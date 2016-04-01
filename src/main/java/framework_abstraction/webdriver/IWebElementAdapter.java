@@ -1,9 +1,9 @@
 package framework_abstraction.webdriver;
 
 import common.webobjects.interfaces.IBy;
+import framework_interaction.Point;
 import org.openqa.selenium.Keys;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.UUID;
 

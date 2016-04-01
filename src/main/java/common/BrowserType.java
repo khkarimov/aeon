@@ -17,23 +17,5 @@ public enum BrowserType {
     /**
      * Mozilla Firefox.
      */
-    Firefox,
-
-    /**
-     * Safari Apple iOS.
-     */
-    SafariOniOS,
-
-    /**
-     * Chrome Android.
-     */
-    ChromeOnAndroid;
-
-    public int getValue() {
-        return this.ordinal();
-    }
-
-    public static BrowserType forValue(int value) {
-        return values()[value];
-    }
+    Firefox
 }

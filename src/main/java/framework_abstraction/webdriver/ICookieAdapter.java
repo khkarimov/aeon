@@ -1,5 +1,7 @@
 package framework_abstraction.webdriver;
 
+import java.util.Date;
+
 /**
  * Interface for cookie interactions.
  */
@@ -27,7 +29,7 @@ public interface ICookieAdapter {
     /**
      * Gets the Expiration DateTime of the cookie.
      */
-    java.time.LocalDateTime getExpiration();
+    Date getExpiration();
 
     /**
      * Gets a value indicating whether or not the cookie is Secure.

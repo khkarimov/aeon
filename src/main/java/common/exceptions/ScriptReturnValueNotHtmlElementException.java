@@ -30,7 +30,7 @@ public class ScriptReturnValueNotHtmlElementException extends RuntimeException i
      * @param script         The script that was executed.
      * @param innerException The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.
      */
-    public ScriptReturnValueNotHtmlElementException(Object returnValue, String script, RuntimeException innerException) {
+    public ScriptReturnValueNotHtmlElementException(Object returnValue, String script, Exception innerException) {
         super(String.format(Resources.getString("ScriptReturnValueNotHTMLElementException_ctor_DefaultMessage"), returnValue, script), innerException);
         this.returnValue = returnValue;
         this.script = script;

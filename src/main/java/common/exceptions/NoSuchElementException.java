@@ -20,7 +20,7 @@ public class NoSuchElementException extends RuntimeException implements Serializ
      *
      * @param innerException The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.
      */
-    public NoSuchElementException(RuntimeException innerException) {
+    public NoSuchElementException(Exception innerException) {
         super(Resources.getString("NoSuchElementException_ctor_DefaultMessage"), innerException);
     }
 }

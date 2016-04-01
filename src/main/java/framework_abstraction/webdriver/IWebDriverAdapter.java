@@ -1,16 +1,13 @@
 package framework_abstraction.webdriver;
 
 import com.sun.glass.ui.Size;
-import com.sun.prism.Image;
 import common.exceptions.*;
 import common.webobjects.interfaces.IBy;
 import framework_abstraction.WebElement;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.net.URL;
+import java.util.*;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 /**
  * Defines the interface through which the user controls the browser.
@@ -30,7 +27,7 @@ public interface IWebDriverAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @return The URL the browser is currently displaying.
      */
-    URI GetUrl(UUID guid);
+    URL GetUrl(UUID guid);
 
     /**
      * Gets the current window handle, which is an opaque handle to this window that uniquely identifies it within this driver instance.
@@ -56,7 +53,7 @@ public interface IWebDriverAdapter {
      * @return The current handler after the change.
      * @throws IllegalArgumentException If <paramref name="url"/> is <see langword="null"/>.
      */
-    String GoToUrl(UUID guid, URI url);
+    String GoToUrl(UUID guid, URL url);
 
     /**
      * Scrolls to the top of the window.
@@ -237,7 +234,7 @@ public interface IWebDriverAdapter {
      * @return The value returned by the script.
      * @throws ScriptExecutionException If the JavaScript encounters an error.
      */
-    Object ExecuteScript(UUID guid, String script, Object[]... args);
+    Object ExecuteScript(UUID guid, String script, Object ... args);
 
     /**
      * Move back a single entry in the browser's history.
@@ -298,7 +295,7 @@ public interface IWebDriverAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @return Image of the browser window.
      */
-    Image GetScreenshot(UUID guid);
+    java.awt.Image GetScreenshot(UUID guid);
 
     /**
      * Gets the source of the current browser window.
@@ -373,7 +370,7 @@ public interface IWebDriverAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @return The list of cookies.
      */
-    ArrayList<ICookieAdapter> GetAllCookies(UUID guid);
+    List<ICookieAdapter> GetAllCookies(UUID guid);
 
     /**
      * Gets a cookie.
