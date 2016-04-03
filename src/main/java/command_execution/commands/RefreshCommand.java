@@ -2,6 +2,7 @@ package command_execution.commands;
 
 import command_execution.commands.initialization.ICommandInitializer;
 import command_execution.commands.initialization.WebCommandInitializer;
+import common.Resources;
 import common.logging.ILog;
 import common.parameters.ParameterObject;
 import framework_abstraction.IFrameworkAbstractionFacade;
@@ -16,7 +17,7 @@ public class RefreshCommand extends Command {
      * @param log the logger
      */
     public RefreshCommand(ILog log) {
-        super(new ParameterObject(log, CommandsInfo.Get_RefreshCommandInfo()), new WebCommandInitializer());
+        super(new ParameterObject(log, Resources.getString("RefreshCommand_Info")), new WebCommandInitializer());
     }
 
     /**

@@ -3,6 +3,7 @@ package command_execution.commands;
 import command_execution.commands.initialization.ICommandInitializer;
 import command_execution.commands.initialization.WebCommandInitializer;
 import command_execution.commands.interfaces.ISelectorFinder;
+import common.Resources;
 import common.logging.ILog;
 import common.parameters.ParameterObject;
 import common.webobjects.interfaces.IBy;
@@ -25,7 +26,7 @@ public class ClickCommand extends WebElementCommand {
      */
     public ClickCommand(ILog log, Iterable<IBy> switchMechanism, IBy selector, ISelectorFinder finder) {
         this(new ParameterObject(log,
-                    String.format(Locale.getDefault(), CommandsInfo.Get_ClickCommandInfo(), selector),
+                    String.format(Locale.getDefault(), Resources.getString("ClickCommand_Info"), selector),
                     switchMechanism,
                     selector,
                     finder),

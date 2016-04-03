@@ -3,6 +3,7 @@ package command_execution.commands;
 import command_execution.commands.initialization.ICommandInitializer;
 import command_execution.commands.initialization.WebCommandInitializer;
 import command_execution.commands.interfaces.ISelectorFinder;
+import common.Resources;
 import common.SelectOption;
 import common.logging.ILog;
 import common.parameters.ParameterObject;
@@ -27,7 +28,7 @@ public class SetCommand extends WebElementCommand  {
      * @param value the value
      */
     public SetCommand(ILog log, Iterable<IBy> switchMechanism, IBy selector, ISelectorFinder finder, SelectOption selectionOption, String value) {
-        this(new ParameterObject(log, String.format(Locale.getDefault(), CommandsInfo.Get_SetCommandInfo(), value, selector), switchMechanism, selector, finder), new WebCommandInitializer());
+        this(new ParameterObject(log, String.format(Locale.getDefault(), Resources.getString("SetCommand_Info"), value, selector), switchMechanism, selector, finder), new WebCommandInitializer());
 
         getParameterObject().getWeb().setValue(value);
         getParameterObject().getWeb().setSelectOption(selectionOption);
