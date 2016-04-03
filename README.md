@@ -1,5 +1,6 @@
 # Echo
 Echo re-write in Java
 
-# Tools
-IntelliJ
+## Requirements
+* IntelliJ 2016
+* Java 8
