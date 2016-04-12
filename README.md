@@ -13,4 +13,8 @@ Echo re-write in Java
 * Open the project in IntelliJ.
 * In the Event Log click on the link that states "Import Gradle Project".
 * Press OK in the dialog that appears.
+* Press File -> Project Structure.
+* Next to the dropdown with the red text press New.
+* Select JDK and put the value of the JDK path into dialog.
 * Click View -> Tool Windows -> Project to see a Solution Explorer like view of the project.
+* The project will now be buildable.
