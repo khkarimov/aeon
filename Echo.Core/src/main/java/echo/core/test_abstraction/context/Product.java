@@ -2,11 +2,8 @@ package echo.core.test_abstraction.context;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.framework_abstraction.Driver;
-import echo.core.framework_abstraction.webdriver.IWebDriverAdapter;
-import echo.core.framework_abstraction.webdriver.IWebDriverFactory;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * Created by DionnyS on 4/12/2016.
