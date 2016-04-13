@@ -10,10 +10,13 @@ import echo.core.common.exceptions.UnsupportedPlatformException;
 import echo.core.common.helpers.OsCheck;
 import echo.core.common.helpers.Process;
 import echo.core.common.logging.ILog;
+import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IDriverFactory;
 import echo.core.framework_abstraction.webdriver.IJavaScriptFlowExecutor;
 import echo.core.framework_abstraction.webdriver.IWebDriverAdapter;
 import echo.core.framework_abstraction.webdriver.IWebDriverFactory;
 import echo.core.framework_interaction.environment.ClientEnvironmentManager;
+import echo.core.test_abstraction.webenvironment.Parameters;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
@@ -121,17 +124,12 @@ public final class SeleniumWebDriverFactory implements IWebDriverFactory {
         this.proxyLocation = proxyLocation;
     }
 
-    /**
-     * Creates a driver instance for automation.
-     *
-     * @param guid               A globally unique identifier associated with this call.
-     * @param browserType        The browser type.
-     * @param maximizeBrowser    Whether or not to maximize the browser.
-     * @param useMobileUserAgent Indicates whether to use the mobile user agent when instantiating the driver.
-     * @return A new <see cref="IWebDriverAdapter"/> object.
-     */
-    public IWebDriverAdapter CreateInstance(UUID guid, BrowserType browserType, boolean maximizeBrowser, boolean useMobileUserAgent) {
-        return CreateInstance(guid, browserType, maximizeBrowser, useMobileUserAgent, null);
+    public IDriver createDriver(Parameters parameters) {
+        return createInstance(
+                UUID.randomUUID(),
+                parameters.getParameter(BrowserType.class, "browserType"),
+                parameters.getBoolean("maximizeBrowser"),
+                parameters.getBoolean("useMobileUserAgent"));
     }
 
     /**
@@ -141,55 +139,10 @@ public final class SeleniumWebDriverFactory implements IWebDriverFactory {
      * @param browserType        The browser type.
      * @param maximizeBrowser    Whether or not to maximize the browser.
      * @param useMobileUserAgent Indicates whether to use the mobile user agent when instantiating the driver.
-     * @param device             Indicates the device to use when instantiating the driver.
      * @return A new <see cref="IWebDriverAdapter"/> object.
      */
-    public IWebDriverAdapter CreateInstance(UUID guid, BrowserType browserType, boolean maximizeBrowser, boolean useMobileUserAgent, IDevice device) {
-        ClientEnvironmentManager.ManageEnvironment(guid, log, browserType, browserAcceptedLanguageCodes, ensureCleanEnvironment);
-
-        switch (browserType) {
-            case Firefox:
-                WebDriver driver;
-                if (enableSeleniumGrid) {
-                    driver = new RemoteWebDriver(seleniumHubUri, GetCapabilities(guid, log, browserType,
-                            browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, null));
-                } else {
-                    driver = new FirefoxDriver(new FirefoxBinary(),
-                            GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent),
-                            setProxySettings(DesiredCapabilities.firefox(), proxyLocation));
-                }
-                return new SeleniumFirefoxWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
-
-            case Chrome:
-                if (enableSeleniumGrid) {
-                    driver = new RemoteWebDriver(seleniumHubUri, GetCapabilities(guid, log, browserType,
-                            browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, null));
-                } else {
-                    DesiredCapabilities capabilities =
-                            GetChromeOptions(browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, proxyLocation);
-
-                    driver = new ChromeDriver(
-                            new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
-                            setProxySettings(capabilities, proxyLocation));
-                }
-
-                return new SeleniumChromeWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
-
-            case InternetExplorer:
-                if (enableSeleniumGrid) {
-                    driver = new RemoteWebDriver(seleniumHubUri, GetCapabilities(guid, log, browserType,
-                            browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, null));
-                } else {
-                    driver = new InternetExplorerDriver(
-                            new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
-                            GetInternetExplorerOptions(guid, log, ensureCleanEnvironment, proxyLocation));
-                }
-
-                return new SeleniumInternetExplorerWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
-            default:
-                throw new ConfigurationException("BrowserType", "Configuration",
-                        String.format("%1$s is not a supported browser", browserType));
-        }
+    public IWebDriverAdapter createInstance(UUID guid, BrowserType browserType, boolean maximizeBrowser, boolean useMobileUserAgent) {
+        return CreateInstance(guid, browserType, maximizeBrowser, useMobileUserAgent, null);
     }
 
     private static Capabilities GetCapabilities(UUID guid, ILog log, BrowserType browserType, String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent, IDevice device) {
@@ -296,6 +249,64 @@ public final class SeleniumWebDriverFactory implements IWebDriverFactory {
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
 
         return capabilities;
+    }
+
+    /**
+     * Creates a driver instance for automation.
+     *
+     * @param guid               A globally unique identifier associated with this call.
+     * @param browserType        The browser type.
+     * @param maximizeBrowser    Whether or not to maximize the browser.
+     * @param useMobileUserAgent Indicates whether to use the mobile user agent when instantiating the driver.
+     * @param device             Indicates the device to use when instantiating the driver.
+     * @return A new <see cref="IWebDriverAdapter"/> object.
+     */
+    private IWebDriverAdapter CreateInstance(UUID guid, BrowserType browserType, boolean maximizeBrowser, boolean useMobileUserAgent, IDevice device) {
+        ClientEnvironmentManager.ManageEnvironment(guid, log, browserType, browserAcceptedLanguageCodes, ensureCleanEnvironment);
+
+        switch (browserType) {
+            case Firefox:
+                WebDriver driver;
+                if (enableSeleniumGrid) {
+                    driver = new RemoteWebDriver(seleniumHubUri, GetCapabilities(guid, log, browserType,
+                            browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, null));
+                } else {
+                    driver = new FirefoxDriver(new FirefoxBinary(),
+                            GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent),
+                            setProxySettings(DesiredCapabilities.firefox(), proxyLocation));
+                }
+                return new SeleniumFirefoxWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
+
+            case Chrome:
+                if (enableSeleniumGrid) {
+                    driver = new RemoteWebDriver(seleniumHubUri, GetCapabilities(guid, log, browserType,
+                            browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, null));
+                } else {
+                    DesiredCapabilities capabilities =
+                            GetChromeOptions(browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, proxyLocation);
+
+                    driver = new ChromeDriver(
+                            new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
+                            setProxySettings(capabilities, proxyLocation));
+                }
+
+                return new SeleniumChromeWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
+
+            case InternetExplorer:
+                if (enableSeleniumGrid) {
+                    driver = new RemoteWebDriver(seleniumHubUri, GetCapabilities(guid, log, browserType,
+                            browserAcceptedLanguageCodes, maximizeBrowser, useMobileUserAgent, null));
+                } else {
+                    driver = new InternetExplorerDriver(
+                            new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
+                            GetInternetExplorerOptions(guid, log, ensureCleanEnvironment, proxyLocation));
+                }
+
+                return new SeleniumInternetExplorerWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
+            default:
+                throw new ConfigurationException("BrowserType", "Configuration",
+                        String.format("%1$s is not a supported browser", browserType));
+        }
     }
 }
 

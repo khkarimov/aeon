@@ -19,7 +19,7 @@ public class SeleniumInternetExplorerWebDriver extends SeleniumWebDriver {
         ExecuteScript(guid, "if(!document.hasFocus()) { window.focus(); }");
     }
 
-    // IE Driver black screenshot issue
+    // IE IDriver black screenshot issue
     @Override
     public Image GetScreenshot(UUID guid) {
         return super.GetScreenshot(guid);

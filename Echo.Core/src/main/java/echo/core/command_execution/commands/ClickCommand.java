@@ -19,6 +19,7 @@ public class ClickCommand extends WebElementCommand {
 
     /**
      * Initializes a new instance of Click Command
+     *
      * @param log
      * @param switchMechanism
      * @param selector
@@ -26,16 +27,17 @@ public class ClickCommand extends WebElementCommand {
      */
     public ClickCommand(ILog log, Iterable<IBy> switchMechanism, IBy selector, ISelectorFinder finder) {
         this(new ParameterObject(log,
-                    String.format(Locale.getDefault(), Resources.getString("ClickCommand_Info"), selector),
-                    switchMechanism,
-                    selector,
-                    finder),
+                        String.format(Locale.getDefault(), Resources.getString("ClickCommand_Info"), selector),
+                        switchMechanism,
+                        selector,
+                        finder),
                 new WebCommandInitializer());
     }
 
     /**
      * Initializes a new instance of Click Command
-     * @param parameterObject the parameter object
+     *
+     * @param parameterObject    the parameter object
      * @param commandInitializer the command initializer
      */
     public ClickCommand(ParameterObject parameterObject, ICommandInitializer commandInitializer) {
@@ -44,7 +46,7 @@ public class ClickCommand extends WebElementCommand {
 
     @Override
     protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, WebElement webElement) {
-        if(frameworkAbstractionFacade == null) {
+        if (frameworkAbstractionFacade == null) {
             throw new IllegalArgumentException();
         }
         frameworkAbstractionFacade.ClickElement(getParameterObject());

@@ -1,17 +1,17 @@
 package echo.core.command_execution;
 
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.Driver;
+import echo.core.framework_abstraction.IDriver;
 
 /**
  * Provides access to data required for automation.
  */
 public class AutomationInfo {
     private ICommandExecutionFacade CommandExecutionFacade;
-    private Driver driver;
+    private IDriver driver;
     private ILog log;
 
-    public AutomationInfo(Driver driver, ILog log) {
+    public AutomationInfo(IDriver driver, ILog log) {
         this.driver = driver;
         this.log = log;
     }
@@ -28,7 +28,7 @@ public class AutomationInfo {
         return log;
     }
 
-    public final Driver getDriverAdapter() {
+    public final IDriver getDriverAdapter() {
         return this.driver;
     }
 

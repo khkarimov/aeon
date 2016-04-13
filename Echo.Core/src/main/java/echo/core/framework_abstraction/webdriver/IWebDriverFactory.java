@@ -17,5 +17,5 @@ public interface IWebDriverFactory {
      * @param useMobileUserAgent Indicates whether to use the mobile user agent when instantiating the driver.
      * @return A new <see cref="IWebDriverAdapter"/> object.
      */
-    IWebDriverAdapter CreateInstance(UUID guid, BrowserType browserType, boolean maximizeBrowser, boolean useMobileUserAgent);
+    IWebDriverAdapter createInstance(UUID guid, BrowserType browserType, boolean maximizeBrowser, boolean useMobileUserAgent);
 }

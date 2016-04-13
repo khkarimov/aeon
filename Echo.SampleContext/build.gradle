@@ -30,7 +30,7 @@ jar {
     archiveName = base + '-' + version + '.jar'
 
     manifest {
-        attributes 'Implementation-Title': baseProjectDescription + ' Service SDK',
+        attributes 'Implementation-Title': baseProjectDescription,
                 'Implementation-Version': version
     }
 

@@ -676,7 +676,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
         TakesScreenshot driver = (TakesScreenshot) ((underlyingWebDriver instanceof TakesScreenshot) ? underlyingWebDriver : null);
 
         if (driver == null) {
-            throw new IllegalStateException("Web Driver does not support taking screenshot");
+            throw new IllegalStateException("Web IDriver does not support taking screenshot");
         }
 
         log.Trace(guid, "webDriver.getScreenshotAs(bytes);");
