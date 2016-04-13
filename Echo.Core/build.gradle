@@ -1,0 +1,58 @@
+def baseProjectName = 'Echo.Core'
+def baseProjectDescription = 'Echo Core'
+def base = baseProjectName
+
+group 'Echo'
+version '0.0.1'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    seleniumVersion = '2.53.0'
+    chromeDriverVersion = '2.21'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.1'
+
+    // Drivers
+    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+}
+
+task copyToDistrib(type: Copy) {
+    println('Copying output to distrib folder')
+
+    def source = 'build/libs/' + base + '-' + version + '.jar'
+    def destination = '../distrib'
+    def distribFolder =  new File('../distrib', '')
+
+    if(!distribFolder.exists()) {
+        println('Creating distrib folder')
+
+        distribFolder.mkdir()
+    }
+    else {
+        println('Distrib exists')
+    }
+
+    from source
+    into destination
+}
+
+copyToDistrib.outputs.upToDateWhen {false}
+
+build.finalizedBy(copyToDistrib)
