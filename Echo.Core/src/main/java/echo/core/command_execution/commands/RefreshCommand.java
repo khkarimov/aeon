@@ -1,11 +1,11 @@
-package command_execution.commands;
+package echo.core.command_execution.commands;
 
-import command_execution.commands.initialization.ICommandInitializer;
-import command_execution.commands.initialization.WebCommandInitializer;
-import common.Resources;
-import common.logging.ILog;
-import common.parameters.ParameterObject;
-import framework_abstraction.IFrameworkAbstractionFacade;
+import echo.core.command_execution.commands.initialization.ICommandInitializer;
+import echo.core.command_execution.commands.initialization.WebCommandInitializer;
+import echo.core.common.Resources;
+import echo.core.common.logging.ILog;
+import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 
 /**
  * Refreshes the current page

@@ -1,7 +1,6 @@
 package main;
 
 import echo.core.framework_interaction.selenium.Selenium;
-import echo.core.framework_interaction.selenium.SeleniumWebDriverFactory;
 import echo.core.test_abstraction.context.Product;
 
 /**

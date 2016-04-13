@@ -1,14 +1,14 @@
-package command_execution.commands;
+package echo.core.command_execution.commands;
 
-import command_execution.commands.initialization.ICommandInitializer;
-import command_execution.commands.initialization.WebCommandInitializer;
-import command_execution.commands.interfaces.ISelectorFinder;
-import common.Resources;
-import common.logging.ILog;
-import common.parameters.ParameterObject;
-import common.webobjects.interfaces.IBy;
-import framework_abstraction.IFrameworkAbstractionFacade;
-import framework_abstraction.WebElement;
+import echo.core.command_execution.commands.initialization.ICommandInitializer;
+import echo.core.command_execution.commands.initialization.WebCommandInitializer;
+import echo.core.command_execution.commands.interfaces.ISelectorFinder;
+import echo.core.common.Resources;
+import echo.core.common.logging.ILog;
+import echo.core.common.parameters.ParameterObject;
+import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
+import echo.core.framework_abstraction.WebElement;
 
 import java.util.Locale;
 

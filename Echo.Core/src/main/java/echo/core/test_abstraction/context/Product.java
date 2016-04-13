@@ -12,8 +12,7 @@ public class Product<T extends Driver> {
     private AutomationInfo automationInfo;
 
     public Product() {
-        String factory = this.createFactory().GetFactory();
-        //this.automationInfo = new AutomationInfo();
+        String factory = this.createDriver().GetFactory();
     }
 
     public Product(AutomationInfo automationInfo) {
@@ -28,13 +27,7 @@ public class Product<T extends Driver> {
         this.automationInfo = automationInfo;
     }
 
-//    public void Launch() {
-//        T factory = this.createFactory();
-//
-//        this.automationInfo = new AutomationInfo(factory.getDriver());
-//    }
-
-    private T createFactory() {
+    private T createDriver() {
         try {
             ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
             Class factoryClass = (Class) type.getActualTypeArguments()[0];
