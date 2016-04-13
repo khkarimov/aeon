@@ -4,10 +4,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static echo.core.common.BrowserType.Chrome;
 import static echo.core.common.BrowserType.Firefox;
-import static echo.core.common.BrowserType.InternetExplorer;
-import static echo.core.test_abstraction.context.Echo.*;
 
 /**
  * Created by DionnyS on 4/13/2016.
@@ -18,37 +15,22 @@ public class SampleTest {
 
     @BeforeClass
     public static void fixtureSetUp() {
-        product = Launch(Sample.class, Firefox);
-
-        //product.Browser.NavigateTo("http://devausql03/ABsCarSearch");
+        product = Echo.Launch(Sample.class, Firefox);
+        product.Browser.NavigateTo("http://devausql03/ABsCarSearch");
     }
 
     @AfterClass
     public static void fixtureTearDown() {
-//        product.Browser.Quit();
+        //product.Browser.Quit();
     }
 
     @Test
     public void SampleTest() {
-//        product.Main.Submit.Click();
+        //product.Main.Submit.Click();
 
-//        product.EeMain
-//                .EmployeeGrid
-//                .Row.byId("someId").byName("name")
-//                .Element
-//                .Click();
-//
-//        product.EeMain
-//                .EmployeeGrid
-//                .Row.byId("someId").andName("name")
-//                .Element
-//                .Click();
-//
-//        product.EeMain
-//                .EmployeeGrid
-//                .RowById("someId").andName("name")
-//                .Element
-//                .Click();
-
+        // Grid Examples
+//        product.Main.MyGrid.Row.ById("12345").ByName("bob").NameLabel.Exists();
+//        product.Main.MyGrid.Row.ById("12345").ByName("bob").descriptionTextBox.Set("text to set");
+//        product.Main.MyGrid.Row.ById("12345").ByName("bob").IdLink.Click();
     }
 }
