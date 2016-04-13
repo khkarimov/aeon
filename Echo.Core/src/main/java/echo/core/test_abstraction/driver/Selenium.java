@@ -32,6 +32,7 @@ public class Selenium implements IDriverFactory {
                     parameters.getString("proxyLocation"));
 
             return factory.createDriver(parameters);
+            
         } catch (MalformedURLException e) {
             throw new UnableToCreateDriverException(e);
         }

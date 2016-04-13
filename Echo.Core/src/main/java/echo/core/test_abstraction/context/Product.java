@@ -22,32 +22,32 @@ public class Product<T extends IDriverFactory> {
         this.factory = createDriverFactory();
     }
 
-    public Product(AutomationInfo automationInfo) {
+    protected Product(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
     }
 
-    public AutomationInfo getAutomationInfo() {
+    protected AutomationInfo getAutomationInfo() {
         return automationInfo;
     }
 
-    public void setAutomationInfo(AutomationInfo automationInfo) {
+    protected void setAutomationInfo(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
     }
 
-    public void launch() {
+    protected void launch() {
         IDriver driver = factory.createDriver(parameters, log);
         setAutomationInfo(new AutomationInfo(driver, log));
     }
 
-    public void setParameters(Parameters parameters) {
+    protected void setParameters(Parameters parameters) {
         this.parameters = parameters;
     }
 
-    public ISettingsProvider getSettingsProvider() {
+    protected ISettingsProvider getSettingsProvider() {
         return factory.getSettingsProvider();
     }
 
-    public void setLog(ILog log) {
+    protected void setLog(ILog log) {
         this.log = log;
     }
 
