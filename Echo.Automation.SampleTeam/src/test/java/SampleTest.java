@@ -27,5 +27,10 @@ public class SampleTest {
     @Test
     public void SampleTest() {
         //product.Main.Submit.Click();
+
+        // Grid Examples
+        //product.Main.MyGrid.Row.ById("12345").ByName("bob").NameLabel.Exists();
+        //product.Main.MyGrid.Row.ById("12345").ByName("bob").descriptionTextBox.Set("text to set");
+        //product.Main.MyGrid.Row.ById("12345").ByName("bob").IdLink.Click();
     }
 }
