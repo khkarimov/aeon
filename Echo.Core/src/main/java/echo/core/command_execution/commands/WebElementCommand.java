@@ -6,8 +6,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
+import echo.core.framework_abstraction.IElement;
 
 /**
  * Serves as the base class for all web element commands that need a finder
@@ -63,7 +62,7 @@ public abstract class WebElementCommand extends Command {
      * The method which provides the logic for the web element command
      *
      * @param frameworkAbstractionFacade the framework abstraction facade
-     * @param webElement                 The web element
+     * @param element                 The web element
      */
-    protected abstract void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, WebElement webElement);
+    protected abstract void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, IElement element);
 }

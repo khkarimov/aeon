@@ -8,8 +8,7 @@ import echo.core.common.SelectOption;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
+import echo.core.framework_abstraction.IElement;
 
 import java.util.Locale;
 
@@ -46,10 +45,10 @@ public class SetCommand extends WebElementCommand  {
     /**
      * The method which providse the logic for the web element command.
      * @param frameworkAbstractionFacade the framework abstraction facade
-     * @param webElement The web element
+     * @param element The web element
      */
     @Override
-    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, WebElement webElement) {
+    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, IElement element) {
         frameworkAbstractionFacade.Set(getParameterObject());
     }
 }

@@ -1,4 +1,4 @@
-package echo.core.framework_abstraction.webdriver;
+package echo.core.framework_abstraction;
 
 /**
  * Interface for preparing JavaScript according to formats specified by classes implementing this interface.

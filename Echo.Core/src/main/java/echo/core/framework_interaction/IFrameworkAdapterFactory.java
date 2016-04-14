@@ -1,6 +1,7 @@
 package echo.core.framework_interaction;
 
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_abstraction.webdriver.ISelectElementFactory;
 
 /**
@@ -14,5 +15,5 @@ public interface IFrameworkAdapterFactory {
      * @param selectElementFactory The slectElementFactory.
      * @return The created instance of the framework adapter.
      */
-    IFrameworkAdapter CreateInstance(ParameterObject parameterObject, ISelectElementFactory selectElementFactory);
+    IDriver CreateInstance(ParameterObject parameterObject, ISelectElementFactory selectElementFactory);
 }

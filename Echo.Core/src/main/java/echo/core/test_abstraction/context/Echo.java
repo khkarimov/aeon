@@ -13,10 +13,10 @@ import java.util.ResourceBundle;
  * Created by DionnyS on 4/13/2016.
  */
 public class Echo {
-    public static <T extends Product> T Launch(Class<T> tClass, BrowserType browserType) {
+    public static <T extends Product> T Launch(Class<T> productClass, BrowserType browserType) {
         try {
-            T product = tClass.newInstance();
-            Parameters parameters = loadParameters(product.getSettingsProvider());
+            T product = productClass.newInstance();
+            Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
             parameters.put("browserType", browserType);
 
             product.setParameters(parameters);

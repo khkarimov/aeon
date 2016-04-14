@@ -2,7 +2,6 @@ package echo.core.command_execution.delegate_runners;
 
 import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunner;
 import echo.core.common.helpers.Sleep;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 import org.joda.time.Duration;
 
 import java.util.UUID;

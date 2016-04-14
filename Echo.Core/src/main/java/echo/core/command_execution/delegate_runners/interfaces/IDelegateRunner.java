@@ -1,7 +1,6 @@
 package echo.core.command_execution.delegate_runners.interfaces;
 
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 
 import java.util.function.Consumer;
 import java.util.function.Function;

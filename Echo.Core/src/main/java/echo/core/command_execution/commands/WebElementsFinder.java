@@ -4,8 +4,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.common.IWebElementsFinder;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
+import echo.core.framework_abstraction.IElement;
 
 import java.util.Collection;
 
@@ -51,12 +50,12 @@ public class WebElementsFinder implements IWebElementsFinder {
      * @param selector                   Elements locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    public final Collection<WebElement> FindElements(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector) {
+    public final Collection<IElement> FindElements(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector) {
         if (frameworkAbstractionFacade == null) {
             throw new IllegalArgumentException("frameworkAbstractionFacade");
         }
 
         getParameterObject().getWeb().setFindIBy(selectorFinder.FindSelector(frameworkAbstractionFacade, selector));
-        return frameworkAbstractionFacade.FindIElements(getParameterObject());
+        return frameworkAbstractionFacade.FindElements(getParameterObject());
     }
 }

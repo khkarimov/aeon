@@ -1,8 +1,8 @@
-package echo.core.framework_interaction.selenium;
+package echo.selenium;
 
 import echo.core.common.helpers.ConvertHelper;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.webdriver.IWebDriverScriptExecutor;
+import echo.core.framework_abstraction.IScriptExecutor;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
@@ -10,11 +10,11 @@ import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class SeleniumWebDriverScriptExecutor implements IWebDriverScriptExecutor {
+public class SeleniumScriptExecutor implements IScriptExecutor {
     private ILog log;
     private WebDriver remoteWebDriver;
 
-    public SeleniumWebDriverScriptExecutor(WebDriver remoteWebDriver, ILog log) {
+    public SeleniumScriptExecutor(WebDriver remoteWebDriver, ILog log) {
         setRemoteWebDriver(remoteWebDriver);
         this.log = log;
     }

@@ -2,6 +2,7 @@ package echo.core.framework_interaction;
 
 import echo.core.common.exceptions.FrameworkNotSupportedException;
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_abstraction.webdriver.ISelectElementFactory;
 import org.joda.time.Duration;
 
@@ -31,10 +32,10 @@ public class FrameworkAdapterFactory implements IFrameworkAdapterFactory {
      * @param selectElementFactory The selectElementFactory.
      * @return The created instance of a framework adapter.
      */
-    public final IFrameworkAdapter CreateInstance(ParameterObject parameterObject, ISelectElementFactory selectElementFactory) {
+    public final IDriver CreateInstance(ParameterObject parameterObject, ISelectElementFactory selectElementFactory) {
         switch (parameterObject.getElementType()) {
             case Selenium:
-                return new SeleniumFrameworkAdapter(parameterObject, selectElementFactory);
+                return new EchoDriver(parameterObject, selectElementFactory);
 
             default:
                 throw new FrameworkNotSupportedException(parameterObject.getElementType());

@@ -6,8 +6,7 @@ import echo.core.common.BrowserType;
 import echo.core.common.helpers.Clock;
 import echo.core.common.helpers.IClock;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.FrameworkAbstractionFacadeFactory;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_interaction.FrameworkAdapterFactory;
 import echo.core.framework_interaction.selenium.SeleniumKeyboardMapper;
 import echo.core.framework_interaction.selenium.SeleniumSelectElementFactory;
@@ -63,10 +62,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
         int mouseDragSpeed = parameterObject.getAutomationInfo().getParameters().getInt("mouseDragSpeed");
 
         IFrameworkAbstractionFacade frameworkAbstractionFacade =
-                new FrameworkAbstractionFacadeFactory(
-                        new SeleniumKeyboardMapper(),
-                        new SeleniumSelectElementFactory(),
-                        new FrameworkAdapterFactory(mouseDragSpeed, Duration.standardSeconds(30)))
+                new FrameworkAbstractionFacadeFactory(new FrameworkAdapterFactory(mouseDragSpeed, Duration.standardSeconds(30)))
                         .CreateInstance(parameterObject);
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(frameworkAbstractionFacade, parameterObject.getAutomationInfo().getLog());

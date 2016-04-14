@@ -7,12 +7,10 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebElementFinder;
 import echo.core.common.*;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
-import echo.core.framework_abstraction.webdriver.ICookieAdapter;
+import echo.core.framework_abstraction.IElement;
+import echo.core.framework_abstraction.ICookie;
 import org.openqa.selenium.Keys;
 
-import java.net.URI;
 import java.net.URL;
 import java.time.Duration;
 import java.util.function.Consumer;
@@ -102,13 +100,13 @@ public class WebParameters {
     /**
      * Gets or sets Cookie.
      */
-    private ICookieAdapter Cookie;
+    private ICookie Cookie;
 
-    public final ICookieAdapter getCookie() {
+    public final ICookie getCookie() {
         return Cookie;
     }
 
-    public final void setCookie(ICookieAdapter value) {
+    public final void setCookie(ICookie value) {
         Cookie = value;
     }
 
@@ -414,13 +412,13 @@ public class WebParameters {
     /**
      * Gets or sets WebElement.
      */
-    private WebElement webElement;
+    private IElement webElement;
 
-    public final WebElement getWebElement() {
+    public final IElement getWebElement() {
         return webElement;
     }
 
-    public final void setWebElement(WebElement value) {
+    public final void setWebElement(IElement value) {
         webElement = value;
     }
 

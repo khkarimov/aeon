@@ -1,4 +1,4 @@
-package echo.core.framework_interaction.selenium;
+package echo.selenium;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.glass.ui.Size;
@@ -10,11 +10,11 @@ import echo.core.common.logging.ILog;
 import echo.core.common.webobjects.By;
 import echo.core.common.webobjects.ByJQuery;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.WebElement;
-import echo.core.framework_abstraction.webdriver.*;
+import echo.core.framework_abstraction.*;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
@@ -28,33 +28,33 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoCloseable {
+public abstract class SeleniumAdapter implements IAdapter, AutoCloseable {
 
-    private WebDriver underlyingWebDriver;
+    private WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private ILog log;
     private final ObjectMapper mapper;
     private boolean moveMouseToOrigin;
 
-    public SeleniumWebDriver(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, ILog log, boolean moveMouseToOrigin) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, ILog log, boolean moveMouseToOrigin) {
         this.javaScriptExecutor = javaScriptExecutor;
-        this.underlyingWebDriver = seleniumWebDriver;
+        this.webDriver = seleniumWebDriver;
         this.log = log;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.mapper = new ObjectMapper();
     }
 
     public void close() {
-        underlyingWebDriver.quit();
-        underlyingWebDriver = null;
+        webDriver.quit();
+        webDriver = null;
     }
 
-    protected final WebDriver getUnderlyingWebDriver() {
-        return underlyingWebDriver;
+    protected final WebDriver getWebDriver() {
+        return webDriver;
     }
 
-    private void setUnderlyingWebDriver(WebDriver value) {
-        underlyingWebDriver = value;
+    private void setWebDriver(WebDriver value) {
+        webDriver = value;
     }
 
     protected final IJavaScriptFlowExecutor getJavaScriptExecutor() {
@@ -71,10 +71,10 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param guid   A globally unique identifier associated with this call.
      * @param cookie The cookie to be added.
      */
-    public final void AddCookie(UUID guid, ICookieAdapter cookie) {
+    public final void AddCookie(UUID guid, ICookie cookie) {
         log.Trace(guid, "WebDriver.add_Cookie();");
         Cookie c = new Cookie(cookie.getName(), cookie.getValue(), cookie.getDomain(), cookie.getPath(), cookie.getExpiration());
-        getUnderlyingWebDriver().manage().addCookie(c);
+        getWebDriver().manage().addCookie(c);
     }
 
     /**
@@ -84,7 +84,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final void DeleteAllCookies(UUID guid) {
         log.Trace(guid, "WebDriver.delete_AllCookies();");
-        getUnderlyingWebDriver().manage().deleteAllCookies();
+        getWebDriver().manage().deleteAllCookies();
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final void DeleteCookie(UUID guid, String name) {
         log.Trace(guid, "WebDriver.delete_Cookie();");
-        getUnderlyingWebDriver().manage().deleteCookieNamed(name);
+        getWebDriver().manage().deleteCookieNamed(name);
     }
 
     /**
@@ -104,10 +104,10 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param guid A globally unique identifier associated with this call.
      * @return The list of cookies.
      */
-    public final List<ICookieAdapter> GetAllCookies(UUID guid) {
+    public final List<ICookie> GetAllCookies(UUID guid) {
         log.Trace(guid, "WebDriver.get_AllCookies();");
 
-        List<ICookieAdapter> result = getUnderlyingWebDriver().manage().getCookies()
+        List<ICookie> result = getWebDriver().manage().getCookies()
                 .stream()
                 .map(x -> new SeleniumCookie(x))
                 .collect(Collectors.toList());
@@ -123,11 +123,11 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param name Name of the cookie to retrieve.
      * @return The specified cookie.
      */
-    public final ICookieAdapter GetCookie(UUID guid, String name) {
+    public final ICookie GetCookie(UUID guid, String name) {
         log.Trace(guid, "WebDriver.get_Cookie();");
 
-        Cookie cookie = getUnderlyingWebDriver().manage().getCookieNamed(name);
-        ICookieAdapter result = null;
+        Cookie cookie = getWebDriver().manage().getCookieNamed(name);
+        ICookie result = null;
         if (cookie != null) {
             result = new SeleniumCookie(cookie);
         }
@@ -145,7 +145,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final void ModifyCookie(UUID guid, String name, String value) {
         log.Trace(guid, "WebDriver.modify_Cookie();");
-        Cookie cookie = getUnderlyingWebDriver().manage().getCookieNamed(name);
+        Cookie cookie = getWebDriver().manage().getCookieNamed(name);
 
         // Check if cookie actually exists.
         if (cookie == null) {
@@ -153,9 +153,9 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
         }
 
         // Delete old cookie, then add a new one with the new value.
-        getUnderlyingWebDriver().manage().deleteCookieNamed(name);
+        getWebDriver().manage().deleteCookieNamed(name);
         Cookie newCookie = new Cookie(cookie.getName(), value, cookie.getDomain(), cookie.getPath(), cookie.getExpiry());
-        getUnderlyingWebDriver().manage().addCookie(newCookie);
+        getWebDriver().manage().addCookie(newCookie);
     }
 
     /**
@@ -166,7 +166,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final String GetTitle(UUID guid) {
         log.Trace(guid, "WebDriver.get_Title();");
-        String result = underlyingWebDriver.getTitle();
+        String result = webDriver.getTitle();
         log.Trace(guid, String.format("Result: %1$s", result));
         return result;
     }
@@ -179,7 +179,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final URL GetUrl(UUID guid) {
         log.Trace(guid, "WebDriver.get_Url();");
-        String result = underlyingWebDriver.getCurrentUrl();
+        String result = webDriver.getCurrentUrl();
         getLog().Trace(guid, String.format("Result: %1$s", result));
         try {
             return new URL(result);
@@ -194,9 +194,9 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param guid A globally unique identifier associated with this call.
      * @return The currently focused element.
      */
-    public final IWebElementAdapter GetFocusedElement(UUID guid) {
+    public final IElement GetFocusedElement(UUID guid) {
         log.Trace(guid, "WebDriver.switch_To().active_Element()");
-        org.openqa.selenium.WebElement result = underlyingWebDriver.switchTo().activeElement();
+        org.openqa.selenium.WebElement result = webDriver.switchTo().activeElement();
         log.Trace(guid, String.format("Result: %1$s", result));
         return new SeleniumElement(result, log);
     }
@@ -209,7 +209,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final String GetCurrentWindowHandle(UUID guid) {
         log.Trace(guid, "WebDriver.get_CurrentWindowHandle();");
-        String result = underlyingWebDriver.getWindowHandle();
+        String result = webDriver.getWindowHandle();
         log.Trace(guid, String.format("Result: %1$s", result));
         return result;
     }
@@ -222,7 +222,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final Collection<String> GetWindowHandles(UUID guid) {
         log.Trace(guid, "WebDriver.get_WindowHandles();");
-        return underlyingWebDriver.getWindowHandles();
+        return webDriver.getWindowHandles();
     }
 
     /**
@@ -235,7 +235,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
     public final String GoToUrl(UUID guid, URL url) {
         log.Trace(guid, String.format("WebDriver.Navigate().GoToUrl(\"%1$s\");", url));
 
-        underlyingWebDriver.navigate().to(url);
+        webDriver.navigate().to(url);
 
         return GetCurrentWindowHandle(guid);
     }
@@ -265,12 +265,12 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param findBy Selector used to search with.
      * @return An IWebElementAdapter matching the findBy.
      */
-    public IWebElementAdapter FindElement(UUID guid, IBy findBy) {
+    public IElement FindElement(UUID guid, IBy findBy) {
         By by = (By) ((findBy instanceof By) ? findBy : null);
         if (by != null) {
             log.Trace(guid, String.format("WebDriver.FindElement(By.CssSelector(%1$s));", by));
             try {
-                return new SeleniumElement(underlyingWebDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())), log);
+                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())), log);
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new NoSuchElementException(e);
             }
@@ -278,7 +278,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
 
         ByJQuery byJQuery = (ByJQuery) ((findBy instanceof ByJQuery) ? findBy : null);
         if (byJQuery != null) {
-            return (IWebElementAdapter) FindElements(guid, byJQuery).toArray()[0];
+            return (IElement) FindElements(guid, byJQuery).toArray()[0];
         }
 
         throw new UnsupportedOperationException();
@@ -291,14 +291,14 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param findBy Selector passed to search.
      * @return A ReadOnlyCollection of IWebElementAdapter.
      */
-    public final Collection<IWebElementAdapter> FindElements(UUID guid, IBy findBy) {
+    public final Collection<IElement> FindElements(UUID guid, IBy findBy) {
         By by = (By) ((findBy instanceof By) ? findBy : null);
         if (by != null) {
-            Collection<IWebElementAdapter> collection;
+            Collection<IElement> collection;
             log.Trace(guid, String.format("WebDriver.FindElements(By.CssSelector(%1$s));", by));
 
             try {
-                collection = underlyingWebDriver.findElements(org.openqa.selenium.By.cssSelector(findBy.toString()))
+                collection = webDriver.findElements(org.openqa.selenium.By.cssSelector(findBy.toString()))
                         .stream()
                         .map(e -> new SeleniumElement(e, log))
                         .collect(Collectors.toList());
@@ -332,7 +332,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param findBy The element(s) to find.
      * @return A ReadOnlyCollection of IWebElementAdapters.
      */
-    private Collection<IWebElementAdapter> FindElements(UUID guid, ByJQuery findBy) {
+    private Collection<IElement> FindElements(UUID guid, ByJQuery findBy) {
         String script = findBy.toString(JQueryStringType.ReturnElementArray);
         Object result = ExecuteScript(guid, script);
 
@@ -358,8 +358,8 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param findBy Selector object that we are using the find the <select></select> tag.
      * @return IWebSelectElementAdapter matching the findBy.
      */
-    public final IWebSelectElementAdapter FindSelectElement(UUID guid, IBy findBy) {
-        IWebElementAdapter webElement = FindElement(guid, findBy);
+    public final IElement FindSelectElement(UUID guid, IBy findBy) {
+        IElement webElement = FindElement(guid, findBy);
         SeleniumElement elem = (SeleniumElement) ((webElement instanceof SeleniumElement) ? webElement : null);
         if (elem == null) {
             throw new UnsupportedSelectElementException(webElement.getClass());
@@ -375,7 +375,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final void SwitchToDefaultContent(UUID guid) {
         log.Trace(guid, "WebDriver.SwitchTo().DefaultContent();");
-        underlyingWebDriver.switchTo().defaultContent();
+        webDriver.switchTo().defaultContent();
     }
 
     /**
@@ -385,7 +385,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param findBy The selector of the element <frame></frame> to switch to.
      */
     public final void SwitchToFrame(UUID guid, IBy findBy) {
-        IWebElementAdapter webElement = FindElement(guid, findBy);
+        IElement webElement = FindElement(guid, findBy);
         SeleniumElement elem = (SeleniumElement) ((webElement instanceof SeleniumElement) ? webElement : null);
         if (elem == null) {
             throw new UnsupportedElementException(webElement.getClass());
@@ -393,7 +393,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
 
         log.Trace(guid, "WebDriver.SwitchTo().Frame(<IWebElement>);");
 
-        underlyingWebDriver.switchTo().frame(elem.getUnderlyingWebElement());
+        webDriver.switchTo().frame(elem.getUnderlyingWebElement());
     }
 
     /**
@@ -410,7 +410,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
         for (String window : GetWindowHandles(guid)) {
             log.Trace(guid, String.format("WebDriver.SwitchTo().Window(%1$s);", window));
 
-            underlyingWebDriver.switchTo().window(window);
+            webDriver.switchTo().window(window);
 
             if (GetTitle(guid).toLowerCase().contains(windowTitle.toLowerCase())) {
                 return window;
@@ -428,7 +428,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final void SwitchToWindowByHandle(UUID guid, String handle) {
         log.Trace(guid, String.format("WebDriver.SwitchTo().Window(%1$s);", handle));
-        underlyingWebDriver.switchTo().window(handle);
+        webDriver.switchTo().window(handle);
     }
 
     /**
@@ -446,7 +446,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
         for (String window : GetWindowHandles(guid)) {
             log.Trace(guid, String.format("WebDriver.SwitchTo().Window(%1$s);", window));
 
-            underlyingWebDriver.switchTo().window(window);
+            webDriver.switchTo().window(window);
 
             if (GetUrl(guid).toString().toLowerCase().contains(value.toLowerCase())) {
                 return window;
@@ -466,7 +466,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
 
         log.Trace(guid, "WebDriver.Close();");
 
-        underlyingWebDriver.close();
+        webDriver.close();
     }
 
     /**
@@ -477,7 +477,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
     public final void Quit(UUID guid) {
         log.Trace(guid, "WebDriver.Quit();");
 
-        underlyingWebDriver.quit();
+        webDriver.quit();
     }
 
     /**
@@ -489,7 +489,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
         log.Trace(guid, "WebDriver.SwitchTo().Alert();");
 
         try {
-            underlyingWebDriver.switchTo().alert();
+            webDriver.switchTo().alert();
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
         }
@@ -504,7 +504,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
         log.Trace(guid, "WebDriver.SwitchTo().Alert();");
 
         try {
-            underlyingWebDriver.switchTo().alert();
+            webDriver.switchTo().alert();
         } catch (NoAlertPresentException e) {
             return;
         }
@@ -521,7 +521,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
     public final String GetAlertText(UUID guid) {
         log.Trace(guid, "WebDriver.SwitchTo().Alert().get_Text();");
 
-        return underlyingWebDriver.switchTo().alert().getText();
+        return webDriver.switchTo().alert().getText();
     }
 
     /**
@@ -532,7 +532,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final void SendKeysToAlert(UUID guid, String keysToSend) {
         log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
-        underlyingWebDriver.switchTo().alert().sendKeys(keysToSend);
+        webDriver.switchTo().alert().sendKeys(keysToSend);
     }
 
     /**
@@ -543,7 +543,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
     public void AcceptAlert(UUID guid) {
         try {
             log.Trace(guid, "WebDriver.SwitchTo().Alert();");
-            underlyingWebDriver.switchTo().alert().accept();
+            webDriver.switchTo().alert().accept();
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
         }
@@ -557,7 +557,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
     public final void DismissAlert(UUID guid) {
         try {
             log.Trace(guid, "WebDriver.SwitchTo().Alert().Dismiss();");
-            underlyingWebDriver.switchTo().alert().dismiss();
+            webDriver.switchTo().alert().dismiss();
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
         }
@@ -583,7 +583,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
     public final Object ExecuteScript(UUID guid, String script, Object ... args) {
         try {
             return javaScriptExecutor.getExecutor()
-                    .apply(new SeleniumWebDriverScriptExecutor(underlyingWebDriver, log), guid, script, Arrays.asList(args));
+                    .apply(new SeleniumScriptExecutor(webDriver, log), guid, script, Arrays.asList(args));
 
         } catch (RuntimeException e) {
             throw new ScriptExecutionException(script, e);
@@ -615,7 +615,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public final void Refresh(UUID guid) {
         log.Trace(guid, "WebDriver.Navigate().Refresh();");
-        underlyingWebDriver.navigate().refresh();
+        webDriver.navigate().refresh();
     }
 
     /**
@@ -626,7 +626,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
     public void Maximize(UUID guid) {
         try {
             log.Trace(guid, "WebDriver.Manage().Window.Maximize();");
-            underlyingWebDriver.manage().window().maximize();
+            webDriver.manage().window().maximize();
         } catch (IllegalStateException e) {
             log.Trace(guid, "window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
             ExecuteScript(guid, "window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
@@ -641,7 +641,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      */
     public void Resize(UUID guid, Size size) {
         log.Trace(guid, String.format("WebDriver.Manage().Window.set_Size(%1$s);", size));
-        underlyingWebDriver.manage().window().setSize(new Dimension(size.width, size.height));
+        webDriver.manage().window().setSize(new Dimension(size.width, size.height));
     }
 
     /**
@@ -651,7 +651,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param selector The element on the page to click.
      */
     public void OpenFileDialog(UUID guid, IBy selector) {
-        IWebElementAdapter element = FindElement(guid, selector);
+        IElement element = FindElement(guid, selector);
         element.Click(guid, moveMouseToOrigin);
     }
 
@@ -673,7 +673,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @return An Image object of the current browser.
      */
     public Image GetScreenshot(UUID guid) {
-        TakesScreenshot driver = (TakesScreenshot) ((underlyingWebDriver instanceof TakesScreenshot) ? underlyingWebDriver : null);
+        TakesScreenshot driver = (TakesScreenshot) ((webDriver instanceof TakesScreenshot) ? webDriver : null);
 
         if (driver == null) {
             throw new IllegalStateException("Web IDriver does not support taking screenshot");
@@ -696,13 +696,13 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @return A string representation of the source code of the page.
      */
     public final String GetPageSource(UUID guid) {
-        if (underlyingWebDriver == null) {
+        if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
 
         log.Trace(guid, "WebDriver.get_PageSource();");
 
-        return underlyingWebDriver.getPageSource();
+        return webDriver.getPageSource();
     }
 
     /**
@@ -713,13 +713,13 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param targetElement Where the element will be dropped.
      */
     public final void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
-        if (underlyingWebDriver == null) {
+        if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
 
         log.Trace(guid, "new Actions(IWebDriver).DragAndDrop(IWebElement, IWebElement);");
 
-        (new Actions(underlyingWebDriver)).dragAndDrop(
+        (new Actions(webDriver)).dragAndDrop(
                 ((SeleniumElement) FindElement(guid, dropElement)).getUnderlyingWebElement(),
                 ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement())
                 .perform();
@@ -732,13 +732,13 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param selector The element to perform the RightClick on.
      */
     public final void RightClick(UUID guid, IBy selector) {
-        if (underlyingWebDriver == null) {
+        if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
 
         log.Trace(guid, "new Actions(IWebDriver).ContextClick(IWebElement);");
 
-        (new Actions(underlyingWebDriver)).contextClick(
+        (new Actions(webDriver)).contextClick(
                 ((SeleniumElement) FindElement(guid, selector)).getUnderlyingWebElement())
                 .perform();
     }
@@ -750,13 +750,13 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param selector The element to perform the DoubleClick on.
      */
     public final void DoubleClick(UUID guid, IBy selector) {
-        if (underlyingWebDriver == null) {
+        if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
 
         log.Trace(guid, "new Actions(IWebDriver).DoubleClick(IWebElement);");
 
-        (new Actions(underlyingWebDriver)).doubleClick(
+        (new Actions(webDriver)).doubleClick(
                 ((SeleniumElement) FindElement(guid, selector)).getUnderlyingWebElement())
                 .perform();
     }
@@ -767,7 +767,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param guid    A globally unique identifier associated with this call.
      * @param element The element to perform the Click on.
      */
-    public final void Click(UUID guid, WebElement element) {
+    public final void Click(UUID guid, IElement element) {
         // Check if wrapped (Might affect three browsers)
         String script = String.format(
                 "var rects = %1$s[0].getClientRects(); return rects.length;", element.getSelector().ToJQuery());
@@ -784,12 +784,12 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             WrappedClick(guid, element, new ArrayList<>(list));
         } else {
-            element.getWebElementAdapter().Click(guid, moveMouseToOrigin);
+            element.Click(guid, moveMouseToOrigin);
         }
     }
 
     // Linked to selenium issue https://code.google.com/p/selenium/issues/detail?id=6702 and https://code.google.com/p/selenium/issues/detail?id=4618
-    protected void WrappedClick(UUID guid, WebElement element, List<Object> list) {
+    protected void WrappedClick(UUID guid, IElement element, List<Object> list) {
         int x1 = (int) (list.get(0));
         int y1 = (int) (list.get(1));
         int x2 = (int) (list.get(2));
@@ -798,9 +798,9 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
         int x = (x2 - x1) / 2;
         int y = (y2 - y1) / 2;
 
-        SeleniumElement seleniumElement = (SeleniumElement) element.getWebElementAdapter();
+        SeleniumElement seleniumElement = (SeleniumElement) element;
 
-        (new Actions(underlyingWebDriver))
+        (new Actions(webDriver))
                 .moveToElement(seleniumElement.getUnderlyingWebElement(), x, y)
                 .click()
                 .perform();
@@ -814,10 +814,10 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param x       The x offset.
      * @param y       The y offset.
      */
-    public final void ClickAtOffset(UUID guid, WebElement element, int x, int y) {
-        SeleniumElement seleniumElement = (SeleniumElement) element.getWebElementAdapter();
+    public final void ClickAtOffset(UUID guid, IElement element, int x, int y) {
+        SeleniumElement seleniumElement = (SeleniumElement) element;
 
-        (new Actions(underlyingWebDriver))
+        (new Actions(webDriver))
                 .moveToElement(seleniumElement.getUnderlyingWebElement(), x, y)
                 .click()
                 .perform();
@@ -829,7 +829,7 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      * @param guid A globally unique identifier associated with this call.
      */
     public final void RefreshFrame(UUID guid) {
-        if (underlyingWebDriver == null) {
+        if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
 
@@ -863,9 +863,9 @@ public abstract class SeleniumWebDriver implements IWebDriverAdapter, AutoClosea
      *                 was called on, but any call that triggers a MouseUp event should suffice.
      *                 </p>
      */
-    public void ClickAndHold(UUID guid, echo.core.framework_abstraction.WebElement element, int duration) {
-        SeleniumElement seleniumElement = (SeleniumElement) element.getWebElementAdapter();
-        Actions action = new Actions(underlyingWebDriver);
+    public void ClickAndHold(UUID guid, IElement element, int duration) {
+        SeleniumElement seleniumElement = (SeleniumElement) element;
+        Actions action = new Actions(webDriver);
 
         // Click.
         action.clickAndHold(seleniumElement.getUnderlyingWebElement()).perform();

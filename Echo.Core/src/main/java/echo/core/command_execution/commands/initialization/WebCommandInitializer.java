@@ -3,8 +3,6 @@ package echo.core.command_execution.commands.initialization;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.parameters.WebParameters;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -23,7 +21,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param parameterObject            Parameter Object.
      */
     public final void FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
-        WebElement webElement = parameterObject.getWeb().getWebElementFinder().FindElement(frameworkAbstractionFacade, parameterObject);
+        IElement IElement = parameterObject.getWeb().getWebElementFinder().FindElement(frameworkAbstractionFacade, parameterObject);
         parameterObject.getWeb().setWebElement(webElement);
         frameworkAbstractionFacade.ScrollElementIntoView(parameterObject);
     }
@@ -35,7 +33,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param parameterObject            Parameter Object.
      */
     public final void FindElementDoNotScroll(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
-        WebElement webElement = parameterObject.getWeb().getWebElementFinder().FindElement(frameworkAbstractionFacade, parameterObject);
+        IElement IElement = parameterObject.getWeb().getWebElementFinder().FindElement(frameworkAbstractionFacade, parameterObject);
         parameterObject.getWeb().setWebElement(webElement);
     }
 

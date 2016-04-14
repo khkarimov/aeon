@@ -1,4 +1,4 @@
-package echo.core.framework_abstraction.webdriver;
+package echo.core.framework_abstraction;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Defines the interface through which the user can execute JavaScript.
  */
-public interface IWebDriverScriptExecutor {
+public interface IScriptExecutor {
     /**
      * Specifies the amount of time the driver should wait when executing JavaScript asynchronously.
      *

@@ -1,14 +1,14 @@
-package echo.core.framework_interaction.selenium;
+package echo.selenium;
 
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.webdriver.IWebElementAdapter;
-import echo.core.framework_abstraction.webdriver.IWebSelectElementAdapter;
+import echo.core.framework_abstraction.IElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class SeleniumSelectElement implements IWebSelectElementAdapter {
+public class SeleniumSelectElement implements IElement {
     private Select underlyingSelectElement;
     private ILog log;
 
@@ -30,19 +30,19 @@ public class SeleniumSelectElement implements IWebSelectElementAdapter {
         return getUnderlyingSelectElement().isMultiple();
     }
 
-    public final List<IWebElementAdapter> GetAllSelectedOptions(UUID guid) {
+    public final List<IElement> GetAllSelectedOptions(UUID guid) {
         log.Trace(guid, "SelectElement.get_AllSelectedOptions();");
         return underlyingSelectElement.getAllSelectedOptions().stream()
                 .map(e -> new SeleniumElement(e, log))
                 .collect(Collectors.toList());
     }
 
-    public final IWebElementAdapter GetSelectedOption(UUID guid) {
+    public final IElement GetSelectedOption(UUID guid) {
         log.Trace(guid, "SelectElement.get_SelectedOption();");
         return new SeleniumElement(getUnderlyingSelectElement().getFirstSelectedOption(), getLog());
     }
 
-    public final List<IWebElementAdapter> GetOptions(UUID guid) {
+    public final List<IElement> GetOptions(UUID guid) {
         log.Trace(guid, "SelectElement.get_Options();");
         return underlyingSelectElement.getOptions().stream()
                 .map(e -> new SeleniumElement(e, log))

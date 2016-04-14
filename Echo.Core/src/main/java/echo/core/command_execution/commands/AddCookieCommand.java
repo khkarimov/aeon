@@ -4,8 +4,7 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.webdriver.ICookieAdapter;
+import echo.core.framework_abstraction.ICookie;
 
 /**
  * Returns the name value pair for a cookie.
@@ -17,7 +16,7 @@ public class AddCookieCommand extends Command {
      * @param log    The logger.
      * @param cookie Cookie to be added.
      */
-    public AddCookieCommand(ILog log, ICookieAdapter cookie) {
+    public AddCookieCommand(ILog log, ICookie cookie) {
         this(new ParameterObject(log, "Adding cookie"), new WebCommandInitializer());
         getParameterObject().getWeb().setCookie(cookie);
     }

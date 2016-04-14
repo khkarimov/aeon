@@ -7,7 +7,6 @@ import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;

@@ -1,11 +1,11 @@
-package echo.core.framework_abstraction.webdriver;
+package echo.core.framework_abstraction;
 
 import java.util.Date;
 
 /**
  * Interface for cookie interactions.
  */
-public interface ICookieAdapter {
+public interface ICookie {
     /**
      * Gets the name of the cookie.
      */

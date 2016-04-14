@@ -4,7 +4,6 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 
 /**
  * Returns the name value pair for a cookie.

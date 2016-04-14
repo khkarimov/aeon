@@ -1,427 +1,735 @@
 package echo.core.framework_abstraction;
 
-import com.sun.glass.ui.Size;
-import echo.core.common.exceptions.*;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.webdriver.ICookieAdapter;
-import echo.core.framework_abstraction.webdriver.IWebElementAdapter;
-import echo.core.framework_abstraction.webdriver.IWebSelectElementAdapter;
+import echo.core.common.BrowserSize;
+import echo.core.common.BrowserType;
+import echo.core.common.ClientRects;
+import echo.core.common.parameters.ParameterObject;
+import echo.core.common.webobjects.Parameter;
+import echo.core.framework_abstraction.ICookie;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 
 /**
- * Created by DionnyS on 4/13/2016.
+ * The framework adapter interface.
  */
 public interface IDriver {
     /**
-     * Gets the title of the current browser window.
+     * Clicks the element.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The title of the current browser window.
+     * @param parameterObject Framework param object.
      */
-    String GetTitle(UUID guid);
+    void Click(ParameterObject parameterObject);
 
     /**
-     * Gets the URL the browser is currently displaying.
+     * Check the element.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The URL the browser is currently displaying.
+     * @param parameterObject The parameter object.
+     * @return Wether or not the element was checked.
      */
-    URL GetUrl(UUID guid);
+    boolean Check(ParameterObject parameterObject);
 
     /**
-     * Gets the current window handle, which is an opaque handle to this window that uniquely identifies it within this driver instance.
+     * Uncheck the element.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The current window handle, which is an opaque handle to this window that uniquely identifies it within this driver instance.
+     * @param parameterObject The parameter object.
+     * @return Wether or not the element was unchecked.
      */
-    String GetCurrentWindowHandle(UUID guid);
+    boolean Uncheck(ParameterObject parameterObject);
 
     /**
-     * Gets the window handles of open browser windows.
+     * Double clicks the element.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The window handles of open browser windows.
+     * @param parameterObject Parameter Object.
      */
-    Collection<String> GetWindowHandles(UUID guid);
+    void DoubleClick(ParameterObject parameterObject);
 
     /**
-     * Load a new web page in the current browser window.
+     * Right clicks the element.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @param url  The URL to load. It is best to use a fully qualified URL.
-     * @return The current handler after the change.
-     * @throws IllegalArgumentException If <paramref name="url"/> is <see langword="null"/>.
+     * @param parameterObject Parameter Object.
      */
-    String GoToUrl(UUID guid, URL url);
+    void RightClick(ParameterObject parameterObject);
 
     /**
-     * Scrolls to the top of the window.
+     * Clicks and holds on the element.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void ScrollToTop(UUID guid);
+    void ClickAndHold(ParameterObject parameterObject);
 
     /**
-     * Scrolls to the end of the window.
+     * Control click the element.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The paramater object.
      */
-    void ScrollToEnd(UUID guid);
+    void ControlClick(ParameterObject parameterObject);
 
     /**
-     * Finds the first <see cref="IWebElementAdapter"/> using the given method.
+     * Set a value.
      *
-     * @param guid   A globally unique identifier associated with this call.
-     * @param findBy The locating mechanism to use.
-     * @return The first matching <see cref="IWebElementAdapter"/> on the current context.
-     * @throws IllegalArgumentException If <paramref name="findBy"/> is <see langword="null"/>.
-     * @throws NoSuchElementException   If there is no such element.
+     * @param parameterObject The Parameter Object.
      */
-    IWebElementAdapter FindElement(UUID guid, IBy findBy);
+    void Set(ParameterObject parameterObject);
 
     /**
-     * Finds all <see cref="IWebElementAdapter">IWebElementAdapters</see> within the current context
-     * using the given mechanism.
+     * Checks if the element is empty.
      *
-     * @param guid   A globally unique identifier associated with this call.
-     * @param findBy The locating mechanism to use.
-     * @return A <see cref="ReadOnlyCollection{T}"/> of all <see cref="IWebElementAdapter">IWebElementAdapters</see>
-     * matching the current criteria, or an empty list if nothing matches.
-     * @throws IllegalArgumentException If <paramref name="findBy"/> is <see langword="null"/>.
-     * @throws NoSuchElementException   If there is no such element.
+     * @param parameterObject The element being set.
      */
-    Collection<IWebElementAdapter> FindElements(UUID guid, IBy findBy);
+    void IsEmpty(ParameterObject parameterObject);
 
     /**
-     * Finds the first <see cref="IWebSelectElementAdapter"/> using the given method.
+     * Clears the element.
      *
-     * @param guid   A globally unique identifier associated with this call.
-     * @param findBy The locating mechanism to use.
-     * @return The first matching <see cref="IWebSelectElementAdapter"/> on the current context.
-     * @throws IllegalArgumentException                 If <paramref name="findBy"/> is <see langword="null"/>.
-     * @throws NoSuchElementException                   If there is no such element.
-     * @throws ScriptReturnValueNotHtmlElementException If the JavaScript did not return an HTML element.
-     * @throws UnsupportedSelectElementException        If the select element is not supported.
+     * @param parameterObject The Parameter Object.
      */
-    IWebSelectElementAdapter FindSelectElement(UUID guid, IBy findBy);
+    void Clear(ParameterObject parameterObject);
 
     /**
-     * Selects either the first frame on the page or the main document when a page contains iframes.
+     * Mouses over the element.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void SwitchToDefaultContent(UUID guid);
+    void MouseOver(ParameterObject parameterObject);
 
     /**
-     * Selects the first frame using the given method.
+     * Mouses out of the element.
      *
-     * @param guid   A globally unique identifier associated with this call.
-     * @param findBy The locating mechanism to use.
-     * @throws IllegalArgumentException    If <paramref name="findBy"/> is <see langword="null"/>.
-     * @throws UnsupportedElementException If the element is not supported.
+     * @param parameterObject The parameter object.
      */
-    void SwitchToFrame(UUID guid, IBy findBy);
+    void MouseOutOf(ParameterObject parameterObject);
 
     /**
-     * Switches the focus of future commands for this driver to the window with the given title.
+     * Drags the element to the destination.
      *
-     * @param guid        A globally unique identifier associated with this call.
-     * @param windowTitle The title of the window to select.
-     * @return The current handler after the change.
-     * @throws IllegalArgumentException If <paramref name="windowTitle"/> is <see langword="null"/>.
-     * @throws IllegalArgumentException If <paramref name="windowTitle"/> is empty.
-     * @throws NoSuchWindowException    If the window cannot be found.
+     * @param parameterObject The Parameter Object.
      */
-    String SwitchToWindowByTitle(UUID guid, String windowTitle);
+    void DragAndDrop(ParameterObject parameterObject);
 
     /**
-     * Switches the focus of future commands for this driver to the window with the given handle.
+     * Checks if the element is visible.
      *
-     * @param guid   A globally unique identifier associated with this call.
-     * @param handle The handle of the window to select.
-     * @throws IllegalArgumentException If <paramref name="handle"/> is <see langword="null"/>.
-     * @throws IllegalArgumentException If <paramref name="handle"/> is empty.
-     * @throws NoSuchWindowException    If the window cannot be found.
+     * @param parameterObject The parameter object.
      */
-    void SwitchToWindowByHandle(UUID guid, String handle);
+    void IsVisible(ParameterObject parameterObject);
 
     /**
-     * Switches the focus of future commands for this driver to the window with the given url.
+     * Checks if the element exists.
      *
-     * @param guid  A globally unique identifier associated with this call.
-     * @param value The URL to which to switch focus.
-     * @return The current handler after the change.
-     * @throws IllegalArgumentException If <paramref name="value"/> is <see langword="null"/>.
-     * @throws IllegalArgumentException If <paramref name="value"/> is empty.
-     * @throws NoSuchWindowException    If the window cannot be found.
+     * @param parameterObject The parameter object.
      */
-    String SwitchToWindowByUrl(UUID guid, String value);
+    void Exists(ParameterObject parameterObject);
 
     /**
-     * Close the current window, quitting the browser if it is the last window currently open.
+     * Checks if the element is does not exist.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void Close(UUID guid);
+    void NotExists(ParameterObject parameterObject);
 
     /**
-     * Quits this driver, closing every associated window.
+     * Checks if the control exists.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
+     * @return The wether or not the control exists.
      */
-    void Quit(UUID guid);
+    boolean ControlExists(ParameterObject parameterObject);
 
     /**
-     * Checks whether an active modal dialog for this particular driver instance exists.
+     * Checks if the element exists and is not visible.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @throws NoAlertException If the alert does not exist.
+     * @param parameterObject The parameter object.
      */
-    void VerifyAlertExists(UUID guid);
+    void NotVisibleExists(ParameterObject parameterObject);
 
     /**
-     * Checks whether an active modal dialog for this particular driver instance does not exist.
+     * Checks if the element is enabled.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @throws AlertExistsException If the alert exists.
+     * @param parameterObject The parameter object.
      */
-    void VerifyAlertNotExists(UUID guid);
+    void Enabled(ParameterObject parameterObject);
 
     /**
-     * Checks whether the text of the currently active modal dialog for this particular driver instance equals the expected value.
+     * Checks if the element is not enabled.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The value of the text in the alert.
+     * @param parameterObject The parameter object.
      */
-    String GetAlertText(UUID guid);
+    void NotEnabled(ParameterObject parameterObject);
 
     /**
-     * Sends keys to the currently active modal dialog for this particular driver instance.
+     * Checks if the element is selected.
      *
-     * @param guid       A globally unique identifier associated with this call.
-     * @param keysToSend The keystrokes to send.
+     * @param parameterObject Parameter Object.
      */
-    void SendKeysToAlert(UUID guid, String keysToSend);
+    void Selected(ParameterObject parameterObject);
 
     /**
-     * Accepts the currently active modal dialog for this particular driver instance.
+     * Checks if the element is not selected.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The element to check.
      */
-    void AcceptAlert(UUID guid);
+    void NotSelected(ParameterObject parameterObject);
 
     /**
-     * Dismisses the currently active modal dialog for this particular driver instance.
+     * Checks if the element has an option.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void DismissAlert(UUID guid);
+    void HasOption(ParameterObject parameterObject);
 
     /**
-     * Focuses the currently selected window.
+     * Checks if the element has a certain number of options.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void FocusWindow(UUID guid);
+    void HasNumberOfOptions(ParameterObject parameterObject);
 
     /**
-     * Executes JavaScript in the context of the currently selected frame or window.
+     * Checks if the element has a set of options.
      *
-     * @param guid   A globally unique identifier associated with this call.
-     * @param script The JavaScript code to execute.
-     * @param args   The arguments to the script.
-     * @return The value returned by the script.
-     * @throws ScriptExecutionException If the JavaScript encounters an error.
+     * @param parameterObject The parameter object.
      */
-    Object ExecuteScript(UUID guid, String script, Object... args);
+    void HasOptions(ParameterObject parameterObject);
 
     /**
-     * Move back a single entry in the browser's history.
+     * Checks if the element has a set of options in order.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The options to check for.
      */
-    void Back(UUID guid);
+    void HasOptionsInOrder(ParameterObject parameterObject);
 
     /**
-     * Move a single "item" forward in the browser's history.
+     * Checks if the element does not have a certain option.
      *
-     * @param guid A globally unique identifier associated with this call.
-     *             Does nothing if we are on the latest page viewed.
+     * @param parameterObject The parameter object.
      */
-    void Forward(UUID guid);
+    void DoesNotHaveOption(ParameterObject parameterObject);
 
     /**
-     * Refreshes the current page.
+     * Checks if the element does not have a set of options.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void Refresh(UUID guid);
+    void DoesNotHaveOptions(ParameterObject parameterObject);
 
     /**
-     * Maximizes the current window if it is not already maximized.
+     * Checks if the element has the messages.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void Maximize(UUID guid);
+    void Has(ParameterObject parameterObject);
 
     /**
-     * Resizes the current window.
+     * Checks if the element does not have the messages.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @param size The new browser size.
+     * @param parameterObject The parameter object.
      */
-    void Resize(UUID guid, Size size);
+    void DoesNotHave(ParameterObject parameterObject);
 
     /**
-     * Opens on a type input type=file.
+     * Checks if the element has the messages.
      *
-     * @param guid     A globally unique identifier associated with this call.
-     * @param selector The selector for the element.
+     * @param parameterObject The parameter object.
      */
-    void OpenFileDialog(UUID guid, IBy selector);
+    void HasPartial(ParameterObject parameterObject);
 
     /**
-     * Scrolls to the element on the page if in Chrome.
+     * Checks if the element does not have the messages.
      *
-     * @param guid     A globally unique identifier associated with this call.
-     * @param selector The selector.
+     * @param parameterObject The parameter object.
      */
-    void ScrollElementIntoView(UUID guid, IBy selector);
+    void DoesNotHavePartial(ParameterObject parameterObject);
 
     /**
-     * Gets a screenshot of the currently focus browser window.
+     * Checks if the element only has the messages.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return Image of the browser window.
+     * @param parameterObject The parameter object.
      */
-    java.awt.Image GetScreenshot(UUID guid);
+    void HasOnly(ParameterObject parameterObject);
 
     /**
-     * Gets the source of the current browser window.
+     * Checks if the element has comparable options.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The current page's source as a string.
+     * @param parameterObject The parameter object.
      */
-    String GetPageSource(UUID guid);
+    void HasComparableOptions(ParameterObject parameterObject);
 
     /**
-     * Drags one element and drops it into another.
+     * Checks if something is a certain value.
      *
-     * @param guid          A globally unique identifier associated with this call.
-     * @param dropElement   The element to drop.
-     * @param targetElement The target element.
+     * @param parameterObject Parameter Object.
      */
-    void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
+    void Is(ParameterObject parameterObject);
 
     /**
-     * Right clicks an element.
+     * Checks if the element is like a certain value.
      *
-     * @param guid     A globally unique identifier associated with this call.
-     * @param selector The element to right click.
+     * @param parameterObject The parameter object.
      */
-    void RightClick(UUID guid, IBy selector);
+    void Like(ParameterObject parameterObject);
 
     /**
-     * Clicks an element.
+     * Checks if the element is not like a certain value.
      *
-     * @param guid    A globally unique identifier associated with this call.
-     * @param element The web element to click.
+     * @param parameterObject The parameter object.
      */
-    void Click(UUID guid, WebElement element);
+    void NotLike(ParameterObject parameterObject);
 
     /**
-     * Double clicks an element.
+     * Captures an image.
      *
-     * @param guid    A globally unique identifier associated with this call.
-     * @param element The web element to double click.
+     * @param parameterObject The element to get an image of.
      */
-    void DoubleClick(UUID guid, IBy element);
+    void CaptureImage(ParameterObject parameterObject);
 
     /**
-     * Holds a click on an element for the duration specified.
+     * Gets the scroll position.
      *
-     * @param guid     A globally unique identifier associated with this call.
-     * @param element  The web element to click.
-     * @param duration Click for at least this long (in milliseconds).
+     * @param parameterObject The parameter object.
+     * @return The current scroll position.
      */
-    void ClickAndHold(UUID guid, WebElement element, int duration);
+    int GetScrollPosition(ParameterObject parameterObject);
 
     /**
-     * Clicks the element at the specified (x, y) offset.
+     * Sets the scroll position.
      *
-     * @param guid    A globally unique identifier associated with this call.
-     * @param element The web element to click.
-     * @param x       The x offset.
-     * @param y       The y offset.
+     * @param parameterObject Parameter Object.
      */
-    void ClickAtOffset(UUID guid, WebElement element, int x, int y);
+    void SetScrollPosition(ParameterObject parameterObject);
 
     /**
-     * Refreshes a Frame.
+     * Gets the maximum scroll position.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
+     * @return The maximum scroll position.
      */
-    void RefreshFrame(UUID guid);
+    int GetMaximumScrollPosition(ParameterObject parameterObject);
 
     /**
-     * Gets the list of all cookies.
+     * Gets the minimum scroll position.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The list of cookies.
+     * @param parameterObject The parameter object.
+     * @return The minimum scroll position.
      */
-    List<ICookieAdapter> GetAllCookies(UUID guid);
+    int GetMinimumScrollPosition(ParameterObject parameterObject);
 
     /**
-     * Gets a cookie.
+     * Wait until a control exists.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @param name Name of the cookie to retrieve.
-     * @return The specified cookie.
+     * @param parameterObject The parameter object.
      */
-    ICookieAdapter GetCookie(UUID guid, String name);
+    void WaitForControlExist(ParameterObject parameterObject);
+
+    /**
+     * Wait until the parent element contains the child.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void WaitForControlContains(ParameterObject parameterObject);
+
+    /**
+     * Blur Method.
+     *
+     * @param parameterObject Parmaeter OBject.
+     */
+    void Blur(ParameterObject parameterObject);
+
+    /**
+     * SendKeys Method.
+     *
+     * @param frameworkElement Parameter Object.
+     */
+    void SendKeys(ParameterObject frameworkElement);
+
+    /**
+     * AcceptAlert Method.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void AcceptAlert(ParameterObject parameterObject);
+
+    /**
+     * Dismiss Alert Method.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void DismissAlert(ParameterObject parameterObject);
+
+    /**
+     * Verify Altert Command.
+     *
+     * @param parameterObject Parameter object.
+     */
+    void VerifyAlertExists(ParameterObject parameterObject);
+
+    /**
+     * Verify Alert Not Exists Command.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void VerifyAlertNotExists(ParameterObject parameterObject);
+
+    /**
+     * Get alert text.
+     *
+     * @param parameterObject Parameter Object.
+     * @return Alert TExt.
+     */
+    String GetAlertText(ParameterObject parameterObject);
+
+    /**
+     * Send Keys to alert.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void SendKeysToAlert(ParameterObject parameterObject);
+
+    /**
+     * Closes window.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void Close(ParameterObject parameterObject);
+
+    /**
+     * Quits the thing.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void Quit(ParameterObject parameterObject);
 
     /**
      * Adds a cookie.
      *
-     * @param guid   A globally unique identifier associated with this call.
-     * @param cookie The cookie to be added.
+     * @param parameterObject The parameter object.
      */
-    void AddCookie(UUID guid, ICookieAdapter cookie);
-
-    /**
-     * Deletes a cookie.
-     *
-     * @param guid A globally unique identifier associated with this call.
-     * @param name The name of the cookie to be modified.
-     */
-    void DeleteCookie(UUID guid, String name);
+    void AddCookie(ParameterObject parameterObject);
 
     /**
      * Deletes all cookies.
      *
-     * @param guid A globally unique identifier associated with this call.
+     * @param parameterObject The parameter object.
      */
-    void DeleteAllCookies(UUID guid);
+    void DeleteAllCookies(ParameterObject parameterObject);
 
     /**
-     * Modifies the value of a cookie.
+     * Deletes a cookie.
      *
-     * @param guid  A globally unique identifier associated with this call.
-     * @param name  The name of the cookie to be modified.
-     * @param value The value of the cookie.
+     * @param parameterObject The parameter object.
      */
-    void ModifyCookie(UUID guid, String name, String value);
+    void DeleteCookie(ParameterObject parameterObject);
 
     /**
-     * Gets the currently focused element.
+     * Gets all cookies.
      *
-     * @param guid A globally unique identifier associated with this call.
-     * @return The currently focused element.
+     * @param parameterObject The parameter object.
+     * @return List of cookies.
      */
-    IWebElementAdapter GetFocusedElement(UUID guid);
+    List<ICookie> GetAllCookies(ParameterObject parameterObject);
+
+    /**
+     * Gets a cookie.
+     *
+     * @param parameterObject The parameter object.
+     * @return The cookie adapter.
+     */
+    ICookie GetCookie(ParameterObject parameterObject);
+
+    /**
+     * Modifies a cookie.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void ModifyCookie(ParameterObject parameterObject);
+
+    /**
+     * Verify the title.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void VerifyTitle(ParameterObject parameterObject);
+
+    /**
+     * Verify the url.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void VerifyUrl(ParameterObject parameterObject);
+
+    /**
+     * Scroll to top of page.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void ScrollToTop(ParameterObject parameterObject);
+
+    /**
+     * Clears browser storage.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void ClearBrowserStorage(ParameterObject parameterObject);
+
+    /**
+     * Switches to a window by the title.
+     *
+     * @param parameterObject The paramter object.
+     * @return The current handler after the change.
+     */
+    String SwitchToWindowByTitle(ParameterObject parameterObject);
+
+    /**
+     * Switches to the main window.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void SwitchToMainWindow(ParameterObject parameterObject);
+
+    /**
+     * Switches to a window by the url.
+     *
+     * @param parameterObject The paramter object.
+     * @return The current handler after the change.
+     */
+    String SwitchToWindowByUrl(ParameterObject parameterObject);
+
+    /**
+     * Checks if a window does not exist by the title.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void WindowDoesNotExistByTitle(ParameterObject parameterObject);
+
+    /**
+     * Checks if a window does not exist by the url.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void WindowDoesNotExistByUrl(ParameterObject parameterObject);
+
+    /**
+     * Maximizes the window.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void Maximize(ParameterObject parameterObject);
+
+    /**
+     * Resizes the window.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void Resize(ParameterObject parameterObject);
+
+    /**
+     * Goes back.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void GoBack(ParameterObject parameterObject);
+
+    /**
+     * Goes forward.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void GoForward(ParameterObject parameterObject);
+
+    /**
+     * Goes to a Url.
+     *
+     * @param parameterObject The paramter object.
+     * @return The current handler after the change.
+     */
+    String GoToUrl(ParameterObject parameterObject);
+
+    /**
+     * Refreshs the page.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void Refresh(ParameterObject parameterObject);
+
+    /**
+     * Appends a query string.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void AppendQueryString(ParameterObject parameterObject);
+
+    /**
+     * Grid Not Exists.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void GridNotExists(ParameterObject parameterObject);
+
+    /**
+     * Grid Exists.
+     *
+     * @param parameterObject Parameter Object.
+     * @return Grid Index.
+     */
+    int GridExists(ParameterObject parameterObject);
+
+    /**
+     * Row Exists.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void RowExists(ParameterObject parameterObject);
+
+    /**
+     * Row Not Exists.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void RowNotExists(ParameterObject parameterObject);
+
+    /**
+     * Click by javascript.
+     *
+     * @param element Parameter Object.
+     */
+    void ClickByJavascript(ParameterObject element);
+
+    /**
+     * Set Value by Javascript.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void SetValueByJavaScript(ParameterObject parameterObject);
+
+    /**
+     * Sets Div Value by Javascript.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void SetDivValueByJavascript(ParameterObject parameterObject);
+
+    /**
+     * Sets Body Value by Javascript.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void SetBodyValueByJavascript(ParameterObject parameterObject);
+
+    /**
+     * Approximately Equal.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void ApproximatelyEqual(ParameterObject parameterObject);
+
+    /**
+     * Not visible.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void IsNotVisible(ParameterObject parameterObject);
+
+    /**
+     * Refresh frame.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void RefreshFrame(ParameterObject parameterObject);
+
+    /**
+     * Gets the browser type.
+     *
+     * @param parameterObject The paramter object.
+     * @return The browser type.
+     */
+    BrowserType GetBrowserType(ParameterObject parameterObject);
+
+    /**
+     * Gets client rects.
+     *
+     * @param parameterObject The paramter object.
+     * @return A client rect.
+     */
+    ClientRects GetClientRects(ParameterObject parameterObject);
+
+    Collection<IElement> FindElements(ParameterObject parameterObject);
+
+    IElement FindElement(ParameterObject parameterObject);
+
+    /**
+     * Gets the element attribute.
+     *
+     * @param parameterObject The paramter object.
+     * @return The element attribute.
+     */
+    String GetElementAttribute(ParameterObject parameterObject);
+
+    /**
+     * Edits the menu navigation scroll.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void EditMenuNavigationScroll(ParameterObject parameterObject);
+
+    /**
+     * Fires change event.
+     *
+     * @param parameterObject The parameter object.
+     */
+    void FireChangeEvent(ParameterObject parameterObject);
+
+    /**
+     * JQuery before or after.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void JQueryBeforeOrAfter(ParameterObject parameterObject);
+
+    /**
+     * Open file dialog.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void OpenFileDialog(ParameterObject parameterObject);
+
+    /**
+     * Select file dialog.
+     *
+     * @param parameterObject The paramter object.
+     */
+    void SelectFileDialog(ParameterObject parameterObject);
+
+    /**
+     * Scrolls the element into view.
+     *
+     * @param parameterObject The element to scroll.
+     */
+    void ScrollElementIntoView(ParameterObject parameterObject);
+
+    /**
+     * Checks if the element is not read only.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void NotReadOnly(ParameterObject parameterObject);
+
+    /**
+     * Checks if the element is read only.
+     *
+     * @param parameterObject Parameter Object.
+     */
+    void ReadOnly(ParameterObject parameterObject);
+
+    /**
+     * Scrolls to the end of the page.
+     *
+     * @param parameterObject The frameworkElement.
+     */
+    void ScrollToEnd(ParameterObject parameterObject);
+
+    String GetTitle(ParameterObject parameterObject);
+
+    URL GetURL(ParameterObject parameterObject);
+
+    Collection<String> GetWindowHandles(ParameterObject parameterObject);
 }

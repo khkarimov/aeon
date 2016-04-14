@@ -4,8 +4,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebElementFinder;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
+import echo.core.framework_abstraction.IElement;
 
 /**
  * Finds a web element.
@@ -36,13 +35,13 @@ public class WebElementFinder implements IWebElementFinder {
      * @param parameterObject            Parameter object with set element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    public final WebElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
+    public final IElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
         if (frameworkAbstractionFacade == null) {
             throw new IllegalArgumentException("frameworkAbstractionFacade");
         }
 
         parameterObject.getWeb().setFindIBy(selectorFinder.FindSelector(frameworkAbstractionFacade, parameterObject.getWeb().getFindIBy()));
-        return frameworkAbstractionFacade.FindIElement(parameterObject);
+        return frameworkAbstractionFacade.FindElement(parameterObject);
     }
 
     /**
@@ -52,7 +51,7 @@ public class WebElementFinder implements IWebElementFinder {
      * @param selector                   Element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    public final WebElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector) {
+    public final IElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector) {
         if (frameworkAbstractionFacade == null) {
             throw new IllegalArgumentException("frameworkAbstractionFacade");
         }

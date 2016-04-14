@@ -1,4 +1,4 @@
-package echo.core.framework_abstraction.webdriver;
+package echo.core.framework_abstraction;
 
 import echo.core.common.JavaScriptFinalizerOptions;
 

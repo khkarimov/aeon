@@ -1,6 +1,7 @@
 package echo.core.command_execution;
 
 import echo.core.common.logging.ILog;
+import echo.core.framework_abstraction.IAdapter;
 import echo.core.framework_abstraction.IDriver;
 import echo.core.test_abstraction.webenvironment.Parameters;
 
@@ -10,21 +11,14 @@ import echo.core.test_abstraction.webenvironment.Parameters;
 public class AutomationInfo {
     private Parameters parameters;
     private ICommandExecutionFacade commandExecutionFacade;
+    private IAdapter adapter;
     private IDriver driver;
     private ILog log;
 
-    public AutomationInfo(IDriver driver, ILog log) {
+    public AutomationInfo(Parameters parameters, IDriver driver, IAdapter adapter, ILog log) {
         this.driver = driver;
+        this.adapter = adapter;
         this.log = log;
-    }
-
-    public AutomationInfo(ICommandExecutionFacade commandExecutionFacade, ILog log) {
-        this.commandExecutionFacade = commandExecutionFacade;
-        this.log = log;
-    }
-
-    public AutomationInfo(Parameters parameters, IDriver driver, ILog log) {
-        this(driver, log);
         this.parameters = parameters;
     }
 
@@ -35,8 +29,12 @@ public class AutomationInfo {
         return log;
     }
 
-    public final IDriver getDriverAdapter() {
-        return this.driver;
+    public final IAdapter getAdapter() {
+        return this.adapter;
+    }
+
+    public final void setAdapter(IAdapter adapter) {
+        this.adapter = adapter;
     }
 
     public final ICommandExecutionFacade getCommandExecutionFacade() {

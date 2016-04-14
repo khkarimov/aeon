@@ -1,4 +1,4 @@
-package echo.core.framework_abstraction.webdriver;
+package echo.core.framework_abstraction;
 
 import echo.core.common.JavaScriptFinalizerOptions;
 import echo.core.common.QuadFunction;
@@ -21,5 +21,5 @@ public abstract class JavaScriptFlowExecutor implements IJavaScriptFlowExecutor 
         return (options) -> getFinalizerFactory().CreateInstance(options);
     }
 
-    public abstract QuadFunction<IWebDriverScriptExecutor, UUID, String, Iterable<Object>, Object> getExecutor();
+    public abstract QuadFunction<IScriptExecutor, UUID, String, Iterable<Object>, Object> getExecutor();
 }

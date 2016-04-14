@@ -7,8 +7,7 @@ import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
+import echo.core.framework_abstraction.IElement;
 
 import java.util.Locale;
 
@@ -45,7 +44,7 @@ public class ClickCommand extends WebElementCommand {
     }
 
     @Override
-    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, WebElement webElement) {
+    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, IElement element) {
         if (frameworkAbstractionFacade == null) {
             throw new IllegalArgumentException();
         }

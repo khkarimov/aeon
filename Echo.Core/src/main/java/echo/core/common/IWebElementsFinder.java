@@ -1,8 +1,7 @@
 package echo.core.common;
 
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
+import echo.core.framework_abstraction.IElement;
 
 import java.util.Collection;
 
@@ -17,5 +16,5 @@ public interface IWebElementsFinder {
      * @param selector                   Element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    Collection<WebElement> FindElements(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector);
+    Collection<IElement> FindElements(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector);
 }

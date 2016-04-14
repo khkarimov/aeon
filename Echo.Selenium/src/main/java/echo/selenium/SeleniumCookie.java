@@ -1,6 +1,6 @@
-package echo.core.framework_interaction.selenium;
+package echo.selenium;
 
-import echo.core.framework_abstraction.webdriver.ICookieAdapter;
+import echo.core.framework_abstraction.ICookie;
 import org.openqa.selenium.Cookie;
 
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Provides methods available for a cookie.
  */
-public class SeleniumCookie implements ICookieAdapter {
+public class SeleniumCookie implements ICookie {
     /**
      * The underlying cookie.
      */

@@ -1,7 +1,6 @@
 package echo.core.command_execution.commands.interfaces;
 
 import echo.core.common.webobjects.ByJQuery;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 
 /**
  * Finds a grid element.

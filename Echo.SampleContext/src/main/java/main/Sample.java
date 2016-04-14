@@ -7,7 +7,7 @@ import echo.core.test_abstraction.driver.Selenium;
 /**
  * Created by DionnyS on 4/13/2016.
  */
-public class Sample extends WebProduct<Selenium> implements Browseable {
+public class Sample extends Product<Selenium> implements Browseable {
     public SamplePage Main;
 
     public Sample() {

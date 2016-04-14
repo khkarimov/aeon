@@ -4,39 +4,35 @@ import echo.core.common.BrowserType;
 import echo.core.common.ClientRects;
 import echo.core.common.JQueryStringType;
 import echo.core.common.Resources;
-import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.ScriptExecutionException;
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IAdapter;
+import echo.core.framework_abstraction.ICookie;
 import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.WebElement;
-import echo.core.framework_abstraction.webdriver.ICookieAdapter;
-import echo.core.framework_abstraction.webdriver.ISelectElementFactory;
+import echo.core.framework_abstraction.IElement;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Web framework adapter.
  */
-public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
-    private IDriver seleniumWebDriver;
+public class EchoDriver implements IDriver {
+    private IAdapter adapter;
     private UUID guid = UUID.randomUUID();
-    private ISelectElementFactory selectElementFactory;
 
     /**
-     * Initializes a new instance of the <see cref="SeleniumFrameworkAdapter"/> class.
+     * Initializes a new instance of the <see cref="EchoDriver"/> class.
      *
      * @param parameterObject      The parameterObject.
-     * @param selectElementFactory The selectElementFactory.
      */
-    public SeleniumFrameworkAdapter(ParameterObject parameterObject, ISelectElementFactory selectElementFactory) {
-        seleniumWebDriver = parameterObject.getAutomationInfo().getDriverAdapter();
+    public EchoDriver(ParameterObject parameterObject) {
+        adapter = parameterObject.getAutomationInfo().getAdapter();
         guid = parameterObject.getGuid();
-        this.selectElementFactory = selectElementFactory;
     }
 
     /**
@@ -45,7 +41,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Framework param object from facade.
      */
     public final void Click(ParameterObject parameterObject) {
-        seleniumWebDriver.Click(guid, parameterObject.getWeb().getWebElement());
+        adapter.Click(guid, parameterObject.getWeb().getWebElement());
     }
 
     /**
@@ -79,7 +75,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
         }
 
         ScrollElementIntoView(parameterObject);
-        seleniumWebDriver.DoubleClick(parameterObject.getGuid(), parameterObject.getWeb().getFindIBy());
+        adapter.DoubleClick(parameterObject.getGuid(), parameterObject.getWeb().getFindIBy());
     }
 
     /**
@@ -93,7 +89,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
         }
 
         ScrollElementIntoView(parameterObject);
-        seleniumWebDriver.RightClick(parameterObject.getGuid(), parameterObject.getWeb().getFindIBy());
+        adapter.RightClick(parameterObject.getGuid(), parameterObject.getWeb().getFindIBy());
     }
 
     /**
@@ -102,7 +98,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      */
     public final void ClickAndHold(ParameterObject parameterObject) {
-        seleniumWebDriver.ClickAndHold(parameterObject.getGuid(), parameterObject.getWeb().getWebElement(),
+        adapter.ClickAndHold(parameterObject.getGuid(), parameterObject.getWeb().getWebElement(),
                 parameterObject.getDuration());
     }
 
@@ -131,9 +127,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Parameter Object.
      */
     public final void ChooseSelectElementByValue(ParameterObject parameterObject) {
-        selectElementFactory.CreateInstance(parameterObject.getGuid(),
-                parameterObject.getWeb().getWebElement().getWebElementAdapter(), parameterObject.getLog())
-                .SelectByValue(parameterObject.getGuid(), parameterObject.getWeb().getValue());
+        parameterObject.getWeb().getWebElement().SelectByValue(parameterObject.getGuid(), parameterObject.getWeb().getValue());
     }
 
     /**
@@ -142,9 +136,8 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Parameter Object.
      */
     public final void ChooseSelectElementByText(ParameterObject parameterObject) {
-        selectElementFactory.CreateInstance(parameterObject.getGuid(),
-                parameterObject.getWeb().getWebElement().getWebElementAdapter(), parameterObject.getLog())
-                .SelectByText(parameterObject.getGuid(), parameterObject.getWeb().getValue());
+        //TODO: WTF PARAMETER OBJECT getWeb()?
+        parameterObject.getWeb().getWebElement().SelectByText(parameterObject.getGuid(), parameterObject.getWeb().getValue());
     }
 
     /**
@@ -234,8 +227,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @throws IllegalArgumentException If <paramref name="parameterObject"/> is <see langword="null"/>.
      */
     public final void SendKeysToElement(ParameterObject parameterObject) {
-        parameterObject.getWeb().getWebElement().getWebElementAdapter()
-                .SendKeys(guid, parameterObject.getWeb().getValue());
+        parameterObject.getWeb().getWebElement().SendKeys(guid, parameterObject.getWeb().getValue());
     }
 
     /**
@@ -246,7 +238,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @throws ScriptExecutionException If the JavaScript encounters an error.
      */
     public final Object ExecuteScript(ParameterObject frameworkElement) {
-        return seleniumWebDriver.ExecuteScript(
+        return adapter.ExecuteScript(
                 guid,
                 frameworkElement.getWeb().getScript(),
                 frameworkElement.getWeb().getArgs());
@@ -298,7 +290,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @return The element tag name.
      */
     public final String GetElementTagName(ParameterObject parameterObject) {
-        return parameterObject.getWeb().getWebElement().getWebElementAdapter().GetTagName(guid);
+        return parameterObject.getWeb().getWebElement().GetTagName(guid);
     }
 
     /**
@@ -315,7 +307,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
             throw new IllegalArgumentException("dropTarget");
         }
 
-        seleniumWebDriver.DragAndDrop(parameterObject.getGuid(), parameterObject.getWeb().getDropElement(), parameterObject.getWeb().getDropTarget());
+        adapter.DragAndDrop(parameterObject.getGuid(), parameterObject.getWeb().getDropElement(), parameterObject.getWeb().getDropTarget());
     }
 
     /**
@@ -367,7 +359,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param frameworkElement Parameter Object.
      */
     public final void SendKeys(ParameterObject frameworkElement) {
-        frameworkElement.getWeb().getWebElement().getWebElementAdapter().SendKeys(guid, frameworkElement.getWeb().getKey());
+        frameworkElement.getWeb().getWebElement().SendKeys(guid, frameworkElement.getWeb().getKey());
     }
 
     /**
@@ -376,7 +368,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Parameter Object.
      */
     public final void AcceptAlert(ParameterObject parameterObject) {
-        seleniumWebDriver.AcceptAlert(parameterObject.getGuid());
+        adapter.AcceptAlert(parameterObject.getGuid());
     }
 
     /**
@@ -385,7 +377,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Parameter Object.
      */
     public final void DismissAlert(ParameterObject parameterObject) {
-        seleniumWebDriver.DismissAlert(parameterObject.getGuid());
+        adapter.DismissAlert(parameterObject.getGuid());
     }
 
     /**
@@ -394,7 +386,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Parameter Object.
      */
     public final void VerifyAlertExists(ParameterObject parameterObject) {
-        seleniumWebDriver.VerifyAlertExists(parameterObject.getGuid());
+        adapter.VerifyAlertExists(parameterObject.getGuid());
     }
 
     /**
@@ -403,7 +395,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Parameter Object.
      */
     public final void VerifyAlertNotExists(ParameterObject parameterObject) {
-        seleniumWebDriver.VerifyAlertNotExists(parameterObject.getGuid());
+        adapter.VerifyAlertNotExists(parameterObject.getGuid());
     }
 
     /**
@@ -413,7 +405,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @return Alert text.
      */
     public final String GetAlertText(ParameterObject parameterObject) {
-        return seleniumWebDriver.GetAlertText(parameterObject.getGuid());
+        return adapter.GetAlertText(parameterObject.getGuid());
     }
 
     /**
@@ -422,7 +414,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject Parameter Object.
      */
     public final void SendKeysToAlert(ParameterObject parameterObject) {
-        seleniumWebDriver.SendKeysToAlert(parameterObject.getGuid(), parameterObject.getWeb().getKeysToSend());
+        adapter.SendKeysToAlert(parameterObject.getGuid(), parameterObject.getWeb().getKeysToSend());
     }
 
     /**
@@ -633,46 +625,30 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
         throw new UnsupportedOperationException();
     }
 
+    public final IElement FindElement(ParameterObject parameterObject) {
+        return adapter.FindElement(guid, parameterObject.getWeb().getFindIBy());
+    }
+
     /**
      * Finds all <see cref="IWebElementAdapter">IWebElementAdapters</see> within the current context
      * using the given mechanism.
      *
-     * @param frameworkElement Framework element.
+     * @param parameterObject Framework element.
      * @return A <see cref="ReadOnlyCollection{T}"/> of all <see cref="IWebElementAdapter">IWebElementAdapters</see> matching the current criteria, or an empty list if nothing matches.
      * @throws IllegalArgumentException If <paramref name="frameworkElement"/> is <see langword="null"/>.
      */
-    public final List<WebElement> FindElements(ParameterObject frameworkElement) {
-        return new ArrayList<>(
-                frameworkElement.getWeb().getWebElement().getWebElementAdapter()
-                        .FindElements(guid, frameworkElement.getWeb().getFindIBy())
-                        .stream().map(x -> new WebElement(x, frameworkElement.getWeb().getFindIBy())).collect(Collectors.toList()));
+    public final Collection<IElement> FindElements(ParameterObject parameterObject) {
+        return adapter.FindElements(guid, parameterObject.getWeb().getFindIBy());
     }
 
     /**
      * Gets the innerText of the element, without any leading or trailing whitespace, and with other whitespace collapsed.
      *
-     * @param frameworkElement Framework element.
+     * @param parameterObject Framework element.
      * @return The innerText of the element, without any leading or trailing whitespace, and with other whitespace collapsed.
      */
-    public final String GetElementText(ParameterObject frameworkElement) {
-        return frameworkElement.getWeb().getWebElement().getWebElementAdapter().GetText(guid);
-    }
-
-    /**
-     * Finds all web elements within the current context
-     * using the given mechanism.
-     *
-     * @param frameworkElement Framework element.
-     * @return A <see cref="ReadOnlyCollection{T}"/> of all <see cref="IWebElementAdapter">IWebElementAdapters</see>
-     * matching the current criteria, or an empty list if nothing matches.
-     * @throws IllegalArgumentException If <paramref name="frameworkElement"/> is <see langword="null"/>.
-     * @throws NoSuchElementException   If there is no such element.
-     */
-    public final List<WebElement> FindIElements(ParameterObject frameworkElement) {
-        return new ArrayList<WebElement>(
-                seleniumWebDriver.FindElements(guid, frameworkElement.getWeb().getFindIBy())
-                        .stream().map(x -> new WebElement(x, frameworkElement.getWeb().getFindIBy()))
-                        .collect(Collectors.toList()));
+    public final String GetElementText(ParameterObject parameterObject) {
+        return parameterObject.getWeb().getWebElement().GetText(guid);
     }
 
     /**
@@ -747,7 +723,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      */
     public final void Close(ParameterObject parameterObject) {
-        seleniumWebDriver.Close(guid);
+        adapter.Close(guid);
     }
 
     /**
@@ -756,7 +732,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      */
     public final void Quit(ParameterObject parameterObject) {
-        seleniumWebDriver.Quit(guid);
+        adapter.Quit(guid);
     }
 
     /**
@@ -769,7 +745,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
             throw new IllegalArgumentException("cookie");
         }
 
-        seleniumWebDriver.AddCookie(parameterObject.getGuid(), parameterObject.getWeb().getCookie());
+        adapter.AddCookie(parameterObject.getGuid(), parameterObject.getWeb().getCookie());
     }
 
     /**
@@ -778,7 +754,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      */
     public final void DeleteAllCookies(ParameterObject parameterObject) {
-        seleniumWebDriver.DeleteAllCookies(parameterObject.getGuid());
+        adapter.DeleteAllCookies(parameterObject.getGuid());
     }
 
     /**
@@ -791,7 +767,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
             throw new IllegalArgumentException("cookieName");
         }
 
-        seleniumWebDriver.DeleteCookie(parameterObject.getGuid(), parameterObject.getWeb().getCookieName());
+        adapter.DeleteCookie(parameterObject.getGuid(), parameterObject.getWeb().getCookieName());
     }
 
     /**
@@ -800,8 +776,8 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      * @return List of cookies.
      */
-    public final List<ICookieAdapter> GetAllCookies(ParameterObject parameterObject) {
-        return seleniumWebDriver.GetAllCookies(guid);
+    public final List<ICookie> GetAllCookies(ParameterObject parameterObject) {
+        return adapter.GetAllCookies(guid);
     }
 
     /**
@@ -810,12 +786,12 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      * @return The cookie adapter.
      */
-    public final ICookieAdapter GetCookie(ParameterObject parameterObject) {
+    public final ICookie GetCookie(ParameterObject parameterObject) {
         if (StringUtils.isBlank(parameterObject.getWeb().getCookieName())) {
             throw new IllegalArgumentException("cookieName");
         }
 
-        return seleniumWebDriver.GetCookie(guid, parameterObject.getWeb().getCookieName());
+        return adapter.GetCookie(guid, parameterObject.getWeb().getCookieName());
     }
 
     /**
@@ -828,7 +804,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
             throw new IllegalArgumentException("cookieName");
         }
 
-        seleniumWebDriver.ModifyCookie(parameterObject.getGuid(), parameterObject.getWeb().getCookieName(), parameterObject.getWeb().getValue());
+        adapter.ModifyCookie(parameterObject.getGuid(), parameterObject.getWeb().getCookieName(), parameterObject.getWeb().getValue());
     }
 
     /**
@@ -857,7 +833,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      */
     public final void ScrollToTop(ParameterObject parameterObject) {
-        seleniumWebDriver.ScrollToTop(parameterObject.getGuid());
+        adapter.ScrollToTop(parameterObject.getGuid());
     }
 
     /**
@@ -866,7 +842,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The parameter object.
      */
     public final void ScrollToEnd(ParameterObject parameterObject) {
-        seleniumWebDriver.ScrollToEnd(parameterObject.getGuid());
+        adapter.ScrollToEnd(parameterObject.getGuid());
     }
 
     /**
@@ -893,7 +869,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
             throw new IllegalArgumentException(Resources.getString("Argument_StringZeroLength") + " = windowTitle");
         }
 
-        return seleniumWebDriver.SwitchToWindowByTitle(parameterObject.getGuid(), parameterObject.getWeb().getWindowTitle());
+        return adapter.SwitchToWindowByTitle(parameterObject.getGuid(), parameterObject.getWeb().getWindowTitle());
     }
 
     /**
@@ -913,7 +889,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @return The current handler after the change.
      */
     public final String SwitchToWindowByUrl(ParameterObject parameterObject) {
-        return seleniumWebDriver.SwitchToWindowByUrl(parameterObject.getGuid(), parameterObject.getWeb().getUrlString());
+        return adapter.SwitchToWindowByUrl(parameterObject.getGuid(), parameterObject.getWeb().getUrlString());
     }
 
     /**
@@ -942,7 +918,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The paramter object.
      */
     public final void Maximize(ParameterObject parameterObject) {
-        seleniumWebDriver.Maximize(parameterObject.getGuid());
+        adapter.Maximize(parameterObject.getGuid());
     }
 
     /**
@@ -951,7 +927,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The paramter object.
      */
     public final void Resize(ParameterObject parameterObject) {
-        seleniumWebDriver.Resize(parameterObject.getGuid(), parameterObject.getWeb().getSize());
+        adapter.Resize(parameterObject.getGuid(), parameterObject.getWeb().getSize());
     }
 
     /**
@@ -960,7 +936,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The paramter object.
      */
     public final void GoBack(ParameterObject parameterObject) {
-        seleniumWebDriver.Back(parameterObject.getGuid());
+        adapter.Back(parameterObject.getGuid());
     }
 
     /**
@@ -969,7 +945,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The paramter object.
      */
     public final void GoForward(ParameterObject parameterObject) {
-        seleniumWebDriver.Forward(parameterObject.getGuid());
+        adapter.Forward(parameterObject.getGuid());
     }
 
     /**
@@ -979,7 +955,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @return The current handler after the change.
      */
     public final String GoToUrl(ParameterObject parameterObject) {
-        return seleniumWebDriver.GoToUrl(parameterObject.getGuid(), parameterObject.getWeb().getUrl());
+        return adapter.GoToUrl(parameterObject.getGuid(), parameterObject.getWeb().getUrl());
     }
 
     /**
@@ -988,7 +964,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The paramter object.
      */
     public final void Refresh(ParameterObject parameterObject) {
-        seleniumWebDriver.Refresh(parameterObject.getGuid());
+        adapter.Refresh(parameterObject.getGuid());
     }
 
     /**
@@ -1048,7 +1024,7 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
      * @param parameterObject The paramter object.
      */
     public final void RefreshFrame(ParameterObject parameterObject) {
-        seleniumWebDriver.RefreshFrame(parameterObject.getGuid());
+        adapter.RefreshFrame(parameterObject.getGuid());
     }
 
     /**
@@ -1176,5 +1152,17 @@ public class SeleniumFrameworkAdapter implements IFrameworkAdapter {
     @Override
     public void ReadOnly(ParameterObject parameterObject) {
         throw new UnsupportedOperationException();
+    }
+
+    public String GetTitle(ParameterObject parameterObject) {
+        return adapter.GetTitle(parameterObject.getGuid());
+    }
+
+    public URL GetURL(ParameterObject parameterObject) {
+        return adapter.GetUrl(parameterObject.getGuid());
+    }
+
+    public Collection<String> GetWindowHandles(ParameterObject parameterObject) {
+        return adapter.GetWindowHandles(parameterObject.getGuid());
     }
 }

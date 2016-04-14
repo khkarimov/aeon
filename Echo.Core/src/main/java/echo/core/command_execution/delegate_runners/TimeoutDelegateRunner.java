@@ -6,7 +6,6 @@ import echo.core.common.Resources;
 import echo.core.common.exceptions.TimeoutExpiredException;
 import echo.core.common.helpers.IClock;
 import echo.core.common.helpers.Sleep;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 

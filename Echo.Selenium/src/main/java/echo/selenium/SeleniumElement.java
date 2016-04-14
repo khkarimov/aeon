@@ -1,8 +1,8 @@
-package echo.core.framework_interaction.selenium;
+package echo.selenium;
 
 import echo.core.common.logging.ILog;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.webdriver.IWebElementAdapter;
+import echo.core.framework_abstraction.IElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * Provides methods available for a web element.
  */
-public class SeleniumElement implements IWebElementAdapter {
+public class SeleniumElement implements IElement {
     private static final int LONG_STRING_LENGTH = 50;
     private WebElement underlyingWebElement;
     private ILog log;
@@ -135,7 +135,7 @@ public class SeleniumElement implements IWebElementAdapter {
      * @param findBy Findby used to find the web element.
      * @return Returns the web element.
      */
-    public final IWebElementAdapter FindElement(UUID guid, IBy findBy) {
+    public final IElement FindElement(UUID guid, IBy findBy) {
         if (findBy == null) {
             throw new IllegalArgumentException("findBy");
         }
@@ -153,12 +153,12 @@ public class SeleniumElement implements IWebElementAdapter {
      * @param findBy Findby used to find the web elements.
      * @return Returns a collection of web elements.
      */
-    public final Collection<IWebElementAdapter> FindElements(UUID guid, IBy findBy) {
+    public final Collection<IElement> FindElements(UUID guid, IBy findBy) {
         if (findBy == null) {
             throw new IllegalArgumentException("findBy");
         }
 
-        List<IWebElementAdapter> result = new ArrayList<IWebElementAdapter>();
+        List<IElement> result = new ArrayList<IElement>();
 
         getLog().Trace(guid, String.format("WebElement.FindElements(By.CssSelector(%1$s));", findBy));
 

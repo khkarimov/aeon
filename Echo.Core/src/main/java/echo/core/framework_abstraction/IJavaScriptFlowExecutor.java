@@ -1,4 +1,4 @@
-package echo.core.framework_abstraction.webdriver;
+package echo.core.framework_abstraction;
 
 import echo.core.common.JavaScriptFinalizerOptions;
 import echo.core.common.QuadFunction;
@@ -19,5 +19,5 @@ public interface IJavaScriptFlowExecutor
 	/** 
 	 Gets a function return an object, as performed by <see cref="IWebDriverScriptExecutor"/>.
 	*/
-	QuadFunction<IWebDriverScriptExecutor, UUID, String, Iterable<Object>, Object> getExecutor();
+	QuadFunction<IScriptExecutor, UUID, String, Iterable<Object>, Object> getExecutor();
 }

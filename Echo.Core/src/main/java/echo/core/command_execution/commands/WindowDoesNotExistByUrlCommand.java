@@ -5,7 +5,6 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 
 /**
  * <p>Checks for the absense of a window by URL.</p>

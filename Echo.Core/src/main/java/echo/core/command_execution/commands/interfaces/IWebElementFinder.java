@@ -2,8 +2,7 @@ package echo.core.command_execution.commands.interfaces;
 
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-import echo.core.framework_abstraction.WebElement;
+import echo.core.framework_abstraction.IElement;
 
 /**
  * Finds a web element.
@@ -16,7 +15,7 @@ public interface IWebElementFinder {
      * @param parameterObject            Parameter Object.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    WebElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject);
+    IElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject);
 
     /**
      * Finds a web element utilizing a web driver.
@@ -25,5 +24,5 @@ public interface IWebElementFinder {
      * @param selector                   Element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    WebElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector);
+    IElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector);
 }

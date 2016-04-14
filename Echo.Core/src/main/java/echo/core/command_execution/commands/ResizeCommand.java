@@ -6,7 +6,6 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
 
 /**
  * <p>Resizes the currently focused browser window.</p>
