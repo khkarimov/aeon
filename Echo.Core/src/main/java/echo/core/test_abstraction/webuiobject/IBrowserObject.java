@@ -310,7 +310,7 @@ public interface IBrowserObject {
      * @param value  Value of the cookie.
      * @param expiry Expiry date of the cookie.
      */
-    void AddCookie(String name, String value, java.time.LocalDateTime expiry);
+    void AddCookie(String name, String value, Date expiry);
 
     /**
      * Deletes a cookie.
@@ -331,12 +331,4 @@ public interface IBrowserObject {
      * @param value The new value of the cookie.
      */
     void ModifyCookie(String name, String value);
-
-    /**
-     * Adds the pids passed to the pids tracked by the BrowserObject.
-     * They will be killed if possible when the IBrowserObject.Quit() is called.
-     *
-     * @param pids Pids to kill.
-     */
-    void AddPIDs(Iterable<Integer> pids);
 }

@@ -1,11 +1,18 @@
 package echo.core.test_abstraction.webuiobject;
 
+import com.sun.glass.ui.Size;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.ICommandExecutionFacade;
+import echo.core.command_execution.commands.*;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
+import echo.core.common.BrowserSize;
+import echo.core.common.BrowserSizeMap;
 import echo.core.common.Resources;
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.webdriver.ICookieAdapter;
 import echo.core.framework_interaction.ElementType;
+import echo.core.framework_interaction.selenium.SeleniumCookie;
+import org.openqa.selenium.Cookie;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -66,7 +73,6 @@ public final class BrowserObject implements IBrowserObject {
         //SendKeys.SendWait(keysToSend);
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public void ScrollToTop() {
         commandExecutionFacade.Execute(parameterObject.getAutomationInfo(),
                 new ScrollToTopCommand(parameterObject.getLog()));
@@ -121,165 +127,154 @@ public final class BrowserObject implements IBrowserObject {
     }
 
     public void Close() {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new CloseCommand(parameterObject.Log));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new CloseCommand(parameterObject.getLog()));
     }
 
     public void Quit() {
         // Clears browser storage if ensureCleanSession flag is set to true in app.config
         if (parameterObject.getAutomationInfo().IsCleanSession) {
-            commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new ClearBrowserStorageCommand(parameterObject.Log));
+            commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new ClearBrowserStorageCommand(parameterObject.getLog()));
         }
 
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new QuitCommand(parameterObject.Log));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new QuitCommand(parameterObject.getLog()));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void SwitchToWindow(String windowTitle) {
         ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).SwitchToWindow(windowTitle, false);
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void SwitchToWindow(String windowTitle, boolean setMainWindow) {
         if (windowTitle == null) {
             throw new IllegalArgumentException("windowTitle");
         }
 
-        Object tempVar = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new SwitchToWindowByTitleCommand(parameterObject.Log, windowTitle));
-        CurrentWindowHandle = (String) ((tempVar instanceof String) ? tempVar : null);
+        Object output = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new SwitchToWindowByTitleCommand(parameterObject.getLog(), windowTitle));
+        String currentWindowHandle = (String) ((output instanceof String) ? output : null);
 
         if (setMainWindow) {
-            MainWindowHandle = CurrentWindowHandle;
+            mainWindowHandle = currentWindowHandle;
         }
 
-        ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).Maximize();
+        Maximize();
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void SwitchToMainWindow() {
         ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).SwitchToMainWindow(false);
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void SwitchToMainWindow(boolean waitForAllPopupWindowsToClose) {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new SwitchToMainWindowCommand(parameterObject.Log, MainWindowHandle, waitForAllPopupWindowsToClose));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new SwitchToMainWindowCommand(parameterObject.getLog(), mainWindowHandle, waitForAllPopupWindowsToClose));
 
-        CurrentWindowHandle = MainWindowHandle;
+        currentWindowHandle = mainWindowHandle;
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void SwitchToWindowByUrl(String url) {
         ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).SwitchToWindowByUrl(url, false);
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void SwitchToWindowByUrl(String value, boolean setMainWindow) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
 
-        Object tempVar = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new SwitchToWindowByUrlCommand(parameterObject.Log, value));
-        CurrentWindowHandle = (String) ((tempVar instanceof String) ? tempVar : null);
+        Object tempVar = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new SwitchToWindowByUrlCommand(parameterObject.getLog(), value));
+        String currentWindowHandle = (String) ((tempVar instanceof String) ? tempVar : null);
 
         if (setMainWindow) {
-            MainWindowHandle = CurrentWindowHandle;
+            mainWindowHandle = currentWindowHandle;
         }
 
-        ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).Maximize();
+        Maximize();
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void GoToUrl(String url) {
-        ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).GoToUrl(new Uri(url));
+        try {
+            GoToUrl(new URL(url));
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
-    public final void GoToUrl(Uri url) {
-        ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).GoToUrl(url, false);
+    public final void GoToUrl(URL url) {
+        GoToUrl(url, false);
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void GoToUrl(String url, boolean setMainWindow) {
-        ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).GoToUrl(new Uri(url), setMainWindow);
+        try {
+            GoToUrl(new URL(url), setMainWindow);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
-    public final void GoToUrl(Uri url, boolean setMainWindow) {
+    public final void GoToUrl(URL url, boolean setMainWindow) {
         if (url == null) {
             throw new IllegalArgumentException("url");
         }
 
-        GoToUrlCommand command = new GoToUrlCommand(parameterObject.Log, url);
+        GoToUrlCommand command = new GoToUrlCommand(parameterObject.getLog(), url);
 
         Object tempVar = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), command);
-        CurrentWindowHandle = (String) ((tempVar instanceof String) ? tempVar : null);
+        String currentWindowHandle = (String) ((tempVar instanceof String) ? tempVar : null);
 
         if (setMainWindow) {
-            MainWindowHandle = CurrentWindowHandle;
+            mainWindowHandle = currentWindowHandle;
         }
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void WindowDoesNotExistByTitle(String windowTitle) {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new WindowDoesNotExistByTitleCommand(parameterObject.Log, windowTitle, CurrentWindowHandle));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new WindowDoesNotExistByTitleCommand(parameterObject.getLog(), windowTitle, currentWindowHandle));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void WindowDoesNotExistByUrl(String url) {
         if (url == null) {
             throw new IllegalArgumentException("url");
         }
 
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new WindowDoesNotExistByUrlCommand(parameterObject.Log, url, CurrentWindowHandle));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new WindowDoesNotExistByUrlCommand(parameterObject.getLog(), url, currentWindowHandle));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void Maximize() {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new MaximizeCommand(parameterObject.Log));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new MaximizeCommand(parameterObject.getLog()));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void Resize(BrowserSize browserSize) {
         Resize(BrowserSizeMap.Map(browserSize));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void Resize(int browserWidth, int browserHeight) {
         Resize(new Size(browserWidth, browserHeight));
     }
 
     // executes a resize command.
     public final void Resize(Size size) {
-        if (Size.OpEquality(size, Size.Empty)) {
-            ((IBrowserObject) ((this instanceof IBrowserObject) ? this : null)).Maximize();
+        if (size.width == 0 && size.height == 0) {
+            Maximize();
             return;
         }
 
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new ResizeCommand(parameterObject.Log, size));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new ResizeCommand(parameterObject.getLog(), size));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void GoBack() {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GoBackCommand(parameterObject.Log));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GoBackCommand(parameterObject.getLog()));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void GoForward() {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GoForwardCommand(parameterObject.Log));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GoForwardCommand(parameterObject.getLog()));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void Refresh() {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new RefreshCommand(parameterObject.Log));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new RefreshCommand(parameterObject.getLog()));
     }
 
-    // explicit interface to partially discourage public usage (i.e., hide IntelliSense) of this class (this class being only the implementation details), but encourage use of public interface IBrowserObject
     public final void AppendQueryString(String queryString) {
         if (queryString == null) {
             throw new IllegalArgumentException("queryString");
         }
 
-        Object tempVar = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new AppendQueryStringCommand(parameterObject.Log, queryString));
-        CurrentWindowHandle = (String) ((tempVar instanceof String) ? tempVar : null);
+        Object tempVar = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new AppendQueryStringCommand(parameterObject.getLog(), queryString));
+        currentWindowHandle = (String) ((tempVar instanceof String) ? tempVar : null);
     }
 
     /**
@@ -299,7 +294,7 @@ public final class BrowserObject implements IBrowserObject {
      * @param value  The value of the cookie.
      * @param expiry The expiry date of the cookie.
      */
-    public final void AddCookie(String name, String value, java.time.LocalDateTime expiry) {
+    public final void AddCookie(String name, String value, Date expiry) {
         if (name == null) {
             throw new IllegalArgumentException("name");
         }
@@ -309,14 +304,14 @@ public final class BrowserObject implements IBrowserObject {
         }
 
         ICookieAdapter cookie = new SeleniumCookie(new Cookie(name, value, null, null, expiry));
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new AddCookieCommand(parameterObject.Log, cookie));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new AddCookieCommand(parameterObject.getLog(), cookie));
     }
 
     /**
      * Deletes all cookies.
      */
     public final void DeleteAllCookies() {
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new DeleteAllCookiesCommand(parameterObject.Log));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new DeleteAllCookiesCommand(parameterObject.getLog()));
     }
 
     /**
@@ -329,10 +324,8 @@ public final class BrowserObject implements IBrowserObject {
             throw new IllegalArgumentException("name");
         }
 
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new DeleteCookieCommand(parameterObject.Log, name));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new DeleteCookieCommand(parameterObject.getLog(), name));
     }
-
-    import java.util.*;
 
     /**
      * Gets all cookies.
@@ -340,17 +333,17 @@ public final class BrowserObject implements IBrowserObject {
      * @return List of all cookies.
      */
     public final HashMap<String, HashMap<String, String>> GetAllCookies() {
-        HashMap<> cookies = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GetAllCookiesCommand(parameterObject.Log));
+        List<ICookieAdapter> cookies = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GetAllCookiesCommand(parameterObject.getLog()));
         HashMap<String, HashMap<String, String>> allCookies = new HashMap<String, HashMap<String, String>>();
-        for (ArrayList<ICookieAdapter> cookie : (ArrayList<ICookieAdapter>) cookies) {
-            if (!allCookies.containsKey(cookie.Domain)) {
-                allCookies.put(cookie.Domain, new HashMap<String, String>() {
+        for (ICookieAdapter cookie : cookies) {
+            if (!allCookies.containsKey(cookie.getDomain())) {
+                allCookies.put(cookie.getDomain(), new HashMap<String, String>() {
                     {
-                        cookie.Name, cookie.Value
+                        put(cookie.getName(), cookie.getValue());
                     }
                 });
             } else {
-                allCookies.get(cookie.Domain).put(cookie.Name, cookie.Value);
+                allCookies.get(cookie.getDomain()).put(cookie.getName(), cookie.getValue());
             }
         }
 
@@ -368,9 +361,9 @@ public final class BrowserObject implements IBrowserObject {
             throw new IllegalArgumentException("name");
         }
 
-        ICookieAdapter cookie = (ICookieAdapter) commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GetCookieCommand(parameterObject.Log, name));
+        ICookieAdapter cookie = (ICookieAdapter) commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GetCookieCommand(parameterObject.getLog(), name));
 
-        return cookie == null ? "" : cookie.Value;
+        return cookie == null ? "" : cookie.getValue();
     }
 
     /**
@@ -388,6 +381,6 @@ public final class BrowserObject implements IBrowserObject {
             throw new IllegalArgumentException("value");
         }
 
-        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new ModifyCookieCommand(parameterObject.Log, name, value));
+        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new ModifyCookieCommand(parameterObject.getLog(), name, value));
     }
 }
