@@ -3,8 +3,8 @@ package echo.core.framework_interaction;
 import echo.core.common.exceptions.FrameworkNotSupportedException;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.framework_abstraction.webdriver.ISelectElementFactory;
+import org.joda.time.Duration;
 
-import java.time.Duration;
 
 /**
  * Handles the creation of framework adapters.

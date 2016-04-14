@@ -20,6 +20,10 @@ public class Parameters extends HashMap<String, Object> {
         return get(name).toString();
     }
 
+    public int getInt(String name) {
+        return (int) get(name);
+    }
+
     public void load(ResourceBundle bundle) {
         Enumeration<String> keys = bundle.getKeys();
 

@@ -13,23 +13,19 @@ public class FrameworkAbstractionFacadeFactory implements IFrameworkAbstractionF
     private IKeyboardMapper keyboardMapper;
     private ISelectElementFactory selectElementFactory;
     private IFrameworkAdapterFactory frameworkAdapterFactory;
-    private boolean headlessMode;
 
     /**
      * Initializes a new instance of the <see cref="FrameworkAbstractionFacadeFactory"/> class.
      *
      * @param keyboardMapper          The keyboard mapper.
      * @param selectElementFactory    The select element factory.
-     * @param headlessMode            The headless mode.
      * @param frameworkAdapterFactory Framwork Adapter factory.
      */
     public FrameworkAbstractionFacadeFactory(IKeyboardMapper keyboardMapper,
                                              ISelectElementFactory selectElementFactory,
-                                             boolean headlessMode,
                                              IFrameworkAdapterFactory frameworkAdapterFactory) {
         this.keyboardMapper = keyboardMapper;
         this.selectElementFactory = selectElementFactory;
-        this.headlessMode = headlessMode;
         this.frameworkAdapterFactory = frameworkAdapterFactory;
     }
 
@@ -41,7 +37,7 @@ public class FrameworkAbstractionFacadeFactory implements IFrameworkAbstractionF
      */
     public final IFrameworkAbstractionFacade CreateInstance(ParameterObject parameterObject) {
         IFrameworkAdapter adapter = frameworkAdapterFactory.CreateInstance(parameterObject, selectElementFactory);
-        return new FrameworkAbstractionFacade(keyboardMapper, selectElementFactory, headlessMode,
+        return new FrameworkAbstractionFacade(keyboardMapper, selectElementFactory,
                 parameterObject.getGuid(), parameterObject.getAutomationInfo(), adapter);
     }
 }

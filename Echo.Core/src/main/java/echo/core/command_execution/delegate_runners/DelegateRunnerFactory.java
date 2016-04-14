@@ -8,7 +8,9 @@ import echo.core.common.helpers.IClock;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.framework_abstraction.FrameworkAbstractionFacadeFactory;
 import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
+import echo.core.framework_interaction.FrameworkAdapterFactory;
 import echo.core.framework_interaction.selenium.SeleniumKeyboardMapper;
+import echo.core.framework_interaction.selenium.SeleniumSelectElementFactory;
 import org.joda.time.Duration;
 
 /**
@@ -58,8 +60,13 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
      */
     public final IDelegateRunner CreateInstance(ParameterObject parameterObject) {
         // TODO: JAVA_CONVERSION Use an IoC container to resolve the factory.
+        int mouseDragSpeed = parameterObject.getAutomationInfo().getParameters().getInt("mouseDragSpeed");
+
         IFrameworkAbstractionFacade frameworkAbstractionFacade =
-                new FrameworkAbstractionFacadeFactory(new SeleniumKeyboardMapper())
+                new FrameworkAbstractionFacadeFactory(
+                        new SeleniumKeyboardMapper(),
+                        new SeleniumSelectElementFactory(),
+                        new FrameworkAdapterFactory(mouseDragSpeed, Duration.standardSeconds(30)))
                         .CreateInstance(parameterObject);
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(frameworkAbstractionFacade, parameterObject.getAutomationInfo().getLog());

@@ -41,15 +41,13 @@ public final class FrameworkAbstractionFacade implements IFrameworkAbstractionFa
      *
      * @param keyboardMapper       The keyboard mapper.
      * @param selectElementFactory The select element factory.
-     * @param headlessMode         The headless mode.
      * @param guid                 A globally unique identifier associated with this call.
      * @param automationInfo       The automation info.
      * @param adapter              Framework adapter.
      */
-    public FrameworkAbstractionFacade(IKeyboardMapper keyboardMapper, ISelectElementFactory selectElementFactory, boolean headlessMode, UUID guid, AutomationInfo automationInfo, IFrameworkAdapter adapter) {
+    public FrameworkAbstractionFacade(IKeyboardMapper keyboardMapper, ISelectElementFactory selectElementFactory, UUID guid, AutomationInfo automationInfo, IFrameworkAdapter adapter) {
         this.keyboardMapper = keyboardMapper;
         this.selectElementFactory = selectElementFactory;
-        this.headlessMode = headlessMode;
         this.guid = guid;
         log = automationInfo.getLog();
         webDriverAdapter = automationInfo.getDriverAdapter();
