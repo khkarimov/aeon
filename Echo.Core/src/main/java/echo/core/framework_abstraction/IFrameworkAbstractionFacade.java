@@ -12,6 +12,7 @@ import org.openqa.selenium.Keys;
 
 import java.awt.*;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +35,7 @@ public interface IFrameworkAbstractionFacade {
     /**
      * Gets the URL the browser is currently displaying.
      */
-    URI getUrl();
+    URL getUrl();
 
     /**
      * Finds the first <see cref="IWebElementAdapter"/> using the given method.

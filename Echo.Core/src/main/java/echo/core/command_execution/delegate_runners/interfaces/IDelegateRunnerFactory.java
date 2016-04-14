@@ -1,11 +1,16 @@
 package echo.core.command_execution.delegate_runners.interfaces;
 
-import echo.core.command_execution.ICommandExecutionFacade;
 import echo.core.common.parameters.ParameterObject;
 
 /**
- * Created by dionnys on 4/13/16.
+ * A delegate runner factory.
  */
 public interface IDelegateRunnerFactory {
-    ICommandExecutionFacade CreateInstance(ParameterObject parameterObject);
+    /**
+     * Creates an instance of the <see cref="IDelegateRunner"/> class which is used to run delegates.
+     *
+     * @param parameterObject Framework parameter object.
+     * @return A new <see cref="IDelegateRunner"/> object.
+     */
+    IDelegateRunner CreateInstance(ParameterObject parameterObject);
 }
