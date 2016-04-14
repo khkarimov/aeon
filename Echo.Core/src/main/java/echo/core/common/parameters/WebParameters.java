@@ -13,6 +13,7 @@ import echo.core.framework_abstraction.webdriver.ICookieAdapter;
 import org.openqa.selenium.Keys;
 
 import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
 import java.util.function.Consumer;
 
@@ -374,13 +375,13 @@ public class WebParameters {
     /**
      * Gets or sets url.
      */
-    private URI url;
+    private URL url;
 
-    public final URI getUrl() {
+    public final URL getUrl() {
         return url;
     }
 
-    public final void setUrl(URI value) {
+    public final void setUrl(URL value) {
         url = value;
     }
 

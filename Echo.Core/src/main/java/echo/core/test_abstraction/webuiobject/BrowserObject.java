@@ -26,9 +26,7 @@ import java.util.*;
 public final class BrowserObject implements IBrowserObject {
     private String currentWindowHandle;
     private String mainWindowHandle;
-    private Iterable<Integer> browserPIDs;
     private ICommandExecutionFacade commandExecutionFacade;
-    private WebCommandInitializer commandInitializer;
     private ParameterObject parameterObject;
 
     /**
@@ -37,9 +35,9 @@ public final class BrowserObject implements IBrowserObject {
      * @param automationInfo The automationInfo.
      */
     public BrowserObject(AutomationInfo automationInfo) {
-        commandInitializer = new WebCommandInitializer();
         parameterObject = new ParameterObject(automationInfo, ElementType.Selenium);
         parameterObject.setLog(automationInfo.getLog());
+        commandExecutionFacade = automationInfo.getCommandExecutionFacade();
     }
 
     public String getCurrentWindowHandle() {
@@ -131,8 +129,7 @@ public final class BrowserObject implements IBrowserObject {
     }
 
     public void Quit() {
-        // Clears browser storage if ensureCleanSession flag is set to true in app.config
-        if (parameterObject.getAutomationInfo().IsCleanSession) {
+        if (parameterObject.getAutomationInfo().getParameters().getBoolean("ensureCleanSession")) {
             commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new ClearBrowserStorageCommand(parameterObject.getLog()));
         }
 
@@ -333,7 +330,11 @@ public final class BrowserObject implements IBrowserObject {
      * @return List of all cookies.
      */
     public final HashMap<String, HashMap<String, String>> GetAllCookies() {
-        List<ICookieAdapter> cookies = commandExecutionFacade.Execute(parameterObject.getAutomationInfo(), new GetAllCookiesCommand(parameterObject.getLog()));
+        List<ICookieAdapter> cookies =
+                (List<ICookieAdapter>)
+                        commandExecutionFacade.Execute(parameterObject.getAutomationInfo(),
+                                new GetAllCookiesCommand(parameterObject.getLog()));
+
         HashMap<String, HashMap<String, String>> allCookies = new HashMap<String, HashMap<String, String>>();
         for (ICookieAdapter cookie : cookies) {
             if (!allCookies.containsKey(cookie.getDomain())) {

@@ -36,7 +36,7 @@ public class Product<T extends IDriverFactory> {
 
     protected void launch() {
         IDriver driver = factory.createDriver(parameters, log);
-        setAutomationInfo(new AutomationInfo(driver, log));
+        setAutomationInfo(new AutomationInfo(parameters, driver, log));
     }
 
     protected void setParameters(Parameters parameters) {

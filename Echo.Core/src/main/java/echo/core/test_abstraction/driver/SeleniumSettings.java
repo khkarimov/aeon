@@ -22,6 +22,7 @@ public class SeleniumSettings implements ISettingsProvider {
         put("maximizeBrowser", true);
         put("useMobileUserAgent", false);
         put("proxyLocation", "");
+        put("ensureCleanSession", false);
     }};
 
     public HashMap<String, Object> getSettings() {

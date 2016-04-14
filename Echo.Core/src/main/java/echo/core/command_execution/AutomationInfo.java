@@ -2,12 +2,14 @@ package echo.core.command_execution;
 
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.IDriver;
+import echo.core.test_abstraction.webenvironment.Parameters;
 
 /**
  * Provides access to data required for automation.
  */
 public class AutomationInfo {
-    private ICommandExecutionFacade CommandExecutionFacade;
+    private Parameters parameters;
+    private ICommandExecutionFacade commandExecutionFacade;
     private IDriver driver;
     private ILog log;
 
@@ -17,8 +19,13 @@ public class AutomationInfo {
     }
 
     public AutomationInfo(ICommandExecutionFacade commandExecutionFacade, ILog log) {
-        setCommandExecutionFacade(commandExecutionFacade);
+        this.commandExecutionFacade = commandExecutionFacade;
         this.log = log;
+    }
+
+    public AutomationInfo(Parameters parameters, IDriver driver, ILog log) {
+        this(driver, log);
+        this.parameters = parameters;
     }
 
     /**
@@ -33,10 +40,18 @@ public class AutomationInfo {
     }
 
     public final ICommandExecutionFacade getCommandExecutionFacade() {
-        return CommandExecutionFacade;
+        return commandExecutionFacade;
     }
 
     public final void setCommandExecutionFacade(ICommandExecutionFacade value) {
-        CommandExecutionFacade = value;
+        commandExecutionFacade = value;
+    }
+
+    public Parameters getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Parameters parameters) {
+        this.parameters = parameters;
     }
 }

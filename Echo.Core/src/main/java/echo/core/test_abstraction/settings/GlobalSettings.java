@@ -8,7 +8,6 @@ import java.util.HashMap;
 public class GlobalSettings implements ISettingsProvider {
     private HashMap<String, Object> settings = new HashMap<String, Object>() {{
         put("defaultTimeout", 15.0);
-        put("ensureCleanSession", false);
         put("promptUserForContinueOnExceptionDecision", false);
         put("ensureCleanEnvironment", false);
     }};
