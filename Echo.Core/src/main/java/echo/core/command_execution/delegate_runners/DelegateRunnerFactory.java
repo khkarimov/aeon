@@ -8,8 +8,8 @@ import echo.core.common.helpers.IClock;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.framework_abstraction.FrameworkAbstractionFacadeFactory;
 import echo.core.framework_abstraction.IFrameworkAbstractionFacade;
-
-import java.time.Duration;
+import echo.core.framework_interaction.selenium.SeleniumKeyboardMapper;
+import org.joda.time.Duration;
 
 /**
  * The Web delegate runner factory.
@@ -59,7 +59,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     public final IDelegateRunner CreateInstance(ParameterObject parameterObject) {
         // TODO: JAVA_CONVERSION Use an IoC container to resolve the factory.
         IFrameworkAbstractionFacade frameworkAbstractionFacade =
-                new FrameworkAbstractionFacadeFactory()
+                new FrameworkAbstractionFacadeFactory(new SeleniumKeyboardMapper())
                         .CreateInstance(parameterObject);
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(frameworkAbstractionFacade, parameterObject.getAutomationInfo().getLog());

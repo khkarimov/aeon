@@ -1,6 +1,7 @@
 package echo.core.common.logging;
 
-import java.awt.*;
+import com.sun.prism.Image;
+
 import java.util.UUID;
 
 /**

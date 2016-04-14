@@ -1,6 +1,6 @@
 package echo.core.common.helpers;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Represents a clock.
@@ -11,5 +11,5 @@ public interface IClock {
      *
      * @return A <see cref="DateTime"/> whose value is the current UTC date and time.
      */
-    Date getUtcNow();
+    DateTime getUtcNow();
 }

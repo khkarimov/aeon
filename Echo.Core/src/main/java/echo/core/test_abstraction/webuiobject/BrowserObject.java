@@ -4,7 +4,6 @@ import com.sun.glass.ui.Size;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.ICommandExecutionFacade;
 import echo.core.command_execution.commands.*;
-import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.common.BrowserSize;
 import echo.core.common.BrowserSizeMap;
 import echo.core.common.Resources;
@@ -16,7 +15,10 @@ import org.openqa.selenium.Cookie;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The publicly accessible elements of the browser.

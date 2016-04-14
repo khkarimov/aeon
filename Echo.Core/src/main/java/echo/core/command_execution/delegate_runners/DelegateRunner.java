@@ -11,7 +11,7 @@ import java.util.function.Function;
 public abstract class DelegateRunner implements IDelegateRunner {
     protected UUID guid;
 
-    private IDelegateRunner successor;
+    protected IDelegateRunner successor;
 
     protected DelegateRunner(UUID guid, IDelegateRunner successor) {
         this.guid = guid;
@@ -19,11 +19,7 @@ public abstract class DelegateRunner implements IDelegateRunner {
     }
 
     public final ILog getLog() {
-        return getSuccessor().getLog();
-    }
-
-    public final IDelegateRunner getSuccessor() {
-        return successor;
+        return successor.getLog();
     }
 
     public abstract void Execute(Consumer<IFrameworkAbstractionFacade> commandDelegate);

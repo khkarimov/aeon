@@ -1,8 +1,8 @@
 package echo.core.common.logging;
 
-import java.awt.*;
 import java.util.UUID;
 
+import com.sun.prism.Image;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
