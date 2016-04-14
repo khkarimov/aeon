@@ -3,6 +3,8 @@ package echo.core.command_execution.commands.initialization;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.parameters.WebParameters;
 import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IElement;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -17,38 +19,38 @@ public class WebCommandInitializer implements ICommandInitializer {
     /**
      * Finds the web element and gives the reference to the Parameter Object.
      *
-     * @param frameworkAbstractionFacade Framework Abstraction Facade.
+     * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
-        IElement IElement = parameterObject.getWeb().getWebElementFinder().FindElement(frameworkAbstractionFacade, parameterObject);
-        parameterObject.getWeb().setWebElement(webElement);
-        frameworkAbstractionFacade.ScrollElementIntoView(parameterObject);
+    public final void FindElement(IDriver driver, ParameterObject parameterObject) {
+        IElement element = parameterObject.getWeb().getWebElementFinder().FindElement(driver, parameterObject);
+        parameterObject.getWeb().setWebElement(element);
+        driver.ScrollElementIntoView(parameterObject);
     }
 
     /**
      * Finds the web element and gives the reference to the Parameter Object.
      *
-     * @param frameworkAbstractionFacade Framework Abstraction Facade.
+     * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void FindElementDoNotScroll(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
-        IElement IElement = parameterObject.getWeb().getWebElementFinder().FindElement(frameworkAbstractionFacade, parameterObject);
-        parameterObject.getWeb().setWebElement(webElement);
+    public final void FindElementDoNotScroll(IDriver driver, ParameterObject parameterObject) {
+        IElement element = parameterObject.getWeb().getWebElementFinder().FindElement(driver, parameterObject);
+        parameterObject.getWeb().setWebElement(element);
     }
 
     /**
      * Finds the selector.
      *
-     * @param frameworkAbstractionFacade Framework Abstraction Facade.
+     * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void FindSelector(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
+    public final void FindSelector(IDriver driver, ParameterObject parameterObject) {
         parameterObject.getWeb().setFindIBy(
                 parameterObject.getWeb().getSelectorFinder()
-                        .FindSelector(frameworkAbstractionFacade, parameterObject.getWeb().getFindIBy()));
+                        .FindSelector(driver, parameterObject.getWeb().getFindIBy()));
 
-        parameterObject.getWeb().setWebElement(frameworkAbstractionFacade.FindIElement(parameterObject));
+        parameterObject.getWeb().setWebElement(driver.FindElement(parameterObject));
     }
 
     /**
@@ -57,17 +59,17 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param parameterObject Parameter Object.
      * @return The command action.
      */
-    public final Consumer<IFrameworkAbstractionFacade> GetCommandAction(ParameterObject parameterObject) {
-        Consumer<IFrameworkAbstractionFacade> action = frameworkAbstractionFacade ->
+    public final Consumer<IDriver> GetCommandAction(ParameterObject parameterObject) {
+        Consumer<IDriver> action = driver ->
         {
             if (parameterObject.getWeb().getSwitchMechanism() != null) {
                 IBy current = parameterObject.getWeb().getFindIBy();
-                frameworkAbstractionFacade.SwitchToDefaultContent();
-                frameworkAbstractionFacade.FocusWindow();
+                driver.SwitchToDefaultContent(parameterObject);
+                driver.FocusWindow(parameterObject);
 
                 for (IBy by : parameterObject.getWeb().getSwitchMechanism()) {
                     parameterObject.getWeb().setFindIBy(by);
-                    frameworkAbstractionFacade.SwitchToFrame(parameterObject);
+                    driver.SwitchToFrame(parameterObject);
                 }
 
                 parameterObject.getWeb().setFindIBy(current);
@@ -83,17 +85,17 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param parameterObject Parameter Object.
      * @return The command function.
      */
-    public final Function<IFrameworkAbstractionFacade, Object> GetCommandFunc(ParameterObject parameterObject) {
-        Function<IFrameworkAbstractionFacade, Object> func = frameworkAbstractionFacade ->
+    public final Function<IDriver, Object> GetCommandFunc(ParameterObject parameterObject) {
+        Function<IDriver, Object> func = driver ->
         {
             if (parameterObject.getWeb().getSwitchMechanism() != null) {
                 IBy current = parameterObject.getWeb().getFindIBy();
 
-                frameworkAbstractionFacade.SwitchToDefaultContent();
+                driver.SwitchToDefaultContent(parameterObject);
 
                 for (IBy by : parameterObject.getWeb().getSwitchMechanism()) {
                     parameterObject.getWeb().setFindIBy(by);
-                    frameworkAbstractionFacade.SwitchToFrame(parameterObject);
+                    driver.SwitchToFrame(parameterObject);
                 }
 
                 parameterObject.getWeb().setFindIBy(current);
@@ -108,21 +110,21 @@ public class WebCommandInitializer implements ICommandInitializer {
     /**
      * Finds the Grid Index.
      *
-     * @param frameworkAbstractionFacade Framework Abstraction Facade.
+     * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void GetGridIndex(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
-        parameterObject.getWeb().setGridIndex(parameterObject.getWeb().getGridFinder().GetGridIndex(frameworkAbstractionFacade));
+    public final void GetGridIndex(IDriver driver, ParameterObject parameterObject) {
+        parameterObject.getWeb().setGridIndex(parameterObject.getWeb().getGridFinder().GetGridIndex(driver));
     }
 
     /**
      * Finds the Row Index.
      *
-     * @param frameworkAbstractionFacade Framework Abstraction Facade.
+     * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void GetRowIndex(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
-        parameterObject.getWeb().setRowIndex(parameterObject.getWeb().getGridSelectorFinder().GetRowIndex(frameworkAbstractionFacade));
+    public final void GetRowIndex(IDriver driver, ParameterObject parameterObject) {
+        parameterObject.getWeb().setRowIndex(parameterObject.getWeb().getGridSelectorFinder().GetRowIndex(driver));
     }
 
     /**

@@ -2,6 +2,7 @@ package echo.core.command_execution.delegate_runners;
 
 import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunner;
 import echo.core.common.logging.ILog;
+import echo.core.framework_abstraction.IDriver;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -21,7 +22,7 @@ public abstract class DelegateRunner implements IDelegateRunner {
         return successor.getLog();
     }
 
-    public abstract void Execute(Consumer<IFrameworkAbstractionFacade> commandDelegate);
+    public abstract void Execute(Consumer<IDriver> commandDelegate);
 
-    public abstract Object Execute(Function<IFrameworkAbstractionFacade, Object> commandDelegate);
+    public abstract Object Execute(Function<IDriver, Object> commandDelegate);
 }

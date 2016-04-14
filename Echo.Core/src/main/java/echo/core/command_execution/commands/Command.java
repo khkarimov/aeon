@@ -7,6 +7,7 @@ import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IDriver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
 /**
  * A command.
  */
-public abstract class Command implements ICommand<Consumer<IFrameworkAbstractionFacade>> {
+public abstract class Command implements ICommand<Consumer<IDriver>> {
 
     private ParameterObject parameterObject;
     private ICommandInitializer commandInitializer;
@@ -117,22 +118,22 @@ public abstract class Command implements ICommand<Consumer<IFrameworkAbstraction
      * <see cref="GetCommandDelegate"/> returns this property. This design allows internal child classes to override the frame switching mechanism while still protecting the mechanism from public overrides.
      * It is not intended for end-users to override this property; thus, it should be sealed at the end of the inheritance chain.
      */
-    public Consumer<IFrameworkAbstractionFacade> getCmdDelegateProperty() {
-        Consumer<IFrameworkAbstractionFacade> action = frameworkAbstractionFacade ->
+    public Consumer<IDriver> getCmdDelegateProperty() {
+        Consumer<IDriver> action = driver ->
         {
         };
 
         action.andThen(getCommandInitializer().GetCommandAction(getParameterObject()));
 
-        action.andThen(frameworkAbstractionFacade ->
+        action.andThen(driver ->
         {
             if (getCommandInitializer().ResetParameterObject() != null) {
                 setParameterObject(getCommandInitializer().ResetParameterObject());
             }
         });
 
-        action.andThen(frameworkAbstractionFacade -> getCommandInitializer().SaveParameterObject(getParameterObject()));
-        action.andThen(frameworkAbstractionFacade -> CommandDelegate(frameworkAbstractionFacade));
+        action.andThen(driver -> getCommandInitializer().SaveParameterObject(getParameterObject()));
+        action.andThen(driver -> CommandDelegate(driver));
         return action;
     }
 
@@ -147,14 +148,14 @@ public abstract class Command implements ICommand<Consumer<IFrameworkAbstraction
      *
      * @return The delegate property (<see cref="CmdDelegateProperty"/>).
      */
-    public final Consumer<IFrameworkAbstractionFacade> GetCommandDelegate() {
+    public final Consumer<IDriver> GetCommandDelegate() {
         return getCmdDelegateProperty();
     }
 
     /**
      * The method which provides the logic for the command.
      *
-     * @param frameworkAbstractionFacade The framework abstraction facade.
+     * @param driver The framework abstraction facade.
      */
-    protected abstract void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade);
+    protected abstract void CommandDelegate(IDriver driver);
 }

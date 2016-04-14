@@ -4,6 +4,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.common.IWebElementsFinder;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_abstraction.IElement;
 
 import java.util.Collection;
@@ -46,16 +47,16 @@ public class WebElementsFinder implements IWebElementsFinder {
     /**
      * Finds a collection of web elements utilizing a web driver.
      *
-     * @param frameworkAbstractionFacade The facade for the framework abstraction layer.
-     * @param selector                   Elements locator.
+     * @param driver   The facade for the framework abstraction layer.
+     * @param selector Elements locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    public final Collection<IElement> FindElements(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector) {
-        if (frameworkAbstractionFacade == null) {
-            throw new IllegalArgumentException("frameworkAbstractionFacade");
+    public final Collection<IElement> FindElements(IDriver driver, IBy selector) {
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
         }
 
-        getParameterObject().getWeb().setFindIBy(selectorFinder.FindSelector(frameworkAbstractionFacade, selector));
-        return frameworkAbstractionFacade.FindElements(getParameterObject());
+        getParameterObject().getWeb().setFindIBy(selectorFinder.FindSelector(driver, selector));
+        return driver.FindElements(getParameterObject());
     }
 }

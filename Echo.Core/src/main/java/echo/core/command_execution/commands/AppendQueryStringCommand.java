@@ -5,6 +5,7 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IDriver;
 
 /**
  * <p>Appends a query string to the current URL in the browser.</p>
@@ -37,15 +38,15 @@ public class AppendQueryStringCommand extends CommandWithReturn {
     /**
      * The method which provides the logic for the command.
      *
-     * @param frameworkAbstractionFacade The framework abstraction facade.
+     * @param driver The framework abstraction facade.
      * @return The current handler after the change.
      */
     @Override
-    protected Object CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade) {
-        if (frameworkAbstractionFacade == null) {
-            throw new IllegalArgumentException("frameworkAbstractionFacade");
+    protected Object CommandDelegate(IDriver driver) {
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
         }
 
-        return frameworkAbstractionFacade.GoToUrl(getParameterObject());
+        return driver.GoToUrl(getParameterObject());
     }
 }

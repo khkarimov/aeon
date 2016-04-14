@@ -1,11 +1,12 @@
 package echo.core.command_execution.delegate_runners;
 
-import com.sun.prism.Image;
+import java.awt.Image;
 import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunner;
 import echo.core.common.Resources;
 import echo.core.common.exceptions.TimeoutExpiredException;
 import echo.core.common.helpers.IClock;
 import echo.core.common.helpers.Sleep;
+import echo.core.framework_abstraction.IDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
@@ -16,24 +17,24 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class TimeoutDelegateRunner extends DelegateRunner {
-    private IFrameworkAbstractionFacade frameworkAbstractionFacade;
+    private IDriver driver;
     private IClock clock;
     private Duration timeout;
 
-    public TimeoutDelegateRunner(UUID guid, IDelegateRunner successor, IFrameworkAbstractionFacade frameworkAbstractionFacade, IClock clock, Duration timeout) {
+    public TimeoutDelegateRunner(UUID guid, IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
         super(guid, successor);
-        this.frameworkAbstractionFacade = frameworkAbstractionFacade;
+        this.driver = driver;
         this.clock = clock;
         this.timeout = timeout;
     }
 
     @Override
-    public void Execute(Consumer<IFrameworkAbstractionFacade> commandDelegate) {
+    public void Execute(Consumer<IDriver> commandDelegate) {
         ExecuteDelegate(() -> successor.Execute(commandDelegate));
     }
 
     @Override
-    public Object Execute(Function<IFrameworkAbstractionFacade, Object> commandDelegate) {
+    public Object Execute(Function<IDriver, Object> commandDelegate) {
         return ExecuteDelegateWithReturn(() -> successor.Execute(commandDelegate));
     }
 
@@ -78,7 +79,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
         Image screenshot = null;
         try {
-            screenshot = frameworkAbstractionFacade.GetScreenshot();
+            screenshot = driver.GetScreenshot();
         } catch (OutOfMemoryError e) {
             throw e;
         } catch (RuntimeException e2) {
@@ -94,7 +95,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
         String pageSource = null;
         try {
-            pageSource = frameworkAbstractionFacade.GetPageSource();
+            pageSource = driver.GetPageSource();
         } catch (OutOfMemoryError e3) {
             throw e3;
         } catch (RuntimeException e4) {

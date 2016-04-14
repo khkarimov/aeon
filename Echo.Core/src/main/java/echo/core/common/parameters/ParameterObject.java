@@ -12,7 +12,7 @@ import echo.core.test_abstraction.locators.ILocator;
 import java.util.UUID;
 
 /**
- * Class for parameters for the FrameworkAbstractionFacade.
+ * Class for parameters for the driver.
  */
 public class ParameterObject {
     private int numberOfOptions;
@@ -32,7 +32,7 @@ public class ParameterObject {
      */
     public ParameterObject() {
         web = new WebParameters();
-        web.setAction(frameworkAbstractionFacade ->
+        web.setAction(driver ->
         {
         });
     }

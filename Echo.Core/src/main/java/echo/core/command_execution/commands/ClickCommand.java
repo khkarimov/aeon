@@ -7,7 +7,7 @@ import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IElement;
+import echo.core.framework_abstraction.IDriver;
 
 import java.util.Locale;
 
@@ -44,10 +44,10 @@ public class ClickCommand extends WebElementCommand {
     }
 
     @Override
-    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, IElement element) {
-        if (frameworkAbstractionFacade == null) {
+    protected void Command(IDriver driver) {
+        if (driver == null) {
             throw new IllegalArgumentException();
         }
-        frameworkAbstractionFacade.ClickElement(getParameterObject());
+        driver.Click(getParameterObject());
     }
 }

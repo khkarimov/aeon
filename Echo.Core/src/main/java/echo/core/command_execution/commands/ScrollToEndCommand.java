@@ -5,6 +5,7 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IDriver;
 
 public class ScrollToEndCommand extends Command
 {
@@ -32,16 +33,16 @@ public class ScrollToEndCommand extends Command
 	/** 
 	 The method which provides the logic for the command.
 	 
-	 @param frameworkAbstractionFacade The framework abstraction facade.
+	 @param driver The framework abstraction facade.
 	*/
 	@Override
-	protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade)
+	protected void CommandDelegate(IDriver driver)
 	{
-		if (frameworkAbstractionFacade == null)
+		if (driver == null)
 		{
-			throw new IllegalArgumentException("frameworkAbstractionFacade");
+			throw new IllegalArgumentException("driver");
 		}
 
-		frameworkAbstractionFacade.ScrollToEnd(getParameterObject());
+		driver.ScrollToEnd(getParameterObject());
 	}
 }

@@ -1,6 +1,5 @@
 package echo.selenium;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.glass.ui.Size;
 import echo.core.common.JQueryStringType;
 import echo.core.common.exceptions.*;
@@ -10,11 +9,15 @@ import echo.core.common.logging.ILog;
 import echo.core.common.webobjects.By;
 import echo.core.common.webobjects.ByJQuery;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.*;
+import echo.core.framework_abstraction.Configuration;
+import echo.core.framework_abstraction.IAdapter;
+import echo.core.framework_abstraction.ICookie;
+import echo.core.framework_abstraction.IElement;
+import echo.selenium.jQuery.IJavaScriptFlowExecutor;
+import echo.selenium.jQuery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
@@ -28,20 +31,24 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class SeleniumAdapter implements IAdapter, AutoCloseable {
-
+public class SeleniumAdapter implements IAdapter, AutoCloseable {
     private WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private ILog log;
-    private final ObjectMapper mapper;
     private boolean moveMouseToOrigin;
+
+    public SeleniumAdapter() {
+    }
 
     public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, ILog log, boolean moveMouseToOrigin) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.log = log;
         this.moveMouseToOrigin = moveMouseToOrigin;
-        this.mapper = new ObjectMapper();
+    }
+
+    public IAdapter Configure(Configuration configuration) {
+        return SeleniumAdapterFactory.Create((SeleniumConfiguration)configuration);
     }
 
     public void close() {

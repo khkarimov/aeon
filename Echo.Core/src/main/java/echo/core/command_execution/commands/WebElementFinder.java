@@ -4,6 +4,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebElementFinder;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_abstraction.IElement;
 
 /**
@@ -31,31 +32,16 @@ public class WebElementFinder implements IWebElementFinder {
     /**
      * Finds a web element utilizing a web driver.
      *
-     * @param frameworkAbstractionFacade The facade for the framework abstraction layer.
+     * @param driver The facade for the framework abstraction layer.
      * @param parameterObject            Parameter object with set element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    public final IElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, ParameterObject parameterObject) {
-        if (frameworkAbstractionFacade == null) {
-            throw new IllegalArgumentException("frameworkAbstractionFacade");
+    public final IElement FindElement(IDriver driver, ParameterObject parameterObject) {
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
         }
 
-        parameterObject.getWeb().setFindIBy(selectorFinder.FindSelector(frameworkAbstractionFacade, parameterObject.getWeb().getFindIBy()));
-        return frameworkAbstractionFacade.FindElement(parameterObject);
-    }
-
-    /**
-     * Finds a web element utilizing a web driver.
-     *
-     * @param frameworkAbstractionFacade The facade for the framework abstraction layer.
-     * @param selector                   Element locator.
-     * @return An <see cref="IWebElementAdapter"/>.
-     */
-    public final IElement FindElement(IFrameworkAbstractionFacade frameworkAbstractionFacade, IBy selector) {
-        if (frameworkAbstractionFacade == null) {
-            throw new IllegalArgumentException("frameworkAbstractionFacade");
-        }
-
-        return frameworkAbstractionFacade.FindElement(selectorFinder.FindSelector(frameworkAbstractionFacade, selector));
+        parameterObject.getWeb().setFindIBy(selectorFinder.FindSelector(driver, parameterObject.getWeb().getFindIBy()));
+        return driver.FindElement(parameterObject);
     }
 }

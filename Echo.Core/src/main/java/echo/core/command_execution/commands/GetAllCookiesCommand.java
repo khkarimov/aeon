@@ -4,6 +4,7 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IDriver;
 
 public class GetAllCookiesCommand extends CommandWithReturn {
     /**
@@ -28,15 +29,15 @@ public class GetAllCookiesCommand extends CommandWithReturn {
     /**
      * The method which provides the logic for the command.
      *
-     * @param frameworkAbstractionFacade The framework abstraction facade.
+     * @param driver The framework abstraction facade.
      * @return A list of all the cookies.
      */
     @Override
-    protected Object CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade) {
-        if (frameworkAbstractionFacade == null) {
-            throw new IllegalArgumentException("frameworkAbstractionFacade");
+    protected Object CommandDelegate(IDriver driver) {
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
         }
 
-        return frameworkAbstractionFacade.GetAllCookies(getParameterObject());
+        return driver.GetAllCookies(getParameterObject());
     }
 }

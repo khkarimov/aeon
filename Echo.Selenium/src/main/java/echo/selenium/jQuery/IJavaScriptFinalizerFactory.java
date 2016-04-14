@@ -1,6 +1,4 @@
-package echo.core.framework_abstraction;
-
-import echo.core.common.JavaScriptFinalizerOptions;
+package echo.selenium.jQuery;
 
 /**
  Factory for <see cref="IJavaScriptFinalizer"/>.

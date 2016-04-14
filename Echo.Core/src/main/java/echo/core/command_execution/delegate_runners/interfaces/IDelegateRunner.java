@@ -1,6 +1,7 @@
 package echo.core.command_execution.delegate_runners.interfaces;
 
 import echo.core.common.logging.ILog;
+import echo.core.framework_abstraction.IDriver;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -19,7 +20,7 @@ public interface IDelegateRunner {
      *
      * @param commandDelegate A command delegate.
      */
-    void Execute(Consumer<IFrameworkAbstractionFacade> commandDelegate);
+    void Execute(Consumer<IDriver> commandDelegate);
 
     /**
      * Executes a command.
@@ -27,5 +28,5 @@ public interface IDelegateRunner {
      * @param commandDelegate A command delegate.
      * @return An object.
      */
-    Object Execute(Function<IFrameworkAbstractionFacade, Object> commandDelegate);
+    Object Execute(Function<IDriver, Object> commandDelegate);
 }

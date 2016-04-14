@@ -8,6 +8,7 @@ import echo.core.test_abstraction.settings.ISettingsProvider;
 import echo.core.test_abstraction.webenvironment.Parameters;
 
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 /**
  * Created by DionnyS on 4/13/2016.
@@ -17,10 +18,14 @@ public class Echo {
         try {
             T product = productClass.newInstance();
             Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
-            parameters.put("browserType", browserType);
 
+            parameters.put("browserType", browserType);
+            product.getConfiguration().setBrowserType(browserType);
+            product.getConfiguration().setLog(createLogger());
             product.setParameters(parameters);
-            product.setLog(createLogger());
+
+            product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product...");
+
             product.launch();
 
             return product;

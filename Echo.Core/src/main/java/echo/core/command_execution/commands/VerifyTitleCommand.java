@@ -5,6 +5,7 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
+import echo.core.framework_abstraction.IDriver;
 
 /**
  * <p>Verifies the current URL.</p>
@@ -38,14 +39,14 @@ public class VerifyTitleCommand extends Command {
     /**
      * The method which provides the logic for the command.
      *
-     * @param frameworkAbstractionFacade The framework abstraction facade.
+     * @param driver The framework abstraction facade.
      */
     @Override
-    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade) {
-        if (frameworkAbstractionFacade == null) {
-            throw new IllegalArgumentException("frameworkAbstractionFacade");
+    protected void CommandDelegate(IDriver driver) {
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
         }
 
-        frameworkAbstractionFacade.VerifyTitle(getParameterObject());
+        driver.VerifyTitle(getParameterObject());
     }
 }

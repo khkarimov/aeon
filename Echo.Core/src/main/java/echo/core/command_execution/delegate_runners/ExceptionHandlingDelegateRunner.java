@@ -3,6 +3,7 @@ package echo.core.command_execution.delegate_runners;
 import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunner;
 import echo.core.command_execution.delegate_runners.interfaces.IExceptionHandlerFactory;
 import echo.core.common.exceptions.TimeoutExpiredException;
+import echo.core.framework_abstraction.IDriver;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -22,12 +23,12 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
     }
 
     @Override
-    public void Execute(Consumer<IFrameworkAbstractionFacade> commandDelegate) {
+    public void Execute(Consumer<IDriver> commandDelegate) {
         ExecuteDelegate(() -> successor.Execute(commandDelegate));
     }
 
     @Override
-    public Object Execute(Function<IFrameworkAbstractionFacade, Object> commandDelegate) {
+    public Object Execute(Function<IDriver, Object> commandDelegate) {
         return ExecuteDelegateWithReturn(() -> successor.Execute(commandDelegate));
     }
 

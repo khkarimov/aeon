@@ -7,9 +7,6 @@ import echo.core.common.helpers.Clock;
 import echo.core.common.helpers.IClock;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_interaction.FrameworkAdapterFactory;
-import echo.core.framework_interaction.selenium.SeleniumKeyboardMapper;
-import echo.core.framework_interaction.selenium.SeleniumSelectElementFactory;
 import org.joda.time.Duration;
 
 /**
@@ -61,12 +58,10 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
         // TODO: JAVA_CONVERSION Use an IoC container to resolve the factory.
         int mouseDragSpeed = parameterObject.getAutomationInfo().getParameters().getInt("mouseDragSpeed");
 
-        IFrameworkAbstractionFacade frameworkAbstractionFacade =
-                new FrameworkAbstractionFacadeFactory(new FrameworkAdapterFactory(mouseDragSpeed, Duration.standardSeconds(30)))
-                        .CreateInstance(parameterObject);
+        IDriver driver = parameterObject.getAutomationInfo().getDriver();
 
-        CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(frameworkAbstractionFacade, parameterObject.getAutomationInfo().getLog());
-        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(parameterObject.getGuid(), commandDelegateRunner, frameworkAbstractionFacade, clock, defaultTimeout);
+        CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver, parameterObject.getAutomationInfo().getLog());
+        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(parameterObject.getGuid(), commandDelegateRunner, driver, clock, defaultTimeout);
         ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(parameterObject.getGuid(), timeoutDelegateRunner, new SeleniumExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
         return new ThrottledDelegateRunner(parameterObject.getGuid(), exceptionHandlingDelegateRunner, parameterObject.getAutomationInfo().getParameters().getParameter(BrowserType.class, "browserType") == BrowserType.InternetExplorer ? throttleFactorForInternetExplorer : throttleFactor);
     }

@@ -13,6 +13,7 @@ import echo.core.framework_abstraction.IElement;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
@@ -23,16 +24,17 @@ import java.util.UUID;
  */
 public class EchoDriver implements IDriver {
     private IAdapter adapter;
-    private UUID guid = UUID.randomUUID();
 
     /**
      * Initializes a new instance of the <see cref="EchoDriver"/> class.
-     *
-     * @param parameterObject      The parameterObject.
      */
-    public EchoDriver(ParameterObject parameterObject) {
-        adapter = parameterObject.getAutomationInfo().getAdapter();
-        guid = parameterObject.getGuid();
+    public EchoDriver() {
+    }
+
+    public IDriver Configure(IAdapter adapter) {
+        this.adapter = adapter;
+
+        return this;
     }
 
     /**
@@ -41,7 +43,7 @@ public class EchoDriver implements IDriver {
      * @param parameterObject Framework param object from facade.
      */
     public final void Click(ParameterObject parameterObject) {
-        adapter.Click(guid, parameterObject.getWeb().getWebElement());
+        adapter.Click(parameterObject.getGuid(), parameterObject.getWeb().getWebElement());
     }
 
     /**
@@ -227,21 +229,21 @@ public class EchoDriver implements IDriver {
      * @throws IllegalArgumentException If <paramref name="parameterObject"/> is <see langword="null"/>.
      */
     public final void SendKeysToElement(ParameterObject parameterObject) {
-        parameterObject.getWeb().getWebElement().SendKeys(guid, parameterObject.getWeb().getValue());
+        parameterObject.getWeb().getWebElement().SendKeys(parameterObject.getGuid(), parameterObject.getWeb().getValue());
     }
 
     /**
      * Executes JavaScript in the context of the currently selected frame or window.
      *
-     * @param frameworkElement Framework element.
+     * @param parameterObject Framework element.
      * @return The value returned by the script.
      * @throws ScriptExecutionException If the JavaScript encounters an error.
      */
-    public final Object ExecuteScript(ParameterObject frameworkElement) {
+    public final Object ExecuteScript(ParameterObject parameterObject) {
         return adapter.ExecuteScript(
-                guid,
-                frameworkElement.getWeb().getScript(),
-                frameworkElement.getWeb().getArgs());
+                parameterObject.getGuid(),
+                parameterObject.getWeb().getScript(),
+                parameterObject.getWeb().getArgs());
     }
 
     /**
@@ -290,7 +292,7 @@ public class EchoDriver implements IDriver {
      * @return The element tag name.
      */
     public final String GetElementTagName(ParameterObject parameterObject) {
-        return parameterObject.getWeb().getWebElement().GetTagName(guid);
+        return parameterObject.getWeb().getWebElement().GetTagName(parameterObject.getGuid());
     }
 
     /**
@@ -356,10 +358,10 @@ public class EchoDriver implements IDriver {
     /**
      * The sendkeys method.
      *
-     * @param frameworkElement Parameter Object.
+     * @param parameterObject Parameter Object.
      */
-    public final void SendKeys(ParameterObject frameworkElement) {
-        frameworkElement.getWeb().getWebElement().SendKeys(guid, frameworkElement.getWeb().getKey());
+    public final void SendKeys(ParameterObject parameterObject) {
+        parameterObject.getWeb().getWebElement().SendKeys(parameterObject.getGuid(), parameterObject.getWeb().getKey());
     }
 
     /**
@@ -626,7 +628,7 @@ public class EchoDriver implements IDriver {
     }
 
     public final IElement FindElement(ParameterObject parameterObject) {
-        return adapter.FindElement(guid, parameterObject.getWeb().getFindIBy());
+        return adapter.FindElement(parameterObject.getGuid(), parameterObject.getWeb().getFindIBy());
     }
 
     /**
@@ -638,7 +640,7 @@ public class EchoDriver implements IDriver {
      * @throws IllegalArgumentException If <paramref name="frameworkElement"/> is <see langword="null"/>.
      */
     public final Collection<IElement> FindElements(ParameterObject parameterObject) {
-        return adapter.FindElements(guid, parameterObject.getWeb().getFindIBy());
+        return adapter.FindElements(parameterObject.getGuid(), parameterObject.getWeb().getFindIBy());
     }
 
     /**
@@ -648,7 +650,7 @@ public class EchoDriver implements IDriver {
      * @return The innerText of the element, without any leading or trailing whitespace, and with other whitespace collapsed.
      */
     public final String GetElementText(ParameterObject parameterObject) {
-        return parameterObject.getWeb().getWebElement().GetText(guid);
+        return parameterObject.getWeb().getWebElement().GetText(parameterObject.getGuid());
     }
 
     /**
@@ -723,7 +725,7 @@ public class EchoDriver implements IDriver {
      * @param parameterObject The parameter object.
      */
     public final void Close(ParameterObject parameterObject) {
-        adapter.Close(guid);
+        adapter.Close(parameterObject.getGuid());
     }
 
     /**
@@ -732,7 +734,7 @@ public class EchoDriver implements IDriver {
      * @param parameterObject The parameter object.
      */
     public final void Quit(ParameterObject parameterObject) {
-        adapter.Quit(guid);
+        adapter.Quit(parameterObject.getGuid());
     }
 
     /**
@@ -777,7 +779,7 @@ public class EchoDriver implements IDriver {
      * @return List of cookies.
      */
     public final List<ICookie> GetAllCookies(ParameterObject parameterObject) {
-        return adapter.GetAllCookies(guid);
+        return adapter.GetAllCookies(parameterObject.getGuid());
     }
 
     /**
@@ -791,7 +793,7 @@ public class EchoDriver implements IDriver {
             throw new IllegalArgumentException("cookieName");
         }
 
-        return adapter.GetCookie(guid, parameterObject.getWeb().getCookieName());
+        return adapter.GetCookie(parameterObject.getGuid(), parameterObject.getWeb().getCookieName());
     }
 
     /**
@@ -1164,5 +1166,30 @@ public class EchoDriver implements IDriver {
 
     public Collection<String> GetWindowHandles(ParameterObject parameterObject) {
         return adapter.GetWindowHandles(parameterObject.getGuid());
+    }
+
+    @Override
+    public String GetPageSource() {
+        return adapter.GetPageSource(UUID.randomUUID());
+    }
+
+    @Override
+    public Image GetScreenshot() {
+        return adapter.GetScreenshot(UUID.randomUUID());
+    }
+
+    @Override
+    public void SwitchToDefaultContent(ParameterObject parameterObject) {
+        adapter.SwitchToDefaultContent(parameterObject.getGuid());
+    }
+
+    @Override
+    public void SwitchToFrame(ParameterObject parameterObject) {
+        adapter.SwitchToFrame(parameterObject.getGuid(), parameterObject.getWeb().getFindIBy());
+    }
+
+    @Override
+    public void FocusWindow(ParameterObject parameterObject) {
+        adapter.FocusWindow(parameterObject.getGuid());
     }
 }

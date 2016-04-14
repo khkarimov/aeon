@@ -1,4 +1,4 @@
-package echo.core.framework_abstraction;
+package echo.selenium.jQuery;
 
 /**
  * Interface for preparing JavaScript according to formats specified by classes implementing this interface.

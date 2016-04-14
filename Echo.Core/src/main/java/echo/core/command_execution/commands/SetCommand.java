@@ -8,6 +8,7 @@ import echo.core.common.SelectOption;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_abstraction.IElement;
 
 import java.util.Locale;
@@ -15,16 +16,17 @@ import java.util.Locale;
 /**
  * Sets an element to a certain value.
  */
-public class SetCommand extends WebElementCommand  {
+public class SetCommand extends WebElementCommand {
 
     /**
      * Initializes a new instance of SetCommand
-     * @param log the logger
-     * @param switchMechanism  the switch mechanism
-     * @param selector the selector
-     * @param finder the finder
+     *
+     * @param log             the logger
+     * @param switchMechanism the switch mechanism
+     * @param selector        the selector
+     * @param finder          the finder
      * @param selectionOption the selection option
-     * @param value the value
+     * @param value           the value
      */
     public SetCommand(ILog log, Iterable<IBy> switchMechanism, IBy selector, ISelectorFinder finder, SelectOption selectionOption, String value) {
         this(new ParameterObject(log, String.format(Locale.getDefault(), Resources.getString("SetCommand_Info"), value, selector), switchMechanism, selector, finder), new WebCommandInitializer());
@@ -35,7 +37,8 @@ public class SetCommand extends WebElementCommand  {
 
     /**
      * Initializes a new instance of SetCommand
-     * @param parameterObject Parameter object
+     *
+     * @param parameterObject    Parameter object
      * @param commandInitializer The command initalizer
      */
     public SetCommand(ParameterObject parameterObject, ICommandInitializer commandInitializer) {
@@ -44,11 +47,11 @@ public class SetCommand extends WebElementCommand  {
 
     /**
      * The method which providse the logic for the web element command.
-     * @param frameworkAbstractionFacade the framework abstraction facade
-     * @param element The web element
+     *
+     * @param driver the framework abstraction facade
      */
     @Override
-    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, IElement element) {
-        frameworkAbstractionFacade.Set(getParameterObject());
+    protected void Command(IDriver driver) {
+        driver.Set(getParameterObject());
     }
 }

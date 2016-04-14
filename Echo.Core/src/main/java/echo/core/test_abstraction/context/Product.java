@@ -39,13 +39,20 @@ public class Product {
         IAdapter adapter;
 
         try {
-            driver = (IDriver)configuration.getDriver().newInstance();
             adapter = (IAdapter)configuration.getAdapter().newInstance();
+            adapter = adapter.Configure(configuration);
 
-            this.automationInfo = new AutomationInfo(parameters, driver, adapter, log);
+            driver = (IDriver)configuration.getDriver().newInstance();
+            driver.Configure(adapter);
+
+            this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
+    }
+
+    protected Configuration getConfiguration() {
+        return this.configuration;
     }
 
     protected void switchDriver(IAdapter adapter) {

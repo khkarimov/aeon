@@ -1,19 +1,22 @@
 package echo.core.framework_abstraction;
 
-import echo.core.common.BrowserSize;
+import java.awt.Image;
 import echo.core.common.BrowserType;
 import echo.core.common.ClientRects;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.common.webobjects.Parameter;
-import echo.core.framework_abstraction.ICookie;
+import echo.core.test_abstraction.webenvironment.Parameters;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * The framework adapter interface.
  */
 public interface IDriver {
+    IDriver Configure(IAdapter adapter);
+
     /**
      * Clicks the element.
      *
@@ -732,4 +735,14 @@ public interface IDriver {
     URL GetURL(ParameterObject parameterObject);
 
     Collection<String> GetWindowHandles(ParameterObject parameterObject);
+
+    String GetPageSource();
+
+    Image GetScreenshot();
+
+    void SwitchToDefaultContent(ParameterObject parameterObject);
+
+    void SwitchToFrame(ParameterObject parameterObject);
+
+    void FocusWindow(ParameterObject parameterObject);
 }

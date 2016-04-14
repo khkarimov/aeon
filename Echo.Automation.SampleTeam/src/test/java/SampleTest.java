@@ -1,5 +1,3 @@
-import echo.core.test_abstraction.context.Echo;
-import echo.core.test_abstraction.driver.Selenium;
 import main.Sample;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

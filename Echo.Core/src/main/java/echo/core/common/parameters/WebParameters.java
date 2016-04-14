@@ -7,6 +7,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebElementFinder;
 import echo.core.common.*;
 import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_abstraction.IElement;
 import echo.core.framework_abstraction.ICookie;
 import org.openqa.selenium.Keys;
@@ -16,19 +17,19 @@ import java.time.Duration;
 import java.util.function.Consumer;
 
 /**
- * Class for parameters for the FrameworkAbstractionFacade.
+ * Class for parameters for the driver.
  */
 public class WebParameters {
     /**
      * Gets or sets Action.
      */
-    private Consumer<IFrameworkAbstractionFacade> Action;
+    private Consumer<IDriver> Action;
 
-    public final Consumer<IFrameworkAbstractionFacade> getAction() {
+    public final Consumer<IDriver> getAction() {
         return Action;
     }
 
-    public final void setAction(Consumer<IFrameworkAbstractionFacade> value) {
+    public final void setAction(Consumer<IDriver> value) {
         Action = value;
     }
 

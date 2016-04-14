@@ -6,7 +6,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IElement;
+import echo.core.framework_abstraction.IDriver;
 
 /**
  * Serves as the base class for all web element commands that need a finder
@@ -50,19 +50,18 @@ public abstract class WebElementCommand extends Command {
     /**
      * The method which provides the logic for the command
      *
-     * @param frameworkAbstractionFacade The framework abstraction facade.
+     * @param driver The framework abstraction facade.
      */
     @Override
-    protected void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade) {
-        getCommandInitializer().FindElement(frameworkAbstractionFacade, getParameterObject());
-        CommandDelegate(frameworkAbstractionFacade, getParameterObject().getWeb().getWebElement());
+    protected void CommandDelegate(IDriver driver) {
+        getCommandInitializer().FindElement(driver, getParameterObject());
+        Command(driver);
     }
 
     /**
      * The method which provides the logic for the web element command
+     *  @param driver the framework abstraction facade
      *
-     * @param frameworkAbstractionFacade the framework abstraction facade
-     * @param element                 The web element
      */
-    protected abstract void CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade, IElement element);
+    protected abstract void Command(IDriver driver);
 }

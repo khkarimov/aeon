@@ -4,6 +4,7 @@ import com.sun.glass.ui.Size;
 import echo.core.common.exceptions.*;
 import echo.core.common.webobjects.interfaces.IBy;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.UUID;
  * Created by DionnyS on 4/13/2016.
  */
 public interface IAdapter {
+    IAdapter Configure(Configuration configuration);
+
     /**
      * Gets the title of the current browser window.
      *
@@ -296,7 +299,7 @@ public interface IAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @return Image of the browser window.
      */
-    java.awt.Image GetScreenshot(UUID guid);
+    Image GetScreenshot(UUID guid);
 
     /**
      * Gets the source of the current browser window.

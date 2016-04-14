@@ -1,6 +1,7 @@
-package echo.core.framework_abstraction;
+package echo.selenium.jQuery;
 
-import java.time.Duration;
+import org.joda.time.Duration;
+
 import java.util.UUID;
 
 /**

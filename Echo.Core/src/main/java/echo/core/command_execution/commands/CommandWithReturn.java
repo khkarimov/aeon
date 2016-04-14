@@ -7,6 +7,7 @@ import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.framework_abstraction.IDriver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -15,7 +16,7 @@ import java.util.function.Function;
 /**
  * A command with a return value.
  */
-public abstract class CommandWithReturn implements ICommand<Function<IFrameworkAbstractionFacade, Object>> {
+public abstract class CommandWithReturn implements ICommand<Function<IDriver, Object>> {
     /**
      * Initializes a new instance of the <see cref="CommandWithReturn"/> class.
      *
@@ -110,14 +111,14 @@ public abstract class CommandWithReturn implements ICommand<Function<IFrameworkA
      *
      * @return A delegate.
      */
-    public final Function<IFrameworkAbstractionFacade, Object> GetCommandDelegate() {
-        Function<IFrameworkAbstractionFacade, Object> func;
+    public final Function<IDriver, Object> GetCommandDelegate() {
+        Function<IDriver, Object> func;
 
-        func = frameworkAbstractionFacade ->
+        func = driver ->
         {
             getCommandInitializer()
                     .GetCommandFunc(getParameterObject())
-                    .apply(frameworkAbstractionFacade);
+                    .apply(driver);
 
             if (getCommandInitializer().ResetParameterObject() != null) {
                 setParameterObject(getCommandInitializer().ResetParameterObject());
@@ -125,7 +126,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IFrameworkA
 
             getCommandInitializer().SaveParameterObject(getParameterObject());
 
-            return CommandDelegate(frameworkAbstractionFacade);
+            return CommandDelegate(driver);
         };
 
         return func;
@@ -134,8 +135,8 @@ public abstract class CommandWithReturn implements ICommand<Function<IFrameworkA
     /**
      * The method which provides the logic for the command.
      *
-     * @param frameworkAbstractionFacade The framework abstraction facade.
+     * @param driver The framework abstraction facade.
      * @return The return value for the command.
      */
-    protected abstract Object CommandDelegate(IFrameworkAbstractionFacade frameworkAbstractionFacade);
+    protected abstract Object CommandDelegate(IDriver driver);
 }

@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.interfaces;
 
 import echo.core.common.webobjects.ByJQuery;
+import echo.core.framework_abstraction.IDriver;
 
 /**
  * Finds a grid element.
@@ -14,8 +15,8 @@ public interface IGridSelectorFinder extends ISelectorFinder {
     /**
      * Gets the index of a row utilizing a web driver.
      *
-     * @param frameworkAbstractionFacade The facade for the framework abstraction layer.
+     * @param driver The facade for the framework abstraction layer.
      * @return The index of the row.
      */
-    int GetRowIndex(IFrameworkAbstractionFacade frameworkAbstractionFacade);
+    int GetRowIndex(IDriver driver);
 }

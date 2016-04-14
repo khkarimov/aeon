@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.selenium.jQuery;
 
 /**
  * Created by DionnyS on 3/31/2016.

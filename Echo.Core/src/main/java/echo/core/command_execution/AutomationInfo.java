@@ -52,4 +52,12 @@ public class AutomationInfo {
     public void setParameters(Parameters parameters) {
         this.parameters = parameters;
     }
+
+    public IDriver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(IDriver driver) {
+        this.driver = driver;
+    }
 }

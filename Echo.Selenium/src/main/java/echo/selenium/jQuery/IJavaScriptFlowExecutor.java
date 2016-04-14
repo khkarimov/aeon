@@ -1,6 +1,5 @@
-package echo.core.framework_abstraction;
+package echo.selenium.jQuery;
 
-import echo.core.common.JavaScriptFinalizerOptions;
 import echo.core.common.QuadFunction;
 
 import java.util.UUID;

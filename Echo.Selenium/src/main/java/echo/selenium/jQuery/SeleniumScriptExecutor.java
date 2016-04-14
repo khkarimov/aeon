@@ -1,12 +1,11 @@
-package echo.selenium;
+package echo.selenium.jQuery;
 
 import echo.core.common.helpers.ConvertHelper;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IScriptExecutor;
+import org.joda.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +32,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
 
     public final void SetTimeout(UUID guid, Duration timeToWait) {
         log.Trace(guid, String.format("WebDriver.Manage().Timeouts().SetScriptTimeout(%1$s);", timeToWait));
-        getRemoteWebDriver().manage().timeouts().setScriptTimeout(timeToWait.getSeconds(), TimeUnit.SECONDS);
+        getRemoteWebDriver().manage().timeouts().setScriptTimeout(timeToWait.getStandardSeconds(), TimeUnit.SECONDS);
     }
 
     public final Object ExecuteScript(UUID guid, String script, Object... args) {
