@@ -2,6 +2,7 @@ package echo.core.command_execution;
 
 import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.CommandWithReturn;
+import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunnerFactory;
 
 /**
  * The facade for the Command Execution layer.

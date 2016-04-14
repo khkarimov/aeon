@@ -1,5 +1,6 @@
 package echo.core.framework_interaction;
 
+import echo.core.common.exceptions.FrameworkNotSupportedException;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.framework_abstraction.webdriver.ISelectElementFactory;
 
@@ -36,7 +37,7 @@ public class FrameworkAdapterFactory implements IFrameworkAdapterFactory {
                 return new SeleniumFrameworkAdapter(parameterObject, selectElementFactory);
 
             default:
-                throw new FrameworkNotSupportedException(parameterObject.ElementType);
+                throw new FrameworkNotSupportedException(parameterObject.getElementType());
         }
     }
 }

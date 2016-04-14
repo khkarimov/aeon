@@ -423,7 +423,7 @@ public interface IFrameworkAdapter {
      * @param parameterObject The parameter object.
      * @return List of cookies.
      */
-    ArrayList<ICookieAdapter> GetAllCookies(ParameterObject parameterObject);
+    List<ICookieAdapter> GetAllCookies(ParameterObject parameterObject);
 
     /**
      * Gets a cookie.
@@ -691,13 +691,6 @@ public interface IFrameworkAdapter {
      * @param parameterObject The paramter object.
      */
     void SelectFileDialog(ParameterObject parameterObject);
-
-    /**
-     * Toggle UltiPro stuff.
-     *
-     * @param parameterObject The paramter object.
-     */
-    void ToggleUltiProMobileMenu(ParameterObject parameterObject);
 
     /**
      * Scrolls the element into view.
