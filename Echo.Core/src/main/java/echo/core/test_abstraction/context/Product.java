@@ -4,10 +4,8 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.Configuration;
 import echo.core.framework_abstraction.IAdapter;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.test_abstraction.webenvironment.Parameters;
-
-import java.lang.reflect.ParameterizedType;
 
 /**
  * Created by DionnyS on 4/12/2016.
@@ -35,14 +33,14 @@ public class Product {
     }
 
     protected void launch() {
-        IDriver driver;
+        IWebDriver driver;
         IAdapter adapter;
 
         try {
             adapter = (IAdapter)configuration.getAdapter().newInstance();
             adapter = adapter.Configure(configuration);
 
-            driver = (IDriver)configuration.getDriver().newInstance();
+            driver = (IWebDriver)configuration.getDriver().newInstance();
             driver.Configure(adapter);
 
             this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());

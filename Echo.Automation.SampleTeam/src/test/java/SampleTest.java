@@ -16,6 +16,7 @@ public class SampleTest {
     @BeforeClass
     public static void fixtureSetUp() {
         product = Launch(Sample.class, Firefox);
+
         //product.Browser.NavigateTo("http://devausql03/ABsCarSearch");
     }
 
@@ -27,12 +28,6 @@ public class SampleTest {
     @Test
     public void SampleTest() {
         //product.Main.Submit.Click();
-
-        //product.Main.SomeSikuliControl.Click();
-
-//        product.SwitchDriver(Sikulu.class);
-//        product.Main.SikuliControl.SikuliCommand();
-//        product.SwitchDriver(Selenium.class);
 
         /*
          row = product.Main.MyGrid.SelectRow(ById("").ByName(""))

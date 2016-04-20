@@ -1,11 +1,9 @@
 package echo.core.framework_abstraction;
 
 import java.awt.Image;
-import echo.core.common.BrowserType;
-import echo.core.common.ClientRects;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.test_abstraction.webenvironment.Parameters;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.net.URL;
 import java.util.Collection;
@@ -14,8 +12,8 @@ import java.util.List;
 /**
  * The framework adapter interface.
  */
-public interface IDriver {
-    IDriver Configure(IAdapter adapter);
+public interface IWebDriver {
+    IWebDriver Configure(IAdapter adapter);
 
     /**
      * Clicks the element.

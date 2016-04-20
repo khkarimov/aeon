@@ -2,7 +2,7 @@
 //
 //import echo.core.common.exceptions.UnableToCreateDriverException;
 //import echo.core.common.logging.ILog;
-//import echo.core.framework_abstraction.IDriver;
+//import echo.core.framework_abstraction.IWebDriver;
 //import echo.core.framework_abstraction.IDriverFactory;
 //import echo.core.framework_abstraction.webdriver.IWebDriverAdapter;
 //import echo.core.framework_interaction.selenium.SeleniumWebDriverFactory;
@@ -15,7 +15,7 @@
 ///**
 // * Created by DionnyS on 4/13/2016.
 // */
-//public class Selenium implements IDriver {
+//public class Selenium implements IWebDriver {
 //    IWebDriverAdapter driver;
 //
 //    public Selenium(Parameters parameters, ILog log) {

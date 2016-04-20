@@ -4,7 +4,7 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * Returns the name value pair for a cookie.
@@ -37,7 +37,7 @@ public class DeleteCookieCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void CommandDelegate(IDriver driver) {
+    protected void CommandDelegate(IWebDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

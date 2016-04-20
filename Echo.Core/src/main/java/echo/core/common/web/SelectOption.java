@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.core.common.web;
 
 /**
  * The way to set a select element.

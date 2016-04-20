@@ -2,7 +2,7 @@ package echo.core.framework_abstraction;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.exceptions.*;
-import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.common.web.interfaces.IBy;
 
 import java.awt.*;
 import java.net.URL;

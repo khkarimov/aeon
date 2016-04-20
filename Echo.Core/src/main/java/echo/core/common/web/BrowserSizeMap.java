@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.core.common.web;
 
 import com.sun.glass.ui.Size;
 

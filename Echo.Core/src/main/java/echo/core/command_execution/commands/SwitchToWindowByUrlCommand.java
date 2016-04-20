@@ -5,7 +5,7 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * <p>Switches focus to a specified window.</p>
@@ -43,7 +43,7 @@ public class SwitchToWindowByUrlCommand extends CommandWithReturn {
      * @return The current handler after the change.
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
+    protected Object CommandDelegate(IWebDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

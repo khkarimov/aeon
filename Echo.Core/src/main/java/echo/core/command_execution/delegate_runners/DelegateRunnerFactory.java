@@ -2,11 +2,11 @@ package echo.core.command_execution.delegate_runners;
 
 import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunner;
 import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunnerFactory;
-import echo.core.common.BrowserType;
+import echo.core.common.web.BrowserType;
 import echo.core.common.helpers.Clock;
 import echo.core.common.helpers.IClock;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 import org.joda.time.Duration;
 
 /**
@@ -58,7 +58,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
         // TODO: JAVA_CONVERSION Use an IoC container to resolve the factory.
         int mouseDragSpeed = parameterObject.getAutomationInfo().getParameters().getInt("mouseDragSpeed");
 
-        IDriver driver = parameterObject.getAutomationInfo().getDriver();
+        IWebDriver driver = parameterObject.getAutomationInfo().getDriver();
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver, parameterObject.getAutomationInfo().getLog());
         TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(parameterObject.getGuid(), commandDelegateRunner, driver, clock, defaultTimeout);

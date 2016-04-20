@@ -1,6 +1,6 @@
 package echo.core.test_abstraction.context;
 
-import echo.core.common.BrowserType;
+import echo.core.common.web.BrowserType;
 import echo.core.common.logging.ILog;
 import echo.core.common.logging.Log;
 import echo.core.test_abstraction.settings.GlobalSettings;

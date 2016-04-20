@@ -4,12 +4,11 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.common.Resources;
-import echo.core.common.SelectOption;
+import echo.core.common.web.SelectOption;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IElement;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 
 import java.util.Locale;
 
@@ -51,7 +50,7 @@ public class SetCommand extends WebElementCommand {
      * @param driver the framework abstraction facade
      */
     @Override
-    protected void Command(IDriver driver) {
+    protected void Command(IWebDriver driver) {
         driver.Set(getParameterObject());
     }
 }

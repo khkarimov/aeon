@@ -1,6 +1,6 @@
 package echo.core.test_abstraction.context;
 
-import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.common.web.interfaces.IBy;
 
 /**
  * Created by DionnyS on 4/12/2016.

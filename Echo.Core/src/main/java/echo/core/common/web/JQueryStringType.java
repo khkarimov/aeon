@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.core.common.web;
 
 /**
  * Indicates how to format a <see cref="ByJQuery"/>.

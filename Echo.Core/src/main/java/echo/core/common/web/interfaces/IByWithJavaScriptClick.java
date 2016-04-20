@@ -1,4 +1,4 @@
-package echo.core.common.webobjects.interfaces;
+package echo.core.common.web.interfaces;
 
 /**
  * Indicates requires a JavaScript click.

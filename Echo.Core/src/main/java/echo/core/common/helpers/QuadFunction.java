@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.core.common.helpers;
 
 import java.util.Objects;
 import java.util.function.Function;

@@ -1,6 +1,6 @@
-package echo.core.common.webobjects.interfaces;
+package echo.core.common.web.interfaces;
 
-import echo.core.common.webobjects.ByJQuery;
+import echo.core.common.web.selectors.ByJQuery;
 
 /**
  * Interface for selecting elements.

@@ -4,7 +4,7 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * Returns the name value pair for a cookie.
@@ -38,7 +38,7 @@ public class GetCookieCommand extends CommandWithReturn {
      * @return A list of all the cookies.
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
+    protected Object CommandDelegate(IWebDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

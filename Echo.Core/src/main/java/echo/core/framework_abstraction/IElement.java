@@ -1,7 +1,7 @@
 package echo.core.framework_abstraction;
 
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_interaction.Point;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.common.Point;
 import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.Keys;
 

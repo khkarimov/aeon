@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.core.common.mobile;
 
 /**
  * The device on which to run tests.

@@ -1,6 +1,6 @@
 package echo.core.test_abstraction.context.elementtypes;
 
-import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.context.Element;
 
 /**

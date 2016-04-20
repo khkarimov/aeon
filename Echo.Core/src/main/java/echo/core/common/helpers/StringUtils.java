@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.core.common.helpers;
 
 /**
  * Created by DionnyS on 3/31/2016.

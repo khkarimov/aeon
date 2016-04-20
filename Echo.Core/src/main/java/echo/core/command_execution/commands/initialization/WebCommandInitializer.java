@@ -2,8 +2,8 @@ package echo.core.command_execution.commands.initialization;
 
 import echo.core.common.parameters.ParameterObject;
 import echo.core.common.parameters.WebParameters;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.framework_abstraction.IElement;
 
 import java.util.function.Consumer;
@@ -22,7 +22,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void FindElement(IDriver driver, ParameterObject parameterObject) {
+    public final void FindElement(IWebDriver driver, ParameterObject parameterObject) {
         IElement element = parameterObject.getWeb().getWebElementFinder().FindElement(driver, parameterObject);
         parameterObject.getWeb().setWebElement(element);
         driver.ScrollElementIntoView(parameterObject);
@@ -34,7 +34,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void FindElementDoNotScroll(IDriver driver, ParameterObject parameterObject) {
+    public final void FindElementDoNotScroll(IWebDriver driver, ParameterObject parameterObject) {
         IElement element = parameterObject.getWeb().getWebElementFinder().FindElement(driver, parameterObject);
         parameterObject.getWeb().setWebElement(element);
     }
@@ -45,7 +45,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void FindSelector(IDriver driver, ParameterObject parameterObject) {
+    public final void FindSelector(IWebDriver driver, ParameterObject parameterObject) {
         parameterObject.getWeb().setFindIBy(
                 parameterObject.getWeb().getSelectorFinder()
                         .FindSelector(driver, parameterObject.getWeb().getFindIBy()));
@@ -59,8 +59,8 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param parameterObject Parameter Object.
      * @return The command action.
      */
-    public final Consumer<IDriver> GetCommandAction(ParameterObject parameterObject) {
-        Consumer<IDriver> action = driver ->
+    public final Consumer<IWebDriver> GetCommandAction(ParameterObject parameterObject) {
+        Consumer<IWebDriver> action = driver ->
         {
             if (parameterObject.getWeb().getSwitchMechanism() != null) {
                 IBy current = parameterObject.getWeb().getFindIBy();
@@ -85,8 +85,8 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param parameterObject Parameter Object.
      * @return The command function.
      */
-    public final Function<IDriver, Object> GetCommandFunc(ParameterObject parameterObject) {
-        Function<IDriver, Object> func = driver ->
+    public final Function<IWebDriver, Object> GetCommandFunc(ParameterObject parameterObject) {
+        Function<IWebDriver, Object> func = driver ->
         {
             if (parameterObject.getWeb().getSwitchMechanism() != null) {
                 IBy current = parameterObject.getWeb().getFindIBy();
@@ -113,7 +113,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void GetGridIndex(IDriver driver, ParameterObject parameterObject) {
+    public final void GetGridIndex(IWebDriver driver, ParameterObject parameterObject) {
         parameterObject.getWeb().setGridIndex(parameterObject.getWeb().getGridFinder().GetGridIndex(driver));
     }
 
@@ -123,7 +123,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * @param driver Framework Abstraction Facade.
      * @param parameterObject            Parameter Object.
      */
-    public final void GetRowIndex(IDriver driver, ParameterObject parameterObject) {
+    public final void GetRowIndex(IWebDriver driver, ParameterObject parameterObject) {
         parameterObject.getWeb().setRowIndex(parameterObject.getWeb().getGridSelectorFinder().GetRowIndex(driver));
     }
 

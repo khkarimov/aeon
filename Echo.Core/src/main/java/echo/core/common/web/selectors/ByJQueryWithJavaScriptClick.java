@@ -1,6 +1,6 @@
-package echo.core.common.webobjects;
+package echo.core.common.web.selectors;
 
-import echo.core.common.webobjects.interfaces.IByWithJavaScriptClick;
+import echo.core.common.web.interfaces.IByWithJavaScriptClick;
 
 /**
  * Meta Platform element which must be clicked by JavaScript to avoid tests failing in IE.

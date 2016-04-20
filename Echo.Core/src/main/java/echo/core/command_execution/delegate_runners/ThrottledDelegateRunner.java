@@ -2,7 +2,7 @@ package echo.core.command_execution.delegate_runners;
 
 import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunner;
 import echo.core.common.helpers.Sleep;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 import org.joda.time.Duration;
 
 import java.util.UUID;
@@ -18,13 +18,13 @@ public class ThrottledDelegateRunner extends DelegateRunner {
     }
 
     @Override
-    public void Execute(Consumer<IDriver> commandDelegate) {
+    public void Execute(Consumer<IWebDriver> commandDelegate) {
         Sleep.WaitDuration(throttleFactor);
         successor.Execute(commandDelegate);
     }
 
     @Override
-    public Object Execute(Function<IDriver, Object> commandDelegate) {
+    public Object Execute(Function<IWebDriver, Object> commandDelegate) {
         Sleep.WaitDuration(throttleFactor);
         return successor.Execute(commandDelegate);
     }

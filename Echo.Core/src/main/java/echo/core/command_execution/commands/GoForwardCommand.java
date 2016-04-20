@@ -5,7 +5,7 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * <p>Move forward a single entry in the browser's history.</p>
@@ -41,7 +41,7 @@ public class GoForwardCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void CommandDelegate(IDriver driver) {
+    protected void CommandDelegate(IWebDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

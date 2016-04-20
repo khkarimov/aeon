@@ -1,7 +1,7 @@
 package echo.core.command_execution.commands.interfaces;
 
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * Finds a web element.
@@ -14,5 +14,5 @@ public interface ISelectorFinder {
      * @param selector                   Element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    IBy FindSelector(IDriver driver, IBy selector);
+    IBy FindSelector(IWebDriver driver, IBy selector);
 }

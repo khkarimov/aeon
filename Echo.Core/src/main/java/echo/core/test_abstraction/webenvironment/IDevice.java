@@ -1,6 +1,6 @@
 package echo.core.test_abstraction.webenvironment;
 
-import echo.core.common.DeviceType;
+import echo.core.common.mobile.DeviceType;
 
 /**
  * The device interface.

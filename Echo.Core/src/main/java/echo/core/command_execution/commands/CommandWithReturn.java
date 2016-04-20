@@ -6,8 +6,8 @@ import echo.core.command_execution.commands.interfaces.ICommand;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -16,7 +16,7 @@ import java.util.function.Function;
 /**
  * A command with a return value.
  */
-public abstract class CommandWithReturn implements ICommand<Function<IDriver, Object>> {
+public abstract class CommandWithReturn implements ICommand<Function<IWebDriver, Object>> {
     /**
      * Initializes a new instance of the <see cref="CommandWithReturn"/> class.
      *
@@ -111,8 +111,8 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
      *
      * @return A delegate.
      */
-    public final Function<IDriver, Object> GetCommandDelegate() {
-        Function<IDriver, Object> func;
+    public final Function<IWebDriver, Object> GetCommandDelegate() {
+        Function<IWebDriver, Object> func;
 
         func = driver ->
         {
@@ -138,5 +138,5 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
      * @param driver The framework abstraction facade.
      * @return The return value for the command.
      */
-    protected abstract Object CommandDelegate(IDriver driver);
+    protected abstract Object CommandDelegate(IWebDriver driver);
 }

@@ -5,7 +5,7 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * <p>Appends a query string to the current URL in the browser.</p>
@@ -42,7 +42,7 @@ public class AppendQueryStringCommand extends CommandWithReturn {
      * @return The current handler after the change.
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
+    protected Object CommandDelegate(IWebDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

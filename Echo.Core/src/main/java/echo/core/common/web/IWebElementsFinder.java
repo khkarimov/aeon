@@ -1,7 +1,7 @@
-package echo.core.common;
+package echo.core.common.web;
 
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.framework_abstraction.IElement;
 
 import java.util.Collection;
@@ -17,5 +17,5 @@ public interface IWebElementsFinder {
      * @param selector                   Element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    Collection<IElement> FindElements(IDriver driver, IBy selector);
+    Collection<IElement> FindElements(IWebDriver driver, IBy selector);
 }

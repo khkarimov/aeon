@@ -1,7 +1,7 @@
 package echo.core.command_execution.commands.interfaces;
 
-import echo.core.common.webobjects.ByJQuery;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.selectors.ByJQuery;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * Finds a grid web element.
@@ -18,5 +18,5 @@ public interface IGridFinder extends IGridSelectorFinder {
      * @param driver The facade for the framework abstraction layer.
      * @return The index of the grid.
      */
-    int GetGridIndex(IDriver driver);
+    int GetGridIndex(IWebDriver driver);
 }

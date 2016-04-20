@@ -1,6 +1,6 @@
-package echo.core.common.webobjects;
+package echo.core.common.web.selectors;
 
-import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.common.web.interfaces.IBy;
 
 /**
  * Class for selecting elements (default is via a CSS selector).

@@ -1,8 +1,7 @@
 package echo.core.command_execution.commands.interfaces;
 
 import echo.core.common.parameters.ParameterObject;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.framework_abstraction.IElement;
 
 /**
@@ -16,5 +15,5 @@ public interface IWebElementFinder {
      * @param parameterObject            Parameter Object.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    IElement FindElement(IDriver driver, ParameterObject parameterObject);
+    IElement FindElement(IWebDriver driver, ParameterObject parameterObject);
 }

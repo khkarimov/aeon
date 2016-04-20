@@ -6,8 +6,10 @@ import echo.core.command_execution.commands.interfaces.IGridSelectorFinder;
 import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebElementFinder;
 import echo.core.common.*;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.IWebElementsFinder;
+import echo.core.common.web.SelectOption;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.framework_abstraction.IElement;
 import echo.core.framework_abstraction.ICookie;
 import org.openqa.selenium.Keys;
@@ -23,20 +25,183 @@ public class WebParameters {
     /**
      * Gets or sets Action.
      */
-    private Consumer<IDriver> Action;
-
-    public final Consumer<IDriver> getAction() {
-        return Action;
-    }
-
-    public final void setAction(Consumer<IDriver> value) {
-        Action = value;
-    }
-
+    private Consumer<IWebDriver> Action;
     /**
      * Gets or sets Args.
      */
     private Object[] Args;
+    /**
+     * Gets or sets AttributeName.
+     */
+    private String AttributeName;
+    /**
+     * Gets or sets ChildSelector.
+     */
+    private IBy ChildSelector;
+    /**
+     * Gets or sets the CompareType.
+     */
+    private CompareType compareType;
+    /**
+     * Gets or sets ComparisonOption.
+     */
+    private ComparisonOption comparisonOption;
+    /**
+     * Gets or sets Cookie.
+     */
+    private ICookie Cookie;
+    /**
+     * Gets or sets CookieName.
+     */
+    private String CookieName;
+    /**
+     * Gets or sets Delta.
+     */
+    private Duration Delta;
+    /**
+     * Gets or sets Direction.
+     */
+    private Direction direction;
+    /**
+     * Gets or sets DropElement.
+     */
+    private IBy DropElement;
+    /**
+     * Gets or sets DropTarget.
+     */
+    private IBy DropTarget;
+    /**
+     * Gets or sets Duration.
+     */
+    private int duration;
+    /**
+     * Gets or sets ExpectedDateTime.
+     */
+    private java.time.LocalDateTime ExpecteDateTime = java.time.LocalDateTime.MIN;
+    /**
+     * Gets or sets WebElementFinder.
+     */
+    private IWebElementFinder WebElementFinder;
+    /**
+     * Gets or sets WebElementsFinder.
+     */
+    private IWebElementsFinder WebElementsFinder;
+    /**
+     * Gets or sets FindIBy.
+     */
+    private IBy FindIBy;
+    /**
+     * Gets or sets Handle.
+     */
+    private String Handle;
+    /**
+     * Gets or sets HowManyPixelsToScroll.
+     */
+    private int HowManyPixelsToScroll;
+    /**
+     * Gets or sets Key.
+     */
+    private Keys Key;
+    /**
+     * Gets or sets KeysToSend.
+     */
+    private String KeysToSend;
+    /**
+     * Gets or sets Messages.
+     */
+    private String[] Messages;
+    /**
+     * Gets or sets OptGroup.
+     */
+    private String OptGroup;
+    /**
+     * Gets or sets QueryString.
+     */
+    private String QueryString;
+    /**
+     * Gets or sets Script.
+     */
+    private String Script;
+    /**
+     * Gets or sets Size.
+     */
+    private Size size;
+    /**
+     * Gets or sets SwitchMechanism.
+     */
+    private Iterable<IBy> SwitchMechanism;
+    /**
+     * Gets or sets url.
+     */
+    private URL url;
+    /**
+     * Gets or sets UrlString.
+     */
+    private String UrlString;
+    /**
+     * Gets or sets Value.
+     */
+    private String Value;
+    /**
+     * Gets or sets WebElement.
+     */
+    private IElement webElement;
+    /**
+     * Gets or sets WindowTitle.
+     */
+    private String WindowTitle;
+    /**
+     * Gets or sets X.
+     */
+    private int X;
+    /**
+     * Gets or sets X.
+     */
+    private int Y;
+    /**
+     * Gets or sets SelectOption.
+     */
+    private SelectOption selectOption;
+    /**
+     * Gets or sets SelectorFinder.
+     */
+    private ISelectorFinder SelectorFinder;
+    /**
+     * Gets or sets GridFinder.
+     */
+    private IGridFinder GridFinder;
+    /**
+     * Gets or sets GridSelectorFinder.
+     */
+    private IGridSelectorFinder GridSelectorFinder;
+    /**
+     * Gets or sets GridIndex.
+     */
+    private int GridIndex;
+    /**
+     * Gets or sets RowIndex.
+     */
+    private int RowIndex;
+    /**
+     * Gets or sets a value indicating whether WaitForAllPopupWindowsToClose.
+     */
+    private boolean WaitForAllPopupWindowsToClose;
+    /**
+     * Gets or sets ReferencePoint.
+     */
+    private IBy ReferencePoint;
+    /**
+     * Gets or sets ElementToMove.
+     */
+    private IBy ElementToMove;
+
+    public final Consumer<IWebDriver> getAction() {
+        return Action;
+    }
+
+    public final void setAction(Consumer<IWebDriver> value) {
+        Action = value;
+    }
 
     public final Object[] getArgs() {
         return Args;
@@ -46,11 +211,6 @@ public class WebParameters {
         Args = value;
     }
 
-    /**
-     * Gets or sets AttributeName.
-     */
-    private String AttributeName;
-
     public final String getAttributeName() {
         return AttributeName;
     }
@@ -58,11 +218,6 @@ public class WebParameters {
     public final void setAttributeName(String value) {
         AttributeName = value;
     }
-
-    /**
-     * Gets or sets ChildSelector.
-     */
-    private IBy ChildSelector;
 
     public final IBy getChildSelector() {
         return ChildSelector;
@@ -72,11 +227,6 @@ public class WebParameters {
         ChildSelector = value;
     }
 
-    /**
-     * Gets or sets the CompareType.
-     */
-    private CompareType compareType;
-
     public final CompareType getCompareType() {
         return compareType;
     }
@@ -84,11 +234,6 @@ public class WebParameters {
     public final void setCompareType(CompareType value) {
         compareType = value;
     }
-
-    /**
-     * Gets or sets ComparisonOption.
-     */
-    private ComparisonOption comparisonOption;
 
     public final ComparisonOption getComparisonOption() {
         return comparisonOption;
@@ -98,11 +243,6 @@ public class WebParameters {
         comparisonOption = value;
     }
 
-    /**
-     * Gets or sets Cookie.
-     */
-    private ICookie Cookie;
-
     public final ICookie getCookie() {
         return Cookie;
     }
@@ -110,11 +250,6 @@ public class WebParameters {
     public final void setCookie(ICookie value) {
         Cookie = value;
     }
-
-    /**
-     * Gets or sets CookieName.
-     */
-    private String CookieName;
 
     public final String getCookieName() {
         return CookieName;
@@ -124,11 +259,6 @@ public class WebParameters {
         CookieName = value;
     }
 
-    /**
-     * Gets or sets Delta.
-     */
-    private Duration Delta;
-
     public final Duration getDelta() {
         return Delta;
     }
@@ -136,11 +266,6 @@ public class WebParameters {
     public final void setDelta(Duration value) {
         Delta = value;
     }
-
-    /**
-     * Gets or sets Direction.
-     */
-    private Direction direction;
 
     public final Direction getDirection() {
         return direction;
@@ -150,11 +275,6 @@ public class WebParameters {
         direction = value;
     }
 
-    /**
-     * Gets or sets DropElement.
-     */
-    private IBy DropElement;
-
     public final IBy getDropElement() {
         return DropElement;
     }
@@ -162,11 +282,6 @@ public class WebParameters {
     public final void setDropElement(IBy value) {
         DropElement = value;
     }
-
-    /**
-     * Gets or sets DropTarget.
-     */
-    private IBy DropTarget;
 
     public final IBy getDropTarget() {
         return DropTarget;
@@ -176,11 +291,6 @@ public class WebParameters {
         DropTarget = value;
     }
 
-    /**
-     * Gets or sets Duration.
-     */
-    private int duration;
-
     public final int getDuration() {
         return duration;
     }
@@ -188,11 +298,6 @@ public class WebParameters {
     public final void setDuration(int value) {
         duration = value;
     }
-
-    /**
-     * Gets or sets ExpectedDateTime.
-     */
-    private java.time.LocalDateTime ExpecteDateTime = java.time.LocalDateTime.MIN;
 
     public final java.time.LocalDateTime getExpecteDateTime() {
         return ExpecteDateTime;
@@ -202,11 +307,6 @@ public class WebParameters {
         ExpecteDateTime = value;
     }
 
-    /**
-     * Gets or sets WebElementFinder.
-     */
-    private IWebElementFinder WebElementFinder;
-
     public final IWebElementFinder getWebElementFinder() {
         return WebElementFinder;
     }
@@ -214,11 +314,6 @@ public class WebParameters {
     public final void setWebElementFinder(IWebElementFinder value) {
         WebElementFinder = value;
     }
-
-    /**
-     * Gets or sets WebElementsFinder.
-     */
-    private IWebElementsFinder WebElementsFinder;
 
     public final IWebElementsFinder getWebElementsFinder() {
         return WebElementsFinder;
@@ -228,11 +323,6 @@ public class WebParameters {
         WebElementsFinder = value;
     }
 
-    /**
-     * Gets or sets FindIBy.
-     */
-    private IBy FindIBy;
-
     public final IBy getFindIBy() {
         return FindIBy;
     }
@@ -240,11 +330,6 @@ public class WebParameters {
     public final void setFindIBy(IBy value) {
         FindIBy = value;
     }
-
-    /**
-     * Gets or sets Handle.
-     */
-    private String Handle;
 
     public final String getHandle() {
         return Handle;
@@ -254,11 +339,6 @@ public class WebParameters {
         Handle = value;
     }
 
-    /**
-     * Gets or sets HowManyPixelsToScroll.
-     */
-    private int HowManyPixelsToScroll;
-
     public final int getHowManyPixelsToScroll() {
         return HowManyPixelsToScroll;
     }
@@ -266,11 +346,6 @@ public class WebParameters {
     public final void setHowManyPixelsToScroll(int value) {
         HowManyPixelsToScroll = value;
     }
-
-    /**
-     * Gets or sets Key.
-     */
-    private Keys Key;
 
     public final Keys getKey() {
         return Key;
@@ -280,11 +355,6 @@ public class WebParameters {
         Key = value;
     }
 
-    /**
-     * Gets or sets KeysToSend.
-     */
-    private String KeysToSend;
-
     public final String getKeysToSend() {
         return KeysToSend;
     }
@@ -292,11 +362,6 @@ public class WebParameters {
     public final void setKeysToSend(String value) {
         KeysToSend = value;
     }
-
-    /**
-     * Gets or sets Messages.
-     */
-    private String[] Messages;
 
     public final String[] getMessages() {
         return Messages;
@@ -306,11 +371,6 @@ public class WebParameters {
         Messages = value;
     }
 
-    /**
-     * Gets or sets OptGroup.
-     */
-    private String OptGroup;
-
     public final String getOptGroup() {
         return OptGroup;
     }
@@ -318,11 +378,6 @@ public class WebParameters {
     public final void setOptGroup(String value) {
         OptGroup = value;
     }
-
-    /**
-     * Gets or sets QueryString.
-     */
-    private String QueryString;
 
     public final String getQueryString() {
         return QueryString;
@@ -332,11 +387,6 @@ public class WebParameters {
         QueryString = value;
     }
 
-    /**
-     * Gets or sets Script.
-     */
-    private String Script;
-
     public final String getScript() {
         return Script;
     }
@@ -344,11 +394,6 @@ public class WebParameters {
     public final void setScript(String value) {
         Script = value;
     }
-
-    /**
-     * Gets or sets Size.
-     */
-    private Size size;
 
     public final Size getSize() {
         return size;
@@ -358,11 +403,6 @@ public class WebParameters {
         size = value;
     }
 
-    /**
-     * Gets or sets SwitchMechanism.
-     */
-    private Iterable<IBy> SwitchMechanism;
-
     public final Iterable<IBy> getSwitchMechanism() {
         return SwitchMechanism;
     }
@@ -370,11 +410,6 @@ public class WebParameters {
     public final void setSwitchMechanism(Iterable<IBy> value) {
         SwitchMechanism = value;
     }
-
-    /**
-     * Gets or sets url.
-     */
-    private URL url;
 
     public final URL getUrl() {
         return url;
@@ -384,11 +419,6 @@ public class WebParameters {
         url = value;
     }
 
-    /**
-     * Gets or sets UrlString.
-     */
-    private String UrlString;
-
     public final String getUrlString() {
         return UrlString;
     }
@@ -396,11 +426,6 @@ public class WebParameters {
     public final void setUrlString(String value) {
         UrlString = value;
     }
-
-    /**
-     * Gets or sets Value.
-     */
-    private String Value;
 
     public final String getValue() {
         return Value;
@@ -410,11 +435,6 @@ public class WebParameters {
         Value = value;
     }
 
-    /**
-     * Gets or sets WebElement.
-     */
-    private IElement webElement;
-
     public final IElement getWebElement() {
         return webElement;
     }
@@ -422,11 +442,6 @@ public class WebParameters {
     public final void setWebElement(IElement value) {
         webElement = value;
     }
-
-    /**
-     * Gets or sets WindowTitle.
-     */
-    private String WindowTitle;
 
     public final String getWindowTitle() {
         return WindowTitle;
@@ -436,11 +451,6 @@ public class WebParameters {
         WindowTitle = value;
     }
 
-    /**
-     * Gets or sets X.
-     */
-    private int X;
-
     public final int getX() {
         return X;
     }
@@ -448,11 +458,6 @@ public class WebParameters {
     public final void setX(int value) {
         X = value;
     }
-
-    /**
-     * Gets or sets X.
-     */
-    private int Y;
 
     public final int getY() {
         return Y;
@@ -462,11 +467,6 @@ public class WebParameters {
         Y = value;
     }
 
-    /**
-     * Gets or sets SelectOption.
-     */
-    private SelectOption selectOption;
-
     public final SelectOption getSelectOption() {
         return selectOption;
     }
@@ -474,11 +474,6 @@ public class WebParameters {
     public final void setSelectOption(SelectOption value) {
         selectOption = value;
     }
-
-    /**
-     * Gets or sets SelectorFinder.
-     */
-    private ISelectorFinder SelectorFinder;
 
     public final ISelectorFinder getSelectorFinder() {
         return SelectorFinder;
@@ -488,11 +483,6 @@ public class WebParameters {
         SelectorFinder = value;
     }
 
-    /**
-     * Gets or sets GridFinder.
-     */
-    private IGridFinder GridFinder;
-
     public final IGridFinder getGridFinder() {
         return GridFinder;
     }
@@ -500,11 +490,6 @@ public class WebParameters {
     public final void setGridFinder(IGridFinder value) {
         GridFinder = value;
     }
-
-    /**
-     * Gets or sets GridSelectorFinder.
-     */
-    private IGridSelectorFinder GridSelectorFinder;
 
     public final IGridSelectorFinder getGridSelectorFinder() {
         return GridSelectorFinder;
@@ -514,11 +499,6 @@ public class WebParameters {
         GridSelectorFinder = value;
     }
 
-    /**
-     * Gets or sets GridIndex.
-     */
-    private int GridIndex;
-
     public final int getGridIndex() {
         return GridIndex;
     }
@@ -526,11 +506,6 @@ public class WebParameters {
     public final void setGridIndex(int value) {
         GridIndex = value;
     }
-
-    /**
-     * Gets or sets RowIndex.
-     */
-    private int RowIndex;
 
     public final int getRowIndex() {
         return RowIndex;
@@ -540,11 +515,6 @@ public class WebParameters {
         RowIndex = value;
     }
 
-    /**
-     * Gets or sets a value indicating whether WaitForAllPopupWindowsToClose.
-     */
-    private boolean WaitForAllPopupWindowsToClose;
-
     public final boolean getWaitForAllPopupWindowsToClose() {
         return WaitForAllPopupWindowsToClose;
     }
@@ -553,11 +523,6 @@ public class WebParameters {
         WaitForAllPopupWindowsToClose = value;
     }
 
-    /**
-     * Gets or sets ReferencePoint.
-     */
-    private IBy ReferencePoint;
-
     public final IBy getReferencePoint() {
         return ReferencePoint;
     }
@@ -565,11 +530,6 @@ public class WebParameters {
     public final void setReferencePoint(IBy value) {
         ReferencePoint = value;
     }
-
-    /**
-     * Gets or sets ElementToMove.
-     */
-    private IBy ElementToMove;
 
     public final IBy getElementToMove() {
         return ElementToMove;

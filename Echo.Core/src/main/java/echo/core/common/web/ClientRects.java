@@ -1,4 +1,4 @@
-package echo.core.common;// <summary>
+package echo.core.common.web;// <summary>
 
 /**
  * Class to easily manage the return value from <see cref="GetClientRectsCommand"/>. It also provides the script for that command.

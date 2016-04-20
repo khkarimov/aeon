@@ -1,8 +1,8 @@
 package echo.core.command_execution.commands;
 
 import echo.core.command_execution.commands.interfaces.ISelectorFinder;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 
 /**
  * Finds a web element.
@@ -15,7 +15,7 @@ public class SelectorFinder implements ISelectorFinder {
      * @param selector                   Element locator.
      * @return The narrowed down selector.
      */
-    public IBy FindSelector(IDriver driver, IBy selector) {
+    public IBy FindSelector(IWebDriver driver, IBy selector) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

@@ -1,14 +1,14 @@
 package echo.core.framework_interaction;
 
-import echo.core.common.BrowserType;
-import echo.core.common.ClientRects;
-import echo.core.common.JQueryStringType;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
+import echo.core.common.web.JQueryStringType;
 import echo.core.common.Resources;
 import echo.core.common.exceptions.ScriptExecutionException;
 import echo.core.common.parameters.ParameterObject;
 import echo.core.framework_abstraction.IAdapter;
 import echo.core.framework_abstraction.ICookie;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.framework_abstraction.IElement;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
@@ -22,16 +22,16 @@ import java.util.UUID;
 /**
  * Web framework adapter.
  */
-public class EchoDriver implements IDriver {
+public class EchoWebDriver implements IWebDriver {
     private IAdapter adapter;
 
     /**
-     * Initializes a new instance of the <see cref="EchoDriver"/> class.
+     * Initializes a new instance of the <see cref="EchoWebDriver"/> class.
      */
-    public EchoDriver() {
+    public EchoWebDriver() {
     }
 
-    public IDriver Configure(IAdapter adapter) {
+    public IWebDriver Configure(IAdapter adapter) {
         this.adapter = adapter;
 
         return this;

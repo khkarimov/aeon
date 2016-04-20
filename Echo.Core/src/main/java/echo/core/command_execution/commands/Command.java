@@ -6,8 +6,8 @@ import echo.core.command_execution.commands.interfaces.ICommand;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 /**
  * A command.
  */
-public abstract class Command implements ICommand<Consumer<IDriver>> {
+public abstract class Command implements ICommand<Consumer<IWebDriver>> {
 
     private ParameterObject parameterObject;
     private ICommandInitializer commandInitializer;
@@ -118,8 +118,8 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
      * <see cref="GetCommandDelegate"/> returns this property. This design allows internal child classes to override the frame switching mechanism while still protecting the mechanism from public overrides.
      * It is not intended for end-users to override this property; thus, it should be sealed at the end of the inheritance chain.
      */
-    public Consumer<IDriver> getCmdDelegateProperty() {
-        Consumer<IDriver> action = driver ->
+    public Consumer<IWebDriver> getCmdDelegateProperty() {
+        Consumer<IWebDriver> action = driver ->
         {
         };
 
@@ -148,7 +148,7 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
      *
      * @return The delegate property (<see cref="CmdDelegateProperty"/>).
      */
-    public final Consumer<IDriver> GetCommandDelegate() {
+    public final Consumer<IWebDriver> GetCommandDelegate() {
         return getCmdDelegateProperty();
     }
 
@@ -157,5 +157,5 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
      *
      * @param driver The framework abstraction facade.
      */
-    protected abstract void CommandDelegate(IDriver driver);
+    protected abstract void CommandDelegate(IWebDriver driver);
 }

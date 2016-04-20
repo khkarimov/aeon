@@ -3,8 +3,7 @@ package echo.core.command_execution.commands;
 import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebElementFinder;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.framework_abstraction.IElement;
 
 /**
@@ -36,7 +35,7 @@ public class WebElementFinder implements IWebElementFinder {
      * @param parameterObject            Parameter object with set element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    public final IElement FindElement(IDriver driver, ParameterObject parameterObject) {
+    public final IElement FindElement(IWebDriver driver, ParameterObject parameterObject) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

@@ -1,10 +1,10 @@
 package echo.core.command_execution.commands;
 
 import echo.core.command_execution.commands.interfaces.ISelectorFinder;
-import echo.core.common.IWebElementsFinder;
+import echo.core.common.web.IWebElementsFinder;
 import echo.core.common.parameters.ParameterObject;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.IWebDriver;
 import echo.core.framework_abstraction.IElement;
 
 import java.util.Collection;
@@ -51,7 +51,7 @@ public class WebElementsFinder implements IWebElementsFinder {
      * @param selector Elements locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
-    public final Collection<IElement> FindElements(IDriver driver, IBy selector) {
+    public final Collection<IElement> FindElements(IWebDriver driver, IBy selector) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

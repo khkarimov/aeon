@@ -1,6 +1,6 @@
-package echo.core.common.webobjects;
+package echo.core.common.web.selectors;
 
-import echo.core.common.webobjects.interfaces.IByWithJavaScriptClick;
+import echo.core.common.web.interfaces.IByWithJavaScriptClick;
 
 /**
  * Class for selecting elements using JavaScript (default is via a CSS selector).

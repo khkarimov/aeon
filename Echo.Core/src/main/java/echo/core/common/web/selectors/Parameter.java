@@ -1,6 +1,6 @@
-package echo.core.common.webobjects;
+package echo.core.common.web.selectors;
 
-import echo.core.common.StringUtils;
+import echo.core.common.helpers.StringUtils;
 
 /**
  * Struct for parameters for <see cref="ByJQuery"/>.

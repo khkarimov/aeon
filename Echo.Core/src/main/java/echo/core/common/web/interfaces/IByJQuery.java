@@ -1,9 +1,9 @@
-package echo.core.common.webobjects.interfaces;
+package echo.core.common.web.interfaces;
 
 import com.sun.javafx.fxml.expression.Expression;
-import echo.core.common.JQueryStringType;
-import echo.core.common.webobjects.ByJQuery;
-import echo.core.common.webobjects.ByJQueryWithArithmeticOperatorOverload;
+import echo.core.common.web.JQueryStringType;
+import echo.core.common.web.selectors.ByJQuery;
+import echo.core.common.web.selectors.ByJQueryWithArithmeticOperatorOverload;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;

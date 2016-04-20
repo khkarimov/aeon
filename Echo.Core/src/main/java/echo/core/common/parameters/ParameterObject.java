@@ -5,7 +5,7 @@ import echo.core.command_execution.commands.interfaces.ISelectorFinder;
 import echo.core.command_execution.commands.WebElementFinder;
 import echo.core.command_execution.commands.WebElementsFinder;
 import echo.core.common.logging.ILog;
-import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_interaction.ElementType;
 import echo.core.test_abstraction.locators.ILocator;
 

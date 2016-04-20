@@ -6,7 +6,7 @@ import echo.core.common.Resources;
 import echo.core.common.exceptions.TimeoutExpiredException;
 import echo.core.common.helpers.IClock;
 import echo.core.common.helpers.Sleep;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.IWebDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
@@ -17,11 +17,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class TimeoutDelegateRunner extends DelegateRunner {
-    private IDriver driver;
+    private IWebDriver driver;
     private IClock clock;
     private Duration timeout;
 
-    public TimeoutDelegateRunner(UUID guid, IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
+    public TimeoutDelegateRunner(UUID guid, IDelegateRunner successor, IWebDriver driver, IClock clock, Duration timeout) {
         super(guid, successor);
         this.driver = driver;
         this.clock = clock;
@@ -29,12 +29,12 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     }
 
     @Override
-    public void Execute(Consumer<IDriver> commandDelegate) {
+    public void Execute(Consumer<IWebDriver> commandDelegate) {
         ExecuteDelegate(() -> successor.Execute(commandDelegate));
     }
 
     @Override
-    public Object Execute(Function<IDriver, Object> commandDelegate) {
+    public Object Execute(Function<IWebDriver, Object> commandDelegate) {
         return ExecuteDelegateWithReturn(() -> successor.Execute(commandDelegate));
     }
 

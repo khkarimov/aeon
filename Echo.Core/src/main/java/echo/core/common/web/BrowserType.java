@@ -1,4 +1,4 @@
-package echo.core.common;
+package echo.core.common.web;
 
 /**
  * The browser on which to automate tests.

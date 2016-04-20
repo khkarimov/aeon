@@ -1,4 +1,4 @@
-package echo.core.common.webobjects;
+package echo.core.common.web.selectors;
 
 /**
  * Instantiated from JQuery + int, JQuery - int operator overload.
