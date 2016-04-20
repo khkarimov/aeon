@@ -2,7 +2,7 @@ package echo.core.command_execution;
 
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.IAdapter;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.test_abstraction.webenvironment.Parameters;
 
 /**
@@ -12,10 +12,10 @@ public class AutomationInfo {
     private Parameters parameters;
     private ICommandExecutionFacade commandExecutionFacade;
     private IAdapter adapter;
-    private IWebDriver driver;
+    private IDriver driver;
     private ILog log;
 
-    public AutomationInfo(Parameters parameters, IWebDriver driver, IAdapter adapter, ILog log) {
+    public AutomationInfo(Parameters parameters, IDriver driver, IAdapter adapter, ILog log) {
         this.driver = driver;
         this.adapter = adapter;
         this.log = log;
@@ -53,11 +53,11 @@ public class AutomationInfo {
         this.parameters = parameters;
     }
 
-    public IWebDriver getDriver() {
+    public IDriver getDriver() {
         return driver;
     }
 
-    public void setDriver(IWebDriver driver) {
+    public void setDriver(IDriver driver) {
         this.driver = driver;
     }
 }

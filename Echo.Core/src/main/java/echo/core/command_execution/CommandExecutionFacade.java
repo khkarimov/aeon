@@ -2,7 +2,7 @@ package echo.core.command_execution;
 
 import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.CommandWithReturn;
-import echo.core.command_execution.delegate_runners.interfaces.IDelegateRunnerFactory;
+import echo.core.command_execution.consumers.interfaces.IDelegateRunnerFactory;
 
 /**
  * The facade for the Command Execution layer.
@@ -30,8 +30,7 @@ public final class CommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
 
-        command.getParameterObject().setAutomationInfo(automationInfo);
-        delegateRunnerFactory.CreateInstance(command.getParameterObject()).Execute(command.GetCommandDelegate());
+        delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
     }
 
     /**
@@ -46,7 +45,6 @@ public final class CommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
 
-        command.getParameterObject().setAutomationInfo(automationInfo);
-        return delegateRunnerFactory.CreateInstance(command.getParameterObject()).Execute(command.GetCommandDelegate());
+        return delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
     }
 }

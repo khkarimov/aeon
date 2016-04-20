@@ -1,13 +1,10 @@
 package echo.core.command_execution.commands;
 
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
-import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.interfaces.ICommand;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.common.parameters.ParameterObject;
-import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.IDriver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -16,9 +13,9 @@ import java.util.function.Consumer;
 /**
  * A command.
  */
-public abstract class Command implements ICommand<Consumer<IWebDriver>> {
+public abstract class Command implements ICommand<Consumer<IDriver>> {
 
-    private ParameterObject parameterObject;
+    private UUID guid;
     private ICommandInitializer commandInitializer;
 
     /**
@@ -34,68 +31,26 @@ public abstract class Command implements ICommand<Consumer<IWebDriver>> {
     /**
      * Initializes a new instance of the <see cref="Command"/> class.
      *
-     * @param parameterObject    The framework param object.
-     * @param commandInitializer The command initializer.
+     * @param log     The log.
+     * @param message The message to log.
      */
-    protected Command(ParameterObject parameterObject, ICommandInitializer commandInitializer) {
-        this.parameterObject = parameterObject;
-        this.commandInitializer = commandInitializer;
-
-        if (parameterObject.getLog() == null) {
-            throw new IllegalArgumentException("log");
-        }
-
-        if (StringUtils.isEmpty(parameterObject.getMessage())) {
-            getParameterObject().setMessage(this.getClass().getSimpleName());
-        }
-
-        parameterObject.setGuid(UUID.randomUUID());
-        parameterObject.getLog().Info(
-                getParameterObject().getGuid(),
-                String.format(Resources.getString("CommandInstantiated_Info"), parameterObject.getMessage()));
-    }
-
-    /**
-     * Initializes a new instance of the <see cref="Command"/> class.
-     *
-     * @param log             The log.
-     * @param message         The message to log.
-     * @param switchMechanism The switch mechanism.
-     */
-    protected Command(ILog log, String message, Iterable<IBy> switchMechanism) {
+    protected Command(ILog log, String message, ICommandInitializer initializer) {
         if (log == null) {
             throw new IllegalArgumentException("log");
         }
 
-        if (StringUtils.isEmpty(parameterObject.getMessage())) {
+        this.commandInitializer = initializer;
+        this.guid = UUID.randomUUID();
+
+        if (StringUtils.isEmpty(message)) {
             message = this.getClass().getSimpleName();
         }
 
-        // This will only be called by selenium commands.
-        ParameterObject parameterObject = new ParameterObject(log, message);
-        setParameterObject(parameterObject);
-        setCommandInitializer(new WebCommandInitializer());
-        parameterObject.getWeb().setSwitchMechanism(switchMechanism);
-        parameterObject.setGuid(UUID.randomUUID());
-        parameterObject.getLog().Info(
-                getParameterObject().getGuid(),
-                String.format(Resources.getString("CommandInstantiated_Info"), parameterObject.getMessage()));
+        log.Info(
+                guid,
+                String.format(Resources.getString("CommandInstantiated_Info"), message));
     }
 
-    /**
-     * Gets or sets ParameterObject.
-     */
-    public final ParameterObject getParameterObject() {
-        return parameterObject;
-    }
-
-    public final void setParameterObject(ParameterObject value) {
-        parameterObject = value;
-    }
-
-    /**
-     * Gets or sets the command initializer.
-     */
     public final ICommandInitializer getCommandInitializer() {
         return commandInitializer;
     }
@@ -104,52 +59,21 @@ public abstract class Command implements ICommand<Consumer<IWebDriver>> {
         commandInitializer = value;
     }
 
-    /**
-     * Gets the GUID for the command.
-     */
     public final UUID getGuid() {
-        return getParameterObject().getGuid();
+        return guid;
     }
 
-    /**
-     * Gets the delegate for the command. It also defines the frame switching mechanism. Overriding this property is meant for custom commands only.
-     * <p>
-     * <p>
-     * <see cref="GetCommandDelegate"/> returns this property. This design allows internal child classes to override the frame switching mechanism while still protecting the mechanism from public overrides.
-     * It is not intended for end-users to override this property; thus, it should be sealed at the end of the inheritance chain.
-     */
-    public Consumer<IWebDriver> getCmdDelegateProperty() {
-        Consumer<IWebDriver> action = driver ->
+    public Consumer<IDriver> GetCommandDelegate() {
+        Consumer<IDriver> action = driver ->
         {
         };
 
-        action.andThen(getCommandInitializer().GetCommandAction(getParameterObject()));
+        if (commandInitializer != null) {
+            action.andThen(commandInitializer.SetContext(guid));
+        }
 
-        action.andThen(driver ->
-        {
-            if (getCommandInitializer().ResetParameterObject() != null) {
-                setParameterObject(getCommandInitializer().ResetParameterObject());
-            }
-        });
-
-        action.andThen(driver -> getCommandInitializer().SaveParameterObject(getParameterObject()));
-        action.andThen(driver -> CommandDelegate(driver));
+        action.andThen(driver -> DriverDelegate(driver));
         return action;
-    }
-
-    /**
-     * Gets the delegate for the command.
-     * <p>
-     * <p>
-     * GetCommandDelegate is a wrapper for the delegate and actual command.
-     * The internal virtual CmdDelegateProperty holds the logic for the delegate.
-     * In this way, the logic can be used by an outside class, but only modified by internal classes.
-     * This is intentionally not virtual.
-     *
-     * @return The delegate property (<see cref="CmdDelegateProperty"/>).
-     */
-    public final Consumer<IWebDriver> GetCommandDelegate() {
-        return getCmdDelegateProperty();
     }
 
     /**
@@ -157,5 +81,5 @@ public abstract class Command implements ICommand<Consumer<IWebDriver>> {
      *
      * @param driver The framework abstraction facade.
      */
-    protected abstract void CommandDelegate(IWebDriver driver);
+    protected abstract void DriverDelegate(IDriver driver);
 }

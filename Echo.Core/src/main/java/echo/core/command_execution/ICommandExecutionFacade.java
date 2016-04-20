@@ -1,6 +1,5 @@
 package echo.core.command_execution;
 
-import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.CommandWithReturn;
 

@@ -1,11 +1,8 @@
 package echo.core.command_execution.commands;
 
-import echo.core.command_execution.commands.initialization.ICommandInitializer;
-import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.common.parameters.ParameterObject;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.IDriver;
 
 /**
  * <p>Closes the currently focused browser window.</p>
@@ -20,17 +17,7 @@ public class CloseCommand extends Command {
      * @param log The logger.
      */
     public CloseCommand(ILog log) {
-        this(new ParameterObject(log, Resources.getString("CloseCommand_Info")), new WebCommandInitializer());
-    }
-
-    /**
-     * Initializes a new instance of the <see cref="CloseCommand"/> class.
-     *
-     * @param parameterObject    The framework param object.
-     * @param commandInitializer The command initializer.
-     */
-    public CloseCommand(ParameterObject parameterObject, ICommandInitializer commandInitializer) {
-        super(parameterObject, commandInitializer);
+        super(log, Resources.getString("CloseCommand_Info"));
     }
 
     /**
@@ -39,11 +26,11 @@ public class CloseCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver) {
+    protected void DriverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        driver.Close(getParameterObject());
+        driver.Close(getGuid());
     }
 }
