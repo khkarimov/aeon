@@ -16,7 +16,6 @@ public class SampleTest {
     @BeforeClass
     public static void fixtureSetUp() {
         product = Launch(Sample.class, Firefox);
-
         //product.Browser.NavigateTo("http://devausql03/ABsCarSearch");
     }
 
@@ -28,16 +27,5 @@ public class SampleTest {
     @Test
     public void SampleTest() {
         //product.Main.Submit.Click();
-
-        /*
-         row = product.Main.MyGrid.SelectRow(ById("").ByName(""))
-         product.Main.MyGrid.RowById("12345").AndName("bob").NameLabel.Exists();
-
-          */
-
-        // Grid Examples
-//        product.Main.MyGrid.Row.ById("12345").ByName("bob").NameLabel.Exists();
-//        product.Main.MyGrid.Row.ById("12345").ByName("bob").descriptionTextBox.Set("text to set");
-//        product.Main.MyGrid.Row.ById("12345").ByName("bob").IdLink.Click();
     }
 }
