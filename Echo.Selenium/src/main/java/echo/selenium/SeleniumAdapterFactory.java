@@ -2,7 +2,6 @@ package echo.selenium;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import echo.core.common.BrowserType;
 import echo.core.common.Resources;
 import echo.core.common.exceptions.ConfigurationException;
 import echo.core.common.exceptions.UnableToCreateDriverException;
@@ -10,6 +9,7 @@ import echo.core.common.exceptions.UnsupportedPlatformException;
 import echo.core.common.helpers.OsCheck;
 import echo.core.common.helpers.Process;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
 import echo.core.framework_abstraction.IAdapter;
 import echo.core.test_abstraction.webenvironment.IDevice;
 import echo.selenium.jQuery.*;

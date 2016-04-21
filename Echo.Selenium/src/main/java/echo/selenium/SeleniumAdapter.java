@@ -1,18 +1,14 @@
 package echo.selenium;
 
 import com.sun.glass.ui.Size;
-import echo.core.common.JQueryStringType;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
 import echo.core.common.logging.ILog;
-import echo.core.common.webobjects.By;
-import echo.core.common.webobjects.ByJQuery;
-import echo.core.common.webobjects.interfaces.IBy;
-import echo.core.framework_abstraction.Configuration;
-import echo.core.framework_abstraction.IAdapter;
-import echo.core.framework_abstraction.ICookie;
-import echo.core.framework_abstraction.IElement;
+import echo.core.common.web.JQueryStringType;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.common.web.selectors.ByJQuery;
+import echo.core.framework_abstraction.*;
 import echo.selenium.jQuery.IJavaScriptFlowExecutor;
 import echo.selenium.jQuery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +27,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SeleniumAdapter implements IAdapter, AutoCloseable {
+public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private ILog log;
@@ -78,7 +74,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param guid   A globally unique identifier associated with this call.
      * @param cookie The cookie to be added.
      */
-    public final void AddCookie(UUID guid, ICookie cookie) {
+    public final void AddCookie(UUID guid, IWebCookie cookie) {
         log.Trace(guid, "WebDriver.add_Cookie();");
         Cookie c = new Cookie(cookie.getName(), cookie.getValue(), cookie.getDomain(), cookie.getPath(), cookie.getExpiration());
         getWebDriver().manage().addCookie(c);
@@ -111,10 +107,10 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      * @return The list of cookies.
      */
-    public final List<ICookie> GetAllCookies(UUID guid) {
+    public final List<IWebCookie> GetAllCookies(UUID guid) {
         log.Trace(guid, "WebDriver.get_AllCookies();");
 
-        List<ICookie> result = getWebDriver().manage().getCookies()
+        List<IWebCookie> result = getWebDriver().manage().getCookies()
                 .stream()
                 .map(x -> new SeleniumCookie(x))
                 .collect(Collectors.toList());
@@ -130,11 +126,11 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param name Name of the cookie to retrieve.
      * @return The specified cookie.
      */
-    public final ICookie GetCookie(UUID guid, String name) {
+    public final IWebCookie GetCookie(UUID guid, String name) {
         log.Trace(guid, "WebDriver.get_Cookie();");
 
         Cookie cookie = getWebDriver().manage().getCookieNamed(name);
-        ICookie result = null;
+        IWebCookie result = null;
         if (cookie != null) {
             result = new SeleniumCookie(cookie);
         }
@@ -201,11 +197,56 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      * @return The currently focused element.
      */
-    public final IElement GetFocusedElement(UUID guid) {
+    public final WebControl GetFocusedElement(UUID guid) {
         log.Trace(guid, "WebDriver.switch_To().active_Element()");
         org.openqa.selenium.WebElement result = webDriver.switchTo().activeElement();
         log.Trace(guid, String.format("Result: %1$s", result));
         return new SeleniumElement(result, log);
+    }
+
+    @Override
+    public String GetElementTagName(UUID uuid, WebControl webControl) {
+        return null;
+    }
+
+    @Override
+    public void ClearElement(UUID uuid, WebControl webControl) {
+
+    }
+
+    @Override
+    public void GoBack(UUID uuid) {
+
+    }
+
+    @Override
+    public void ChooseSelectElementByValue(UUID uuid, WebControl webControl, String s) {
+
+    }
+
+    @Override
+    public void ChooseSelectElementByText(UUID uuid, WebControl webControl, String s) {
+
+    }
+
+    @Override
+    public void ClickElement(UUID uuid, WebControl webControl) {
+
+    }
+
+    @Override
+    public void SendKeysToElement(UUID uuid, WebControl webControl, String s) {
+
+    }
+
+    @Override
+    public String GetElementAttribute(UUID uuid, WebControl webControl, String s) {
+        return null;
+    }
+
+    @Override
+    public void SwitchToMainWindow(UUID uuid) {
+
     }
 
     /**
@@ -272,7 +313,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param findBy Selector used to search with.
      * @return An IWebElementAdapter matching the findBy.
      */
-    public IElement FindElement(UUID guid, IBy findBy) {
+    public WebControl FindElement(UUID guid, IBy findBy) {
         By by = (By) ((findBy instanceof By) ? findBy : null);
         if (by != null) {
             log.Trace(guid, String.format("WebDriver.FindElement(By.CssSelector(%1$s));", by));
@@ -285,7 +326,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
 
         ByJQuery byJQuery = (ByJQuery) ((findBy instanceof ByJQuery) ? findBy : null);
         if (byJQuery != null) {
-            return (IElement) FindElements(guid, byJQuery).toArray()[0];
+            return (WebControl) FindElements(guid, byJQuery).toArray()[0];
         }
 
         throw new UnsupportedOperationException();
@@ -298,10 +339,10 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param findBy Selector passed to search.
      * @return A ReadOnlyCollection of IWebElementAdapter.
      */
-    public final Collection<IElement> FindElements(UUID guid, IBy findBy) {
+    public final Collection<WebControl> FindElements(UUID guid, IBy findBy) {
         By by = (By) ((findBy instanceof By) ? findBy : null);
         if (by != null) {
-            Collection<IElement> collection;
+            Collection<WebControl> collection;
             log.Trace(guid, String.format("WebDriver.FindElements(By.CssSelector(%1$s));", by));
 
             try {
@@ -339,7 +380,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param findBy The element(s) to find.
      * @return A ReadOnlyCollection of IWebElementAdapters.
      */
-    private Collection<IElement> FindElements(UUID guid, ByJQuery findBy) {
+    private Collection<WebControl> FindElements(UUID guid, ByJQuery findBy) {
         String script = findBy.toString(JQueryStringType.ReturnElementArray);
         Object result = ExecuteScript(guid, script);
 
@@ -365,8 +406,8 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param findBy Selector object that we are using the find the <select></select> tag.
      * @return IWebSelectElementAdapter matching the findBy.
      */
-    public final IElement FindSelectElement(UUID guid, IBy findBy) {
-        IElement webElement = FindElement(guid, findBy);
+    public final WebControl FindSelectElement(UUID guid, IBy findBy) {
+        WebControl webElement = FindElement(guid, findBy);
         SeleniumElement elem = (SeleniumElement) ((webElement instanceof SeleniumElement) ? webElement : null);
         if (elem == null) {
             throw new UnsupportedSelectElementException(webElement.getClass());
@@ -392,7 +433,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param findBy The selector of the element <frame></frame> to switch to.
      */
     public final void SwitchToFrame(UUID guid, IBy findBy) {
-        IElement webElement = FindElement(guid, findBy);
+        WebControl webElement = FindElement(guid, findBy);
         SeleniumElement elem = (SeleniumElement) ((webElement instanceof SeleniumElement) ? webElement : null);
         if (elem == null) {
             throw new UnsupportedElementException(webElement.getClass());
@@ -658,8 +699,17 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param selector The element on the page to click.
      */
     public void OpenFileDialog(UUID guid, IBy selector) {
-        IElement element = FindElement(guid, selector);
-        element.Click(guid, moveMouseToOrigin);
+        WebControl element = FindElement(guid, selector);
+        Click(guid, element, moveMouseToOrigin);
+    }
+
+    private void Click(UUID guid, WebControl element, boolean moveMouseToOrigin) {
+        ((SeleniumElement)element).Click(guid, moveMouseToOrigin);
+    }
+
+    @Override
+    public void ScrollElementIntoView(UUID uuid, WebControl webControl) {
+
     }
 
     /**
@@ -774,7 +824,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param guid    A globally unique identifier associated with this call.
      * @param element The element to perform the Click on.
      */
-    public final void Click(UUID guid, IElement element) {
+    public final void Click(UUID guid, WebControl element) {
         // Check if wrapped (Might affect three browsers)
         String script = String.format(
                 "var rects = %1$s[0].getClientRects(); return rects.length;", element.getSelector().ToJQuery());
@@ -791,12 +841,12 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             WrappedClick(guid, element, new ArrayList<>(list));
         } else {
-            element.Click(guid, moveMouseToOrigin);
+            Click(guid, element, moveMouseToOrigin);
         }
     }
 
     // Linked to selenium issue https://code.google.com/p/selenium/issues/detail?id=6702 and https://code.google.com/p/selenium/issues/detail?id=4618
-    protected void WrappedClick(UUID guid, IElement element, List<Object> list) {
+    protected void WrappedClick(UUID guid, WebControl element, List<Object> list) {
         int x1 = (int) (list.get(0));
         int y1 = (int) (list.get(1));
         int x2 = (int) (list.get(2));
@@ -821,7 +871,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      * @param x       The x offset.
      * @param y       The y offset.
      */
-    public final void ClickAtOffset(UUID guid, IElement element, int x, int y) {
+    public final void ClickAtOffset(UUID guid, WebControl element, int x, int y) {
         SeleniumElement seleniumElement = (SeleniumElement) element;
 
         (new Actions(webDriver))
@@ -870,7 +920,7 @@ public class SeleniumAdapter implements IAdapter, AutoCloseable {
      *                 was called on, but any call that triggers a MouseUp event should suffice.
      *                 </p>
      */
-    public void ClickAndHold(UUID guid, IElement element, int duration) {
+    public void ClickAndHold(UUID guid, WebControl element, int duration) {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 

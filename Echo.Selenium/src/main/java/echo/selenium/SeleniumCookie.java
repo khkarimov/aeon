@@ -1,6 +1,6 @@
 package echo.selenium;
 
-import echo.core.framework_abstraction.ICookie;
+import echo.core.framework_abstraction.IWebCookie;
 import org.openqa.selenium.Cookie;
 
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Provides methods available for a cookie.
  */
-public class SeleniumCookie implements ICookie {
+public class SeleniumCookie implements IWebCookie {
     /**
      * The underlying cookie.
      */

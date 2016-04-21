@@ -1,6 +1,6 @@
 package main;
 
-import echo.core.common.webobjects.By;
+import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.context.Element;
 import echo.core.test_abstraction.context.Page;
 import main.samplegrid.SampleGrid;

@@ -1,8 +1,9 @@
 package echo.selenium;
 
 import echo.core.common.logging.ILog;
-import echo.core.common.webobjects.interfaces.IBy;
+import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.IElement;
+import echo.core.framework_abstraction.WebControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -16,7 +17,7 @@ import java.util.UUID;
 /**
  * Provides methods available for a web element.
  */
-public class SeleniumElement implements IElement {
+public class SeleniumElement extends WebControl {
     private static final int LONG_STRING_LENGTH = 50;
     private WebElement underlyingWebElement;
     private ILog log;
@@ -98,11 +99,11 @@ public class SeleniumElement implements IElement {
      * @param guid Uniquely identify the web element.
      * @return Returns the location of the web element.
      */
-    public final echo.core.framework_interaction.Point GetLocation(UUID guid) {
+    public final echo.core.common.Point GetLocation(UUID guid) {
         getLog().Trace(guid, "WebElement.get_Location();");
         org.openqa.selenium.Point result = getUnderlyingWebElement().getLocation();
         getLog().Trace(guid, String.format("Result: %1$s", result));
-        return new echo.core.framework_interaction.Point(result.getX(), result.getY());
+        return new echo.core.common.Point(result.getX(), result.getY());
     }
 
     /**
@@ -135,7 +136,7 @@ public class SeleniumElement implements IElement {
      * @param findBy Findby used to find the web element.
      * @return Returns the web element.
      */
-    public final IElement FindElement(UUID guid, IBy findBy) {
+    public final WebControl FindElement(UUID guid, IBy findBy) {
         if (findBy == null) {
             throw new IllegalArgumentException("findBy");
         }
@@ -153,12 +154,12 @@ public class SeleniumElement implements IElement {
      * @param findBy Findby used to find the web elements.
      * @return Returns a collection of web elements.
      */
-    public final Collection<IElement> FindElements(UUID guid, IBy findBy) {
+    public final Collection<WebControl> FindElements(UUID guid, IBy findBy) {
         if (findBy == null) {
             throw new IllegalArgumentException("findBy");
         }
 
-        List<IElement> result = new ArrayList<IElement>();
+        List<WebControl> result = new ArrayList<>();
 
         getLog().Trace(guid, String.format("WebElement.FindElements(By.CssSelector(%1$s));", findBy));
 

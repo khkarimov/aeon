@@ -96,17 +96,17 @@ public interface IWebAdapter extends IAdapter {
     Collection<WebControl> FindElements(UUID guid, IBy findBy);
 
     /**
-     * Finds the first <see cref="IElement"/> using the given method.
+     * Finds the first <see cref="WebControl"/> using the given method.
      *
      * @param guid   A globally unique identifier associated with this call.
      * @param findBy The locating mechanism to use.
-     * @return The first matching <see cref="IElement"/> on the current context.
+     * @return The first matching <see cref="WebControl"/> on the current context.
      * @throws IllegalArgumentException                 If <paramref name="findBy"/> is <see langword="null"/>.
      * @throws NoSuchElementException                   If there is no such element.
      * @throws ScriptReturnValueNotHtmlElementException If the JavaScript did not return an HTML element.
      * @throws UnsupportedSelectElementException        If the select element is not supported.
      */
-    IElement FindSelectElement(UUID guid, IBy findBy);
+    WebControl FindSelectElement(UUID guid, IBy findBy);
 
     /**
      * Selects either the first frame on the page or the main document when a page contains iframes.
@@ -345,7 +345,7 @@ public interface IWebAdapter extends IAdapter {
      * @param element  The web element to click.
      * @param duration Click for at least this long (in milliseconds).
      */
-    void ClickAndHold(UUID guid, IElement element, int duration);
+    void ClickAndHold(UUID guid, WebControl element, int duration);
 
     /**
      * Clicks the element at the specified (x, y) offset.
@@ -355,7 +355,7 @@ public interface IWebAdapter extends IAdapter {
      * @param x       The x offset.
      * @param y       The y offset.
      */
-    void ClickAtOffset(UUID guid, IElement element, int x, int y);
+    void ClickAtOffset(UUID guid, WebControl element, int x, int y);
 
     /**
      * Refreshes a Frame.
@@ -419,7 +419,7 @@ public interface IWebAdapter extends IAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @return The currently focused element.
      */
-    IElement GetFocusedElement(UUID guid);
+    WebControl GetFocusedElement(UUID guid);
 
     String GetElementTagName(UUID guid, WebControl webControl);
 

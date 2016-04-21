@@ -1,4 +1,4 @@
-package echo.core.framework_interaction;
+package echo.core.framework_abstraction;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.web.interfaces.IBy;

@@ -1,9 +1,8 @@
 package echo.selenium;
 
-import echo.core.common.BrowserType;
-import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.Configuration;
-import echo.core.framework_interaction.EchoDriver;
+import echo.core.framework_abstraction.EchoWebDriver;
+import echo.core.framework_abstraction.IWebAdapter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,7 +23,7 @@ public class SeleniumConfiguration extends Configuration {
     private boolean ensureCleanEnvironment;
 
     public SeleniumConfiguration() {
-        super(EchoDriver.class, SeleniumAdapter.class);
+        super(EchoWebDriver.class, IWebAdapter.class);
 
         this.chromeDirectory = System.getProperty("user.dir");
         this.ieDirectory = System.getProperty("user.dir");

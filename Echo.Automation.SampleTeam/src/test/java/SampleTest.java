@@ -3,7 +3,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static echo.core.common.BrowserType.Firefox;
+import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.context.Echo.Launch;
 
 /**

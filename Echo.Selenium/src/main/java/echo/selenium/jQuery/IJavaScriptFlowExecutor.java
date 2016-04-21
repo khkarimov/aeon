@@ -1,6 +1,6 @@
 package echo.selenium.jQuery;
 
-import echo.core.common.QuadFunction;
+import echo.core.common.helpers.QuadFunction;
 
 import java.util.UUID;
 import java.util.function.Function;

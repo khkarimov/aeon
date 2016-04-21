@@ -1,7 +1,5 @@
 package echo.core.test_abstraction.locators;
 
-import echo.core.framework_interaction.ElementType;
-
 import java.awt.*;
 
 /**
@@ -12,11 +10,6 @@ public interface ILocator {
      * Gets the location info.
      */
     String getLocationInfo();
-
-    /**
-     * Gets the element type.
-     */
-    ElementType getElementType();
 
     /**
      * Finds the location of the element.

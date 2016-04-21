@@ -2,13 +2,14 @@ package echo.selenium;
 
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.IElement;
+import echo.core.framework_abstraction.WebControl;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class SeleniumSelectElement implements IElement {
+public class SeleniumSelectElement extends WebControl {
     private Select underlyingSelectElement;
     private ILog log;
 
@@ -30,19 +31,19 @@ public class SeleniumSelectElement implements IElement {
         return getUnderlyingSelectElement().isMultiple();
     }
 
-    public final List<IElement> GetAllSelectedOptions(UUID guid) {
+    public final List<WebControl> GetAllSelectedOptions(UUID guid) {
         log.Trace(guid, "SelectElement.get_AllSelectedOptions();");
         return underlyingSelectElement.getAllSelectedOptions().stream()
                 .map(e -> new SeleniumElement(e, log))
                 .collect(Collectors.toList());
     }
 
-    public final IElement GetSelectedOption(UUID guid) {
+    public final WebControl GetSelectedOption(UUID guid) {
         log.Trace(guid, "SelectElement.get_SelectedOption();");
         return new SeleniumElement(getUnderlyingSelectElement().getFirstSelectedOption(), getLog());
     }
 
-    public final List<IElement> GetOptions(UUID guid) {
+    public final List<WebControl> GetOptions(UUID guid) {
         log.Trace(guid, "SelectElement.get_Options();");
         return underlyingSelectElement.getOptions().stream()
                 .map(e -> new SeleniumElement(e, log))

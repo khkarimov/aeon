@@ -1,6 +1,6 @@
 package main.samplegrid;
 
-import echo.core.common.webobjects.By;
+import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.context.elementtypes.Label;
 import echo.core.test_abstraction.context.elementtypes.Link;
 import echo.core.test_abstraction.context.elementtypes.TextBox;
