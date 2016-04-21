@@ -1,6 +1,6 @@
 package main.samplegrid;
 
-import echo.core.test_abstraction.context.controls.RowActions;
+import echo.core.test_abstraction.elements.RowActions;
 
 /**
  * Created by AdamC on 4/13/2016.

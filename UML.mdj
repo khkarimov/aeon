@@ -1482,7 +1482,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Elements",
+											"text": "Controls",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
@@ -5480,7 +5480,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFULwOFb90KU4A="
 									},
-									"name": "Elements",
+									"name": "Controls",
 									"ownedElements": [
 										{
 											"_type": "UMLDependency",
@@ -7267,7 +7267,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "ImageElement",
+											"text": "ImageControl",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
@@ -16156,7 +16156,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "ImageElement",
+					"name": "ImageControl",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",

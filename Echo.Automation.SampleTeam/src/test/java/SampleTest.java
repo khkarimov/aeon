@@ -4,7 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static echo.core.common.web.BrowserType.Firefox;
-import static echo.core.test_abstraction.context.Echo.Launch;
+import static echo.core.test_abstraction.product.Echo.Launch;
 
 /**
  * Created by DionnyS on 4/13/2016.
@@ -16,16 +16,18 @@ public class SampleTest {
     @BeforeClass
     public static void fixtureSetUp() {
         product = Launch(Sample.class, Firefox);
-        //product.Browser.NavigateTo("http://devausql03/ABsCarSearch");
+        product.Browser.GoToUrl("http://stefekmweb/");
     }
 
     @AfterClass
     public static void fixtureTearDown() {
-        //product.Browser.Quit();
+        product.Browser.Quit();
     }
 
     @Test
     public void SampleTest() {
-        //product.Main.Submit.Click();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.PasswordTextBox.Set("password");
+        product.Login.LoginButton.Click();
     }
 }

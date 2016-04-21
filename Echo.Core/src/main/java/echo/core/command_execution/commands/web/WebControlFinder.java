@@ -3,8 +3,8 @@ package echo.core.command_execution.commands.web;
 import echo.core.command_execution.commands.interfaces.IWebSelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebControlFinder;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.IWebDriver;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.framework_abstraction.drivers.IWebDriver;
+import echo.core.framework_abstraction.controls.web.WebControl;
 
 import java.util.UUID;
 
@@ -38,6 +38,8 @@ public class WebControlFinder implements IWebControlFinder {
             throw new IllegalArgumentException("driver");
         }
 
-        return driver.FindElement(guid, selectorFinder.FindSelector(driver, selector));
+        WebControl control = driver.FindElement(guid, selectorFinder.FindSelector(driver, selector));
+        control.setSelector(selector);
+        return control;
     }
 }

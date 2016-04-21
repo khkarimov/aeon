@@ -1,8 +1,8 @@
 package echo.core.common.web;
 
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.IWebDriver;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.framework_abstraction.drivers.IWebDriver;
+import echo.core.framework_abstraction.controls.web.WebControl;
 
 import java.util.Collection;
 

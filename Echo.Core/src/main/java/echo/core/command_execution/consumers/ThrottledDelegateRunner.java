@@ -2,8 +2,7 @@ package echo.core.command_execution.consumers;
 
 import echo.core.command_execution.consumers.interfaces.IDelegateRunner;
 import echo.core.common.helpers.Sleep;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 import org.joda.time.Duration;
 
 import java.util.UUID;

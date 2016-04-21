@@ -4,8 +4,8 @@ import com.sun.glass.ui.Size;
 import echo.core.command_execution.commands.Command;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
+import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
  * <p>Resizes the currently focused browser window.</p>

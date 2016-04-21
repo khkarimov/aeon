@@ -1,8 +1,7 @@
 package echo.core.command_execution.consumers.interfaces;
 
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 
 import java.util.function.Consumer;
 import java.util.function.Function;

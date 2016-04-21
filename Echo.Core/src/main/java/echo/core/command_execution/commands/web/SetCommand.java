@@ -5,8 +5,8 @@ import echo.core.common.exceptions.Select2Exception;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.IWebDriver;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.framework_abstraction.drivers.IWebDriver;
+import echo.core.framework_abstraction.controls.web.WebControl;
 import org.openqa.selenium.Keys;
 
 /**
@@ -21,12 +21,11 @@ public class SetCommand extends WebControlCommand {
      * Initializes a new instance of the <see cref="Command"/> class.
      *
      * @param log         The log.
-     * @param message     The message to log.
      * @param selector
      * @param initializer
      */
-    protected SetCommand(ILog log, String message, IBy selector, ICommandInitializer initializer, WebSelectOption selectOption, String value) {
-        super(log, message, selector, initializer);
+    public SetCommand(ILog log, IBy selector, ICommandInitializer initializer, WebSelectOption selectOption, String value) {
+        super(log, "Setting", selector, initializer);
         this.selectOption = selectOption;
         this.value = value;
     }

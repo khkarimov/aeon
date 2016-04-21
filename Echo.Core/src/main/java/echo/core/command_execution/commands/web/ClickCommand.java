@@ -1,8 +1,10 @@
 package echo.core.command_execution.commands.web;
 
+import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IWebDriver;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.drivers.IWebDriver;
+import echo.core.framework_abstraction.controls.web.WebControl;
 
 /**
  * Clicks an element
@@ -11,12 +13,9 @@ public class ClickCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the <see cref="Command"/> class.
-     *
-     * @param log     The logger.
-     * @param message The message to log.
      */
-    protected ClickCommand(ILog log, String message) {
-        super(log, message);
+    public ClickCommand(ILog log, IBy selector, ICommandInitializer initializer) {
+        super(log, "Clicking", selector, initializer);
     }
 
     @Override

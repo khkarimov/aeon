@@ -10,8 +10,7 @@ import echo.core.common.helpers.OsCheck;
 import echo.core.common.helpers.Process;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.BrowserType;
-import echo.core.framework_abstraction.IAdapter;
-import echo.core.test_abstraction.webenvironment.IDevice;
+import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.selenium.jQuery.*;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Duration;
@@ -69,7 +68,7 @@ public final class SeleniumAdapterFactory {
                 WebDriver driver;
                 if (enableSeleniumGrid) {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, log, browserType,
-                            language, maximizeBrowser, useMobileUserAgent, null));
+                            language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     driver = new FirefoxDriver(new FirefoxBinary(),
                             GetFirefoxProfile(language, useMobileUserAgent),
@@ -82,7 +81,7 @@ public final class SeleniumAdapterFactory {
             case Chrome:
                 if (enableSeleniumGrid) {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, log, browserType,
-                            language, maximizeBrowser, useMobileUserAgent, null));
+                            language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     DesiredCapabilities capabilities =
                             GetChromeOptions(language, maximizeBrowser, useMobileUserAgent, proxyLocation);
@@ -98,7 +97,7 @@ public final class SeleniumAdapterFactory {
             case InternetExplorer:
                 if (enableSeleniumGrid) {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, log, browserType,
-                            language, maximizeBrowser, useMobileUserAgent, null));
+                            language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     driver = new InternetExplorerDriver(
                             new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
@@ -113,7 +112,7 @@ public final class SeleniumAdapterFactory {
         }
     }
 
-    private static Capabilities GetCapabilities(UUID guid, ILog log, BrowserType browserType, String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent, IDevice device) {
+    private static Capabilities GetCapabilities(UUID guid, ILog log, BrowserType browserType, String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent) {
         DesiredCapabilities desiredCapabilities;
 
         switch (browserType) {

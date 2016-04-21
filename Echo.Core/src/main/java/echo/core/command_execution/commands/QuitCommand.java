@@ -2,7 +2,7 @@ package echo.core.command_execution.commands;
 
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 
 public class QuitCommand extends Command {
     /**

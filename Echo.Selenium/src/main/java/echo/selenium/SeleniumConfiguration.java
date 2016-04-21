@@ -1,8 +1,8 @@
 package echo.selenium;
 
-import echo.core.framework_abstraction.Configuration;
-import echo.core.framework_abstraction.EchoWebDriver;
-import echo.core.framework_abstraction.IWebAdapter;
+
+import echo.core.framework_abstraction.drivers.EchoWebDriver;
+import echo.core.test_abstraction.product.Configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;

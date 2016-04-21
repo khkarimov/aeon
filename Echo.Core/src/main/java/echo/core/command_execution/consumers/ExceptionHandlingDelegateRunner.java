@@ -3,8 +3,7 @@ package echo.core.command_execution.consumers;
 import echo.core.command_execution.consumers.interfaces.IDelegateRunner;
 import echo.core.command_execution.consumers.interfaces.IExceptionHandlerFactory;
 import echo.core.common.exceptions.TimeoutExpiredException;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 
 import java.util.UUID;
 import java.util.function.Consumer;

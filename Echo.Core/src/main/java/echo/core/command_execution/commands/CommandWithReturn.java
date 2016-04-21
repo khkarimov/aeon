@@ -4,11 +4,10 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.interfaces.ICommand;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**

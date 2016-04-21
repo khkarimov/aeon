@@ -3,8 +3,8 @@ package echo.core.command_execution.commands.web;
 import echo.core.command_execution.commands.Command;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
+import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
  * <p>Switches focus to the original window.</p>

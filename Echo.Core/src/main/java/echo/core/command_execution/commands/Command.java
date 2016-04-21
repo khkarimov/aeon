@@ -4,7 +4,7 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.command_execution.commands.interfaces.ICommand;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -66,13 +66,13 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
     public Consumer<IDriver> GetCommandDelegate() {
         Consumer<IDriver> action = driver ->
         {
+            if (commandInitializer != null) {
+                commandInitializer.SetContext(guid).accept(driver);
+            }
+
+            DriverDelegate(driver);
         };
 
-        if (commandInitializer != null) {
-            action.andThen(commandInitializer.SetContext(guid));
-        }
-
-        action.andThen(driver -> DriverDelegate(driver));
         return action;
     }
 

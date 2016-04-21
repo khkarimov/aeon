@@ -4,9 +4,9 @@ import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.framework_abstraction.drivers.IDriver;
+import echo.core.framework_abstraction.drivers.IWebDriver;
+import echo.core.framework_abstraction.controls.web.WebControl;
 
 /**
  * Serves as the base class for all web element commands that need a finder

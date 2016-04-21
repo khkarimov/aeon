@@ -1,8 +1,7 @@
 package echo.selenium;
 
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IElement;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.framework_abstraction.controls.web.WebControl;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package echo.core.command_execution.commands;
 
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 
 /**
  * <p>Closes the currently focused browser window.</p>

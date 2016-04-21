@@ -6,8 +6,7 @@ import echo.core.command_execution.consumers.interfaces.IDelegateRunnerFactory;
 import echo.core.common.web.BrowserType;
 import echo.core.common.helpers.Clock;
 import echo.core.common.helpers.IClock;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.drivers.IDriver;
 import org.joda.time.Duration;
 
 import java.util.UUID;
@@ -20,7 +19,6 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     private Duration defaultTimeout;
     private boolean promptUserForContinueOnExceptionDecision;
     private Duration throttleFactor;
-    private Duration throttleFactorForInternetExplorer;
 
     /**
      * Initializes a new instance of the <see cref="DelegateRunnerFactory"/> class.
@@ -29,14 +27,12 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
      * @param defaultTimeout                           The timeout to wait for.
      * @param promptUserForContinueOnExceptionDecision Instructs the framework to show a popup when an unhandled exception occurs prompting the users to decide if the test should attempt to continue.
      * @param throttleFactor                           TimeSpan used to slow down test execution. This value will be used as a pause between test actions.
-     * @param throttleFactorForInternetExplorer        The throttle factor for Internet Explorer.
      */
-    public DelegateRunnerFactory(IClock clock, Duration defaultTimeout, boolean promptUserForContinueOnExceptionDecision, Duration throttleFactor, Duration throttleFactorForInternetExplorer) {
+    public DelegateRunnerFactory(IClock clock, Duration defaultTimeout, boolean promptUserForContinueOnExceptionDecision, Duration throttleFactor) {
         this.clock = clock;
         this.defaultTimeout = defaultTimeout;
         this.promptUserForContinueOnExceptionDecision = promptUserForContinueOnExceptionDecision;
         this.throttleFactor = throttleFactor;
-        this.throttleFactorForInternetExplorer = throttleFactorForInternetExplorer;
     }
 
     /**
@@ -56,12 +52,11 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
      */
     public final IDelegateRunner CreateInstance(UUID guid, AutomationInfo automationInfo) {
         // TODO: JAVA_CONVERSION Use an IoC container to resolve the factory.
-        int mouseDragSpeed = automationInfo.getParameters().getInt("mouseDragSpeed");
         IDriver driver = automationInfo.getDriver();
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver, automationInfo.getLog());
         TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(guid, commandDelegateRunner, driver, clock, defaultTimeout);
         ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(guid, timeoutDelegateRunner, new SeleniumExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
-        return new ThrottledDelegateRunner(guid, exceptionHandlingDelegateRunner, automationInfo.getParameters().getParameter(BrowserType.class, "browserType") == BrowserType.InternetExplorer ? throttleFactorForInternetExplorer : throttleFactor);
+        return new ThrottledDelegateRunner(guid, exceptionHandlingDelegateRunner, throttleFactor);
     }
 }

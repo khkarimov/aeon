@@ -1,8 +1,8 @@
 package main;
 
 import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.context.Element;
-import echo.core.test_abstraction.context.Page;
+import echo.core.test_abstraction.elements.Element;
+import echo.core.test_abstraction.models.Page;
 import main.samplegrid.SampleGrid;
 
 /**

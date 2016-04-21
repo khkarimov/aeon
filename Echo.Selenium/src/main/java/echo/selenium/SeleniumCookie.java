@@ -1,6 +1,6 @@
 package echo.selenium;
 
-import echo.core.framework_abstraction.IWebCookie;
+import echo.core.framework_abstraction.controls.web.IWebCookie;
 import org.openqa.selenium.Cookie;
 
 import java.util.Date;

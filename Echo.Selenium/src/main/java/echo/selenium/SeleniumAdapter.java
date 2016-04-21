@@ -1,18 +1,24 @@
 package echo.selenium;
 
 import com.sun.glass.ui.Size;
+import com.thoughtworks.selenium.Selenium;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.common.web.selectors.ByJQuery;
-import echo.core.framework_abstraction.*;
+import echo.core.common.web.selectors.*;
+import echo.core.framework_abstraction.adapters.IAdapter;
+import echo.core.framework_abstraction.adapters.IWebAdapter;
+import echo.core.framework_abstraction.controls.web.IWebCookie;
+import echo.core.framework_abstraction.controls.web.WebControl;
+import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jQuery.IJavaScriptFlowExecutor;
 import echo.selenium.jQuery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -44,7 +50,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     public IAdapter Configure(Configuration configuration) {
-        return SeleniumAdapterFactory.Create((SeleniumConfiguration)configuration);
+        return SeleniumAdapterFactory.Create((SeleniumConfiguration) configuration);
     }
 
     public void close() {
@@ -206,7 +212,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public String GetElementTagName(UUID uuid, WebControl webControl) {
-        return null;
+        return ((SeleniumElement) webControl).getUnderlyingWebElement().getTagName();
     }
 
     @Override
@@ -231,12 +237,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void ClickElement(UUID uuid, WebControl webControl) {
-
+        ((SeleniumElement) webControl).getUnderlyingWebElement().click();
     }
 
     @Override
     public void SendKeysToElement(UUID uuid, WebControl webControl, String s) {
-
+        ((SeleniumElement) webControl).getUnderlyingWebElement().sendKeys(s);
     }
 
     @Override
@@ -314,7 +320,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return An IWebElementAdapter matching the findBy.
      */
     public WebControl FindElement(UUID guid, IBy findBy) {
-        By by = (By) ((findBy instanceof By) ? findBy : null);
+        echo.core.common.web.selectors.By by =
+                (echo.core.common.web.selectors.By)
+                        ((findBy instanceof echo.core.common.web.selectors.By) ? findBy : null);
+
         if (by != null) {
             log.Trace(guid, String.format("WebDriver.FindElement(By.CssSelector(%1$s));", by));
             try {
@@ -628,7 +637,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param args   Args to pass to JavaScriptExecutor.
      * @return An object returned from the script executed.
      */
-    public final Object ExecuteScript(UUID guid, String script, Object ... args) {
+    public final Object ExecuteScript(UUID guid, String script, Object... args) {
         try {
             return javaScriptExecutor.getExecutor()
                     .apply(new SeleniumScriptExecutor(webDriver, log), guid, script, Arrays.asList(args));
@@ -704,7 +713,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     private void Click(UUID guid, WebControl element, boolean moveMouseToOrigin) {
-        ((SeleniumElement)element).Click(guid, moveMouseToOrigin);
+        ((SeleniumElement) element).Click(guid, moveMouseToOrigin);
     }
 
     @Override
@@ -829,7 +838,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         String script = String.format(
                 "var rects = %1$s[0].getClientRects(); return rects.length;", element.getSelector().ToJQuery());
 
-        int rectsLength = (int) ExecuteScript(guid, script);
+        long rectsLength = (long) ExecuteScript(guid, script);
 
         if (rectsLength > 1) {
             script = String.format(

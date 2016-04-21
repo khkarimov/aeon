@@ -1,7 +1,7 @@
 package echo.core.command_execution.commands.interfaces;
 
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.IWebDriver;
+import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
  * Finds a web element.

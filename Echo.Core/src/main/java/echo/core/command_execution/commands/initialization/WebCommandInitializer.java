@@ -2,10 +2,10 @@ package echo.core.command_execution.commands.initialization;
 
 import echo.core.command_execution.commands.interfaces.IWebControlFinder;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.Control;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.framework_abstraction.IWebDriver;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.framework_abstraction.controls.Control;
+import echo.core.framework_abstraction.drivers.IDriver;
+import echo.core.framework_abstraction.drivers.IWebDriver;
+import echo.core.framework_abstraction.controls.web.WebControl;
 
 import java.util.UUID;
 import java.util.function.Consumer;

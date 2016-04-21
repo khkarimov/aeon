@@ -1,9 +1,9 @@
 package echo.core.command_execution;
 
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.IAdapter;
-import echo.core.framework_abstraction.IDriver;
-import echo.core.test_abstraction.webenvironment.Parameters;
+import echo.core.framework_abstraction.adapters.IAdapter;
+import echo.core.framework_abstraction.drivers.IDriver;
+import echo.core.test_abstraction.product.Parameters;
 
 /**
  * Provides access to data required for automation.

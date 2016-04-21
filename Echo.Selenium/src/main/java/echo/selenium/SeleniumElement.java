@@ -2,8 +2,7 @@ package echo.selenium;
 
 import echo.core.common.logging.ILog;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.IElement;
-import echo.core.framework_abstraction.WebControl;
+import echo.core.framework_abstraction.controls.web.WebControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
