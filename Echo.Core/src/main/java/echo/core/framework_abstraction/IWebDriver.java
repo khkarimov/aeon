@@ -12,8 +12,6 @@ import java.util.UUID;
  * The framework adapter interface.
  */
 public interface IWebDriver extends IDriver {
-    IWebDriver Configure(IAdapter adapter);
-
     WebControl FindElement(UUID guid, IBy selector);
 
     Collection<WebControl> FindElements(UUID guid, IBy selector);

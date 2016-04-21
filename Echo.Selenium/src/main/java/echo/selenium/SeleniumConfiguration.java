@@ -23,7 +23,7 @@ public class SeleniumConfiguration extends Configuration {
     private boolean ensureCleanEnvironment;
 
     public SeleniumConfiguration() {
-        super(EchoWebDriver.class, IWebAdapter.class);
+        super(EchoWebDriver.class, SeleniumAdapter.class);
 
         this.chromeDirectory = System.getProperty("user.dir");
         this.ieDirectory = System.getProperty("user.dir");

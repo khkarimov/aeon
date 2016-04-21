@@ -4,6 +4,7 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.Configuration;
 import echo.core.framework_abstraction.IAdapter;
+import echo.core.framework_abstraction.IDriver;
 import echo.core.framework_abstraction.IWebDriver;
 import echo.core.test_abstraction.webenvironment.Parameters;
 
@@ -33,14 +34,14 @@ public class Product {
     }
 
     protected void launch() {
-        IWebDriver driver;
+        IDriver driver;
         IAdapter adapter;
 
         try {
             adapter = (IAdapter)configuration.getAdapter().newInstance();
             adapter = adapter.Configure(configuration);
 
-            driver = (IWebDriver)configuration.getDriver().newInstance();
+            driver = (IDriver)configuration.getDriver().newInstance();
             driver.Configure(adapter);
 
             this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());

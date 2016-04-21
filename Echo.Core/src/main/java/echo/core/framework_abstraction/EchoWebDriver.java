@@ -2,7 +2,6 @@ package echo.core.framework_abstraction;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.*;
 
 import java.awt.*;
 import java.net.URL;
@@ -21,8 +20,9 @@ public class EchoWebDriver implements IWebDriver {
     public EchoWebDriver() {
     }
 
-    public IWebDriver Configure(IAdapter adapter) {
-        this.adapter = (IWebAdapter) adapter;
+    @Override
+    public IDriver Configure(IAdapter adapter) {
+        this.adapter = (IWebAdapter)adapter;
         return this;
     }
 
