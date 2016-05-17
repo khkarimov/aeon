@@ -10,7 +10,6 @@ public class Sample extends WebProduct {
     public LoginPage Login;
 
     public Sample() {
-        super(new SampleConfiguration());
         Main = new SamplePage();
     }
 
