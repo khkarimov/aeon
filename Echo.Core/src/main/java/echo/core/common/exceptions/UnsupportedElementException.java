@@ -13,7 +13,7 @@ public class UnsupportedElementException extends RuntimeException implements Ser
     /**
      * Initializes a new instance of the <see cref="UnsupportedSelectElementException"/> class.
      *
-     * @param forType The select element object’s <see cref="Type"/> which is not supported.
+     * @param forType The select element object's <see cref="Type"/> which is not supported.
      */
     public UnsupportedElementException(Class forType) {
         super(String.format(Resources.getString("UnsupportedElementException_ctor_DefaultMessage"), forType));
