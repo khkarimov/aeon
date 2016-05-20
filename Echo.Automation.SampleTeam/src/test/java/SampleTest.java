@@ -16,7 +16,7 @@ public class SampleTest {
     @BeforeClass
     public static void fixtureSetUp() {
         product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("http://stefekmweb/");
+        product.Browser.GoToUrl("http://stefekmweb.newgen.corp/");
     }
 
     @AfterClass
