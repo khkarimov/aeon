@@ -24,6 +24,7 @@ ext {
 }
 
 dependencies {
+    compile project(':Echo.Core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     compile 'org.apache.commons:commons-lang3:3.4'
