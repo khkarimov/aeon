@@ -67,6 +67,7 @@ public interface IWebDriver extends IDriver {
 
     void Resize(UUID guid, Size size);
 
+
 //
 //    /**
 //     * Check the element.
