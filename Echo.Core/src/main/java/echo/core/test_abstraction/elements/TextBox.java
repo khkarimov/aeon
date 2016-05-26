@@ -2,6 +2,7 @@ package echo.core.test_abstraction.elements;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
+import echo.core.command_execution.commands.web.ClearCommand;
 import echo.core.command_execution.commands.web.SetCommand;
 import echo.core.command_execution.commands.web.WebControlFinder;
 import echo.core.command_execution.commands.web.WebSelectorFinder;
@@ -33,6 +34,13 @@ public class TextBox extends Element {
                         value));
     }
 
+    public void Clear(){
+        info.getCommandExecutionFacade().Execute(info, new ClearCommand(
+                this.info.getLog(),
+                this.selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())
+        ));
+    }
     public void Blur() {
         throw new UnsupportedOperationException();
     }

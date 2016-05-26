@@ -217,7 +217,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void ClearElement(UUID uuid, WebControl webControl) {
-
+        ((SeleniumElement) webControl).Clear(uuid);
     }
 
     @Override

@@ -35,6 +35,8 @@ public interface IWebDriver extends IDriver {
 
     void AddCookie(UUID guid, IWebCookie cookie);
 
+    void DeleteCookie(UUID guid, String cookie);
+
     void GoBack(UUID guid);
 
     String GoToUrl(UUID guid, URL url);

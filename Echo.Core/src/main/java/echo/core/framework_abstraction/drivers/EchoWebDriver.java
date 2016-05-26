@@ -86,6 +86,9 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void DeleteCookie(UUID guid, String cookie) { adapter.DeleteCookie(guid, cookie);}
+
+    @Override
     public void GoBack(UUID guid) {
         adapter.GoBack(guid);
     }

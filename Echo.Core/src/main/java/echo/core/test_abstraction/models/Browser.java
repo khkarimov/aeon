@@ -2,6 +2,7 @@ package echo.core.test_abstraction.models;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.QuitCommand;
+import echo.core.command_execution.commands.web.AddCookieCommand;
 import echo.core.command_execution.commands.web.GoToUrlCommand;
 import echo.core.common.helpers.URLUtil;
 
@@ -22,4 +23,5 @@ public class Browser {
     public void Quit() {
         info.getCommandExecutionFacade().Execute(info, new QuitCommand(info.getLog()));
     }
+
 }
