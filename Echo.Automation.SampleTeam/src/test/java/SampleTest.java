@@ -41,11 +41,12 @@ public class SampleTest {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
-        //product.Browser.GoToUrl("http://www.google.com");
+        product.Browser.GoToUrl("http://www.google.com");
         product.Browser.GoBack();
         product.Browser.GoForward();
-
+        //scroll tests
+        product.Browser.GoToUrl("http://www.tutorialspoint.com/");
+        product.Browser.ScrollToEnd();
+        product.Browser.ScrollToTop();
     }
-        product.Login.LoginButton.DoubleClick();
-         }
 }
