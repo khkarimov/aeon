@@ -1,6 +1,7 @@
 package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
+import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
@@ -44,6 +45,9 @@ public class EchoWebDriver implements IWebDriver {
     public void Click(UUID guid, WebControl webControl) {
         adapter.Click(guid, webControl);
     }
+
+    @Override
+    public void DoubleClick(UUID guid, IBy selector) {adapter.DoubleClick(guid, selector);}
 
     @Override
     public void ScrollElementIntoView(UUID guid, WebControl control) {
@@ -99,9 +103,15 @@ public class EchoWebDriver implements IWebDriver {
     public void DeleteCookie(UUID guid, String cookie) { adapter.DeleteCookie(guid, cookie);}
 
     @Override
+    public void DeleteAllCookies(UUID guid) {adapter.DeleteAllCookies(guid);}
+
+    @Override
     public void GoBack(UUID guid) {
-        adapter.GoBack(guid);
+        adapter.Back(guid);
     }
+
+    @Override
+    public void GoForward(UUID guid) { adapter.Forward(guid); }
 
     @Override
     public String GoToUrl(UUID guid, URL url) {
@@ -172,6 +182,14 @@ public class EchoWebDriver implements IWebDriver {
     public void Quit(UUID guid) {
         adapter.Quit(guid);
     }
+
+    @Override
+    public void AcceptAlert(UUID guid) {adapter.AcceptAlert(guid);}
+
+    @Override
+    public void DismissAlert(UUID guid) {adapter.DismissAlert(guid);}
+
+
 
 //
 //    /**
@@ -883,8 +901,8 @@ public class EchoWebDriver implements IWebDriver {
 //     *
 //     * @param parameterObject The parameter object.
 //     */
-//    public final void DeleteAllCookies(ParameterObject parameterObject) {
-//        adapter.DeleteAllCookies(parameterObject.getGuid());
+//    public final void DeleteAllCookiesCommand(ParameterObject parameterObject) {
+//        adapter.DeleteAllCookiesCommand(parameterObject.getGuid());
 //    }
 //
 //    /**

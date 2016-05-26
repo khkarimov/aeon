@@ -221,11 +221,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     @Override
-    public void GoBack(UUID uuid) {
-
-    }
-
-    @Override
     public void ChooseSelectElementByValue(UUID uuid, WebControl webControl, String s) {
 
     }
@@ -916,7 +911,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *                 depending on the system, it could be much worse. In some cases, the accuracy is much better, approaching
      *                 1ms. This can happen on Win7 and .Net 4 and higher, but having those do not guarantee it.
      *                 </p>
-     *                 <p></p>
+     *                 <p></p>dou
      *                 <p>
      *                 Another consideration to take into account is the specific browser you are using this command with.
      *                 Initial testing showed IE and Firefox to have much worse response time with this command in comparison to

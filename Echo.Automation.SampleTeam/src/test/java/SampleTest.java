@@ -1,3 +1,6 @@
+import echo.core.common.web.BrowserSize;
+import echo.core.common.web.BrowserSizeMap;
+import echo.selenium.SeleniumCookie;
 import main.Sample;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -16,7 +19,7 @@ public class SampleTest {
     @BeforeClass
     public static void fixtureSetUp() {
         product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("http://www.tutorialspoint.com/");
+        product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
     }
 
     @AfterClass
@@ -26,10 +29,23 @@ public class SampleTest {
 
     @Test
     public void SampleTest() {
-        //product.Login.UserNameTextBox.Set("usa-canu");
-        //product.Login.PasswordTextBox.Set("password");
-        //product.Login.LoginButton.Click();
-        product.Browser.ScrollToEnd();
-        product.Browser.ScrollToTop();
+        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.TabletLandscape));
+        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.SmallTabletLandscape));
+        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.MobileLandscape));
+        product.Browser.Maximize();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.UserNameTextBox.Clear();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.PasswordTextBox.Set("password");
+        product.Browser.Refresh();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.PasswordTextBox.Set("password");
+        product.Login.LoginButton.Click();
+        //product.Browser.GoToUrl("http://www.google.com");
+        product.Browser.GoBack();
+        product.Browser.GoForward();
+
     }
+        product.Login.LoginButton.DoubleClick();
+         }
 }
