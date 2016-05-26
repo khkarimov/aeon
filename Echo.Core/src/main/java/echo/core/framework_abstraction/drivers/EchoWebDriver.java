@@ -891,8 +891,8 @@ public class EchoWebDriver implements IWebDriver {
 //     *
 //     * @param parameterObject The parameter object.
 //     */
-//    public final void DeleteAllCookies(ParameterObject parameterObject) {
-//        adapter.DeleteAllCookies(parameterObject.getGuid());
+//    public final void DeleteAllCookiesCommand(ParameterObject parameterObject) {
+//        adapter.DeleteAllCookiesCommand(parameterObject.getGuid());
 //    }
 //
 //    /**

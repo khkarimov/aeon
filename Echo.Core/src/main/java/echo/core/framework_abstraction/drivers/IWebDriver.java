@@ -461,7 +461,7 @@ public interface IWebDriver extends IDriver {
 //     *
 //     * @param parameterObject The parameter object.
 //     */
-//    void DeleteAllCookies(ParameterObject parameterObject);
+//    void DeleteAllCookiesCommand(ParameterObject parameterObject);
 //
 //    /**
 //     * Deletes a cookie.

@@ -1,5 +1,7 @@
 package echo.core.test_abstraction.models;
 
+import com.sun.glass.ui.Size;
+
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.QuitCommand;
 import echo.core.command_execution.commands.web.*;
@@ -32,6 +34,14 @@ public class Browser {
 
     public void DeleteAllCookies() {
         info.getCommandExecutionFacade().Execute(info, new DeleteAllCookiesCommand(info.getLog()));
+    }
+
+    public void Refresh() {
+        info.getCommandExecutionFacade().Execute(info, new RefreshCommand(info.getLog()));
+    }
+
+    public void Resize(Size size){
+        info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), size));
     }
 
     public void AcceptAlert() {
