@@ -44,6 +44,10 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new MaximizeCommand(info.getLog()));
     }
 
+    public void GoForward() {
+        info.getCommandExecutionFacade().Execute(info, new GoForwardCommand(info.getLog()));
+    }
+
     public void Quit() {
         info.getCommandExecutionFacade().Execute(info, new QuitCommand(info.getLog()));
     }

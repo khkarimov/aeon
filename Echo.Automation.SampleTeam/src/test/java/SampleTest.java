@@ -29,7 +29,12 @@ public class SampleTest {
     public void SampleTest() {
         product.Browser.Maximize();
         product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.UserNameTextBox.Clear();
+        product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
+        product.Browser.GoToUrl("http://www.google.com");
+        product.Browser.GoBack();
+        product.Browser.GoForward();
     }
 }

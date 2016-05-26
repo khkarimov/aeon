@@ -45,6 +45,8 @@ public interface IWebDriver extends IDriver {
 
     void GoBack(UUID guid);
 
+    void GoForward(UUID guid);
+
     String GoToUrl(UUID guid, URL url);
 
     void Maximize(UUID guid);

@@ -221,11 +221,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     @Override
-    public void GoBack(UUID uuid) {
-
-    }
-
-    @Override
     public void ChooseSelectElementByValue(UUID uuid, WebControl webControl, String s) {
 
     }

@@ -1,6 +1,7 @@
 package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
+import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
@@ -93,8 +94,11 @@ public class EchoWebDriver implements IWebDriver {
 
     @Override
     public void GoBack(UUID guid) {
-        adapter.GoBack(guid);
+        adapter.Back(guid);
     }
+
+    @Override
+    public void GoForward(UUID guid) { adapter.Forward(guid); }
 
     @Override
     public String GoToUrl(UUID guid, URL url) {
@@ -171,6 +175,8 @@ public class EchoWebDriver implements IWebDriver {
 
     @Override
     public void DismissAlert(UUID guid) {adapter.DismissAlert(guid);}
+
+
 
 //
 //    /**
