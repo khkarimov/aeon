@@ -16,7 +16,7 @@ public class SampleTest {
     @BeforeClass
     public static void fixtureSetUp() {
         product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
+        product.Browser.GoToUrl("http://www.tutorialspoint.com/");
     }
 
     @AfterClass
@@ -26,8 +26,10 @@ public class SampleTest {
 
     @Test
     public void SampleTest() {
-        product.Login.UserNameTextBox.Set("usa-canu");
-        product.Login.PasswordTextBox.Set("password");
-        product.Login.LoginButton.Click();
+        //product.Login.UserNameTextBox.Set("usa-canu");
+        //product.Login.PasswordTextBox.Set("password");
+        //product.Login.LoginButton.Click();
+        product.Browser.ScrollToEnd();
+        product.Browser.ScrollToTop();
     }
 }

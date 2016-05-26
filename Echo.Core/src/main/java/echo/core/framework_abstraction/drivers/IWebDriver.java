@@ -21,6 +21,10 @@ public interface IWebDriver extends IDriver {
 
     void ScrollElementIntoView(UUID guid, WebControl webControl);
 
+    void ScrollToTop(UUID guid);
+
+    void ScrollToEnd(UUID guid);
+
     void SwitchToDefaultContent(UUID guid);
 
     void FocusWindow(UUID guid);

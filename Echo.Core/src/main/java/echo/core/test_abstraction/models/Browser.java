@@ -4,6 +4,8 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.QuitCommand;
 import echo.core.command_execution.commands.web.AddCookieCommand;
 import echo.core.command_execution.commands.web.GoToUrlCommand;
+import echo.core.command_execution.commands.web.ScrollToEndCommand;
+import echo.core.command_execution.commands.web.ScrollToTopCommand;
 import echo.core.common.helpers.URLUtil;
 
 /**
@@ -24,4 +26,11 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new QuitCommand(info.getLog()));
     }
 
+    public void ScrollToTop(){
+        info.getCommandExecutionFacade().Execute(info, new ScrollToTopCommand(info.getLog()));
+    }
+
+    public void ScrollToEnd(){
+       info.getCommandExecutionFacade().Execute(info, new ScrollToEndCommand(info.getLog()));
+    }
 }

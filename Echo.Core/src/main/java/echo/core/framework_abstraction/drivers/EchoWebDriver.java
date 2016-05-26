@@ -51,6 +51,16 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void ScrollToTop(UUID guid){
+        adapter.ScrollToTop(guid);
+    }
+
+    @Override
+    public void ScrollToEnd(UUID guid){
+        adapter.ScrollToEnd(guid);
+    }
+
+    @Override
     public void SwitchToDefaultContent(UUID guid) {
         adapter.SwitchToDefaultContent(guid);
     }
