@@ -46,6 +46,9 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void DoubleClick(UUID guid, IBy selector) {adapter.DoubleClick(guid, selector);}
+
+    @Override
     public void ScrollElementIntoView(UUID guid, WebControl control) {
         adapter.ScrollElementIntoView(guid, control);
     }
@@ -93,7 +96,7 @@ public class EchoWebDriver implements IWebDriver {
 
     @Override
     public void GoBack(UUID guid) {
-        adapter.GoBack(guid);
+        adapter.Back(guid);
     }
 
     @Override

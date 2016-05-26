@@ -19,6 +19,8 @@ public interface IWebDriver extends IDriver {
 
     void Click(UUID guid, WebControl webControl);
 
+    void DoubleClick(UUID guid, IBy selector);
+
     void AcceptAlert(UUID guid);
 
     void DismissAlert(UUID guid);

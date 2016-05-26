@@ -31,7 +31,7 @@ public class Browser {
     }
 
     public void DeleteAllCookies() {
-        info.getCommandExecutionFacade().Execute(info, new DeleteAllCookies(info.getLog()));
+        info.getCommandExecutionFacade().Execute(info, new DeleteAllCookiesCommand(info.getLog()));
     }
 
     public void AcceptAlert() {

@@ -9,9 +9,9 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by RafaelT on 5/26/2016.
  */
-public class DeleteAllCookies extends Command {
+public class DeleteAllCookiesCommand extends Command {
 
-    public DeleteAllCookies (ILog log) {
+    public DeleteAllCookiesCommand (ILog log) {
         super(log, Resources.getString("DeleteAllCookieCommand_Info"));
     }
 

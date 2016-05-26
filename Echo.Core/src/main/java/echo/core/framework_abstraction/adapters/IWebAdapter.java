@@ -427,8 +427,6 @@ public interface IWebAdapter extends IAdapter {
 
     void ClearElement(UUID guid, WebControl webControl);
 
-    void GoBack(UUID guid);
-
     void ChooseSelectElementByValue(UUID guid, WebControl control, String value);
 
     void ChooseSelectElementByText(UUID guid, WebControl control, String value);
