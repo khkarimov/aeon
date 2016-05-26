@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.Command;
+import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
@@ -12,7 +13,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 public class AcceptAlertCommand extends Command {
 
     public AcceptAlertCommand(ILog log) {
-        super(log, "Accepting Alert");
+        super(log, Resources.getString("AcceptAlertCommand_Info"));
     }
 
     @Override

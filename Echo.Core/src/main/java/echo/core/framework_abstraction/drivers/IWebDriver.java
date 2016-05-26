@@ -21,6 +21,8 @@ public interface IWebDriver extends IDriver {
 
     void AcceptAlert(UUID guid);
 
+    void DismissAlert(UUID guid);
+
     void ScrollElementIntoView(UUID guid, WebControl webControl);
 
     void SwitchToDefaultContent(UUID guid);

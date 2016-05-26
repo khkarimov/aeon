@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.Command;
+import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.drivers.IDriver;
@@ -19,7 +20,7 @@ public class DeleteCookieCommand extends Command {
      * @param cookie Name of the cookie to be added.
     */
     public DeleteCookieCommand(ILog log, String cookie) {
-        super(log, "Deleting a cookie");
+        super(log, Resources.getString("DeleteCookieCommand_Info"));
         this.cookie = cookie;
     }
 

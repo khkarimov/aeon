@@ -1,7 +1,6 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.Command;
-import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
@@ -9,14 +8,13 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by RafaelT on 5/26/2016.
  */
-public class DeleteAllCookies extends Command {
+public class DismissAlertCommand extends Command {
 
-    public DeleteAllCookies (ILog log) {
-        super(log, Resources.getString("DeleteAllCookieCommand_Info"));
+    public DismissAlertCommand (ILog log) {
+        super(log, "DismissAlertCommand_Info");
     }
-
     @Override
     protected void DriverDelegate(IDriver driver) {
-        ((IWebDriver) driver).DeleteAllCookies(getGuid());
+        ((IWebDriver) driver).DismissAlert(getGuid());
     }
 }

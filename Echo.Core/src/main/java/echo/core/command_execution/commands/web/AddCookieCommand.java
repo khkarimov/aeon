@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.Command;
+import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
@@ -19,7 +20,7 @@ public class AddCookieCommand extends Command {
      * @param cookie Cookie to be added.
      */
     public AddCookieCommand(ILog log, IWebCookie cookie) {
-        super(log, "Adding cookie");
+        super(log, Resources.getString("AddCookieCommand_Info"));
         this.cookie = cookie;
     }
 

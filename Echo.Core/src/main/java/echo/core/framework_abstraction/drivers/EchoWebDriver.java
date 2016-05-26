@@ -169,6 +169,9 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void AcceptAlert(UUID guid) {adapter.AcceptAlert(guid);}
 
+    @Override
+    public void DismissAlert(UUID guid) {adapter.DismissAlert(guid);}
+
 //
 //    /**
 //     * Checks an element.
