@@ -2,10 +2,7 @@ package echo.core.test_abstraction.models;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.QuitCommand;
-import echo.core.command_execution.commands.web.AcceptAlertCommand;
-import echo.core.command_execution.commands.web.AddCookieCommand;
-import echo.core.command_execution.commands.web.DeleteCookieCommand;
-import echo.core.command_execution.commands.web.GoToUrlCommand;
+import echo.core.command_execution.commands.web.*;
 import echo.core.common.helpers.URLUtil;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 
@@ -29,6 +26,10 @@ public class Browser {
 
     public void AddCookie(IWebCookie cookie) {
         info.getCommandExecutionFacade().Execute(info, new AddCookieCommand(info.getLog(), cookie));
+    }
+
+    public void DeleteAllCookies() {
+        info.getCommandExecutionFacade().Execute(info, new DeleteAllCookies(info.getLog()));
     }
 
     public void AcceptAlert() {
