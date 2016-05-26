@@ -27,6 +27,7 @@ public class SampleTest {
 
     @Test
     public void SampleTest() {
+        product.Browser.Maximize();
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();

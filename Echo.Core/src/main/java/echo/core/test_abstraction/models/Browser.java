@@ -40,6 +40,10 @@ public class Browser {
 
     public void DismissAlert() {info.getCommandExecutionFacade().Execute(info, new DismissAlertCommand(info.getLog()));}
 
+    public void Maximize() {
+        info.getCommandExecutionFacade().Execute(info, new MaximizeCommand(info.getLog()));
+    }
+
     public void Quit() {
         info.getCommandExecutionFacade().Execute(info, new QuitCommand(info.getLog()));
     }
