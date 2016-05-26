@@ -1,3 +1,4 @@
+import echo.selenium.SeleniumCookie;
 import main.Sample;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

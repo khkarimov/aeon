@@ -21,8 +21,6 @@ public class DeleteCookieCommand extends Command {
     public DeleteCookieCommand(ILog log, String cookie) {
         super(log, "Deleting a cookie");
         this.cookie = cookie;
-
-
     }
 
     /**
