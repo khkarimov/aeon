@@ -37,4 +37,6 @@ public class SampleTest {
         product.Browser.GoBack();
         product.Browser.GoForward();
     }
+        product.Login.LoginButton.DoubleClick();
+         }
 }
