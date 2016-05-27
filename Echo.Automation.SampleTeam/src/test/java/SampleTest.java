@@ -32,10 +32,10 @@ public class SampleTest {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
-        //product.Browser.GoBack();
-        //product.Browser.GoForward();
-        product.Home.ViewPayStatement.Click();
-        System.out.println("After Click");
+        product.Browser.GoBack();
+        product.Browser.GoForward();
+        //product.Home.ViewPayStatement.Click();
+        //System.out.println("After Click");
     }
 
     @Test
@@ -53,9 +53,9 @@ public class SampleTest {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
-        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.TabletLandscape));
-        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.SmallTabletLandscape));
-        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.MobileLandscape));
+        product.Browser.Resize(BrowserSize.TabletLandscape);
+        product.Browser.Resize(BrowserSize.SmallTabletLandscape);
+        product.Browser.Resize(BrowserSize.MobileLandscape);
         product.Browser.Maximize();
 
     }
@@ -74,9 +74,9 @@ public class SampleTest {
     @Test
     public void SampleTest2()
     {
-        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.TabletLandscape));
-        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.SmallTabletLandscape));
-        product.Browser.Resize(BrowserSizeMap.Map(BrowserSize.MobileLandscape));
+        product.Browser.Resize(BrowserSize.TabletLandscape);
+        product.Browser.Resize(BrowserSize.SmallTabletLandscape);
+        product.Browser.Resize(BrowserSize.MobileLandscape);
         product.Browser.Maximize();
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.UserNameTextBox.Clear();

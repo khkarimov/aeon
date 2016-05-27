@@ -10,6 +10,8 @@ import echo.core.command_execution.commands.web.*;
 import echo.core.command_execution.commands.web.ScrollToEndCommand;
 import echo.core.command_execution.commands.web.ScrollToTopCommand;
 import echo.core.common.helpers.URLUtil;
+import echo.core.common.web.BrowserSize;
+import echo.core.common.web.BrowserSizeMap;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 
 /**
@@ -44,8 +46,8 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new RefreshCommand(info.getLog()));
     }
 
-    public void Resize(Size size){
-        info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), size));
+    public void Resize(BrowserSize size){
+        info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), BrowserSizeMap.Map(size)));
     }
 
     public void AcceptAlert() {
