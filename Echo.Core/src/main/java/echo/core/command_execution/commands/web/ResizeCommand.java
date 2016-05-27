@@ -4,6 +4,8 @@ import com.sun.glass.ui.Size;
 import echo.core.command_execution.commands.Command;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserSize;
+import echo.core.common.web.BrowserSizeMap;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
@@ -23,9 +25,9 @@ public class ResizeCommand extends Command {
      * @param log  The logger.
      * @param size The new browser size.
      */
-    public ResizeCommand(ILog log, Size size) {
+    public ResizeCommand(ILog log,BrowserSize size) {
         super(log, Resources.getString("ResizeCommand_Info"));
-        this.size = size;
+        this.size = BrowserSizeMap.Map(size);
     }
 
     /**

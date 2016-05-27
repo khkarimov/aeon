@@ -47,7 +47,7 @@ public class Browser {
     }
 
     public void Resize(BrowserSize size){
-        info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), BrowserSizeMap.Map(size)));
+        info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), size));
     }
 
     public void AcceptAlert() {
