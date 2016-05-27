@@ -34,6 +34,9 @@ public class ScrollToEndCommand extends Command {
      */
     @Override
     protected void DriverDelegate(IDriver driver){
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
+        }
         ((IWebDriver) driver).ScrollToEnd(getGuid());
     }
 }

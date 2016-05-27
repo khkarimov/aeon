@@ -242,7 +242,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public String GetElementAttribute(UUID uuid, WebControl webControl, String s) {
-        return null;
+       return ((SeleniumElement) webControl).getUnderlyingWebElement().getAttribute(s);
     }
 
     @Override

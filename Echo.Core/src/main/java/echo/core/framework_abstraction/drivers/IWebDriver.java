@@ -71,6 +71,8 @@ public interface IWebDriver extends IDriver {
 
     void SwitchToMainWindow(UUID guid);
 
+    String SwitchToWindowByTitle(UUID guid, String title);
+
     void Resize(UUID guid, Size size);
 
 

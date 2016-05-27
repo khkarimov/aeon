@@ -35,6 +35,9 @@ public class ScrollToTopCommand extends Command{
      */
     @Override
     protected void DriverDelegate(IDriver driver){
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
+        }
         ((IWebDriver) driver).ScrollToTop(getGuid());
     }
 }

@@ -159,6 +159,11 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public String SwitchToWindowByTitle(UUID guid, String title){
+        return adapter.SwitchToWindowByTitle(guid, title);
+    }
+
+    @Override
     public void Resize(UUID guid, Size size) {
         adapter.Resize(guid, size);
     }
