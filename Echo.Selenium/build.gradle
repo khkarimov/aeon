@@ -24,6 +24,7 @@ ext {
 }
 
 dependencies {
+    compile project(':Echo.Core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     compile 'ro.fortsoft.pf4j:pf4j:0.13.1'

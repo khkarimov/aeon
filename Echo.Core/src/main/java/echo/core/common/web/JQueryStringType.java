@@ -45,17 +45,17 @@ public enum JQueryStringType {
     ReturnElementArray,
 
     /**
-     * JavaScript code for setting an element’s text.
+     * JavaScript code for setting an element's text.
      */
     SetElementText,
 
     /**
-     * JavaScript code for setting a body’s text.
+     * JavaScript code for setting a body's text.
      */
     SetBodyText,
 
     /**
-     * JavaScript code for setting a div’s text.
+     * JavaScript code for setting a div's text.
      */
     SetDivText,
 
