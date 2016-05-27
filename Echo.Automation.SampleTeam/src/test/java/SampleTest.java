@@ -26,7 +26,7 @@ public class SampleTest {
 
     @Test
     public void SampleTest() {
-        product.Login.UserNameTextBox.Set("usa-canu1");
+        product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
     }

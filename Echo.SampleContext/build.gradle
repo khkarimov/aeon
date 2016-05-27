@@ -20,11 +20,9 @@ configurations {
 
 dependencies {
     compile project(':Echo.Core')
-    //compile project(':Echo.Selenium')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     echo fileTree(dir: '../distrib/', include: 'Echo.Core-*.jar')
-    //echo fileTree(dir: '../distrib/', include: 'Echo.Selenium-*.jar')
 }
 
 jar {

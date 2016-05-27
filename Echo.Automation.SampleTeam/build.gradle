@@ -17,7 +17,7 @@ ext {
 dependencies {
     compile project(':Echo.SampleContext')
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
+
     compile 'ro.fortsoft.pf4j:pf4j:0.13.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
@@ -36,6 +36,5 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
 
     compile fileTree(dir: '../distrib/', include: 'Echo.Core-*.jar')
-    //compile fileTree(dir: '../distrib/', include: 'Echo.Selenium-*.jar')
     compile fileTree(dir: '../distrib/', include: 'Echo.SampleContext-*.jar')
 }
