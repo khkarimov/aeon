@@ -9,9 +9,11 @@ import echo.core.test_abstraction.elements.*;
  */
 public class HomePage {
     private AutomationInfo automationInfo;
+    public Link ViewPayStatement;
 
     public HomePage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
+        ViewPayStatement = new Link(automationInfo, By.CssSelector("a[id*='viewPayStatementLink']"));
     }
 
 

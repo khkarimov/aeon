@@ -17,13 +17,13 @@ public class SampleTest {
     private static Sample product;
 
     @Before
-    public static void fixtureSetUp() {
+    public void SetUp() {
         product = Launch(Sample.class, Firefox);
         product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
     }
 
     @After
-    public static void fixtureTearDown() {
+    public void TearDown() {
         product.Browser.Quit();
     }
 
@@ -32,8 +32,10 @@ public class SampleTest {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
-        product.Browser.GoBack();
-        product.Browser.GoForward();
+        //product.Browser.GoBack();
+        //product.Browser.GoForward();
+        product.Home.ViewPayStatement.Click();
+        System.out.println("After Click");
     }
 
     @Test
@@ -65,8 +67,10 @@ public class SampleTest {
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.DoubleClick();
         product.Browser.GoToUrl("http://www.tutorialspoint.com");
-        product.Browser.
+        product.Browser.ScrollToEnd();
+        product.Browser.ScrollToTop();
     }
+
     @Test
     public void SampleTest2()
     {
