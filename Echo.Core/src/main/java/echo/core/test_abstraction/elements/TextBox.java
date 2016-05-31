@@ -2,10 +2,7 @@ package echo.core.test_abstraction.elements;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
-import echo.core.command_execution.commands.web.ClearCommand;
-import echo.core.command_execution.commands.web.SetCommand;
-import echo.core.command_execution.commands.web.WebControlFinder;
-import echo.core.command_execution.commands.web.WebSelectorFinder;
+import echo.core.command_execution.commands.web.*;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 
@@ -43,5 +40,15 @@ public class TextBox extends Element {
     }
     public void Blur() {
         throw new UnsupportedOperationException();
+    }
+
+    public Object GetElementAttribute(String attributeName){
+        //We should ensure that the attribute name is valid
+        return info.getCommandExecutionFacade().Execute(info,
+                new GetElementAttributeCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                        attributeName));
     }
 }
