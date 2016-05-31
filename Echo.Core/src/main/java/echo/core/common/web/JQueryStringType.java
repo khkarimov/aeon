@@ -82,7 +82,12 @@ public enum JQueryStringType {
     /**
      * JavaScript code getting the client rects of an element.
      */
-    GetClientRects;
+    GetClientRects,
+
+    /**
+     * JavaScript code getting the options of a select element
+     */
+    GetOptions;
 
     public int getValue() {
         return this.ordinal();

@@ -6,6 +6,7 @@ import echo.core.common.Resources;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.ConvertHelper;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.interfaces.IBy;
@@ -230,6 +231,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void ChooseSelectElementByText(UUID uuid, WebControl webControl, String s) {
 
     }
+
 
     @Override
     public void ClickElement(UUID uuid, WebControl webControl) {

@@ -197,7 +197,8 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void Blur(UUID guid, WebControl control) {adapter.Blur(guid, control);}
 
-
+    @Override
+    public void RightClick(UUID guid, WebControl element) {adapter.RightClick(guid, element.getSelector());}
 
 //
 //    /**

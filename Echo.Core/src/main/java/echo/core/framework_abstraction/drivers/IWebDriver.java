@@ -76,7 +76,8 @@ public interface IWebDriver extends IDriver {
     void Resize(UUID guid, Size size);
 
     void Blur(UUID guid, WebControl control);
-
+	
+	void RightClick(UUID guid, WebControl element);
 
 //
 //    /**
