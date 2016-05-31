@@ -438,4 +438,16 @@ public interface IWebAdapter extends IAdapter {
     String GetElementAttribute(UUID guid, WebControl control, String value);
 
     void SwitchToMainWindow(UUID guid);
+
+    void Blur(UUID guid, WebControl element);
+	
+	void CheckElement(UUID guid, WebControl element);
+
+    void UnCheckElement(UUID guid, WebControl element);
+
+    void IsElementEnabled(UUID guid, WebControl element);
+
+    void Exists(UUID guid, WebControl element);
+
+    void NotExists(UUID guid, WebControl element);
 }

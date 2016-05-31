@@ -2,9 +2,11 @@ package echo.selenium;
 
 import com.sun.glass.ui.Size;
 import com.thoughtworks.selenium.Selenium;
+import echo.core.common.Resources;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.ConvertHelper;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.interfaces.IBy;
@@ -229,6 +231,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void ChooseSelectElementByText(UUID uuid, WebControl webControl, String s) {
 
     }
+
 
     @Override
     public void ClickElement(UUID uuid, WebControl webControl) {
@@ -671,6 +674,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
+     * Blurs the current element
+     * @param guid A globally unique identifier associated with this call
+     * @param element The element to be blurred
+     */
+    public final void Blur(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.BlurElement));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.BlurElement));
+    }
+
+    /**
      * Maximizes the browser window.
      *
      * @param guid A globally unique identifier associated with this call.
@@ -940,5 +953,58 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // Release click.
         action.release(seleniumElement.getUnderlyingWebElement()).perform();
+    }
+
+    /**
+     * Checks a checkbox.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The checkbox to be checked.
+     */
+    public void CheckElement (UUID guid, WebControl element) {
+        if(!((SeleniumElement) element).getUnderlyingWebElement().isSelected()){
+            Click(guid, element);
+        }
+    }
+
+    /**
+     * Unchecks a checkbox
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The checkbox to be unchecked.
+     */
+    public void UnCheckElement(UUID guid, WebControl element) {
+        if(((SeleniumElement) element).getUnderlyingWebElement().isSelected()){
+            Click(guid, element);
+        }
+    }
+
+    /**
+     * Checks that an element is enabled
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element to check.
+     */
+    public void IsElementEnabled(UUID guid, WebControl element) {
+        boolean enabled = ((SeleniumElement) element).Enabled(guid);
+        if (!enabled) {
+            throw new ElementNotEnabledException();
+        }
+    }
+
+    /**
+     * If this method was called then the element exists.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     */
+    public void Exists(UUID guid, WebControl element) {
+        //Logic done at command initialization
+    }
+
+    /**
+     * If this method was reached then the element exists when it should not.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     */
+    public void NotExists(UUID guid, WebControl element) {
+        //IF execution reachd here then element exists.
+        throw new ElementExistsException();
     }
 }

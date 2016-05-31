@@ -38,8 +38,13 @@ public class TextBox extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())
         ));
     }
+
     public void Blur() {
-        throw new UnsupportedOperationException();
+        info.getCommandExecutionFacade().Execute(info, new BlurCommand(
+                this.info.getLog(),
+                this.selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())
+        ));
     }
 
     public Object GetElementAttribute(String attributeName){

@@ -194,7 +194,29 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void DismissAlert(UUID guid) {adapter.DismissAlert(guid);}
 
+    @Override
+    public void Blur(UUID guid, WebControl control) {adapter.Blur(guid, control);}
 
+    @Override
+    public void RightClick(UUID guid, WebControl element) {adapter.RightClick(guid, element.getSelector());}
+
+    @Override
+	public void Check(UUID guid, WebControl element) {adapter.CheckElement(guid, element);}
+
+    @Override
+    public void UnCheck(UUID guid, WebControl element) {adapter.UnCheckElement(guid, element);}
+
+	@Override
+	public void ClickAndHold(UUID guid, WebControl element, int duration) {adapter.ClickAndHold(guid, element, duration);}
+
+    @Override
+    public void IsElementEnabled(UUID guid, WebControl element) {adapter.IsElementEnabled(guid, element);}
+
+    @Override
+    public void Exists(UUID guid, WebControl element) {adapter.Exists(guid, element);}
+
+    @Override
+    public void NotExists(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
 
 //
 //    /**
