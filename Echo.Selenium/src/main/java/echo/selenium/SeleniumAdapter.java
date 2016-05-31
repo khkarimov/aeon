@@ -2,6 +2,7 @@ package echo.selenium;
 
 import com.sun.glass.ui.Size;
 import com.thoughtworks.selenium.Selenium;
+import echo.core.common.Resources;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
@@ -668,6 +669,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public final void Refresh(UUID guid) {
         log.Trace(guid, "WebDriver.Navigate().Refresh();");
         webDriver.navigate().refresh();
+    }
+
+    /**
+     * Blurs the current element
+     * @param guid A globally unique identifier associated with this call
+     * @param element The element to be blurred
+     */
+    public final void Blur(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.BlurElement));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.BlurElement));
     }
 
     /**

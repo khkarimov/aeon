@@ -438,4 +438,6 @@ public interface IWebAdapter extends IAdapter {
     String GetElementAttribute(UUID guid, WebControl control, String value);
 
     void SwitchToMainWindow(UUID guid);
+
+    void Blur(UUID guid, WebControl element);
 }

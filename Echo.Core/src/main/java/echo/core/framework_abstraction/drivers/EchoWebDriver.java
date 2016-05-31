@@ -194,6 +194,9 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void DismissAlert(UUID guid) {adapter.DismissAlert(guid);}
 
+    @Override
+    public void Blur(UUID guid, WebControl control) {adapter.Blur(guid, control);}
+
 
 
 //
