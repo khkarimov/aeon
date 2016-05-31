@@ -988,4 +988,23 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new ElementNotEnabledException();
         }
     }
+
+    /**
+     * If this method was called then the element exists.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     */
+    public void Exists(UUID guid, WebControl element) {
+        //Logic done at command initialization
+    }
+
+    /**
+     * If this method was reached then the element exists when it should not.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     */
+    public void NotExists(UUID guid, WebControl element) {
+        //IF execution reachd here then element exists.
+        throw new ElementExistsException();
+    }
 }

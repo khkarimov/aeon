@@ -212,6 +212,12 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void IsElementEnabled(UUID guid, WebControl element) {adapter.IsElementEnabled(guid, element);}
 
+    @Override
+    public void Exists(UUID guid, WebControl element) {adapter.Exists(guid, element);}
+
+    @Override
+    public void NotExists(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
+
 //
 //    /**
 //     * Checks an element.

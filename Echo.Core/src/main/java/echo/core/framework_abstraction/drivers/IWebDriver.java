@@ -87,6 +87,10 @@ public interface IWebDriver extends IDriver {
 
     void IsElementEnabled(UUID guid, WebControl element);
 
+    void Exists(UUID guid, WebControl element);
+
+    void NotExists(UUID guid, WebControl element);
+
 //
 //    /**
 //     * Check the element.
