@@ -91,5 +91,5 @@ public class SampleTest {
         product.Browser.GoBack();
         product.Browser.GoForward();
     }
-    
+
 }
