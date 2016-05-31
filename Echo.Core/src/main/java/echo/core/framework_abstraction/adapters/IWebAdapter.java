@@ -440,4 +440,10 @@ public interface IWebAdapter extends IAdapter {
     void SwitchToMainWindow(UUID guid);
 
     void Blur(UUID guid, WebControl element);
+	
+	void CheckElement(UUID guid, WebControl element);
+
+    void UnCheckElement(UUID guid, WebControl element);
+
+    void IsElementEnabled(UUID guid, WebControl element);
 }

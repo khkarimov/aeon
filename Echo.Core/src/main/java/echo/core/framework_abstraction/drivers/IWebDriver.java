@@ -79,6 +79,14 @@ public interface IWebDriver extends IDriver {
 	
 	void RightClick(UUID guid, WebControl element);
 
+    void Check(UUID guid, WebControl element);
+
+    void UnCheck(UUID guid, WebControl element);
+	
+	void ClickAndHold(UUID guid, WebControl element, int duration);
+
+    void IsElementEnabled(UUID guid, WebControl element);
+
 //
 //    /**
 //     * Check the element.

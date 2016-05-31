@@ -42,4 +42,12 @@ public class Button extends Element {
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
+
+    public void ClickAndHold(int duration) {
+        info.getCommandExecutionFacade().Execute(info,
+                new ClickAndHoldCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), duration));
+    }
 }

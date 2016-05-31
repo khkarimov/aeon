@@ -954,4 +954,38 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         // Release click.
         action.release(seleniumElement.getUnderlyingWebElement()).perform();
     }
+
+    /**
+     * Checks a checkbox.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The checkbox to be checked.
+     */
+    public void CheckElement (UUID guid, WebControl element) {
+        if(!((SeleniumElement) element).getUnderlyingWebElement().isSelected()){
+            Click(guid, element);
+        }
+    }
+
+    /**
+     * Unchecks a checkbox
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The checkbox to be unchecked.
+     */
+    public void UnCheckElement(UUID guid, WebControl element) {
+        if(((SeleniumElement) element).getUnderlyingWebElement().isSelected()){
+            Click(guid, element);
+        }
+    }
+
+    /**
+     * Checks that an element is enabled
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element to check.
+     */
+    public void IsElementEnabled(UUID guid, WebControl element) {
+        boolean enabled = ((SeleniumElement) element).Enabled(guid);
+        if (!enabled) {
+            throw new ElementNotEnabledException();
+        }
+    }
 }
