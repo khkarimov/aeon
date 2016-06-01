@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by DionnyS on 4/21/2016.
  */
-public class Button extends Element {
+public class  Button extends Element {
     private AutomationInfo info;
     private IBy selector;
 

@@ -97,4 +97,9 @@ public class SampleTest {
         String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
         System.out.println(testAttributeValues);
     }
+
+    @Test
+    public void TestFile(){
+        product.Browser.GoToUrl("file:///C:/Users/Administrator/Desktop/NubTestSite.html");
+    }
 }

@@ -223,6 +223,25 @@ public class EchoWebDriver implements IWebDriver {
         adapter.OpenFileDialog(guid, selector);
     }
 
+    @Override
+    public void VerifyAlertExists(UUID guid) {
+        adapter.VerifyAlertExists(guid);
+    }
+
+    @Override
+    public void VerifyAlertNotExists(UUID guid) {
+        adapter.VerifyAlertNotExists(guid);
+    }
+
+    @Override
+    public void SendKeysToAlert(UUID guid, String keysToSend) {
+        adapter.SendKeysToAlert(guid, keysToSend);
+    }
+
+    @Override
+    public void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
+        adapter.DragAndDrop(guid, dropElement, targetElement);
+    }
 //
 //    /**
 //     * Checks an element.

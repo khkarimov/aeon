@@ -93,6 +93,14 @@ public interface IWebDriver extends IDriver {
 
     void OpenFileDialog(UUID guid, IBy selector);
 
+    void VerifyAlertExists(UUID guid);
+
+    void VerifyAlertNotExists(UUID guid);
+
+    void SendKeysToAlert(UUID guid, String keysToSend);
+
+    void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
+
 //
 //    /**
 //     * Check the element.
