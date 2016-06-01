@@ -218,6 +218,11 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void NotExists(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
 
+    @Override
+    public void OpenFileDialog(UUID guid, IBy selector){
+        adapter.OpenFileDialog(guid, selector);
+    }
+
 //
 //    /**
 //     * Checks an element.

@@ -91,13 +91,10 @@ public class SampleTest {
         product.Browser.GoBack();
         product.Browser.GoForward();
     }
-
-<<<<<<< HEAD
+    
     @Test
     public void TestGetElementAttributeWithTextBoxNameAttribute(){
         String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
         System.out.println(testAttributeValues);
     }
-=======
->>>>>>> d11fef7c8fc693833587d60fce300c63d08f6fb3
 }

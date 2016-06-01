@@ -91,6 +91,8 @@ public interface IWebDriver extends IDriver {
 
     void NotExists(UUID guid, WebControl element);
 
+    void OpenFileDialog(UUID guid, IBy selector);
+
 //
 //    /**
 //     * Check the element.
