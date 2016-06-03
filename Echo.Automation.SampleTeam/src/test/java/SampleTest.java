@@ -1,5 +1,6 @@
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
+import echo.core.common.web.WebSelectOption;
 import echo.selenium.SeleniumCookie;
 import main.Sample;
 import org.junit.*;
@@ -29,8 +30,15 @@ public class SampleTest {
 
     @Test
     public void TestGoBackGoForward_01() {
-        product.Login.UserNameTextBox.Set("usa-canu");
-        product.Login.PasswordTextBox.Set("password");
+        String [] texts = {"English (USA)", "Italiano (IT)"};
+        String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
+        String [] values = {"1", "2"};
+        String [] valuesShouldFail = {"-12", "Blue"};
+        product.Login.LanguageSelect.Click();
+        product.Login.LanguageSelect.HasOptions(texts, null,  WebSelectOption.Text);
+        product.Login.LanguageSelect.HasOptions(values, null,  WebSelectOption.Value);
+        product.Login.LanguageSelect.DoesNotHaveOptions(shouldfail, null, WebSelectOption.Text);
+        product.Login.LanguageSelect.DoesNotHaveOptions(valuesShouldFail, null, WebSelectOption.Value);
         product.Login.LoginButton.Click();
         product.Browser.GoBack();
         product.Browser.GoForward();
@@ -39,8 +47,7 @@ public class SampleTest {
     }
 
     @Test
-    public void TestClearAndRefresh_02()
-    {
+    public void TestClearAndRefresh_02() {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.UserNameTextBox.Clear();
@@ -49,7 +56,7 @@ public class SampleTest {
     }
 
     @Test
-    public void TestWindowResizing_03(){
+    public void TestWindowResizing_03() {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
@@ -61,8 +68,7 @@ public class SampleTest {
     }
 
     @Test
-    public void TestDoubleClickScrollTopEnd_04()
-    {
+    public void TestDoubleClickScrollTopEnd_04() {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.DoubleClick();
@@ -72,8 +78,7 @@ public class SampleTest {
     }
 
     @Test
-    public void SampleTest2()
-    {
+    public void SampleTest2() {
         product.Browser.Resize(BrowserSize.TabletLandscape);
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
         product.Browser.Resize(BrowserSize.MobileLandscape);
@@ -91,13 +96,4 @@ public class SampleTest {
         product.Browser.GoBack();
         product.Browser.GoForward();
     }
-
-<<<<<<< HEAD
-    @Test
-    public void TestGetElementAttributeWithTextBoxNameAttribute(){
-        String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
-        System.out.println(testAttributeValues);
-    }
-=======
->>>>>>> d11fef7c8fc693833587d60fce300c63d08f6fb3
 }

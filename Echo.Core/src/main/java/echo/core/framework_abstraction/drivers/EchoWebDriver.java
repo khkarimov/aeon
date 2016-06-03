@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
 import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
+import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
@@ -218,6 +219,11 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void NotExists(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
 
+    @Override
+    public void HasOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {adapter.ElementHasOptions(guid, element, options, optgroup, select);}
+
+    @Override
+    public void DoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {adapter.ElementDoesNotHaveOptions(guid, element, options, optgroup, select);}
 //
 //    /**
 //     * Checks an element.
