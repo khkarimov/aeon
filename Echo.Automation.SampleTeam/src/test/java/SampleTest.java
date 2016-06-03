@@ -79,7 +79,7 @@ public class SampleTest {
 
     @Test
     public void SampleTest2() {
-        product.Browser.Resize(BrowserSize.TabletLandscape);
+        product.Browser.Resize(BrowserSize.TabletLandscape);s
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
         product.Browser.Resize(BrowserSize.MobileLandscape);
         product.Browser.Maximize();
