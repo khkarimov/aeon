@@ -224,6 +224,31 @@ public class EchoWebDriver implements IWebDriver {
 
     @Override
     public void DoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {adapter.ElementDoesNotHaveOptions(guid, element, options, optgroup, select);}
+
+    @Override
+    public void OpenFileDialog(UUID guid, IBy selector){
+        adapter.OpenFileDialog(guid, selector);
+    }
+
+    @Override
+    public void VerifyAlertExists(UUID guid) {
+        adapter.VerifyAlertExists(guid);
+    }
+
+    @Override
+    public void VerifyAlertNotExists(UUID guid) {
+        adapter.VerifyAlertNotExists(guid);
+    }
+
+    @Override
+    public void SendKeysToAlert(UUID guid, String keysToSend) {
+        adapter.SendKeysToAlert(guid, keysToSend);
+    }
+
+    @Override
+    public void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
+        adapter.DragAndDrop(guid, dropElement, targetElement);
+    }
 //
 //    /**
 //     * Checks an element.

@@ -96,6 +96,16 @@ public interface IWebDriver extends IDriver {
 
     void DoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
+    void OpenFileDialog(UUID guid, IBy selector);
+
+    void VerifyAlertExists(UUID guid);
+
+    void VerifyAlertNotExists(UUID guid);
+
+    void SendKeysToAlert(UUID guid, String keysToSend);
+
+    void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
+
 //
 //    /**
 //     * Check the element.
