@@ -61,6 +61,10 @@ public class Browser {
     public void VerifyAlertExists(){
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertExistsCommand(info.getLog()));
     }
+
+    public void VerifyAlertNotExists(){
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertNotExistsCommand(info .getLog()));
+    }
     //endregion
 
     public void Maximize() {
