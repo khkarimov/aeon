@@ -450,4 +450,6 @@ public interface IWebAdapter extends IAdapter {
     void Exists(UUID guid, WebControl element);
 
     void NotExists(UUID guid, WebControl element);
+
+    void ClearBrowserStorage(UUID guid);
 }

@@ -95,6 +95,9 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void ClearBrowserStorage(UUID guid) { adapter.ClearBrowserStorage(guid); }
+
+    @Override
     public void AddCookie(UUID guid, IWebCookie cookie) {
         adapter.AddCookie(guid, cookie);
     }

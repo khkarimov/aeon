@@ -39,13 +39,12 @@ public class SampleTest {
     }
 
     @Test
-    public void TestClearAndRefresh_02()
-    {
+    public void TestClearAndRefresh_02() {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
-        product.Login.UserNameTextBox.Clear();
-        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.LoginButton.Click();
         product.Browser.Refresh();
+        product.Browser.ClearBrowserStorage();
     }
 
     @Test
