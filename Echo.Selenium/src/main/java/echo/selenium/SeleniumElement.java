@@ -1,17 +1,22 @@
 package echo.selenium;
 
+import echo.core.common.exceptions.IncorrectElementTagException;
+import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Provides methods available for a web element.
@@ -19,6 +24,7 @@ import java.util.UUID;
 public class SeleniumElement extends WebControl {
     private static final int LONG_STRING_LENGTH = 50;
     private WebElement underlyingWebElement;
+    private SeleniumSelectElement selectHelper;
     private ILog log;
 
     /**
@@ -29,6 +35,8 @@ public class SeleniumElement extends WebControl {
      */
     public SeleniumElement(WebElement seleniumWebElement, ILog log) {
         underlyingWebElement = seleniumWebElement;
+        if (underlyingWebElement.getTagName().equalsIgnoreCase("select")) selectHelper  = new SeleniumSelectElement(new Select(underlyingWebElement), log);
+        else selectHelper = null;
         this.log = log;
     }
 
@@ -136,14 +144,35 @@ public class SeleniumElement extends WebControl {
      * @return Returns the web element.
      */
     public final WebControl FindElement(UUID guid, IBy findBy) {
-        if (findBy == null) {
-            throw new IllegalArgumentException("findBy");
+        try {
+            if (findBy == null) {
+                throw new IllegalArgumentException("findBy");
+            }
+
+            getLog().Trace(guid, String.format("WebElement.FindElement(By.CssSelector(%1$s));", findBy));
+            WebElement seleniumElement = underlyingWebElement.findElement(By.cssSelector(findBy.toString()));
+
+            return new SeleniumElement(seleniumElement, getLog());
         }
+        catch (org.openqa.selenium.NoSuchElementException e) {
+            throw new NoSuchElementException();
+        }
+    }
 
-        getLog().Trace(guid, String.format("WebElement.FindElement(By.CssSelector(%1$s));", findBy));
-        WebElement seleniumElement = underlyingWebElement.findElement(By.cssSelector(findBy.toString()));
-
-        return new SeleniumElement(seleniumElement, getLog());
+    /**
+     * Finds element through its text or value.
+     * @param guid
+     * @param by
+     * @param
+     * @return
+     */
+    public WebControl FindElementByText(UUID guid, IBy by) {
+       try {
+           return new SeleniumElement(underlyingWebElement.findElement(org.openqa.selenium.By.xpath(by.toString())), log);
+       }
+       catch (org.openqa.selenium.NoSuchElementException e) {
+           throw new NoSuchElementException();
+       }
     }
 
     /**
@@ -299,5 +328,83 @@ public class SeleniumElement extends WebControl {
     public final void Submit(UUID guid) {
         getLog().Trace(guid, "WebElement.Submit();");
         underlyingWebElement.submit();
+    }
+
+    //functions specfically for select elements
+    public final boolean IsMultiple(UUID guid) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        return selectHelper.IsMultiple(guid);
+    }
+
+    public final List<WebControl> GetAllSelectedOptions(UUID guid) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+       return selectHelper.GetAllSelectedOptions(guid);
+    }
+
+    public final WebControl GetSelectedOption(UUID guid) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        return selectHelper.GetSelectedOption(guid);
+    }
+
+    public final List<WebControl> GetOptions(UUID guid) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        return selectHelper.GetOptions(guid);
+    }
+
+    public final void DeselectAll(UUID guid) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        selectHelper.DeselectAll(guid);
+    }
+
+    public final void DeselectByIndex(UUID guid, int index) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        selectHelper.DeselectByIndex(guid, index);
+    }
+
+    public final void DeselectByText(UUID guid, String text) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        selectHelper.DeselectByText(guid, text);
+    }
+
+    public final void DeselectByValue(UUID guid, String value) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        selectHelper.DeselectByValue(guid, value);
+    }
+
+    public final void SelectByIndex(UUID guid, int index) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        selectHelper.SelectByIndex(guid, index);
+    }
+
+    public final void SelectByText(UUID guid, String text) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        selectHelper.SelectByText(guid, text);
+    }
+
+    public final void SelectByValue(UUID guid, String value) {
+        if (selectHelper == null) {
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        selectHelper.SelectByValue(guid, value);
     }
 }

@@ -1,6 +1,7 @@
 package echo.selenium;
 
 import echo.core.common.logging.ILog;
+import echo.core.common.web.selectors.By;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import org.openqa.selenium.support.ui.Select;
 

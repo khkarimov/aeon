@@ -1,6 +1,7 @@
 package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
+import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
@@ -93,7 +94,19 @@ public interface IWebDriver extends IDriver {
 
     void NotExists(UUID guid, WebControl element);
 
+    void HasOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
+
+    void DoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
+
     void OpenFileDialog(UUID guid, IBy selector);
+
+    void VerifyAlertExists(UUID guid);
+
+    void VerifyAlertNotExists(UUID guid);
+
+    void SendKeysToAlert(UUID guid, String keysToSend);
+
+    void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
 
 //
 //    /**

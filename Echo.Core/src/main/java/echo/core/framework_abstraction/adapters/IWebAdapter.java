@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.adapters;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.exceptions.*;
+import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
@@ -452,4 +453,8 @@ public interface IWebAdapter extends IAdapter {
     void NotExists(UUID guid, WebControl element);
 
     void ClearBrowserStorage(UUID guid);
+
+    void ElementHasOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
+
+    void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 }

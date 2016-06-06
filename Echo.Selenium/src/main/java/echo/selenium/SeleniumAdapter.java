@@ -1,14 +1,12 @@
 package echo.selenium;
 
 import com.sun.glass.ui.Size;
-import com.thoughtworks.selenium.Selenium;
-import echo.core.common.Resources;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
-import echo.core.common.helpers.ConvertHelper;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.JQueryStringType;
+import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.selectors.*;
 import echo.core.framework_abstraction.adapters.IAdapter;
@@ -23,6 +21,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
 import javax.imageio.ImageIO;
@@ -1016,5 +1015,48 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void NotExists(UUID guid, WebControl element) {
         //IF execution reachd here then element exists.
         throw new ElementExistsException();
+    }
+
+
+    public void hasOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
+        try {
+            for (String desiredOption : options) {
+                if (select == WebSelectOption.Text)
+                    element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                else
+                    element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
+            }
+        }
+        catch (NoSuchElementException e) {throw new ElementDoesNotHaveOptionException();}
+    }
+
+    public void DoesNotHaveOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
+        for (String desiredOption:options) {
+            boolean elementFound = true;
+            try {
+                if (select == WebSelectOption.Text)
+                    element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                else
+                    element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
+            }
+            catch (NoSuchElementException e) {elementFound = false;}
+            finally {if (elementFound) throw new ElementHasOptionException();}
+        }
+    }
+
+    public void ElementHasOptions (UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (optgroup != null) {
+            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
+            hasOptions(guid, group, options, select);
+        }
+        else hasOptions(guid,(SeleniumElement) element, options, select);
+     }
+
+    public void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (optgroup != null) {
+            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
+            DoesNotHaveOptions(guid, group, options, select);
+        }
+        else DoesNotHaveOptions(guid,(SeleniumElement) element, options, select);
     }
 }
