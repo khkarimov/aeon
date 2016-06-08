@@ -18,9 +18,10 @@ public class LoginPage {
 
     public LoginPage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
-        UserNameTextBox = new TextBox(automationInfo, By.CssSelector("input[id*='UserName']"));
-        PasswordTextBox = new TextBox(automationInfo, By.CssSelector("input[id*='Password']"));
-        LoginButton = new Button(automationInfo, By.CssSelector("input[id*='LoginButton']"));
-        LanguageSelect = new Select(automationInfo, By.CssSelector("select[name*='languagesSelection']"));
+        WebFactory web = new WebFactory(automationInfo);
+        UserNameTextBox = web.TextBox("input[id*='UserName']");
+        PasswordTextBox = web.TextBox("input[id*='Password']");
+        LoginButton = web.Button("input[id*='LoginButton']");
+        LanguageSelect = web.Select("select[name*='languagesSelection']");
     }
 }

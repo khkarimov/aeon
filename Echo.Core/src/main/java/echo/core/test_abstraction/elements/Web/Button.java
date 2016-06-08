@@ -1,9 +1,10 @@
-package echo.core.test_abstraction.elements;
+package echo.core.test_abstraction.elements.Web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
