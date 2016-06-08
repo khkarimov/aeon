@@ -51,4 +51,13 @@ public class  Button extends Element {
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), duration));
     }
+
+    public void IsEnabled(){
+        info.getCommandExecutionFacade().Execute(info,
+                new EnabledCommand(
+                        info.getLog(),
+                        selector,
+                        getWebCommandInitializer()));
+    }
+
 }
