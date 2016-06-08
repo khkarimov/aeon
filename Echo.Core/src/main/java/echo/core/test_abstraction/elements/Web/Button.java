@@ -1,4 +1,4 @@
-package echo.core.test_abstraction.elements.Web;
+package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;

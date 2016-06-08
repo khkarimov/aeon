@@ -1,4 +1,4 @@
-package echo.core.test_abstraction.elements.Web;
+package echo.core.test_abstraction.elements.web;
 
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;

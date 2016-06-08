@@ -1,9 +1,9 @@
 package main.samplegrid;
 
 import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.Label;
-import echo.core.test_abstraction.elements.Link;
-import echo.core.test_abstraction.elements.TextBox;
+import echo.core.test_abstraction.elements.web.Label;
+import echo.core.test_abstraction.elements.web.Link;
+import echo.core.test_abstraction.elements.web.TextBox;
 
 /**
  * Created by AdamC on 4/13/2016.

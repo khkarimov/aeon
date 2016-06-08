@@ -7,7 +7,6 @@ import echo.core.common.web.interfaces.IBy;
  */
 public class Element extends ElementAssertions {
     private IBy selector;
-
     public Element(IBy selector) {
         this.selector = selector;
     }
