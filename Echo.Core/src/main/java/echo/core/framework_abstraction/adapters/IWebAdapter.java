@@ -457,4 +457,8 @@ public interface IWebAdapter extends IAdapter {
     void ElementHasOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
     void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
+
+    void MouseOut(UUID guid, WebControl element);
+
+    void MouseOver(UUID guid, WebControl element);
 }

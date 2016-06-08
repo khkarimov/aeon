@@ -108,6 +108,10 @@ public interface IWebDriver extends IDriver {
 
     void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
 
+    void MouseOut(UUID guid, WebControl element);
+
+    void MouseOver(UUID guid, WebControl element);
+
 //
 //    /**
 //     * Check the element.

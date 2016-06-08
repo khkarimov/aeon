@@ -252,6 +252,12 @@ public class EchoWebDriver implements IWebDriver {
     public void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
         adapter.DragAndDrop(guid, dropElement, targetElement);
     }
+
+    @Override
+    public void MouseOut(UUID guid,WebControl control) { adapter.MouseOut(guid, control); }
+
+    @Override
+    public void MouseOver(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
 //
 //    /**
 //     * Checks an element.
