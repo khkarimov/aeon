@@ -2,7 +2,7 @@ package main;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.Button;
+import echo.core.test_abstraction.elements.web.Button;
 import echo.core.test_abstraction.elements.Checkbox;
 import echo.core.test_abstraction.elements.FileDialogInput;
 import echo.core.test_abstraction.elements.Image;

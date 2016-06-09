@@ -90,4 +90,7 @@ public class Browser {
     public void ScrollToEnd(){
        info.getCommandExecutionFacade().Execute(info, new ScrollToEndCommand(info.getLog()));
     }
+
+    public void SwitchToWindowByTitle(String title) { info.getCommandExecutionFacade().Execute(info,
+            new SwitchToWindowByTitleCommand(info.getLog(), title));}
 }

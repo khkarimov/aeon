@@ -100,7 +100,7 @@ public class SampleTest {
     @Test
     public void TestGetElementAttributeWithTextBoxNameAttribute(){
         String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
-        System.out.println(testAttributeValues);
+        System.out.println("User Name text box name value: " + testAttributeValues);
     }
 
 }

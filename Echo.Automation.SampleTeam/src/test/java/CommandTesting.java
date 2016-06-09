@@ -28,6 +28,7 @@ public class CommandTesting {
 
     @Test
     public void TestAcceptAlertWhenThereIsAnAlert(){
+        product.Browser.SwitchToWindowByTitle("");
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.AcceptAlert();
