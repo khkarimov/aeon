@@ -7,6 +7,7 @@ import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static echo.core.common.web.BrowserType.Chrome;
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -19,7 +20,7 @@ public class SampleTest {
 
     @Before
     public void SetUp() {
-        product = Launch(Sample.class, Firefox);
+        product = Launch(Sample.class, Chrome);
         product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
     }
 
