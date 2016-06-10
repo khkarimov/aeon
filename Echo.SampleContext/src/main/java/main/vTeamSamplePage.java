@@ -6,6 +6,7 @@ import echo.core.test_abstraction.elements.web.Button;
 import echo.core.test_abstraction.elements.Checkbox;
 import echo.core.test_abstraction.elements.FileDialogInput;
 import echo.core.test_abstraction.elements.Image;
+import echo.core.test_abstraction.elements.web.TextBox;
 
 /**
  * Created by Administrator on 6/3/2016.
@@ -17,6 +18,7 @@ public class vTeamSamplePage {
     public Image UltimateLogoImage;
     public Checkbox TestCheckbox;
     public FileDialogInput TestFileDialogInput;
+    public TextBox AlertTitleTextBox;
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
@@ -25,5 +27,7 @@ public class vTeamSamplePage {
         TestCheckbox = new Checkbox(info, By.CssSelector("input[id='checkbox']"));
         TestFileDialogInput = new FileDialogInput(info, By.CssSelector("input[id='file-dialog']"));
         OpenAlertButton = new Button(info, By.CssSelector("button[id='alertDialog']"));
+        AlertTitleTextBox = new TextBox(info, By.CssSelector("input[id ='sample1'"));
+
     }
 }

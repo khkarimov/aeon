@@ -24,4 +24,7 @@ public class Image extends Element {
                         selector,
                         getWebCommandInitializer()));
     }
+
+    public void DragAndDrop() {
+    }
 }

@@ -3,6 +3,7 @@ package echo.core.test_abstraction.elements.web;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.ClickCommand;
+import echo.core.command_execution.commands.web.RightClickCommand;
 import echo.core.command_execution.commands.web.WebControlFinder;
 import echo.core.command_execution.commands.web.WebSelectorFinder;
 import echo.core.common.web.interfaces.IBy;
@@ -32,6 +33,15 @@ public class Link extends Element {
     {
         info.getCommandExecutionFacade().Execute(info,
                 new ClickCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
+
+    public void RightClick()
+    {
+        info.getCommandExecutionFacade().Execute(info,
+                new RightClickCommand(
                         info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));

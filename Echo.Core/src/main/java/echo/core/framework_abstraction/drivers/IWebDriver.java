@@ -26,6 +26,8 @@ public interface IWebDriver extends IDriver {
 
     void DismissAlert(UUID guid);
 
+    String GetAlertText(UUID guid);
+
     void ScrollElementIntoView(UUID guid, WebControl webControl);
 
     void ScrollToTop(UUID guid);

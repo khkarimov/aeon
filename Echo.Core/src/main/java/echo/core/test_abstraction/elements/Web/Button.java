@@ -31,11 +31,20 @@ public class  Button extends Element {
 
     public void DoubleClick() {
         info.getCommandExecutionFacade().Execute(info,
-        new DoubleClickCommand(
-                info.getLog(),
-                selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                new DoubleClickCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
+
+    public void RightClick() {
+        info.getCommandExecutionFacade().Execute(info,
+                new RightClickCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
+
     public void Blur(){
         info.getCommandExecutionFacade().Execute(info,
                 new BlurCommand(
