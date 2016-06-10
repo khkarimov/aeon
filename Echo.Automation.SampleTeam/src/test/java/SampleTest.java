@@ -20,7 +20,7 @@ public class SampleTest {
 
     @Before
     public void SetUp() {
-        product = Launch(Sample.class, Chrome);
+        product = Launch(Sample.class, Firefox );
         product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
     }
 
