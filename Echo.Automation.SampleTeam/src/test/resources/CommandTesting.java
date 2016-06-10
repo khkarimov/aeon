@@ -19,7 +19,7 @@ public class CommandTesting {
 
     @Before
     public void SetUp(){
-        product = Launch(Sample.class, Chrome);
+        product = Launch(Sample.class, Firefox);
         //Make sure to change to where you are keeping the fake test site
         product.Browser.GoToUrl("file:///C:/Users/Administrator/Desktop/Test%20Sample%20Context/index.html");
     }
