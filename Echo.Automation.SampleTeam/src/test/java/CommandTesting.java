@@ -2,6 +2,7 @@
  * Created by SebastianR on 6/6/2016.
  */
 
+import echo.core.common.web.selectors.By;
 import main.Sample;
 import org.junit.*;
 import org.junit.Test;
@@ -31,6 +32,12 @@ public class CommandTesting {
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.AcceptAlert();
+    }
+
+    @Test
+    public void TestDragAndDropOnASiteThatDoesntUseHTMl5(){
+        product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.StartPage.ListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
     }
 
 }

@@ -56,7 +56,7 @@ public class  Button extends Element {
                 new EnabledCommand(
                         info.getLog(),
                         selector,
-                        getWebCommandInitializer()));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
 }
