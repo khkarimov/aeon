@@ -28,7 +28,7 @@ public class Image extends Element {
 
     public void DragAndDrop(IBy targetElement) {
         info.getCommandExecutionFacade().Execute(info,
-                new Draggit sAndDropCommand(info.getLog(),
+                new DragAndDropCommand(info.getLog(),
                         selector,
                         targetElement));
     }

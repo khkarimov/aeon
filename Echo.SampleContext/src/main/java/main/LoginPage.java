@@ -19,10 +19,9 @@ public class LoginPage {
 
     public LoginPage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
-        WebFactory web = new WebFactory(automationInfo);
-        UserNameTextBox = web.TextBox("input[id*='UserName']");
-        PasswordTextBox = web.TextBox("input[id*='Password']");
-        LoginButton = web.Button("input[id*='LoginButton']");
-        LanguageSelect = web.Select("select[name*='languagesSelection']");
+        UserNameTextBox = WebFactory.createTextBox("input[id*='UserName']", automationInfo);
+        PasswordTextBox = WebFactory.createTextBox("input[id*='Password']", automationInfo);
+        LoginButton = WebFactory.createButton("input[id*='LoginButton']", automationInfo);
+        LanguageSelect = WebFactory.createSelect("select[name*='languagesSelection']", automationInfo);
     }
 }

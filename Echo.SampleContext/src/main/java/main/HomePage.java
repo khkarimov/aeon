@@ -13,8 +13,7 @@ public class HomePage {
 
     public HomePage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
-		WebFactory web = new WebFactory(this.automationInfo);
-        ViewPayStatement = web.Link("a[id*='viewPayStatementLink']");
+        ViewPayStatement = WebFactory.createLink("a[id*='viewPayStatementLink']", automationInfo);
     }
 
 

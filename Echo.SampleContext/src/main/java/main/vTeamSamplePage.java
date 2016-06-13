@@ -7,6 +7,7 @@ import echo.core.test_abstraction.elements.Checkbox;
 import echo.core.test_abstraction.elements.FileDialogInput;
 import echo.core.test_abstraction.elements.Image;
 import echo.core.test_abstraction.elements.web.TextBox;
+import echo.core.test_abstraction.elements.web.WebFactory;
 
 /**
  * Created by Administrator on 6/3/2016.
@@ -22,12 +23,12 @@ public class vTeamSamplePage {
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
-        DisabledButton = new Button(info, By.CssSelector("button[id='disabled-button']"));
-        UltimateLogoImage = new Image(info, By.CssSelector("img[id='dragtarget']"));
-        TestCheckbox = new Checkbox(info, By.CssSelector("input[id='checkbox']"));
-        TestFileDialogInput = new FileDialogInput(info, By.CssSelector("input[id='file-dialog']"));
-        OpenAlertButton = new Button(info, By.CssSelector("button[id='alertDialog']"));
-        AlertTitleTextBox = new TextBox(info, By.CssSelector("input[id ='sample1'"));
+        DisabledButton = WebFactory.createButton("button[id='disabled-button']", info);
+        UltimateLogoImage = WebFactory.createImage("img[id='dragtarget']", info);
+        TestCheckbox = WebFactory.createCheckbox("input[id='checkbox']", info);
+        TestFileDialogInput = WebFactory.createFileDialogInput("input[id='file-dialog']", info);
+        OpenAlertButton = WebFactory.createButton("button[id='alertDialog']", info);
+        AlertTitleTextBox = WebFactory.createTextBox("input[id ='sample1'", info);
 
     }
 }
