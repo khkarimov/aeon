@@ -2,6 +2,7 @@
  * Created by SebastianR on 6/6/2016.
  */
 
+import echo.core.common.web.selectors.By;
 import main.Sample;
 import org.junit.*;
 import org.junit.Test;
@@ -62,6 +63,13 @@ public class CommandTesting {
     public void TestOpenFileDialog(){
         product.StartPage.TestFileDialogInput.OpenFileDialog();
         //product.StartPage.AlertTitleTextBox.RightClick();
+    }
+
+    @Test
+    public void TestDragAndDrop(){
+        product.Browser.Maximize();
+        product.StartPage.UltimateLogoImage.DragAndDrop(By.CssSelector("div[id='secondDrop']"));
+        product.StartPage.UltimateLogoImage.DoubleClick();
     }
 
 }

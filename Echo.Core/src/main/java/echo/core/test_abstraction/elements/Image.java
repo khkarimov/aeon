@@ -5,6 +5,7 @@ package echo.core.test_abstraction.elements;
  */
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.web.DoubleClickCommand;
+import echo.core.command_execution.commands.web.DragAndDropCommand;
 import echo.core.common.web.interfaces.IBy;
 
 public class Image extends Element {
@@ -25,6 +26,10 @@ public class Image extends Element {
                         getWebCommandInitializer()));
     }
 
-    public void DragAndDrop() {
+    public void DragAndDrop(IBy targetElement) {
+        info.getCommandExecutionFacade().Execute(info,
+                new Draggit sAndDropCommand(info.getLog(),
+                        selector,
+                        targetElement));
     }
 }
