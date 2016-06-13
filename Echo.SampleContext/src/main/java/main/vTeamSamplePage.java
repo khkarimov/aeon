@@ -1,11 +1,10 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.web.Button;
-import echo.core.test_abstraction.elements.Checkbox;
-import echo.core.test_abstraction.elements.FileDialogInput;
-import echo.core.test_abstraction.elements.Image;
+import echo.core.test_abstraction.elements.web.Checkbox;
+import echo.core.test_abstraction.elements.web.FileDialogInput;
+import echo.core.test_abstraction.elements.web.Image;
 import echo.core.test_abstraction.elements.web.TextBox;
 import echo.core.test_abstraction.elements.web.WebFactory;
 

@@ -4,7 +4,6 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.common.exceptions.UnsupportedElementException;
 import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.*;
-import javafx.scene.control.CheckBox;
 
 import java.lang.reflect.Type;
 
