@@ -1052,6 +1052,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select The method by which the options are identifed, either their value or their visible text.
      */
     public void ElementHasOptions (UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
             hasOptions(guid, group, options, select);
@@ -1068,6 +1071,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select The method by which the options are identified, either their value or their visible text.
      */
     public void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
             DoesNotHaveOptions(guid, group, options, select);
@@ -1096,6 +1102,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select The method by which the options are identifed, either their value, or their visible text.
      */
     public void ElementHasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='" + optgroup + "']"));
             ElementHasOptionsInOrder(guid, group, options, select);
@@ -1122,6 +1131,26 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             }
         } catch (org.openqa.selenium.NoSuchElementException e) {
             throw new ElementDoesNotHaveOptionException();
+        }
+    }
+
+    /**
+     * Asserts that a select element has a certain number of options. Can optionally specify an option group instead of the entire select.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     * @param optnumber The amount of options the element should have.
+     * @param optgroup The optional optgion group to be searched.
+     */
+    public void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
+        if (optgroup != null) {
+            element = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='" + optgroup + "']"));
+        }
+        Collection <WebControl> options = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector("option"));
+        if(options.size() != optnumber) {
+            throw new ElementDoesNotHaveNumberOfOptionsException();
         }
     }
 }

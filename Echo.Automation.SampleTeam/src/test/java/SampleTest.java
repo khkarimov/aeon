@@ -117,5 +117,4 @@ public class SampleTest {
         product.Login.LanguageSelect.HasOptionsInOrder(value, WebSelectOption.Value);
         product.Login.LanguageSelect.HasOptionsInOrder(option, WebSelectOption.Text);
     }
-
 }

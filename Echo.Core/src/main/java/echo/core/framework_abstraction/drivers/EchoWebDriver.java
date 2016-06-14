@@ -264,6 +264,11 @@ public class EchoWebDriver implements IWebDriver {
     public void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
         adapter.ElementHasOptionsInOrder(guid, element, options, optgroup, select);
     }
+
+    @Override
+    public void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup) {
+        adapter.HasNumberOfOptions(guid, element, optnumber, optgroup);
+    }
 //
 //    /**
 //     * Checks an element.

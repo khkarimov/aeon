@@ -114,6 +114,8 @@ public interface IWebDriver extends IDriver {
 
     void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
+    void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup);
+
 //
 //    /**
 //     * Check the element.

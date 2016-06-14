@@ -68,6 +68,22 @@ public class Select extends Element {
         ));
     }
 
+    public void HasNumberOfOptions(int optnumber, String optgroup) {
+        info.getCommandExecutionFacade().Execute(info, new HasNumberOfOptionsCommand(
+                this.info.getLog(),
+                this.selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), optnumber, optgroup
+        ));
+    }
+
+    public void HasNumberOfOptions(int optnumber) {
+        info.getCommandExecutionFacade().Execute(info, new HasNumberOfOptionsCommand(
+                this.info.getLog(),
+                this.selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), optnumber
+        ));
+    }
+
     public void Click() {
         info.getCommandExecutionFacade().Execute(info,
                 new ClickCommand(
