@@ -1017,7 +1017,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         throw new ElementExistsException();
     }
 
-    public void hasOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
+    private void hasOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
         try {
             for (String desiredOption : options) {
                 if (select == WebSelectOption.Text)
@@ -1029,7 +1029,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         catch (NoSuchElementException e) {throw new ElementDoesNotHaveOptionException();}
     }
 
-    public void DoesNotHaveOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
+    private void DoesNotHaveOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
         for (String desiredOption:options) {
             boolean elementFound = true;
             try {
