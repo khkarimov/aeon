@@ -104,4 +104,18 @@ public class SampleTest {
         System.out.println("User Name text box name value: " + testAttributeValues);
     }
 
+    @Test
+    public void TestHasElementsInOrder() {
+        String [] options = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
+        String [] values = new String [] {"0", "5", "13"};
+        String [] badValues = new String [] {"0", "13", "5"};
+        String [] badOptions = new String [] {"English (USA)", "Melayu (MY)", "Italiano (IT)"};
+        String [] value = new String [] {"0"};
+        String [] option = new String [] {"English (USA)"};
+        product.Login.LanguageSelect.HasOptionsInOrder(options, WebSelectOption.Text);
+        product.Login.LanguageSelect.HasOptionsInOrder(values, WebSelectOption.Value);
+        product.Login.LanguageSelect.HasOptionsInOrder(value, WebSelectOption.Value);
+        product.Login.LanguageSelect.HasOptionsInOrder(option, WebSelectOption.Text);
+    }
+
 }

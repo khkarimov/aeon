@@ -259,6 +259,11 @@ public class EchoWebDriver implements IWebDriver {
     public void ClickAllElements(UUID guid, IBy elementsBy) {
         adapter.ClickAllElements(guid, elementsBy);
     }
+
+    @Override
+    public void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        adapter.ElementHasOptionsInOrder(guid, element, options, optgroup, select);
+    }
 //
 //    /**
 //     * Checks an element.

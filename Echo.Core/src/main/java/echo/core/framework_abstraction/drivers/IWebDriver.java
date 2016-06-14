@@ -112,6 +112,8 @@ public interface IWebDriver extends IDriver {
 
     void ClickAllElements(UUID guid, IBy elementsBy);
 
+    void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
+
 //
 //    /**
 //     * Check the element.

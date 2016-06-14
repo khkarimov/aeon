@@ -459,4 +459,6 @@ public interface IWebAdapter extends IAdapter {
     void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
     void ClickAllElements(UUID guid, IBy elementsBy);
+
+    void ElementHasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 }
