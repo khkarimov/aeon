@@ -1104,8 +1104,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     private void ElementHasOptionsInOrder(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
-        SeleniumElement option;
-        //Must do this because first element is not a sibling of the select element.
         try {
             if (options.length  > 1) {
                 if (select == WebSelectOption.Text) element = (SeleniumElement) element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
