@@ -13,12 +13,27 @@ import java.util.Locale;
 /**
  * Created by RafaelT on 5/31/2016.
  */
+
+/**
+ * Asserts that a certain element does not exist.
+ */
 public class NotExistsCommand extends WebControlCommand {
 
+    /**
+     * Initializes a new instance of the NotExistsCommand.
+     * @param log The logger.
+     * @param selector The selector.
+     * @param commandInitializer The command initializer.
+     */
     public NotExistsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
         super(log, String.format(Locale.getDefault(), Resources.getString("CheckCommand_Info"), selector), selector, commandInitializer);
     }
 
+    /**
+     * Provides the logic for the command.
+     * @param driver The web driver.
+     * @param control The web control.
+     */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
         try {
