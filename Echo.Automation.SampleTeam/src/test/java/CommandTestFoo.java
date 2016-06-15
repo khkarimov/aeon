@@ -25,8 +25,8 @@ public class CommandTestFoo {
 
     @Test
     public void TestAcceptAlertWhenThereIsAnAlert() {
-        product.StartPage.element.MouseOver();
-        product.StartPage.element.MouseOut();
+        product.StartPage.Start.MouseOver();
+        product.StartPage.Start.MouseOut();
     }
 
 //    @Test

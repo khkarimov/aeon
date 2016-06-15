@@ -54,11 +54,22 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), size));
     }
 
+    //region Commands pertaining to alerts
+
     public void AcceptAlert() {
         info.getCommandExecutionFacade().Execute(info, new AcceptAlertCommand(info.getLog()));
     }
 
     public void DismissAlert() {info.getCommandExecutionFacade().Execute(info, new DismissAlertCommand(info.getLog()));}
+
+    public void VerifyAlertExists(){
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertExistsCommand(info.getLog()));
+    }
+
+    public void VerifyAlertNotExists(){
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertNotExistsCommand(info .getLog()));
+    }
+    //endregion
 
     public void Maximize() {
         info.getCommandExecutionFacade().Execute(info, new MaximizeCommand(info.getLog()));

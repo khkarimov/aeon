@@ -1,7 +1,6 @@
 package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;

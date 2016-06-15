@@ -105,8 +105,4 @@ public class SampleTest {
         System.out.println(testAttributeValues);
     }
 
-    @Test
-    public void TestFile(){
-        product.Browser.GoToUrl("file:///C:/Users/Administrator/Desktop/NubTestSite.html");
-    }
 }

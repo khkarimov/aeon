@@ -8,7 +8,7 @@ import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
- * Created by Administrator on 6/1/2016.
+ * Created by SebastianR on 6/1/2016.
  */
 public class DragAndDropCommand extends Command {
     IBy dropElement;
