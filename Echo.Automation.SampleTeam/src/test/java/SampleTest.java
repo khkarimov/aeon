@@ -7,14 +7,6 @@ import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
 
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
@@ -29,7 +21,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
+        product.Browser.GoToUrl("file:///C:/Users/stevefo/Documents/Node%20Sample/public/index.html");
     }
 
     @After

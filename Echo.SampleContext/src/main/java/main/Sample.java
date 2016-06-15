@@ -9,6 +9,7 @@ public class Sample extends WebProduct {
     public SamplePage Main;
     public LoginPage Login;
     public HomePage Home;
+    public main.vTeamSamplePage StartPage;
 
     public Sample() {
         super(new SampleConfiguration());
@@ -20,5 +21,6 @@ public class Sample extends WebProduct {
         super.afterLaunch();
         Login = new LoginPage(getAutomationInfo());
         Home = new HomePage(getAutomationInfo());
+        StartPage = new main.vTeamSamplePage(getAutomationInfo());
     }
 }
