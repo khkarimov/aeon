@@ -20,6 +20,7 @@ import org.mockito.Mockito;
 
  //region  SR - This object may not need unit tests, but instead only integration tests. Will remove if unnecessary
 public class BrowserObjectTest {
+/*
     private ICommandExecutionFacade commandExecutionFacade;
     private Parameters parameters;
     private AutomationInfo info;
@@ -32,7 +33,7 @@ public class BrowserObjectTest {
     @Before
     public void SetUp(){
 
-        /*
+        *//*
         delegateRunnerFactory = Mockito.mock(IDelegateRunnerFactory.class);
         parameters = Mockito.mock(Parameters.class);
         webAdapter = Mockito.mock(IWebAdapter.class);
@@ -42,7 +43,7 @@ public class BrowserObjectTest {
         info = new AutomationInfo(parameters, driver, webAdapter, log);
         info.setCommandExecutionFacade(commandExecutionFacade);
         browser = new Browser(info);
-        */
+        *//*
         delegateRunnerFactory = Mockito.mock(IDelegateRunnerFactory.class);
         commandExecutionFacade = new CommandExecutionFacade(Mockito.mock(IDelegateRunnerFactory.class));
         info = Mockito.mock(AutomationInfo.class);
@@ -59,6 +60,6 @@ public class BrowserObjectTest {
         browser.ScrollToTop();
 
         // Assert.
-    }
+    }*/
 //endregion
 }
