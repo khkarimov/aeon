@@ -1059,4 +1059,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         else DoesNotHaveOptions(guid,(SeleniumElement) element, options, select);
     }
+
+    @Override
+    public void MouseOut(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));
+
+    }
+
+    @Override
+    public void MouseOver(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));
+    }
 }

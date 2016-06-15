@@ -15,7 +15,7 @@ public class  Button extends Element {
     private IBy selector;
 
     public Button(AutomationInfo info, IBy selector) {
-        super(selector);
+        super(selector, info);
         this.info = info;
         this.selector = selector;
     }

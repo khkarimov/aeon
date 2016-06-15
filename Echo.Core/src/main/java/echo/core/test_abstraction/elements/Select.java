@@ -15,7 +15,7 @@ public class Select extends Element {
     private AutomationInfo info;
     private IBy selector;
     public Select(AutomationInfo info, IBy selector) {
-        super(selector);
+        super(selector, info);
         this.info = info;
         this.selector = selector;
     }

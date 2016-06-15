@@ -12,7 +12,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public class MouseOverCommand extends WebControlCommand {
 
-    protected MouseOverCommand(ILog log, IBy selector, ICommandInitializer initializer) {
+    public MouseOverCommand(ILog log, IBy selector, ICommandInitializer initializer) {
         super(log, Resources.getString("MoveOverCommand_Info"), selector, initializer);
     }
 

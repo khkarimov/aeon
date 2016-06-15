@@ -12,7 +12,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public class MouseOutCommand extends  WebControlCommand {
 
-    protected MouseOutCommand(ILog log, IBy selector, ICommandInitializer initializer) {
+    public MouseOutCommand(ILog log, IBy selector, ICommandInitializer initializer) {
         super(log, Resources.getString("MouseOutCommand_Info"), selector, initializer);
     }
 

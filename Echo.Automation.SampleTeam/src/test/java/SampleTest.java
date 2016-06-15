@@ -7,6 +7,15 @@ import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -68,10 +77,11 @@ public class SampleTest {
     }
 
     @Test
-    public void TestDoubleClickScrollTopEnd_04() {
+    public void TestDoubleClickScrollTopEnd_04() throws InterruptedException {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
-        product.Login.LoginButton.DoubleClick();
+        product.Login.LoginButton.MouseOver();
+        product.Login.LoginButton.MouseOut();
         product.Browser.GoToUrl("http://www.tutorialspoint.com");
         product.Browser.ScrollToEnd();
         product.Browser.ScrollToTop();
