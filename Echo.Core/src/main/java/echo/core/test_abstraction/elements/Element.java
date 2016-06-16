@@ -12,7 +12,6 @@ import java.util.ArrayList;
  */
 public class Element extends ElementAssertions {
     private IBy selector;
-
     public Element(IBy selector) {
         this.selector = selector;
     }

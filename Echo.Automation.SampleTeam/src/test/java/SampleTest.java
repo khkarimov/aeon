@@ -7,6 +7,7 @@ import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static echo.core.common.web.BrowserType.Chrome;
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -19,7 +20,7 @@ public class SampleTest {
 
     @Before
     public void SetUp() {
-        product = Launch(Sample.class, Firefox);
+        product = Launch(Sample.class, Firefox );
         product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
     }
 
@@ -100,7 +101,7 @@ public class SampleTest {
     @Test
     public void TestGetElementAttributeWithTextBoxNameAttribute(){
         String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
-        System.out.println(testAttributeValues);
+        System.out.println("User Name text box name value: " + testAttributeValues);
     }
 
 }

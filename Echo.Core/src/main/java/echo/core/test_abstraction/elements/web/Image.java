@@ -1,11 +1,13 @@
-package echo.core.test_abstraction.elements;
+package echo.core.test_abstraction.elements.web;
 
 /**
  * Created by SebastianR on 6/3/2016.
  */
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.web.DoubleClickCommand;
+import echo.core.command_execution.commands.web.DragAndDropCommand;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.test_abstraction.elements.Element;
 
 public class Image extends Element {
     private AutomationInfo info;
@@ -23,5 +25,12 @@ public class Image extends Element {
                         info.getLog(),
                         selector,
                         getWebCommandInitializer()));
+    }
+
+    public void DragAndDrop(IBy targetElement) {
+        info.getCommandExecutionFacade().Execute(info,
+                new DragAndDropCommand(info.getLog(),
+                        selector,
+                        targetElement));
     }
 }

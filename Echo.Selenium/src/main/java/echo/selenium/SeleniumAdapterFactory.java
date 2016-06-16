@@ -205,9 +205,9 @@ public final class SeleniumAdapterFactory {
                 put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
             }});
 
-            chromeOptionsMap.put("excludedSwitches", new ArrayList<String>() {{
+            /*chromeOptionsMap.put("excludedSwitches", new ArrayList<String>() {{
                 add("test-type");
-            }});
+            }});*/
         } catch (IOException e) {
             throw new UnableToCreateDriverException(e);
         }
