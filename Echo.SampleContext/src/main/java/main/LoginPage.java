@@ -1,11 +1,10 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.web.Button;
 import echo.core.test_abstraction.elements.web.TextBox;
 import echo.core.test_abstraction.elements.web.Select;
-import echo.core.test_abstraction.elements.web.WebFactory;
+import echo.core.test_abstraction.elements.factories.WebFactory;
 
 /**
  * Created by DionnyS on 4/21/2016.
@@ -19,9 +18,10 @@ public class LoginPage {
 
     public LoginPage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
-        UserNameTextBox = WebFactory.createTextBox("input[id*='UserName']", automationInfo);
-        PasswordTextBox = WebFactory.createTextBox("input[id*='Password']", automationInfo);
-        LoginButton = WebFactory.createButton("input[id*='LoginButton']", automationInfo);
-        LanguageSelect = WebFactory.createSelect("select[name*='languagesSelection']", automationInfo);
+        WebFactory web = new WebFactory(this.automationInfo);
+        UserNameTextBox = (TextBox) web.create(TextBox.class, "input[id*='UserName']");
+        PasswordTextBox = (TextBox) web.create(TextBox.class, "input[id*='Password']");
+        LoginButton = (Button) web.create(Button.class, "input[id*='LoginButton']");
+        LanguageSelect = (Select) web.create(Select.class, "select[name*='languagesSelection']");
     }
 }

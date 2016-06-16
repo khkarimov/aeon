@@ -1,9 +1,10 @@
-package echo.core.test_abstraction.elements.web;
+package echo.core.test_abstraction.elements.factories;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.exceptions.UnsupportedElementException;
 import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.*;
+import echo.core.test_abstraction.elements.web.*;
 
 import java.lang.reflect.Type;
 
@@ -43,37 +44,5 @@ public class WebFactory implements IElementFactory {
             return new FileDialogInput(info, By.CssSelector(selector));
         }
         else throw new UnsupportedElementException(elementType.getClass());
-    }
-
-    public static Button createButton(String selector, AutomationInfo info) {
-        return (Button) (new WebFactory(info).create(Button.class, selector));
-    }
-
-    public static Select createSelect(String selector, AutomationInfo info) {
-        return (Select) (new WebFactory(info).create(Select.class, selector));
-    }
-
-    public static TextBox createTextBox(String selector, AutomationInfo info) {
-        return (TextBox) (new WebFactory(info).create(TextBox.class, selector));
-    }
-
-    public static Label createLabel(String selector, AutomationInfo info) {
-        return (Label) (new WebFactory(info).create(Label.class, selector));
-    }
-
-    public static Link createLink(String selector, AutomationInfo info) {
-        return (Link) (new WebFactory(info).create(Link.class, selector));
-    }
-
-    public static Image createImage(String selector, AutomationInfo info) {
-        return (Image) (new WebFactory(info)).create(Image.class, selector);
-    }
-
-    public static Checkbox createCheckbox(String selector, AutomationInfo info) {
-        return (Checkbox) (new WebFactory(info)).create(Checkbox.class, selector);
-    }
-
-    public static FileDialogInput createFileDialogInput (String selector, AutomationInfo info) {
-        return (FileDialogInput) (new WebFactory(info)).create(FileDialogInput.class, selector);
     }
 }

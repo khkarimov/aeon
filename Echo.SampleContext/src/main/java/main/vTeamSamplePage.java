@@ -6,7 +6,7 @@ import echo.core.test_abstraction.elements.web.Checkbox;
 import echo.core.test_abstraction.elements.web.FileDialogInput;
 import echo.core.test_abstraction.elements.web.Image;
 import echo.core.test_abstraction.elements.web.TextBox;
-import echo.core.test_abstraction.elements.web.WebFactory;
+import echo.core.test_abstraction.elements.factories.WebFactory;
 
 /**
  * Created by Administrator on 6/3/2016.
@@ -22,12 +22,13 @@ public class vTeamSamplePage {
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
-        DisabledButton = WebFactory.createButton("button[id='disabled-button']", info);
-        UltimateLogoImage = WebFactory.createImage("img[id='dragtarget']", info);
-        TestCheckbox = WebFactory.createCheckbox("input[id='checkbox']", info);
-        TestFileDialogInput = WebFactory.createFileDialogInput("input[id='file-dialog']", info);
-        OpenAlertButton = WebFactory.createButton("button[id='alertDialog']", info);
-        AlertTitleTextBox = WebFactory.createTextBox("input[id ='sample1'", info);
+        WebFactory web = new WebFactory(this.info);
+        DisabledButton = (Button) web.create(Button.class, "button[id='disabled-button']");
+        UltimateLogoImage = (Image) web.create(Image.class, "img[id='dragtarget']");
+        TestCheckbox = (Checkbox) web.create(Checkbox.class, "input[id='checkbox']");
+        TestFileDialogInput = (FileDialogInput) web.create(FileDialogInput.class, "input[id='file-dialog']");
+        OpenAlertButton = (Button) web.create(Button.class, "button[id='alertDialog']");
+        AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1'");
 
     }
 }
