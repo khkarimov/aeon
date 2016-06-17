@@ -205,7 +205,7 @@ public class ByJQuery implements IBy, IByJQuery {
                 return toString();
             case MouseOut:
                 return String.format("var a=%1$s;if(a.length>0)a.mouseout();return a.length;", toString());
-            case MouseOver://%1$s replace this token with the first parameter and treat it like a string
+            case MouseOver:
                 return String.format("var a=%1$s;if(a.length>0)a.mouseover();return a.length;", toString());
             case ReturnElementArray:
                 return String.format("return $.makeArray(%1$s);", toString());
