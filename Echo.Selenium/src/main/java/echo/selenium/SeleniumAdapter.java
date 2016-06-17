@@ -1206,22 +1206,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             currOption = (SeleniumElement) elementsIterator.next();
             switch (compare) {
                 case AscendingByText:
-                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
-                        throw new ElementsNotInOrderException();
-                    }
-                    break;
-                case DescendingByText:
                     if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;
+                case DescendingByText:
+                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
                 case AscendingByValue:
-                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;
                 case DescendingByValue:
-                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;

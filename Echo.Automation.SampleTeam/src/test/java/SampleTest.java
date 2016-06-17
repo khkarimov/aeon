@@ -1,3 +1,4 @@
+import echo.core.common.CompareType;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
@@ -21,7 +22,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("file:///C:/Users/stevefo/Documents/Node%20Sample/public/index.html");
+        product.Browser.GoToUrl("file:///C:/Users/Administrator/Desktop/test.html");
     }
 
     @After
