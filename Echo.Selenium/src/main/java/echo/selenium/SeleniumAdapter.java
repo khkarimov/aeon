@@ -1084,4 +1084,36 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             ClickElement(guid, element);
         }
     }
+
+    @Override
+    public void MouseOut(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));
+
+    }
+
+    @Override
+    public void MouseOver(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));
+    }
+
+    @Override
+    public void SetBodyValueByJavaScript(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText));
+
+    }
+
+    @Override
+    public void SetValueByJavaScript(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText));
+    }
+
+    @Override
+    public void SetDivValueByJavaScript(UUID guid, WebControl element) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));
+    }
 }

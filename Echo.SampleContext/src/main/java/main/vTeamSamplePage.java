@@ -19,6 +19,7 @@ public class vTeamSamplePage {
     public Checkbox TestCheckbox;
     public FileDialogInput TestFileDialogInput;
     public TextBox AlertTitleTextBox;
+    public Button Start;
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
@@ -30,5 +31,6 @@ public class vTeamSamplePage {
         OpenAlertButton = (Button) web.create(Button.class, "button[id='alertDialog']");
         AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1'");
 
+        Start = new Button (info, By.CssSelector("button[id='start']"));
     }
 }

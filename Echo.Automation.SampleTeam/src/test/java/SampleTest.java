@@ -21,7 +21,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
+        product.Browser.GoToUrl("file:///C:/Users/stevefo/Documents/Node%20Sample/public/index.html");
     }
 
     @After
@@ -69,10 +69,11 @@ public class SampleTest {
     }
 
     @Test
-    public void TestDoubleClickScrollTopEnd_04() {
+    public void TestDoubleClickScrollTopEnd_04() throws InterruptedException {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
-        product.Login.LoginButton.DoubleClick();
+        product.Login.LoginButton.MouseOver();
+        product.Login.LoginButton.MouseOut();
         product.Browser.GoToUrl("http://www.tutorialspoint.com");
         product.Browser.ScrollToEnd();
         product.Browser.ScrollToTop();
