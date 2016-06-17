@@ -1022,7 +1022,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             for (String desiredOption : options) {
                 if (select == WebSelectOption.Text)
-                    element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                    element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
                 else
                     element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
             }
@@ -1035,7 +1035,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             boolean elementFound = true;
             try {
                 if (select == WebSelectOption.Text)
-                    element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                    element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
                 else
                     element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
             }
@@ -1148,19 +1148,19 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private void ElementHasOptionsInOrder(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
         try {
             if (options.length  > 1) {
-                if (select == WebSelectOption.Text) element = (SeleniumElement) element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
+                if (select == WebSelectOption.Text) element = (SeleniumElement) element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
 
                 for (int i = 1; i < options.length; i++) {
                     if (select == WebSelectOption.Value) {
                         element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='" + options[i-1] + "'] ~ option[value='" + options[i] + "']"));
                     } else
-                        element = (SeleniumElement) element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[i]) + "]"));
+                        element = (SeleniumElement) element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[i]) + "]"));
                 }
             }
             else{
                 if (select == WebSelectOption.Value) {
                     element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='" + options[0] + "']"));
-                } else element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
+                } else element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
             }
         } catch (org.openqa.selenium.NoSuchElementException e) {
             throw new ElementDoesNotHaveOptionException();

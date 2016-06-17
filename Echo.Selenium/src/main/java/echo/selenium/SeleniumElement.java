@@ -165,7 +165,7 @@ public class SeleniumElement extends WebControl {
      * @param by The selector.
      * @return The first web control found by the selector.
      */
-    public WebControl FindElementByText(UUID guid, IBy by) {
+    public WebControl FindElementByXPath(UUID guid, IBy by) {
        try {
            return new SeleniumElement(underlyingWebElement.findElement(org.openqa.selenium.By.xpath(by.toString())), log);
        }
