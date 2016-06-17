@@ -31,6 +31,6 @@ public class vTeamSamplePage {
         OpenAlertButton = (Button) web.create(Button.class, "button[id='alertDialog']");
         AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1'");
 
-        Start = new Button (info, By.CssSelector("button[id='start']"));
+        Start = (Button) web.create(Button.class, "button[id='start']");
     }
 }
