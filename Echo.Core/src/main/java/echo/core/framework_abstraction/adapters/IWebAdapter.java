@@ -467,4 +467,6 @@ public interface IWebAdapter extends IAdapter {
     void SetValueByJavaScript(UUID guid, WebControl element);
 
     void SetDivValueByJavaScript(UUID guid, WebControl element);
+
+    void ClickAllElements(UUID guid, IBy elementsBy);
 }

@@ -1,13 +1,14 @@
-package echo.core.test_abstraction.elements;
+package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.web.OpenFileDialogCommand;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.test_abstraction.elements.Element;
 
 /**
  * Created by SebastianR on 6/3/2016.
  */
-public class FileDialogInput extends Element{
+public class FileDialogInput extends Element {
     private AutomationInfo info;
     private IBy selector;
 

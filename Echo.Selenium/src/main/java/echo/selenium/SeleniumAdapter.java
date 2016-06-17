@@ -356,7 +356,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A ReadOnlyCollection of IWebElementAdapter.
      */
     public final Collection<WebControl> FindElements(UUID guid, IBy findBy) {
-        By by = (By) ((findBy instanceof By) ? findBy : null);
+        echo.core.common.web.selectors.By by = (echo.core.common.web.selectors.By) ((findBy instanceof echo.core.common.web.selectors.By) ? findBy : null);
         if (by != null) {
             Collection<WebControl> collection;
             log.Trace(guid, String.format("WebDriver.FindElements(By.CssSelector(%1$s));", by));
@@ -1017,7 +1017,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         throw new ElementExistsException();
     }
 
-
+    /**
+     * Asserts that a select has all of the options specified. Optionally can specify which option group the elements are part of.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element to check.
+     * @param options The options the select should have.
+     * @param select The optional option group the options are part of.
+     */
     public void hasOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
         try {
             for (String desiredOption : options) {
@@ -1030,6 +1036,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         catch (NoSuchElementException e) {throw new ElementDoesNotHaveOptionException();}
     }
 
+    /**
+     * Asserst that a select has none of the options specified. Optionally can specify which option group the elements are part of.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element to check.
+     * @param options The options the select should not have.
+     * @param select The optional option group the options should not be part of.
+     */
     public void DoesNotHaveOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
         for (String desiredOption:options) {
             boolean elementFound = true;
@@ -1090,5 +1103,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void SetDivValueByJavaScript(UUID guid, WebControl element) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));
+    }
+
+    /**
+     * Method that clicks all elements that correspond with the given IBy.
+     * @param guid A globally unique identifier associated with this call.
+     * @param elementsBy The IBy that corresponds with all the elements to click.
+     */
+    public void ClickAllElements(UUID guid, IBy elementsBy) {
+        Collection <WebControl> elements = FindElements(guid, elementsBy);
+        for (WebControl element: elements) {
+            ClickElement(guid, element);
+        }
     }
 }

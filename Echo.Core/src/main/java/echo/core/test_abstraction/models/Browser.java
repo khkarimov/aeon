@@ -67,7 +67,15 @@ public class Browser {
     }
 
     public void VerifyAlertNotExists(){
-        info.getCommandExecutionFacade().Execute(info, new VerifyAlertNotExistsCommand(info .getLog()));
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertNotExistsCommand(info.getLog()));
+    }
+
+    public void SendKeysToAlert(String keys){
+        info.getCommandExecutionFacade().Execute(info, new SendKeysToAlertCommand(info.getLog(), keys));
+    }
+
+    public String GetAlertText(){
+        return info.getCommandExecutionFacade().Execute(info, new GetAlertTextCommand(info.getLog())).toString();
     }
     //endregion
 
@@ -90,4 +98,7 @@ public class Browser {
     public void ScrollToEnd(){
        info.getCommandExecutionFacade().Execute(info, new ScrollToEndCommand(info.getLog()));
     }
+
+    public void SwitchToWindowByTitle(String title) { info.getCommandExecutionFacade().Execute(info,
+            new SwitchToWindowByTitleCommand(info.getLog(), title));}
 }
