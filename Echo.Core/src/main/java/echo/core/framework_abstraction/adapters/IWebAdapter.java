@@ -458,8 +458,6 @@ public interface IWebAdapter extends IAdapter {
 
     void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
-    void ClickAllElements(UUID guid, IBy elementsBy);
-
     void MouseOut(UUID guid, WebControl element);
 
     void MouseOver(UUID guid, WebControl element);
@@ -469,4 +467,6 @@ public interface IWebAdapter extends IAdapter {
     void SetValueByJavaScript(UUID guid, WebControl element);
 
     void SetDivValueByJavaScript(UUID guid, WebControl element);
+
+    void ClickAllElements(UUID guid, IBy elementsBy);
 }

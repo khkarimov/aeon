@@ -1,11 +1,7 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.test_abstraction.elements.web.Button;
-import echo.core.test_abstraction.elements.web.Checkbox;
-import echo.core.test_abstraction.elements.web.FileDialogInput;
-import echo.core.test_abstraction.elements.web.Image;
-import echo.core.test_abstraction.elements.web.TextBox;
+import echo.core.test_abstraction.elements.web.*;
 import echo.core.test_abstraction.elements.factories.WebFactory;
 
 /**
@@ -18,8 +14,9 @@ public class vTeamSamplePage {
     public Image UltimateLogoImage;
     public Checkbox TestCheckbox;
     public FileDialogInput TestFileDialogInput;
-    public TextBox AlertTitleTextBox;
     public Button Start;
+    public TextBox AlertTitleTextBox;
+    public ListItem DraggableListItem;
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
@@ -29,8 +26,9 @@ public class vTeamSamplePage {
         TestCheckbox = (Checkbox) web.create(Checkbox.class, "input[id='checkbox']");
         TestFileDialogInput = (FileDialogInput) web.create(FileDialogInput.class, "input[id='file-dialog']");
         OpenAlertButton = (Button) web.create(Button.class, "button[id='alertDialog']");
-        AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1'");
-
-        Start = new Button (info, By.CssSelector("button[id='start']"));
+        AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1']");
+        Start =(Button) web.create(Button.class,"button[id='start']");
+        //SR - this is not part of our sample site but I'm using it to test the drag and drop command
+        DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='node1']");
     }
 }

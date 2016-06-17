@@ -4,6 +4,7 @@ import com.sun.glass.ui.Size;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
@@ -802,10 +803,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         log.Trace(guid, "new Actions(IWebDriver).DragAndDrop(IWebElement, IWebElement);");
 
-        (new Actions(webDriver)).dragAndDrop(
+        WebElement drop = ((SeleniumElement) FindElement(guid, dropElement)).getUnderlyingWebElement();
+        WebElement target = ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement();
+        Actions builder = new Actions(webDriver);
+        builder.clickAndHold(drop).perform();
+        // SR - we should consider having a dynamic wait time. Could use the throttle factor in the TimeoutDelegateRunner
+        Sleep.Wait(250);
+        builder.release(target);
+        builder.perform();
+        /*(new Actions(webDriver)).dragAndDrop(
                 ((SeleniumElement) FindElement(guid, dropElement)).getUnderlyingWebElement(),
                 ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement())
-                .perform();
+                .perform();*/
     }
 
     /**
@@ -1073,18 +1082,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         else DoesNotHaveOptions(guid,(SeleniumElement) element, options, select);
     }
 
-    /**
-     * Method that clicks all elements that correspond with the given IBy.
-     * @param guid A globally unique identifier associated with this call.
-     * @param elementsBy The IBy that corresponds with all the elements to click.
-     */
-    public void ClickAllElements(UUID guid, IBy elementsBy) {
-        Collection <WebControl> elements = FindElements(guid, elementsBy);
-        for (WebControl element: elements) {
-            ClickElement(guid, element);
-        }
-    }
-
     @Override
     public void MouseOut(UUID guid, WebControl element) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
@@ -1115,5 +1112,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void SetDivValueByJavaScript(UUID guid, WebControl element) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));
+    }
+
+    /**
+     * Method that clicks all elements that correspond with the given IBy.
+     * @param guid A globally unique identifier associated with this call.
+     * @param elementsBy The IBy that corresponds with all the elements to click.
+     */
+    public void ClickAllElements(UUID guid, IBy elementsBy) {
+        Collection <WebControl> elements = FindElements(guid, elementsBy);
+        for (WebControl element: elements) {
+            ClickElement(guid, element);
+        }
     }
 }
