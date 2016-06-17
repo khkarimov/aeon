@@ -16,7 +16,7 @@ public class Checkbox extends Element {
     private IBy selector;
 
     public Checkbox(AutomationInfo info, IBy selector){
-        super(selector);
+        super(selector, info);
         this.info = info;
         this.selector = selector;
     }

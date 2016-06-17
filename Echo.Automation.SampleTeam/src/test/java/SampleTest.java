@@ -1,6 +1,7 @@
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
+import echo.core.common.web.selectors.By;
 import echo.selenium.SeleniumCookie;
 import main.Sample;
 import org.junit.*;
@@ -21,7 +22,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("file:///C:/Users/stevefo/Documents/Node%20Sample/public/index.html");
+        product.Browser.GoToUrl("http://srenv02web/");
     }
 
     @After
@@ -105,4 +106,9 @@ public class SampleTest {
         System.out.println("User Name text box name value: " + testAttributeValues);
     }
 
+    @Test
+    public void TestDragAndDropNotUsingHTML5Events(){
+        product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
+    }
 }
