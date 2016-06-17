@@ -5,6 +5,7 @@ import echo.core.common.CompareType;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
@@ -803,10 +804,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         log.Trace(guid, "new Actions(IWebDriver).DragAndDrop(IWebElement, IWebElement);");
 
-        (new Actions(webDriver)).dragAndDrop(
+        WebElement drop = ((SeleniumElement) FindElement(guid, dropElement)).getUnderlyingWebElement();
+        WebElement target = ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement();
+        Actions builder = new Actions(webDriver);
+        builder.clickAndHold(drop).perform();
+        // SR - we should consider having a dynamic wait time. Could use the throttle factor in the TimeoutDelegateRunner
+        Sleep.Wait(250);
+        builder.release(target);
+        builder.perform();
+        /*(new Actions(webDriver)).dragAndDrop(
                 ((SeleniumElement) FindElement(guid, dropElement)).getUnderlyingWebElement(),
                 ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement())
-                .perform();
+                .perform();*/
     }
 
     /**

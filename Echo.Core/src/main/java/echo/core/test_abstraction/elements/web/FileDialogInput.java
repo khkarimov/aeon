@@ -18,7 +18,7 @@ public class FileDialogInput extends Element {
     private IBy selector;
 
     public FileDialogInput(AutomationInfo info, IBy selector){
-        super(selector);
+        super(selector, info);
         this.info = info;
         this.selector = selector;
     }

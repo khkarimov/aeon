@@ -5,6 +5,7 @@ import echo.core.common.exceptions.UnsupportedElementException;
 import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.*;
 import echo.core.test_abstraction.elements.web.*;
+import echo.core.test_abstraction.elements.web.ListItem;
 
 import java.lang.reflect.Type;
 
@@ -42,6 +43,9 @@ public class WebFactory implements IElementFactory {
         }
         else if (elementType.equals(FileDialogInput.class)) {
             return new FileDialogInput(info, By.CssSelector(selector));
+        }
+        else if(elementType.equals(ListItem.class)){
+            return new ListItem(info, By.CssSelector(selector));
         }
         else throw new UnsupportedElementException(elementType.getClass());
     }

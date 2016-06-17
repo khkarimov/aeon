@@ -1,0 +1,27 @@
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile project(':Echo.Core')
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.mockito:mockito-core:1.10.19'
+
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.1'
+
+    compile 'org.apache.logging.log4j:log4j-core:2.5'
+    compile 'org.apache.logging.log4j:log4j-api:2.5'
+
+    compile 'joda-time:joda-time:2.9.3'
+    compile fileTree(dir: '../distrib/', include: 'Echo.Core-*.jar')
+
+}
