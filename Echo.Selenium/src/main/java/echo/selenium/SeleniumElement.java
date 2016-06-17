@@ -166,6 +166,10 @@ public class SeleniumElement extends WebControl {
      * @return The first web control found by the selector.
      */
     public WebControl FindElementByXPath(UUID guid, IBy by) {
+        if (by == null) {
+            throw new IllegalArgumentException("by");
+        }
+
        try {
            return new SeleniumElement(underlyingWebElement.findElement(org.openqa.selenium.By.xpath(by.toString())), log);
        }
