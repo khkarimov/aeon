@@ -18,10 +18,10 @@ public class Link extends Element {
 
     private AutomationInfo info;
     private IBy selector;
-    public Link(AutomationInfo automationInfo, IBy selector)
+    public Link(AutomationInfo info, IBy selector)
     {
-        super(selector);
-        this.info= automationInfo;
+        super(selector, info);
+        this.info= info;
         this.selector = selector;
     }
 
