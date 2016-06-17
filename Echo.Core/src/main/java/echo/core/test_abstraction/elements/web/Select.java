@@ -1,10 +1,11 @@
-package echo.core.test_abstraction.elements;
+package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class Select extends Element {
     private AutomationInfo info;
     private IBy selector;
     public Select(AutomationInfo info, IBy selector) {
-        super(selector);
+        super(selector, info);
         this.info = info;
         this.selector = selector;
     }

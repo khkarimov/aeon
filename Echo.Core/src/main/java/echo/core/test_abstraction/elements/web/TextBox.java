@@ -1,10 +1,11 @@
-package echo.core.test_abstraction.elements;
+package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class TextBox extends Element {
     private IBy selector;
 
     public TextBox(AutomationInfo info, IBy selector) {
-        super(selector);
+        super(selector, info);
         this.info = info;
         this.selector = selector;
     }
@@ -37,6 +38,13 @@ public class TextBox extends Element {
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())
         ));
+    }
+
+    public void RightClick(){
+        info.getCommandExecutionFacade().Execute(info, new RightClickCommand(
+                this.info.getLog(),
+                this.selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
     public void Blur() {

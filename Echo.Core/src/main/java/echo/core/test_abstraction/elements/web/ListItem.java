@@ -1,32 +1,33 @@
-package echo.core.test_abstraction.elements;
+package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
-import echo.core.command_execution.commands.web.OpenFileDialogCommand;
+import echo.core.command_execution.commands.web.DragAndDropCommand;
 import echo.core.command_execution.commands.web.WebControlFinder;
 import echo.core.command_execution.commands.web.WebSelectorFinder;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
 /**
- * Created by SebastianR on 6/3/2016.
+ * Created by Administrator on 6/17/2016.
  */
-public class FileDialogInput extends Element{
+public class ListItem extends Element {
     private AutomationInfo info;
     private IBy selector;
 
-    public FileDialogInput(AutomationInfo info, IBy selector){
-        super(selector);
+    public ListItem(AutomationInfo info, IBy selector){
+        super(selector, info);
         this.info = info;
         this.selector = selector;
     }
 
-    public void OpenFileDialog(){
+    public void DragAndDrop(IBy targetElement) {
         info.getCommandExecutionFacade().Execute(info,
-                new OpenFileDialogCommand(
-                        info.getLog(),
+                new DragAndDropCommand(info.getLog(),
                         selector,
+                        targetElement,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 }

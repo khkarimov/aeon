@@ -1,12 +1,14 @@
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
+import echo.core.common.web.selectors.By;
 import echo.selenium.SeleniumCookie;
 import main.Sample;
 import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static echo.core.common.web.BrowserType.Chrome;
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -19,8 +21,8 @@ public class SampleTest {
 
     @Before
     public void SetUp() {
-        product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
+        product = Launch(Sample.class, Firefox );
+        product.Browser.GoToUrl("http://srenv02web/");
     }
 
     @After
@@ -68,10 +70,11 @@ public class SampleTest {
     }
 
     @Test
-    public void TestDoubleClickScrollTopEnd_04() {
+    public void TestDoubleClickScrollTopEnd_04() throws InterruptedException {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
-        product.Login.LoginButton.DoubleClick();
+        product.Login.LoginButton.MouseOver();
+        product.Login.LoginButton.MouseOut();
         product.Browser.GoToUrl("http://www.tutorialspoint.com");
         product.Browser.ScrollToEnd();
         product.Browser.ScrollToTop();
@@ -100,7 +103,12 @@ public class SampleTest {
     @Test
     public void TestGetElementAttributeWithTextBoxNameAttribute(){
         String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
-        System.out.println(testAttributeValues);
+        System.out.println("User Name text box name value: " + testAttributeValues);
     }
 
+    @Test
+    public void TestDragAndDropNotUsingHTML5Events(){
+        product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
+    }
 }

@@ -198,6 +198,9 @@ public class EchoWebDriver implements IWebDriver {
     public void DismissAlert(UUID guid) {adapter.DismissAlert(guid);}
 
     @Override
+    public String GetAlertText(UUID guid) {return adapter.GetAlertText(guid);}
+
+    @Override
     public void Blur(UUID guid, WebControl control) {adapter.Blur(guid, control);}
 
     @Override
@@ -251,6 +254,26 @@ public class EchoWebDriver implements IWebDriver {
     public void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
         adapter.DragAndDrop(guid, dropElement, targetElement);
     }
+
+    @Override
+    public void ClickAllElements(UUID guid, IBy elementsBy) {
+        adapter.ClickAllElements(guid, elementsBy);
+    }
+
+    @Override
+    public void MouseOut(UUID guid,WebControl control) { adapter.MouseOut(guid, control); }
+
+    @Override
+    public void MouseOver(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
+
+    @Override
+    public void SetBodyValueByJavaScript(UUID guid,WebControl control) { adapter.MouseOut(guid, control); }
+
+    @Override
+    public void SetValueByJavaScript(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
+
+    @Override
+    public void SetDivValueByJavaScript(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
 //
 //    /**
 //     * Checks an element.

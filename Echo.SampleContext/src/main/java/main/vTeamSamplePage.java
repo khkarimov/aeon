@@ -1,8 +1,8 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.*;
+import echo.core.test_abstraction.elements.web.*;
+import echo.core.test_abstraction.elements.factories.WebFactory;
 
 /**
  * Created by Administrator on 6/3/2016.
@@ -14,17 +14,21 @@ public class vTeamSamplePage {
     public Image UltimateLogoImage;
     public Checkbox TestCheckbox;
     public FileDialogInput TestFileDialogInput;
-    public ListItem ListItem;
+    public Button Start;
+    public TextBox AlertTitleTextBox;
+    public ListItem DraggableListItem;
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
-        DisabledButton = new Button(info, By.CssSelector("button[id='disabled-button']"));
-        UltimateLogoImage = new Image(info, By.CssSelector("img[id='dragtarget']"));
-        TestCheckbox = new Checkbox(info, By.CssSelector("input[id='checkbox']"));
-        TestFileDialogInput = new FileDialogInput(info, By.CssSelector("input[id='file-dialog']"));
-        OpenAlertButton = new Button(info, By.CssSelector("button[id='alertDialog']"));
-        //SR - THIS IS NOT PART OF THE SAMPLE PAGE, ITS ONLY USED TO TEST DRAG AND DROP
-        // This context belongs to another site: http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html
-        ListItem = new ListItem(info, By.CssSelector("li[id='node1']"));
+        WebFactory web = new WebFactory(this.info);
+        DisabledButton = (Button) web.create(Button.class, "button[id='disabled-button']");
+        UltimateLogoImage = (Image) web.create(Image.class, "img[id='dragtarget']");
+        TestCheckbox = (Checkbox) web.create(Checkbox.class, "input[id='checkbox']");
+        TestFileDialogInput = (FileDialogInput) web.create(FileDialogInput.class, "input[id='file-dialog']");
+        OpenAlertButton = (Button) web.create(Button.class, "button[id='alertDialog']");
+        AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1']");
+        Start =(Button) web.create(Button.class,"button[id='start']");
+        //SR - this is not part of our sample site but I'm using it to test the drag and drop command
+        DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='node1']");
     }
 }

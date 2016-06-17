@@ -26,6 +26,8 @@ public interface IWebDriver extends IDriver {
 
     void DismissAlert(UUID guid);
 
+    String GetAlertText(UUID guid);
+
     void ScrollElementIntoView(UUID guid, WebControl webControl);
 
     void ScrollToTop(UUID guid);
@@ -107,6 +109,18 @@ public interface IWebDriver extends IDriver {
     void SendKeysToAlert(UUID guid, String keysToSend);
 
     void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
+
+    void MouseOut(UUID guid, WebControl element);
+
+    void MouseOver(UUID guid, WebControl element);
+
+    void SetBodyValueByJavaScript(UUID guid, WebControl element);
+
+    void SetValueByJavaScript(UUID guid, WebControl element);
+
+    void SetDivValueByJavaScript(UUID guid, WebControl element);
+
+    void ClickAllElements(UUID guid, IBy elementsBy);
 
 //
 //    /**
