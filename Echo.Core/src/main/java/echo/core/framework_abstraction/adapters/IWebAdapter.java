@@ -482,6 +482,16 @@ public interface IWebAdapter extends IAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @param elementsBy The selector.
      */
+    void MouseOut(UUID guid, WebControl element);
+
+    void MouseOver(UUID guid, WebControl element);
+
+    void SetBodyValueByJavaScript(UUID guid, WebControl element);
+
+    void SetValueByJavaScript(UUID guid, WebControl element);
+
+    void SetDivValueByJavaScript(UUID guid, WebControl element);
+
     void ClickAllElements(UUID guid, IBy elementsBy);
 
     /**
