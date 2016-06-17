@@ -1,6 +1,7 @@
 package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
+import echo.core.common.CompareType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
@@ -268,6 +269,11 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup) {
         adapter.HasNumberOfOptions(guid, element, optnumber, optgroup);
+    }
+
+    @Override
+    public void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
+        adapter.HaAllOptionsInOrder(guid, element, compare, optGroup);
     }
 //
 //    /**

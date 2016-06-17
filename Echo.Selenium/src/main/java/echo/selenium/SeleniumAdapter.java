@@ -1,6 +1,7 @@
 package echo.selenium;
 
 import com.sun.glass.ui.Size;
+import echo.core.common.CompareType;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
@@ -1139,7 +1140,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      * @param element The select element.
      * @param optnumber The amount of options the element should have.
-     * @param optgroup The optional optgion group to be searched.
+     * @param optgroup The optional option group to be searched.
      */
     public void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup) {
         if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
@@ -1151,6 +1152,49 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         Collection <WebControl> options = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector("option"));
         if(options.size() != optnumber) {
             throw new ElementDoesNotHaveNumberOfOptionsException();
+        }
+    }
+
+    /**
+     * Asserts that a select has all of its options in order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
+     * @param guid A globally unique identifier associated with this call. Can optionally be passed an option group which will be searched instead of the entire select.
+     * @param element The select element to be searched.
+     * @param compare The method by which the options will be compared.
+     * @param optGroup An optional option group which would be searched in isolation instad of all the options under select.
+     */
+    public void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
+        if (optGroup != null) {
+            element = ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='" + optGroup + "']"));
+        }
+        Collection<WebControl> elements = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector("option"));
+        Iterator <WebControl> elementsIterator = elements.iterator();
+        SeleniumElement prevOption =(SeleniumElement) elementsIterator.next();
+        SeleniumElement currOption;
+        while (elementsIterator.hasNext()) {
+            currOption = (SeleniumElement) elementsIterator.next();
+            switch (compare) {
+                case AscendingByText:
+                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+                case DescendingByText:
+                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+                case AscendingByValue:
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+                case DescendingByValue:
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+            }
+            prevOption = currOption;
         }
     }
 }

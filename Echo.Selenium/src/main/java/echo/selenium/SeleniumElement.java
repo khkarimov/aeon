@@ -161,10 +161,9 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Finds element through its text or value.
-     * @param guid
-     * @param by
-     * @param
-     * @return
+     * @param guid Uniquely identifiable id associated with this call.
+     * @param by The selector.
+     * @return The first web control found by the selector.
      */
     public WebControl FindElementByText(UUID guid, IBy by) {
        try {
@@ -173,6 +172,28 @@ public class SeleniumElement extends WebControl {
        catch (org.openqa.selenium.NoSuchElementException e) {
            throw new NoSuchElementException();
        }
+    }
+
+    /**
+     * Finds all elements corresponding to a given selector.
+     * @param guid A globally unique identifier associated with a call.
+     * @param by The selector.
+     * @return A collection of WebControls.
+     */
+    public Collection<WebControl> FindElementsByXPath(UUID guid, IBy by) {
+       if (by  == null) {
+           throw new IllegalArgumentException("by");
+       }
+
+        List<WebControl> result = new ArrayList<>();
+
+        getLog().Trace(guid, String.format("WebElement.FindElementsByXPath(By.CssSelector(%1$s)),", by));
+
+        for (WebElement seleniumElement : underlyingWebElement.findElements(By.xpath(by.toString()))){
+            result.add(new SeleniumElement(seleniumElement, getLog()));
+        }
+
+        return new ArrayList<>(result);
     }
 
     /**
