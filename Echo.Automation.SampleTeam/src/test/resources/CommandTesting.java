@@ -2,6 +2,8 @@
  * Created by SebastianR on 6/6/2016.
  */
 
+import echo.core.common.exceptions.TimeoutExpiredException;
+import echo.core.common.helpers.Sleep;
 import echo.core.common.web.selectors.By;
 import main.Sample;
 import org.junit.*;
@@ -65,11 +67,31 @@ public class CommandTesting {
         //product.StartPage.AlertTitleTextBox.RightClick();
     }
 
-    @Test
+    @Test(expected = TimeoutExpiredException.class)
     public void TestDragAndDrop(){
         product.Browser.Maximize();
         product.StartPage.UltimateLogoImage.DragAndDrop(By.CssSelector("div[id='secondDrop']"));
         product.StartPage.UltimateLogoImage.DoubleClick();
     }
+//region Testing MouseOver and MouseOut commands
+    @Test
+    public void MouseOverButton_ButtonTextChangesColor() {
+        product.StartPage.Start.MouseOver();
+        product.StartPage.Start.MouseOut();
+    }
 
+    @Test
+    public void MouseOverImage_ImageChanges(){
+        product.Browser.ScrollToEnd();
+        product.StartPage.UltimateLogoImage.MouseOver();
+        product.StartPage.UltimateLogoImage.MouseOut();
+    }
+
+    @Test
+    public void MouseOverLink_TextChangesColor(){
+        product.StartPage.TryLink.MouseOver();
+        product.StartPage.TryLink.MouseOut();
+        product.StartPage.CheckboxLabel.MouseOver();
+    }
+//endregion
 }

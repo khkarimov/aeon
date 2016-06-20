@@ -11,12 +11,12 @@ import java.util.ArrayList;
 /**
  * Created by DionnyS on 4/21/2016.
  */
-public class  Button extends Element {
+public class  Button extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
     public Button(AutomationInfo info, IBy selector) {
-        super(selector, info);
+        super(info, selector);
         this.info = info;
         this.selector = selector;
     }

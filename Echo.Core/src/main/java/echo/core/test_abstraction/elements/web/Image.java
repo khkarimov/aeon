@@ -14,12 +14,12 @@ import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
-public class Image extends Element {
+public class Image extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
     public Image(AutomationInfo info, IBy selector){
-        super(selector, info);
+        super(info, selector);
         this.info = info;
         this.selector = selector;
     }
