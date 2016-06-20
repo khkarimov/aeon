@@ -33,6 +33,7 @@ public class CommandTesting {
     @Test
     public void TestAcceptAlertWhenThereIsAnAlert(){
         product.Browser.VerifyAlertNotExists();
+        product.Browser.VerifyAlertExists();
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.SendKeysToAlert("Tester of Alerts");
