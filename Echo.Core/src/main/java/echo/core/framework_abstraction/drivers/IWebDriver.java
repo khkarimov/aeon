@@ -114,11 +114,11 @@ public interface IWebDriver extends IDriver {
 
     void MouseOver(UUID guid, WebControl element);
 
-    void SetBodyValueByJavaScript(UUID guid, WebControl element);
+    void SetBodyValueByJavaScript(UUID guid, WebControl element, String value);
 
-    void SetValueByJavaScript(UUID guid, WebControl element);
+    void SetValueByJavaScript(UUID guid, WebControl element, String value);
 
-    void SetDivValueByJavaScript(UUID guid, WebControl element);
+    void SetDivValueByJavaScript(UUID guid, WebControl element, String value);
 
     void ClickAllElements(UUID guid, IBy elementsBy);
 

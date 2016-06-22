@@ -52,9 +52,9 @@ public class SampleTest {
     public void TestClearAndRefresh_02() {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
-        product.Login.LoginButton.Click();
-        product.Browser.Refresh();
-        product.Browser.ClearBrowserStorage();
+        product.Login.PasswordTextBox.SetDivValueByJavaScript("<div class=\"hello\"></div>");
+      //  product.Login.LoginButton.MouseOver();
+//        product.Browser.ClearBrowserStorage();
     }
 
     @Test

@@ -12,14 +12,17 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public class SetBodyValueByJavaScriptCommand extends WebControlCommand {
 
+    private String value;
 
-    public SetBodyValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer) {
+
+    public SetBodyValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
         super(log, Resources.getString("SetBodyValueByJavaScriptCommand_Info"), selector, initializer);
+        this.value = value;
     }
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.MouseOver(getGuid(), control);
+        driver.SetBodyValueByJavaScript(getGuid(), control, value);
 
     }
 }

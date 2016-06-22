@@ -651,6 +651,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     .apply(new SeleniumScriptExecutor(webDriver, log), guid, script, Arrays.asList(args));
 
         } catch (RuntimeException e) {
+            System.out.println("FAIL");
             throw new ScriptExecutionException(script, e);
         }
     }
@@ -1096,22 +1097,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     @Override
-    public void SetBodyValueByJavaScript(UUID guid, WebControl element) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
-        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText));
+    public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText), value);
 
     }
 
     @Override
-    public void SetValueByJavaScript(UUID guid, WebControl element) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
-        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText));
+    public void SetValueByJavaScript(UUID guid, WebControl element, String value) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText), value);
     }
 
     @Override
-    public void SetDivValueByJavaScript(UUID guid, WebControl element) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
-        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));
+    public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText), value);
     }
 
     /**
