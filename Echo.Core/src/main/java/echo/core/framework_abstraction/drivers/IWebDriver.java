@@ -1,6 +1,7 @@
 package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
+import echo.core.common.CompareType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
@@ -121,6 +122,12 @@ public interface IWebDriver extends IDriver {
     void SetDivValueByJavaScript(UUID guid, WebControl element);
 
     void ClickAllElements(UUID guid, IBy elementsBy);
+
+    void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
+
+    void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup);
+
+    void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
 //
 //    /**

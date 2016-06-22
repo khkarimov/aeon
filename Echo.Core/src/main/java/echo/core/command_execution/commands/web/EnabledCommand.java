@@ -12,6 +12,10 @@ import java.util.Locale;
 /**
  * Created by RafaelT on 5/31/2016.
  */
+
+/**
+ * Asserts that an element is enabled.
+ */
 public class EnabledCommand extends WebControlCommand {
 
     /**
