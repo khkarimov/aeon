@@ -8,6 +8,7 @@ import echo.core.command_execution.commands.initialization.WebCommandInitializer
 import echo.core.command_execution.commands.web.DoubleClickCommand;
 import echo.core.command_execution.commands.web.WebControlFinder;
 import echo.core.command_execution.commands.web.DragAndDropCommand;
+import echo.core.command_execution.commands.web.WebControlFinder;
 import echo.core.command_execution.commands.web.WebSelectorFinder;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;
@@ -19,7 +20,7 @@ public class Image extends Element {
     private IBy selector;
 
     public Image(AutomationInfo info, IBy selector){
-        super(selector, info);
+        super(selector);
         this.info = info;
         this.selector = selector;
     }
@@ -34,7 +35,8 @@ public class Image extends Element {
 
     public void DragAndDrop(IBy targetElement) {
         info.getCommandExecutionFacade().Execute(info,
-                new DragAndDropCommand(info.getLog(),
+                new DragAndDropCommand(
+                        info.getLog(),
                         selector,
                         targetElement,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));

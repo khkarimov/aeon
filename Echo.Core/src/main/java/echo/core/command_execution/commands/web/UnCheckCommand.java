@@ -12,12 +12,27 @@ import java.util.Locale;
 /**
  * Created by RafaelT on 5/31/2016.
  */
+
+/**
+ * Unchecks a checkbox if it is currently checked.
+ */
 public class UnCheckCommand extends WebControlCommand {
 
+    /**
+     * Initializes a new instance of the UnCheckCommand.
+     * @param log The logger.
+     * @param selector The selector.
+     * @param commandInitializer The command initializer.
+     */
     public UnCheckCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
         super(log, String.format(Locale.getDefault(), Resources.getString("UnCheckCommand_Info"), selector), selector, commandInitializer);
     }
 
+    /**
+     * Provides the logic for the command.
+     * @param driver The web driver.
+     * @param control The web control.
+     */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
         driver.UnCheck(getGuid(), control);

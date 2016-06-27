@@ -1,6 +1,7 @@
 package echo.selenium;
 
 import com.sun.glass.ui.Size;
+import echo.core.common.CompareType;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
@@ -76,16 +77,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         return log;
     }
 
-    /**
-     * Clears the browers data
-     *
-     * @param guid A globally unique identifier associated with this call.
-     */
-
-    public final void ClearBrowserStorage(UUID guid) {
-        ExecuteScript( guid , "var echoJStorageLoaded=false;function echoOnFinishJStorageLoading(){if(echoJStorageLoaded)return;echoJStorageLoaded=true;$.jStorage.flush()}var echoJStorageLoaded=false;if(typeof JSON=='undefined'){var jsonScript=document.createElement('script');jsonScript.type='text/javascript';jsonScript.src='//cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js';document.getElementsByTagName('head')[0].appendChild(jsonScript)}if(typeof $.jStorage=='undefined'){var jStorageScript=document.createElement('script');jStorageScript.type='text/javascript';jStorageScript.src='https://raw.github.com/andris9/jStorage/master/jstorage.js';jStorageScript.onload=echoOnFinishJStorageLoading;jStorageScript.onreadystatechange=function(){if(this.readyState=='loaded'||this.readyState=='complete'){echoOnFinishJStorageLoading()}};document.getElementsByTagName('head')[0].appendChild(jStorageScript)}else{echoOnFinishJStorageLoading()}" );
-
-    }
     /**
      * Adds a cookie.
      *
@@ -1026,18 +1017,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         throw new ElementExistsException();
     }
 
-    /**
-     * Asserts that a select has all of the options specified. Optionally can specify which option group the elements are part of.
-     * @param guid A globally unique identifier associated with this call.
-     * @param element The select element to check.
-     * @param options The options the select should have.
-     * @param select The optional option group the options are part of.
-     */
-    public void hasOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
+    private void hasOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
         try {
             for (String desiredOption : options) {
                 if (select == WebSelectOption.Text)
-                    element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                    element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
                 else
                     element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
             }
@@ -1045,19 +1029,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         catch (NoSuchElementException e) {throw new ElementDoesNotHaveOptionException();}
     }
 
-    /**
-     * Asserst that a select has none of the options specified. Optionally can specify which option group the elements are part of.
-     * @param guid A globally unique identifier associated with this call.
-     * @param element The select element to check.
-     * @param options The options the select should not have.
-     * @param select The optional option group the options should not be part of.
-     */
-    public void DoesNotHaveOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
+    private void DoesNotHaveOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
         for (String desiredOption:options) {
             boolean elementFound = true;
             try {
                 if (select == WebSelectOption.Text)
-                    element.FindElementByText(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                    element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
                 else
                     element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
             }
@@ -1066,7 +1043,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Asserts that a select has all the options specified. Optionally can specify which option group the elements are part of.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element which should contain the options.
+     * @param options The options.
+     * @param optgroup The optional option group.
+     * @param select The method by which the options are identifed, either their value or their visible text.
+     */
     public void ElementHasOptions (UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
             hasOptions(guid, group, options, select);
@@ -1074,7 +1062,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         else hasOptions(guid,(SeleniumElement) element, options, select);
      }
 
+    /**
+     * Asserts that a select element has none of the options specified. Optionally can specify which option group the elements are part of.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element which should not contain the options.
+     * @param options The options.
+     * @param optgroup The optional option group.
+     * @param select The method by which the options are identified, either their value or their visible text.
+     */
     public void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
             DoesNotHaveOptions(guid, group, options, select);
@@ -1123,6 +1122,110 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         Collection <WebControl> elements = FindElements(guid, elementsBy);
         for (WebControl element: elements) {
             ClickElement(guid, element);
+        }
+    }
+
+    /**
+     * Asserts that a select has all the specified elements in that order. Can optionally specify which optiongroup the elements are a part of.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element to search.
+     * @param options The options the element should have in the same order.
+     * @param optgroup The option group the options should be a part of.
+     * @param select The method by which the options are identifed, either their value, or their visible text.
+     */
+    public void ElementHasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
+        if (optgroup != null) {
+            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='" + optgroup + "']"));
+            ElementHasOptionsInOrder(guid, group, options, select);
+        }
+        else ElementHasOptionsInOrder(guid, (SeleniumElement) element, options, select);
+    }
+
+    private void ElementHasOptionsInOrder(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
+        try {
+            if (options.length  > 1) {
+                if (select == WebSelectOption.Text) element = (SeleniumElement) element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
+
+                for (int i = 1; i < options.length; i++) {
+                    if (select == WebSelectOption.Value) {
+                        element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='" + options[i-1] + "'] ~ option[value='" + options[i] + "']"));
+                    } else
+                        element = (SeleniumElement) element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[i]) + "]"));
+                }
+            }
+            else{
+                if (select == WebSelectOption.Value) {
+                    element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='" + options[0] + "']"));
+                } else element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
+            }
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            throw new ElementDoesNotHaveOptionException();
+        }
+    }
+
+    /**
+     * Asserts that a select element has a certain number of options. Can optionally specify an option group instead of the entire select.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     * @param optnumber The amount of options the element should have.
+     * @param optgroup The optional option group to be searched.
+     */
+    public void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup) {
+        if (!((SeleniumElement) element).GetTagName(guid).equals("select")) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(guid), "select");
+        }
+        if (optgroup != null) {
+            element = (SeleniumElement) ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='" + optgroup + "']"));
+        }
+        Collection <WebControl> options = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector("option"));
+        if(options.size() != optnumber) {
+            throw new ElementDoesNotHaveNumberOfOptionsException();
+        }
+    }
+
+    /**
+     * Asserts that a select has all of its options in order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
+     * @param guid A globally unique identifier associated with this call. Can optionally be passed an option group which will be searched instead of the entire select.
+     * @param element The select element to be searched.
+     * @param compare The method by which the options will be compared.
+     * @param optGroup An optional option group which would be searched in isolation instad of all the options under select.
+     */
+    public void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
+        if (optGroup != null) {
+            element = ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='" + optGroup + "']"));
+        }
+        Collection<WebControl> elements = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector("option"));
+        Iterator <WebControl> elementsIterator = elements.iterator();
+        SeleniumElement prevOption =(SeleniumElement) elementsIterator.next();
+        SeleniumElement currOption;
+        while (elementsIterator.hasNext()) {
+            currOption = (SeleniumElement) elementsIterator.next();
+            switch (compare) {
+                case AscendingByText:
+                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+                case DescendingByText:
+                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+                case AscendingByValue:
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+                case DescendingByValue:
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
+            }
+            prevOption = currOption;
         }
     }
 }

@@ -21,8 +21,7 @@ public class CommandTesting {
     @Before
     public void SetUp(){
         product = Launch(Sample.class, Firefox);
-        //Make sure to change to where you are keeping the fake test site
-        product.Browser.GoToUrl("file:///C:/Users/Administrator/Desktop/Test%20Sample%20Context/index.html");
+        product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
@@ -32,7 +31,10 @@ public class CommandTesting {
 
     @Test
     public void TestAcceptAlertWhenThereIsAnAlert(){
+        //String s1 = System.getProperty("user.dir");
+
         product.Browser.VerifyAlertNotExists();
+        //product.Browser.VerifyAlertExists();
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.SendKeysToAlert("Tester of Alerts");

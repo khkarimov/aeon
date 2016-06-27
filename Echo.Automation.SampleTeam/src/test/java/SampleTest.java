@@ -1,3 +1,4 @@
+import echo.core.common.CompareType;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
@@ -51,13 +52,10 @@ public class SampleTest {
 
     @Test
     public void TestClearAndRefresh_02() {
-        product.StartPage.TestCheckbox.SetBodyValueByJavaScript("Hello");
-        //product.StartPage.AlertTitleTextBox.SetDivValueByJavaScript("Hey there");
-//        product.Login.UserNameTextBox.Set("usa-canu");
-//        product.Login.PasswordTextBox.Set("password");
-//        product.Login.PasswordTextBox.SetDivValueByJavaScript("Hey There");
-//        product.Login.LoginButton.MouseOver();
-//        product.Browser.ClearBrowserStorage();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.PasswordTextBox.Set("password");
+        product.Login.LoginButton.Click();
+        product.Browser.Refresh();
     }
 
     @Test
@@ -113,5 +111,18 @@ public class SampleTest {
     public void TestDragAndDropNotUsingHTML5Events(){
         product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
         product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
+    }
+    @Test
+    public void TestHasElementsInOrder() {
+        String [] options = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
+        String [] values = new String [] {"0", "5", "13"};
+        String [] badValues = new String [] {"0", "13", "5"};
+        String [] badOptions = new String [] {"English (USA)", "Melayu (MY)", "Italiano (IT)"};
+        String [] value = new String [] {"0"};
+        String [] option = new String [] {"English (USA)"};
+        product.Login.LanguageSelect.HasOptionsInOrder(options, WebSelectOption.Text);
+        product.Login.LanguageSelect.HasOptionsInOrder(values, WebSelectOption.Value);
+        product.Login.LanguageSelect.HasOptionsInOrder(value, WebSelectOption.Value);
+        product.Login.LanguageSelect.HasOptionsInOrder(option, WebSelectOption.Text);
     }
 }
