@@ -129,6 +129,8 @@ public interface IWebDriver extends IDriver {
     void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
     Collection <IWebCookie> GetAllCookies(UUID guid);
+
+    void ModifyCookie (UUID guid, String name, String value);
 //
 //    /**
 //     * Check the element.

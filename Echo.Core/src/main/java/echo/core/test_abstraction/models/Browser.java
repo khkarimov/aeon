@@ -101,4 +101,6 @@ public class Browser {
             new SwitchToWindowByTitleCommand(info.getLog(), title));}
 
     public Collection<IWebCookie> GetAllCookies() {return (Collection<IWebCookie>) info.getCommandExecutionFacade().Execute(info, new GetAllCookiesCommand(info.getLog()));}
+
+    public void ModifyCookie(String name, String value){info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));}
 }

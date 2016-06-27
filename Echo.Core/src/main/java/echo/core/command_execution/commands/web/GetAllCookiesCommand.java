@@ -20,7 +20,7 @@ public class GetAllCookiesCommand extends CommandWithReturn {
      * @param log The logger.
      */
     public GetAllCookiesCommand(ILog log) {
-        super(log, Resources.getString("AddCookieCommand_Info"));
+        super(log, Resources.getString("GetAllCookiesCommand_Info"));
     }
 
     /**
