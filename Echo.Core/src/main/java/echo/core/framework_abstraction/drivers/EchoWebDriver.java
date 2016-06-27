@@ -297,6 +297,11 @@ public class EchoWebDriver implements IWebDriver {
     public void ModifyCookie (UUID guid, String name, String value) {
         adapter.ModifyCookie(guid, name, value);
     }
+
+    @Override
+    public IWebCookie GetCookie(UUID guid, String name) {
+        return adapter.GetCookie(guid, name);
+    }
 //
 //    /**
 //     * Checks an element.

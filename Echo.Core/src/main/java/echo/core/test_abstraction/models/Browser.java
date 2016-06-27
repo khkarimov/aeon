@@ -103,4 +103,6 @@ public class Browser {
     public Collection<IWebCookie> GetAllCookies() {return (Collection<IWebCookie>) info.getCommandExecutionFacade().Execute(info, new GetAllCookiesCommand(info.getLog()));}
 
     public void ModifyCookie(String name, String value){info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));}
+
+    public IWebCookie GetCookie(String name) {return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(info.getLog(), name));}
 }

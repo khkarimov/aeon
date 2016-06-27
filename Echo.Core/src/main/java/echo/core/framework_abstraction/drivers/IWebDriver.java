@@ -131,6 +131,8 @@ public interface IWebDriver extends IDriver {
     Collection <IWebCookie> GetAllCookies(UUID guid);
 
     void ModifyCookie (UUID guid, String name, String value);
+
+    IWebCookie GetCookie(UUID guid, String name);
 //
 //    /**
 //     * Check the element.
