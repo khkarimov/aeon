@@ -4,15 +4,14 @@
 
 import echo.core.common.exceptions.TimeoutExpiredException;
 import echo.core.common.helpers.Sleep;
+import echo.core.common.web.BrowserSize;
+import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import main.Sample;
 import org.junit.*;
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 
-import static echo.core.common.web.BrowserType.Chrome;
 import static echo.core.common.web.BrowserType.Firefox;
-import static echo.core.common.web.BrowserType.InternetExplorer;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
 public class CommandTesting {
@@ -23,8 +22,8 @@ public class CommandTesting {
     @Before
     public void SetUp(){
         product = Launch(Sample.class, Firefox);
-        //Make sure to change to where you are keeping the fake test site
-        product.Browser.GoToUrl("file:///C:/Users/Administrator/Desktop/Test%20Sample%20Context/index.html");
+        product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+        product.Browser.Maximize();
     }
 
     @After
@@ -33,65 +32,77 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestAcceptAlertWhenThereIsAnAlert(){
+    public void TestSendKeysToAlert_AcceptAlertWhenThereIsAnAlert(){
         product.Browser.VerifyAlertNotExists();
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.SendKeysToAlert("Tester of Alerts");
-        System.out.println(product.Browser.GetAlertText());
         product.Browser.AcceptAlert();
     }
 
-    @Test
+//region Ignore Test
+    @Ignore
     public void TestDismissAlertWhenThereIsAnAlert(){
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.DismissAlert();
     }
 
-    @Test
+    @Ignore
     public void TestBlurTextBox(){
         product.StartPage.AlertTitleTextBox.Set("Alert Test Title");
         product.StartPage.AlertTitleTextBox.Blur();
     }
 
+    @Ignore
+    public void MouseOverButton_ButtonTextChangesColor() {
+        product.StartPage.Start.MouseOver();
+        product.StartPage.Start.MouseOut();
+    }
+//endregion
+
     @Test
-    public void TestRightClick(){
-        //product.StartPage.OpenAlertButton.RightClick();
-        product.StartPage.AlertTitleTextBox.RightClick();
+    public void TestHasOptionsCommandsWith50000() {
+        String [] texts = {"option49999", "option8"};
+        String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
+        String [] values = {"1", "2"};
+        String [] valuesShouldFail = {"-12", "Blue"};
+        product.StartPage.DropDown.Click();
+        product.StartPage.DropDown.HasOptions(texts, null,  WebSelectOption.Text);
+        product.StartPage.DropDown.HasOptions(values, null,  WebSelectOption.Value);
+        product.StartPage.DropDown.DoesNotHaveOptions(shouldfail, null, WebSelectOption.Text);
+        product.StartPage.DropDown.DoesNotHaveOptions(valuesShouldFail, null, WebSelectOption.Value);
+    }
+
+    @Test
+    public void TestWindowResizingAndNavigation() {
+        product.Browser.Resize(BrowserSize.TabletLandscape);
+        product.Browser.Resize(BrowserSize.SmallTabletLandscape);
+        product.Browser.Resize(BrowserSize.MobileLandscape);
+        product.Browser.Maximize();
+        product.Browser.GoToUrl("http://www.tutorialspoint.com");
+        product.Browser.ScrollToEnd();
+        product.Browser.ScrollToTop();
+        product.Browser.GoBack();
+        product.Browser.GoForward();
+    }
+
+    @Test
+    public void TestDoubleClickAndMouseOverOut(){
+        product.StartPage.UltimateLogoImage.DoubleClick();
+        product.StartPage.UltimateLogoImage.MouseOut();
+    }
+
+    @Test
+    public void TestDragAndDropNotUsingHTML5Events(){
+        product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
     }
 
     @Test
     public void TestOpenFileDialog(){
         product.StartPage.TestFileDialogInput.OpenFileDialog();
-        //product.StartPage.AlertTitleTextBox.RightClick();
     }
-
-    @Test(expected = TimeoutExpiredException.class)
-    public void TestDragAndDrop(){
-        product.Browser.Maximize();
-        product.StartPage.UltimateLogoImage.DragAndDrop(By.CssSelector("div[id='secondDrop']"));
-        product.StartPage.UltimateLogoImage.DoubleClick();
-    }
-//region Testing MouseOver and MouseOut commands
-    @Test
-    public void MouseOverButton_ButtonTextChangesColor() {
-        product.StartPage.Start.MouseOver();
-        product.StartPage.Start.MouseOut();
-    }
-
-    @Test
-    public void MouseOverImage_ImageChanges(){
-        product.Browser.ScrollToEnd();
-        product.StartPage.UltimateLogoImage.MouseOver();
-        product.StartPage.UltimateLogoImage.MouseOut();
-    }
-
-    @Test
-    public void MouseOverLink_TextChangesColor(){
-        product.StartPage.TryLink.MouseOver();
-        product.StartPage.TryLink.MouseOut();
-        product.StartPage.CheckboxLabel.MouseOver();
-    }
-//endregion
 }
+
+

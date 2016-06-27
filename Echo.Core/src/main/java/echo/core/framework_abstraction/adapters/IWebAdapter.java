@@ -1,6 +1,7 @@
 package echo.core.framework_abstraction.adapters;
 
 import com.sun.glass.ui.Size;
+import echo.core.common.CompareType;
 import echo.core.common.exceptions.*;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
@@ -454,10 +455,33 @@ public interface IWebAdapter extends IAdapter {
 
     void ClearBrowserStorage(UUID guid);
 
+    /**
+     * Asserts that a select element posseses all of the elements passed to it. It can optionally be passed an option group that if non-null will be searched instead of the entire
+     * select tag. Options will be searched by either their value or their visible text.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     * @param options The options that the element should posses.
+     * @param optgroup The optional option group that which will be searched.
+     * @param select The method by which the options will be searched either by value or by text.
+     */
     void ElementHasOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
+    /**
+     * Asserts that a select element does not posses any of the options passed. Can optionally be passed an option group that if non-null will be searched instead of the entire
+     * select tag. Options will be searched for either by their value or their visible text.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     * @param options The options that the select element should not have.
+     * @param optgroup The optional option group that will be searched.
+     * @param select The method by which the options will be searched for either by visible text or their value.
+     */
     void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
+    /**
+     * Clicks all elements that corresponding with the given IBy.
+     * @param guid A globally unique identifier associated with this call.
+     * @param elementsBy The selector.
+     */
     void MouseOut(UUID guid, WebControl element);
 
     void MouseOver(UUID guid, WebControl element);
@@ -469,4 +493,35 @@ public interface IWebAdapter extends IAdapter {
     void SetDivValueByJavaScript(UUID guid, WebControl element);
 
     void ClickAllElements(UUID guid, IBy elementsBy);
+
+    /**
+     * Asserts that a select element not only has all of the options provided by that they are all in the order provided. Can optionally be passed an option group
+     * that if non-null will be searched in isolation instead of the entire select. Options can be searched either by their value or their visible text.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     * @param options The options to be searched for.
+     * @param optgroup The visible text of the optional option group which would be searched.
+     * @param select The method by which the options will be searched, either by text or value.
+     */
+    void ElementHasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
+
+    /**
+     * Asserts that a select element has a certain amount of options. Can optionally be passed an option group that if non-null will be searched
+     * in isolation instead of the he entire select.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     * @param optnumber The amount of elements the select should have.
+     * @param optgroup The visible text of the optional option group which would be searched.
+     */
+    void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup);
+
+    /**
+     * Asserts that a select element has all of its options in a certain order, either ascending or descending alphanumerically by either their value
+     * or their visible text.
+     * @param guid A gobally unique identifier associated with this call.
+     * @param element The select element.
+     * @param compare The method by which the options will be compared.
+     * @param optGroup The optional option group which would be searched in isolation instead.
+     */
+    void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 }

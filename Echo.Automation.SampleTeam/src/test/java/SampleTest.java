@@ -1,3 +1,4 @@
+import echo.core.common.CompareType;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
@@ -22,7 +23,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://srenv02web/");
+        product.Browser.GoToUrl("http://rtechoweb/");
     }
 
     @After
@@ -66,7 +67,6 @@ public class SampleTest {
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
         product.Browser.Resize(BrowserSize.MobileLandscape);
         product.Browser.Maximize();
-
     }
 
     @Test
@@ -110,5 +110,18 @@ public class SampleTest {
     public void TestDragAndDropNotUsingHTML5Events(){
         product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
         product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
+    }
+    @Test
+    public void TestHasElementsInOrder() {
+        String [] options = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
+        String [] values = new String [] {"0", "5", "13"};
+        String [] badValues = new String [] {"0", "13", "5"};
+        String [] badOptions = new String [] {"English (USA)", "Melayu (MY)", "Italiano (IT)"};
+        String [] value = new String [] {"0"};
+        String [] option = new String [] {"English (USA)"};
+        product.Login.LanguageSelect.HasOptionsInOrder(options, WebSelectOption.Text);
+        product.Login.LanguageSelect.HasOptionsInOrder(values, WebSelectOption.Value);
+        product.Login.LanguageSelect.HasOptionsInOrder(value, WebSelectOption.Value);
+        product.Login.LanguageSelect.HasOptionsInOrder(option, WebSelectOption.Text);
     }
 }

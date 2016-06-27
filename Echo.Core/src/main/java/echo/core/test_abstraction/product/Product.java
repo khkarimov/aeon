@@ -46,7 +46,7 @@ public class Product {
             driver.Configure(adapter);
 
             commandExecutionFacade = new CommandExecutionFacade(
-                    new DelegateRunnerFactory(Duration.millis(200), Duration.standardSeconds(10)));
+                    new DelegateRunnerFactory(Duration.millis(1000), Duration.standardSeconds(10)));
 
             this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());
             automationInfo.setCommandExecutionFacade(commandExecutionFacade);
