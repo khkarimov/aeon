@@ -9,6 +9,7 @@ import echo.core.framework_abstraction.controls.web.WebControl;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -127,6 +128,7 @@ public interface IWebDriver extends IDriver {
 
     void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
+    Collection <IWebCookie> GetAllCookies(UUID guid);
 //
 //    /**
 //     * Check the element.

@@ -287,6 +287,11 @@ public class EchoWebDriver implements IWebDriver {
     public void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
         adapter.HaAllOptionsInOrder(guid, element, compare, optGroup);
     }
+
+    @Override
+    public Collection <IWebCookie> GetAllCookies(UUID guid) {
+        return adapter.GetAllCookies(guid);
+    }
 //
 //    /**
 //     * Checks an element.
