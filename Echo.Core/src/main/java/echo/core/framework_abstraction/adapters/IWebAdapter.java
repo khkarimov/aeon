@@ -453,8 +453,6 @@ public interface IWebAdapter extends IAdapter {
 
     void NotExists(UUID guid, WebControl element);
 
-    void ClearBrowserStorage(UUID guid);
-
     /**
      * Asserts that a select element posseses all of the elements passed to it. It can optionally be passed an option group that if non-null will be searched instead of the entire
      * select tag. Options will be searched by either their value or their visible text.

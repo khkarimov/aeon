@@ -78,16 +78,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Clears the browers data
-     *
-     * @param guid A globally unique identifier associated with this call.
-     */
-
-    public final void ClearBrowserStorage(UUID guid) {
-        ExecuteScript( guid , "var echoJStorageLoaded=false;function echoOnFinishJStorageLoading(){if(echoJStorageLoaded)return;echoJStorageLoaded=true;$.jStorage.flush()}var echoJStorageLoaded=false;if(typeof JSON=='undefined'){var jsonScript=document.createElement('script');jsonScript.type='text/javascript';jsonScript.src='//cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js';document.getElementsByTagName('head')[0].appendChild(jsonScript)}if(typeof $.jStorage=='undefined'){var jStorageScript=document.createElement('script');jStorageScript.type='text/javascript';jStorageScript.src='https://raw.github.com/andris9/jStorage/master/jstorage.js';jStorageScript.onload=echoOnFinishJStorageLoading;jStorageScript.onreadystatechange=function(){if(this.readyState=='loaded'||this.readyState=='complete'){echoOnFinishJStorageLoading()}};document.getElementsByTagName('head')[0].appendChild(jStorageScript)}else{echoOnFinishJStorageLoading()}" );
-
-    }
-    /**
      * Adds a cookie.
      *
      * @param guid   A globally unique identifier associated with this call.

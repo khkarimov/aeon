@@ -42,10 +42,6 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new DeleteAllCookiesCommand(info.getLog()));
     }
 
-    public void ClearBrowserStorage() {
-        info.getCommandExecutionFacade().Execute(info, new ClearBrowserStorageCommand(info.getLog()));
-    }
-
     public void Refresh() {
         info.getCommandExecutionFacade().Execute(info, new RefreshCommand(info.getLog()));
     }

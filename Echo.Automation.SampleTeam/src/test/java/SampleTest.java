@@ -55,7 +55,6 @@ public class SampleTest {
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
         product.Browser.Refresh();
-        product.Browser.ClearBrowserStorage();
     }
 
     @Test
