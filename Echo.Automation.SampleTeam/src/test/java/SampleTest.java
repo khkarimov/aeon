@@ -22,7 +22,8 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://srenv02web/");
+        //"http://gandaras01web.newgen.corp/"
+        product.Browser.GoToUrl("file://C:/Users/Administrator/Documents/index.html");
     }
 
     @After
@@ -50,10 +51,12 @@ public class SampleTest {
 
     @Test
     public void TestClearAndRefresh_02() {
-        product.Login.UserNameTextBox.Set("usa-canu");
-        product.Login.PasswordTextBox.Set("password");
-        product.Login.PasswordTextBox.SetDivValueByJavaScript("<div class=\"hello\"></div>");
-      //  product.Login.LoginButton.MouseOver();
+        product.StartPage.TestCheckbox.SetBodyValueByJavaScript("Hello");
+        //product.StartPage.AlertTitleTextBox.SetDivValueByJavaScript("Hey there");
+//        product.Login.UserNameTextBox.Set("usa-canu");
+//        product.Login.PasswordTextBox.Set("password");
+//        product.Login.PasswordTextBox.SetDivValueByJavaScript("Hey There");
+//        product.Login.LoginButton.MouseOver();
 //        product.Browser.ClearBrowserStorage();
     }
 

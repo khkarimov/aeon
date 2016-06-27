@@ -1,6 +1,7 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
+import echo.core.test_abstraction.elements.Element;
 import echo.core.test_abstraction.elements.web.*;
 import echo.core.test_abstraction.elements.factories.WebFactory;
 
@@ -17,6 +18,7 @@ public class vTeamSamplePage {
     public Button Start;
     public TextBox AlertTitleTextBox;
     public ListItem DraggableListItem;
+    public TextBox Async;
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
@@ -29,6 +31,7 @@ public class vTeamSamplePage {
         AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1']");
         Start =(Button) web.create(Button.class,"button[id='start']");
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
-        DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='node1']");
+        DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='dragtarget']");
+        Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
     }
 }

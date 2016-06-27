@@ -12,8 +12,11 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public class SetValueByJavaScriptCommand extends WebControlCommand{
 
-    public SetValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer) {
+    private String value;
+
+    public SetValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
         super(log, Resources.getString("SetValueByJavaScriptCommand_Info"), selector, initializer);
+        this.value = value;
     }
 
     @Override

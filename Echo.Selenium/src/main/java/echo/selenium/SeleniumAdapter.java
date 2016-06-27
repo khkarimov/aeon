@@ -651,7 +651,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     .apply(new SeleniumScriptExecutor(webDriver, log), guid, script, Arrays.asList(args));
 
         } catch (RuntimeException e) {
-            System.out.println("FAIL");
             throw new ScriptExecutionException(script, e);
         }
     }
@@ -1099,20 +1098,20 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText));");
-        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText), value);
+        ExecuteScript(guid, String.format(element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText), Quotes.escape(value)));
 
     }
 
     @Override
     public void SetValueByJavaScript(UUID guid, WebControl element, String value) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText));");
-        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText), value);
+        ExecuteScript(guid, String.format(element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText), Quotes.escape(value)));
     }
 
     @Override
     public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));");
-        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText), value);
+        ExecuteScript(guid, String.format(element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText), Quotes.escape(value)));
     }
 
     /**

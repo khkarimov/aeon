@@ -53,5 +53,13 @@ public class Element extends ElementAssertions {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
                 value));
     }
+
+    public void SetValueByJavaScript(String value) {
+        info.getCommandExecutionFacade().Execute(info, new SetValueByJavaScriptCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                value));
+    }
 }
 
