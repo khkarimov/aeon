@@ -47,8 +47,6 @@ public interface IWebDriver extends IDriver {
 
     void ClearElement(UUID guid, WebControl webControl);
 
-    void ClearBrowserStorage(UUID guid);
-
     void AddCookie(UUID guid, IWebCookie cookie);
 
     void DeleteCookie(UUID guid, String cookie);
