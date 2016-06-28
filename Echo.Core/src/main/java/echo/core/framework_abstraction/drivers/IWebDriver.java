@@ -135,6 +135,8 @@ public interface IWebDriver extends IDriver {
     IWebCookie GetCookie(UUID guid, String name);
 
     void Has (UUID guid, WebControl control, String [] messages, String selector);
+
+    void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector);
 //
 //    /**
 //     * Check the element.

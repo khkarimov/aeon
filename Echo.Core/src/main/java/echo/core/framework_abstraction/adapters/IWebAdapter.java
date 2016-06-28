@@ -524,4 +524,6 @@ public interface IWebAdapter extends IAdapter {
     void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
     void Has(UUID guid, WebControl element, String [] messages, String selector);
+
+    void DoesNotHave(UUID guid, WebControl element, String [] messages, String selector);
 }

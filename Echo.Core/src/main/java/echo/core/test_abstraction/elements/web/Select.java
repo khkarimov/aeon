@@ -118,4 +118,13 @@ public class Select extends Element {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector
                 ));
     }
+
+    public void DoesNotHave(String [] messages, String childSelector) {
+        info.getCommandExecutionFacade().Execute(info,
+                new DoesNotHaveCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector
+                ));
+    }
 }

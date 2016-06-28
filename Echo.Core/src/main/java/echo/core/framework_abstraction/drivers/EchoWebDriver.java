@@ -307,6 +307,11 @@ public class EchoWebDriver implements IWebDriver {
     public void Has(UUID guid, WebControl control, String [] messages, String selector) {
         adapter.Has(guid, control, messages, selector);
     }
+
+    @Override
+    public void DoesNotHave (UUID guid, WebControl control, String [] messages, String selector) {
+        adapter.DoesNotHave(guid, control, messages, selector);
+    }
 //
 //    /**
 //     * Checks an element.

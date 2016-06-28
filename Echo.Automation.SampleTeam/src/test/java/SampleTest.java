@@ -127,7 +127,9 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] messages = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)", "Asdasd"};
+        String [] messages = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
+        String [] notMessages = new String [] {"asdasdasd", "sss"};
         product.Login.LanguageSelect.Has(messages, "option");
+        product.Login.LanguageSelect.DoesNotHave(notMessages, "option");
     }
 }
