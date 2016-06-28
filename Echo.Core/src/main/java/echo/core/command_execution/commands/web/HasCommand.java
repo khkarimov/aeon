@@ -14,12 +14,25 @@ import java.util.Locale;
 /**
  * Created by RafaelT on 6/28/2016.
  */
+/**
+ * Asserts that an elements children that match a selector posses certain values.
+ */
 public class HasCommand extends WebControlCommand {
     private String [] messages;
     private String childSelector;
     private String attribute;
     private ComparisonOption option;
 
+    /**
+     * Initializes a new instance of the HasCommand
+     * @param log The logger.
+     * @param selector The selector for the element.
+     * @param commandInitializer The Command initializer.
+     * @param messages The strings to be matched.
+     * @param childSelector The selector that the children are matched to.
+     * @param option Whether or not the "INNERHTML" tag will refer to the literal html in the tag or the visible text.
+     * @param attribute The attribute of the children to compare with messages.
+     */
     public HasCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String [] messages, String childSelector, ComparisonOption option, String attribute ) {
         super(log, String.format(Locale.getDefault(), Resources.getString("HasCommand_Info"), selector), selector, commandInitializer);
         this.messages = messages;

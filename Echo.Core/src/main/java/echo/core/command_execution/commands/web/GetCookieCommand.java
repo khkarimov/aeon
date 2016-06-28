@@ -9,12 +9,17 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by RafaelT on 6/27/2016.
  */
+
+/**
+ * Gets a specific cookie.
+ */
 public class GetCookieCommand extends CommandWithReturn {
     private String name;
 
     /**
      * Initializes a new instance of the <see cref="GetAllCookiesCommand"/> class.
      * @param log The logger.
+     * @param name The name of the cookie to get.
      */
     public GetCookieCommand(ILog log, String name) {
         super(log, Resources.getString("GetCookieCommand_Info"));

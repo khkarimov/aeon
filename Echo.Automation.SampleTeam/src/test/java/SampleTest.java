@@ -138,5 +138,6 @@ public class SampleTest {
         product.Login.LanguageSelect.DoesNotHave(Badvalues, "option", "value");
         product.Login.LanguageSelect.Has(values, "option", "value");
         product.Login.LanguageSelect.HasOnly(texts, "option");
+        product.Login.LanguageSelect.HasOnly(new String [] {"1"}, "option[value='1']", "value");
     }
 }
