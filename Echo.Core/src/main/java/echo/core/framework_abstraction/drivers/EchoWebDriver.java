@@ -318,6 +318,11 @@ public class EchoWebDriver implements IWebDriver {
     public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
         adapter.HasOnly(guid, control, messages, selector,  option, attribute);
     }
+
+    @Override
+    public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.Is(guid, control, value, option, attribute);
+    }
 //
 //    /**
 //     * Checks an element.

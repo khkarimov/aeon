@@ -1324,4 +1324,24 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new ElementDoesNotOnlyHaveException (elements);
         }
     }
+
+    /**
+     * Asserts that an element's attribute is equal to a given value.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (!value.equals(((SeleniumElement) control).GetText(guid))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
+            }
+        } else {
+            if(!value.equals(((SeleniumElement) control).GetAttribute(guid, attribute))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
+            }
+        }
+    }
 }

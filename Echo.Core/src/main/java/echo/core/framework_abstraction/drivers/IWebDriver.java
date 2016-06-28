@@ -141,6 +141,8 @@ public interface IWebDriver extends IDriver {
 
     void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
 
+    void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
 //
 //    /**
 //     * Check the element.

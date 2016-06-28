@@ -2,10 +2,8 @@ package echo.core.test_abstraction.elements;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
-import echo.core.command_execution.commands.web.MouseOutCommand;
-import echo.core.command_execution.commands.web.MouseOverCommand;
-import echo.core.command_execution.commands.web.WebControlFinder;
-import echo.core.command_execution.commands.web.WebSelectorFinder;
+import echo.core.command_execution.commands.web.*;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.interfaces.IBy;
 
 import java.util.ArrayList;
@@ -39,6 +37,20 @@ public class Element extends ElementAssertions {
                 info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
+
+    public void Is(String value, String attribute) {
+        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), value, ComparisonOption.Raw, attribute));
+    }
+
+    public void Is(String value) {
+        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), value, ComparisonOption.Raw, "INNERHTML"));
     }
 }
 

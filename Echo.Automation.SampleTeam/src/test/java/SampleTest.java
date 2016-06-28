@@ -139,5 +139,6 @@ public class SampleTest {
         product.Login.LanguageSelect.Has(values, "option", "value");
         product.Login.LanguageSelect.HasOnly(texts, "option");
         product.Login.LanguageSelect.HasOnly(new String [] {"1"}, "option[value='1']", "value");
+        product.Login.PasswordTextBox.Is("ctl00_Content_Login1_Password", "id");
     }
 }
