@@ -109,4 +109,13 @@ public class Select extends Element {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), comparisonType, null
                 ));
     }
+
+    public void Has(String [] messages, String childSelector) {
+        info.getCommandExecutionFacade().Execute(info,
+                new HasCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector
+                ));
+    }
 }

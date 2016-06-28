@@ -522,4 +522,6 @@ public interface IWebAdapter extends IAdapter {
      * @param optGroup The optional option group which would be searched in isolation instead.
      */
     void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
+
+    void Has(UUID guid, WebControl element, String [] messages, String selector);
 }

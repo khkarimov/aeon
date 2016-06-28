@@ -302,6 +302,11 @@ public class EchoWebDriver implements IWebDriver {
     public IWebCookie GetCookie(UUID guid, String name) {
         return adapter.GetCookie(guid, name);
     }
+
+    @Override
+    public void Has(UUID guid, WebControl control, String [] messages, String selector) {
+        adapter.Has(guid, control, messages, selector);
+    }
 //
 //    /**
 //     * Checks an element.

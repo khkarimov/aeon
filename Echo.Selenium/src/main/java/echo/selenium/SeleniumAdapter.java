@@ -1228,4 +1228,23 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             prevOption = currOption;
         }
     }
+
+    /**
+     * Checks that that a certain elements children have the given texts.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element to be searched
+     * @param messages The texts that the children should posses
+     */
+    public void Has(UUID guid, WebControl control, String [] messages, String selector) {
+        String mess;
+        Collection<String> elements = ((SeleniumElement) control).
+                FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                stream().map(e -> ((SeleniumElement) e).GetText(guid)).collect(Collectors.toList());
+        for (String message : messages) {
+            mess = message;
+            if (!elements.contains(message)) {
+                throw new ElementDoesNotHaveException(message);
+            }
+        }
+    }
 }

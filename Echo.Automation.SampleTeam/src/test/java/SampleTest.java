@@ -23,7 +23,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://srenv02web/");
+        product.Browser.GoToUrl("http://rtechoweb/");
     }
 
     @After
@@ -123,5 +123,11 @@ public class SampleTest {
         product.Login.LanguageSelect.HasOptionsInOrder(values, WebSelectOption.Value);
         product.Login.LanguageSelect.HasOptionsInOrder(value, WebSelectOption.Value);
         product.Login.LanguageSelect.HasOptionsInOrder(option, WebSelectOption.Text);
+    }
+
+    @Test
+    public void TestHas() {
+        String [] messages = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)", "Asdasd"};
+        product.Login.LanguageSelect.Has(messages, "option");
     }
 }
