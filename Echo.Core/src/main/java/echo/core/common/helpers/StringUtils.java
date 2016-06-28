@@ -156,7 +156,8 @@ public class StringUtils {
 
 
     /**
-     * Used for partial comparisons, ignoring the spacing differences.
+     * Used for partial comparisons, including differences in case. It ignores
+     * differences in spacing.
      * @param value The current instance.
      * @param expectedValue The value your comparing against the current instance.
      * @return Whether or not the current instance equals the expected value.
@@ -165,6 +166,13 @@ public class StringUtils {
         return Like(value, expectedValue, true);
     }
 
+    /**
+     * Used for partial comparisons, ignoring differences in case and
+     * spacing differences.
+     * @param value The current instance.
+     * @param expectedValue The value your comparing against the current instance.
+     * @return Whether or not the current instance equals the expected value.
+     */
     public static boolean Like(String value, String expectedValue, boolean caseSensitive){
         if(value == null){
             throw new IllegalArgumentException("value");
@@ -182,6 +190,12 @@ public class StringUtils {
         }
     }
 
+    /**
+     * Indicates whether the current instance contains the specified string.
+     * @param value The current instance.
+     * @param word The word for which to search.
+     * @return Whether or not the current instance contains the word.
+     */
     public static boolean ContainsWord(String value, String word){
         if(value == null){
             throw new IllegalArgumentException("value");
@@ -193,6 +207,11 @@ public class StringUtils {
         return normalizedSpacinValue.contains(' ' + word + ' ') ||  normalizedSpacinValue.startsWith(word) || normalizedSpacinValue.endsWith(word);
     }
 
+    /**
+     * Asserts the the current instance contains no whitespace.
+     * @param value The current instance.
+     * @return The current instance, if not exception is thrown.
+     */
     public static String AssertNoWhiteSpace(String value){
         if(value == null){
             throw new IllegalArgumentException("value");
@@ -203,6 +222,12 @@ public class StringUtils {
         return value;
     }
 
+    /**
+     * Removes the text specified.
+     * @param value The current instance.
+     * @param values Values to remove from the current instance.
+     * @return The current instance with values removed.
+     */
     public static String Remove(String value, Object... values){
         if(value == null){
             throw new IllegalArgumentException("value");
