@@ -227,9 +227,11 @@
             <h5>Drag and drop command</h5>
             <div id="drop-div" style="overflow: hidden">
                 <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <img id="dragtarget" src="ultimate-image.png" ondragstart="dragStart(event)" draggable="true"/>
+                    <img id="dragtarget" ondblclick="imageDoubleClick(event)"  src="ultimate-image.png" ondragstart="dragStart(event)" draggable="true"/>
                 </div>
-                <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <img id="dbl-click-image" />
+                </div>
             </div><br/><br/>
 
         </div>
@@ -294,6 +296,10 @@
 			anOption.text = "option" + i;
 			anOption.value = i;
 			document.getElementById("drop-down-list").add(anOption);
+        }
+
+        function imageDoubleClick(event){
+            document.getElementById("dbl-click-image").src = "ultimate-image.png";
         }
 	
         /* Event fired on the drag target */

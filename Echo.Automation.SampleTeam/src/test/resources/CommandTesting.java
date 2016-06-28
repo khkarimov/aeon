@@ -64,7 +64,7 @@ public class CommandTesting {
     @Test
     public void TestHasOptionsCommandsWith50000() {
         String [] texts = {"option49999", "option8"};
-        String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
+        String [] shouldfail = {"Klingon", "Clicky Noises", "Reptilian Hissing"};
         String [] values = {"1", "2"};
         String [] valuesShouldFail = {"-12", "Blue"};
         product.StartPage.DropDown.Click();
@@ -100,6 +100,11 @@ public class CommandTesting {
     }
 
     @Test
+    public void TestNotEnabled(){
+        product.StartPage.DisabledButton.IsDisabled();
+    }
+
+    @Ignore
     public void TestOpenFileDialog(){
         product.StartPage.TestFileDialogInput.OpenFileDialog();
     }
