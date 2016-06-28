@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.adapters;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.exceptions.*;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
@@ -523,7 +524,9 @@ public interface IWebAdapter extends IAdapter {
      */
     void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
-    void Has(UUID guid, WebControl element, String [] messages, String selector);
+    void Has(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
-    void DoesNotHave(UUID guid, WebControl element, String [] messages, String selector);
+    void DoesNotHave(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
 }

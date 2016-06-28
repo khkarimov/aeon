@@ -33,7 +33,8 @@ public class SampleTest {
 
     @Test
     public void TestGoBackGoForward_01() {
-        String [] texts = {"English (USA)", "Italiano (IT)"};
+        String [] texts = {"English (USA)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (IT)", "Melayu (MY)"
+        , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
         String [] values = {"1", "2"};
         String [] valuesShouldFail = {"-12", "Blue"};
@@ -127,9 +128,15 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] messages = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
+        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MY)"
+                , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] notMessages = new String [] {"asdasdasd", "sss"};
-        product.Login.LanguageSelect.Has(messages, "option");
+        String [] values = new String [] {"0", "5"};
+        String [] Badvalues = new String [] {"13s"};
+        product.Login.LanguageSelect.Has(texts, "option");
         product.Login.LanguageSelect.DoesNotHave(notMessages, "option");
+        product.Login.LanguageSelect.DoesNotHave(Badvalues, "option", "value");
+        product.Login.LanguageSelect.Has(values, "option", "value");
+        product.Login.LanguageSelect.HasOnly(texts, "option");
     }
 }

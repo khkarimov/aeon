@@ -4,6 +4,7 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;
@@ -115,16 +116,51 @@ public class Select extends Element {
                 new HasCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
+    public void Has(String [] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().Execute(info,
+                new HasCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
+                ));
+    }
     public void DoesNotHave(String [] messages, String childSelector) {
         info.getCommandExecutionFacade().Execute(info,
                 new DoesNotHaveCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                ));
+    }
+
+    public void DoesNotHave(String [] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().Execute(info,
+                new DoesNotHaveCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw,  attribute
+                ));
+    }
+
+    public void HasOnly(String [] messages, String childSelector) {
+        info.getCommandExecutionFacade().Execute(info,
+                new HasOnlyCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                ));
+    }
+
+    public void HasOnly(String [] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().Execute(info,
+                new HasOnlyCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 }

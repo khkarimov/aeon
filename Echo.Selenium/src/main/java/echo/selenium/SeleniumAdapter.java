@@ -2,6 +2,7 @@ package echo.selenium;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
@@ -1230,16 +1231,32 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Checks that that a certain elements children have the given texts.
+     * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web element to be searched
-     * @param messages The texts that the children should posses
-     * @param selector The selector for the child elements to be searched
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
      */
-    public void Has(UUID guid, WebControl control, String [] messages, String selector) {
-        Collection<String> elements = ((SeleniumElement) control).
-                FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
-                stream().map(e -> ((SeleniumElement) e).GetText(guid)).collect(Collectors.toList());
+    public void Has(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> ((SeleniumElement) e).GetText(guid)).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> ((SeleniumElement) e).GetAttribute(guid, attribute)).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> ((SeleniumElement) x).GetAttribute(guid, attribute)).collect(Collectors.toList());
+        }
         for (String message : messages) {
             if (!elements.contains(message)) {
                 throw new ElementDoesNotHaveException(message);
@@ -1254,13 +1271,57 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param messages The text that the chilren should not posses.
      * @param selector The selector for the children to be searched.
      */
-    public void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector) {
-        Collection <String> elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
-                stream().map(x -> ((SeleniumElement) x).GetText(guid)).collect(Collectors.toList());
-        for(String message: messages) {
+    public void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> ((SeleniumElement) e).GetText(guid)).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> ((SeleniumElement) e).GetAttribute(guid, attribute)).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> ((SeleniumElement) x).GetAttribute(guid, attribute)).collect(Collectors.toList());
+        }
+        for (String message : messages) {
             if (elements.contains(message)) {
                 throw new ElementHasException(message);
             }
+        }
+    }
+
+    public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> ((SeleniumElement) e).GetText(guid)).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> ((SeleniumElement) e).GetAttribute(guid, attribute)).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> ((SeleniumElement) x).GetAttribute(guid, attribute)).collect(Collectors.toList());
+        }
+        for (String message : messages) {
+            if (!elements.contains(message)) {
+                throw new ElementDoesNotHaveException(message);
+            }
+            elements.remove(message);
+        }
+        if (!elements.isEmpty()) {
+            throw new ElementDoesNotOnlyHaveException (elements);
         }
     }
 }

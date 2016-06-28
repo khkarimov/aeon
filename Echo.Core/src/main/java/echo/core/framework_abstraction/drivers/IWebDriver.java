@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
@@ -134,9 +135,12 @@ public interface IWebDriver extends IDriver {
 
     IWebCookie GetCookie(UUID guid, String name);
 
-    void Has (UUID guid, WebControl control, String [] messages, String selector);
+    void Has (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
 
-    void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector);
+    void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
 //
 //    /**
 //     * Check the element.

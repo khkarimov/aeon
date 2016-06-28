@@ -1,10 +1,13 @@
 package echo.core.command_execution.commands.web;
 
+/**
+ * Created by RafaelT on 6/28/2016.
+ */
+
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.ComparisonOption;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
@@ -14,14 +17,14 @@ import java.util.Locale;
 /**
  * Created by RafaelT on 6/28/2016.
  */
-public class HasCommand extends WebControlCommand {
+public class HasOnlyCommand extends WebControlCommand {
     private String [] messages;
     private String childSelector;
     private String attribute;
     private ComparisonOption option;
 
-    public HasCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String [] messages, String childSelector, ComparisonOption option, String attribute ) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("HasCommand_Info"), selector), selector, commandInitializer);
+    public HasOnlyCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String [] messages, String childSelector, ComparisonOption option, String attribute ) {
+        super(log, String.format(Locale.getDefault(), Resources.getString("HasOnlyCommand_Info"), selector), selector, commandInitializer);
         this.messages = messages;
         this.childSelector = childSelector;
         this.option = option;
@@ -30,6 +33,6 @@ public class HasCommand extends WebControlCommand {
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Has(getGuid(), control, messages, childSelector, option, attribute);
+        driver.HasOnly(getGuid(), control, messages, childSelector, option, attribute);
     }
 }
