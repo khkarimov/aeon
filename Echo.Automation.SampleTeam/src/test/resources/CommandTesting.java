@@ -75,11 +75,12 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestOpenFileDialog(){
+    public void TestOpenFileDialog() {
         product.StartPage.TestFileDialogInput.OpenFileDialog();
         System.out.println();
         //product.StartPage.AlertTitleTextBox.RightClick();
-
+    }
+    
     public void TestWindowResizingAndNavigation() {
         product.Browser.Resize(BrowserSize.TabletLandscape);
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
@@ -120,10 +121,6 @@ public class CommandTesting {
         product.StartPage.DisabledButton.IsDisabled();
     }
 
-    @Ignore
-    public void TestOpenFileDialog(){
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
-    }
 }
 
 
