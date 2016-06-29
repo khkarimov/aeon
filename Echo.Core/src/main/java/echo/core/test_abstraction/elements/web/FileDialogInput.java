@@ -11,12 +11,12 @@ import java.util.ArrayList;
 /**
  * Created by SebastianR on 6/3/2016.
  */
-public class FileDialogInput extends Element {
+public class FileDialogInput extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
     public FileDialogInput(AutomationInfo info, IBy selector){
-        super(selector, info);
+        super(info, selector);
         this.info = info;
         this.selector = selector;
     }

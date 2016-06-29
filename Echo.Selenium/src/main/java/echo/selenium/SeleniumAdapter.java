@@ -1025,6 +1025,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    @Override
+    public void IsElementDisabled(UUID guid, WebControl element) {
+        if(((SeleniumElement) element).Enabled(guid)){
+            throw new ElementIsEnabledException();
+        }
+    }
+
     /**
      * Checks that an element is enabled
      * @param guid A globally unique identifier associated with this call.

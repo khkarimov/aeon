@@ -12,12 +12,12 @@ import java.util.ArrayList;
 /**
  * Created by AdamC on 4/13/2016.
  */
-public class TextBox extends Element {
+public class TextBox extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
     public TextBox(AutomationInfo info, IBy selector) {
-        super(selector, info);
+        super(info, selector);
         this.info = info;
         this.selector = selector;
     }
