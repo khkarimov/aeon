@@ -33,7 +33,7 @@ public class WebFactory implements IElementFactory {
             return new Link(info, By.CssSelector(selector));
         }
         else if (elementType.equals(Label.class)) {
-            return new Label(By.CssSelector(selector));
+            return new Label(info, By.CssSelector(selector));
         }
         else if (elementType.equals(Image.class)) {
             return new Image(info, By.CssSelector(selector));

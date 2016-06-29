@@ -23,7 +23,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://srenv02web/");
+        product.Browser.GoToUrl("http://rtechoweb/");
     }
 
     @After
@@ -66,7 +66,6 @@ public class SampleTest {
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
         product.Browser.Resize(BrowserSize.MobileLandscape);
         product.Browser.Maximize();
-
     }
 
     @Test

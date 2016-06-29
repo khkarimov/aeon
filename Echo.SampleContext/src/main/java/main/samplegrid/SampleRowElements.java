@@ -15,7 +15,7 @@ public class SampleRowElements extends SampleRowActions {
 
     public SampleRowElements(){
         IdLink = new Link(By.CssSelector("[id*=link]"));
-        NameLabel = new Label(By.CssSelector("[id*=label]"));
+//        NameLabel = new Label(By.CssSelector("[id*=label]"));
 //        descriptionTextBox = new TextBox(By.CssSelector("[id*=textbox]"));
     }
 }

@@ -127,6 +127,7 @@ public interface IWebDriver extends IDriver {
 
     void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
+    void IsElementDisabled(UUID guid, WebControl element);
 //
 //    /**
 //     * Check the element.
