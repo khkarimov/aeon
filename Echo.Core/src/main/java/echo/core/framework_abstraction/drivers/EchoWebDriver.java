@@ -310,6 +310,11 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void HasLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasLike(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
     public void DoesNotHave (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
         adapter.DoesNotHave(guid, control, messages, selector, option, attribute);
     }
