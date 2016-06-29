@@ -3,6 +3,7 @@ package echo.selenium;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.exceptions.*;
+import echo.core.common.exceptions.ElementNotVisibleException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
 import echo.core.common.helpers.Sleep;
@@ -1088,19 +1089,34 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         else DoesNotHaveOptions(guid,(SeleniumElement) element, options, select);
     }
 
+    /**
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param element
+     */
     @Override
     public void MouseOut(UUID guid, WebControl element) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));
-
     }
 
+    /**
+     *
+     * @param guid
+     * @param element
+     */
     @Override
     public void MouseOver(UUID guid, WebControl element) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));
     }
 
+    /**
+     *
+     * @param guid
+     * @param element
+     * @param value
+     */
     @Override
     public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText));");
@@ -1108,12 +1124,24 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     }
 
+    /**
+     *
+     * @param guid
+     * @param element
+     * @param value
+     */
     @Override
     public void SetValueByJavaScript(UUID guid, WebControl element, String value) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText));");
         ExecuteScript(guid, String.format(element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText), Quotes.escape(value)));
     }
 
+    /**
+     *
+     * @param guid
+     * @param element
+     * @param value
+     */
     @Override
     public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));");
@@ -1235,4 +1263,29 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             prevOption = currOption;
         }
     }
+
+    public void Selected(UUID guid, WebControl element) {
+        if (!((SeleniumElement) element).Selected(guid)) {
+            throw new ElementNotSelectedException();
+        }
+    }
+
+    public void NotSelected(UUID guid, WebControl element) {
+        if (((SeleniumElement) element).Selected(guid)) {
+            throw new ElementIsSelectedException();
+        }
+    }
+
+    public void Visible(UUID guid, WebControl element) {
+        if (!((SeleniumElement) element).Displayed(guid)) {
+            throw new ElementNotVisibleException();
+        }
+    }
+
+    public void NotVisible(UUID guid, WebControl element) {
+        if (((SeleniumElement) element).Displayed(guid)) {
+            throw new ElementIsVisibleException();
+        }
+    }
+
 }

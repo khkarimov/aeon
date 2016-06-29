@@ -37,6 +37,5 @@ public class vTeamSamplePage {
         DropDown = (Select) web.create(Select.class, "select[id='drop-down-list']");
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
         DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='dragtarget']");
-        Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
     }
 }

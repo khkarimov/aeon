@@ -293,6 +293,18 @@ public class EchoWebDriver implements IWebDriver {
         adapter.IsElementDisabled(guid, element);
     }
 
+    @Override
+    public void NotSelected(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
+
+    @Override
+    public void NotVisible(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
+
+    @Override
+    public void Selected(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
+
+    @Override
+    public void Visible(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
+
     //
 //    /**
 //     * Checks an element.
