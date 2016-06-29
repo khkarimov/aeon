@@ -19,19 +19,22 @@ public class CommandTesting {
     private static Sample product;
 
 
-    @Before
-    public void SetUp(){
+    @BeforeClass
+    public static void  onlyOnce(){
         product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
-        product.Browser.Maximize();
     }
 
-    @After
-    public void TearDown(){
+    @AfterClass
+    public static void TearDown(){
         product.Browser.Quit();
     }
 
-    @Test
+    @Before
+    public void SetUp(){
+        product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+    }
+
+   @Test
     public void TestSendKeysToAlert_AcceptAlertWhenThereIsAnAlert(){
         product.Browser.VerifyAlertNotExists();
         product.StartPage.OpenAlertButton.Click();
@@ -58,6 +61,11 @@ public class CommandTesting {
     public void MouseOverButton_ButtonTextChangesColor() {
         product.StartPage.Start.MouseOver();
         product.StartPage.Start.MouseOut();
+    }
+
+    @Ignore
+    public void TestOpenFileDialog(){
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
     }
 //endregion
 
@@ -104,9 +112,53 @@ public class CommandTesting {
         product.StartPage.DisabledButton.IsDisabled();
     }
 
-    @Ignore
-    public void TestOpenFileDialog(){
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
+    @Test
+    public void TestVerifyAlertTextWithCorrectText(){
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertText("Send some keys");
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyAlertTextWithIncorrectText(){
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertText("Send other keys");
+    }
+
+    @Test
+    public void TestVerifyAlertTextLikeWithCorrectText(){
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertTextLike("Send some keys", true);
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyAlertTextLikeWithIncorrectText() {
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertTextLike("send some keys", true);
+    }
+
+    @Test
+    public void TestVerifyTitleWithCorrectTitle(){
+        product.Browser.VerifyTitle("Material Design Lite");
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyTitleWithIncorrectTitle(){
+        product.Browser.VerifyTitle("Material Design");
+    }
+
+    @Test
+    public void TestVerifyURLWithCorrectURL(){
+        product.Browser.GoToUrl("https://www.google.com");
+        product.Browser.VerifyURL("https://www.google.com/");
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyURLWithIncorrectURL(){
+        product.Browser.VerifyURL("https://www.google.com");
     }
 }
 

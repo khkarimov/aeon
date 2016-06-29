@@ -97,4 +97,20 @@ public class Browser {
 
     public void SwitchToWindowByTitle(String title) { info.getCommandExecutionFacade().Execute(info,
             new SwitchToWindowByTitleCommand(info.getLog(), title));}
+
+    public void VerifyAlertText(String comparingText){
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextCommand(info.getLog(), comparingText));
+    }
+
+    public void VerifyAlertTextLike(String comparingText, boolean caseSensitive){
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextLikeCommand(info.getLog(), comparingText, caseSensitive));
+    }
+
+    public void VerifyTitle(String comparingTitle){
+        info.getCommandExecutionFacade().Execute(info, new VerifyTitleCommand(info.getLog(), comparingTitle));
+    }
+
+    public void VerifyURL(String comparingURL){
+        info.getCommandExecutionFacade().Execute(info, new VerifyUrlCommand(info.getLog(), comparingURL));
+    }
 }
