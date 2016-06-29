@@ -287,6 +287,15 @@ public interface IWebAdapter extends IAdapter {
     void OpenFileDialog(UUID guid, IBy selector);
 
     /**
+     *Types keys of file indicated by provided path
+     *REQUIRES DIALOG BOX TO ALREADY BE OPENED BY OpenFileDialog
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The selector for the element.
+     * @param path      The path to the file to be selected.
+     */
+    void SelectFileDialog(UUID guid, IBy selector, String path);
+
+    /**
      * Opens a windows select file dialog and selects
      * file indicated by provided path
      *
@@ -294,7 +303,7 @@ public interface IWebAdapter extends IAdapter {
      * @param selector The selector for the element.
      * @param path      The path to the file to be selected.
      */
-    void SelectFileDialog(UUID guid, IBy selector, String path);
+    void UploadFileDialog(UUID guid, IBy selector, String path);
 
     /**
      * Scrolls to the element on the page if in Chrome.

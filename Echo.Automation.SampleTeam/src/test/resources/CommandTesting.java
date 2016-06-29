@@ -72,6 +72,7 @@ public class CommandTesting {
     public void TestSelectFileDialog(){
         product.StartPage.TestFileDialogInput.OpenFileDialog();
         product.StartPage.TestFileDialogInput.SelectFileDialog("C:\\Projects\\distrib\\neW3.txt");
+        product.StartPage.TestFileDialogInput.UploadFileDialog("C:\\Projects\\distrib\\NEW2.txt");
         System.out.println();
     }
 

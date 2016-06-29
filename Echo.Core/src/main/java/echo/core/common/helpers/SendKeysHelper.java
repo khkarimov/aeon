@@ -13,7 +13,7 @@ public class SendKeysHelper{
 
     public static void SendKeysToKeyboard(String stringToSend) throws AWTException {
         Robot robot = new Robot();
-        robot.delay(5000);
+        robot.setAutoDelay(50);
         for(int i =0; i< stringToSend.length(); i++)
         {
             char character = stringToSend.charAt(i);

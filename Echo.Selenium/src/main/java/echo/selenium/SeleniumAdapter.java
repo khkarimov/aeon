@@ -725,15 +725,31 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
+     * Uses keyboard native events to input file name and select it
+     * from fileDialogBox
+     *
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The element on the page to click.
+     */
+    public void SelectFileDialog(UUID guid, IBy selector, String path) {
+        try {
+            SendKeysHelper.SendKeysToKeyboard(path);
+            SendKeysHelper.SendEnterKey();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Finds the 'selector' on the page, and performs a Click() on the object.
      * Then uses keyboard native events to input file name and select it.
      *
      * @param guid     A globally unique identifier associated with this call.
      * @param selector The element on the page to click.
      */
-    public void SelectFileDialog(UUID guid, IBy selector, String path) {
-        /*WebControl element = FindElement(guid, selector);
-        Click(guid, element, moveMouseToOrigin);*/
+    public void UploadFileDialog(UUID guid, IBy selector, String path) {
+        WebControl element = FindElement(guid, selector);
+        Click(guid, element, moveMouseToOrigin);
         try {
             SendKeysHelper.SendKeysToKeyboard(path);
             SendKeysHelper.SendEnterKey();
