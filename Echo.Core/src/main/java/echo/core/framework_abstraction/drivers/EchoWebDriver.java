@@ -234,6 +234,11 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void SelectFileDialog(UUID guid, IBy selector, String path){
+        adapter.SelectFileDialog(guid, selector, path);
+    }
+
+    @Override
     public void VerifyAlertExists(UUID guid) {
         adapter.VerifyAlertExists(guid);
     }

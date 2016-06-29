@@ -101,6 +101,8 @@ public interface IWebDriver extends IDriver {
 
     void OpenFileDialog(UUID guid, IBy selector);
 
+    void SelectFileDialog(UUID guid, IBy selector, String path);
+
     void VerifyAlertExists(UUID guid);
 
     void VerifyAlertNotExists(UUID guid);

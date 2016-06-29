@@ -64,7 +64,15 @@ public class CommandTesting {
     @Test
     public void TestOpenFileDialog(){
         product.StartPage.TestFileDialogInput.OpenFileDialog();
+        System.out.println();
         //product.StartPage.AlertTitleTextBox.RightClick();
+    }
+
+    @Test
+    public void TestSelectFileDialog(){
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
+        product.StartPage.TestFileDialogInput.SelectFileDialog("C:\\Projects\\distrib\\neW3.txt");
+        System.out.println();
     }
 
     @Test
