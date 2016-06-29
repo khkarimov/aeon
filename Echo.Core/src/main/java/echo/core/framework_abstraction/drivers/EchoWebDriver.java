@@ -324,6 +324,11 @@ public class EchoWebDriver implements IWebDriver {
         adapter.Is(guid, control, value, option, attribute);
     }
 //
+
+    @Override
+    public void IsElementDisabled(UUID guid, WebControl element) {
+        adapter.IsElementDisabled(guid, element);
+    }
 //    /**
 //     * Checks an element.
 //     *

@@ -67,7 +67,6 @@ public class SampleTest {
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
         product.Browser.Resize(BrowserSize.MobileLandscape);
         product.Browser.Maximize();
-
     }
 
     @Test

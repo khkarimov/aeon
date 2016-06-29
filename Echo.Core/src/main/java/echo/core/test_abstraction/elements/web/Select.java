@@ -14,11 +14,11 @@ import java.util.ArrayList;
 /**
  * Created by RafaelT on 6/2/2016.
  */
-public class Select extends Element {
+public class Select extends WebElement {
     private AutomationInfo info;
     private IBy selector;
     public Select(AutomationInfo info, IBy selector) {
-        super(selector, info);
+        super(info, selector);
         this.info = info;
         this.selector = selector;
     }

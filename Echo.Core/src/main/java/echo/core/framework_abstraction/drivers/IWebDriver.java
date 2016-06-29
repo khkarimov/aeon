@@ -143,7 +143,7 @@ public interface IWebDriver extends IDriver {
 
     void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
-//
+    void IsElementDisabled(UUID guid, WebControl element);//
 //    /**
 //     * Check the element.
 //     *

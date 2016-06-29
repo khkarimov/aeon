@@ -4,19 +4,18 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
 /**
  * Created by DionnyS on 4/21/2016.
  */
-public class  Button extends Element {
+public class  Button extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
     public Button(AutomationInfo info, IBy selector) {
-        super(selector, info);
+        super(info, selector);
         this.info = info;
         this.selector = selector;
     }
@@ -69,4 +68,11 @@ public class  Button extends Element {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
+    public void IsDisabled(){
+        info.getCommandExecutionFacade().Execute(info,
+                new DisabledCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
 }
