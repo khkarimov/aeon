@@ -21,7 +21,7 @@ public class SetValueByJavaScriptCommand extends WebControlCommand{
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.MouseOver(getGuid(), control);
+        driver.SetValueByJavaScript(getGuid(), control, value);
 
     }
 }
