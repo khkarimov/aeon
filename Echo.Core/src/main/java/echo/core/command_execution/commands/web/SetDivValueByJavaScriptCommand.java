@@ -12,14 +12,16 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public class SetDivValueByJavaScriptCommand extends WebControlCommand {
 
+    private String value;
 
-    public SetDivValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer) {
+    public SetDivValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
         super(log, Resources.getString("SetDivValueByJavaScriptCommand_Info"), selector, initializer);
+        this.value = value;
     }
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.MouseOver(getGuid(), control);
+        driver.SetDivValueByJavaScript(getGuid(), control, value);
 
     }
 }

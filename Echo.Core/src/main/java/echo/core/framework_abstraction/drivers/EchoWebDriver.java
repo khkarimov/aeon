@@ -275,13 +275,13 @@ public class EchoWebDriver implements IWebDriver {
     public void MouseOver(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
 
     @Override
-    public void SetBodyValueByJavaScript(UUID guid,WebControl control) { adapter.MouseOut(guid, control); }
+    public void SetBodyValueByJavaScript(UUID guid,WebControl control, String value) { adapter.SetBodyValueByJavaScript(guid, control, value); }
 
     @Override
-    public void SetValueByJavaScript(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
+    public void SetValueByJavaScript(UUID guid, WebControl control, String value) { adapter.SetValueByJavaScript(guid, control, value); }
 
     @Override
-    public void SetDivValueByJavaScript(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
+    public void SetDivValueByJavaScript(UUID guid, WebControl control, String value) { adapter.SetDivValueByJavaScript(guid, control, value); }
 
     @Override
     public void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {

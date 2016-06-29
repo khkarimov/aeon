@@ -212,15 +212,15 @@ public class ByJQuery implements IBy, IByJQuery {
             case ScrollElementIntoView:
                 return String.format("var a=%1$s;if(a.length>0)a[0].scrollIntoView(false);return a.length;", toString());
             case SetElementText:
-                return String.format("var a=%1$s;if(a.length>0)a.val({0});return a.length;", toString());
+                return String.format("var a=%1$s;if(a.length>0)a.val(%%1$s);return a.length;", toString());
             case SetBodyText:
-                return String.format("var a=%1$s;if(a.length>0)a.text({0});return a.length;", toString());
+                return String.format("var a=%1$s;if(a.length>0)a.text(%%1$s);return a.length;", toString());
             case SetDivText:
-                return String.format("var a=%1$s;if(a.length>0)a.html({0});return a.length;", toString());
+                return String.format("var a=%1$s;if(a.length>0)a.html(%%1$s);return a.length;", toString());
             case ShowElement:
                 return String.format("var a=%1$s;if(a.length>0)a.show();return a.length;", toString());
             case SetMaskedInputText:
-                return String.format("var a=%1$s;if(a.length>0)a.val({0}).blur();return a.length;", toString());
+                return String.format("var a=%1$s;if(a.length>0)a.val(%%1$s).blur();return a.length;", toString());
             case HasNumberOfOptions:
                 return String.format("var a=%1$s;return a.length>0?a.children().length:-1;", toString());
             case GetClientRects:
