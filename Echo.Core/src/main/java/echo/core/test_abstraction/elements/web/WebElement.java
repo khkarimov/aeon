@@ -60,6 +60,26 @@ public class WebElement extends Element {
                 attribute));
     }
 
+    public void IsLike(String value) {
+        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Text,
+                "INNERHTML"));
+    }
+
+    public void IsLike(String value, String attribute) {
+        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Raw,
+                attribute));
+    }
+
     public void Has(String [] messages, String childSelector) {
         info.getCommandExecutionFacade().Execute(info,
                 new HasCommand(
@@ -77,6 +97,25 @@ public class WebElement extends Element {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
+
+    public void HasLike(String [] messages, String childSelector) {
+        info.getCommandExecutionFacade().Execute(info,
+                new HasLikeCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                ));
+    }
+
+    public void HasLike(String [] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().Execute(info,
+                new HasLikeCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
+                ));
+    }
+
     public void DoesNotHave(String [] messages, String childSelector) {
         info.getCommandExecutionFacade().Execute(info,
                 new DoesNotHaveCommand(
@@ -89,6 +128,24 @@ public class WebElement extends Element {
     public void DoesNotHave(String [] messages, String childSelector, String attribute) {
         info.getCommandExecutionFacade().Execute(info,
                 new DoesNotHaveCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw,  attribute
+                ));
+    }
+
+    public void DoesNotHaveLike(String [] messages, String childSelector) {
+        info.getCommandExecutionFacade().Execute(info,
+                new DoesNotHaveLikeCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                ));
+    }
+
+    public void DoesNotHaveLike(String [] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().Execute(info,
+                new DoesNotHaveLikeCommand(
                         info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw,  attribute

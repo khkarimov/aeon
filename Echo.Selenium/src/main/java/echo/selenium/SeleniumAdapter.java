@@ -1450,11 +1450,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
         if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
-            if (!Like(value, ((SeleniumElement) control).GetText(guid))) {
+            if (!Like(value, ((SeleniumElement) control).GetText(guid), false)) {
                 throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
             }
         } else {
-            if (!Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute))) {
+            if (!Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
                 throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
             }
         }

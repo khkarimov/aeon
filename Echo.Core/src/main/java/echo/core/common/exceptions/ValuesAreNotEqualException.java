@@ -7,6 +7,6 @@ import echo.core.common.Resources;
  */
 public class ValuesAreNotEqualException extends RuntimeException {
     public ValuesAreNotEqualException (String expectedvalue, String value, String attribute) {
-        super(Resources.getString("ElementHasException_ctor_DefaultMessage" + " " + expectedvalue + " " + value + " " + attribute));
+        super(Resources.getString("ValuesAreNotEqualException_ctor_DefaultMessage" + " " + expectedvalue + " " + value + " " + attribute));
     }
 }
