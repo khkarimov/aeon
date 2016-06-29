@@ -1347,6 +1347,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element to be searched.
+     * @param messages The text that the chilren should not posses.
+     * @param selector The selector for the children to be searched.
+     */
     public void DoesNotHaveLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
@@ -1373,6 +1380,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+
+    /**
+     * Asserts that an elements children that match a given selector only contain either the visible text or the named attribute.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
     public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());

@@ -141,9 +141,13 @@ public interface IWebDriver extends IDriver {
 
     void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
 
+    void DoesNotHaveLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
     void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
 
     void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
     void IsElementDisabled(UUID guid, WebControl element);//
 //    /**

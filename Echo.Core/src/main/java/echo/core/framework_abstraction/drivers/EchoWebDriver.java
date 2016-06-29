@@ -320,6 +320,11 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void DoesNotHaveLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.DoesNotHaveLike(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
     public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
         adapter.HasOnly(guid, control, messages, selector,  option, attribute);
     }
@@ -328,7 +333,11 @@ public class EchoWebDriver implements IWebDriver {
     public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
         adapter.Is(guid, control, value, option, attribute);
     }
-//
+
+    @Override
+    public void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.IsLike(guid, control, value, option, attribute);
+    }
 
     @Override
     public void IsElementDisabled(UUID guid, WebControl element) {
