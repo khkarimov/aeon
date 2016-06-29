@@ -23,9 +23,8 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        //"http://gandaras01web.newgen.corp/"
-        product.Browser.GoToUrl("file://C:/Users/Administrator/Documents/index.html");
-    }
+        product.Browser.GoToUrl("http://rtechoweb/");
+		//"http://gandaras01web.newgen.corp/"    }
 
     @After
     public void TearDown() {
@@ -67,7 +66,6 @@ public class SampleTest {
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
         product.Browser.Resize(BrowserSize.MobileLandscape);
         product.Browser.Maximize();
-
     }
 
     @Test

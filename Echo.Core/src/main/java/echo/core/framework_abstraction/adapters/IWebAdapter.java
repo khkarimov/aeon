@@ -449,6 +449,8 @@ public interface IWebAdapter extends IAdapter {
 
     void IsElementEnabled(UUID guid, WebControl element);
 
+    void IsElementDisabled(UUID guid, WebControl element);
+
     void Exists(UUID guid, WebControl element);
 
     void NotExists(UUID guid, WebControl element);

@@ -287,7 +287,13 @@ public class EchoWebDriver implements IWebDriver {
     public void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
         adapter.HaAllOptionsInOrder(guid, element, compare, optGroup);
     }
-//
+
+    @Override
+    public void IsElementDisabled(UUID guid, WebControl element) {
+        adapter.IsElementDisabled(guid, element);
+    }
+
+    //
 //    /**
 //     * Checks an element.
 //     *

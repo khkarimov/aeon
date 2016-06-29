@@ -18,7 +18,9 @@ public class vTeamSamplePage {
     public Button Start;
     public TextBox AlertTitleTextBox;
     public ListItem DraggableListItem;
-    public TextBox Async;
+    public Label CheckboxLabel;
+    public Link TryLink;
+    public Select DropDown;
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
@@ -30,6 +32,9 @@ public class vTeamSamplePage {
         OpenAlertButton = (Button) web.create(Button.class, "button[id='alertDialog']");
         AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1']");
         Start =(Button) web.create(Button.class,"button[id='start']");
+        CheckboxLabel = (Label) web.create(Label.class, "label[for='checkbox']");
+        TryLink = (Link) web.create(Link.class, "a[id='tryLink']");
+        DropDown = (Select) web.create(Select.class, "select[id='drop-down-list']");
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
         DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='dragtarget']");
         Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
