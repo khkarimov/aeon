@@ -113,6 +113,30 @@ public class WebElement extends Element {
                 ));
     }
 
+    public void SetDivValueByJavaScript(String value) {
+        info.getCommandExecutionFacade().Execute(info, new SetDivValueByJavaScriptCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                value));
+    }
+
+    public void SetBodyValueByJavaScript(String value) {
+        info.getCommandExecutionFacade().Execute(info, new SetBodyValueByJavaScriptCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                value));
+    }
+
+    public void SetValueByJavaScript(String value) {
+        info.getCommandExecutionFacade().Execute(info, new SetValueByJavaScriptCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                value));
+    }
+
     protected WebCommandInitializer createWebCommandInitializer(){
         return new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>());
     }
