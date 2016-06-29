@@ -24,7 +24,7 @@ public class DoesNotHaveLikeCommand extends WebControlCommand {
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the DoesNotHaveLikeCommand.
+     * Initializes a new instance of the DoesNotHaveLikeCommand. Ignores caps.
      * @param log The logger.
      * @param selector The selector for the element.
      * @param commandInitializer The Command initializer.
