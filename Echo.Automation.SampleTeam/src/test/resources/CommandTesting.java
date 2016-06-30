@@ -131,10 +131,7 @@ public class CommandTesting {
         product.StartPage.div.DoesNotHave(new String [] {"ASYNC CALL 1"}, "h3");
         product.StartPage.div.DoesNotHaveLike(new String[] {"async call 3"}, "h3");
     }
-    @Ignore
-    public void TestOpenFileDialog(){
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
-    }
+    
 }
 
 
