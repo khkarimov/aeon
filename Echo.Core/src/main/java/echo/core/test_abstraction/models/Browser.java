@@ -14,6 +14,8 @@ import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 
+import java.util.Collection;
+
 /**
  * Created by DionnyS on 4/21/2016.
  */
@@ -97,4 +99,10 @@ public class Browser {
 
     public void SwitchToWindowByTitle(String title) { info.getCommandExecutionFacade().Execute(info,
             new SwitchToWindowByTitleCommand(info.getLog(), title));}
+
+    public Collection<IWebCookie> GetAllCookies() {return (Collection<IWebCookie>) info.getCommandExecutionFacade().Execute(info, new GetAllCookiesCommand(info.getLog()));}
+
+    public void ModifyCookie(String name, String value){info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));}
+
+    public IWebCookie GetCookie(String name) {return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(info.getLog(), name));}
 }

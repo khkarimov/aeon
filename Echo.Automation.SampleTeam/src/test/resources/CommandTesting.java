@@ -23,7 +23,6 @@ public class CommandTesting {
     public void SetUp(){
         product = Launch(Sample.class, Firefox);
         product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
-        product.Browser.Maximize();
     }
 
     @After
@@ -121,6 +120,21 @@ public class CommandTesting {
         product.StartPage.DisabledButton.IsDisabled();
     }
 
+    @Test
+    public void Has(){
+        product.StartPage.div.Has(new String[]{"Async Call 1", "Async Call 2", "Async Call 2"}, "h3");
+        product.StartPage.div.Has(new String[]{"start"}, "button", "id");
+        product.StartPage.div.HasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
+        product.StartPage.div.HasLike(new String[]{"START"}, "button", "id");
+        product.StartPage.DropDown.Is("drop-down-list", "id");
+        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST","id");
+        product.StartPage.div.DoesNotHave(new String [] {"ASYNC CALL 1"}, "h3");
+        product.StartPage.div.DoesNotHaveLike(new String[] {"async call 3"}, "h3");
+    }
+    @Ignore
+    public void TestOpenFileDialog(){
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
+    }
 }
 
 
