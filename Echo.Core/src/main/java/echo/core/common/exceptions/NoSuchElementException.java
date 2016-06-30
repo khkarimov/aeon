@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class NoSuchElementException extends RuntimeException implements Serializable {
     /**
-     * Initializes a new instance of the <see cref="NoSuchElementException"/> class.
+     * Initializes a new instance of the <see href="NoSuchElementException"/> class.
      */
     public NoSuchElementException() {
         super(Resources.getString("NoSuchElementException_ctor_DefaultMessage"));

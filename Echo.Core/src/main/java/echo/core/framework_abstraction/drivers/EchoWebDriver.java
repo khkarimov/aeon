@@ -353,6 +353,27 @@ public class EchoWebDriver implements IWebDriver {
     public void IsElementDisabled(UUID guid, WebControl element) {
         adapter.IsElementDisabled(guid, element);
     }
+
+    @Override
+    public void VerifyAlertText(UUID guid, String comparingText) {
+        adapter.VerifyAlertText(guid, comparingText);
+    }
+
+    @Override
+    public void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive) {
+        adapter.VerifyAlertTextLike(guid, comparingText, caseSensitive);
+    }
+
+    @Override
+    public void VerifyTitle(UUID guid, String comparingTitle) {
+        adapter.VerifyTitle(guid, comparingTitle);
+    }
+
+    @Override
+    public void VerifyURL(UUID guid, URL comparingURL) {
+        adapter.VerifyURL(guid, comparingURL);
+    }
+//
 //    /**
 //     * Checks an element.
 //     *

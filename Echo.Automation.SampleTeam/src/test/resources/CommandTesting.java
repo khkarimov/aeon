@@ -116,17 +116,65 @@ public class CommandTesting {
     }
 
     @Test
-    public void Has(){
+    public void Has() {
         product.StartPage.div.Has(new String[]{"Async Call 1", "Async Call 2", "Async Call 2"}, "h3");
         product.StartPage.div.Has(new String[]{"start"}, "button", "id");
         product.StartPage.div.HasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
         product.StartPage.div.HasLike(new String[]{"START"}, "button", "id");
         product.StartPage.DropDown.Is("drop-down-list", "id");
-        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST","id");
-        product.StartPage.div.DoesNotHave(new String [] {"ASYNC CALL 1"}, "h3");
-        product.StartPage.div.DoesNotHaveLike(new String[] {"async call 3"}, "h3");
+        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
+        product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
+        product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
     }
-    
+
+    @Test
+    public void TestVerifyAlertTextWithCorrectText(){
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertText("Send some keys");
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyAlertTextWithIncorrectText(){
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertText("Send other keys");
+    }
+
+    @Test
+    public void TestVerifyAlertTextLikeWithCorrectText(){
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertTextLike("Send some keys", true);
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyAlertTextLikeWithIncorrectText() {
+        product.StartPage.OpenAlertButton.Click();
+        product.Browser.VerifyAlertExists();
+        product.Browser.VerifyAlertTextLike("send some keys", true);
+    }
+
+    @Test
+    public void TestVerifyTitleWithCorrectTitle(){
+        product.Browser.VerifyTitle("Material Design Lite");
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyTitleWithIncorrectTitle(){
+        product.Browser.VerifyTitle("Material Design");
+    }
+
+    @Test
+    public void TestVerifyURLWithCorrectURL(){
+        product.Browser.GoToUrl("https://www.google.com");
+        product.Browser.VerifyURL("https://www.google.com/");
+    }
+
+    @Test(expected = TimeoutExpiredException.class)
+    public void TestVerifyURLWithIncorrectURL(){
+        product.Browser.VerifyURL("https://www.google.com");
+    }
 }
 
 

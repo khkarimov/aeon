@@ -35,6 +35,7 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -1496,6 +1497,34 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             if (!Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
                 throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
             }
+        }
+    }
+
+    @Override
+    public void VerifyAlertText(UUID guid, String comparingText) {
+        if(!echo.core.common.helpers.StringUtils.Is(GetAlertText(guid), comparingText)){
+            throw new ValuesAreNotEqualException(GetAlertText(guid), comparingText);
+        }
+    }
+
+    @Override
+    public void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive) {
+        if(!echo.core.common.helpers.StringUtils.Like(GetAlertText(guid), comparingText, caseSensitive)){
+            throw new ValuesAreNotAlikeException();
+        }
+    }
+
+    @Override
+    public void VerifyTitle(UUID guid, String comparingTitle) {
+        if(!echo.core.common.helpers.StringUtils.Is(GetTitle(guid), comparingTitle)){
+            throw new ValuesAreNotEqualException(GetTitle(guid), comparingTitle);
+        }
+    }
+
+    @Override
+    public void VerifyURL(UUID guid, URL comparingURL) {
+        if(!GetUrl(guid).equals(comparingURL)){
+            throw new ValuesAreNotEqualException(GetUrl(guid).toString(), comparingURL.toString());
         }
     }
 }
