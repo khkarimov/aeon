@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
@@ -289,11 +290,59 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public Collection <IWebCookie> GetAllCookies(UUID guid) {
+        return adapter.GetAllCookies(guid);
+    }
+
+    @Override
+    public void ModifyCookie (UUID guid, String name, String value) {
+        adapter.ModifyCookie(guid, name, value);
+    }
+
+    @Override
+    public IWebCookie GetCookie(UUID guid, String name) {
+        return adapter.GetCookie(guid, name);
+    }
+
+    @Override
+    public void Has(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.Has(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void HasLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasLike(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void DoesNotHave (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.DoesNotHave(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void DoesNotHaveLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.DoesNotHaveLike(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasOnly(guid, control, messages, selector,  option, attribute);
+    }
+
+    @Override
+    public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.Is(guid, control, value, option, attribute);
+    }
+
+    @Override
+    public void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.IsLike(guid, control, value, option, attribute);
+    }
+
+    @Override
     public void IsElementDisabled(UUID guid, WebControl element) {
         adapter.IsElementDisabled(guid, element);
     }
-
-    //
 //    /**
 //     * Checks an element.
 //     *

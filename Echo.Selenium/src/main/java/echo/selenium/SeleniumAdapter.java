@@ -2,6 +2,7 @@ package echo.selenium;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
@@ -35,6 +36,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static echo.core.common.helpers.StringUtils.Like;
+import static echo.core.common.helpers.StringUtils.NormalizeSpacing;
 
 public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private WebDriver webDriver;
@@ -1233,6 +1237,226 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     break;
             }
             prevOption = currOption;
+        }
+    }
+
+    /**
+     * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
+    public void Has(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (!elements.contains(value)) {
+                throw new ElementDoesNotHaveException(value);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
+     * Comparisons are made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
+    public void HasLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection <String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> echo.core.common.helpers.StringUtils.
+                        NormalizeSpacing(((SeleniumElement) e).GetText(guid)).toLowerCase()).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> echo.core.common.helpers.StringUtils.
+                        NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> echo.core.common.helpers.StringUtils.
+                            NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute).toLowerCase())).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (!elements.contains(value)) {
+                throw new ElementDoesNotHaveException(value);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an elements children do not posses a text.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element to be searched.
+     * @param messages The text that the chilren should not posses.
+     * @param selector The selector for the children to be searched.
+     */
+    public void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (elements.contains(value)) {
+                throw new ElementHasException(value);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element to be searched.
+     * @param messages The text that the chilren should not posses.
+     * @param selector The selector for the children to be searched.
+     */
+    public void DoesNotHaveLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid)).toLowerCase()).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (elements.contains(value)) {
+                throw new ElementHasException(value);
+            }
+        }
+    }
+
+
+    /**
+     * Asserts that an elements children that match a given selector only contain either the visible text or the named attribute.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
+    public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (!elements.contains(value)) {
+                throw new ElementDoesNotHaveException(value);
+            }
+            elements.remove(value);
+        }
+        if (!elements.isEmpty()) {
+            throw new ElementDoesNotOnlyHaveException (elements);
+        }
+    }
+
+    /**
+     * Asserts that an element's attribute is equal to a given value.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) control).GetText(guid))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
+            }
+        } else {
+            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) control).GetAttribute(guid, attribute))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    public void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (!Like(value, ((SeleniumElement) control).GetText(guid), false)) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
+            }
+        } else {
+            if (!Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
+            }
         }
     }
 }
