@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.adapters;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.exceptions.*;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
@@ -287,6 +288,25 @@ public interface IWebAdapter extends IAdapter {
     void OpenFileDialog(UUID guid, IBy selector);
 
     /**
+     *Types keys of file indicated by provided path
+     *REQUIRES DIALOG BOX TO ALREADY BE OPENED BY OpenFileDialog
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The selector for the element.
+     * @param path      The path to the file to be selected.
+     */
+    void SelectFileDialog(UUID guid, IBy selector, String path);
+
+    /**
+     * Opens a windows select file dialog and selects
+     * file indicated by provided path
+     *
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The selector for the element.
+     * @param path      The path to the file to be selected.
+     */
+    void UploadFileDialog(UUID guid, IBy selector, String path);
+
+    /**
      * Scrolls to the element on the page if in Chrome.
      *  @param guid
      * @param selector The selector.
@@ -486,11 +506,11 @@ public interface IWebAdapter extends IAdapter {
 
     void MouseOver(UUID guid, WebControl element);
 
-    void SetBodyValueByJavaScript(UUID guid, WebControl element);
+    void SetBodyValueByJavaScript(UUID guid, WebControl element, String value);
 
-    void SetValueByJavaScript(UUID guid, WebControl element);
+    void SetValueByJavaScript(UUID guid, WebControl element, String value);
 
-    void SetDivValueByJavaScript(UUID guid, WebControl element);
+    void SetDivValueByJavaScript(UUID guid, WebControl element, String value);
 
     void ClickAllElements(UUID guid, IBy elementsBy);
 
@@ -524,6 +544,20 @@ public interface IWebAdapter extends IAdapter {
      * @param optGroup The optional option group which would be searched in isolation instead.
      */
     void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
+
+    void Has(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void DoesNotHave(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void DoesNotHaveLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
     void VerifyAlertText(UUID guid, String comparingText);
 

@@ -24,7 +24,8 @@ public class SampleTest {
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
         product.Browser.GoToUrl("http://rtechoweb/");
-    }
+		//"http://gandaras01web.newgen.corp/"
+        }
 
     @After
     public void TearDown() {
@@ -33,7 +34,8 @@ public class SampleTest {
 
     @Test
     public void TestGoBackGoForward_01() {
-        String [] texts = {"English (USA)", "Italiano (IT)"};
+        String [] texts = {"English (USA)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (IT)", "Melayu (MY)"
+        , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
         String [] values = {"1", "2"};
         String [] valuesShouldFail = {"-12", "Blue"};
@@ -122,5 +124,21 @@ public class SampleTest {
         product.Login.LanguageSelect.HasOptionsInOrder(values, WebSelectOption.Value);
         product.Login.LanguageSelect.HasOptionsInOrder(value, WebSelectOption.Value);
         product.Login.LanguageSelect.HasOptionsInOrder(option, WebSelectOption.Text);
+    }
+
+    @Test
+    public void TestHas() {
+        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MY)"
+                , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
+        String [] notMessages = new String [] {"asdasdasd", "sss"};
+        String [] values = new String [] {"0", "5"};
+        String [] Badvalues = new String [] {"13s"};
+        product.Login.LanguageSelect.Has(texts, "option");
+        product.Login.LanguageSelect.DoesNotHave(notMessages, "option");
+        product.Login.LanguageSelect.DoesNotHave(Badvalues, "option", "value");
+        product.Login.LanguageSelect.Has(values, "option", "value");
+        product.Login.LanguageSelect.HasOnly(texts, "option");
+        product.Login.LanguageSelect.HasOnly(new String [] {"1"}, "option[value='1']", "value");
+        product.Login.PasswordTextBox.Is("ctl00_Content_Login1_Password", "id");
     }
 }

@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
@@ -234,6 +235,16 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void SelectFileDialog(UUID guid, IBy selector, String path){
+        adapter.SelectFileDialog(guid, selector, path);
+    }
+
+    @Override
+    public void UploadFileDialog(UUID guid, IBy selector, String path){
+        adapter.UploadFileDialog(guid, selector, path);
+    }
+
+    @Override
     public void VerifyAlertExists(UUID guid) {
         adapter.VerifyAlertExists(guid);
     }
@@ -265,13 +276,13 @@ public class EchoWebDriver implements IWebDriver {
     public void MouseOver(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
 
     @Override
-    public void SetBodyValueByJavaScript(UUID guid,WebControl control) { adapter.MouseOut(guid, control); }
+    public void SetBodyValueByJavaScript(UUID guid,WebControl control, String value) { adapter.SetBodyValueByJavaScript(guid, control, value); }
 
     @Override
-    public void SetValueByJavaScript(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
+    public void SetValueByJavaScript(UUID guid, WebControl control, String value) { adapter.SetValueByJavaScript(guid, control, value); }
 
     @Override
-    public void SetDivValueByJavaScript(UUID guid, WebControl control) { adapter.MouseOver(guid, control); }
+    public void SetDivValueByJavaScript(UUID guid, WebControl control, String value) { adapter.SetDivValueByJavaScript(guid, control, value); }
 
     @Override
     public void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
@@ -286,6 +297,56 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
         adapter.HaAllOptionsInOrder(guid, element, compare, optGroup);
+    }
+
+    @Override
+    public Collection <IWebCookie> GetAllCookies(UUID guid) {
+        return adapter.GetAllCookies(guid);
+    }
+
+    @Override
+    public void ModifyCookie (UUID guid, String name, String value) {
+        adapter.ModifyCookie(guid, name, value);
+    }
+
+    @Override
+    public IWebCookie GetCookie(UUID guid, String name) {
+        return adapter.GetCookie(guid, name);
+    }
+
+    @Override
+    public void Has(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.Has(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void HasLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasLike(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void DoesNotHave (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.DoesNotHave(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void DoesNotHaveLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.DoesNotHaveLike(guid, control, messages, selector, option, attribute);
+    }
+
+    @Override
+    public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasOnly(guid, control, messages, selector,  option, attribute);
+    }
+
+    @Override
+    public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.Is(guid, control, value, option, attribute);
+    }
+
+    @Override
+    public void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.IsLike(guid, control, value, option, attribute);
     }
 
     @Override

@@ -18,10 +18,11 @@ public class CommandTesting {
 
     private static Sample product;
 
-
+//region Setup and Teardown
     @BeforeClass
-    public static void  onlyOnce(){
+    public static void SetUp(){
         product = Launch(Sample.class, Firefox);
+        product.Browser.Maximize();
     }
 
     @AfterClass
@@ -30,11 +31,12 @@ public class CommandTesting {
     }
 
     @Before
-    public void SetUp(){
+    public void BetweenTests(){
         product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
+//endregion
 
-   @Test
+    @Test
     public void TestSendKeysToAlert_AcceptAlertWhenThereIsAnAlert(){
         product.Browser.VerifyAlertNotExists();
         product.StartPage.OpenAlertButton.Click();
@@ -44,6 +46,11 @@ public class CommandTesting {
     }
 
 //region Ignore Test
+    @Ignore
+    public void TestOpenFileDialog() {
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
+    }
+
     @Ignore
     public void TestDismissAlertWhenThereIsAnAlert(){
         product.StartPage.OpenAlertButton.Click();
@@ -96,9 +103,10 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestDoubleClickAndMouseOverOut(){
-        product.StartPage.UltimateLogoImage.DoubleClick();
-        product.StartPage.UltimateLogoImage.MouseOut();
+    public void TestSelectFileDialog(){
+        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
+        product.StartPage.TestFileDialogInput.SelectFileDialog(path);
     }
 
     @Test
@@ -112,6 +120,16 @@ public class CommandTesting {
         product.StartPage.DisabledButton.IsDisabled();
     }
 
+    @Test
+    public void Has(){
+        product.StartPage.div.Has(new String[]{"Async Call 1", "Async Call 2", "Async Call 2"}, "h3");
+        product.StartPage.div.Has(new String[]{"start"}, "button", "id");
+        product.StartPage.div.HasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
+        product.StartPage.div.HasLike(new String[]{"START"}, "button", "id");
+        product.StartPage.DropDown.Is("drop-down-list", "id");
+        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST","id");
+        product.StartPage.div.DoesNotHave(new String [] {"ASYNC CALL 1"}, "h3");
+        product.StartPage.div.DoesNotHaveLike(new String[] {"async call 3"}, "h3");
     @Test
     public void TestVerifyAlertTextWithCorrectText(){
         product.StartPage.OpenAlertButton.Click();

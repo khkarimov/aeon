@@ -1,6 +1,8 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
+import echo.core.common.web.selectors.By;
+import echo.core.test_abstraction.elements.Element;
 import echo.core.test_abstraction.elements.web.*;
 import echo.core.test_abstraction.elements.factories.WebFactory;
 
@@ -20,6 +22,7 @@ public class vTeamSamplePage {
     public Label CheckboxLabel;
     public Link TryLink;
     public Select DropDown;
+    public  WebElement div;
 
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
@@ -36,5 +39,7 @@ public class vTeamSamplePage {
         DropDown = (Select) web.create(Select.class, "select[id='drop-down-list']");
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
         DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='node1']");
+        //TextBox Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
+        div = new WebElement(info, By.CssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
     }
 }

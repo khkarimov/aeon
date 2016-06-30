@@ -2,6 +2,7 @@ package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
@@ -9,6 +10,7 @@ import echo.core.framework_abstraction.controls.web.WebControl;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -101,6 +103,10 @@ public interface IWebDriver extends IDriver {
 
     void OpenFileDialog(UUID guid, IBy selector);
 
+    void SelectFileDialog(UUID guid, IBy selector, String path);
+
+    void UploadFileDialog(UUID guid, IBy selector, String path);
+
     void VerifyAlertExists(UUID guid);
 
     void VerifyAlertNotExists(UUID guid);
@@ -113,11 +119,11 @@ public interface IWebDriver extends IDriver {
 
     void MouseOver(UUID guid, WebControl element);
 
-    void SetBodyValueByJavaScript(UUID guid, WebControl element);
+    void SetBodyValueByJavaScript(UUID guid, WebControl element, String value);
 
-    void SetValueByJavaScript(UUID guid, WebControl element);
+    void SetValueByJavaScript(UUID guid, WebControl element, String value);
 
-    void SetDivValueByJavaScript(UUID guid, WebControl element);
+    void SetDivValueByJavaScript(UUID guid, WebControl element, String value);
 
     void ClickAllElements(UUID guid, IBy elementsBy);
 
@@ -138,6 +144,27 @@ public interface IWebDriver extends IDriver {
     void VerifyURL(UUID guid, URL comparingURL);
 
 //
+    Collection <IWebCookie> GetAllCookies(UUID guid);
+
+    void ModifyCookie (UUID guid, String name, String value);
+
+    IWebCookie GetCookie(UUID guid, String name);
+
+    void Has (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void DoesNotHaveLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsElementDisabled(UUID guid, WebControl element);//
 //    /**
 //     * Check the element.
 //     *
