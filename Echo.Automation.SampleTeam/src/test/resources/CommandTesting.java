@@ -74,6 +74,12 @@ public class CommandTesting {
     }
 
     @Test
+    public void TestOpenFileDialog() {
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
+        System.out.println();
+        //product.StartPage.AlertTitleTextBox.RightClick();
+    }
+    
     public void TestWindowResizingAndNavigation() {
         product.Browser.Resize(BrowserSize.TabletLandscape);
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
@@ -87,7 +93,18 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestDoubleClickAndMouseOverOut(){
+
+    public void TestSelectFileDialog(){
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
+        product.StartPage.TestFileDialogInput.SelectFileDialog("C:\\Projects\\distrib\\neW3.txt");
+        product.StartPage.TestFileDialogInput.UploadFileDialog("C:\\Projects\\distrib\\NEW2.txt");
+        System.out.println();
+    }
+
+    @Test
+    public void TestDragAndDrop(){
+        product.Browser.Maximize();
+        product.StartPage.UltimateLogoImage.DragAndDrop(By.CssSelector("div[id='secondDrop']"));
         product.StartPage.UltimateLogoImage.DoubleClick();
         product.StartPage.UltimateLogoImage.MouseOut();
     }
@@ -114,10 +131,7 @@ public class CommandTesting {
         product.StartPage.div.DoesNotHave(new String [] {"ASYNC CALL 1"}, "h3");
         product.StartPage.div.DoesNotHaveLike(new String[] {"async call 3"}, "h3");
     }
-    @Ignore
-    public void TestOpenFileDialog(){
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
-    }
+    
 }
 
 

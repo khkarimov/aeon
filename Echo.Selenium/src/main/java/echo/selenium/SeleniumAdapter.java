@@ -1,11 +1,13 @@
 package echo.selenium;
 
+import com.sun.glass.events.KeyEvent;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.JQueryStringType;
@@ -24,6 +26,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -724,6 +727,42 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         WebControl element = FindElement(guid, selector);
         Click(guid, element, moveMouseToOrigin);
     }
+
+    /**
+     * Uses keyboard native events to input file name and select it
+     * from fileDialogBox
+     *
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The element on the page to click.
+     */
+    public void SelectFileDialog(UUID guid, IBy selector, String path) {
+        try {
+            SendKeysHelper.SendKeysToKeyboard(path);
+            SendKeysHelper.SendEnterKey();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Finds the 'selector' on the page, and performs a Click() on the object.
+     * Then uses keyboard native events to input file name and select it.
+     *
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The element on the page to click.
+     */
+    public void UploadFileDialog(UUID guid, IBy selector, String path) {
+        WebControl element = FindElement(guid, selector);
+        Click(guid, element, moveMouseToOrigin);
+        try {
+            SendKeysHelper.SendKeysToKeyboard(path);
+            SendKeysHelper.SendEnterKey();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     private void Click(UUID guid, WebControl element, boolean moveMouseToOrigin) {
         ((SeleniumElement) element).Click(guid, moveMouseToOrigin);
