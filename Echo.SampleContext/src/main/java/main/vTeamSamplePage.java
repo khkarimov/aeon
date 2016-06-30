@@ -23,6 +23,7 @@ public class vTeamSamplePage {
     public Link TryLink;
     public Select DropDown;
     public  WebElement div;
+
     public vTeamSamplePage(AutomationInfo info){
         this.info = info;
         WebFactory web = new WebFactory(this.info);
@@ -37,8 +38,8 @@ public class vTeamSamplePage {
         TryLink = (Link) web.create(Link.class, "a[id='tryLink']");
         DropDown = (Select) web.create(Select.class, "select[id='drop-down-list']");
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
-        DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='dragtarget']");
-       TextBox Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
+        DraggableListItem = (ListItem) web.create(ListItem.class,"li[id='node1']");
+        //TextBox Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
         div = new WebElement(info, By.CssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
     }
 }

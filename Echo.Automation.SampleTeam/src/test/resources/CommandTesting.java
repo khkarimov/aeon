@@ -18,17 +18,23 @@ public class CommandTesting {
 
     private static Sample product;
 
-
-    @Before
-    public void SetUp(){
+//region Setup and Teardown
+    @BeforeClass
+    public static void SetUp(){
         product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+        product.Browser.Maximize();
     }
 
-    @After
-    public void TearDown(){
+    @AfterClass
+    public static void TearDown(){
         product.Browser.Quit();
     }
+
+    @Before
+    public void BetweenTests(){
+        product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+    }
+//endregion
 
     @Test
     public void TestSendKeysToAlert_AcceptAlertWhenThereIsAnAlert(){
@@ -40,6 +46,11 @@ public class CommandTesting {
     }
 
 //region Ignore Test
+    @Ignore
+    public void TestOpenFileDialog() {
+        product.StartPage.TestFileDialogInput.OpenFileDialog();
+    }
+
     @Ignore
     public void TestDismissAlertWhenThereIsAnAlert(){
         product.StartPage.OpenAlertButton.Click();
@@ -74,12 +85,6 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestOpenFileDialog() {
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
-        System.out.println();
-        //product.StartPage.AlertTitleTextBox.RightClick();
-    }
-    
     public void TestWindowResizingAndNavigation() {
         product.Browser.Resize(BrowserSize.TabletLandscape);
         product.Browser.Resize(BrowserSize.SmallTabletLandscape);
@@ -93,20 +98,10 @@ public class CommandTesting {
     }
 
     @Test
-
     public void TestSelectFileDialog(){
+        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
         product.StartPage.TestFileDialogInput.OpenFileDialog();
-        product.StartPage.TestFileDialogInput.SelectFileDialog("C:\\Projects\\distrib\\neW3.txt");
-        product.StartPage.TestFileDialogInput.UploadFileDialog("C:\\Projects\\distrib\\NEW2.txt");
-        System.out.println();
-    }
-
-    @Test
-    public void TestDragAndDrop(){
-        product.Browser.Maximize();
-        product.StartPage.UltimateLogoImage.DragAndDrop(By.CssSelector("div[id='secondDrop']"));
-        product.StartPage.UltimateLogoImage.DoubleClick();
-        product.StartPage.UltimateLogoImage.MouseOut();
+        product.StartPage.TestFileDialogInput.SelectFileDialog(path);
     }
 
     @Test
