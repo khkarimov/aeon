@@ -1553,6 +1553,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Obtains a date from an elements attribute and compares it with an expected date. Has a
+     * Margin of error. The date must be in the ISO-8601 standard.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element that posseses the date.
+     * @param attributeName The name of the attribute that has the date.
+     * @param expectedDate The expected date that the attribute should posses.
+     * @param delta The margin of error that the date can be within. Cannot posses any weeks, months or years due to
+     *              them having variable lengths.
+     */
     @Override
     public void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expectedDate, Period delta) {
         String actualString = ((SeleniumElement) element).GetAttribute(guid, attributeName);
@@ -1566,6 +1576,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
          }
     }
 
+    /**
+     * Returns the enumerable BrowserType representing the current browser.
+     * @param guid A Globally unique identifier associated with this call.
+     * @return Returns the BrowserType associated with this browser.
+     */
     @Override
     public BrowserType GetBrowserType(UUID guid) {
         String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
@@ -1587,6 +1602,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Gets the bounding rectangle for an element.
+     * @param guid A Globally unique identifier associated with this call.
+     * @param control The element whose rects are to be returned.
+     * @return Returns a ClientRects object with the four sides of the bounding rectangle.
+     */
     @Override
     public ClientRects GetClientRects(UUID guid, WebControl control) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));");

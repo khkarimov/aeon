@@ -13,6 +13,10 @@ import java.util.Locale;
 /**
  * Created by RafaelT on 7/1/2016.
  */
+
+/**
+ * Asserts that an elements attribute is not comparable to a value when ignoring differences in whitespace and case.
+ */
 public class IsNotLikeCommand extends WebControlCommand{
     private String value;
     private String attribute;
@@ -33,6 +37,12 @@ public class IsNotLikeCommand extends WebControlCommand{
         this.option = option;
         this.attribute = attribute;
     }
+
+    /**
+     * Provides the logic for the command.
+     * @param driver The WebDriver.
+     * @param control The element whose attribute is to be compared.
+     */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
         driver.IsNotLike(getGuid(), control, value, option, attribute);

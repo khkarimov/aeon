@@ -26,6 +26,11 @@ public class GetCookieCommand extends CommandWithReturn {
         this.name = name;
     }
 
+    /**
+     * Provides the logic for the command.
+     * @param driver The framework abstraction facade.
+     * @return A IWebCookie representing the cookie.
+     */
     @Override
     protected Object CommandDelegate(IDriver driver) {
         return ((IWebDriver) driver).GetCookie(getGuid(), name);
