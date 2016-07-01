@@ -1503,6 +1503,27 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    @Override
+    public void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (Like(value, ((SeleniumElement) control).GetText(guid), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetText(guid));
+            }
+        } else {
+            if (Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetAttribute(guid, attribute));
+            }
+        }
+    }
+
     @Override
     public void VerifyAlertText(UUID guid, String comparingText) {
         if(!echo.core.common.helpers.StringUtils.Is(GetAlertText(guid), comparingText)){

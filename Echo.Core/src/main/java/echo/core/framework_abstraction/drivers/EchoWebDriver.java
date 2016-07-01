@@ -387,6 +387,11 @@ public class EchoWebDriver implements IWebDriver {
     public BrowserType GetBrowserType(UUID guid) {
         return adapter.GetBrowserType(guid);
     }
+
+    @Override
+    public void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.IsNotLike(guid, control, value, option, attribute);
+    }
 //
 //    /**
 //     * Checks an element.

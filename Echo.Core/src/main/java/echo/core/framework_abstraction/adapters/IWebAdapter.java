@@ -562,6 +562,8 @@ public interface IWebAdapter extends IAdapter {
 
     void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
+    void IsNotLike (UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
     void VerifyAlertText(UUID guid, String comparingText);
 
     void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);

@@ -83,6 +83,26 @@ public class WebElement extends Element {
                 attribute));
     }
 
+    public void IsNotLike(String value) {
+        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Text,
+                "INNERHTML"));
+    }
+
+    public void IsNotLike(String value, String attribute) {
+        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Raw,
+                attribute));
+    }
+
     public void Has(String [] messages, String childSelector) {
         info.getCommandExecutionFacade().Execute(info,
                 new HasCommand(

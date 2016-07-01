@@ -170,6 +170,8 @@ public interface IWebDriver extends IDriver {
     void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
 
     BrowserType GetBrowserType(UUID guid);
+
+    void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 //    /**
 //     * Check the element.
 //     *
