@@ -4,10 +4,12 @@ import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.exceptions.*;
+import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import java.awt.*;
@@ -568,5 +570,7 @@ public interface IWebAdapter extends IAdapter {
 
     void VerifyURL(UUID guid, URL comparingURL);
 
-    void DatesApproximatelyEqual(UUID guid, WebControl element, String dateFormat, String attributeName, Date expected, Period delta);
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
+
+    BrowserType GetBrowserType(UUID guid);
 }

@@ -6,6 +6,7 @@ import echo.core.command_execution.commands.web.*;
 import echo.core.common.ComparisonOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;
+import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import java.util.ArrayList;
@@ -196,12 +197,12 @@ public class WebElement extends Element {
                 value));
     }
 
-    public void DatesApproximatelyEqual(String dateFormat, String attributeName, Date expectedDate, Period acceptableDelta) {
+    public void DatesApproximatelyEqual(String attributeName, DateTime expectedDate, Period acceptableDelta) {
         info.getCommandExecutionFacade().Execute(info, new DatesApproximatelyEqualCommand(
                 info.getLog(),
                 selector,
                 createWebCommandInitializer(),
-                dateFormat, attributeName, expectedDate, acceptableDelta
+                attributeName, expectedDate, acceptableDelta
         ));
     }
 

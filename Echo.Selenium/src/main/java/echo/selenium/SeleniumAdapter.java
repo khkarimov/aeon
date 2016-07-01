@@ -10,6 +10,7 @@ import echo.core.common.exceptions.NoSuchWindowException;
 import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
@@ -22,6 +23,7 @@ import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jQuery.IJavaScriptFlowExecutor;
 import echo.selenium.jQuery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
@@ -1530,16 +1532,33 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     @Override
-    public void DatesApproximatelyEqual(UUID guid, WebControl element, String dateFormat, String attributeName, Date expected, Period delta) {
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+    public void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expectedDate, Period delta) {
         String actualString = ((SeleniumElement) element).GetAttribute(guid, attributeName);
-        try {
-            Date actual = formatter.parse(actualString);
-            if (!ApproximatelyEquals(actual, expected, delta)) {
-                throw new DatesNotApproximatelyEqualException(expected, actual, delta);
-            }
-        } catch (ParseException e) {
-            throw new ElementAttributeNotADateException(attributeName, actualString, dateFormat);
+         try {
+             DateTime actualDate = DateTime.parse(actualString);
+             if (!ApproximatelyEquals(actualDate, expectedDate, delta)) {
+                 throw new DatesNotApproximatelyEqualException(expectedDate, actualDate, delta);
+             }
+         } catch (IllegalArgumentException e) {
+             throw new ElementAttributeNotADateException(attributeName, actualString);
+         }
+    }
+
+    @Override
+    public BrowserType GetBrowserType(UUID guid) {
+        String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
+        String version = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appVersion; return browserType;");
+        String userAgent = (String) ExecuteScript(guid,"var browserType = \"\" + navigator.userAgent; return browserType;");
+        if (name.toLowerCase().contains("internet") && name.toLowerCase().contains("explorer")) {
+            return BrowserType.InternetExplorer;
+        }
+        else if (version.toLowerCase().contains("chrome")) {
+            return BrowserType.Chrome;
+        }
+        else if (userAgent.toLowerCase().contains("firefox")) {
+            return BrowserType.Firefox;
+        } else {
+            throw new BrowserTypeNotRecognizedException();
         }
     }
 }

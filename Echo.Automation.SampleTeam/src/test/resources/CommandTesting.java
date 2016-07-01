@@ -8,8 +8,13 @@ import echo.core.common.web.BrowserSize;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import main.Sample;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.junit.*;
 import org.junit.Test;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
@@ -174,6 +179,13 @@ public class CommandTesting {
     @Test(expected = TimeoutExpiredException.class)
     public void TestVerifyURLWithIncorrectURL(){
         product.Browser.VerifyURL("https://www.google.com");
+    }
+
+    @Test
+    public void TestDatesApproximatelyEqual() {
+        DateTime expected = new DateTime(2016, 7, 5, 0, 0);
+        Period delta = new Period (0, 0, 0, 4, 0, 0 ,0, 0);
+        product.StartPage.CheckboxLabel.DatesApproximatelyEqual("name", expected, delta);
     }
 }
 

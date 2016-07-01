@@ -1,5 +1,6 @@
 package echo.core.common.helpers;
 
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.Period;
 
@@ -16,12 +17,11 @@ public class DateTimeExtensions {
      * Checks that the actual value is within a certain margin of error
      * @param value The actual value encountered.
      * @param expected The expected value.
-     * @param delta The margin of error the actual value can be within. If negative then the value can be less than the
-     *              expected, if positive it can be greater than.
+     * @param delta The margin of error the actual value can be within.
      * @return Whether or not the actual value is within the margin of error.
      */
-    public static boolean ApproximatelyEquals(Date value, Date expected, Period delta) {
-        return (value.getTime() - expected.getTime()) <= PeriodToMilliSeconds(delta);
+    public static boolean ApproximatelyEquals(DateTime value, DateTime expected, Period delta) {
+        return Math.abs(value.getMillis() - expected.getMillis()) <= PeriodToMilliSeconds(delta);
     }
 
     /**

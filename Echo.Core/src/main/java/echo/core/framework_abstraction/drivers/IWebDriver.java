@@ -3,10 +3,12 @@ package echo.core.framework_abstraction.drivers;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import java.net.URL;
@@ -165,7 +167,9 @@ public interface IWebDriver extends IDriver {
 
     void IsElementDisabled(UUID guid, WebControl element);//
 
-    void DatesApproximatelyEqual(UUID guid, WebControl element, String format, String attributeName, Date expected, Period delta);
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
+
+    BrowserType GetBrowserType(UUID guid);
 //    /**
 //     * Check the element.
 //     *

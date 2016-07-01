@@ -3,12 +3,14 @@ package echo.core.framework_abstraction.drivers;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import java.awt.*;
@@ -377,8 +379,13 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void DatesApproximatelyEqual(UUID guid, WebControl element, String format, String attributeName, Date expected, Period delta) {
-        adapter.DatesApproximatelyEqual(guid, element, format, attributeName, expected, delta);
+    public void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta) {
+        adapter.DatesApproximatelyEqual(guid, element, attributeName, expected, delta);
+    }
+
+    @Override
+    public BrowserType GetBrowserType(UUID guid) {
+        return adapter.GetBrowserType(guid);
     }
 //
 //    /**
