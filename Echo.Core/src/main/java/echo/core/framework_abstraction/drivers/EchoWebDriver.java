@@ -4,6 +4,7 @@ import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
@@ -391,6 +392,11 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
         adapter.IsNotLike(guid, control, value, option, attribute);
+    }
+
+    @Override
+    public ClientRects GetClientRects(UUID guid, WebControl control) {
+        return adapter.GetClientRects(guid, control);
     }
 //
 //    /**

@@ -193,6 +193,10 @@ public class CommandTesting {
     @Test
     public void TestGetBrowserType() {
         System.out.println(product.Browser.GetBrowserType());
+        System.out.println(product.StartPage.CheckboxLabel.GetClientRects());
+        System.out.println(product.StartPage.TestCheckbox.GetClientRects());
+        System.out.println(product.StartPage.AlertTitleTextBox.GetClientRects());
+        System.out.println(product.StartPage.DropDown.GetClientRects());
     }
 }
 

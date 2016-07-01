@@ -5,6 +5,7 @@ import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.exceptions.*;
 import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
@@ -575,4 +576,6 @@ public interface IWebAdapter extends IAdapter {
     void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
 
     BrowserType GetBrowserType(UUID guid);
+
+    ClientRects GetClientRects(UUID guid, WebControl element);
 }

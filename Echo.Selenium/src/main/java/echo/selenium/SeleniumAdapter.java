@@ -11,6 +11,7 @@ import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
@@ -1584,5 +1585,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         } else {
             throw new BrowserTypeNotRecognizedException();
         }
+    }
+
+    @Override
+    public ClientRects GetClientRects(UUID guid, WebControl control) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));");
+        ArrayList rects = (ArrayList) ExecuteScript(guid, control.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));
+        int bottom = ((Number) rects.get(1)).intValue();
+        int left = ((Number) rects.get(2)).intValue();
+        int right = ((Number) rects.get(3)).intValue();
+        int top = ((Number) rects.get(4)).intValue();
+        return new ClientRects(top, bottom, left, right);
     }
 }

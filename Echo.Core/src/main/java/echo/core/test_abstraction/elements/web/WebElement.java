@@ -4,6 +4,7 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.ComparisonOption;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;
 import org.joda.time.DateTime;
@@ -223,6 +224,14 @@ public class WebElement extends Element {
                 selector,
                 createWebCommandInitializer(),
                 attributeName, expectedDate, acceptableDelta
+        ));
+    }
+
+    public ClientRects GetClientRects() {
+        return (ClientRects) info.getCommandExecutionFacade().Execute(info, new GetClientRectsCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()
         ));
     }
 

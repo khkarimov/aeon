@@ -4,6 +4,7 @@ import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
@@ -172,6 +173,8 @@ public interface IWebDriver extends IDriver {
     BrowserType GetBrowserType(UUID guid);
 
     void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    ClientRects GetClientRects(UUID guid, WebControl control);
 //    /**
 //     * Check the element.
 //     *
