@@ -6,11 +6,13 @@ import echo.core.command_execution.commands.web.*;
 import echo.core.common.ComparisonOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;
+import org.joda.time.Period;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
- * Created by Administrator on 6/20/2016.
+ * Created by SebastianR on 6/20/2016.
  */
 public class WebElement extends Element {
     private IBy selector;
@@ -192,6 +194,15 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
                 value));
+    }
+
+    public void DatesApproximatelyEqual(String dateFormat, String attributeName, Date expectedDate, Period acceptableDelta) {
+        info.getCommandExecutionFacade().Execute(info, new DatesApproximatelyEqualCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                dateFormat, attributeName, expectedDate, acceptableDelta
+        ));
     }
 
     protected WebCommandInitializer createWebCommandInitializer(){

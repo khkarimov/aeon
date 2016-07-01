@@ -8,6 +8,7 @@ import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
@@ -566,4 +567,6 @@ public interface IWebAdapter extends IAdapter {
     void VerifyTitle(UUID guid, String comparingTitle);
 
     void VerifyURL(UUID guid, URL comparingURL);
+
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String dateFormat, String attributeName, Date expected, Period delta);
 }

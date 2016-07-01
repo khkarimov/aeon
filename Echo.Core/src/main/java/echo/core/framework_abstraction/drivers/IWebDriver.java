@@ -7,10 +7,11 @@ import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.Period;
 
 import java.net.URL;
 import java.util.Collection;
-import java.util.List;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -163,6 +164,8 @@ public interface IWebDriver extends IDriver {
     void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
     void IsElementDisabled(UUID guid, WebControl element);//
+
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String format, String attributeName, Date expected, Period delta);
 //    /**
 //     * Check the element.
 //     *

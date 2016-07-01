@@ -22,11 +22,10 @@ import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jQuery.IJavaScriptFlowExecutor;
 import echo.selenium.jQuery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.Period;
 import org.openqa.selenium.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -35,12 +34,14 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static echo.core.common.helpers.DateTimeExtensions.ApproximatelyEquals;
 import static echo.core.common.helpers.StringUtils.Like;
 import static echo.core.common.helpers.StringUtils.NormalizeSpacing;
 
@@ -1525,6 +1526,20 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void VerifyURL(UUID guid, URL comparingURL) {
         if(!GetUrl(guid).equals(comparingURL)){
             throw new ValuesAreNotEqualException(GetUrl(guid).toString(), comparingURL.toString());
+        }
+    }
+
+    @Override
+    public void DatesApproximatelyEqual(UUID guid, WebControl element, String dateFormat, String attributeName, Date expected, Period delta) {
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+        String actualString = ((SeleniumElement) element).GetAttribute(guid, attributeName);
+        try {
+            Date actual = formatter.parse(actualString);
+            if (!ApproximatelyEquals(actual, expected, delta)) {
+                throw new DatesNotApproximatelyEqualException(expected, actual, delta);
+            }
+        } catch (ParseException e) {
+            throw new ElementAttributeNotADateException(attributeName, actualString, dateFormat);
         }
     }
 }

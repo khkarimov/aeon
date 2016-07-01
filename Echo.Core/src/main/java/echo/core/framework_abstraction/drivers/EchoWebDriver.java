@@ -9,10 +9,12 @@ import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -372,6 +374,11 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public void VerifyURL(UUID guid, URL comparingURL) {
         adapter.VerifyURL(guid, comparingURL);
+    }
+
+    @Override
+    public void DatesApproximatelyEqual(UUID guid, WebControl element, String format, String attributeName, Date expected, Period delta) {
+        adapter.DatesApproximatelyEqual(guid, element, format, attributeName, expected, delta);
     }
 //
 //    /**
