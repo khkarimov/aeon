@@ -1555,6 +1555,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         else if (version.toLowerCase().contains("chrome")) {
             return BrowserType.Chrome;
         }
+        else if (userAgent.toLowerCase().contains("trident/7.0")) {
+            return BrowserType.InternetExplorer;
+        }
         else if (userAgent.toLowerCase().contains("firefox")) {
             return BrowserType.Firefox;
         } else {
