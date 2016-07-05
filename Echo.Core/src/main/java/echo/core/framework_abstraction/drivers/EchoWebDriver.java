@@ -3,6 +3,7 @@ package echo.core.framework_abstraction.drivers;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
@@ -399,7 +400,8 @@ public class EchoWebDriver implements IWebDriver {
         return adapter.GetClientRects(guid, control);
     }
 
-
+    @Override
+    public void PressKeyboardKey(UUID guid, WebControl control, KeyboardKey key) {adapter.PressKeyboardKey(guid, control, key);}
 //
 //    /**
 //     * Checks an element.

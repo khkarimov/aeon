@@ -4,6 +4,7 @@ import com.sun.glass.events.KeyEvent;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
@@ -1617,5 +1618,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         int right = ((Number) rects.get(3)).intValue();
         int top = ((Number) rects.get(4)).intValue();
         return new ClientRects(top, bottom, left, right);
+    }
+
+    /**
+     * Sends a non-alphanumeric keys to an element.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to recieve the keys.
+     * @param key The key to be sent.
+     */
+    @Override
+    public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {
+        ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(SeleniumKeyboardMapper.Map(key));
     }
 }

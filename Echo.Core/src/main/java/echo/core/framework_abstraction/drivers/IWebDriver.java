@@ -3,6 +3,7 @@ package echo.core.framework_abstraction.drivers;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
@@ -175,6 +176,8 @@ public interface IWebDriver extends IDriver {
     void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
     ClientRects GetClientRects(UUID guid, WebControl control);
+
+    void PressKeyboardKey(UUID guid, WebControl control, KeyboardKey key);
 //    /**
 //     * Check the element.
 //     *

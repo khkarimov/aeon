@@ -3,6 +3,7 @@ package echo.core.framework_abstraction.adapters;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.ClientRects;
@@ -578,4 +579,6 @@ public interface IWebAdapter extends IAdapter {
     BrowserType GetBrowserType(UUID guid);
 
     ClientRects GetClientRects(UUID guid, WebControl element);
+
+    void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
 }

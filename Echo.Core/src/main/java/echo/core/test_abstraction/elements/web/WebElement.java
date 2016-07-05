@@ -4,6 +4,7 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.web.ClientRects;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;
@@ -233,6 +234,14 @@ public class WebElement extends Element {
                 selector,
                 createWebCommandInitializer()
         ));
+    }
+
+    public void PressKeyboardKey(KeyboardKey key) {
+        info.getCommandExecutionFacade().Execute(info, new PressKeyboardKeyCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                key));
     }
 
     protected WebCommandInitializer createWebCommandInitializer(){
