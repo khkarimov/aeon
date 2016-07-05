@@ -172,8 +172,13 @@ public class CommandTesting {
     }
 
     @Test(expected = TimeoutExpiredException.class)
-    public void TestVerifyURLWithIncorrectURL(){
+    public void TestVerifyURLWithIncorrectURL() {
         product.Browser.VerifyURL("https://www.google.com");
+    }
+
+    @Test
+    public void TestUploadFile() {
+        product.StartPage.TestFileDialogInput.UploadFileDialog("asdasd#@$@#$");
     }
 }
 
