@@ -3,319 +3,82 @@ package echo.core.common;
 /**
  * Created by RafaelT on 7/5/2016.
  */
-public enum KeyboardKey {
-    /// <summary>
-    /// Add
-    /// </summary>
-    Add,
+public enum KeyboardKey  {
+    NULL         ('\uE000'),
+    CANCEL       ('\uE001'), // ^break
+    HELP         ('\uE002'),
+    BACK_SPACE   ('\uE003'),
+    TAB          ('\uE004'),
+    CLEAR        ('\uE005'),
+    RETURN       ('\uE006'),
+    ENTER        ('\uE007'),
+    SHIFT        ('\uE008'),
+    LEFT_SHIFT   (KeyboardKey.SHIFT.getUnicode()),
+    CONTROL      ('\uE009'),
+    LEFT_CONTROL (KeyboardKey.CONTROL.getUnicode()),
+    ALT          ('\uE00A'),
+    LEFT_ALT     (KeyboardKey.ALT.getUnicode()),
+    PAUSE        ('\uE00B'),
+    ESCAPE       ('\uE00C'),
+    SPACE        ('\uE00D'),
+    PAGE_UP      ('\uE00E'),
+    PAGE_DOWN    ('\uE00F'),
+    END          ('\uE010'),
+    HOME         ('\uE011'),
+    LEFT         ('\uE012'),
+    ARROW_LEFT   (KeyboardKey.LEFT.getUnicode()),
+    UP           ('\uE013'),
+    ARROW_UP     (KeyboardKey.UP.getUnicode()),
+    RIGHT        ('\uE014'),
+    ARROW_RIGHT  (KeyboardKey.RIGHT.getUnicode()),
+    DOWN         ('\uE015'),
+    ARROW_DOWN   (KeyboardKey.DOWN.getUnicode()),
+    INSERT       ('\uE016'),
+    DELETE       ('\uE017'),
+    SEMICOLON    ('\uE018'),
+    EQUALS       ('\uE019'),
 
-    /// <summary>
-    /// Alt
-    /// </summary>
-    Alt,
+    // Number pad keys
+    NUMPAD0      ('\uE01A'),
+    NUMPAD1      ('\uE01B'),
+    NUMPAD2      ('\uE01C'),
+    NUMPAD3      ('\uE01D'),
+    NUMPAD4      ('\uE01E'),
+    NUMPAD5      ('\uE01F'),
+    NUMPAD6      ('\uE020'),
+    NUMPAD7      ('\uE021'),
+    NUMPAD8      ('\uE022'),
+    NUMPAD9      ('\uE023'),
+    MULTIPLY     ('\uE024'),
+    ADD          ('\uE025'),
+    SEPARATOR    ('\uE026'),
+    SUBTRACT     ('\uE027'),
+    DECIMAL      ('\uE028'),
+    DIVIDE       ('\uE029'),
 
-    /// <summary>
-    /// ArrowDown
-    /// </summary>
-    ArrowDown,
+    // Function keys
+    F1           ('\uE031'),
+    F2           ('\uE032'),
+    F3           ('\uE033'),
+    F4           ('\uE034'),
+    F5           ('\uE035'),
+    F6           ('\uE036'),
+    F7           ('\uE037'),
+    F8           ('\uE038'),
+    F9           ('\uE039'),
+    F10          ('\uE03A'),
+    F11          ('\uE03B'),
+    F12          ('\uE03C'),
 
-    /// <summary>
-    /// ArrowLeft
-    /// </summary>
-    ArrowLeft,
+    META         ('\uE03D');
 
-    /// <summary>
-    /// ArrowRight
-    /// </summary>
-    ArrowRight,
+    private char code;
 
-    /// <summary>
-    /// ArrowUp
-    /// </summary>
-    ArrowUp,
+    private KeyboardKey(char code) {
+        this.code = code;
+    }
 
-    /// <summary>
-    /// Backspace
-    /// </summary>
-    Backspace,
-
-    /// <summary>
-    /// Cancel
-    /// </summary>
-    Cancel,
-
-    /// <summary>
-    /// Clear
-    /// </summary>
-    Clear,
-
-    /// <summary>
-    /// Command
-    /// </summary>
-    Command,
-
-    /// <summary>
-    /// Control
-    /// </summary>
-    Control,
-
-    /// <summary>
-    /// Decimal
-    /// </summary>
-    Decimal,
-
-    /// <summary>
-    /// Delete
-    /// </summary>
-    Delete,
-
-    /// <summary>
-    /// Divide
-    /// </summary>
-    Divide,
-
-    /// <summary>
-    /// Down
-    /// </summary>
-    Down,
-
-    /// <summary>
-    /// End
-    /// </summary>
-    End,
-
-    /// <summary>
-    /// Enter
-    /// </summary>
-    Enter,
-
-    /// <summary>
-    /// Equal
-    /// </summary>
-    Equal,
-
-    /// <summary>
-    /// Escape
-    /// </summary>
-    Escape,
-
-    /// <summary>
-    /// F1
-    /// </summary>
-    F1,
-
-    /// <summary>
-    /// F10
-    /// </summary>
-    F10,
-
-    /// <summary>
-    /// F11
-    /// </summary>
-    F11,
-
-    /// <summary>
-    /// F12
-    /// </summary>
-    F12,
-
-    /// <summary>
-    /// F2
-    /// </summary>
-    F2,
-
-    /// <summary>
-    /// F3
-    /// </summary>
-    F3,
-
-    /// <summary>
-    /// F4
-    /// </summary>
-    F4,
-
-    /// <summary>
-    /// F5
-    /// </summary>
-    F5,
-
-    /// <summary>
-    /// F6
-    /// </summary>
-    F6,
-
-    /// <summary>
-    /// F7
-    /// </summary>
-    F7,
-
-    /// <summary>
-    /// F8
-    /// </summary>
-    F8,
-
-    /// <summary>
-    /// F9
-    /// </summary>
-    F9,
-
-    /// <summary>
-    /// Help
-    /// </summary>
-    Help,
-
-    /// <summary>
-    /// F2
-    /// </summary>
-    Home,
-
-    /// <summary>
-    /// Insert
-    /// </summary>
-    Insert,
-
-    /// <summary>
-    /// Left
-    /// </summary>
-    Left,
-
-    /// <summary>
-    /// LeftAlt
-    /// </summary>
-    LeftAlt,
-
-    /// <summary>
-    /// LeftControl
-    /// </summary>
-    LeftControl,
-
-    /// <summary>
-    /// LeftShift
-    /// </summary>
-    LeftShift,
-
-    /// <summary>
-    /// Meta
-    /// </summary>
-    Meta,
-
-    /// <summary>
-    /// Multiply
-    /// </summary>
-    Multiply,
-
-    /// <summary>
-    /// Null
-    /// </summary>
-    Null,
-
-    /// <summary>
-    /// NumberPad0
-    /// </summary>
-    NumberPad0,
-
-    /// <summary>
-    /// NumberPad1
-    /// </summary>
-    NumberPad1,
-
-    /// <summary>
-    /// NumberPad2
-    /// </summary>
-    NumberPad2,
-
-    /// <summary>
-    /// NumberPad3
-    /// </summary>
-    NumberPad3,
-
-    /// <summary>
-    /// NumberPad4
-    /// </summary>
-    NumberPad4,
-
-    /// <summary>
-    /// NumberPad5
-    /// </summary>
-    NumberPad5,
-
-    /// <summary>
-    /// NumberPad6
-    /// </summary>
-    NumberPad6,
-
-    /// <summary>
-    /// NumberPad7
-    /// </summary>
-    NumberPad7,
-
-    /// <summary>
-    /// NumberPad8
-    /// </summary>
-    NumberPad8,
-
-    /// <summary>
-    /// NumberPad9
-    /// </summary>
-    NumberPad9,
-
-    /// <summary>
-    /// PageDown
-    /// </summary>
-    PageDown,
-
-    /// <summary>
-    /// PageUp
-    /// </summary>
-    PageUp,
-
-    /// <summary>
-    /// Pause
-    /// </summary>
-    Pause,
-
-    /// <summary>
-    /// Return
-    /// </summary>
-    Return,
-
-    /// <summary>
-    /// Right
-    /// </summary>
-    Right,
-
-    /// <summary>
-    /// Semicolon
-    /// </summary>
-    Semicolon,
-
-    /// <summary>
-    /// Separator
-    /// </summary>
-    Separator,
-
-    /// <summary>
-    /// Shift
-    /// </summary>
-    Shift,
-
-    /// <summary>
-    /// Space
-    /// </summary>
-    Space,
-
-    /// <summary>
-    /// Subtract
-    /// </summary>
-    Subtract,
-
-    /// <summary>
-    /// Tab
-    /// </summary>
-    Tab,
-
-    /// <summary>
-    /// Up
-    /// </summary>
-    Up
+    public char getUnicode() {
+        return code;
+    }
 }

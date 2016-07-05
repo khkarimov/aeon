@@ -1628,6 +1628,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {
-        ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(SeleniumKeyboardMapper.Map(key));
+        ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(Keys.getKeyFromUnicode(key.getUnicode()));
     }
 }

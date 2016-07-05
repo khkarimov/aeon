@@ -2,8 +2,8 @@
  * Created by SebastianR on 6/6/2016.
  */
 
+import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.TimeoutExpiredException;
-import echo.core.common.helpers.Sleep;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
@@ -14,11 +14,6 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import static echo.core.common.web.BrowserType.Chrome;
-import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
 public class CommandTesting {
@@ -202,6 +197,15 @@ public class CommandTesting {
         System.out.println(product.StartPage.UltimateLogoImage.GetClientRects());
     }
 
+    @Test
+    public void TestPressKeyboardKey() {
+       product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
+        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
+        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
+        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
+        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
+        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_UP);
+    }
 }
 
 
