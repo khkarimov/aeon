@@ -28,7 +28,7 @@ public class CommandTesting {
 //region Setup and Teardown
     @BeforeClass
     public static void SetUp(){
-        product = Launch(Sample.class, Firefox);
+        product = Launch(Sample.class, BrowserType.Firefox);
         product.Browser.Maximize();
     }
 
@@ -197,6 +197,15 @@ public class CommandTesting {
         System.out.println(product.StartPage.TestCheckbox.GetClientRects());
         System.out.println(product.StartPage.AlertTitleTextBox.GetClientRects());
         System.out.println(product.StartPage.DropDown.GetClientRects());
+        System.out.println(product.StartPage.DisabledButton.GetClientRects());
+        System.out.println(product.StartPage.TestCheckbox.GetClientRects());
+        System.out.println(product.StartPage.UltimateLogoImage.GetClientRects());
+    }
+
+    @Test
+    public void TestRefreshFrame() {
+        product.Browser.GoToUrl("http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe");
+        product.Browser.RefreshFrame();
     }
 }
 

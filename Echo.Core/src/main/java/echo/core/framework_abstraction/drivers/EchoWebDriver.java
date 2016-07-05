@@ -398,6 +398,9 @@ public class EchoWebDriver implements IWebDriver {
     public ClientRects GetClientRects(UUID guid, WebControl control) {
         return adapter.GetClientRects(guid, control);
     }
+
+    @Override
+    public void RefreshFrame(UUID guid) {adapter.RefreshFrame(guid);}
 //
 //    /**
 //     * Checks an element.

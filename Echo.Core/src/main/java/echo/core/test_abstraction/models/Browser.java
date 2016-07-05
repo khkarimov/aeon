@@ -124,4 +124,6 @@ public class Browser {
     public IWebCookie GetCookie(String name) {return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(info.getLog(), name));}
 
     public BrowserType GetBrowserType() {return (BrowserType) info.getCommandExecutionFacade().Execute(info, new GetBrowserTypeCommand(info.getLog()));}
+
+    public void RefreshFrame(){info.getCommandExecutionFacade().Execute(info, new RefreshFrameCommand(info.getLog()));}
 }
