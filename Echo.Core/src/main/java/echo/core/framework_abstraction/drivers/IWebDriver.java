@@ -175,8 +175,6 @@ public interface IWebDriver extends IDriver {
     void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
     ClientRects GetClientRects(UUID guid, WebControl control);
-
-    void RefreshFrame(UUID guid);
 //    /**
 //     * Check the element.
 //     *

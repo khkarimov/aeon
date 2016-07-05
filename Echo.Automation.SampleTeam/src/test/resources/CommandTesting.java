@@ -202,11 +202,6 @@ public class CommandTesting {
         System.out.println(product.StartPage.UltimateLogoImage.GetClientRects());
     }
 
-    @Test
-    public void TestRefreshFrame() {
-        product.Browser.GoToUrl("http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe");
-        product.Browser.RefreshFrame();
-    }
 }
 
 
