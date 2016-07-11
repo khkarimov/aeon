@@ -113,6 +113,13 @@ public class CommandTesting {
     @Test
     public void TestNotEnabled(){
         product.StartPage.DisabledButton.IsDisabled();
+        //product.StartPage.DisabledButton.IsEnabled();
+        product.StartPage.Start.IsEnabled();
+    }
+
+    @Test
+    public void TestClickAndHold(){
+        product.StartPage.Start.ClickAndHold(9000);
     }
 
     @Test
@@ -179,6 +186,13 @@ public class CommandTesting {
     @Test
     public void TestUploadFile() {
         product.StartPage.TestFileDialogInput.UploadFileDialog("asdasd#@$@#$");
+    }
+
+    @Test
+    public void TestCheckCommand() {
+        product.StartPage.TestCheckbox.Check();
+        product.StartPage.TestCheckbox.Uncheck();
+
     }
 }
 

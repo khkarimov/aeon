@@ -52,12 +52,12 @@ public class  Button extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
-    public void ClickAndHold(int duration) {
+    public void ClickAndHold(int milliseconds) {
         info.getCommandExecutionFacade().Execute(info,
                 new ClickAndHoldCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), duration));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), milliseconds));
     }
 
     public void IsEnabled(){
