@@ -57,7 +57,8 @@ public class  Button extends WebElement {
                 new ClickAndHoldCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), milliseconds));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                        milliseconds));
     }
 
     public void IsEnabled(){

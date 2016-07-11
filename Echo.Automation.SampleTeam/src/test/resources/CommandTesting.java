@@ -192,7 +192,11 @@ public class CommandTesting {
     public void TestCheckCommand() {
         product.StartPage.TestCheckbox.Check();
         product.StartPage.TestCheckbox.Uncheck();
+    }
 
+    @Test
+    public void TestClickAllElements() {
+        product.Browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
     }
 }
 
