@@ -51,12 +51,24 @@ jar {
 
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
-                'Implementation-Version': version
+                'Implementation-Version': version,
+                'Plugin-Id' : 'SeleniumEcho',
+                'Plugin-Version' : '1.0.0',
+                'Plugin-Class' : 'echo.selenium.SeleniumPlugin'
     }
 
 //    from configurations.compile.collect {
 //        it.isDirectory() ? it : zipTree(it)
 //    }
+}
+
+task plugin(type: Jar) {
+    baseName = base
+    version = '0.0.1'
+    into ('classes'){
+        with jar
+    }
+    extension('zip')
 }
 
 task copyToDistrib(type: Copy) {

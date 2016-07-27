@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Implementation-Title: Echo Selenium
+Implementation-Version: 0.0.1
+Plugin-Id: SeleniumEcho
+Plugin-Version: 1.0.0
+Plugin-Class: echo.selenium.SeleniumPlugin
+
