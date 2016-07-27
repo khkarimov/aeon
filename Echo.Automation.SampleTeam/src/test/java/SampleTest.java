@@ -23,7 +23,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://rtechoweb/");
+        product.Browser.GoToUrl("http://gandaras01web/");
 		//"http://gandaras01web.newgen.corp/"
         }
 
@@ -78,6 +78,26 @@ public class SampleTest {
         product.Browser.GoToUrl("http://www.tutorialspoint.com");
         product.Browser.ScrollToEnd();
         product.Browser.ScrollToTop();
+    }
+
+    @Test
+    public void TestVisibleAndNotVisible_05() {
+        product.Login.WarningMessage.NotVisible();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.PasswordTextBox.Set("FAIL");
+        product.Login.LoginButton.Click();
+        product.Login.WarningMessage.Visible();
+    }
+
+    @Test
+    public void TestSelectedAndNotSelected_06() {
+        product.Login.PasswordTextBox.NotSelected();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.PasswordTextBox.Set("FAIL");
+        product.Login.PasswordTextBox.NotSelected();
+        product.Login.PasswordTextBox.Selected();
+        product.Login.LoginButton.Click();
+        product.Login.WarningMessage.Visible();
     }
 
     @Test
