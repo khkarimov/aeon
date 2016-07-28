@@ -62,7 +62,8 @@ jar {
 //    }
 }
 
-task plugin(type: Jar) {
+
+task buildPlugin(type: Jar) {
     baseName = base
     version = '0.0.1'
     into ('classes'){
@@ -93,4 +94,4 @@ task copyToDistrib(type: Copy) {
 
 copyToDistrib.outputs.upToDateWhen {false}
 
-build.finalizedBy(copyToDistrib)
+jar.finalizedBy(buildPlugin)

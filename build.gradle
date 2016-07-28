@@ -1,0 +1,14 @@
+apply plugin: 'java'
+group 'Next.Echo'
+
+dependencies {
+    compile project('Echo.Selenium')
+    compile project('Echo.Automation.SampleTeam')
+}
+
+task BuildSeleniumPlugin(type: Copy, dependsOn: build) {
+    group 'build'
+    from 'Echo.Selenium/build/libs'
+    into 'Echo.Automation.SampleTeam/plugins'
+    include '*.zip'
+}
