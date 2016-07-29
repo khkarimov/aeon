@@ -1,15 +1,11 @@
-import echo.core.common.CompareType;
 import echo.core.common.web.BrowserSize;
-import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
-import echo.selenium.SeleniumCookie;
 import main.Sample;
 import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static echo.core.common.web.BrowserType.Chrome;
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -20,13 +16,14 @@ public class SampleTest {
 
     private static Sample product;
 
+    @BeforeClass
+    public static void fixtureSetUp() {
+    }
     @Before
-    public void SetUp() {
-        product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://rtechoweb/");
-		//"http://gandaras01web.newgen.corp/"
-        }
-
+    public void StartUp () {
+        product = Launch(Sample.class, Firefox);
+        product.Browser.GoToUrl("http://srenv02web/login.aspx");
+    }
     @After
     public void TearDown() {
         product.Browser.Quit();
@@ -34,8 +31,8 @@ public class SampleTest {
 
     @Test
     public void TestGoBackGoForward_01() {
-        String [] texts = {"English (USA)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (IT)", "Melayu (MY)"
-        , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
+        String [] texts = {"English (USA)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (ITA)", "Melayu (MYS)"
+        , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
         String [] values = {"1", "2"};
         String [] valuesShouldFail = {"-12", "Blue"};
@@ -114,10 +111,10 @@ public class SampleTest {
     }
     @Test
     public void TestHasElementsInOrder() {
-        String [] options = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
+        String [] options = new String [] {"English (USA)", "Italiano (ITA)", "Melayu (MYS)"};
         String [] values = new String [] {"0", "5", "13"};
         String [] badValues = new String [] {"0", "13", "5"};
-        String [] badOptions = new String [] {"English (USA)", "Melayu (MY)", "Italiano (IT)"};
+        String [] badOptions = new String [] {"English (USA)", "Melayu (MYS)", "Italiano (ITA)"};
         String [] value = new String [] {"0"};
         String [] option = new String [] {"English (USA)"};
         product.Login.LanguageSelect.HasOptionsInOrder(options, WebSelectOption.Text);
@@ -128,8 +125,8 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MY)"
-                , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
+        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MYS)"
+                , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] notMessages = new String [] {"asdasdasd", "sss"};
         String [] values = new String [] {"0", "5"};
         String [] Badvalues = new String [] {"13s"};

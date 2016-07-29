@@ -174,38 +174,12 @@ public class CommandTesting {
     }
 
     @Test(expected = TimeoutExpiredException.class)
-    public void TestVerifyURLWithIncorrectURL(){
+    public void TestVerifyURLWithIncorrectURL() {
         product.Browser.VerifyURL("https://www.google.com");
     }
 
     @Test
-    public void TestDatesApproximatelyEqual() {
-        DateTime expected = new DateTime(2016, 7, 5, 0, 0);
-        Period delta = new Period (0, 0, 0, 4, 0, 0 ,0, 0);
-        product.StartPage.CheckboxLabel.DatesApproximatelyEqual("name", expected, delta);
-    }
-
-    @Test
-    public void TestGetBrowserType() {
-        System.out.println(product.Browser.GetBrowserType());
-        System.out.println(product.StartPage.CheckboxLabel.GetClientRects());
-        System.out.println(product.StartPage.TestCheckbox.GetClientRects());
-        System.out.println(product.StartPage.AlertTitleTextBox.GetClientRects());
-        System.out.println(product.StartPage.DropDown.GetClientRects());
-        System.out.println(product.StartPage.DisabledButton.GetClientRects());
-        System.out.println(product.StartPage.TestCheckbox.GetClientRects());
-        System.out.println(product.StartPage.UltimateLogoImage.GetClientRects());
-    }
-
-    @Test
-    public void TestPressKeyboardKey() {
-       product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
-        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
-        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
-        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
-        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_DOWN);
-        product.StartPage.DropDown.PressKeyboardKey(KeyboardKey.ARROW_UP);
+    public void TestUploadFile() {
+        product.StartPage.TestFileDialogInput.UploadFileDialog("asdasd#@$@#$");
     }
 }
-
-

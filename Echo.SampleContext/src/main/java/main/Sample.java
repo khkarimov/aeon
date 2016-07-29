@@ -12,7 +12,6 @@ public class Sample extends WebProduct {
     public vTeamSamplePage StartPage;
 
     public Sample() {
-        super(new SampleConfiguration());
         Main = new SamplePage();
     }
 
