@@ -5,6 +5,7 @@ import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import echo.selenium.SeleniumCookie;
 import main.Sample;
+import main.vTeamSamplePage;
 import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://gandaras01web/");
+        product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
 		//"http://gandaras01web.newgen.corp/"
         }
 
@@ -90,14 +91,11 @@ public class SampleTest {
     }
 
     @Test
+    //Only works on vTeam Sample Page
     public void TestSelectedAndNotSelected_06() {
-        product.Login.PasswordTextBox.NotSelected();
-        product.Login.UserNameTextBox.Set("usa-canu");
-        product.Login.PasswordTextBox.Set("FAIL");
-        product.Login.PasswordTextBox.NotSelected();
-        product.Login.PasswordTextBox.Selected();
-        product.Login.LoginButton.Click();
-        product.Login.WarningMessage.Visible();
+//        product.StartPage.Checkbox100.NotSelected();
+//        product.StartPage.Checkbox100.Check();
+//        product.StartPage.Checkbox100.Selected();
     }
 
     @Test
