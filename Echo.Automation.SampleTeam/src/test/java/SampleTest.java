@@ -1,15 +1,11 @@
-import echo.core.common.CompareType;
 import echo.core.common.web.BrowserSize;
-import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
-import echo.selenium.SeleniumCookie;
 import main.Sample;
 import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static echo.core.common.web.BrowserType.Chrome;
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -33,7 +29,7 @@ public class SampleTest {
 
     @Test
     public void TestGoBackGoForward_01() {
-        String [] texts = {"English (USA)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (IT)", "Melayu (MY)"
+        String [] texts = {"English (USA)", "Italiano (IT)", "Franï¿½ais (CAN)", "Espaï¿½ol (USA)", "Portuguï¿½s (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Franï¿½ais (FRA)", "Italiano (IT)", "Melayu (MY)"
         , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
         String [] values = {"1", "2"};
@@ -127,7 +123,7 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MY)"
+        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Franï¿½ais (CAN)", "Espaï¿½ol (USA)", "Portuguï¿½s (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Franï¿½ais (FRA)", "Melayu (MY)"
                 , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] notMessages = new String [] {"asdasdasd", "sss"};
         String [] values = new String [] {"0", "5"};
