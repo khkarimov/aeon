@@ -27,6 +27,7 @@ dependencies {
     compile project(':Echo.Core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
+    compile 'ro.fortsoft.pf4j:pf4j:0.13.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
@@ -50,12 +51,25 @@ jar {
 
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
-                'Implementation-Version': version
+                'Implementation-Version': version,
+                'Plugin-Id' : 'SeleniumEcho',
+                'Plugin-Version' : '1.0.0',
+                'Plugin-Class' : 'echo.selenium.SeleniumPlugin'
     }
 
 //    from configurations.compile.collect {
 //        it.isDirectory() ? it : zipTree(it)
 //    }
+}
+
+
+task buildPlugin(type: Jar) {
+    baseName = base
+    version = '0.0.1'
+    into ('classes'){
+        with jar
+    }
+    extension('zip')
 }
 
 task copyToDistrib(type: Copy) {
@@ -80,4 +94,4 @@ task copyToDistrib(type: Copy) {
 
 copyToDistrib.outputs.upToDateWhen {false}
 
-build.finalizedBy(copyToDistrib)
+jar.finalizedBy(buildPlugin)

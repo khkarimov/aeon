@@ -20,12 +20,11 @@ public class SampleTest {
 
     private static Sample product;
 
-    @Before
-    public void SetUp() {
-        product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://rtechoweb/");
-		//"http://gandaras01web.newgen.corp/"
-        }
+    @BeforeClass
+    public static void fixtureSetUp() {
+        product = Launch(Sample.class, Firefox);
+        product.Browser.GoToUrl("http://srenv02web/login.aspx");
+    }
 
     @After
     public void TearDown() {
@@ -34,7 +33,7 @@ public class SampleTest {
 
     @Test
     public void TestGoBackGoForward_01() {
-        String [] texts = {"English (USA)", "Italiano (IT)", "FranÃ§ais (CAN)", "EspaÃ±ol (USA)", "PortuguÃªs (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "FranÃ§ais (FRA)", "Italiano (IT)", "Melayu (MY)"
+        String [] texts = {"English (USA)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (IT)", "Melayu (MY)"
         , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
         String [] values = {"1", "2"};
@@ -128,7 +127,7 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "FranÃ§ais (CAN)", "EspaÃ±ol (USA)", "PortuguÃªs (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "FranÃ§ais (FRA)", "Melayu (MY)"
+        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MY)"
                 , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] notMessages = new String [] {"asdasdasd", "sss"};
         String [] values = new String [] {"0", "5"};
