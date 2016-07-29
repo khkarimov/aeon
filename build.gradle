@@ -6,9 +6,11 @@ dependencies {
     compile project('Echo.Automation.SampleTeam')
 }
 
-task BuildSeleniumPlugin(type: Copy, dependsOn: build) {
+task BuildSeleniumPlugin(type: Copy) {
     group 'build'
     from 'Echo.Selenium/build/libs'
     into 'Echo.Automation.SampleTeam/plugins'
     include '*.zip'
 }
+
+build.finalizedBy(BuildSeleniumPlugin)
