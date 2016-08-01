@@ -17,7 +17,7 @@ public class DeleteCookieCommand extends Command {
      * Initializes a new instance of the <see cref="DeleteCookieCommand"/> class.
      *
      * * @param log    The logger.
-     * @param cookie Name of the cookie to be added.
+     * @param cookie Name of the cookie to be deleted.
     */
     public DeleteCookieCommand(ILog log, String cookie) {
         super(log, Resources.getString("DeleteCookieCommand_Info"));

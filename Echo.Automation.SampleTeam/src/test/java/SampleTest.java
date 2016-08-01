@@ -22,7 +22,7 @@ public class SampleTest {
     @Before
     public void StartUp () {
         product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("http://srenv02web/login.aspx");
+        product.Browser.GoToUrl("http://srenv02web.newgen.corp/login.aspx");
     }
     @After
     public void TearDown() {

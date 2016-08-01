@@ -8,11 +8,14 @@ import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
+import echo.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.Test;
+import org.openqa.selenium.Cookie;
+import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -23,8 +26,6 @@ public class CommandTesting {
 //region Setup and Teardown
     @BeforeClass
     public static void SetUp(){
-        product = Launch(Sample.class, BrowserType.Firefox);
-        product.Browser.Maximize();
     }
 
     @AfterClass
@@ -34,7 +35,14 @@ public class CommandTesting {
 
     @Before
     public void BetweenTests(){
+        product = Launch(Sample.class, BrowserType.Firefox);
+        product.Browser.Maximize();
         product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+    }
+
+    @After
+    public void AfterTests() {
+        product.Browser.Quit();
     }
 //endregion
 
@@ -75,7 +83,7 @@ public class CommandTesting {
 
     @Test
     public void TestHasOptionsCommandsWith50000() {
-        String [] texts = {"option49999", "option8"};
+        String [] texts = {"option499", "option8"};
         String [] shouldfail = {"Klingon", "Clicky Noises", "Reptilian Hissing"};
         String [] values = {"1", "2"};
         String [] valuesShouldFail = {"-12", "Blue"};
@@ -178,8 +186,75 @@ public class CommandTesting {
         product.Browser.VerifyURL("https://www.google.com");
     }
 
-    @Test
+    @Ignore
     public void TestUploadFile() {
         product.StartPage.TestFileDialogInput.UploadFileDialog("asdasd#@$@#$");
+    }
+
+    @Test
+    public void CookieTests() {
+        product.Browser.GoToUrl("http://google.com");
+        IWebCookie cookie = new IWebCookie() {
+            String name = "CookieName";
+            String domain = ".google.com";
+            String value = "CookieValue";
+            Date expiration = new Date(2099, 1, 1, 1, 1);
+            String path = "/";
+            boolean secure = false;
+            boolean session = true;
+            @Override
+            public String getName() {
+                return name;
+            }
+
+            @Override
+            public String getValue() {
+                return value;
+            }
+
+            @Override
+            public String getPath() {
+                return path;
+            }
+
+            @Override
+            public String getDomain() {
+                return domain;
+            }
+
+            @Override
+            public Date getExpiration() {
+                return expiration;
+            }
+
+            @Override
+            public boolean getSecure() {
+                return secure;
+            }
+
+            @Override
+            public boolean getSession() {
+                return session;
+            }
+        };
+        product.Browser.AddCookie(cookie);
+        IWebCookie secondCookie = product.Browser.GetCookie(cookie.getName());
+        assert (secondCookie.getName().equals(cookie.getName()));
+        assert (secondCookie.getDomain().equals(cookie.getDomain()));
+        assert (secondCookie.getValue().equals(cookie.getValue()));
+        assert (secondCookie.getSecure() == cookie.getSecure());
+        assert (secondCookie.getPath().equals(cookie.getPath()));
+        assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
+
+        product.Browser.ModifyCookie(cookie.getName(), "CookieNewValue");
+        secondCookie = product.Browser.GetCookie(cookie.getName());
+        assert (secondCookie.getValue().equals("CookieNewValue"));
+        product.Browser.DeleteCookie(cookie.getName());
+    }
+
+    @Test
+    public void CheckBox() {
+        product.StartPage.TestCheckbox.Check();
+        product.StartPage.TestCheckbox.Is("");
     }
 }
