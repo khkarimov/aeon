@@ -4,6 +4,7 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;

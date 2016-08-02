@@ -118,4 +118,9 @@ public class ClientRects {
     public final int getVerticalMiddle() {
         return getHeight() / 2;
     }
+
+
+    public String toString() {
+        return "Top: " + this.getTop() + " Bottom: " + this.getBottom() + " Left: " + this.getLeft() + " Right: " + this.getRight();
+    }
 }

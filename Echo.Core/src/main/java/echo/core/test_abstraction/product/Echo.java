@@ -4,8 +4,13 @@ import echo.core.common.web.BrowserType;
 import echo.core.common.logging.ILog;
 import echo.core.common.logging.Log;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
+
+import echo.core.framework_abstraction.adapters.IAdapterExtension;
+import ro.fortsoft.pf4j.DefaultPluginManager;
+import ro.fortsoft.pf4j.PluginManager;
 
 /**
  * Created by DionnyS on 4/13/2016.
@@ -16,6 +21,9 @@ public class Echo {
             T product = productClass.newInstance();
             Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
 
+            IAdapterExtension plugin = loadPlugins(product);
+            product.setConfiguration(plugin.getConfiguration());
+
             parameters.put("browserType", browserType);
             product.getConfiguration().setBrowserType(browserType);
             product.getConfiguration().setLog(createLogger());
@@ -23,13 +31,31 @@ public class Echo {
 
             product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product...");
 
-            product.launch();
+            product.launch(plugin);
 
             return product;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static <T extends Product> IAdapterExtension loadPlugins(T product) throws Exception {
+        PluginManager pluginManager = new DefaultPluginManager();
+        pluginManager.loadPlugins();
+        pluginManager.startPlugins();
+        System.out.println(pluginManager.getExtensions(IAdapterExtension.class));
+
+        System.out.println("plugins dir: " + System.getProperty("pf4j.pluginsDir", "plugins"));
+
+        List<IAdapterExtension> extensions = pluginManager.getExtensions(IAdapterExtension.class);
+        for (IAdapterExtension extension: extensions) {
+            if(extension.getProvidedCapability() == product.getRequestedCapability()){
+                return extension;
+            }
+        }
+
+        throw new Exception("No valid adapter found");
     }
 
     private static Parameters loadParameters(ISettingsProvider settingsProvider) {

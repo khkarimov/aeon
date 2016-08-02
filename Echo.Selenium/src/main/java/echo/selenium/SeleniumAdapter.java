@@ -1,13 +1,19 @@
 package echo.selenium;
 
+import com.sun.glass.events.KeyEvent;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.ElementNotVisibleException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
@@ -20,8 +26,9 @@ import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jQuery.IJavaScriptFlowExecutor;
 import echo.selenium.jQuery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.openqa.selenium.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Quotes;
@@ -33,9 +40,15 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static echo.core.common.helpers.DateTimeExtensions.ApproximatelyEquals;
+import static echo.core.common.helpers.StringUtils.Like;
+import static echo.core.common.helpers.StringUtils.NormalizeSpacing;
 
 public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private WebDriver webDriver;
@@ -722,6 +735,42 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         Click(guid, element, moveMouseToOrigin);
     }
 
+    /**
+     * Uses keyboard native events to input file name and select it
+     * from fileDialogBox
+     *
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The element on the page to click.
+     */
+    public void SelectFileDialog(UUID guid, IBy selector, String path) {
+        try {
+            SendKeysHelper.SendKeysToKeyboard(path);
+            SendKeysHelper.SendEnterKey();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Finds the 'selector' on the page, and performs a Click() on the object.
+     * Then uses keyboard native events to input file name and select it.
+     *
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The element on the page to click.
+     */
+    public void UploadFileDialog(UUID guid, IBy selector, String path) {
+        WebControl element = FindElement(guid, selector);
+        Click(guid, element, moveMouseToOrigin);
+        try {
+            SendKeysHelper.SendKeysToKeyboard(path);
+            SendKeysHelper.SendEnterKey();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     private void Click(UUID guid, WebControl element, boolean moveMouseToOrigin) {
         ((SeleniumElement) element).Click(guid, moveMouseToOrigin);
     }
@@ -1288,4 +1337,350 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+
+    /**
+     * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
+    public void Has(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (!elements.contains(value)) {
+                throw new ElementDoesNotHaveException(value);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
+     * Comparisons are made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
+    public void HasLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection <String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> echo.core.common.helpers.StringUtils.
+                        NormalizeSpacing(((SeleniumElement) e).GetText(guid)).toLowerCase()).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> echo.core.common.helpers.StringUtils.
+                        NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> echo.core.common.helpers.StringUtils.
+                            NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute).toLowerCase())).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (!elements.contains(value)) {
+                throw new ElementDoesNotHaveException(value);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an elements children do not posses a text.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element to be searched.
+     * @param messages The text that the chilren should not posses.
+     * @param selector The selector for the children to be searched.
+     */
+    public void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (elements.contains(value)) {
+                throw new ElementHasException(value);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element to be searched.
+     * @param messages The text that the chilren should not posses.
+     * @param selector The selector for the children to be searched.
+     */
+    public void DoesNotHaveLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid)).toLowerCase()).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (elements.contains(value)) {
+                throw new ElementHasException(value);
+            }
+        }
+    }
+
+
+    /**
+     * Asserts that an elements children that match a given selector only contain either the visible text or the named attribute.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
+    public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+        Collection<String> elements = null;
+        Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
+        if (option == ComparisonOption.Text) {
+            if (attribute.toUpperCase().equals("INNERHTML")) {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
+            }
+            else {
+                elements = ((SeleniumElement) control).
+                        FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
+                        stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
+            }
+        }
+        else if (option == ComparisonOption.Raw) {
+            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+                    .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
+        }
+        for (String value : values) {
+            if (!elements.contains(value)) {
+                throw new ElementDoesNotHaveException(value);
+            }
+            elements.remove(value);
+        }
+        if (!elements.isEmpty()) {
+            throw new ElementDoesNotOnlyHaveException (elements);
+        }
+    }
+
+    /**
+     * Asserts that an element's attribute is equal to a given value.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) control).GetText(guid))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
+            }
+        } else {
+            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) control).GetAttribute(guid, attribute))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    public void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (!Like(value, ((SeleniumElement) control).GetText(guid), false)) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
+            }
+        } else {
+            if (!Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
+            }
+        }
+    }
+
+    /**
+     * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    @Override
+    public void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (Like(value, ((SeleniumElement) control).GetText(guid), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetText(guid));
+            }
+        } else {
+            if (Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetAttribute(guid, attribute));
+            }
+        }
+    }
+
+    @Override
+    public void VerifyAlertText(UUID guid, String comparingText) {
+        if(!echo.core.common.helpers.StringUtils.Is(GetAlertText(guid), comparingText)){
+            throw new ValuesAreNotEqualException(GetAlertText(guid), comparingText);
+        }
+    }
+
+    @Override
+    public void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive) {
+        if(!echo.core.common.helpers.StringUtils.Like(GetAlertText(guid), comparingText, caseSensitive)){
+            throw new ValuesAreNotAlikeException();
+        }
+    }
+
+    @Override
+    public void VerifyTitle(UUID guid, String comparingTitle) {
+        if(!echo.core.common.helpers.StringUtils.Is(GetTitle(guid), comparingTitle)){
+            throw new ValuesAreNotEqualException(GetTitle(guid), comparingTitle);
+        }
+    }
+
+    @Override
+    public void VerifyURL(UUID guid, URL comparingURL) {
+        if(!GetUrl(guid).equals(comparingURL)){
+            throw new ValuesAreNotEqualException(GetUrl(guid).toString(), comparingURL.toString());
+        }
+    }
+
+    /**
+     * Obtains a date from an elements attribute and compares it with an expected date. Has a
+     * Margin of error. The date must be in the ISO-8601 standard.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element that posseses the date.
+     * @param attributeName The name of the attribute that has the date.
+     * @param expectedDate The expected date that the attribute should posses.
+     * @param delta The margin of error that the date can be within. Cannot posses any weeks, months or years due to
+     *              them having variable lengths.
+     */
+    @Override
+    public void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expectedDate, Period delta) {
+        String actualString = ((SeleniumElement) element).GetAttribute(guid, attributeName);
+         try {
+             DateTime actualDate = DateTime.parse(actualString);
+             if (!ApproximatelyEquals(actualDate, expectedDate, delta)) {
+                 throw new DatesNotApproximatelyEqualException(expectedDate, actualDate, delta);
+             }
+         } catch (IllegalArgumentException e) {
+             throw new ElementAttributeNotADateException(attributeName, actualString);
+         }
+    }
+
+    /**
+     * Returns the enumerable BrowserType representing the current browser.
+     * @param guid A Globally unique identifier associated with this call.
+     * @return Returns the BrowserType associated with this browser.
+     */
+    @Override
+    public BrowserType GetBrowserType(UUID guid) {
+        String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
+        String version = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appVersion; return browserType;");
+        String userAgent = (String) ExecuteScript(guid,"var browserType = \"\" + navigator.userAgent; return browserType;");
+        if (name.toLowerCase().contains("internet") && name.toLowerCase().contains("explorer")) {
+            return BrowserType.InternetExplorer;
+        }
+        else if (version.toLowerCase().contains("chrome")) {
+            return BrowserType.Chrome;
+        }
+        else if (userAgent.toLowerCase().contains("trident/7.0")) {
+            return BrowserType.InternetExplorer;
+        }
+        else if (userAgent.toLowerCase().contains("firefox")) {
+            return BrowserType.Firefox;
+        } else {
+            throw new BrowserTypeNotRecognizedException();
+        }
+    }
+
+    /**
+     * Gets the bounding rectangle for an element.
+     * @param guid A Globally unique identifier associated with this call.
+     * @param control The element whose rects are to be returned.
+     * @return Returns a ClientRects object with the four sides of the bounding rectangle.
+     */
+    @Override
+    public ClientRects GetClientRects(UUID guid, WebControl control) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));");
+        ArrayList rects = (ArrayList) ExecuteScript(guid, control.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));
+        int bottom = ((Number) rects.get(1)).intValue();
+        int left = ((Number) rects.get(2)).intValue();
+        int right = ((Number) rects.get(3)).intValue();
+        int top = ((Number) rects.get(4)).intValue();
+        return new ClientRects(top, bottom, left, right);
+    }
+
+    /**
+     * Sends a non-alphanumeric keys to an element.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to recieve the keys.
+     * @param key The key to be sent.
+     */
+    @Override
+    public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {
+        ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(Keys.getKeyFromUnicode(key.getUnicode()));
+    }
 }

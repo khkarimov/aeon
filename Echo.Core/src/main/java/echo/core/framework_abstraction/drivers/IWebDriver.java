@@ -2,13 +2,20 @@ package echo.core.framework_abstraction.drivers;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -101,6 +108,10 @@ public interface IWebDriver extends IDriver {
 
     void OpenFileDialog(UUID guid, IBy selector);
 
+    void SelectFileDialog(UUID guid, IBy selector, String path);
+
+    void UploadFileDialog(UUID guid, IBy selector, String path);
+
     void VerifyAlertExists(UUID guid);
 
     void VerifyAlertNotExists(UUID guid);
@@ -127,7 +138,14 @@ public interface IWebDriver extends IDriver {
 
     void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
-    void IsElementDisabled(UUID guid, WebControl element);
+    void VerifyAlertText(UUID guid, String comparingText);
+
+    void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);
+
+    void VerifyTitle(UUID guid, String comparingText);
+
+    void VerifyURL(UUID guid, URL comparingURL);
+
 
     void NotSelected(UUID guid, WebControl element);
 
@@ -137,6 +155,37 @@ public interface IWebDriver extends IDriver {
 
     void Visible(UUID guid, WebControl element);
 //
+    Collection <IWebCookie> GetAllCookies(UUID guid);
+
+    void ModifyCookie (UUID guid, String name, String value);
+
+    IWebCookie GetCookie(UUID guid, String name);
+
+    void Has (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void DoesNotHaveLike (UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsElementDisabled(UUID guid, WebControl element);//
+
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
+
+    BrowserType GetBrowserType(UUID guid);
+
+    void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    ClientRects GetClientRects(UUID guid, WebControl control);
+
+    void PressKeyboardKey(UUID guid, WebControl control, KeyboardKey key);
 //    /**
 //     * Check the element.
 //     *

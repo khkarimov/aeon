@@ -19,7 +19,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 
 public class ScrollToEndCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="ScrollToTopCommand"/> class.
+     * Initializes a new instance of the <see href="ScrollToTopCommand"/> class.
      *
      * @param log The logger.
      */

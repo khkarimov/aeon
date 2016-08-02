@@ -12,7 +12,10 @@ import echo.core.command_execution.commands.web.ScrollToTopCommand;
 import echo.core.common.helpers.URLUtil;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
+import echo.core.common.web.BrowserType;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
+
+import java.util.Collection;
 
 /**
  * Created by DionnyS on 4/21/2016.
@@ -97,4 +100,29 @@ public class Browser {
 
     public void SwitchToWindowByTitle(String title) { info.getCommandExecutionFacade().Execute(info,
             new SwitchToWindowByTitleCommand(info.getLog(), title));}
+
+    public void VerifyAlertText(String comparingText){
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextCommand(info.getLog(), comparingText));
+    }
+
+    public void VerifyAlertTextLike(String comparingText, boolean caseSensitive){
+        info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextLikeCommand(info.getLog(), comparingText, caseSensitive));
+    }
+
+    public void VerifyTitle(String comparingTitle){
+        info.getCommandExecutionFacade().Execute(info, new VerifyTitleCommand(info.getLog(), comparingTitle));
+    }
+
+    public void VerifyURL(String comparingURL){
+        info.getCommandExecutionFacade().Execute(info, new VerifyUrlCommand(info.getLog(), comparingURL));
+    }
+
+    public Collection<IWebCookie> GetAllCookies() {return (Collection<IWebCookie>) info.getCommandExecutionFacade().Execute(info, new GetAllCookiesCommand(info.getLog()));}
+
+    public void ModifyCookie(String name, String value){info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));}
+
+    public IWebCookie GetCookie(String name) {return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(info.getLog(), name));}
+
+    public BrowserType GetBrowserType() {return (BrowserType) info.getCommandExecutionFacade().Execute(info, new GetBrowserTypeCommand(info.getLog()));}
+
 }

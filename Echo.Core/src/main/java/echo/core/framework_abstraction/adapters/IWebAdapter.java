@@ -2,11 +2,17 @@ package echo.core.framework_abstraction.adapters;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
@@ -287,6 +293,25 @@ public interface IWebAdapter extends IAdapter {
     void OpenFileDialog(UUID guid, IBy selector);
 
     /**
+     *Types keys of file indicated by provided path
+     *REQUIRES DIALOG BOX TO ALREADY BE OPENED BY OpenFileDialog
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The selector for the element.
+     * @param path      The path to the file to be selected.
+     */
+    void SelectFileDialog(UUID guid, IBy selector, String path);
+
+    /**
+     * Opens a windows select file dialog and selects
+     * file indicated by provided path
+     *
+     * @param guid     A globally unique identifier associated with this call.
+     * @param selector The selector for the element.
+     * @param path      The path to the file to be selected.
+     */
+    void UploadFileDialog(UUID guid, IBy selector, String path);
+
+    /**
      * Scrolls to the element on the page if in Chrome.
      *  @param guid
      * @param selector The selector.
@@ -525,11 +550,35 @@ public interface IWebAdapter extends IAdapter {
      */
     void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
-    void Visible(UUID guid, WebControl element);
+    void Has(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
-    void NotVisible(UUID guid, WebControl element);
+    void HasLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
-    void Selected(UUID guid, WebControl element);
+    void DoesNotHave(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
-    void NotSelected(UUID guid, WebControl element);
+    void DoesNotHaveLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+
+    void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void IsNotLike (UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    void VerifyAlertText(UUID guid, String comparingText);
+
+    void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);
+
+    void VerifyTitle(UUID guid, String comparingTitle);
+
+    void VerifyURL(UUID guid, URL comparingURL);
+
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
+
+    BrowserType GetBrowserType(UUID guid);
+
+    ClientRects GetClientRects(UUID guid, WebControl element);
+
+    void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
 }
