@@ -476,8 +476,46 @@ public interface IWebAdapter extends IAdapter {
 
     void IsElementDisabled(UUID guid, WebControl element);
 
+    /**
+     * Checks to see if a selected element's checkbox is selected
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void Selected(UUID guid, WebControl element);
+
+    /**
+     * Checks to see if a selected element's checkbox is not selected
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void NotSelected(UUID guid, WebControl element);
+
+    /**
+     * Checks to see if a selected element is visible
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void Visible(UUID guid, WebControl element);
+
+    /**
+     * Checks to see if a selected element is hidden
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void NotVisible(UUID guid, WebControl element);
+
+    /**
+     * Checks to see if a selected element does exist on the page
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
     void Exists(UUID guid, WebControl element);
 
+    /**
+     * Checks to see if a selected element does not exist on the page
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
     void NotExists(UUID guid, WebControl element);
 
     /**
@@ -505,16 +543,30 @@ public interface IWebAdapter extends IAdapter {
     /**
      * Clicks all elements that corresponding with the given IBy.
      * @param guid A globally unique identifier associated with this call.
-     * @param elementsBy The selector.
+     * @param element By The selector.
      */
     void MouseOut(UUID guid, WebControl element);
 
     void MouseOver(UUID guid, WebControl element);
 
+    /**
+     * Asserts that the selected element's body tag will be changed into the provided String value
+     * @param guid A globally unique identifier associated with this call.
+     * @param element By The selector.
+     * @param value Html to be inserted into body tag
+     */
     void SetBodyValueByJavaScript(UUID guid, WebControl element, String value);
 
+    /**
+     * Asserts that the selected element's value tag will be changed into the provided String value
+     * @param guid A globally unique identifier associated with this call.
+     * @param element By The selector.
+     * @param value Html to be inserted into a value tag
+     */
     void SetValueByJavaScript(UUID guid, WebControl element, String value);
 
+    /**
+     */
     void SetDivValueByJavaScript(UUID guid, WebControl element, String value);
 
     void ClickAllElements(UUID guid, IBy elementsBy);

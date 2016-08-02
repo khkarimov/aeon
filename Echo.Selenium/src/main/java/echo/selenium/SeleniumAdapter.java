@@ -1161,10 +1161,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     *
-     * @param guid
-     * @param element
-     * @param value
+     * Method asserts that the selected element's body tag will be changed into the provided String value
+     * @param guid A globally unique identifier associated with this call.
+     * @param element By The selector.
+     * @param value Html to be inserted into body tag
      */
     @Override
     public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
@@ -1174,10 +1174,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     *
-     * @param guid
-     * @param element
-     * @param value
+     * Method asserts that the selected element's value tag will be changed into the provided String value
+     * @param guid A globally unique identifier associated with this call.
+     * @param element By The selector.
+     * @param value Html to be inserted into a value tag
      */
     @Override
     public void SetValueByJavaScript(UUID guid, WebControl element, String value) {
@@ -1186,10 +1186,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     *
-     * @param guid
-     * @param element
-     * @param value
+     * Method asserts that the selected element's div tag will be changed into the provided String value
+     * @param guid A globally unique identifier associated with this call.
+     * @param element By The selector.
+     * @param value Html to be inserted into div tag
      */
     @Override
     public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) {
@@ -1313,24 +1313,44 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Checks to see if a selected element's checkbox is selected
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
     public void Selected(UUID guid, WebControl element) {
         if (!((SeleniumElement) element).Selected(guid)) {
             throw new ElementNotSelectedException();
         }
     }
 
+    /**
+     * Checks to see if a selected element's checkbox is not selected
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
     public void NotSelected(UUID guid, WebControl element) {
         if (((SeleniumElement) element).Selected(guid)) {
             throw new ElementIsSelectedException();
         }
     }
 
+    /**
+     * Checks to see if a selected element is visible
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
     public void Visible(UUID guid, WebControl element) {
         if (!((SeleniumElement) element).Displayed(guid)) {
             throw new ElementNotVisibleException();
         }
     }
 
+    /**
+     * Checks to see if a selected element is hidden
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
     public void NotVisible(UUID guid, WebControl element) {
         if (((SeleniumElement) element).Displayed(guid)) {
             throw new ElementIsVisibleException();
