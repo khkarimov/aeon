@@ -7,6 +7,6 @@ import echo.core.common.Resources;
  */
 public class ElementHasException extends RuntimeException {
     public ElementHasException (String message) {
-        super(Resources.getString("ElementHasException_ctor_DefaultMessage" + " " + message));
+        super(Resources.getString("ElementHasException_ctor_DefaultMessage") + " " + message);
     }
 }
