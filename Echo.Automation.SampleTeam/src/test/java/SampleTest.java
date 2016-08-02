@@ -1,4 +1,6 @@
+import echo.core.common.CompareType;
 import echo.core.common.web.BrowserSize;
+import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import main.Sample;
@@ -6,6 +8,7 @@ import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static echo.core.common.web.BrowserType.Chrome;
 import static echo.core.common.web.BrowserType.Firefox;
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -16,14 +19,13 @@ public class SampleTest {
 
     private static Sample product;
 
-    @BeforeClass
-    public static void fixtureSetUp() {
-    }
     @Before
-    public void StartUp () {
-        product = Launch(Sample.class, Firefox);
-        product.Browser.GoToUrl("http://srenv02web.newgen.corp/login.aspx");
-    }
+    public void SetUp() {
+        product = Launch(Sample.class, Firefox );
+        product.Browser.GoToUrl("http://rtechoweb/");
+		//"http://gandaras01web.newgen.corp/"
+        }
+
     @After
     public void TearDown() {
         product.Browser.Quit();
@@ -111,10 +113,10 @@ public class SampleTest {
     }
     @Test
     public void TestHasElementsInOrder() {
-        String [] options = new String [] {"English (USA)", "Italiano (ITA)", "Melayu (MYS)"};
+        String [] options = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
         String [] values = new String [] {"0", "5", "13"};
         String [] badValues = new String [] {"0", "13", "5"};
-        String [] badOptions = new String [] {"English (USA)", "Melayu (MYS)", "Italiano (ITA)"};
+        String [] badOptions = new String [] {"English (USA)", "Melayu (MY)", "Italiano (IT)"};
         String [] value = new String [] {"0"};
         String [] option = new String [] {"English (USA)"};
         product.Login.LanguageSelect.HasOptionsInOrder(options, WebSelectOption.Text);
@@ -125,8 +127,8 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MYS)"
-                , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
+        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MY)"
+                , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] notMessages = new String [] {"asdasdasd", "sss"};
         String [] values = new String [] {"0", "5"};
         String [] Badvalues = new String [] {"13s"};
