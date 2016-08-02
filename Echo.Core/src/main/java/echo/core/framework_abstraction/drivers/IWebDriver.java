@@ -3,14 +3,19 @@ package echo.core.framework_abstraction.drivers;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.net.URL;
 import java.util.Collection;
-import java.util.List;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -163,6 +168,16 @@ public interface IWebDriver extends IDriver {
     void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
     void IsElementDisabled(UUID guid, WebControl element);//
+
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
+
+    BrowserType GetBrowserType(UUID guid);
+
+    void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
+    ClientRects GetClientRects(UUID guid, WebControl control);
+
+    void PressKeyboardKey(UUID guid, WebControl control, KeyboardKey key);
 //    /**
 //     * Check the element.
 //     *

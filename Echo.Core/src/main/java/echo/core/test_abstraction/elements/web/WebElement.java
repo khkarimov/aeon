@@ -4,13 +4,18 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.test_abstraction.elements.Element;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
- * Created by Administrator on 6/20/2016.
+ * Created by SebastianR on 6/20/2016.
  */
 public class WebElement extends Element {
     private IBy selector;
@@ -72,6 +77,26 @@ public class WebElement extends Element {
 
     public void IsLike(String value, String attribute) {
         info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Raw,
+                attribute));
+    }
+
+    public void IsNotLike(String value) {
+        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Text,
+                "INNERHTML"));
+    }
+
+    public void IsNotLike(String value, String attribute) {
+        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
                 info.getLog(),
                 selector,
                 createWebCommandInitializer(),
@@ -212,6 +237,31 @@ public class WebElement extends Element {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
+
+    public void DatesApproximatelyEqual(String attributeName, DateTime expectedDate, Period acceptableDelta) {
+        info.getCommandExecutionFacade().Execute(info, new DatesApproximatelyEqualCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                attributeName, expectedDate, acceptableDelta
+        ));
+    }
+
+    public ClientRects GetClientRects() {
+        return (ClientRects) info.getCommandExecutionFacade().Execute(info, new GetClientRectsCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()
+        ));
+    }
+
+    public void PressKeyboardKey(KeyboardKey key) {
+        info.getCommandExecutionFacade().Execute(info, new PressKeyboardKeyCommand(
+                info.getLog(),
+                selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                key));
+    }
 
     protected WebCommandInitializer createWebCommandInitializer(){
         return new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>());

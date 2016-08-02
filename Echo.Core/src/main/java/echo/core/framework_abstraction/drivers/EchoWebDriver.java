@@ -3,16 +3,22 @@ package echo.core.framework_abstraction.drivers;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -373,6 +379,29 @@ public class EchoWebDriver implements IWebDriver {
     public void VerifyURL(UUID guid, URL comparingURL) {
         adapter.VerifyURL(guid, comparingURL);
     }
+
+    @Override
+    public void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta) {
+        adapter.DatesApproximatelyEqual(guid, element, attributeName, expected, delta);
+    }
+
+    @Override
+    public BrowserType GetBrowserType(UUID guid) {
+        return adapter.GetBrowserType(guid);
+    }
+
+    @Override
+    public void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        adapter.IsNotLike(guid, control, value, option, attribute);
+    }
+
+    @Override
+    public ClientRects GetClientRects(UUID guid, WebControl control) {
+        return adapter.GetClientRects(guid, control);
+    }
+
+    @Override
+    public void PressKeyboardKey(UUID guid, WebControl control, KeyboardKey key) {adapter.PressKeyboardKey(guid, control, key);}
 //
 //    /**
 //     * Checks an element.

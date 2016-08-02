@@ -3,36 +3,34 @@ package echo.core.command_execution.commands.web;
 import echo.core.command_execution.commands.CommandWithReturn;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
- * Created by RafaelT on 6/27/2016.
+ * Created by RafaelT on 7/1/2016.
  */
 
 /**
- * Gets a specific cookie.
+ * Gets the corresponding enumerable BrowserType associated with the current browser.
  */
-public class GetCookieCommand extends CommandWithReturn {
-    private String name;
+public class GetBrowserTypeCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the <see cref="GetAllCookiesCommand"/> class.
+     * Initializes a new instance of the GetBrowserTypeCommand.
      * @param log The logger.
-     * @param name The name of the cookie to get.
      */
-    public GetCookieCommand(ILog log, String name) {
-        super(log, Resources.getString("GetCookieCommand_Info"));
-        this.name = name;
+    public GetBrowserTypeCommand(ILog log) {
+        super(log, Resources.getString("GetBrowserTypeCommand_Info"));
     }
 
     /**
      * Provides the logic for the command.
      * @param driver The framework abstraction facade.
-     * @return A IWebCookie representing the cookie.
+     * @return The enumerable BrowserType associated with the browser.
      */
     @Override
     protected Object CommandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).GetCookie(getGuid(), name);
+        return (BrowserType) ((IWebDriver) driver).GetBrowserType(getGuid());
     }
 }

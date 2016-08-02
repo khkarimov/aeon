@@ -13,6 +13,7 @@ import echo.core.command_execution.commands.web.ScrollToTopCommand;
 import echo.core.common.helpers.URLUtil;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserSizeMap;
+import echo.core.common.web.BrowserType;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 
@@ -124,6 +125,8 @@ public class Browser {
     public void ModifyCookie(String name, String value){info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));}
 
     public IWebCookie GetCookie(String name) {return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(info.getLog(), name));}
+
+    public BrowserType GetBrowserType() {return (BrowserType) info.getCommandExecutionFacade().Execute(info, new GetBrowserTypeCommand(info.getLog()));}
 
     public void ClickAllElementsCommand(IBy selector){
         info.getCommandExecutionFacade().Execute(

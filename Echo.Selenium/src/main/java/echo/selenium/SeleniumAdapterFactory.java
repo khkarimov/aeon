@@ -2,6 +2,7 @@ package echo.selenium;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import echo.core.common.Capability;
 import echo.core.common.Resources;
 import echo.core.common.exceptions.ConfigurationException;
 import echo.core.common.exceptions.UnableToCreateDriverException;
@@ -11,6 +12,8 @@ import echo.core.common.helpers.Process;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.BrowserType;
 import echo.core.framework_abstraction.adapters.IAdapter;
+import echo.core.framework_abstraction.adapters.IAdapterExtension;
+import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jQuery.*;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Duration;
@@ -30,6 +33,7 @@ import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import ro.fortsoft.pf4j.Extension;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +47,8 @@ import java.util.UUID;
 /**
  * The driver factory for Web.
  */
-public final class SeleniumAdapterFactory {
+@Extension
+public final class SeleniumAdapterFactory implements IAdapterExtension {
     private static final String MobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 
     public static IAdapter Create(SeleniumConfiguration configuration) {
@@ -216,6 +221,21 @@ public final class SeleniumAdapterFactory {
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
 
         return capabilities;
+    }
+
+    @Override
+    public IAdapter createAdapter(Configuration configuration) {
+        return Create((SeleniumConfiguration) configuration);
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return new SeleniumConfiguration();
+    }
+
+    @Override
+    public Capability getProvidedCapability() {
+        return Capability.WEB;
     }
 }
 

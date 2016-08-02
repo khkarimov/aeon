@@ -3,11 +3,16 @@ package echo.core.framework_abstraction.adapters;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
@@ -559,6 +564,8 @@ public interface IWebAdapter extends IAdapter {
 
     void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
 
+    void IsNotLike (UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+
     void VerifyAlertText(UUID guid, String comparingText);
 
     void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);
@@ -566,4 +573,12 @@ public interface IWebAdapter extends IAdapter {
     void VerifyTitle(UUID guid, String comparingTitle);
 
     void VerifyURL(UUID guid, URL comparingURL);
+
+    void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
+
+    BrowserType GetBrowserType(UUID guid);
+
+    ClientRects GetClientRects(UUID guid, WebControl element);
+
+    void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
 }

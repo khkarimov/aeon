@@ -4,12 +4,15 @@ import com.sun.glass.events.KeyEvent;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
+import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
 import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.ClientRects;
 import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
@@ -22,11 +25,11 @@ import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jQuery.IJavaScriptFlowExecutor;
 import echo.selenium.jQuery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.openqa.selenium.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -35,12 +38,14 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static echo.core.common.helpers.DateTimeExtensions.ApproximatelyEquals;
 import static echo.core.common.helpers.StringUtils.Like;
 import static echo.core.common.helpers.StringUtils.NormalizeSpacing;
 
@@ -1500,6 +1505,27 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param control The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    @Override
+    public void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+            if (Like(value, ((SeleniumElement) control).GetText(guid), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetText(guid));
+            }
+        } else {
+            if (Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetAttribute(guid, attribute));
+            }
+        }
+    }
+
     @Override
     public void VerifyAlertText(UUID guid, String comparingText) {
         if(!echo.core.common.helpers.StringUtils.Is(GetAlertText(guid), comparingText)){
@@ -1526,5 +1552,82 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if(!GetUrl(guid).equals(comparingURL)){
             throw new ValuesAreNotEqualException(GetUrl(guid).toString(), comparingURL.toString());
         }
+    }
+
+    /**
+     * Obtains a date from an elements attribute and compares it with an expected date. Has a
+     * Margin of error. The date must be in the ISO-8601 standard.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element that posseses the date.
+     * @param attributeName The name of the attribute that has the date.
+     * @param expectedDate The expected date that the attribute should posses.
+     * @param delta The margin of error that the date can be within. Cannot posses any weeks, months or years due to
+     *              them having variable lengths.
+     */
+    @Override
+    public void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expectedDate, Period delta) {
+        String actualString = ((SeleniumElement) element).GetAttribute(guid, attributeName);
+         try {
+             DateTime actualDate = DateTime.parse(actualString);
+             if (!ApproximatelyEquals(actualDate, expectedDate, delta)) {
+                 throw new DatesNotApproximatelyEqualException(expectedDate, actualDate, delta);
+             }
+         } catch (IllegalArgumentException e) {
+             throw new ElementAttributeNotADateException(attributeName, actualString);
+         }
+    }
+
+    /**
+     * Returns the enumerable BrowserType representing the current browser.
+     * @param guid A Globally unique identifier associated with this call.
+     * @return Returns the BrowserType associated with this browser.
+     */
+    @Override
+    public BrowserType GetBrowserType(UUID guid) {
+        String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
+        String version = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appVersion; return browserType;");
+        String userAgent = (String) ExecuteScript(guid,"var browserType = \"\" + navigator.userAgent; return browserType;");
+        if (name.toLowerCase().contains("internet") && name.toLowerCase().contains("explorer")) {
+            return BrowserType.InternetExplorer;
+        }
+        else if (version.toLowerCase().contains("chrome")) {
+            return BrowserType.Chrome;
+        }
+        else if (userAgent.toLowerCase().contains("trident/7.0")) {
+            return BrowserType.InternetExplorer;
+        }
+        else if (userAgent.toLowerCase().contains("firefox")) {
+            return BrowserType.Firefox;
+        } else {
+            throw new BrowserTypeNotRecognizedException();
+        }
+    }
+
+    /**
+     * Gets the bounding rectangle for an element.
+     * @param guid A Globally unique identifier associated with this call.
+     * @param control The element whose rects are to be returned.
+     * @return Returns a ClientRects object with the four sides of the bounding rectangle.
+     */
+    @Override
+    public ClientRects GetClientRects(UUID guid, WebControl control) {
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));");
+        ArrayList rects = (ArrayList) ExecuteScript(guid, control.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));
+        int bottom = ((Number) rects.get(1)).intValue();
+        int left = ((Number) rects.get(2)).intValue();
+        int right = ((Number) rects.get(3)).intValue();
+        int top = ((Number) rects.get(4)).intValue();
+        return new ClientRects(top, bottom, left, right);
+    }
+
+    /**
+     * Sends a non-alphanumeric keys to an element.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to recieve the keys.
+     * @param key The key to be sent.
+     */
+    @Override
+    public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {
+        ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(Keys.getKeyFromUnicode(key.getUnicode()));
     }
 }
