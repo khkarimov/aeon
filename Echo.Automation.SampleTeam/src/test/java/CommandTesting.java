@@ -208,7 +208,6 @@ public class CommandTesting {
     public void TestClickAllElements() {
         product.Browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
     }
-}
 
     @Test
     public void CookieTests() {
