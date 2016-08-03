@@ -113,10 +113,10 @@ public class SampleTest {
     }
     @Test
     public void TestHasElementsInOrder() {
-        String [] options = new String [] {"English (USA)", "Italiano (IT)", "Melayu (MY)"};
+        String [] options = new String [] {"English (USA)", "Italiano (ITA)", "Melayu (MYS)"};
         String [] values = new String [] {"0", "5", "13"};
         String [] badValues = new String [] {"0", "13", "5"};
-        String [] badOptions = new String [] {"English (USA)", "Melayu (MY)", "Italiano (IT)"};
+        String [] badOptions = new String [] {"English (USA)", "Melayu (MYS)", "Italiano (ITA)"};
         String [] value = new String [] {"0"};
         String [] option = new String [] {"English (USA)"};
         product.Login.LanguageSelect.HasOptionsInOrder(options, WebSelectOption.Text);
@@ -127,8 +127,8 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (IT)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MY)"
-                , "Pilipino (PH)", "Dansk (DNK)", "Svenska (SWE)"};
+        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MYS)"
+                , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
         String [] notMessages = new String [] {"asdasdasd", "sss"};
         String [] values = new String [] {"0", "5"};
         String [] Badvalues = new String [] {"13s"};
