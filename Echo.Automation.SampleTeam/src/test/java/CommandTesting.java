@@ -206,7 +206,7 @@ public class CommandTesting {
 
     @Test
     public void TestClickAllElements() {
-        //product.StartPage.DisabledButton.NotExists();
+        product.StartPage.DisabledButton.Exists();
         product.Browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
     }
 

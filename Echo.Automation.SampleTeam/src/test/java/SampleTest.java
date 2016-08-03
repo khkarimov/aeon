@@ -22,8 +22,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://rtechoweb/");
-		//"http://gandaras01web.newgen.corp/"
+        product.Browser.GoToUrl("http://gandaras02web/");
         }
 
     @After
