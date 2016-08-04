@@ -1082,7 +1082,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     element.FindElement(guid, echo.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
             }
         }
-        catch (NoSuchElementException e) {throw new ElementDoesNotHaveOptionException();}
+        catch (NoSuchElementException e) {throw new ElementDoesNotHaveOptionException(e.toString());}
     }
 
     private void DoesNotHaveOptions(UUID guid, SeleniumElement element, String [] options, WebSelectOption select) {
@@ -1218,7 +1218,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 } else element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
             }
         } catch (org.openqa.selenium.NoSuchElementException e) {
-            throw new ElementDoesNotHaveOptionException();
+            throw new ElementDoesNotHaveOptionException(e.toString());
         }
     }
 

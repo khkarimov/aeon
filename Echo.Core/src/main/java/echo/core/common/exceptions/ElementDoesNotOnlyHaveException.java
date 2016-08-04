@@ -9,6 +9,6 @@ import java.util.Collection;
  */
 public class ElementDoesNotOnlyHaveException extends RuntimeException {
     public ElementDoesNotOnlyHaveException (Collection<String> message) {
-        super(Resources.getString("ElementDoesNotOnlyHaveException_ctor_DefaultMessage" + " " + message));
+        super(Resources.getString("ElementDoesNotOnlyHaveException_ctor_DefaultMessage") + " " + message);
     }
 }

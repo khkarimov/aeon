@@ -9,4 +9,7 @@ public class ElementDoesNotHaveOptionException extends RuntimeException {
     public ElementDoesNotHaveOptionException () {
         super(Resources.getString("ElementDoesNotHaveOptionException_ctor_DefaultMessage"));
     }
+    public ElementDoesNotHaveOptionException (String message) {
+        super(Resources.getString("ElementDoesNotHaveOptionException_ctor_DefaultMessage") + message);
+    }
 }
