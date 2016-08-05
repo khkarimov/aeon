@@ -24,6 +24,7 @@ import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jQuery.IJavaScriptFlowExecutor;
 import echo.selenium.jQuery.SeleniumScriptExecutor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -227,44 +228,45 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     @Override
-    public String GetElementTagName(UUID uuid, WebControl webControl) {
-        return ((SeleniumElement) webControl).getUnderlyingWebElement().getTagName();
-    }
-
-    @Override
-    public void ClearElement(UUID uuid, WebControl webControl) {
-        ((SeleniumElement) webControl).Clear(uuid);
-    }
-
-    @Override
-    public void ChooseSelectElementByValue(UUID uuid, WebControl webControl, String s) {
-
-    }
-
-    @Override
-    public void ChooseSelectElementByText(UUID uuid, WebControl webControl, String s) {
-
+    public String GetElementTagName(UUID uuid, WebControl element) {
+        return ((SeleniumElement) element).getUnderlyingWebElement().getTagName();
     }
 
 
     @Override
-    public void ClickElement(UUID uuid, WebControl webControl) {
-        ((SeleniumElement) webControl).getUnderlyingWebElement().click();
+    public void ClearElement(UUID uuid, WebControl element) {
+        ((SeleniumElement) element).Clear(uuid);
     }
 
     @Override
-    public void SendKeysToElement(UUID uuid, WebControl webControl, String s) {
-        ((SeleniumElement) webControl).getUnderlyingWebElement().sendKeys(s);
+    public void ChooseSelectElementByValue(UUID uuid, WebControl element, String s) {
+        throw new NotImplementedException("ChooseSelectElementByValue not implemented");
     }
 
     @Override
-    public String GetElementAttribute(UUID uuid, WebControl webControl, String s) {
-       return ((SeleniumElement) webControl).getUnderlyingWebElement().getAttribute(s);
+    public void ChooseSelectElementByText(UUID uuid, WebControl element, String s) {
+        throw new NotImplementedException("ChooseSelectElementByText not implemented");
+    }
+
+
+    @Override
+    public void ClickElement(UUID uuid, WebControl element) {
+        ((SeleniumElement) element).getUnderlyingWebElement().click();
+    }
+
+    @Override
+    public void SendKeysToElement(UUID uuid, WebControl element, String s) {
+        ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(s);
+    }
+
+    @Override
+    public String GetElementAttribute(UUID uuid, WebControl element, String s) {
+       return ((SeleniumElement) element).getUnderlyingWebElement().getAttribute(s);
     }
 
     @Override
     public void SwitchToMainWindow(UUID uuid) {
-
+        throw new NotImplementedException("SwitchToMainWindow not implemented.");
     }
 
     /**
@@ -775,8 +777,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     @Override
-    public void ScrollElementIntoView(UUID uuid, WebControl webControl) {
-
+    public void ScrollElementIntoView(UUID uuid, WebControl element) {
+        throw new NotImplementedException("ScrollElementIntoView not implemented.");
     }
 
     /**
@@ -1035,6 +1037,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    /**
+     * Checks that an element is disabled.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element to check.
+     */
     @Override
     public void IsElementDisabled(UUID guid, WebControl element) {
         if(((SeleniumElement) element).Enabled(guid)){
@@ -1249,7 +1256,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param compare The method by which the options will be compared.
      * @param optGroup An optional option group which would be searched in isolation instad of all the options under select.
      */
-    public void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
+    public void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
         if (optGroup != null) {
             element = ((SeleniumElement) element).FindElement(guid, echo.core.common.web.selectors.By.CssSelector("optgroup[label='" + optGroup + "']"));
         }
@@ -1288,29 +1295,29 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web control whose children are to be searched.
+     * @param element The web control whose children are to be searched.
      * @param messages The strings to be compared to.
      * @param selector The selectors that the children will be matched to.
      * @param option Whether the childrens visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
-    public void Has(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void Has(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
             }
             else {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
             }
         }
         else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
                     .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1324,31 +1331,31 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
      * Comparisons are made ignoring whitespace and case.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web control whose children are to be searched.
+     * @param element The web control whose children are to be searched.
      * @param messages The strings to be compared to.
      * @param selector The selectors that the children will be matched to.
      * @param option Whether the childrens visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
-    public void HasLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void HasLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         Collection <String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> echo.core.common.helpers.StringUtils.
                         NormalizeSpacing(((SeleniumElement) e).GetText(guid)).toLowerCase()).collect(Collectors.toList());
             }
             else {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> echo.core.common.helpers.StringUtils.
                         NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
             }
         }
         else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
                     .stream().map(x -> echo.core.common.helpers.StringUtils.
                             NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute).toLowerCase())).collect(Collectors.toList());
         }
@@ -1362,27 +1369,27 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Asserts that an elements children do not posses a text.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web element to be searched.
+     * @param element The web element to be searched.
      * @param messages The text that the chilren should not posses.
      * @param selector The selector for the children to be searched.
      */
-    public void DoesNotHave(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void DoesNotHave(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
             }
             else {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
             }
         }
         else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
                     .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1395,27 +1402,27 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web element to be searched.
+     * @param element The web element to be searched.
      * @param messages The text that the chilren should not posses.
      * @param selector The selector for the children to be searched.
      */
-    public void DoesNotHaveLike(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void DoesNotHaveLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid)).toLowerCase()).collect(Collectors.toList());
             }
             else {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
             }
         }
         else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
                     .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute)).toLowerCase()).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1429,29 +1436,29 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Asserts that an elements children that match a given selector only contain either the visible text or the named attribute.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web control whose children are to be searched.
+     * @param element The web control whose children are to be searched.
      * @param messages The strings to be compared to.
      * @param selector The selectors that the children will be matched to.
      * @param option Whether the childrens visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
-    public void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void HasOnly(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         Collection<String> values = Arrays.asList(messages).stream().map(x -> NormalizeSpacing(x)).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetText(guid))).collect(Collectors.toList());
             }
             else {
-                elements = ((SeleniumElement) control).
+                elements = ((SeleniumElement) element).
                         FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector)).
                         stream().map(e -> NormalizeSpacing(((SeleniumElement) e).GetAttribute(guid, attribute))).collect(Collectors.toList());
             }
         }
         else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) control).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector(selector))
                     .stream().map(x -> NormalizeSpacing(((SeleniumElement) x).GetAttribute(guid, attribute))).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1468,19 +1475,19 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Asserts that an element's attribute is equal to a given value.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web element.
+     * @param element The web element.
      * @param value The value the attribute should be.
      * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
-    public void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+    public void Is(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
         if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
-            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) control).GetText(guid))) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
+            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) element).GetText(guid))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetText(guid), attribute);
             }
         } else {
-            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) control).GetAttribute(guid, attribute))) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
+            if (!echo.core.common.helpers.StringUtils.Is(value, ((SeleniumElement) element).GetAttribute(guid, attribute))) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetAttribute(guid, attribute), attribute);
             }
         }
     }
@@ -1488,19 +1495,19 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Asserts that an element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web element.
+     * @param element The web element.
      * @param value The value the attribute should be.
      * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
-    public void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+    public void IsLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
         if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
-            if (!Like(value, ((SeleniumElement) control).GetText(guid), false)) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetText(guid), attribute);
+            if (!Like(value, ((SeleniumElement) element).GetText(guid), false)) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetText(guid), attribute);
             }
         } else {
-            if (!Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) control).GetAttribute(guid, attribute), attribute);
+            if (!Like(value, ((SeleniumElement) element).GetAttribute(guid, attribute), false)) {
+                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetAttribute(guid, attribute), attribute);
             }
         }
     }
@@ -1508,20 +1515,20 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
      * @param guid A globally unique identifier associated with this call.
-     * @param control The web element.
+     * @param element The web element.
      * @param value The value the attribute should be.
      * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
     @Override
-    public void IsNotLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute) {
+    public void IsNotLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
         if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
-            if (Like(value, ((SeleniumElement) control).GetText(guid), false)) {
-                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetText(guid));
+            if (Like(value, ((SeleniumElement) element).GetText(guid), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) element).GetText(guid));
             }
         } else {
-            if (Like(value, ((SeleniumElement) control).GetAttribute(guid, attribute), false)) {
-                throw new ValuesAreAlikeException(value, ((SeleniumElement) control).GetAttribute(guid, attribute));
+            if (Like(value, ((SeleniumElement) element).GetAttribute(guid, attribute), false)) {
+                throw new ValuesAreAlikeException(value, ((SeleniumElement) element).GetAttribute(guid, attribute));
             }
         }
     }
@@ -1606,13 +1613,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Gets the bounding rectangle for an element.
      * @param guid A Globally unique identifier associated with this call.
-     * @param control The element whose rects are to be returned.
+     * @param element The element whose rects are to be returned.
      * @return Returns a ClientRects object with the four sides of the bounding rectangle.
      */
     @Override
-    public ClientRects GetClientRects(UUID guid, WebControl control) {
+    public ClientRects GetClientRects(UUID guid, WebControl element) {
         log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));");
-        ArrayList rects = (ArrayList) ExecuteScript(guid, control.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));
+        ArrayList rects = (ArrayList) ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));
         int bottom = ((Number) rects.get(1)).intValue();
         int left = ((Number) rects.get(2)).intValue();
         int right = ((Number) rects.get(3)).intValue();

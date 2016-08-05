@@ -62,7 +62,7 @@ public interface IWebAdapter extends IAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @param url  The URL to load. It is best to use a fully qualified URL.
      * @return The current handler after the change.
-     * @throws IllegalArgumentException If <paramref name="url"/> is <see langword="null"/>.
+     * @throws IllegalArgumentException If URL is null.
      */
     String GoToUrl(UUID guid, URL url);
 
@@ -81,37 +81,37 @@ public interface IWebAdapter extends IAdapter {
     void ScrollToEnd(UUID guid);
 
     /**
-     * Finds the first <see cref="IWebElementAdapter"/> using the given method.
+     * Finds the first Element using the given mechanism.
      *
      *
-     * @param guid
+     * @param guid A globally unique identifier associated with this call.
      * @param findBy The locating mechanism to use.
-     * @return The first matching <see cref="IWebElementAdapter"/> on the current product.
-     * @throws IllegalArgumentException If <paramref name="findBy"/> is <see langword="null"/>.
+     * @return The first matching Element on the current product.
+     * @throws IllegalArgumentException If FindBy is null.
      * @throws NoSuchElementException   If there is no such element.
      */
     WebControl FindElement(UUID guid, IBy findBy);
 
     /**
-     * Finds all <see cref="IWebElementAdapter">IWebElementAdapters</see> within the current product
+     * Finds all Elements within the current product
      * using the given mechanism.
      *
      * @param guid   A globally unique identifier associated with this call.
      * @param findBy The locating mechanism to use.
-     * @return A <see cref="ReadOnlyCollection{T}"/> of all <see cref="IWebElementAdapter">IWebElementAdapters</see>
+     * @return A ReadOnly Collection of found elements.
      * matching the current criteria, or an empty list if nothing matches.
-     * @throws IllegalArgumentException If <paramref name="findBy"/> is <see langword="null"/>.
+     * @throws IllegalArgumentException If FindBy is null.
      * @throws NoSuchElementException   If there is no such element.
      */
     Collection<WebControl> FindElements(UUID guid, IBy findBy);
 
     /**
-     * Finds the first <see cref="WebControl"/> using the given method.
+     * Finds the first Select Element using the given mechanism.
      *
      * @param guid   A globally unique identifier associated with this call.
      * @param findBy The locating mechanism to use.
-     * @return The first matching <see cref="WebControl"/> on the current product.
-     * @throws IllegalArgumentException                 If <paramref name="findBy"/> is <see langword="null"/>.
+     * @return The first matching Select Element on the current product.
+     * @throws IllegalArgumentException                 If FindBy is null.
      * @throws NoSuchElementException                   If there is no such element.
      * @throws ScriptReturnValueNotHtmlElementException If the JavaScript did not return an HTML element.
      * @throws UnsupportedSelectElementException        If the select element is not supported.
@@ -120,7 +120,7 @@ public interface IWebAdapter extends IAdapter {
 
     /**
      * Selects either the first frame on the page or the main document when a page contains iframes.
-     * @param guid
+     * @param guid A globally unique identifier associated with this call.
      */
     void SwitchToDefaultContent(UUID guid);
 
@@ -128,9 +128,9 @@ public interface IWebAdapter extends IAdapter {
      * Selects the first frame using the given method.
      *
      *
-     * @param guid
+     * @param guid A globally unique identifier associated with this call.
      * @param findBy The locating mechanism to use.
-     * @throws IllegalArgumentException    If <paramref name="findBy"/> is <see langword="null"/>.
+     * @throws IllegalArgumentException    If FindBy is null.
      * @throws UnsupportedElementException If the element is not supported.
      */
     void SwitchToFrame(UUID guid, IBy findBy);
@@ -141,8 +141,8 @@ public interface IWebAdapter extends IAdapter {
      * @param guid        A globally unique identifier associated with this call.
      * @param windowTitle The title of the window to select.
      * @return The current handler after the change.
-     * @throws IllegalArgumentException If <paramref name="windowTitle"/> is <see langword="null"/>.
-     * @throws IllegalArgumentException If <paramref name="windowTitle"/> is empty.
+     * @throws IllegalArgumentException If windowTitle is null.
+     * @throws IllegalArgumentException If windowTitle is empty.
      * @throws NoSuchWindowException    If the window cannot be found.
      */
     String SwitchToWindowByTitle(UUID guid, String windowTitle);
@@ -152,8 +152,8 @@ public interface IWebAdapter extends IAdapter {
      *
      * @param guid   A globally unique identifier associated with this call.
      * @param handle The handle of the window to select.
-     * @throws IllegalArgumentException If <paramref name="handle"/> is <see langword="null"/>.
-     * @throws IllegalArgumentException If <paramref name="handle"/> is empty.
+     * @throws IllegalArgumentException If handle is null.
+     * @throws IllegalArgumentException If handle is empty.
      * @throws NoSuchWindowException    If the window cannot be found.
      */
     void SwitchToWindowByHandle(UUID guid, String handle);
@@ -164,8 +164,8 @@ public interface IWebAdapter extends IAdapter {
      * @param guid  A globally unique identifier associated with this call.
      * @param value The URL to which to switch focus.
      * @return The current handler after the change.
-     * @throws IllegalArgumentException If <paramref name="value"/> is <see langword="null"/>.
-     * @throws IllegalArgumentException If <paramref name="value"/> is empty.
+     * @throws IllegalArgumentException If value is null.
+     * @throws IllegalArgumentException If value is empty.
      * @throws NoSuchWindowException    If the window cannot be found.
      */
     String SwitchToWindowByUrl(UUID guid, String value);
@@ -232,7 +232,7 @@ public interface IWebAdapter extends IAdapter {
 
     /**
      * Focuses the currently selected window.
-     * @param guid
+     * @param guid A globally unique identifier associated with this call.
      */
     void FocusWindow(UUID guid);
 
@@ -313,7 +313,7 @@ public interface IWebAdapter extends IAdapter {
 
     /**
      * Scrolls to the element on the page if in Chrome.
-     *  @param guid
+     *  @param guid A globally unique identifier associated with this call.
      * @param selector The selector.
      */
     void ScrollElementIntoView(UUID guid, WebControl selector);
@@ -450,34 +450,122 @@ public interface IWebAdapter extends IAdapter {
      */
     WebControl GetFocusedElement(UUID guid);
 
-    String GetElementTagName(UUID guid, WebControl webControl);
+    /**
+     * Gets the HTML Tag type of the given element
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to get the Tag of.
+     * @return The type of Tag.
+     */
+    String GetElementTagName(UUID guid, WebControl element);
 
-    void ClearElement(UUID guid, WebControl webControl);
+    /**
+     * Clears the text of the given Element
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to be cleared.
+     */
+    void ClearElement(UUID guid, WebControl element);
 
-    void ChooseSelectElementByValue(UUID guid, WebControl control, String value);
+    /**
+     * Choose a Select Element by its Value.
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to be chosen by value.
+     * @param value The value to search for.
+     */
+    void ChooseSelectElementByValue(UUID guid, WebControl element, String value);
 
-    void ChooseSelectElementByText(UUID guid, WebControl control, String value);
+    /**
+     * Choose a Select Element by its Text.
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to be chosen by value.
+     * @param value The value to search for.
+     */
+    void ChooseSelectElementByText(UUID guid, WebControl element, String value);
 
-    void ClickElement(UUID guid, WebControl control);
+    /**
+     * Clicks on the given element.
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to be clicked.
+     */
+    void ClickElement(UUID guid, WebControl element);
 
-    void SendKeysToElement(UUID guid, WebControl control, String value);
+    /**
+     * Sends Keys to the given element programmatically
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to receive the keys.
+     * @param value The keys to be sent to the element.
+     */
+    void SendKeysToElement(UUID guid, WebControl element, String value);
 
-    String GetElementAttribute(UUID guid, WebControl control, String value);
+    /**
+     * Gets the value of a given attribute of a given element
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to get the attribute values of.
+     * @param value The name of the attribute to get the value of.
+     * @return
+     */
+    String GetElementAttribute(UUID guid, WebControl element, String value);
 
+    /**
+     * Switches to the Main Window
+     *
+     * @param guid
+     */
     void SwitchToMainWindow(UUID guid);
 
+    /**
+     * Blurs the current element, takes off focus.
+     * @param guid A globally unique identifier associated with this call
+     * @param element The element to be blurred
+     */
     void Blur(UUID guid, WebControl element);
-	
+
+    /**
+     * Checks a checkbox.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The checkbox to be checked.
+     */
 	void CheckElement(UUID guid, WebControl element);
 
+    /**
+     * Unchecks a checkbox
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The checkbox to be unchecked.
+     */
     void UnCheckElement(UUID guid, WebControl element);
 
+    /**
+     * Checks that an element is enabled
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element to check.
+     */
     void IsElementEnabled(UUID guid, WebControl element);
 
+    /**
+     * Checks that an element is disabled.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element to check.
+     */
     void IsElementDisabled(UUID guid, WebControl element);
 
+    /**
+     * If this method was called then the element exists. Logic done at command initialization
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     */
     void Exists(UUID guid, WebControl element);
 
+    /**
+     * If this method was reached then the element exists when it should not.
+     * Logic done at command initialization.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     */
     void NotExists(UUID guid, WebControl element);
 
     /**
@@ -503,20 +591,48 @@ public interface IWebAdapter extends IAdapter {
     void ElementDoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select);
 
     /**
+     * Moves the mouse cursor off of an element
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to Mouse Out of
+     */
+    void MouseOut(UUID guid, WebControl element);
+
+    /**
+     * Moves the mouse cursor on top of an element
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to Mouse Over
+     */
+    void MouseOver(UUID guid, WebControl element);
+
+    /**
+     * Sets the Value of a Body element by Javascript
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element whose value is set
+     * @param value The value to set to the element
+     */
+    void SetBodyValueByJavaScript(UUID guid, WebControl element, String value);
+
+    /**
+     * Sets the Value of an Element by Javascript
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element whose value is set
+     * @param value The value to set to the element
+     */
+    void SetValueByJavaScript(UUID guid, WebControl element, String value);
+
+    /**
+     * Sets the Value of a Div element by Javascript
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element whose value is set
+     * @param value The value to set to the element
+     */
+    void SetDivValueByJavaScript(UUID guid, WebControl element, String value);
+
+    /**
      * Clicks all elements that corresponding with the given IBy.
      * @param guid A globally unique identifier associated with this call.
      * @param elementsBy The selector.
      */
-    void MouseOut(UUID guid, WebControl element);
-
-    void MouseOver(UUID guid, WebControl element);
-
-    void SetBodyValueByJavaScript(UUID guid, WebControl element, String value);
-
-    void SetValueByJavaScript(UUID guid, WebControl element, String value);
-
-    void SetDivValueByJavaScript(UUID guid, WebControl element, String value);
-
     void ClickAllElements(UUID guid, IBy elementsBy);
 
     /**
@@ -548,37 +664,155 @@ public interface IWebAdapter extends IAdapter {
      * @param compare The method by which the options will be compared.
      * @param optGroup The optional option group which would be searched in isolation instead.
      */
-    void HaAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
+    void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup);
 
+    /**
+     * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
     void Has(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
+    /**
+     * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
+     * Comparisons are made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
     void HasLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
+    /**
+     * Asserts that an elements children do not posses a text.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element to be searched.
+     * @param messages The text that the chilren should not posses.
+     * @param selector The selector for the children to be searched.
+     */
     void DoesNotHave(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
+    /**
+     * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element to be searched.
+     * @param messages The text that the chilren should not posses.
+     * @param selector The selector for the children to be searched.
+     */
     void DoesNotHaveLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
-    void HasOnly(UUID guid, WebControl control, String [] messages, String selector, ComparisonOption option, String attribute);
+    /**
+     * Asserts that an elements children that match a given selector only contain either the visible text or the named attribute.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web control whose children are to be searched.
+     * @param messages The strings to be compared to.
+     * @param selector The selectors that the children will be matched to.
+     * @param option Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
+     */
+    void HasOnly(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute);
 
-    void Is(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+    /**
+     * Asserts that an element's attribute is equal to a given value.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    void Is(UUID guid, WebControl element, String value, ComparisonOption option, String attribute);
 
-    void IsLike(UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+    /**
+     * Asserts that an element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    void IsLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute);
 
-    void IsNotLike (UUID guid, WebControl control, String value, ComparisonOption option, String attribute);
+    /**
+     * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The web element.
+     * @param value The value the attribute should be.
+     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute The attribute.
+     */
+    void IsNotLike (UUID guid, WebControl element, String value, ComparisonOption option, String attribute);
 
+    /**
+     * Asserts that the Text of given Alert is same as given string
+     * @param guid A globally unique identifier associated with this call.
+     * @param comparingText String to compare against Alert Text.
+     */
     void VerifyAlertText(UUID guid, String comparingText);
 
+    /**
+     * Asserts that the Text of an Alert is Like a given string(spacing and cases* ignored).
+     * caseSensitive is an option
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param comparingText String to compare against Alert Text.
+     * @param caseSensitive Determine caseSensitive comparison
+     */
     void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);
 
+    /**
+     * Asserts the Title of an Alert is equal to a given String
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param comparingTitle String to compare against Alert Title.
+     */
     void VerifyTitle(UUID guid, String comparingTitle);
 
+    /**
+     * Asserts the URL is equal to the given URL
+     *
+     * @param guid A globally unique identifier associated with this call.
+     * @param comparingURL The URL to compare against
+     */
     void VerifyURL(UUID guid, URL comparingURL);
 
+    /**
+     * Obtains a date from an elements attribute and compares it with an expected date. Has a
+     * Margin of error. The date must be in the ISO-8601 standard.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element that posseses the date.
+     * @param attributeName The name of the attribute that has the date.
+     * @param expected The expected date that the attribute should posses.
+     * @param delta The margin of error that the date can be within. Cannot posses any weeks, months or years due to
+     *              them having variable lengths.
+     */
     void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta);
 
+    /**
+     * Returns the enumerable BrowserType representing the current browser.
+     * @param guid A Globally unique identifier associated with this call.
+     * @return Returns the BrowserType associated with this browser.
+     */
     BrowserType GetBrowserType(UUID guid);
 
+    /**
+     * Gets the bounding rectangle for an element.
+     * @param guid A Globally unique identifier associated with this call.
+     * @param element The element whose rects are to be returned.
+     * @return Returns a ClientRects object with the four sides of the bounding rectangle.
+     */
     ClientRects GetClientRects(UUID guid, WebControl element);
 
+    /**
+     * Sends a non-alphanumeric keys to an element.
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The element to recieve the keys.
+     * @param key The key to be sent.
+     */
     void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
 }
