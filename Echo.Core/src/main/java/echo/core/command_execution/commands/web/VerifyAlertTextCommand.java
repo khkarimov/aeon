@@ -9,7 +9,11 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 import echo.core.common.helpers.StringUtils;
 
 /**
- * Created by Administrator on 6/29/2016.
+ * Created by Salvador Gandara on 6/29/2016.
+ */
+
+/**
+ * Verifies the Text of an Alert
  */
 public class VerifyAlertTextCommand extends Command {
     private String comparingText;

@@ -13,6 +13,10 @@ import java.util.Locale;
 /**
  * Created by RafaelT on 6/29/2016.
  */
+
+/**
+ * Checks if the value of a given attribute of an element is like a given value.
+ */
 public class IsLikeCommand extends WebControlCommand{
     private String value;
     private String attribute;

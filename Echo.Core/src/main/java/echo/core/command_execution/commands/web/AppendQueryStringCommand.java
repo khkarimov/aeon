@@ -11,7 +11,7 @@ import echo.core.framework_abstraction.drivers.IDriver;
 public class AppendQueryStringCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the <see cref="ClearBrowserStorageCommand"/> class.
+     * Initializes a new instance of the AppendQueryString class.
      *
      * @param log The logger.
      */

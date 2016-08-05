@@ -7,8 +7,10 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+
+
 /**
- * Created by Administrator on 6/15/2016.
+ * Sets a body value by javascript
  */
 public class SetBodyValueByJavaScriptCommand extends WebControlCommand {
 

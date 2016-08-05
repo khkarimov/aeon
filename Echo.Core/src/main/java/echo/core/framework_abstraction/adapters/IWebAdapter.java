@@ -314,9 +314,9 @@ public interface IWebAdapter extends IAdapter {
     /**
      * Scrolls to the element on the page if in Chrome.
      *  @param guid A globally unique identifier associated with this call.
-     * @param selector The selector.
+     * @param element The selector.
      */
-    void ScrollElementIntoView(UUID guid, WebControl selector);
+    void ScrollElementIntoView(UUID guid, WebControl element);
 
     /**
      * Gets a screenshot of the currently focus browser window.
@@ -507,7 +507,7 @@ public interface IWebAdapter extends IAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @param element The element to get the attribute values of.
      * @param value The name of the attribute to get the value of.
-     * @return
+     * @return The value of the element attribute
      */
     String GetElementAttribute(UUID guid, WebControl element, String value);
 

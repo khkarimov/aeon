@@ -10,6 +10,10 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by Administrator on 6/15/2016.
  */
+
+/**
+ * Sets a div value by JavaScript
+ */
 public class SetDivValueByJavaScriptCommand extends WebControlCommand {
 
     private String value;
