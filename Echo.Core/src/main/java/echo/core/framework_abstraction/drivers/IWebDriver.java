@@ -303,7 +303,7 @@ public interface IWebDriver extends IDriver {
      * Right clicks an element.
      *
      * @param guid     A globally unique identifier associated with this call.
-     * @param selector The element to right click.
+     * @param element The element to right click.
      */
 	void RightClick(UUID guid, WebControl element);
 
