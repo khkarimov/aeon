@@ -22,7 +22,7 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, Firefox );
-        product.Browser.GoToUrl("http://gandaras02web/");
+        product.Browser.GoToUrl("http://gandaras01web/");
         }
 
     @After

@@ -778,7 +778,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void ScrollElementIntoView(UUID uuid, WebControl element) {
-        throw new NotImplementedException("ScrollElementIntoView not implemented.");
+        ScrollElementIntoView(uuid, element.getSelector());
     }
 
     /**
@@ -787,7 +787,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid     A globally unique identifier associated with this call.
      * @param selector Element to scroll into view.
      */
-    public final void ScrollElementIntoView(UUID guid, IBy selector) {
+    private final void ScrollElementIntoView(UUID guid, IBy selector) {
         ExecuteScript(guid, selector.ToJQuery().toString(JQueryStringType.ScrollElementIntoView));
         ExecuteScript(guid, "$(\"body\").scrollLeft(0);");
     }
