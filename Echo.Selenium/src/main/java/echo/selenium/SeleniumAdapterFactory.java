@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The driver factory for Web.
@@ -80,6 +81,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             setProxySettings(DesiredCapabilities.firefox(), proxyLocation));
                 }
 
+                driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
                 //return new SeleniumFirefoxWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
 

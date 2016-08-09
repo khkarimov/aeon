@@ -24,7 +24,7 @@ public class ClickAndHoldCommand extends WebControlCommand{
      * @param log The logger.
      * @param selector The selector.
      * @param commandInitializer The command initializer.
-     * @param duration The duration in
+     * @param duration The duration in milliseconds
      */
     public ClickAndHoldCommand(ILog log, IBy selector, ICommandInitializer commandInitializer,int duration ) {
         super(log, String.format(Locale.getDefault(), Resources.getString("ClickAndHoldCommand_Info"), selector), selector, commandInitializer);

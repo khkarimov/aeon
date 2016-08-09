@@ -219,6 +219,24 @@ public class WebElement extends Element {
                 value));
     }
 
+    public void Exists() {
+        info.getCommandExecutionFacade().Execute(
+                info,
+                new ExistsCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
+
+    public void NotExists() {
+        info.getCommandExecutionFacade().Execute(
+                info,
+                new NotExistsCommand(
+                        info.getLog(),
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
+
     public void Visible() {
         info.getCommandExecutionFacade().Execute(info, new VisibleCommand(
                 info.getLog(),

@@ -7,6 +7,6 @@ import echo.core.common.Resources;
  */
 public class ElementDoesNotHaveException extends RuntimeException {
     public ElementDoesNotHaveException (String message) {
-        super(Resources.getString("ElementDoesNotHaveException_ctor_DefaultMessage" + " " + message));
+        super(Resources.getString("ElementDoesNotHaveException_ctor_DefaultMessage") + " " + message);
     }
 }

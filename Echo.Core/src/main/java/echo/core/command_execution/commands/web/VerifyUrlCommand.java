@@ -12,6 +12,10 @@ import java.net.URL;
 /**
  * Created by SebastianR on 6/29/2016.
  */
+
+/**
+ * Verifies the URL of the browser
+ */
 public class VerifyUrlCommand extends Command {
     private URL comparingURL;
 
