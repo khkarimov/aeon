@@ -4,6 +4,7 @@ import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import main.Sample;
+import main.vTeamSamplePage;
 import org.junit.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -77,6 +78,23 @@ public class SampleTest {
         product.Browser.GoToUrl("http://www.tutorialspoint.com");
         product.Browser.ScrollToEnd();
         product.Browser.ScrollToTop();
+    }
+
+    @Test
+    public void TestVisibleAndNotVisible_05() {
+        product.Login.WarningMessage.NotVisible();
+        product.Login.UserNameTextBox.Set("usa-canu");
+        product.Login.PasswordTextBox.Set("FAIL");
+        product.Login.LoginButton.Click();
+        product.Login.WarningMessage.Visible();
+    }
+
+    @Test
+    //Only works on vTeam Sample Page
+    public void TestSelectedAndNotSelected_06() {
+//        product.StartPage.Checkbox100.NotSelected();
+//        product.StartPage.Checkbox100.Check();
+//        product.StartPage.Checkbox100.Selected();
     }
 
     @Test

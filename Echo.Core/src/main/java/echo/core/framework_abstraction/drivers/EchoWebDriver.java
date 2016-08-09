@@ -360,6 +360,19 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void NotSelected(UUID guid, WebControl element) {adapter.NotSelected(guid, element);}
+
+    @Override
+    public void NotVisible(UUID guid, WebControl element) {adapter.NotVisible(guid, element);}
+
+    @Override
+    public void Selected(UUID guid, WebControl element) {adapter.Selected(guid, element);}
+
+    @Override
+    public void Visible(UUID guid, WebControl element) {adapter.Visible(guid, element);}
+
+    //
+    @Override
     public void VerifyAlertText(UUID guid, String comparingText) {
         adapter.VerifyAlertText(guid, comparingText);
     }

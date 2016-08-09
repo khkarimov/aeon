@@ -543,6 +543,14 @@ public interface IWebDriver extends IDriver {
      */
     void VerifyURL(UUID guid, URL comparingURL);
 
+    void NotSelected(UUID guid, WebControl element);
+
+    void NotVisible(UUID guid, WebControl element);
+
+    void Selected(UUID guid, WebControl element);
+
+    void Visible(UUID guid, WebControl element);
+//
     /**
      * Gets the list of all cookies.
      *

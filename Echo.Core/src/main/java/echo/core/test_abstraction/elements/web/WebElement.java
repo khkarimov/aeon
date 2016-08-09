@@ -237,6 +237,33 @@ public class WebElement extends Element {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
+    public void Visible() {
+        info.getCommandExecutionFacade().Execute(info, new VisibleCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
+    }
+
+    public void NotVisible() {
+        info.getCommandExecutionFacade().Execute(info, new NotVisibleCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
+    }
+
+    public void Selected() {
+        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
+    }
+
+    public void NotSelected() {
+        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
+    }
 
     public void DatesApproximatelyEqual(String attributeName, DateTime expectedDate, Period acceptableDelta) {
         info.getCommandExecutionFacade().Execute(info, new DatesApproximatelyEqualCommand(

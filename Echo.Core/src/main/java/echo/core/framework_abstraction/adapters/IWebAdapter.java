@@ -554,11 +554,39 @@ public interface IWebAdapter extends IAdapter {
     void IsElementDisabled(UUID guid, WebControl element);
 
     /**
+     * Checks to see if a selected element's checkbox is selected
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void Selected(UUID guid, WebControl element);
+
+    /**
+     * Checks to see if a selected element's checkbox is not selected
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void NotSelected(UUID guid, WebControl element);
+
+    /**
+     * Checks to see if a selected element is visible
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void Visible(UUID guid, WebControl element);
+
+    /**
+     * Checks to see if a selected element is hidden
+     * @param guid A globally unique identifier associated with this call.
+     * @param element The select element.
+     */
+    void NotVisible(UUID guid, WebControl element);
+
+    /**
      * If this method was called then the element exists. Logic done at command initialization
      * @param guid A globally unique identifier associated with this call.
      * @param element The web element.
      */
-    void Exists(UUID guid, WebControl element);
+	void Exists(UUID guid, WebControl element);
 
     /**
      * If this method was reached then the element exists when it should not.
@@ -605,18 +633,18 @@ public interface IWebAdapter extends IAdapter {
     void MouseOver(UUID guid, WebControl element);
 
     /**
-     * Sets the Value of a Body element by Javascript
+     * Asserts that the selected element's body tag will be changed into the provided String value
      * @param guid A globally unique identifier associated with this call.
-     * @param element The element whose value is set
-     * @param value The value to set to the element
+     * @param element By The selector.
+     * @param value Html to be inserted into body tag
      */
     void SetBodyValueByJavaScript(UUID guid, WebControl element, String value);
 
     /**
-     * Sets the Value of an Element by Javascript
+     * Asserts that the selected element's value tag will be changed into the provided String value
      * @param guid A globally unique identifier associated with this call.
-     * @param element The element whose value is set
-     * @param value The value to set to the element
+     * @param element By The selector.
+     * @param value Html to be inserted into a value tag
      */
     void SetValueByJavaScript(UUID guid, WebControl element, String value);
 
