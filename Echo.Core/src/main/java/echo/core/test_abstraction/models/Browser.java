@@ -1,6 +1,5 @@
 package echo.core.test_abstraction.models;
 
-import com.sun.glass.ui.Size;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.QuitCommand;
@@ -10,8 +9,8 @@ import echo.core.command_execution.commands.web.*;
 import echo.core.command_execution.commands.web.ScrollToEndCommand;
 import echo.core.command_execution.commands.web.ScrollToTopCommand;
 import echo.core.common.helpers.URLUtil;
+import echo.core.common.logging.ILog;
 import echo.core.common.web.BrowserSize;
-import echo.core.common.web.BrowserSizeMap;
 import echo.core.common.web.BrowserType;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 
@@ -27,14 +26,8 @@ public class Browser {
         this.info = info;
     }
 
-    public void GoToUrl(String url) {
-        info.getCommandExecutionFacade().Execute(info, new GoToUrlCommand(info.getLog(), URLUtil.CreateURL(url)));
-    }
-
-    public void GoBack() {info.getCommandExecutionFacade().Execute(info, new GoBackCommand(info.getLog()));}
-
-    public void DeleteCookie(String cookie) {
-        info.getCommandExecutionFacade().Execute(info, new DeleteCookieCommand(info.getLog(), cookie));
+    public void AcceptAlert() {
+        info.getCommandExecutionFacade().Execute(info, new AcceptAlertCommand(info.getLog()));
     }
 
     public void AddCookie(IWebCookie cookie) {
@@ -45,6 +38,54 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new DeleteAllCookiesCommand(info.getLog()));
     }
 
+    public void DeleteCookie(String cookie) {
+        info.getCommandExecutionFacade().Execute(info, new DeleteCookieCommand(info.getLog(), cookie));
+    }
+
+    public void DismissAlert() {
+        info.getCommandExecutionFacade().Execute(info, new DismissAlertCommand(info.getLog()));
+    }
+
+    public Collection<IWebCookie> GetAllCookies() {
+        return (Collection<IWebCookie>) info.getCommandExecutionFacade().Execute(info, new GetAllCookiesCommand(info.getLog()));
+    }
+
+    public BrowserType GetBrowserType() {
+        return (BrowserType) info.getCommandExecutionFacade().Execute(info, new GetBrowserTypeCommand(info.getLog()));
+    }
+
+    public String GetAlertText() {
+        return info.getCommandExecutionFacade().Execute(info, new GetAlertTextCommand(info.getLog())).toString();
+    }
+
+    public IWebCookie GetCookie(String name) {
+        return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(info.getLog(), name));
+    }
+
+    public void GoBack() {
+        info.getCommandExecutionFacade().Execute(info, new GoBackCommand(info.getLog()));
+    }
+
+    public void GoForward() {
+        info.getCommandExecutionFacade().Execute(info, new GoForwardCommand(info.getLog()));
+    }
+
+    public void GoToUrl(String url) {
+        info.getCommandExecutionFacade().Execute(info, new GoToUrlCommand(info.getLog(), URLUtil.CreateURL(url)));
+    }
+
+    public void Maximize() {
+        info.getCommandExecutionFacade().Execute(info, new MaximizeCommand(info.getLog()));
+    }
+
+    public void ModifyCookie(String name, String value){
+        info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));
+    }
+
+    public void Quit() {
+        info.getCommandExecutionFacade().Execute(info, new QuitCommand(info.getLog()));
+    }
+
     public void Refresh() {
         info.getCommandExecutionFacade().Execute(info, new RefreshCommand(info.getLog()));
     }
@@ -53,13 +94,25 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), size));
     }
 
-    //region Commands pertaining to alerts
-
-    public void AcceptAlert() {
-        info.getCommandExecutionFacade().Execute(info, new AcceptAlertCommand(info.getLog()));
+    public void ScrollToTop(){
+        info.getCommandExecutionFacade().Execute(info, new ScrollToTopCommand(info.getLog()));
     }
 
-    public void DismissAlert() {info.getCommandExecutionFacade().Execute(info, new DismissAlertCommand(info.getLog()));}
+    public void ScrollToEnd(){
+        info.getCommandExecutionFacade().Execute(info, new ScrollToEndCommand(info.getLog()));
+    }
+
+    public void SendKeysToAlert(String keys){
+        info.getCommandExecutionFacade().Execute(info, new SendKeysToAlertCommand(info.getLog(), keys));
+    }
+
+    public void SwitchToWindowByTitle(String title) {
+        info.getCommandExecutionFacade().Execute(info, new SwitchToWindowByTitleCommand(info.getLog(), title));
+    }
+
+    public void SwitchToWindowByUrl(String url){
+        info.getCommandExecutionFacade().Execute(info, new SwitchToWindowByUrlCommand(info.getLog(), url));
+    }
 
     public void VerifyAlertExists(){
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertExistsCommand(info.getLog()));
@@ -68,38 +121,6 @@ public class Browser {
     public void VerifyAlertNotExists(){
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertNotExistsCommand(info.getLog()));
     }
-
-    public void SendKeysToAlert(String keys){
-        info.getCommandExecutionFacade().Execute(info, new SendKeysToAlertCommand(info.getLog(), keys));
-    }
-
-    public String GetAlertText(){
-        return info.getCommandExecutionFacade().Execute(info, new GetAlertTextCommand(info.getLog())).toString();
-    }
-    //endregion
-
-    public void Maximize() {
-        info.getCommandExecutionFacade().Execute(info, new MaximizeCommand(info.getLog()));
-    }
-
-    public void GoForward() {
-        info.getCommandExecutionFacade().Execute(info, new GoForwardCommand(info.getLog()));
-    }
-
-    public void Quit() {
-        info.getCommandExecutionFacade().Execute(info, new QuitCommand(info.getLog()));
-    }
-
-    public void ScrollToTop(){
-        info.getCommandExecutionFacade().Execute(info, new ScrollToTopCommand(info.getLog()));
-    }
-
-    public void ScrollToEnd(){
-       info.getCommandExecutionFacade().Execute(info, new ScrollToEndCommand(info.getLog()));
-    }
-
-    public void SwitchToWindowByTitle(String title) { info.getCommandExecutionFacade().Execute(info,
-            new SwitchToWindowByTitleCommand(info.getLog(), title));}
 
     public void VerifyAlertText(String comparingText){
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextCommand(info.getLog(), comparingText));
@@ -117,12 +138,12 @@ public class Browser {
         info.getCommandExecutionFacade().Execute(info, new VerifyUrlCommand(info.getLog(), comparingURL));
     }
 
-    public Collection<IWebCookie> GetAllCookies() {return (Collection<IWebCookie>) info.getCommandExecutionFacade().Execute(info, new GetAllCookiesCommand(info.getLog()));}
+    public void VerifyWindowDoesNotExistByTitle(String windowTitle){
+        info.getCommandExecutionFacade().Execute(info, new WindowDoesNotExistByTitleCommand(info.getLog(), windowTitle));
+    }
 
-    public void ModifyCookie(String name, String value){info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));}
-
-    public IWebCookie GetCookie(String name) {return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(info.getLog(), name));}
-
-    public BrowserType GetBrowserType() {return (BrowserType) info.getCommandExecutionFacade().Execute(info, new GetBrowserTypeCommand(info.getLog()));}
+    public void VerifyWindowDoesNotExistByUrl(String url){
+        info.getCommandExecutionFacade().Execute(info, new WindowDoesNotExistByUrlCommand(info.getLog(), url));
+    }
 
 }

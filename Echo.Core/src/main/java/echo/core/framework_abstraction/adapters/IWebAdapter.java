@@ -633,4 +633,9 @@ public interface IWebAdapter extends IAdapter {
     ClientRects GetClientRects(UUID guid, WebControl element);
 
     void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
+
+    String WindowDoesNotExistByTitle(UUID guid, String windowTitile);
+
+    String WindowDoesNotExistByUrl(UUID guid, String url);
+
 }

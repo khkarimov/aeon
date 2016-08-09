@@ -474,7 +474,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A string representation of the windowTitle we are searching for.
      */
     public final String SwitchToWindowByTitle(UUID guid, String windowTitle) {
-        if (StringUtils.isEmpty(windowTitle)) {
+        if (StringUtils.isEmpty(windowTitle) || windowTitle == null) {
             throw new IllegalArgumentException("windowTitle is null or an empty string");
         }
         for (String window : GetWindowHandles(guid)) {
@@ -848,7 +848,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         WebElement target = ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement();
         Actions builder = new Actions(webDriver);
         builder.clickAndHold(drop).perform();
-        // SR - we should consider having a dynamic wait time. Could use the throttle factor in the TimeoutDelegateRunner
         Sleep.Wait(250);
         builder.release(target);
         builder.perform();
@@ -983,7 +982,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *                 depending on the system, it could be much worse. In some cases, the accuracy is much better, approaching
      *                 1ms. This can happen on Win7 and .Net 4 and higher, but having those do not guarantee it.
      *                 </p>
-     *                 <p></p>dou
+     *                 <p></p>
      *                 <p>
      *                 Another consideration to take into account is the specific browser you are using this command with.
      *                 Initial testing showed IE and Firefox to have much worse response time with this command in comparison to
@@ -1702,5 +1701,41 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {
         ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(Keys.getKeyFromUnicode(key.getUnicode()));
+    }
+
+    /**
+     * Checks if a window does not exist by the title.
+     * @param guid A globally unique identifier associated with this call.
+     * @param windowTitle The title of the window to check for.
+     * @return The title of the window.
+     */
+    @Override
+    public String WindowDoesNotExistByTitle(UUID guid, String windowTitle) {
+        try
+        {
+            SwitchToWindowByTitle(guid, windowTitle);
+            throw new WindowExistsException(windowTitle);
+        }catch (NoSuchWindowException e)
+        {
+            return windowTitle;
+        }
+    }
+
+    /**
+     * Checks if a window does not exist by the url.
+     * @param guid A globally unique identifier associated with this call.
+     * @param url The url of the window to check for.
+     * @return The url of the window.
+     */
+    @Override
+    public String WindowDoesNotExistByUrl(UUID guid, String url) {
+        try
+        {
+            SwitchToWindowByUrl(guid, url);
+            throw new WindowExistsException(url);
+        }catch (NoSuchWindowException e)
+        {
+            return url;
+        }
     }
 }

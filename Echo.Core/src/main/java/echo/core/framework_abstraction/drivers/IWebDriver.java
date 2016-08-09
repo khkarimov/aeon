@@ -84,6 +84,8 @@ public interface IWebDriver extends IDriver {
 
     String SwitchToWindowByTitle(UUID guid, String title);
 
+    String SwitchToWindowByUrl(UUID guid, String url);
+
     void Resize(UUID guid, Size size);
 
     void Blur(UUID guid, WebControl control);
@@ -186,6 +188,10 @@ public interface IWebDriver extends IDriver {
     ClientRects GetClientRects(UUID guid, WebControl control);
 
     void PressKeyboardKey(UUID guid, WebControl control, KeyboardKey key);
+
+    String WindowDoesNotExistByTitle(UUID guid, String windowTitle);
+
+    String WindowDoesNotExistByUrl(UUID guid, String url);
 //    /**
 //     * Check the element.
 //     *
