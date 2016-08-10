@@ -68,7 +68,7 @@ public class WebElement extends Element {
                 createWebCommandInitializer()));
     }
 
-    public void DisabledCommand(){
+    public void IsDisabled(){
         info.getCommandExecutionFacade().Execute(info, new DisabledCommand(
                 info.getLog(),
                 selector,
@@ -83,7 +83,7 @@ public class WebElement extends Element {
                 createWebCommandInitializer()));
     }
 
-    public void EnabledCommand(){
+    public void IsEnabled(){
         info.getCommandExecutionFacade().Execute(info, new EnabledCommand(
                 info.getLog(),
                 selector,
@@ -305,24 +305,6 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
                 value));
-    }
-
-    public void Exists() {
-        info.getCommandExecutionFacade().Execute(
-                info,
-                new ExistsCommand(
-                        info.getLog(),
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
-    }
-
-    public void NotExists() {
-        info.getCommandExecutionFacade().Execute(
-                info,
-                new NotExistsCommand(
-                        info.getLog(),
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
     public void Visible() {

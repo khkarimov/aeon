@@ -33,6 +33,7 @@ public class Checkbox extends WebElement {
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
+    
     public void Selected() {
         info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
                 info.getLog(),
