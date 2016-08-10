@@ -104,8 +104,8 @@ public class WebElement extends Element {
                 createWebCommandInitializer()));
     }
 
-    public void GetElementAttribute(String attributeName){
-        info.getCommandExecutionFacade().Execute(info, new GetElementAttributeCommand(
+    public Object GetElementAttribute(String attributeName){
+        return info.getCommandExecutionFacade().Execute(info, new GetElementAttributeCommand(
                 info.getLog(),
                 selector,
                 createWebCommandInitializer(),
@@ -316,20 +316,6 @@ public class WebElement extends Element {
 
     public void NotVisible() {
         info.getCommandExecutionFacade().Execute(info, new NotVisibleCommand(
-                info.getLog(),
-                selector,
-                createWebCommandInitializer()));
-    }
-
-    public void Selected() {
-        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
-                info.getLog(),
-                selector,
-                createWebCommandInitializer()));
-    }
-
-    public void NotSelected() {
-        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
                 info.getLog(),
                 selector,
                 createWebCommandInitializer()));
