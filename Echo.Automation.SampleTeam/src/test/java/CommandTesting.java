@@ -34,7 +34,7 @@ public class CommandTesting {
     }
 
     @Before
-    public void BetweenTests(){
+    public void BeforeTests(){
         product = Launch(Sample.class, BrowserType.Firefox);
         product.Browser.Maximize();
         product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
@@ -275,5 +275,11 @@ public class CommandTesting {
     public void CheckBox() {
         product.StartPage.TestCheckbox.Check();
         product.StartPage.TestCheckbox.Is("");
+    }
+
+    @Test
+    public void TestVerifyWindowDoesNotExist(){
+        product.Browser.VerifyWindowDoesNotExistByTitle("fakeTitle");
+        product.Browser.VerifyWindowDoesNotExistByUrl("fakeUrl");
     }
 }

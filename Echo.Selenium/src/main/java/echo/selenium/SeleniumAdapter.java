@@ -1718,6 +1718,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public String WindowDoesNotExistByTitle(UUID guid, String windowTitle) {
+        if(windowTitle.isEmpty() || windowTitle == null){
+            throw new IllegalArgumentException("window title is invalid");
+        }
         try
         {
             SwitchToWindowByTitle(guid, windowTitle);
@@ -1736,6 +1739,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public String WindowDoesNotExistByUrl(UUID guid, String url) {
+        if(url.isEmpty() || url == null){
+            throw new IllegalArgumentException("window title is invalid");
+        }
         try
         {
             SwitchToWindowByUrl(guid, url);
