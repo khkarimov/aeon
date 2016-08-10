@@ -24,4 +24,8 @@ public class Link extends WebElement {
         this.info= info;
         this.selector = selector;
     }
+
+    public Link(IBy selector){
+        this(null, selector);
+    }
 }
