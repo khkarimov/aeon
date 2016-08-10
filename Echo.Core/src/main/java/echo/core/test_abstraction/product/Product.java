@@ -59,7 +59,7 @@ public class Product {
             driver.Configure(adapter);
 
             commandExecutionFacade = new CommandExecutionFacade(
-                    new DelegateRunnerFactory(Duration.millis(250), Duration.standardSeconds(10)));
+                    new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)));
 
             this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());
             automationInfo.setCommandExecutionFacade(commandExecutionFacade);

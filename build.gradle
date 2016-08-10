@@ -1,5 +1,6 @@
 apply plugin: 'java'
 group 'Next.Echo'
+compileTestJava.options.encoding = 'utf-8'
 
 dependencies {
     compile project('Echo.Selenium')

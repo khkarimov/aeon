@@ -14,7 +14,7 @@ public class AddCookieCommand extends Command {
     private IWebCookie cookie;
 
     /**
-     * Initializes a new instance of the <see cref="AddCookieCommand"/> class.
+     * Initializes a new instance of the AddCookieCommand class.
      *
      * @param log    The logger.
      * @param cookie Cookie to be added.

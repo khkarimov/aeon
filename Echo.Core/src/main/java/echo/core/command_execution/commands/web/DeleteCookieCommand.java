@@ -10,11 +10,15 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by RafaelT on 5/26/2016.
  */
+
+/**
+ * Deletes a cookie with a given name
+ */
 public class DeleteCookieCommand extends Command {
     private String cookie;
 
     /**
-     * Initializes a new instance of the <see cref="DeleteCookieCommand"/> class.
+     * Initializes a new instance of the DeleteCookieCommand class.
      *
      * * @param log    The logger.
      * @param cookie Name of the cookie to be deleted.

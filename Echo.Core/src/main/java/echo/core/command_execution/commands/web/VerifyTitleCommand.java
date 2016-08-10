@@ -9,6 +9,10 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by Administrator on 6/29/2016.
  */
+
+/**
+ * Verifies the title of a page
+ */
 public class VerifyTitleCommand extends Command {
     private String comparingText;
 
