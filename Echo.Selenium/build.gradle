@@ -3,7 +3,7 @@ def baseProjectDescription = 'Echo Selenium'
 def base = baseProjectName
 
 group 'Echo.Selenium'
-version '0.0.1'
+version '0.2.0'
 
 apply plugin: 'java'
 
@@ -53,7 +53,7 @@ jar {
         attributes 'Implementation-Title': baseProjectDescription,
                 'Implementation-Version': version,
                 'Plugin-Id' : 'SeleniumEcho',
-                'Plugin-Version' : '1.0.0',
+                'Plugin-Version' : version,
                 'Plugin-Class' : 'echo.selenium.SeleniumPlugin'
     }
 
@@ -65,7 +65,7 @@ jar {
 
 task buildPlugin(type: Jar) {
     baseName = base
-    version = '0.0.1'
+    version = version
     into ('classes'){
         with jar
     }
@@ -73,7 +73,7 @@ task buildPlugin(type: Jar) {
 }
 
 task copyToDistrib(type: Copy) {
-    println('Copying output to distrib folder')
+    println('Copying Echo.Selenium to distrib folder')
 
     def source = 'build/libs/' + base + '-' + version + '.jar'
     def destination = '../distrib'
@@ -93,5 +93,4 @@ task copyToDistrib(type: Copy) {
 }
 
 copyToDistrib.outputs.upToDateWhen {false}
-
 jar.finalizedBy(buildPlugin)
