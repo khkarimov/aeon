@@ -77,3 +77,8 @@ task copyToDistrib(type: Copy) {
 copyToDistrib.outputs.upToDateWhen {false}
 
 build.finalizedBy(copyToDistrib)
+
+apply plugin: 'checkstyle'
+checkstyle {
+    configFile = new File(rootDir, "checkstyle.xml")
+}

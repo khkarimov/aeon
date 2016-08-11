@@ -93,10 +93,10 @@ public class SetCommand extends WebControlCommand {
             return false;
         }
 
-			/*
+            /*
              * This script returns the option ID if there is exactly one element with an exact match between the element's text and the variable 'value'.
-			 * Otherwise, it returns false.
-			 */
+             * Otherwise, it returns false.
+             */
         String scriptToDetermineIfSelect2HasExactlyThatOption = String.format("var theId;" + "var list = %1$s.select2().find(':contains(%2$s)').filter( function() { if($(this).text() === '%2$s') { theId = $(this).val(); return true; } return false; } );" + "if(list.length === 1) { return theId; }; return false;", webControl.getSelector().ToJQuery(), value);
 
         Object select2SpecifiedOption = driver.ExecuteScript(getGuid(), scriptToDetermineIfSelect2HasExactlyThatOption);

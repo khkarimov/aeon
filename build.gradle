@@ -15,3 +15,5 @@ task CopySeleniumPlugin(type: Copy) {
 }
 
 build.finalizedBy(CopySeleniumPlugin)
+
+apply plugin: 'checkstyle'

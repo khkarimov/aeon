@@ -2,7 +2,6 @@ package echo.core.common.helpers;
 
 import com.sun.glass.ui.Size;
 import echo.core.common.web.BrowserType;
-import echo.core.common.helpers.OsCheck;
 import echo.core.common.logging.ILog;
 
 import java.awt.*;
