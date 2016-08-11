@@ -14,6 +14,10 @@ ext {
     chromeDriverVersion = '2.21'
 }
 
+clean {
+    delete 'plugins'
+}
+
 dependencies {
     compile project(':Echo.SampleContext')
     testCompile group: 'junit', name: 'junit', version: '4.11'

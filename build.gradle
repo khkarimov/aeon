@@ -13,12 +13,22 @@ dependencies {
     compile project('Echo.SampleContext')
 }
 
+//Copies dependencies into Distrib folder along with build artifacts.
 task CopyDependencies(type: Copy) {
     into 'distrib'
     from configurations.getByName("compile") {
         exclude "Echo.Selenium-*.jar"
     }.files
 }
+
+//Copy plugin .zip into Plugins folder
+task CopyPluginToDistrib(type: Copy) {
+    into 'plugins'
+    from 'Echo.Selenium/build/libs'
+    include '*.zip'
+}
+
+//Copy selenium plugin into SampleTeam plugins folder
 task CopySeleniumPlugin(type: Copy) {
     group 'build'
     from 'Echo.Selenium/build/libs'
@@ -32,6 +42,7 @@ task cleanDistrib(type: Delete) {
 }
 
 CopySeleniumPlugin.dependsOn(CopyDependencies)
+CopyDependencies.dependsOn(CopyPluginToDistrib)
 
 assemble.dependsOn(cleanDistrib)
 assemble.finalizedBy(CopySeleniumPlugin)
