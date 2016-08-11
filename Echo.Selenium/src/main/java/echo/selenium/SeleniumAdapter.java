@@ -1,6 +1,5 @@
 package echo.selenium;
 
-import com.sun.glass.events.KeyEvent;
 import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
@@ -41,8 +40,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -746,6 +743,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void SelectFileDialog(UUID guid, IBy selector, String path) {
         try {
+            Sleep.Wait(2000);
             SendKeysHelper.SendKeysToKeyboard(path);
             SendKeysHelper.SendEnterKey();
         } catch (AWTException e) {
