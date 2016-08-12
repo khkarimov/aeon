@@ -72,3 +72,4 @@ fabric.properties
 distrib/
 log/
 */plugins
+plugins/
