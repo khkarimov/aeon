@@ -35,7 +35,7 @@ public class CommandTesting {
 
     @Before
     public void BetweenTests(){
-        product = Launch(Sample.class, BrowserType.Firefox);
+        product = Launch(Sample.class, BrowserType.InternetExplorer);
         product.Browser.Maximize();
         product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
@@ -210,7 +210,7 @@ public class CommandTesting {
         product.Browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
     }
 
-    @Test
+    @Ignore
     public void CookieTests() {
         product.Browser.GoToUrl("http://google.com");
         IWebCookie cookie = new IWebCookie() {
