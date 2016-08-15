@@ -47,9 +47,6 @@ CopyDependencies.dependsOn(CopyPluginToDistrib)
 assemble.dependsOn(cleanDistrib)
 assemble.finalizedBy(CopySeleniumPlugin)
 
-build.dependsOn(cleanDistrib)
-build.finalizedBy(CopySeleniumPlugin)
-
 clean {
     delete 'distrib'
     delete 'plugins'
