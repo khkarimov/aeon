@@ -7,14 +7,14 @@ dependencies {
     compile project('Echo.Automation.SampleTeam')
 }
 
-task CopySeleniumPlugin(type: Copy) {
+task copySeleniumPlugin(type: Copy) {
     group 'build'
     from 'Echo.Selenium/build/libs'
     into 'Echo.Automation.SampleTeam/plugins'
     include '*.zip'
 }
 
-build.finalizedBy(CopySeleniumPlugin)
+assemble.finalizedBy(copySeleniumPlugin)
 
 allprojects {
     apply plugin: 'checkstyle'

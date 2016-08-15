@@ -62,4 +62,4 @@ task copyToDistrib(type: Copy) {
 
 copyToDistrib.outputs.upToDateWhen {false}
 
-build.finalizedBy(copyToDistrib)
+assemble.finalizedBy(copyToDistrib)
