@@ -9,7 +9,7 @@ import echo.core.test_abstraction.elements.factories.WebFactory;
 /**
  * Created by Administrator on 6/3/2016.
  */
-public class vTeamSamplePage {
+public class VTeamSamplePage {
     private AutomationInfo info;
     public Button DisabledButton;
     public Button OpenAlertButton;
@@ -25,7 +25,7 @@ public class vTeamSamplePage {
     public Checkbox Checkbox100;
     public  WebElement div;
 
-    public vTeamSamplePage(AutomationInfo info) {
+    public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
         WebFactory web = new WebFactory(this.info);
         DisabledButton = (Button) web.create(Button.class, "button[id='disabled-button']");

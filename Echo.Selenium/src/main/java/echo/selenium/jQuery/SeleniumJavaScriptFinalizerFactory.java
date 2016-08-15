@@ -1,10 +1,5 @@
 package echo.selenium.jQuery;
 
-import echo.selenium.jQuery.IJavaScriptFinalizer;
-import echo.selenium.jQuery.IJavaScriptFinalizerFactory;
-import echo.selenium.jQuery.JQueryRegexPluginRegistration;
-import echo.selenium.jQuery.JavaScriptMinimizer;
-
 /**
  * The default <see cref="IJavaScriptFinalizerFactory"/> implementation for Web.
  */

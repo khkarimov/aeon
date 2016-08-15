@@ -29,7 +29,9 @@ public class InjectJQueryScripter extends JavaScriptFinalizer {
      *     echoCallback(echoFunction(echoNonCallbackArguments));
      */
     private static final String NeedJQueryScriptBefore = "var echoCallback=arguments[arguments.length-1];var echoNonCallbackArguments=arguments.length==1?[]:Array.prototype.slice.call(arguments,0,arguments.length-2);function echoFunction(){";
-    private static final String NeedJQueryScriptAfter = "}var echoJQueryLoaded=false;function echoOnFinishJQueryLoading(){if(echoJQueryLoaded)return;echoJQueryLoaded=true;var $=window.jQuery;echoCallback(echoFunction(echoNonCallbackArguments))}if(!window.jQuery){var script=document.createElement('script');script.type='text/javascript';script.src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';script.onreadystatechange=function(){if(this.readyState=='loaded'||this.readyState=='complete')echoOnFinishJQueryLoading()};script.onload=echoOnFinishJQueryLoading;document.getElementsByTagName('head')[0].appendChild(script)}else echoCallback(echoFunction(echoNonCallbackArguments));";
+    private static final String NeedJQueryScriptAfter = "}var echoJQueryLoaded=false;function echoOnFinishJQueryLoading(){if(echoJQueryLoaded)return;echoJQueryLoaded=true;var $=window.jQuery;echoCallback(echoFunction(echoNonCallbackArguments))}" +
+            "if(!window.jQuery){var script=document.createElement('script');script.type='text/javascript';script.src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';script.onreadystatechange=function(){if(this.readyState=='loaded'||this.readyState=='complete')" +
+            "echoOnFinishJQueryLoading()};script.onload=echoOnFinishJQueryLoading;document.getElementsByTagName('head')[0].appendChild(script)}else echoCallback(echoFunction(echoNonCallbackArguments));";
 
     /* JavaScript to be wrapped around non-JQuery strings
      *

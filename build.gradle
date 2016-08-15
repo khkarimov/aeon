@@ -16,4 +16,9 @@ task CopySeleniumPlugin(type: Copy) {
 
 build.finalizedBy(CopySeleniumPlugin)
 
-apply plugin: 'checkstyle'
+allprojects {
+    apply plugin: 'checkstyle'
+    checkstyle {
+        configFile = new File(rootDir, "checkstyle.xml")
+    }
+}

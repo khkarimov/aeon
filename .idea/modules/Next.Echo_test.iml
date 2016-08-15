@@ -18,11 +18,11 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
     <orderEntry type="library" name="Gradle: ro.fortsoft.pf4j:pf4j:0.13.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:2.53.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-firefox-driver:2.53.0" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:2.53.0" level="project" />
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.3" level="project" />
@@ -31,17 +31,17 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
     <orderEntry type="library" name="Gradle: ro.fortsoft.pf4j:pf4j:0.13.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-firefox-driver:2.53.0" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-ie-driver:2.53.0" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-firefox-driver:2.53.0" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-ie-driver:2.53.0" level="project" />
     <orderEntry type="module" module-name="Echo.Core_main" />
-    <orderEntry type="module" module-name="Echo.Automation.SampleTeam_main" />
     <orderEntry type="module" module-name="Echo.SampleContext_main" />
     <orderEntry type="module" module-name="Echo.Selenium_main" />
+    <orderEntry type="module" module-name="Echo.Automation.SampleTeam_main" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-firefox-driver:2.53.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:2.53.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: ro.fortsoft.pf4j:pf4j:0.13.1" level="project" />
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.3" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:2.53.0" level="project" />
@@ -50,6 +50,30 @@
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:2.53.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.7.1-1" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: ro.fortsoft.pf4j:pf4j:0.13.1" level="project" />
+    <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.7.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-ie-driver:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.7.1-1" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
+    <orderEntry type="library" name="Gradle: ro.fortsoft.pf4j:pf4j:0.13.1" level="project" />
+    <orderEntry type="library" name="Gradle: joda-time:joda-time:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-chrome-driver:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.7.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-ie-driver:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-support:2.53.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="Next.Echo_main" />
 </module>
