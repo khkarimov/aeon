@@ -67,9 +67,9 @@ public final class Sleep {
         }
     }
 
-    public static void Wait(int time) {
+    public static void Wait(int millis) {
         try {
-            Thread.sleep(time);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -210,7 +210,7 @@ public class CommandTesting {
         product.Browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
     }
 
-    @Test
+    @Ignore
     public void CookieTests() {
         product.Browser.GoToUrl("http://google.com");
         IWebCookie cookie = new IWebCookie() {
