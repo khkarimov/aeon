@@ -27,7 +27,7 @@ public class ClickAndHoldCommand extends WebControlCommand{
      * @param duration The duration in milliseconds
      */
     public ClickAndHoldCommand(ILog log, IBy selector, ICommandInitializer commandInitializer,int duration ) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("ClickAndHoldCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("ClickAndHoldCommand_Info"), selector, duration), selector, commandInitializer);
         this.duration = duration;
     }
 

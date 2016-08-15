@@ -14,7 +14,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public class MaximizeCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="MaximizeCommand"/> class.
+     * Initializes a new instance of the MaximizeCommand class.
      *
      * @param log The logger.
      */
