@@ -21,13 +21,13 @@ public class GoToUrlCommand extends CommandWithReturn {
     private URL url;
 
     /**
-     * Initializes a new instance of the <see cref="GoToUrlCommand"/> class.
+     * Initializes a new instance of the GoToUrlCommand class.
      *
      * @param log The logger.
      * @param url The title of the window.
      */
     public GoToUrlCommand(ILog log, URL url) {
-        super(log, String.format(Resources.getString("GoToUrlCommand_Info"), url));
+        super(log, String.format(Resources.getString("GoToUrlCommand_Info"), url.toString()));
         this.url = url;
     }
 

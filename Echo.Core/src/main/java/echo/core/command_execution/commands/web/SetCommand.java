@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
+import echo.core.common.Resources;
 import echo.core.common.exceptions.Select2Exception;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.WebSelectOption;
@@ -25,7 +26,7 @@ public class SetCommand extends WebControlCommand {
      * @param initializer
      */
     public SetCommand(ILog log, IBy selector, ICommandInitializer initializer, WebSelectOption selectOption, String value) {
-        super(log, "Setting", selector, initializer);
+        super(log, String.format(Resources.getString("SetCommand_Info"), value, selector), selector, initializer);
         this.selectOption = selectOption;
         this.value = value;
     }

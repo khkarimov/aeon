@@ -39,29 +39,4 @@ public class TextBox extends WebElement {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())
         ));
     }
-
-    public void RightClick(){
-        info.getCommandExecutionFacade().Execute(info, new RightClickCommand(
-                this.info.getLog(),
-                this.selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
-    }
-
-    public void Blur() {
-        info.getCommandExecutionFacade().Execute(info, new BlurCommand(
-                this.info.getLog(),
-                this.selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())
-        ));
-    }
-
-    public Object GetElementAttribute(String attributeName){
-        //We should ensure that the attribute name is valid
-        return info.getCommandExecutionFacade().Execute(info,
-                new GetElementAttributeCommand(
-                        info.getLog(),
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
-                        attributeName));
-    }
 }

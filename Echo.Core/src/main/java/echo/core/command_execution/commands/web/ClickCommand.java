@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
+import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.drivers.IWebDriver;
@@ -15,7 +16,7 @@ public class ClickCommand extends WebControlCommand {
      * Initializes a new instance of the <see cref="Command"/> class.
      */
     public ClickCommand(ILog log, IBy selector, ICommandInitializer initializer) {
-        super(log, "Clicking", selector, initializer);
+        super(log, String.format(Resources.getString("ClickCommand_Info"), selector), selector, initializer);
     }
 
     @Override

@@ -23,21 +23,4 @@ public class Image extends WebElement {
         this.info = info;
         this.selector = selector;
     }
-
-    public void DoubleClick(){
-        info.getCommandExecutionFacade().Execute(info,
-                new DoubleClickCommand(
-                        info.getLog(),
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
-    }
-
-    public void DragAndDrop(IBy targetElement) {
-        info.getCommandExecutionFacade().Execute(info,
-                new DragAndDropCommand(
-                        info.getLog(),
-                        selector,
-                        targetElement,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
-    }
 }
