@@ -14,9 +14,9 @@ page at http://checkstyle.sourceforge.net/config.html -->
         -->
     </module>
 
-    <!--<module name="NewlineAtEndOfFile">-->
-        <!--<property name="lineSeparator" value="lf"/>-->
-    <!--</module>-->
+    <module name="NewlineAtEndOfFile">
+        <property name="lineSeparator" value="lf"/>
+    </module>
 
     <module name="RegexpSingleline">
         <!-- Checks that FIXME is not used in comments.  TODO is preferred.
@@ -57,7 +57,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
         <module name="ImportOrder">
             <!-- Checks for out of order import statements. -->
             <property name="severity" value="error"/>
-            <property name="groups" value="android,com,echo,junit,net,org,ro,javax,java"/>
+            <property name="groups" value="android,com,echo,junit,main,net,org,ro,javax,java"/>
             <!-- This ensures that static imports go last. -->
             <property name="option" value="bottom"/>
             <property name="tokens" value="STATIC_IMPORT, IMPORT"/>

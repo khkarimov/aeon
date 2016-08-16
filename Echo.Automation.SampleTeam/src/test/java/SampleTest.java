@@ -145,10 +145,10 @@ public class SampleTest {
                 , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
         String[] notMessages = new String[]{"asdasdasd", "sss"};
         String[] values = new String[]{"0", "5"};
-        String[] Badvalues = new String[]{"13s"};
+        String[] badValues = new String[]{"13s"};
         product.Login.LanguageSelect.Has(texts, "option");
         product.Login.LanguageSelect.DoesNotHave(notMessages, "option");
-        product.Login.LanguageSelect.DoesNotHave(Badvalues, "option", "value");
+        product.Login.LanguageSelect.DoesNotHave(badValues, "option", "value");
         product.Login.LanguageSelect.Has(values, "option", "value");
         product.Login.LanguageSelect.HasOnly(texts, "option");
         product.Login.LanguageSelect.HasOnly(new String[]{"1"}, "option[value='1']", "value");
