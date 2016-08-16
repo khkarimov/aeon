@@ -276,4 +276,10 @@ public class CommandTesting {
         product.StartPage.TestCheckbox.Check();
         product.StartPage.TestCheckbox.Is("");
     }
+
+    @Test
+    public void TestVerifyWindowDoesNotExist(){
+        product.Browser.VerifyWindowDoesNotExistByTitle("fakeTitle");
+        product.Browser.VerifyWindowDoesNotExistByUrl("fakeUrl");
+    }
 }

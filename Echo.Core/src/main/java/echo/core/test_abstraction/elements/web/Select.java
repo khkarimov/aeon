@@ -86,14 +86,6 @@ public class Select extends WebElement {
         ));
     }
 
-    public void Click() {
-        info.getCommandExecutionFacade().Execute(info,
-                new ClickCommand(
-                        info.getLog(),
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
-    }
-
     public void HasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
         info.getCommandExecutionFacade().Execute(info,
                 new HasAllOptionsInOrderCommand(
@@ -109,5 +101,28 @@ public class Select extends WebElement {
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), comparisonType, null
                 ));
+    }
+
+    public void Selected() {
+        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
+    }
+
+    public void NotSelected() {
+        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
+    }
+
+    public void Set(WebSelectOption selectOption, String value){
+        info.getCommandExecutionFacade().Execute(info, new SetCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                selectOption,
+                value));
     }
 }

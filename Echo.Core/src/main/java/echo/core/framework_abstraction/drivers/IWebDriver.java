@@ -284,6 +284,8 @@ public interface IWebDriver extends IDriver {
      */
     String SwitchToWindowByTitle(UUID guid, String title);
 
+    String SwitchToWindowByUrl(UUID guid, String url);
+
     /**
      * Resizes the current window.
      *
@@ -703,6 +705,10 @@ public interface IWebDriver extends IDriver {
 
 //NOT IMPLEMENTED OR DEPRECATED COMMANDS
 
+
+    String WindowDoesNotExistByTitle(UUID guid, String windowTitle);
+
+    String WindowDoesNotExistByUrl(UUID guid, String url);
 //    /**
 //
 //   * Check the element.

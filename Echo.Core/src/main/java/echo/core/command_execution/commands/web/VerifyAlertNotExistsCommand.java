@@ -10,10 +10,8 @@ import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
- * <p>Asserts/Checks whether an alert exists. If your code makes an alert popup and after you close it you want to check whether it is the case this method will assert so.</p>
- * <p></p>
- * <p>Usage:</p>
- * <p>      Context.Alert.NotExists();</p>
+ * Asserts/Checks whether an alert exists. If your code makes an alert popup and after you close it you want to check whether it is the case this method will assert so.
+ * Usage: Context.Browser.VerifyAlertNotExists()
  */
 public class VerifyAlertNotExistsCommand extends Command {
     /**

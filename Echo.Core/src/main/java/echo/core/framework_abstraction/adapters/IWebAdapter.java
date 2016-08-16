@@ -843,4 +843,9 @@ public interface IWebAdapter extends IAdapter {
      * @param key The key to be sent.
      */
     void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
+
+    String WindowDoesNotExistByTitle(UUID guid, String windowTitile);
+
+    String WindowDoesNotExistByUrl(UUID guid, String url);
+
 }

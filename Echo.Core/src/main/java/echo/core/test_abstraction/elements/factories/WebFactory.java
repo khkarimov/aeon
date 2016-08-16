@@ -47,6 +47,9 @@ public class WebFactory implements IElementFactory {
         else if(elementType.equals(ListItem.class)){
             return new ListItem(info, By.CssSelector(selector));
         }
+        else if (elementType.equals(RadioButton.class)){
+            return new RadioButton(info, By.CssSelector(selector));
+        }
         else throw new UnsupportedElementException(elementType.getClass());
     }
 }

@@ -26,7 +26,7 @@ public class ClickAllElementsCommand extends WebControlCommand {
      * @param commandInitializer The command initializer.
      */
     public ClickAllElementsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("CheckCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("ClickAllElementsCommand_Info"), selector), selector, commandInitializer);
     }
 
     /**

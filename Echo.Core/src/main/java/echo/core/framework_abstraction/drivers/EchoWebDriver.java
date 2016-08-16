@@ -171,6 +171,11 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public String SwitchToWindowByUrl(UUID guid, String url) {
+        return adapter.SwitchToWindowByUrl(guid, url);
+    }
+
+    @Override
     public void Resize(UUID guid, Size size) {
         adapter.Resize(guid, size);
     }
@@ -307,6 +312,16 @@ public class EchoWebDriver implements IWebDriver {
     @Override
     public Collection <IWebCookie> GetAllCookies(UUID guid) {
         return adapter.GetAllCookies(guid);
+    }
+
+    @Override
+    public String WindowDoesNotExistByTitle(UUID guid, String windowTitle) {
+        return adapter.WindowDoesNotExistByTitle(guid, windowTitle);
+    }
+
+    @Override
+    public String WindowDoesNotExistByUrl(UUID guid, String url) {
+        return adapter.WindowDoesNotExistByUrl(guid, url);
     }
 
     @Override
