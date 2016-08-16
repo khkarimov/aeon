@@ -20,7 +20,6 @@ configurations {
 
 dependencies {
     compile project(':Echo.Core')
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 
     echo fileTree(dir: '../distrib/', include: 'Echo.Core-*.jar')
 }
@@ -41,6 +40,7 @@ jar {
 }
 
 task copyToDistrib(type: Copy) {
+    group 'copy'
     println('Copying output to distrib folder')
 
     def source = 'build/libs/' + base + '-' + version + '.jar'
