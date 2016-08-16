@@ -3,9 +3,7 @@ import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import main.Sample;
-import main.vTeamSamplePage;
 import org.junit.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static echo.core.test_abstraction.product.Echo.Launch;

@@ -307,7 +307,7 @@ public interface IWebDriver extends IDriver {
      * @param guid     A globally unique identifier associated with this call.
      * @param element The element to right click.
      */
-	void RightClick(UUID guid, WebControl element);
+    void RightClick(UUID guid, WebControl element);
 
     /**
      * Checks a checkbox.
@@ -330,7 +330,7 @@ public interface IWebDriver extends IDriver {
      * @param element  The web element to click.
      * @param duration Click for at least this long (in milliseconds).
      */
-	void ClickAndHold(UUID guid, WebControl element, int duration);
+    void ClickAndHold(UUID guid, WebControl element, int duration);
 
     /**
      * Checks that an element is enabled

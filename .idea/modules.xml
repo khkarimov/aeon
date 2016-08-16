@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Automation.SampleTeam/Echo.Automation.SampleTeam.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Automation.SampleTeam/Echo.Automation.SampleTeam.iml" group="Echo.Automation.SampleTeam" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Automation.SampleTeam/Echo.Automation.SampleTeam_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Automation.SampleTeam/Echo.Automation.SampleTeam_main.iml" group="Echo.Automation.SampleTeam" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Automation.SampleTeam/Echo.Automation.SampleTeam_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Automation.SampleTeam/Echo.Automation.SampleTeam_test.iml" group="Echo.Automation.SampleTeam" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Core/Echo.Core.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Core/Echo.Core.iml" group="Echo.Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Core/Echo.Core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Core/Echo.Core_main.iml" group="Echo.Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Core/Echo.Core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Core/Echo.Core_test.iml" group="Echo.Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.SampleContext/Echo.SampleContext.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.SampleContext/Echo.SampleContext.iml" group="Echo.SampleContext" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.SampleContext/Echo.SampleContext_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.SampleContext/Echo.SampleContext_main.iml" group="Echo.SampleContext" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.SampleContext/Echo.SampleContext_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.SampleContext/Echo.SampleContext_test.iml" group="Echo.SampleContext" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Selenium/Echo.Selenium.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Selenium/Echo.Selenium.iml" group="Echo.Selenium" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Selenium/Echo.Selenium_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Selenium/Echo.Selenium_main.iml" group="Echo.Selenium" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Echo.Selenium/Echo.Selenium_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Echo.Selenium/Echo.Selenium_test.iml" group="Echo.Selenium" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Next.Echo.iml" filepath="$PROJECT_DIR$/.idea/modules/Next.Echo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Next.Echo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Next.Echo_main.iml" group="Next.Echo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Next.Echo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Next.Echo_test.iml" group="Next.Echo" />
+    </modules>
+  </component>
+</project>

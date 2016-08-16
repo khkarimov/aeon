@@ -7,7 +7,6 @@ repositories {
 }
 
 dependencies {
-    compile group: 'junit', name: 'junit', version: '4.11'
     compile project('Echo.Selenium')
     compile project('Echo.Core')
     compile project('Echo.SampleContext')
@@ -15,6 +14,7 @@ dependencies {
 
 //Copies dependencies into Distrib folder along with build artifacts.
 task CopyDependencies(type: Copy) {
+    group 'copy'
     into 'distrib'
     from configurations.getByName("compile") {
         exclude "Echo.Selenium-*.jar"
@@ -23,34 +23,33 @@ task CopyDependencies(type: Copy) {
 
 //Copy plugin .zip into Plugins folder
 task CopyPluginToDistrib(type: Copy) {
-    into 'plugins'
+    group 'copy'
+    into 'distrib'
     from 'Echo.Selenium/build/libs'
     include '*.zip'
 }
 
 //Copy selenium plugin into SampleTeam plugins folder
 task CopySeleniumPlugin(type: Copy) {
-    group 'build'
+    group 'copy'
     from 'Echo.Selenium/build/libs'
     into 'Echo.Automation.SampleTeam/plugins'
     include '*.zip'
 }
 
-task cleanDistrib(type: Delete) {
-    delete 'distrib'
-    delete 'plugins'
-}
-
 CopySeleniumPlugin.dependsOn(CopyDependencies)
 CopyDependencies.dependsOn(CopyPluginToDistrib)
 
-assemble.dependsOn(cleanDistrib)
+assemble.dependsOn(clean)
 assemble.finalizedBy(CopySeleniumPlugin)
-
-build.dependsOn(cleanDistrib)
-build.finalizedBy(CopySeleniumPlugin)
 
 clean {
     delete 'distrib'
-    delete 'plugins'
+}
+
+allprojects {
+    apply plugin: 'checkstyle'
+    checkstyle {
+        configFile = new File(rootDir, "checkstyle.xml")
+    }
 }

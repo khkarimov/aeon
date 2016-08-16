@@ -1,6 +1,5 @@
 package echo.core.common.helpers;
 
-import com.sun.org.apache.xml.internal.utils.StringComparable;
 import echo.core.common.exceptions.ContainsWhiteSpaceException;
 
 /**

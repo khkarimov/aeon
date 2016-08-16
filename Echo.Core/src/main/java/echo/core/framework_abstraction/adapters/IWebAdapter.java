@@ -530,7 +530,7 @@ public interface IWebAdapter extends IAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @param element The checkbox to be checked.
      */
-	void CheckElement(UUID guid, WebControl element);
+    void CheckElement(UUID guid, WebControl element);
 
     /**
      * Unchecks a checkbox
@@ -586,7 +586,7 @@ public interface IWebAdapter extends IAdapter {
      * @param guid A globally unique identifier associated with this call.
      * @param element The web element.
      */
-	void Exists(UUID guid, WebControl element);
+    void Exists(UUID guid, WebControl element);
 
     /**
      * If this method was reached then the element exists when it should not.

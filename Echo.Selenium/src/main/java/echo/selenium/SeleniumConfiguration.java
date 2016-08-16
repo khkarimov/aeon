@@ -28,7 +28,7 @@ public class SeleniumConfiguration extends Configuration {
         System.setProperty("user.chromeDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\chromedriver.exe");
         System.setProperty("user.ieDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\IEDriverServer.exe");
         this.chromeDirectory = System.getProperty("user.dir") +  "\\lib\\chromedriver.exe";
-        this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe" ;
+        this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
         this.enableSeleniumGrid = false;
         this.language = "en-us";
         this.moveMouseToOrigin = true;
