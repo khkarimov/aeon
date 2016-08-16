@@ -33,6 +33,6 @@ public class MaximizeCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).Maximize(getGuid());
+        ((IWebDriver) driver).Maximize(getGuid());
     }
 }

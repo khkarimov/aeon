@@ -16,14 +16,14 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 public class VerifyTitleCommand extends Command {
     private String comparingText;
 
-    public VerifyTitleCommand(ILog log, String comparingText){
+    public VerifyTitleCommand(ILog log, String comparingText) {
         super(log, Resources.getString("VerifyTitleCommand_info"));
         this.comparingText = comparingText;
     }
 
     @Override
     protected void DriverDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         ((IWebDriver) driver).VerifyTitle(getGuid(), comparingText);

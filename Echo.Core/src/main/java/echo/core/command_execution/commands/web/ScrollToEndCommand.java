@@ -23,7 +23,7 @@ public class ScrollToEndCommand extends Command {
      *
      * @param log The logger.
      */
-    public ScrollToEndCommand(ILog log){
+    public ScrollToEndCommand(ILog log) {
         super(log, Resources.getString("ScrollToEndCommand_Info"));
     }
 
@@ -33,7 +33,7 @@ public class ScrollToEndCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver){
+    protected void DriverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

@@ -2,15 +2,13 @@ package main;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.Element;
-import echo.core.test_abstraction.elements.web.*;
 import echo.core.test_abstraction.elements.factories.WebFactory;
+import echo.core.test_abstraction.elements.web.*;
 
 /**
  * Created by Administrator on 6/3/2016.
  */
 public class VTeamSamplePage {
-    private AutomationInfo info;
     public Button DisabledButton;
     public Button OpenAlertButton;
     public Image UltimateLogoImage;
@@ -23,7 +21,8 @@ public class VTeamSamplePage {
     public Link TryLink;
     public Select DropDown;
     public Checkbox Checkbox100;
-    public  WebElement div;
+    public WebElement div;
+    private AutomationInfo info;
 
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;

@@ -3,13 +3,6 @@ package echo.core.common.helpers;
 import java.util.Locale;
 
 public final class OsCheck {
-    /**
-     * types of Operating Systems
-     */
-    public enum OSType {
-        Windows, MacOS, Linux, Other
-    }
-
     protected static OSType detectedOS;
 
     /**
@@ -32,5 +25,12 @@ public final class OsCheck {
             }
         }
         return detectedOS;
+    }
+
+    /**
+     * types of Operating Systems
+     */
+    public enum OSType {
+        Windows, MacOS, Linux, Other
     }
 }

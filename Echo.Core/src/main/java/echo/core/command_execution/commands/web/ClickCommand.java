@@ -4,8 +4,8 @@ import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.drivers.IWebDriver;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
  * Clicks an element

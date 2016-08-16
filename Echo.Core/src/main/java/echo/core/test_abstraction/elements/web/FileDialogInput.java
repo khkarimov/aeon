@@ -4,7 +4,6 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
@@ -15,13 +14,13 @@ public class FileDialogInput extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
-    public FileDialogInput(AutomationInfo info, IBy selector){
+    public FileDialogInput(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
-    public void OpenFileDialog(){
+    public void OpenFileDialog() {
         info.getCommandExecutionFacade().Execute(info,
                 new OpenFileDialogCommand(
                         info.getLog(),
@@ -33,9 +32,10 @@ public class FileDialogInput extends WebElement {
      * Takes in the path of a file
      * And then types in the path of the file.
      * REQUIRES OpenFileDialog to be called first.
+     *
      * @param path
      */
-    public void SelectFileDialog(String path){
+    public void SelectFileDialog(String path) {
         info.getCommandExecutionFacade().Execute(info,
                 new SelectFileDialogCommand(
                         info.getLog(),
@@ -49,9 +49,10 @@ public class FileDialogInput extends WebElement {
      * Clicks upload file button to open dialog box,
      * And then types in the path of the file using the keyboard.
      * DOES NOT REQUIRE OpenFileDialog to be called first.
+     *
      * @param path
      */
-    public void UploadFileDialog(String path){
+    public void UploadFileDialog(String path) {
         info.getCommandExecutionFacade().Execute(info,
                 new UploadFileDialogCommand(
                         info.getLog(),

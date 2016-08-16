@@ -4,13 +4,8 @@ package echo.core.test_abstraction.models;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.QuitCommand;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
-import echo.core.command_execution.commands.web.AddCookieCommand;
-import echo.core.command_execution.commands.web.GoToUrlCommand;
 import echo.core.command_execution.commands.web.*;
-import echo.core.command_execution.commands.web.ScrollToEndCommand;
-import echo.core.command_execution.commands.web.ScrollToTopCommand;
 import echo.core.common.helpers.URLUtil;
-import echo.core.common.logging.ILog;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.interfaces.IBy;
@@ -51,6 +46,7 @@ public class Browser {
 
     /**
      * Deletes a cookie.
+     *
      * @param cookie The name of the cookie to be deleted.
      */
     public void DeleteCookie(String cookie) {
@@ -66,6 +62,7 @@ public class Browser {
 
     /**
      * Gets the list of all the cookies.
+     *
      * @return A collection of all the cookies in the browser.
      */
     public Collection<IWebCookie> GetAllCookies() {
@@ -74,6 +71,7 @@ public class Browser {
 
     /**
      * Returns the enumerable BrowserType representing the current browser.
+     *
      * @return The BrowserType for the current browser.
      */
     public BrowserType GetBrowserType() {
@@ -81,7 +79,8 @@ public class Browser {
     }
 
     /**
-     *Get the body text of the alert that is raised on a page.
+     * Get the body text of the alert that is raised on a page.
+     *
      * @return The description of the alert dialog box.
      */
     public String GetAlertText() {
@@ -90,6 +89,7 @@ public class Browser {
 
     /**
      * Gets a cookie.
+     *
      * @param name The name of the cookie to be retrieved.
      * @return The specified cookie.
      */
@@ -113,6 +113,7 @@ public class Browser {
 
     /**
      * Navigates the browser the URL.
+     *
      * @param url The URL the navigate to.
      */
     public void GoToUrl(String url) {
@@ -128,10 +129,11 @@ public class Browser {
 
     /**
      * Modifies the value of a cookie.
-     * @param name The name of the cookie to be modified.
+     *
+     * @param name  The name of the cookie to be modified.
      * @param value The value of the cookie.
      */
-    public void ModifyCookie(String name, String value){
+    public void ModifyCookie(String name, String value) {
         info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(info.getLog(), name, value));
     }
 
@@ -151,36 +153,39 @@ public class Browser {
 
     /**
      * Changes the browser window size.
+     *
      * @param size The new size of the browser window based off the enumerable BrowserSize.
      */
-    public void Resize(BrowserSize size){
+    public void Resize(BrowserSize size) {
         info.getCommandExecutionFacade().Execute(info, new ResizeCommand(info.getLog(), size));
     }
 
     /**
      * Scrolls to the top of the current page.
      */
-    public void ScrollToTop(){
+    public void ScrollToTop() {
         info.getCommandExecutionFacade().Execute(info, new ScrollToTopCommand(info.getLog()));
     }
 
     /**
      * Scrolls to the bottom of the current page.
      */
-    public void ScrollToEnd(){
+    public void ScrollToEnd() {
         info.getCommandExecutionFacade().Execute(info, new ScrollToEndCommand(info.getLog()));
     }
 
     /**
      * Replicates sending keyboard strokes to the alert in the cirrent browser window.
+     *
      * @param keys The values to send to the alert.
      */
-    public void SendKeysToAlert(String keys){
+    public void SendKeysToAlert(String keys) {
         info.getCommandExecutionFacade().Execute(info, new SendKeysToAlertCommand(info.getLog(), keys));
     }
 
     /**
      * Switches to the window with the corresponding title.
+     *
      * @param title The title of the window to switch to
      */
     public void SwitchToWindowByTitle(String title) {
@@ -189,60 +194,61 @@ public class Browser {
 
     /**
      * Switches to the window with the corresponding URL.
+     *
      * @param url The URL of the window to switch to.
      */
-    public void SwitchToWindowByUrl(String url){
+    public void SwitchToWindowByUrl(String url) {
         info.getCommandExecutionFacade().Execute(info, new SwitchToWindowByUrlCommand(info.getLog(), url));
     }
 
     /**
      * Asserts that an alert is not present on the current page.
      */
-    public void VerifyAlertExists(){
+    public void VerifyAlertExists() {
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertExistsCommand(info.getLog()));
     }
 
     /**
      * Asserts that an alert is present on the current page.
      */
-    public void VerifyAlertNotExists(){
+    public void VerifyAlertNotExists() {
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertNotExistsCommand(info.getLog()));
     }
 
     /**
      * Asserts the description of the alert on the current page.
+     *
      * @param comparingText The expected description on the alert.
      */
-    public void VerifyAlertText(String comparingText){
+    public void VerifyAlertText(String comparingText) {
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextCommand(info.getLog(), comparingText));
     }
 
     /**
-     *
      * @param comparingText
      * @param caseSensitive
      */
-    public void VerifyAlertTextLike(String comparingText, boolean caseSensitive){
+    public void VerifyAlertTextLike(String comparingText, boolean caseSensitive) {
         info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextLikeCommand(info.getLog(), comparingText, caseSensitive));
     }
 
-    public void VerifyTitle(String comparingTitle){
+    public void VerifyTitle(String comparingTitle) {
         info.getCommandExecutionFacade().Execute(info, new VerifyTitleCommand(info.getLog(), comparingTitle));
     }
 
-    public void VerifyURL(String comparingURL){
+    public void VerifyURL(String comparingURL) {
         info.getCommandExecutionFacade().Execute(info, new VerifyUrlCommand(info.getLog(), comparingURL));
     }
 
-    public void VerifyWindowDoesNotExistByTitle(String windowTitle){
+    public void VerifyWindowDoesNotExistByTitle(String windowTitle) {
         info.getCommandExecutionFacade().Execute(info, new WindowDoesNotExistByTitleCommand(info.getLog(), windowTitle));
     }
 
-    public void VerifyWindowDoesNotExistByUrl(String url){
+    public void VerifyWindowDoesNotExistByUrl(String url) {
         info.getCommandExecutionFacade().Execute(info, new WindowDoesNotExistByUrlCommand(info.getLog(), url));
     }
 
-    public void ClickAllElementsCommand(IBy selector){
+    public void ClickAllElementsCommand(IBy selector) {
         info.getCommandExecutionFacade().Execute(
                 info,
                 new ClickAllElementsCommand(

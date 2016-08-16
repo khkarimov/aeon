@@ -10,8 +10,8 @@ public interface IWebSelectorFinder {
     /**
      * Finds a web element utilizing a web driver.
      *
-     * @param driver The facade for the framework abstraction layer.
-     * @param selector                   Element locator.
+     * @param driver   The facade for the framework abstraction layer.
+     * @param selector Element locator.
      * @return An <see cref="IWebElementAdapter"/>.
      */
     IBy FindSelector(IWebDriver driver, IBy selector);

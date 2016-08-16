@@ -17,6 +17,7 @@ public class GetAllCookiesCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the <see cref="GetAllCookiesCommand"/> class.
+     *
      * @param log The logger.
      */
     public GetAllCookiesCommand(ILog log) {
@@ -25,6 +26,7 @@ public class GetAllCookiesCommand extends CommandWithReturn {
 
     /**
      * Provides the logic for the command.
+     *
      * @param driver The framework abstraction facade.
      * @return Returns a Collection<IWebCookie>.
      */

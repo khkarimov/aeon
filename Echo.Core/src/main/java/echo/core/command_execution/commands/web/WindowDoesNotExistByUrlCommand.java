@@ -12,14 +12,14 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 public class WindowDoesNotExistByUrlCommand extends CommandWithReturn {
     private String url;
 
-    public WindowDoesNotExistByUrlCommand(ILog log, String url){
+    public WindowDoesNotExistByUrlCommand(ILog log, String url) {
         super(log, Resources.getString("WindowDoesNotExistByUrlCommand_info"));
         this.url = url;
     }
 
     @Override
     protected Object CommandDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         return ((IWebDriver) driver).WindowDoesNotExistByUrl(getGuid(), url);

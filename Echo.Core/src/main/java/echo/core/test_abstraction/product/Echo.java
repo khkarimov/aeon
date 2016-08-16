@@ -1,16 +1,15 @@
 package echo.core.test_abstraction.product;
 
-import echo.core.common.web.BrowserType;
 import echo.core.common.logging.ILog;
 import echo.core.common.logging.Log;
+import echo.core.common.web.BrowserType;
+import echo.core.framework_abstraction.adapters.IAdapterExtension;
+import ro.fortsoft.pf4j.DefaultPluginManager;
+import ro.fortsoft.pf4j.PluginManager;
 
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
-
-import echo.core.framework_abstraction.adapters.IAdapterExtension;
-import ro.fortsoft.pf4j.DefaultPluginManager;
-import ro.fortsoft.pf4j.PluginManager;
 
 /**
  * Created by DionnyS on 4/13/2016.
@@ -49,8 +48,8 @@ public class Echo {
         System.out.println("plugins dir: " + System.getProperty("pf4j.pluginsDir", "plugins"));
 
         List<IAdapterExtension> extensions = pluginManager.getExtensions(IAdapterExtension.class);
-        for (IAdapterExtension extension: extensions) {
-            if(extension.getProvidedCapability() == product.getRequestedCapability()){
+        for (IAdapterExtension extension : extensions) {
+            if (extension.getProvidedCapability() == product.getRequestedCapability()) {
                 return extension;
             }
         }

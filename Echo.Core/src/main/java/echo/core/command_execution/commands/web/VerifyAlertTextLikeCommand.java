@@ -13,7 +13,7 @@ public class VerifyAlertTextLikeCommand extends Command {
     private String comparingText;
     private boolean caseSensitive;
 
-    public VerifyAlertTextLikeCommand(ILog log, String comparingText, boolean caseSensitive){
+    public VerifyAlertTextLikeCommand(ILog log, String comparingText, boolean caseSensitive) {
         super(log, Resources.getString("VerifyAlertTextLikeCommand_info"));
         this.comparingText = comparingText;
         this.caseSensitive = caseSensitive;
@@ -21,7 +21,7 @@ public class VerifyAlertTextLikeCommand extends Command {
 
     @Override
     protected void DriverDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         ((IWebDriver) driver).VerifyAlertTextLike(getGuid(), comparingText, caseSensitive);

@@ -18,7 +18,8 @@ public class GetCookieCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the <see cref="GetAllCookiesCommand"/> class.
-     * @param log The logger.
+     *
+     * @param log  The logger.
      * @param name The name of the cookie to get.
      */
     public GetCookieCommand(ILog log, String name) {
@@ -28,6 +29,7 @@ public class GetCookieCommand extends CommandWithReturn {
 
     /**
      * Provides the logic for the command.
+     *
      * @param driver The framework abstraction facade.
      * @return A IWebCookie representing the cookie.
      */

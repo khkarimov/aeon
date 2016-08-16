@@ -1,7 +1,7 @@
 package echo.core.test_abstraction.product;
 
-import echo.core.common.web.BrowserType;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
 import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
@@ -14,7 +14,7 @@ public class Configuration {
     private BrowserType browserType;
     private ILog log;
 
-    public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D>driver, Class<A> adapter) {
+    public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) {
         this.driver = driver;
         this.adapter = adapter;
     }

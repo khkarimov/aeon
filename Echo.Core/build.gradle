@@ -58,14 +58,13 @@ task copyToDistrib(type: Copy) {
 
     def source = 'build/libs/' + base + '-' + version + '.jar'
     def destination = '../distrib'
-    def distribFolder =  new File('../distrib', '')
+    def distribFolder = new File('../distrib', '')
 
-    if(!distribFolder.exists()) {
+    if (!distribFolder.exists()) {
         println('Creating distrib folder')
 
         distribFolder.mkdir()
-    }
-    else {
+    } else {
         println('Distrib exists')
     }
 
@@ -73,6 +72,6 @@ task copyToDistrib(type: Copy) {
     into destination
 }
 
-copyToDistrib.outputs.upToDateWhen {false}
+copyToDistrib.outputs.upToDateWhen { false }
 
 assemble.finalizedBy(copyToDistrib)

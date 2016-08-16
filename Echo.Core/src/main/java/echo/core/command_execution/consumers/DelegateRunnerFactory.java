@@ -3,7 +3,6 @@ package echo.core.command_execution.consumers;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.consumers.interfaces.IDelegateRunner;
 import echo.core.command_execution.consumers.interfaces.IDelegateRunnerFactory;
-import echo.core.common.web.BrowserType;
 import echo.core.common.helpers.Clock;
 import echo.core.common.helpers.IClock;
 import echo.core.framework_abstraction.drivers.IDriver;

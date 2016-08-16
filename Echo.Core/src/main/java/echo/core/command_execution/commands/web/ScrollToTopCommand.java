@@ -4,10 +4,8 @@ package echo.core.command_execution.commands.web;
  */
 
 import echo.core.command_execution.commands.Command;
-import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
@@ -18,13 +16,13 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>      Context.Browser.ScrollToTop();</p>
  */
 
-public class ScrollToTopCommand extends Command{
+public class ScrollToTopCommand extends Command {
     /**
      * Initializes a new instance of the <see cref="ScrollToTopCommand"/> class.
      *
      * @param log The logger.
      */
-    public ScrollToTopCommand(ILog log){
+    public ScrollToTopCommand(ILog log) {
         super(log, Resources.getString("ScrollToTopCommand_Info"));
     }
 
@@ -34,7 +32,7 @@ public class ScrollToTopCommand extends Command{
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver){
+    protected void DriverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

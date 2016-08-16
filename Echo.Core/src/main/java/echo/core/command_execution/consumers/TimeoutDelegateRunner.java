@@ -1,7 +1,5 @@
 package echo.core.command_execution.consumers;
 
-import java.awt.Image;
-
 import echo.core.command_execution.consumers.interfaces.IDelegateRunner;
 import echo.core.common.Resources;
 import echo.core.common.exceptions.TimeoutExpiredException;
@@ -11,6 +9,7 @@ import echo.core.framework_abstraction.drivers.IDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.function.Consumer;

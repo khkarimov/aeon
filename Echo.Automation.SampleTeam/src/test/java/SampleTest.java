@@ -3,7 +3,8 @@ import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import main.Sample;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
@@ -19,7 +20,7 @@ public class SampleTest {
     public void SetUp() {
         product = Launch(Sample.class, BrowserType.Chrome);
         product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
-        }
+    }
 
     @After
     public void TearDown() {
@@ -28,14 +29,14 @@ public class SampleTest {
 
     @Test
     public void TestGoBackGoForward_01() {
-        String [] texts = {"English (USA)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (ITA)", "Melayu (MYS)"
-        , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
-        String [] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
-        String [] values = {"1", "2"};
-        String [] valuesShouldFail = {"-12", "Blue"};
+        String[] texts = {"English (USA)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Italiano (ITA)", "Melayu (MYS)"
+                , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
+        String[] shouldfail = {"Klingon", "African Clicky Noises", "Reptilian Hissing"};
+        String[] values = {"1", "2"};
+        String[] valuesShouldFail = {"-12", "Blue"};
         product.Login.LanguageSelect.Click();
-        product.Login.LanguageSelect.HasOptions(texts, null,  WebSelectOption.Text);
-        product.Login.LanguageSelect.HasOptions(values, null,  WebSelectOption.Value);
+        product.Login.LanguageSelect.HasOptions(texts, null, WebSelectOption.Text);
+        product.Login.LanguageSelect.HasOptions(values, null, WebSelectOption.Value);
         product.Login.LanguageSelect.DoesNotHaveOptions(shouldfail, null, WebSelectOption.Text);
         product.Login.LanguageSelect.DoesNotHaveOptions(valuesShouldFail, null, WebSelectOption.Value);
         product.Login.LoginButton.Click();
@@ -113,24 +114,25 @@ public class SampleTest {
     }
 
     @Test
-    public void TestGetElementAttributeWithTextBoxNameAttribute(){
+    public void TestGetElementAttributeWithTextBoxNameAttribute() {
         String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
         System.out.println("User Name text box name value: " + testAttributeValues);
     }
 
     @Test
-    public void TestDragAndDropNotUsingHTML5Events(){
+    public void TestDragAndDropNotUsingHTML5Events() {
         product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
         product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
     }
+
     @Test
     public void TestHasElementsInOrder() {
-        String [] options = new String [] {"English (USA)", "Italiano (ITA)", "Melayu (MYS)"};
-        String [] values = new String [] {"0", "5", "13"};
-        String [] badValues = new String [] {"0", "13", "5"};
-        String [] badOptions = new String [] {"English (USA)", "Melayu (MYS)", "Italiano (ITA)"};
-        String [] value = new String [] {"0"};
-        String [] option = new String [] {"English (USA)"};
+        String[] options = new String[]{"English (USA)", "Italiano (ITA)", "Melayu (MYS)"};
+        String[] values = new String[]{"0", "5", "13"};
+        String[] badValues = new String[]{"0", "13", "5"};
+        String[] badOptions = new String[]{"English (USA)", "Melayu (MYS)", "Italiano (ITA)"};
+        String[] value = new String[]{"0"};
+        String[] option = new String[]{"English (USA)"};
         product.Login.LanguageSelect.HasOptionsInOrder(options, WebSelectOption.Text);
         product.Login.LanguageSelect.HasOptionsInOrder(values, WebSelectOption.Value);
         product.Login.LanguageSelect.HasOptionsInOrder(value, WebSelectOption.Value);
@@ -139,17 +141,17 @@ public class SampleTest {
 
     @Test
     public void TestHas() {
-        String [] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MYS)"
+        String[] texts = {"English (USA)", "English (GBR)", "English (CAN)", "Italiano (ITA)", "Français (CAN)", "Español (USA)", "Português (BRA)", "Deutsch (DEU)", "Nederlands (NLD)", "Français (FRA)", "Melayu (MYS)"
                 , "Pilipino (PHL)", "Dansk (DNK)", "Svenska (SWE)"};
-        String [] notMessages = new String [] {"asdasdasd", "sss"};
-        String [] values = new String [] {"0", "5"};
-        String [] Badvalues = new String [] {"13s"};
+        String[] notMessages = new String[]{"asdasdasd", "sss"};
+        String[] values = new String[]{"0", "5"};
+        String[] Badvalues = new String[]{"13s"};
         product.Login.LanguageSelect.Has(texts, "option");
         product.Login.LanguageSelect.DoesNotHave(notMessages, "option");
         product.Login.LanguageSelect.DoesNotHave(Badvalues, "option", "value");
         product.Login.LanguageSelect.Has(values, "option", "value");
         product.Login.LanguageSelect.HasOnly(texts, "option");
-        product.Login.LanguageSelect.HasOnly(new String [] {"1"}, "option[value='1']", "value");
+        product.Login.LanguageSelect.HasOnly(new String[]{"1"}, "option[value='1']", "value");
         product.Login.PasswordTextBox.Is("ctl00_Content_Login1_Password", "id");
     }
 }

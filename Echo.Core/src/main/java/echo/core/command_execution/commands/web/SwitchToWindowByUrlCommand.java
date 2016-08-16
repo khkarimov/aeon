@@ -12,13 +12,14 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 public class SwitchToWindowByUrlCommand extends CommandWithReturn {
     private String url;
 
-    public SwitchToWindowByUrlCommand(ILog log, String url){
+    public SwitchToWindowByUrlCommand(ILog log, String url) {
         super(log, Resources.getString("SwitchToWindowByUrlCommand_info"));
         this.url = url;
     }
+
     @Override
     protected Object CommandDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         return ((IWebDriver) driver).SwitchToWindowByUrl(getGuid(), url);

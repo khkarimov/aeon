@@ -18,13 +18,6 @@ public class By implements IBy {
     }
 
     /**
-     * Gets the CSS selector.
-     */
-    protected final String getSelector() {
-        return selector;
-    }
-
-    /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
@@ -52,6 +45,13 @@ public class By implements IBy {
      */
     public static ByJQuery JQuery(ByJQuery obj) {
         return new ByJQuery(obj);
+    }
+
+    /**
+     * Gets the CSS selector.
+     */
+    protected final String getSelector() {
+        return selector;
     }
 
     /**

@@ -7,7 +7,6 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
-import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -21,8 +20,9 @@ public class ClickAllElementsCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the ClickAllElementsCommand.
-     * @param log The logger.
-     * @param selector The selector.
+     *
+     * @param log                The logger.
+     * @param selector           The selector.
      * @param commandInitializer The command initializer.
      */
     public ClickAllElementsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
@@ -31,7 +31,8 @@ public class ClickAllElementsCommand extends WebControlCommand {
 
     /**
      * Provides the logic for the command.
-     * @param driver The web driver.
+     *
+     * @param driver  The web driver.
      * @param control The web control.
      */
     @Override

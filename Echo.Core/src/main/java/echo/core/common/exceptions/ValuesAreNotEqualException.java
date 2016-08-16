@@ -9,11 +9,11 @@ import java.io.Serializable;
  */
 public class ValuesAreNotEqualException extends RuntimeException implements Serializable {
 
-    public ValuesAreNotEqualException(String value, String comparingValue){
+    public ValuesAreNotEqualException(String value, String comparingValue) {
         super(Resources.getString("ValuesAreNotEqualException_ctor_DefaultMessage") + " " + value + " does not equal " + comparingValue);
     }
 
-    public ValuesAreNotEqualException(String value, String expected, String attribute){
+    public ValuesAreNotEqualException(String value, String expected, String attribute) {
         super(Resources.getString("ValuesAreNotEqualException_ctor_DefaultMessage") + " " + value + " " + expected + " " + attribute);
     }
 }

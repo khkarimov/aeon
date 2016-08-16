@@ -5,7 +5,9 @@ import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.interfaces.IByJQuery;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -14,6 +16,19 @@ import java.util.stream.Collectors;
  * Class for selecting elements with jQuery.
  */
 public class ByJQuery implements IBy, IByJQuery {
+    /**
+     * Gets the function name.
+     */
+    private String function;
+    /**
+     * Gets the parameters for the function.
+     */
+    private Iterable<Parameter> Parameters;
+    /**
+     * Gets the previous function.
+     */
+    private ByJQuery Predecessor;
+
     /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
@@ -48,45 +63,6 @@ public class ByJQuery implements IBy, IByJQuery {
         setFunction(function);
         setParameters(Arrays.asList(parameters).stream().map(x -> new Parameter(x)).collect(Collectors.toList()));
         setPredecessor(predecessor);
-    }
-
-    /**
-     * Gets the function name.
-     */
-    private String function;
-
-    protected final String getFunction() {
-        return function;
-    }
-
-    private void setFunction(String value) {
-        function = value;
-    }
-
-    /**
-     * Gets the parameters for the function.
-     */
-    private Iterable<Parameter> Parameters;
-
-    protected final Iterable<Parameter> getParameters() {
-        return Parameters;
-    }
-
-    private void setParameters(Iterable<Parameter> value) {
-        Parameters = value;
-    }
-
-    /**
-     * Gets the previous function.
-     */
-    private ByJQuery Predecessor;
-
-    protected final ByJQuery getPredecessor() {
-        return Predecessor;
-    }
-
-    private void setPredecessor(ByJQuery value) {
-        Predecessor = value;
     }
 
     /**
@@ -148,6 +124,30 @@ public class ByJQuery implements IBy, IByJQuery {
      */
     public static ByJQueryWithArithmeticOperatorOverload OpSubtraction(ByJQuery obj, int constant) {
         return new ByJQueryWithArithmeticOperatorOverload(String.format("%1$s - %2$s", obj, constant));
+    }
+
+    protected final String getFunction() {
+        return function;
+    }
+
+    private void setFunction(String value) {
+        function = value;
+    }
+
+    protected final Iterable<Parameter> getParameters() {
+        return Parameters;
+    }
+
+    private void setParameters(Iterable<Parameter> value) {
+        Parameters = value;
+    }
+
+    protected final ByJQuery getPredecessor() {
+        return Predecessor;
+    }
+
+    private void setPredecessor(ByJQuery value) {
+        Predecessor = value;
     }
 
     /**

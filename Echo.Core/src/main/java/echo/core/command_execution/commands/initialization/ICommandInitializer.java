@@ -12,5 +12,6 @@ import java.util.function.Consumer;
  */
 public interface ICommandInitializer {
     Consumer<IDriver> SetContext(UUID guid);
+
     Control FindElement(UUID guid, IDriver driver, IBy selector);
 }

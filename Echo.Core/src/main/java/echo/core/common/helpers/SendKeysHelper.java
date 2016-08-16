@@ -8,26 +8,21 @@ import java.awt.event.KeyEvent;
 /**
  * Created by Salvador Gandara on 6/28/2016.
  */
-public class SendKeysHelper{
+public class SendKeysHelper {
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();
 
     public static void SendKeysToKeyboard(String stringToSend) throws AWTException {
         Robot robot = new Robot();
         robot.setAutoDelay(50);
-        for(int i =0; i< stringToSend.length(); i++)
-        {
+        for (int i = 0; i < stringToSend.length(); i++) {
             char character = stringToSend.charAt(i);
-            if(!Character.isLetter(character))
-            {
-                if(Character.isDigit(character))
-                {
+            if (!Character.isLetter(character)) {
+                if (Character.isDigit(character)) {
                     int n = KeyEvent.getExtendedKeyCodeForChar(character);
                     robot.keyPress(n);
                     robot.keyRelease(n);
-                }
-                else{
-                    switch(character)
-                    {
+                } else {
+                    switch (character) {
                         case ':':
                             robot.keyPress(KeyEvent.VK_SHIFT);
                             robot.keyPress(KeyEvent.VK_SEMICOLON);
@@ -56,22 +51,19 @@ public class SendKeysHelper{
                             robot.keyPress(KeyEvent.VK_SPACE);
                             robot.keyRelease(KeyEvent.VK_SPACE);
                             break;
-                        default: throw new UnsupportedSpecialCharacterException(character);
+                        default:
+                            throw new UnsupportedSpecialCharacterException(character);
 
                     }
                 }
-            }
-            else
-            {
+            } else {
                 int n = KeyEvent.getExtendedKeyCodeForChar(character);
-                if(Character.isUpperCase(character))
-                {
+                if (Character.isUpperCase(character)) {
                     robot.keyPress(KeyEvent.VK_SHIFT);
                     robot.keyPress(n);
                     robot.keyRelease(n);
                     robot.keyRelease(KeyEvent.VK_SHIFT);
-                }
-                else {
+                } else {
                     robot.keyPress(n);
                     robot.keyRelease(n);
                 }
@@ -93,8 +85,9 @@ public class SendKeysHelper{
 
     public static void SendEnterKey() throws AWTException {
         Robot robot = new Robot();
-        switch(OS_TYPE){
-            case Windows: robot.keyPress(KeyEvent.VK_ENTER);
+        switch (OS_TYPE) {
+            case Windows:
+                robot.keyPress(KeyEvent.VK_ENTER);
         }
     }
 }

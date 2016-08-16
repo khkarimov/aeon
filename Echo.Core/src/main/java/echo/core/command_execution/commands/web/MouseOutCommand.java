@@ -14,12 +14,13 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Takes the mouse pointer off of an element.
  */
-public class MouseOutCommand extends  WebControlCommand {
+public class MouseOutCommand extends WebControlCommand {
 
     /**
      * Initializes a new MouseOutCommand
-     * @param log The logger
-     * @param selector The selector
+     *
+     * @param log         The logger
+     * @param selector    The selector
      * @param initializer The initializer
      */
     public MouseOutCommand(ILog log, IBy selector, ICommandInitializer initializer) {

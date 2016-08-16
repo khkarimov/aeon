@@ -3,6 +3,7 @@ package echo.core.command_execution.commands.web;
 /**
  * Created by SebastianR on 6/1/2016.
  */
+
 import echo.core.command_execution.commands.Command;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
@@ -16,16 +17,17 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 public class VerifyAlertNotExistsCommand extends Command {
     /**
      * Initializes a new instance of
-     * @see VerifyAlertNotExistsCommand class
+     *
      * @param log
+     * @see VerifyAlertNotExistsCommand class
      */
-    public VerifyAlertNotExistsCommand(ILog log){
+    public VerifyAlertNotExistsCommand(ILog log) {
         super(log, Resources.getString("VerifyAlertExistsCommand_Info"));
     }
 
     @Override
     protected void DriverDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         ((IWebDriver) driver).VerifyAlertNotExists(getGuid());

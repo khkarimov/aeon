@@ -14,13 +14,13 @@ public class RadioButton extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
-    public RadioButton(AutomationInfo info, IBy selector){
+    public RadioButton(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
-    public void Selected(){
+    public void Selected() {
         info.getCommandExecutionFacade().Execute(info,
                 new SelectedCommand(
                         info.getLog(),
@@ -28,7 +28,7 @@ public class RadioButton extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
-    public void NotSelected(){
+    public void NotSelected() {
         info.getCommandExecutionFacade().Execute(info,
                 new NotSelectedCommand(
                         info.getLog(),
@@ -36,7 +36,7 @@ public class RadioButton extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
-    public void Check(){
+    public void Check() {
         info.getCommandExecutionFacade().Execute(info,
                 new CheckCommand(
                         info.getLog(),
@@ -44,7 +44,7 @@ public class RadioButton extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
-    public void UnCheck(){
+    public void UnCheck() {
         info.getCommandExecutionFacade().Execute(info,
                 new UnCheckCommand(
                         info.getLog(),

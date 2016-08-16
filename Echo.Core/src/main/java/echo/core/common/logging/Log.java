@@ -1,10 +1,10 @@
 package echo.core.common.logging;
 
-import java.util.UUID;
-
-import java.awt.Image;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.awt.*;
+import java.util.UUID;
 
 /**
  * Created by DionnyS on 4/13/2016.

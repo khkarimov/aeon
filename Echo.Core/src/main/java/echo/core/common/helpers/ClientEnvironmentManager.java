@@ -1,8 +1,8 @@
 package echo.core.common.helpers;
 
 import com.sun.glass.ui.Size;
-import echo.core.common.web.BrowserType;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
 
 import java.awt.*;
 import java.util.UUID;

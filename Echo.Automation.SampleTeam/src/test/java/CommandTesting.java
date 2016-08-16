@@ -2,7 +2,6 @@
  * Created by SebastianR on 6/6/2016.
  */
 
-import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.TimeoutExpiredException;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
@@ -10,11 +9,8 @@ import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.selectors.By;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.junit.*;
-import org.junit.Test;
-import org.openqa.selenium.Cookie;
+
 import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
@@ -23,18 +19,18 @@ public class CommandTesting {
 
     private static Sample product;
 
-//region Setup and Teardown
+    //region Setup and Teardown
     @BeforeClass
-    public static void SetUp(){
+    public static void SetUp() {
     }
 
     @AfterClass
-    public static void TearDown(){
+    public static void TearDown() {
         product.Browser.Quit();
     }
 
     @Before
-    public void BeforeTests(){
+    public void BeforeTests() {
         product = Launch(Sample.class, BrowserType.Chrome);
         product.Browser.Maximize();
         product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
@@ -47,7 +43,7 @@ public class CommandTesting {
 //endregion
 
     @Test
-    public void TestSendKeysToAlert_AcceptAlertWhenThereIsAnAlert(){
+    public void TestSendKeysToAlert_AcceptAlertWhenThereIsAnAlert() {
         product.Browser.VerifyAlertNotExists();
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
@@ -55,21 +51,21 @@ public class CommandTesting {
         product.Browser.AcceptAlert();
     }
 
-//region Ignore Test
+    //region Ignore Test
     @Ignore
     public void TestOpenFileDialog() {
         product.StartPage.TestFileDialogInput.OpenFileDialog();
     }
 
     @Ignore
-    public void TestDismissAlertWhenThereIsAnAlert(){
+    public void TestDismissAlertWhenThereIsAnAlert() {
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.DismissAlert();
     }
 
     @Ignore
-    public void TestBlurTextBox(){
+    public void TestBlurTextBox() {
         product.StartPage.AlertTitleTextBox.Set("Alert Test Title");
         product.StartPage.AlertTitleTextBox.Blur();
     }
@@ -83,13 +79,13 @@ public class CommandTesting {
 
     @Test
     public void TestHasOptionsCommandsWith50000() {
-        String [] texts = {"option499", "option8"};
-        String [] shouldfail = {"Klingon", "Clicky Noises", "Reptilian Hissing"};
-        String [] values = {"1", "2"};
-        String [] valuesShouldFail = {"-12", "Blue"};
+        String[] texts = {"option499", "option8"};
+        String[] shouldfail = {"Klingon", "Clicky Noises", "Reptilian Hissing"};
+        String[] values = {"1", "2"};
+        String[] valuesShouldFail = {"-12", "Blue"};
         product.StartPage.DropDown.Click();
-        product.StartPage.DropDown.HasOptions(texts, null,  WebSelectOption.Text);
-        product.StartPage.DropDown.HasOptions(values, null,  WebSelectOption.Value);
+        product.StartPage.DropDown.HasOptions(texts, null, WebSelectOption.Text);
+        product.StartPage.DropDown.HasOptions(values, null, WebSelectOption.Value);
         product.StartPage.DropDown.DoesNotHaveOptions(shouldfail, null, WebSelectOption.Text);
         product.StartPage.DropDown.DoesNotHaveOptions(valuesShouldFail, null, WebSelectOption.Value);
     }
@@ -108,27 +104,27 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestSelectFileDialog(){
+    public void TestSelectFileDialog() {
         String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
         product.StartPage.TestFileDialogInput.OpenFileDialog();
         product.StartPage.TestFileDialogInput.SelectFileDialog(path);
     }
 
     @Test
-    public void TestDragAndDropNotUsingHTML5Events(){
+    public void TestDragAndDropNotUsingHTML5Events() {
         product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
         product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
     }
 
     @Test
-    public void TestNotEnabled(){
+    public void TestNotEnabled() {
         product.StartPage.DisabledButton.IsDisabled();
         //product.StartPage.DisabledButton.IsEnabled();
         product.StartPage.Start.IsEnabled();
     }
 
     @Test
-    public void TestClickAndHold(){
+    public void TestClickAndHold() {
         product.StartPage.Start.ClickAndHold(9000);
     }
 
@@ -145,21 +141,21 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestVerifyAlertTextWithCorrectText(){
+    public void TestVerifyAlertTextWithCorrectText() {
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.VerifyAlertText("Send some keys");
     }
 
     @Test(expected = TimeoutExpiredException.class)
-    public void TestVerifyAlertTextWithIncorrectText(){
+    public void TestVerifyAlertTextWithIncorrectText() {
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.VerifyAlertText("Send other keys");
     }
 
     @Test
-    public void TestVerifyAlertTextLikeWithCorrectText(){
+    public void TestVerifyAlertTextLikeWithCorrectText() {
         product.StartPage.OpenAlertButton.Click();
         product.Browser.VerifyAlertExists();
         product.Browser.VerifyAlertTextLike("Send some keys", true);
@@ -173,17 +169,17 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestVerifyTitleWithCorrectTitle(){
+    public void TestVerifyTitleWithCorrectTitle() {
         product.Browser.VerifyTitle("Material Design Lite");
     }
 
     @Test(expected = TimeoutExpiredException.class)
-    public void TestVerifyTitleWithIncorrectTitle(){
+    public void TestVerifyTitleWithIncorrectTitle() {
         product.Browser.VerifyTitle("Material Design");
     }
 
     @Test
-    public void TestVerifyURLWithCorrectURL(){
+    public void TestVerifyURLWithCorrectURL() {
         product.Browser.GoToUrl("https://www.google.com");
         product.Browser.VerifyURL("https://www.google.com/");
     }
@@ -221,6 +217,7 @@ public class CommandTesting {
             String path = "/";
             boolean secure = false;
             boolean session = true;
+
             @Override
             public String getName() {
                 return name;
@@ -278,7 +275,7 @@ public class CommandTesting {
     }
 
     @Test
-    public void TestVerifyWindowDoesNotExist(){
+    public void TestVerifyWindowDoesNotExist() {
         product.Browser.VerifyWindowDoesNotExistByTitle("fakeTitle");
         product.Browser.VerifyWindowDoesNotExistByUrl("fakeUrl");
     }

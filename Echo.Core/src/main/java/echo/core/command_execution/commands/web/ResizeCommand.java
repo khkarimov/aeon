@@ -25,7 +25,7 @@ public class ResizeCommand extends Command {
      * @param log  The logger.
      * @param size The new browser size.
      */
-    public ResizeCommand(ILog log,BrowserSize size) {
+    public ResizeCommand(ILog log, BrowserSize size) {
         super(log, Resources.getString("ResizeCommand_Info"));
         this.size = BrowserSizeMap.Map(size);
     }
@@ -41,6 +41,6 @@ public class ResizeCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).Resize(getGuid(), size);
+        ((IWebDriver) driver).Resize(getGuid(), size);
     }
 }

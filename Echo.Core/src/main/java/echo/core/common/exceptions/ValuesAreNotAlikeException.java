@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class ValuesAreNotAlikeException extends RuntimeException implements Serializable {
 
-    public ValuesAreNotAlikeException(){
+    public ValuesAreNotAlikeException() {
         super(Resources.getString("ValuesAreNotAlikeException_ctor_DefaultMessage"));
     }
 }

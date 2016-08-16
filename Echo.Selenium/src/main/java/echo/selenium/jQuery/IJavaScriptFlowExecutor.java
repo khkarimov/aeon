@@ -6,10 +6,9 @@ import java.util.UUID;
 import java.util.function.Function;
 
 /**
- Interface for executing JavaScript.
-*/
-public interface IJavaScriptFlowExecutor
-{
+ * Interface for executing JavaScript.
+ */
+public interface IJavaScriptFlowExecutor {
     /**
      * Gets a function return a finalizer based upon the given option.
      */

@@ -2,10 +2,11 @@ package echo.core.common.web;
 
 import com.sun.glass.ui.Size;
 
-import java.util.*;
+import java.util.HashMap;
 
 public final class BrowserSizeMap {
     private static final HashMap<BrowserSize, Size> browserSizes = new HashMap<BrowserSize, Size>();
+    private static final HashMap<Size, BrowserSize> sizes = new HashMap<Size, BrowserSize>();
 
     static {
         browserSizes.put(BrowserSize.Maximized, new Size(0, 0));
@@ -16,8 +17,6 @@ public final class BrowserSizeMap {
         browserSizes.put(BrowserSize.TabletPortrait, new Size(768, 1024));
         browserSizes.put(BrowserSize.TabletLandscape, new Size(1024, 768));
     }
-
-    private static final HashMap<Size, BrowserSize> sizes = new HashMap<Size, BrowserSize>();
 
     static {
         sizes.put(new Size(0, 0), BrowserSize.Maximized);

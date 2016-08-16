@@ -12,12 +12,13 @@ import java.util.Locale;
 /**
  * Created by Steve Foo on 6/29/2016.
  */
-public class SelectedCommand extends WebControlCommand{
+public class SelectedCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the SelectedCommand.
-     * @param log The logger.
-     * @param selector The selector.
+     *
+     * @param log                The logger.
+     * @param selector           The selector.
      * @param commandInitializer The command initializer.
      */
     public SelectedCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
@@ -26,7 +27,8 @@ public class SelectedCommand extends WebControlCommand{
 
     /**
      * Provides the logic for the command.
-     * @param driver The web driver.
+     *
+     * @param driver  The web driver.
      * @param control The web control.
      */
     @Override

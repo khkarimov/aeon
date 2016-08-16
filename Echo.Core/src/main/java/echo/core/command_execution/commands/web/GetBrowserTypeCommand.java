@@ -18,6 +18,7 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the GetBrowserTypeCommand.
+     *
      * @param log The logger.
      */
     public GetBrowserTypeCommand(ILog log) {
@@ -26,6 +27,7 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
 
     /**
      * Provides the logic for the command.
+     *
      * @param driver The framework abstraction facade.
      * @return The enumerable BrowserType associated with the browser.
      */

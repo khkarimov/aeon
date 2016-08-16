@@ -64,21 +64,22 @@ public class StringUtils {
     /**
      * Normalizes all line breaks to LF, as well as all spaces to breaking spaces.
      * <p>
+     *
      * @param value The current instance.
      * @return The normalized string value;
      */
-    public static String NormalizeSpacing(String value){
-        if(value == null){
+    public static String NormalizeSpacing(String value) {
+        if (value == null) {
             throw new IllegalArgumentException("value");
         }
         StringBuilder stringBuilder = new StringBuilder(value.length());
         stringBuilder.setLength(0);
-        int length = value.length() -1;
+        int length = value.length() - 1;
         int i = 0;
         char currentChar;
-        for(; i < length; ++i){
+        for (; i < length; ++i) {
             currentChar = value.charAt(i);
-            switch(currentChar) {
+            switch (currentChar) {
                 case '\r':
                     if (value.charAt(i + 1) == '\n') {
                         ++i;
@@ -99,7 +100,7 @@ public class StringUtils {
             }
         }
 
-        if(i==length){
+        if (i == length) {
             currentChar = value.charAt(length);
             stringBuilder.append(currentChar == '\r' ? '\n' : currentChar);
         }
@@ -108,29 +109,28 @@ public class StringUtils {
 
     /**
      * Used, for example, in JavaScript to reduce whitespace.
+     *
      * @param value The current instance
      * @return A string where all the spacing is the same, i.e. tabs, new line, etc..
      */
-    public static String MinimizeWhiteSpace(String value){
-        if(value == null) {
+    public static String MinimizeWhiteSpace(String value) {
+        if (value == null) {
             throw new IllegalArgumentException("value");
         }
         StringBuilder stringBuilder = new StringBuilder(value.length());
         stringBuilder.setLength(0);
         boolean inSpaces = false;
-        for (char currentChar: value.toCharArray()) {
+        for (char currentChar : value.toCharArray()) {
             //SR- vertical tab character is not checked, since \v is not a valid char
-            if(inSpaces){
-                if(currentChar != ' ' && currentChar != '\t' && currentChar != '\r' && currentChar != '\n' && currentChar != '\f'){
+            if (inSpaces) {
+                if (currentChar != ' ' && currentChar != '\t' && currentChar != '\r' && currentChar != '\n' && currentChar != '\f') {
                     inSpaces = false;
                     stringBuilder.append(currentChar);
                 }
-            }
-            else if(currentChar == ' ' || currentChar == '\t' || currentChar == '\r' || currentChar == '\n' || currentChar == '\f'){
+            } else if (currentChar == ' ' || currentChar == '\t' || currentChar == '\r' || currentChar == '\n' || currentChar == '\f') {
                 inSpaces = true;
                 stringBuilder.append(' ');
-            }
-            else{
+            } else {
                 stringBuilder.append(currentChar);
             }
         }
@@ -139,15 +139,16 @@ public class StringUtils {
 
     /**
      * Used for exact comparisons, ignoring the spacing differences.
-     * @param value The current instance.
+     *
+     * @param value         The current instance.
      * @param expectedValue The value your comparing against the current instance.
      * @return Whether or not the current instance matches the expected value.
      */
-    public static boolean Is(String value, String expectedValue){
-        if(value == null){
+    public static boolean Is(String value, String expectedValue) {
+        if (value == null) {
             throw new IllegalArgumentException("value");
         }
-        if(expectedValue == null){
+        if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");
         }
         return NormalizeSpacing(value).equals(NormalizeSpacing(expectedValue));
@@ -157,32 +158,34 @@ public class StringUtils {
     /**
      * Used for partial comparisons, including differences in case. It ignores
      * differences in spacing.
-     * @param value The current instance.
+     *
+     * @param value         The current instance.
      * @param expectedValue The value your comparing against the current instance.
      * @return Whether or not the current instance equals the expected value.
      */
-    public static boolean Like(String value, String expectedValue){
+    public static boolean Like(String value, String expectedValue) {
         return Like(value, expectedValue, true);
     }
 
     /**
      * Used for partial comparisons, ignoring differences in case and
      * spacing differences.
-     * @param value The current instance.
+     *
+     * @param value         The current instance.
      * @param expectedValue The value your comparing against the current instance.
      * @return Whether or not the current instance equals the expected value.
      */
-    public static boolean Like(String value, String expectedValue, boolean caseSensitive){
-        if(value == null){
+    public static boolean Like(String value, String expectedValue, boolean caseSensitive) {
+        if (value == null) {
             throw new IllegalArgumentException("value");
         }
-        if(expectedValue == null){
+        if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");
         }
-        if(expectedValue.length() == 0){
+        if (expectedValue.length() == 0) {
             throw new IllegalArgumentException("zero length expected value");
         }
-        if(caseSensitive){
+        if (caseSensitive) {
             return NormalizeSpacing(value).equals(NormalizeSpacing(expectedValue));
         } else {
             return NormalizeSpacing(value).equalsIgnoreCase(NormalizeSpacing(expectedValue));
@@ -191,31 +194,33 @@ public class StringUtils {
 
     /**
      * Indicates whether the current instance contains the specified string.
+     *
      * @param value The current instance.
-     * @param word The word for which to search.
+     * @param word  The word for which to search.
      * @return Whether or not the current instance contains the word.
      */
-    public static boolean ContainsWord(String value, String word){
-        if(value == null){
+    public static boolean ContainsWord(String value, String word) {
+        if (value == null) {
             throw new IllegalArgumentException("value");
         }
-        if(word == null){
+        if (word == null) {
             throw new IllegalArgumentException("word");
         }
         String normalizedSpacinValue = MinimizeWhiteSpace(value);
-        return normalizedSpacinValue.contains(' ' + word + ' ') ||  normalizedSpacinValue.startsWith(word) || normalizedSpacinValue.endsWith(word);
+        return normalizedSpacinValue.contains(' ' + word + ' ') || normalizedSpacinValue.startsWith(word) || normalizedSpacinValue.endsWith(word);
     }
 
     /**
      * Asserts the the current instance contains no whitespace.
+     *
      * @param value The current instance.
      * @return The current instance, if not exception is thrown.
      */
-    public static String AssertNoWhiteSpace(String value){
-        if(value == null){
+    public static String AssertNoWhiteSpace(String value) {
+        if (value == null) {
             throw new IllegalArgumentException("value");
         }
-        if(value.contains(" ")){
+        if (value.contains(" ")) {
             throw new ContainsWhiteSpaceException();
         }
         return value;
@@ -223,19 +228,20 @@ public class StringUtils {
 
     /**
      * Removes the text specified.
-     * @param value The current instance.
+     *
+     * @param value  The current instance.
      * @param values Values to remove from the current instance.
      * @return The current instance with values removed.
      */
-    public static String Remove(String value, Object... values){
-        if(value == null){
+    public static String Remove(String value, Object... values) {
+        if (value == null) {
             throw new IllegalArgumentException("value");
         }
-        if (values == null){
+        if (values == null) {
             return value;
         }
-        for( Object val : values){
-            if(value.indexOf((String) val) != -1){
+        for (Object val : values) {
+            if (value.indexOf((String) val) != -1) {
                 value.replace((String) val, "");
             }
         }

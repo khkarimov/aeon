@@ -94,11 +94,11 @@ public enum JQueryStringType {
      */
     GetOptions;
 
-    public int getValue() {
-        return this.ordinal();
-    }
-
     public static JQueryStringType forValue(int value) {
         return values()[value];
+    }
+
+    public int getValue() {
+        return this.ordinal();
     }
 }

@@ -7,7 +7,9 @@ import echo.core.test_abstraction.elements.web.RowActions;
  */
 public class SampleRowActions extends RowActions {
 
-    public SampleRowElements ByName(String value) { throw new UnsupportedOperationException(); }
+    public SampleRowElements ByName(String value) {
+        throw new UnsupportedOperationException();
+    }
 
     public SampleRowElements ById(String value) {
         throw new UnsupportedOperationException();

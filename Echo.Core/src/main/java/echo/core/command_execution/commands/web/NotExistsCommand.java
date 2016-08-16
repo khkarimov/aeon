@@ -21,8 +21,9 @@ public class NotExistsCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the NotExistsCommand.
-     * @param log The logger.
-     * @param selector The selector.
+     *
+     * @param log                The logger.
+     * @param selector           The selector.
      * @param commandInitializer The command initializer.
      */
     public NotExistsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
@@ -31,16 +32,16 @@ public class NotExistsCommand extends WebControlCommand {
 
     /**
      * Provides the logic for the command.
-     * @param driver The web driver.
+     *
+     * @param driver  The web driver.
      * @param control The web control.
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
         try {
             getCommandInitializer().FindElement(getGuid(), driver, control.getSelector());
-        }
-        //If element does not exist it should catch the exception and return successfully
-        catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
+            //If element does not exist it should catch the exception and return successfully
             return;
         }
         driver.NotExists(getGuid(), control);

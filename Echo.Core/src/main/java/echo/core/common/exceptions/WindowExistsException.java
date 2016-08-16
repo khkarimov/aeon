@@ -11,7 +11,7 @@ public class WindowExistsException extends RuntimeException implements Serializa
     private String window;
 
 
-    public WindowExistsException(String window){
+    public WindowExistsException(String window) {
         super(String.format(Resources.getString("WindowExistsException_ctor_DefaultMessage"), window));
         this.window = window;
     }

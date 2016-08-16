@@ -9,7 +9,7 @@ import echo.core.test_abstraction.models.Browser;
 public class WebProduct extends Product {
     public Browser Browser;
 
-    public WebProduct(){
+    public WebProduct() {
 
     }
 

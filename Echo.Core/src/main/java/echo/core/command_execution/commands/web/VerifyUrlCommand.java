@@ -19,14 +19,14 @@ import java.net.URL;
 public class VerifyUrlCommand extends Command {
     private URL comparingURL;
 
-    public VerifyUrlCommand(ILog log, String comparingURL){
+    public VerifyUrlCommand(ILog log, String comparingURL) {
         super(log, Resources.getString("VerifyUrlCommand_info"));
         this.comparingURL = URLUtil.CreateURL(comparingURL);
     }
 
     @Override
     protected void DriverDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         ((IWebDriver) driver).VerifyURL(getGuid(), comparingURL);
