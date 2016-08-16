@@ -64,8 +64,7 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
     }
 
     public Consumer<IDriver> GetCommandDelegate() {
-        Consumer<IDriver> action = driver ->
-        {
+        Consumer<IDriver> action = driver -> {
             if (commandInitializer != null) {
                 commandInitializer.SetContext(guid).accept(driver);
             }

@@ -13,8 +13,8 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Resizes the currently focused browser window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.Resize(BrowserSize.Maximized);</p>
- * <p>      Context.Browser.Resize(800, 600);</p>
+ * <p>      Context.browser.Resize(BrowserSize.Maximized);</p>
+ * <p>      Context.browser.Resize(800, 600);</p>
  */
 public class ResizeCommand extends Command {
     private Size size;

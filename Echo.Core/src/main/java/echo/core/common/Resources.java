@@ -16,7 +16,7 @@ public class Resources {
         if (bundle.containsKey(key)) {
             return bundle.getString(key);
         } else {
-            return key;//"No message in MessagesBundle in Echo.Core.Resources";
+            return key; //"No message in MessagesBundle in Echo.Core.Resources";
         }
         //return bundle.getString(key);
         //return key;

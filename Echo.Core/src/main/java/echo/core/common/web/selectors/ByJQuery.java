@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Class for selecting elements with jQuery.
+ * Class for selecting elements with jquery.
  */
 public class ByJQuery implements IBy, IByJQuery {
     /**
@@ -23,11 +23,11 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Gets the parameters for the function.
      */
-    private Iterable<Parameter> Parameters;
+    private Iterable<Parameter> parameters;
     /**
      * Gets the previous function.
      */
-    private ByJQuery Predecessor;
+    private ByJQuery predecessor;
 
     /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
@@ -41,9 +41,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Accepts an existing jQuery object which is then used to match a set of elements.
+     * Accepts an existing jquery object which is then used to match a set of elements.
      *
-     * @param obj An existing jQuery object to clone.
+     * @param obj An existing jquery object to clone.
      */
 
     public ByJQuery(ByJQuery obj) {
@@ -99,15 +99,15 @@ public class ByJQuery implements IBy, IByJQuery {
 
     private static void ChangeLastPredecessor(ByJQuery appendee, ByJQuery changee) {
         ByJQuery current = changee;
-        while (current.Predecessor != null) {
-            current = current.Predecessor;
+        while (current.predecessor != null) {
+            current = current.predecessor;
         }
-        current.Predecessor = appendee;
+        current.predecessor = appendee;
         current.function = "find";
     }
 
     /**
-     * For those jQuery commands which return an integer.
+     * For those jquery commands which return an integer.
      *
      * @param obj      A <see cref="ByJQuery"/> object representing a function which returns an integer.
      * @param constant A constant integer.
@@ -117,7 +117,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * For those jQuery commands which return an integer.
+     * For those jquery commands which return an integer.
      *
      * @param obj      A <see cref="ByJQuery"/> object representing a function which returns an integer.
      * @param constant A constant integer.
@@ -135,19 +135,19 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     protected final Iterable<Parameter> getParameters() {
-        return Parameters;
+        return parameters;
     }
 
     private void setParameters(Iterable<Parameter> value) {
-        Parameters = value;
+        parameters = value;
     }
 
     protected final ByJQuery getPredecessor() {
-        return Predecessor;
+        return predecessor;
     }
 
     private void setPredecessor(ByJQuery value) {
-        Predecessor = value;
+        predecessor = value;
     }
 
     /**
@@ -166,8 +166,8 @@ public class ByJQuery implements IBy, IByJQuery {
      */
     public final ByJQuery Clone() {
         List<Object> objects = new ArrayList<>();
-        Parameters.forEach(p -> objects.add((Object) p));
-        return new ByJQuery(Predecessor == null ? null : Predecessor.Clone(), function, objects);
+        parameters.forEach(p -> objects.add((Object) p));
+        return new ByJQuery(predecessor == null ? null : predecessor.Clone(), function, objects);
     }
 
     /**
@@ -179,9 +179,9 @@ public class ByJQuery implements IBy, IByJQuery {
     @Override
     public String toString() {
         List<String> parameterStrings = new ArrayList<>();
-        Parameters.forEach(x -> parameterStrings.add(x.toString()));
+        parameters.forEach(x -> parameterStrings.add(x.toString()));
         String parameters = String.join(",", parameterStrings);
-        return Predecessor == null ? String.format("%1$s(%2$s)", function, parameters) : String.format("%1$s.%2$s(%3$s)", Predecessor, function, parameters);
+        return predecessor == null ? String.format("%1$s(%2$s)", function, parameters) : String.format("%1$s.%2$s(%3$s)", predecessor, function, parameters);
     }
 
     /**
@@ -243,7 +243,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Add elements to the set of matched elements.
      *
-     * @param obj An existing jQuery object to add to the set of matched elements.
+     * @param obj An existing jquery object to add to the set of matched elements.
      */
     @Override
     public final ByJQuery add(ByJQuery obj) {
@@ -299,7 +299,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Get the first element that matches the selector, beginning at the current element and progressing up through the DOM tree.
      *
-     * @param obj A jQuery object to match elements against.
+     * @param obj A jquery object to match elements against.
      */
     @Override
     public final ByJQuery closest(ByJQuery obj) {
@@ -315,7 +315,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Iterate over a jQuery object, executing a function for each matched element.
+     * Iterate over a jquery object, executing a function for each matched element.
      *
      * @param function A function to execute for each matched element.
      */
@@ -365,7 +365,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Reduce the set of matched elements to those that match the selector or pass the function's test.
      *
-     * @param obj An existing jQuery object to match the current set of elements against.
+     * @param obj An existing jquery object to match the current set of elements against.
      */
     @Override
     public final ByJQuery filter(ByJQuery obj) {
@@ -383,7 +383,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
+     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
      *
      * @param selector A string containing a selector expression to match elements against.
      */
@@ -393,9 +393,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
+     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
      *
-     * @param obj A jQuery object to match elements against.
+     * @param obj A jquery object to match elements against.
      */
     @Override
     public final ByJQuery find(ByJQuery obj) {
@@ -439,7 +439,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Search for a given element from among the matched elements.
      *
-     * @param selector A selector representing a jQuery collection in which to look for an element.
+     * @param selector A selector representing a jquery collection in which to look for an element.
      */
     @Override
     public final ByJQuery index(String selector) {
@@ -449,7 +449,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Search for a given element from among the matched elements.
      *
-     * @param obj The first element within the jQuery object to look for.
+     * @param obj The first element within the jquery object to look for.
      */
     @Override
     public final ByJQuery index(ByJQuery obj) {
@@ -478,7 +478,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Check the current matched set of elements against a selector, element, or jQuery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param selector A string containing a selector expression to match elements against.
      */
@@ -488,9 +488,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Check the current matched set of elements against a selector, element, or jQuery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
-     * @param obj An existing jQuery object to match the current set of elements against.
+     * @param obj An existing jquery object to match the current set of elements against.
      */
     @Override
     public final ByJQuery Is(ByJQuery obj) {
@@ -498,9 +498,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Check the current matched set of elements against a selector, element, or jQuery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
-     * @param function A function used as a test for the set of elements. It accepts one argument which is the element's index in the jQuery collection. Within the function, <code>this</code> refers to the current DOM element.
+     * @param function A function used as a test for the set of elements. It accepts one argument which is the element's index in the jquery collection. Within the function, <code>this</code> refers to the current DOM element.
      */
     @Override
     public final ByJQuery Is(Expression<Function<Integer, Boolean>> function) {
@@ -516,7 +516,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Pass each element in the current matched set through a function, producing a new jQuery object containing the return values.
+     * Pass each element in the current matched set through a function, producing a new jquery object containing the return values.
      *
      * @param callback A function object that will be invoked for each element in the current set.
      */
@@ -562,7 +562,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      */
@@ -572,7 +572,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -583,9 +583,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj A jquery object indicating where to stop matching following sibling elements.
      */
     @Override
     public final ByJQuery nextUntil(ByJQuery obj) {
@@ -593,9 +593,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj    A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
      */
     @Override
@@ -616,7 +616,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Remove elements from the set of matched elements.
      *
-     * @param obj An existing jQuery object to match the current set of elements against.
+     * @param obj An existing jquery object to match the current set of elements against.
      */
     @Override
     public final ByJQuery not(ByJQuery obj) {
@@ -678,7 +678,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      */
@@ -688,7 +688,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -699,9 +699,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
-     * @param obj A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj A jquery object indicating where to stop matching following sibling elements.
      */
     @Override
     public final ByJQuery parentsUntil(ByJQuery obj) {
@@ -709,9 +709,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
-     * @param obj    A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
      */
     @Override
@@ -756,7 +756,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all preceding siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get all preceding siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
      */
@@ -766,7 +766,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -777,9 +777,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj A jQuery object indicating where to stop matching preceding sibling elements.
+     * @param obj A jquery object indicating where to stop matching preceding sibling elements.
      */
     @Override
     public final ByJQuery prevUntil(ByJQuery obj) {
@@ -787,9 +787,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj    A jQuery object indicating where to stop matching preceding sibling elements.
+     * @param obj    A jquery object indicating where to stop matching preceding sibling elements.
      * @param filter A string containing a selector expression to match elements against.
      */
     @Override

@@ -1,4 +1,4 @@
-package echo.selenium.jQuery;
+package echo.selenium.jquery;
 
 /**
  * The default <see cref="IJavaScriptFinalizerFactory"/> implementation for Web.

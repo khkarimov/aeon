@@ -23,7 +23,9 @@ public class AutomationInfo {
     }
 
     /**
-     * Gets the log.
+     * Gets the logger.
+     *
+     * @return The logger
      */
     public final ILog getLog() {
         return log;

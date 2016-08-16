@@ -1,4 +1,4 @@
-package echo.core.common.exceptions;/// <summary>
+package echo.core.common.exceptions;
 
 import echo.core.common.Resources;
 

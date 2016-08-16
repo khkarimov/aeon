@@ -38,9 +38,9 @@ public class By implements IBy {
     }
 
     /**
-     * Accepts an existing jQuery object which is then used to match a set of elements.
+     * Accepts an existing jquery object which is then used to match a set of elements.
      *
-     * @param obj An existing jQuery object to clone.
+     * @param obj An existing jquery object to clone.
      * @return A new <see cref="ByJQuery"/> instance.
      */
     public static ByJQuery JQuery(ByJQuery obj) {

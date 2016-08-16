@@ -19,12 +19,12 @@ public class SampleTest {
     @Before
     public void SetUp() {
         product = Launch(Sample.class, BrowserType.Chrome);
-        product.Browser.GoToUrl("http://gandaras01web.newgen.corp/");
+        product.browser.GoToUrl("http://gandaras01web.newgen.corp/");
     }
 
     @After
     public void TearDown() {
-        product.Browser.Quit();
+        product.browser.Quit();
     }
 
     @Test
@@ -40,8 +40,8 @@ public class SampleTest {
         product.Login.LanguageSelect.DoesNotHaveOptions(shouldfail, null, WebSelectOption.Text);
         product.Login.LanguageSelect.DoesNotHaveOptions(valuesShouldFail, null, WebSelectOption.Value);
         product.Login.LoginButton.Click();
-        product.Browser.GoBack();
-        product.Browser.GoForward();
+        product.browser.GoBack();
+        product.browser.GoForward();
         //product.Home.ViewPayStatement.Click();
         //System.out.println("After Click");
     }
@@ -51,7 +51,7 @@ public class SampleTest {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
-        product.Browser.Refresh();
+        product.browser.Refresh();
     }
 
     @Test
@@ -59,10 +59,10 @@ public class SampleTest {
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.Click();
-        product.Browser.Resize(BrowserSize.TabletLandscape);
-        product.Browser.Resize(BrowserSize.SmallTabletLandscape);
-        product.Browser.Resize(BrowserSize.MobileLandscape);
-        product.Browser.Maximize();
+        product.browser.Resize(BrowserSize.TabletLandscape);
+        product.browser.Resize(BrowserSize.SmallTabletLandscape);
+        product.browser.Resize(BrowserSize.MobileLandscape);
+        product.browser.Maximize();
     }
 
     @Test
@@ -71,9 +71,9 @@ public class SampleTest {
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.MouseOver();
         product.Login.LoginButton.MouseOut();
-        product.Browser.GoToUrl("http://www.tutorialspoint.com");
-        product.Browser.ScrollToEnd();
-        product.Browser.ScrollToTop();
+        product.browser.GoToUrl("http://www.tutorialspoint.com");
+        product.browser.ScrollToEnd();
+        product.browser.ScrollToTop();
     }
 
     @Test
@@ -95,22 +95,22 @@ public class SampleTest {
 
     @Test
     public void SampleTest2() {
-        product.Browser.Resize(BrowserSize.TabletLandscape);
-        product.Browser.Resize(BrowserSize.SmallTabletLandscape);
-        product.Browser.Resize(BrowserSize.MobileLandscape);
-        product.Browser.Maximize();
+        product.browser.Resize(BrowserSize.TabletLandscape);
+        product.browser.Resize(BrowserSize.SmallTabletLandscape);
+        product.browser.Resize(BrowserSize.MobileLandscape);
+        product.browser.Maximize();
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.UserNameTextBox.Clear();
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
-        product.Browser.Refresh();
+        product.browser.Refresh();
         product.Login.UserNameTextBox.Set("usa-canu");
         product.Login.PasswordTextBox.Set("password");
         product.Login.LoginButton.DoubleClick();
         //product.Login.LoginButton.Click();
-        //product.Browser.GoToUrl("http://www.google.com");
-        product.Browser.GoBack();
-        product.Browser.GoForward();
+        //product.browser.GoToUrl("http://www.google.com");
+        product.browser.GoBack();
+        product.browser.GoForward();
     }
 
     @Test
@@ -121,7 +121,7 @@ public class SampleTest {
 
     @Test
     public void TestDragAndDropNotUsingHTML5Events() {
-        product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
         product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
     }
 

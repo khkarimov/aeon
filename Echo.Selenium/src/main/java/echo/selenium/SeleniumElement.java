@@ -331,7 +331,7 @@ public class SeleniumElement extends WebControl {
      * @param moveMouseToOrigin The move Mouse To Origin.
      */
     public final void Click(UUID guid, boolean moveMouseToOrigin) {
-        // TODO: Ensure this works in a grid instance
+        // TODO(DionnyS): Ensure this works in a grid instance
         if (moveMouseToOrigin) {
             try {
                 Robot robot = new Robot();

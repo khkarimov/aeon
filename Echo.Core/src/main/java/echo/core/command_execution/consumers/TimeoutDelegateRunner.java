@@ -39,8 +39,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     }
 
     private void ExecuteDelegate(Runnable commandDelegate) {
-        ExecuteDelegateWithReturn(() ->
-        {
+        ExecuteDelegateWithReturn(() -> {
             commandDelegate.run();
             return null;
         });
@@ -74,7 +73,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         TimeoutExpiredException ex = new TimeoutExpiredException(
                 Resources.getString("TimWtr_TimeoutExpired_DefaultMessage"), timeout, lastCaughtException);
 
-        // TODO: JAVA_CONVERSION Get running processes.
+        // TODO(DionnyS): JAVA_CONVERSION Get running processes.
         //var processList = ProcessCollector.GetProcesses();
 
         Image screenshot = null;
@@ -86,10 +85,10 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         }
 
         if (screenshot == null) {
-            getLog().Error(guid, ex.getMessage(), /* TODO: JAVA_CONVERSION processList */ new ArrayList<>());
+            getLog().Error(guid, ex.getMessage(), /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
             getLog().Error(Resources.getString("StackTraceMessage"), lastCaughtException);
         } else {
-            getLog().Error(guid, ex.getMessage(), screenshot, /* TODO: JAVA_CONVERSION processList */ new ArrayList<>());
+            getLog().Error(guid, ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
             getLog().Error(Resources.getString("StackTraceMessage"), lastCaughtException);
         }
 

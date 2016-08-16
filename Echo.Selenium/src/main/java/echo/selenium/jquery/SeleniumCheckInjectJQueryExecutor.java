@@ -1,4 +1,4 @@
-package echo.selenium.jQuery;
+package echo.selenium.jquery;
 
 import echo.core.common.helpers.QuadFunction;
 import org.joda.time.Duration;
@@ -16,8 +16,8 @@ public class SeleniumCheckInjectJQueryExecutor extends JavaScriptFlowExecutor {
     @Override
     public QuadFunction<IScriptExecutor, UUID, String, Iterable<Object>, Object> getExecutor() {
         return (executor, guid, script, args) -> {
-            if (script.contains("$(") || script.contains("jQuery(")) {
-                boolean hasJQuery = (boolean) (executor.ExecuteScript(guid, "if(window.jQuery)return true;return false;"));
+            if (script.contains("$(") || script.contains("jquery(")) {
+                boolean hasJQuery = (boolean) (executor.ExecuteScript(guid, "if(window.jquery)return true;return false;"));
                 if (hasJQuery) {
                     return executor.ExecuteScript(guid, getFinalizer().apply(JavaScriptFinalizerOptions.None).Prepare(script), args);
                 }

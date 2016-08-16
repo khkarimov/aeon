@@ -14,7 +14,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Scrolls to the end of the page.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.ScrollToEnd();</p>
+ * <p>      Context.browser.ScrollToEnd();</p>
  */
 
 public class ScrollToEndCommand extends Command {

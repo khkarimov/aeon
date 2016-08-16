@@ -1,4 +1,4 @@
-package echo.selenium.jQuery;
+package echo.selenium.jquery;
 
 import echo.core.common.helpers.ConvertHelper;
 import echo.core.common.logging.ILog;

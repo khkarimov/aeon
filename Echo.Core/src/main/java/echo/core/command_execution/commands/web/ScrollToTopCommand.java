@@ -13,7 +13,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Scrolls to the top of the page.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.ScrollToTop();</p>
+ * <p>      Context.browser.ScrollToTop();</p>
  */
 
 public class ScrollToTopCommand extends Command {

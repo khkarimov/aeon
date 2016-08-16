@@ -26,29 +26,29 @@ public class CommandTesting {
 
     @AfterClass
     public static void TearDown() {
-        product.Browser.Quit();
+        product.browser.Quit();
     }
 
     @Before
     public void BeforeTests() {
         product = Launch(Sample.class, BrowserType.Chrome);
-        product.Browser.Maximize();
-        product.Browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+        product.browser.Maximize();
+        product.browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
     public void AfterTests() {
-        product.Browser.Quit();
+        product.browser.Quit();
     }
 //endregion
 
     @Test
     public void TestSendKeysToAlert_AcceptAlertWhenThereIsAnAlert() {
-        product.Browser.VerifyAlertNotExists();
+        product.browser.VerifyAlertNotExists();
         product.StartPage.OpenAlertButton.Click();
-        product.Browser.VerifyAlertExists();
-        product.Browser.SendKeysToAlert("Tester of Alerts");
-        product.Browser.AcceptAlert();
+        product.browser.VerifyAlertExists();
+        product.browser.SendKeysToAlert("Tester of Alerts");
+        product.browser.AcceptAlert();
     }
 
     //region Ignore Test
@@ -60,8 +60,8 @@ public class CommandTesting {
     @Ignore
     public void TestDismissAlertWhenThereIsAnAlert() {
         product.StartPage.OpenAlertButton.Click();
-        product.Browser.VerifyAlertExists();
-        product.Browser.DismissAlert();
+        product.browser.VerifyAlertExists();
+        product.browser.DismissAlert();
     }
 
     @Ignore
@@ -92,15 +92,15 @@ public class CommandTesting {
 
     @Test
     public void TestWindowResizingAndNavigation() {
-        product.Browser.Resize(BrowserSize.TabletLandscape);
-        product.Browser.Resize(BrowserSize.SmallTabletLandscape);
-        product.Browser.Resize(BrowserSize.MobileLandscape);
-        product.Browser.Maximize();
-        product.Browser.GoToUrl("http://www.tutorialspoint.com");
-        product.Browser.ScrollToEnd();
-        product.Browser.ScrollToTop();
-        product.Browser.GoBack();
-        product.Browser.GoForward();
+        product.browser.Resize(BrowserSize.TabletLandscape);
+        product.browser.Resize(BrowserSize.SmallTabletLandscape);
+        product.browser.Resize(BrowserSize.MobileLandscape);
+        product.browser.Maximize();
+        product.browser.GoToUrl("http://www.tutorialspoint.com");
+        product.browser.ScrollToEnd();
+        product.browser.ScrollToTop();
+        product.browser.GoBack();
+        product.browser.GoForward();
     }
 
     @Test
@@ -112,7 +112,7 @@ public class CommandTesting {
 
     @Test
     public void TestDragAndDropNotUsingHTML5Events() {
-        product.Browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
         product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
     }
 
@@ -143,50 +143,50 @@ public class CommandTesting {
     @Test
     public void TestVerifyAlertTextWithCorrectText() {
         product.StartPage.OpenAlertButton.Click();
-        product.Browser.VerifyAlertExists();
-        product.Browser.VerifyAlertText("Send some keys");
+        product.browser.VerifyAlertExists();
+        product.browser.VerifyAlertText("Send some keys");
     }
 
     @Test(expected = TimeoutExpiredException.class)
     public void TestVerifyAlertTextWithIncorrectText() {
         product.StartPage.OpenAlertButton.Click();
-        product.Browser.VerifyAlertExists();
-        product.Browser.VerifyAlertText("Send other keys");
+        product.browser.VerifyAlertExists();
+        product.browser.VerifyAlertText("Send other keys");
     }
 
     @Test
     public void TestVerifyAlertTextLikeWithCorrectText() {
         product.StartPage.OpenAlertButton.Click();
-        product.Browser.VerifyAlertExists();
-        product.Browser.VerifyAlertTextLike("Send some keys", true);
+        product.browser.VerifyAlertExists();
+        product.browser.VerifyAlertTextLike("Send some keys", true);
     }
 
     @Test(expected = TimeoutExpiredException.class)
     public void TestVerifyAlertTextLikeWithIncorrectText() {
         product.StartPage.OpenAlertButton.Click();
-        product.Browser.VerifyAlertExists();
-        product.Browser.VerifyAlertTextLike("send some keys", true);
+        product.browser.VerifyAlertExists();
+        product.browser.VerifyAlertTextLike("send some keys", true);
     }
 
     @Test
     public void TestVerifyTitleWithCorrectTitle() {
-        product.Browser.VerifyTitle("Material Design Lite");
+        product.browser.VerifyTitle("Material Design Lite");
     }
 
     @Test(expected = TimeoutExpiredException.class)
     public void TestVerifyTitleWithIncorrectTitle() {
-        product.Browser.VerifyTitle("Material Design");
+        product.browser.VerifyTitle("Material Design");
     }
 
     @Test
     public void TestVerifyURLWithCorrectURL() {
-        product.Browser.GoToUrl("https://www.google.com");
-        product.Browser.VerifyURL("https://www.google.com/");
+        product.browser.GoToUrl("https://www.google.com");
+        product.browser.VerifyURL("https://www.google.com/");
     }
 
     @Test(expected = TimeoutExpiredException.class)
     public void TestVerifyURLWithIncorrectURL() {
-        product.Browser.VerifyURL("https://www.google.com");
+        product.browser.VerifyURL("https://www.google.com");
     }
 
     @Ignore
@@ -203,12 +203,12 @@ public class CommandTesting {
     @Test
     public void TestClickAllElements() {
         product.StartPage.DisabledButton.Exists();
-        product.Browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
+        product.browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
     }
 
     @Ignore
     public void CookieTests() {
-        product.Browser.GoToUrl("http://google.com");
+        product.browser.GoToUrl("http://google.com");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
             String domain = ".google.com";
@@ -253,8 +253,8 @@ public class CommandTesting {
                 return session;
             }
         };
-        product.Browser.AddCookie(cookie);
-        IWebCookie secondCookie = product.Browser.GetCookie(cookie.getName());
+        product.browser.AddCookie(cookie);
+        IWebCookie secondCookie = product.browser.GetCookie(cookie.getName());
         assert (secondCookie.getName().equals(cookie.getName()));
         assert (secondCookie.getDomain().equals(cookie.getDomain()));
         assert (secondCookie.getValue().equals(cookie.getValue()));
@@ -262,10 +262,10 @@ public class CommandTesting {
         assert (secondCookie.getPath().equals(cookie.getPath()));
         assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
 
-        product.Browser.ModifyCookie(cookie.getName(), "CookieNewValue");
-        secondCookie = product.Browser.GetCookie(cookie.getName());
+        product.browser.ModifyCookie(cookie.getName(), "CookieNewValue");
+        secondCookie = product.browser.GetCookie(cookie.getName());
         assert (secondCookie.getValue().equals("CookieNewValue"));
-        product.Browser.DeleteCookie(cookie.getName());
+        product.browser.DeleteCookie(cookie.getName());
     }
 
     @Test
@@ -276,7 +276,7 @@ public class CommandTesting {
 
     @Test
     public void TestVerifyWindowDoesNotExist() {
-        product.Browser.VerifyWindowDoesNotExistByTitle("fakeTitle");
-        product.Browser.VerifyWindowDoesNotExistByUrl("fakeUrl");
+        product.browser.VerifyWindowDoesNotExistByTitle("fakeTitle");
+        product.browser.VerifyWindowDoesNotExistByUrl("fakeUrl");
     }
 }

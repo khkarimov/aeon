@@ -30,7 +30,7 @@ public interface IByJQuery {
     /**
      * Add elements to the set of matched elements.
      *
-     * @param obj An existing jQuery object to add to the set of matched elements.
+     * @param obj An existing jquery object to add to the set of matched elements.
      */
     ByJQuery add(ByJQuery obj);
 
@@ -68,7 +68,7 @@ public interface IByJQuery {
     /**
      * Get the first element that matches the selector, beginning at the current element and progressing up through the DOM tree.
      *
-     * @param obj A jQuery object to match elements against.
+     * @param obj A jquery object to match elements against.
      */
     ByJQuery closest(ByJQuery obj);
 
@@ -78,7 +78,7 @@ public interface IByJQuery {
     ByJQuery contents();
 
     /**
-     * Iterate over a jQuery object, executing a function for each matched element.
+     * Iterate over a jquery object, executing a function for each matched element.
      *
      * @param function A function to execute for each matched element.
      */
@@ -113,7 +113,7 @@ public interface IByJQuery {
     /**
      * Reduce the set of matched elements to those that match the selector or pass the function's test.
      *
-     * @param obj An existing jQuery object to match the current set of elements against.
+     * @param obj An existing jquery object to match the current set of elements against.
      */
     ByJQuery filter(ByJQuery obj);
 
@@ -125,16 +125,16 @@ public interface IByJQuery {
     ByJQuery filter(Expression<Function<Integer, Boolean>> function);
 
     /**
-     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
+     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
      *
      * @param selector A string containing a selector expression to match elements against.
      */
     ByJQuery find(String selector);
 
     /**
-     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
+     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
      *
-     * @param obj A jQuery object to match elements against.
+     * @param obj A jquery object to match elements against.
      */
     ByJQuery find(ByJQuery obj);
 
@@ -163,14 +163,14 @@ public interface IByJQuery {
     /**
      * Search for a given element from among the matched elements.
      *
-     * @param selector A selector representing a jQuery collection in which to look for an element.
+     * @param selector A selector representing a jquery collection in which to look for an element.
      */
     ByJQuery index(String selector);
 
     /**
      * Search for a given element from among the matched elements.
      *
-     * @param obj The first element within the jQuery object to look for.
+     * @param obj The first element within the jquery object to look for.
      */
     ByJQuery index(ByJQuery obj);
 
@@ -190,23 +190,23 @@ public interface IByJQuery {
     ByJQuery indexOf(String searchValue, int fromIndex);
 
     /**
-     * Check the current matched set of elements against a selector, element, or jQuery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param selector A string containing a selector expression to match elements against.
      */
     ByJQuery Is(String selector);
 
     /**
-     * Check the current matched set of elements against a selector, element, or jQuery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
-     * @param obj An existing jQuery object to match the current set of elements against.
+     * @param obj An existing jquery object to match the current set of elements against.
      */
     ByJQuery Is(ByJQuery obj);
 
     /**
-     * Check the current matched set of elements against a selector, element, or jQuery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
-     * @param function A function used as a test for the set of elements. It accepts one argument which is the element's index in the jQuery collection. Within the function, <code>this</code> refers to the current DOM element.
+     * @param function A function used as a test for the set of elements. It accepts one argument which is the element's index in the jquery collection. Within the function, <code>this</code> refers to the current DOM element.
      */
     ByJQuery Is(Expression<Function<Integer, Boolean>> function);
 
@@ -216,7 +216,7 @@ public interface IByJQuery {
     ByJQuery last();
 
     /**
-     * Pass each element in the current matched set through a function, producing a new jQuery object containing the return values.
+     * Pass each element in the current matched set through a function, producing a new jquery object containing the return values.
      *
      * @param callback A function object that will be invoked for each element in the current set.
      */
@@ -247,14 +247,14 @@ public interface IByJQuery {
     ByJQuery nextAll(String selector);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      */
     ByJQuery nextUntil(String selector);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -262,16 +262,16 @@ public interface IByJQuery {
     ByJQuery nextUntil(String selector, String filter);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj A jquery object indicating where to stop matching following sibling elements.
      */
     ByJQuery nextUntil(ByJQuery obj);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj    A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
      */
     ByJQuery nextUntil(ByJQuery obj, String filter);
@@ -286,7 +286,7 @@ public interface IByJQuery {
     /**
      * Remove elements from the set of matched elements.
      *
-     * @param obj An existing jQuery object to match the current set of elements against.
+     * @param obj An existing jquery object to match the current set of elements against.
      */
     ByJQuery not(ByJQuery obj);
 
@@ -327,14 +327,14 @@ public interface IByJQuery {
     ByJQuery parents(String selector);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      */
     ByJQuery parentsUntil(String selector);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -342,16 +342,16 @@ public interface IByJQuery {
     ByJQuery parentsUntil(String selector, String filter);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
-     * @param obj A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj A jquery object indicating where to stop matching following sibling elements.
      */
     ByJQuery parentsUntil(ByJQuery obj);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
-     * @param obj    A jQuery object indicating where to stop matching following sibling elements.
+     * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
      */
     ByJQuery parentsUntil(ByJQuery obj, String filter);
@@ -381,14 +381,14 @@ public interface IByJQuery {
     ByJQuery prevAll(String selector);
 
     /**
-     * Get all preceding siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object.
+     * Get all preceding siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
      */
     ByJQuery prevUntil(String selector);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -396,16 +396,16 @@ public interface IByJQuery {
     ByJQuery prevUntil(String selector, String filter);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj A jQuery object indicating where to stop matching preceding sibling elements.
+     * @param obj A jquery object indicating where to stop matching preceding sibling elements.
      */
     ByJQuery prevUntil(ByJQuery obj);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.
+     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
-     * @param obj    A jQuery object indicating where to stop matching preceding sibling elements.
+     * @param obj    A jquery object indicating where to stop matching preceding sibling elements.
      * @param filter A string containing a selector expression to match elements against.
      */
     ByJQuery prevUntil(ByJQuery obj, String filter);

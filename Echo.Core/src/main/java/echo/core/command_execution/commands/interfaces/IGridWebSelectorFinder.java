@@ -8,7 +8,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public interface IGridWebSelectorFinder extends IWebSelectorFinder {
     /**
-     * Gets the jQuery expression to find a row within the table.
+     * Gets the jquery expression to find a row within the table.
      */
     ByJQuery getJQueryRowFinder();
 

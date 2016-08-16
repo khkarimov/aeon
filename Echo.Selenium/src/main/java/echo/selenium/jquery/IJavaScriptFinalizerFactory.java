@@ -1,4 +1,4 @@
-package echo.selenium.jQuery;
+package echo.selenium.jquery;
 
 /**
  * Factory for <see cref="IJavaScriptFinalizer"/>.

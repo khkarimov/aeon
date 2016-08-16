@@ -576,7 +576,7 @@ public class EchoWebDriver implements IWebDriver {
 //     * @param parameterObject Parameter Object.
 //     */
 //    public final void ChooseSelectElementByText(ParameterObject parameterObject) {
-//        //TODO: WTF PARAMETER OBJECT getWeb()?
+//        //TODO(DionnyS): WTF PARAMETER OBJECT getWeb()?
 //        parameterObject.getWeb().getWebElement().SelectByText(parameterObject.getGuid(), parameterObject.getWeb().getValue());
 //    }
 //
@@ -1489,7 +1489,7 @@ public class EchoWebDriver implements IWebDriver {
 //            return BrowserType.Firefox;
 //        }
 //
-//        throw new RuntimeException("Browser type not recognized");
+//        throw new RuntimeException("browser type not recognized");
 //    }
 //
 //    /**

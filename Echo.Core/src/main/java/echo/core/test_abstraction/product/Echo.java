@@ -28,7 +28,7 @@ public class Echo {
             product.getConfiguration().setLog(createLogger());
             product.setParameters(parameters);
 
-            product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product on Browser: " + browserType);
+            product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product on browser: " + browserType);
 
             product.launch(plugin);
 

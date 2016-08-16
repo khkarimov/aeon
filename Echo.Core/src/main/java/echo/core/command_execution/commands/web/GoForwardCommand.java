@@ -10,7 +10,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Move forward a single entry in the browser's history.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.GoForward();</p>
+ * <p>      Context.browser.GoForward();</p>
  * <p>
  * Does nothing if we are on the latest page viewed.
  */

@@ -14,8 +14,8 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Switches focus to a specified window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.SwitchToWindow("windowTitle");</p>
- * <p>      Context.Browser.SwitchToWindow("windowTitle", setMainWindowBoolean);</p>
+ * <p>      Context.browser.SwitchToWindow("windowTitle");</p>
+ * <p>      Context.browser.SwitchToWindow("windowTitle", setMainWindowBoolean);</p>
  */
 public class SwitchToWindowByTitleCommand extends CommandWithReturn {
     private String title;

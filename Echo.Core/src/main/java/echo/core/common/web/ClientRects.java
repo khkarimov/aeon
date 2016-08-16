@@ -1,4 +1,4 @@
-package echo.core.common.web;// <summary>
+package echo.core.common.web;
 
 /**
  * Class to easily manage the return value from <see cref="GetClientRectsCommand"/>. It also provides the script for that command.
@@ -21,10 +21,10 @@ public class ClientRects {
     /**
      * Initializes a new instance of the <see cref="ClientRects"/> class.
      *
-     * @param top    TODO: add comment.
-     * @param bottom TODO: add comment.
-     * @param left   TODO: add comment.
-     * @param right  TODO: add comment.
+     * @param top    Location of the top edge of the element relative to the document, in pixels.
+     * @param bottom Location of the bottom edge of the element relative to the document, in pixels.
+     * @param left   Location of the left edge of the element relative to the document, in pixels.
+     * @param right  Location of the right edge of the element relative to the document, in pixels.
      */
     public ClientRects(int top, int bottom, int left, int right) {
         setTop(top);

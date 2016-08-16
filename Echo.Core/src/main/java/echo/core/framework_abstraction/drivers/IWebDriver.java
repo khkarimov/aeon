@@ -685,7 +685,7 @@ public interface IWebDriver extends IDriver {
      * @param guid    A globally unique identifier associated with this call.
      * @param element The web element to check.
      */
-    void IsElementDisabled(UUID guid, WebControl element);//
+    void IsElementDisabled(UUID guid, WebControl element);
 
     /**
      * Obtains a date from an elements attribute and compares it with an expected date. Has a

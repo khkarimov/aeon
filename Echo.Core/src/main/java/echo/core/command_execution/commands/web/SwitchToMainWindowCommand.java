@@ -10,8 +10,8 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Switches focus to the original window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.SwitchToMainWindow();</p>
- * <p>      Context.Browser.SwitchToMainWindow(WaitForAllPopupWindowsToClose);</p>
+ * <p>      Context.browser.SwitchToMainWindow();</p>
+ * <p>      Context.browser.SwitchToMainWindow(WaitForAllPopupWindowsToClose);</p>
  */
 public class SwitchToMainWindowCommand extends Command {
     private String mainWindowHandle;

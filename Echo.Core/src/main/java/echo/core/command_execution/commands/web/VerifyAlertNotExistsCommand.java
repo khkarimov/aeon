@@ -12,7 +12,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
  * Asserts/Checks whether an alert exists. If your code makes an alert popup and after you close it you want to check whether it is the case this method will assert so.
- * Usage: Context.Browser.VerifyAlertNotExists()
+ * Usage: Context.browser.VerifyAlertNotExists()
  */
 public class VerifyAlertNotExistsCommand extends Command {
     /**

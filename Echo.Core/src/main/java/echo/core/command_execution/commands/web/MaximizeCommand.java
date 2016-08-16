@@ -10,7 +10,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Maximizes the currently focused browser window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.Maximize();</p>
+ * <p>      Context.browser.Maximize();</p>
  */
 public class MaximizeCommand extends Command {
     /**

@@ -5,7 +5,7 @@ package echo.core.common.web;
  */
 public enum JQueryStringType {
     /**
-     * Just the raw jQuery selector.
+     * Just the raw jquery selector.
      */
     JustTheJQuerySelector,
 
@@ -40,7 +40,7 @@ public enum JQueryStringType {
     MouseOver,
 
     /**
-     * Returns the jQuery formatted within $.makeArray().
+     * Returns the jquery formatted within $.makeArray().
      */
     ReturnElementArray,
 

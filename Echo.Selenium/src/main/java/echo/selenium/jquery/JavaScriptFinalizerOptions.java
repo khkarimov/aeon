@@ -1,4 +1,4 @@
-package echo.selenium.jQuery;
+package echo.selenium.jquery;
 
 /**
  * Created by DionnyS on 3/31/2016.
