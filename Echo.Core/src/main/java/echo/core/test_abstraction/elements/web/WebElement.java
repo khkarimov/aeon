@@ -98,9 +98,7 @@ public class WebElement extends Element {
 
     public void NotExists() {
         info.getCommandExecutionFacade().Execute(info, new NotExistsCommand(
-                info.getLog(),
-                selector,
-                createWebCommandInitializer()));
+                info.getLog(), selector));
     }
 
     public Object GetElementAttribute(String attributeName) {
