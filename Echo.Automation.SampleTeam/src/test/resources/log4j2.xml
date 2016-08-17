@@ -15,12 +15,16 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
+        <File name="File" filename="log/EchoLog.html">
+            <EchoHtmlLayout></EchoHtmlLayout>
+        </File>
 
     </Appenders>
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="File"/>
         </Root>
     </Loggers>
 </Configuration>
