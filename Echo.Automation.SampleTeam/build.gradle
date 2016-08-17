@@ -15,6 +15,7 @@ ext {
 }
 
 clean {
+    delete 'log'
     delete 'plugins'
 }
 

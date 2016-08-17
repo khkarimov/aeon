@@ -168,7 +168,7 @@ public final class EchoHtmlLayout extends AbstractStringLayout {
         }
 
         sbuf.append("<td title=\"Message\">");
-        sbuf.append("ECHOLogger" + Transform.escapeHtmlTags(event.getMessage().getFormattedMessage()).replaceAll(REGEXP, "<br />"));
+        sbuf.append(Transform.escapeHtmlTags(event.getMessage().getFormattedMessage()).replaceAll(REGEXP, "<br />"));
 
         Object[] parameters = event.getMessage().getParameters();
         if (parameters != null && parameters.length > 0 && parameters[0] instanceof BufferedImage){
