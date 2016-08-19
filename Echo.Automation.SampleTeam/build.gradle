@@ -38,3 +38,7 @@ dependencies {
     compile fileTree(dir: '../distrib/', include: 'Echo.Core-*.jar')
     compile fileTree(dir: '../distrib/', include: 'Echo.SampleContext-*.jar')
 }
+
+test {
+    maxParallelForks = 4
+}
