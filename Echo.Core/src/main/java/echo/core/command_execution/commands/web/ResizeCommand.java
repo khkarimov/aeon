@@ -20,7 +20,7 @@ public class ResizeCommand extends Command {
     private Size size;
 
     /**
-     * Initializes a new instance of the <see cref="ResizeCommand"/> class.
+     * Initializes a new instance of the {@link ResizeCommand} class.
      *
      * @param log  The logger.
      * @param size The new browser size.

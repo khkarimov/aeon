@@ -20,7 +20,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     private Duration throttleFactor;
 
     /**
-     * Initializes a new instance of the <see cref="DelegateRunnerFactory"/> class.
+     * Initializes a new instance of the {@link DelegateRunnerFactory} class.
      *
      * @param clock                                    The clock.
      * @param defaultTimeout                           The timeout to wait for.
@@ -35,7 +35,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     }
 
     /**
-     * Initializes a new instance of the <see cref="DelegateRunnerFactory"/> class for bacho.
+     * Initializes a new instance of the {@link DelegateRunnerFactory} class for bacho.
      *
      * @param throttleFactor The throttle factor.
      * @param defaultTimeout The default timeout.
@@ -47,7 +47,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     }
 
     /**
-     * Creates an instance of the <see cref="IDelegateRunner"/> class which is used to run delegates.
+     * Creates an instance of the {@link IDelegateRunner} class which is used to run delegates.
      */
     public final IDelegateRunner CreateInstance(UUID guid, AutomationInfo automationInfo) {
         // TODO(DionnyS): JAVA_CONVERSION Use an IoC container to resolve the factory.

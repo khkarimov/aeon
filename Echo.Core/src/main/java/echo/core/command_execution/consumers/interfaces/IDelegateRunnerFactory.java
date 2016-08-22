@@ -9,7 +9,7 @@ import java.util.UUID;
  */
 public interface IDelegateRunnerFactory {
     /**
-     * Creates an instance of the <see cref="IDelegateRunner"/> class which is used to run delegates.
+     * Creates an instance of the {@link IDelegateRunner} class which is used to run delegates.
      */
     IDelegateRunner CreateInstance(UUID guid, AutomationInfo automationInfo);
 }

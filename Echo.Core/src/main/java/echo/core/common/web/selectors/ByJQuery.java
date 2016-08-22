@@ -53,7 +53,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Initializes a new instance of the <see cref="ByJQuery"/> class.
+     * Initializes a new instance of the {@link ByJQuery} class.
      *
      * @param predecessor The previous function.
      * @param function    The function name.
@@ -66,11 +66,12 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Appends <see cref="ByJQuery"/> objects to <paramref name="appendee"/>.
+     * Appends {@link ByJQuery} objects to {@code appendee}.
      *
-     * @param appendee   The first <see cref="ByJQuery"/> object in the chain.
-     * @param appendices The next <see cref="ByJQuery"/> objects in the chain.
-     * @throws IllegalArgumentException If <paramref name="appendices"/> is <see langword="null"/>.
+     * @param appendee   The first {@link ByJQuery} object in the chain.
+     * @param appendices The next {@link ByJQuery} objects in the chain.
+     * @throws IllegalArgumentException If {@code appendee} is {@code null}.
+     * @return The {@link ByJQuery}
      */
     public static ByJQuery Append(ByJQuery appendee, ByJQuery... appendices) {
         if (appendee == null) {
@@ -109,7 +110,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * For those jquery commands which return an integer.
      *
-     * @param obj      A <see cref="ByJQuery"/> object representing a function which returns an integer.
+     * @param obj      A {@link ByJQuery} object representing a function which returns an integer.
      * @param constant A constant integer.
      */
     public static ByJQueryWithArithmeticOperatorOverload OpAddition(ByJQuery obj, int constant) {
@@ -119,7 +120,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * For those jquery commands which return an integer.
      *
-     * @param obj      A <see cref="ByJQuery"/> object representing a function which returns an integer.
+     * @param obj      A {@link ByJQuery} object representing a function which returns an integer.
      * @param constant A constant integer.
      */
     public static ByJQueryWithArithmeticOperatorOverload OpSubtraction(ByJQuery obj, int constant) {
@@ -151,18 +152,18 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Converts the current instance to <see cref="ByJQuery"/>.
+     * Converts the current instance to {@link ByJQuery}.
      *
-     * @return A <see cref="ByJQuery"/> object.
+     * @return A {@link ByJQuery} object.
      */
     public final ByJQuery ToJQuery() {
         return this;
     }
 
     /**
-     * Clones the <see cref="ByJQuery"/> object by performing a deep copy.
+     * Clones the {@link ByJQuery} object by performing a deep copy.
      *
-     * @return A new <see cref="ByJQuery"/> object.
+     * @return A new {@link ByJQuery} object.
      */
     public final ByJQuery Clone() {
         List<Object> objects = new ArrayList<>();
@@ -171,10 +172,9 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Returns a <see cref="string"/> that represents the current <see cref="object"/>.
+     * Returns a {@link String} that represents the current {@link Object}.
      *
-     * @return A <see cref="string"/> that represents the current <see cref="object"/>.
-     * <filterpriority>2</filterpriority>
+     * @return A {@link String} that represents the current {@link Object}.
      */
     @Override
     public String toString() {
@@ -185,10 +185,10 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Returns a <see cref="string"/> that represents the current <see cref="object"/>.
+     * Returns a {@link String} that represents the current {@link Object}.
      *
      * @param type The type of string to which to convert.
-     * @return A <see cref="string"/> that represents the current <see cref="object"/>.
+     * @return A {@link String} that represents the current {@link Object}.
      */
     @Override
     public final String toString(JQueryStringType type) {
@@ -467,10 +467,10 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Returns the index within the calling <code>String</code> object of the first occurrence of the specified value, starting the search at <paramref name="fromIndex"/>, returns <code>-1</code> if the value is not found.
+     * Returns the index within the calling {@link String} object of the first occurrence of the specified value, starting the search at {@code fromIndex}, returns {@code -1} if the value is not found.
      *
      * @param searchValue A string representing the value to search for.
-     * @param fromIndex   The location within the calling string to start the search from. It can be any integer between <code>0</code> and the length of the string. The default value is <code>0</code>.
+     * @param fromIndex   The location within the calling string to start the search from. It can be any integer between 0 and the length of the string. The default value is 0.
      */
     @Override
     public final ByJQuery indexOf(String searchValue, int fromIndex) {

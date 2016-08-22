@@ -17,7 +17,7 @@ public class GetCookieCommand extends CommandWithReturn {
     private String name;
 
     /**
-     * Initializes a new instance of the <see cref="GetAllCookiesCommand"/> class.
+     * Initializes a new instance of the {@link GetCookieCommand} class.
      *
      * @param log  The logger.
      * @param name The name of the cookie to get.

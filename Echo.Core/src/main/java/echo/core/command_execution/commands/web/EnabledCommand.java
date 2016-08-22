@@ -19,7 +19,7 @@ import java.util.Locale;
 public class EnabledCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the <see cref="EnabledCommand"/> class.
+     * Initializes a new instance of the {@link WebControlCommand} class.
      *
      * @param log                The logger.
      * @param selector           The selector.

@@ -12,7 +12,7 @@ public interface IScriptExecutor {
      * Specifies the amount of time the driver should wait when executing JavaScript asynchronously.
      *
      * @param guid       A globally unique identifier associated with this call.
-     * @param timeToWait A <see cref="Duration"/> structure defining the amount of time to wait.
+     * @param timeToWait A {@link Duration} structure defining the amount of time to wait.
      */
     void SetTimeout(UUID guid, Duration timeToWait);
 

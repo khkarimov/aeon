@@ -7,7 +7,7 @@ import echo.core.common.web.interfaces.IByWithJavaScriptClick;
  */
 public class ByWithJavaScriptClick extends By implements IByWithJavaScriptClick {
     /**
-     * Initializes a new instance of the <see cref="ByWithJavaScriptClick"/> class.
+     * Initializes a new instance of the {@link ByJQueryWithJavaScriptClick} class.
      *
      * @param selector Replace me.
      */
@@ -19,7 +19,7 @@ public class ByWithJavaScriptClick extends By implements IByWithJavaScriptClick 
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
-     * @return A new <see cref="By"/> instance.
+     * @return A new {@link By} instance.
      */
     public static ByWithJavaScriptClick CssSelector(String selector) {
         return new ByWithJavaScriptClick(selector);

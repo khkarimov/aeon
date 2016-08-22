@@ -25,7 +25,7 @@ public class SelectFileDialogCommand extends Command {
     private String path;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class
+     * Initializes a new instance of the {@link SelectFileDialogCommand} class
      *
      * @param log         The log.
      * @param selector    The selector.

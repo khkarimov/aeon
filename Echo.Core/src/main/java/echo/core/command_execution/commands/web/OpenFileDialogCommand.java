@@ -24,14 +24,14 @@ public class OpenFileDialogCommand extends Command {
     private IBy selector;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class
+     * Initializes a new instance of the {@link Command} class
      *
      * @param log         The log.
      * @param selector    The selector.
      * @param initializer The command initializer.
      */
     public OpenFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer) {
-        super(log, Resources.getString("OpenFiileDialogCommand_Info"), initializer);
+        super(log, Resources.getString("OpenFileDialogCommand_Info"), initializer);
         this.selector = selector;
     }
 

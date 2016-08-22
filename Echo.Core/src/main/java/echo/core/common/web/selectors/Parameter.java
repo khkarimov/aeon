@@ -3,13 +3,13 @@ package echo.core.common.web.selectors;
 import echo.core.common.helpers.StringUtils;
 
 /**
- * Struct for parameters for <see cref="ByJQuery"/>.
+ * Struct for parameters for {@link ByJQuery}.
  */
 public final class Parameter {
     private Object object;
 
     /**
-     * Initializes a new instance of the <see cref="Parameter"/> struct.
+     * Initializes a new instance of the {@link Parameter} struct.
      *
      * @param parameter The parameter.
      */
@@ -22,10 +22,9 @@ public final class Parameter {
     }
 
     /**
-     * Returns a <see cref="string"/> that represents the current <see cref="object"/>.
+     * Returns a {@link String} that represents the current {@link Object}.
      *
-     * @return A <see cref="string"/> that represents the current <see cref="object"/>.
-     * <filterpriority>2</filterpriority>
+     * @return A {@link String} that represents the current {@link Object}.
      */
     @Override
     public String toString() {
@@ -41,7 +40,7 @@ public final class Parameter {
      * Indicates whether the current object is equal to another object of the same type.
      *
      * @param other An object to compare with this object.
-     * @return true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+     * @return true if the current object is equal to the {@code other} parameter; otherwise, false.
      */
     public boolean equals(Parameter other) {
         return object.equals(other.object);
@@ -50,8 +49,8 @@ public final class Parameter {
     /**
      * Indicates whether this instance and a specified object are equal.
      *
-     * @param obj Another object to compare to. <filterpriority>2</filterpriority>
-     * @return true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+     * @param obj Another object to compare to.
+     * @return true if {@code obj} and this instance are the same type and represent the same value; otherwise, false.
      */
     @Override
     public boolean equals(Object obj) {
@@ -66,7 +65,6 @@ public final class Parameter {
      * Returns the hash code for this instance.
      *
      * @return A 32-bit signed integer that is the hash code for this instance.
-     * <filterpriority>2</filterpriority>
      */
     @Override
     public int hashCode() {

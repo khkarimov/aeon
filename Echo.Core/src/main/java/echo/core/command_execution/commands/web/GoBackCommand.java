@@ -14,7 +14,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public class GoBackCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="GoBackCommand"/> class.
+     * Initializes a new instance of the {@link GoBackCommand} class.
      *
      * @param log The logger.
      */

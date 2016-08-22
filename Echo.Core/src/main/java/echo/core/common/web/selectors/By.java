@@ -9,7 +9,7 @@ public class By implements IBy {
     private String selector;
 
     /**
-     * Initializes a new instance of the <see cref="By"/> class.
+     * Initializes a new instance of the {@link By} class.
      *
      * @param selector The CSS selector.
      */
@@ -21,7 +21,7 @@ public class By implements IBy {
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
-     * @return A new <see cref="By"/> instance.
+     * @return A new {@link By} instance.
      */
     public static By CssSelector(String selector) {
         return new By(selector);
@@ -31,7 +31,7 @@ public class By implements IBy {
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
-     * @return A new <see cref="ByJQuery"/> instance.
+     * @return A new {@link By} instance.
      */
     public static ByJQuery JQuery(String selector) {
         return new ByJQuery(selector);
@@ -41,7 +41,7 @@ public class By implements IBy {
      * Accepts an existing jquery object which is then used to match a set of elements.
      *
      * @param obj An existing jquery object to clone.
-     * @return A new <see cref="ByJQuery"/> instance.
+     * @return A new {@link ByJQuery} instance.
      */
     public static ByJQuery JQuery(ByJQuery obj) {
         return new ByJQuery(obj);
@@ -55,9 +55,9 @@ public class By implements IBy {
     }
 
     /**
-     * Converts the current instance to <see cref="ByJQuery"/>.
+     * Converts the current instance to {@link ByJQuery}.
      *
-     * @return A <see cref="ByJQuery"/> object.
+     * @return A {@link ByJQuery} object.
      */
     public final ByJQuery ToJQuery() {
         return new ByJQuery(getSelector());
@@ -67,7 +67,6 @@ public class By implements IBy {
      * Returns a string that represents the current object.
      *
      * @return A string that represents the current object.
-     * <filterpriority>2</filterpriority>
      */
     @Override
     public String toString() {
