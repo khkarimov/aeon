@@ -263,8 +263,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     @Override
-    public void SwitchToMainWindow(UUID uuid) {
-        throw new NotImplementedException("SwitchToMainWindow not implemented.");
+    public void SwitchToMainWindow(UUID uuid, String mainWindowHandle, Boolean waitForAllPopupWindowsToClose) {
+        webDriver.switchTo().window(mainWindowHandle);
+        if(waitForAllPopupWindowsToClose)
+        {
+            if(GetWindowHandles(uuid).size() > 1)
+            {
+                throw new NotAllPopupWindowsClosedException();
+            }
+        }
     }
 
     /**

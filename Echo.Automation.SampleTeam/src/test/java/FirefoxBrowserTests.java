@@ -15,7 +15,7 @@ import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
-public class CommandTesting {
+public class FirefoxBrowserTests {
 
     private static Sample product;
 
@@ -31,7 +31,7 @@ public class CommandTesting {
 
     @Before
     public void BeforeTests() {
-        product = Launch(Sample.class, BrowserType.Chrome);
+        product = Launch(Sample.class, BrowserType.Firefox);
         product.browser.Maximize();
         product.browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
@@ -99,11 +99,12 @@ public class CommandTesting {
         product.browser.GoToUrl("http://www.tutorialspoint.com");
         product.browser.ScrollToEnd();
         product.browser.ScrollToTop();
+        product.browser.VerifyURL("tutorialspoint.com");
         product.browser.GoBack();
         product.browser.GoForward();
     }
 
-    @Test
+    @Ignore
     public void TestSelectFileDialog() {
         String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
         product.StartPage.TestFileDialogInput.OpenFileDialog();
@@ -125,7 +126,7 @@ public class CommandTesting {
 
     @Test
     public void TestClickAndHold() {
-        product.StartPage.Start.ClickAndHold(9000);
+        product.StartPage.Start.ClickAndHold(5000);
     }
 
     @Test
@@ -206,7 +207,7 @@ public class CommandTesting {
         product.browser.ClickAllElementsCommand(By.CssSelector("input[id='checkbox']"));
     }
 
-    @Ignore
+    @Test
     public void CookieTests() {
         product.browser.GoToUrl("http://google.com");
         IWebCookie cookie = new IWebCookie() {

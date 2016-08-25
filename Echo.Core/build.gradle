@@ -14,8 +14,7 @@ repositories {
 }
 
 ext {
-    seleniumVersion = '2.53.0'
-    chromeDriverVersion = '2.21'
+    seleniumVersion = '2.53.1'
 }
 
 dependencies {

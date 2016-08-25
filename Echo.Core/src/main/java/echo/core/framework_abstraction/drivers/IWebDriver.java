@@ -269,9 +269,11 @@ public interface IWebDriver extends IDriver {
     /**
      * Switches to the Main Window
      *
-     * @param guid
+     * @param guid A globally unique identifier associated with this call.
+     * @param mainWindowHandle The handle of the main window
+     * @param waitForAllPopupWindowsToClose
      */
-    void SwitchToMainWindow(UUID guid);
+    void SwitchToMainWindow(UUID guid, String mainWindowHandle, Boolean waitForAllPopupWindowsToClose);
 
     /**
      * Switches the focus of future commands for this driver to the window with the given title.
@@ -550,10 +552,10 @@ public interface IWebDriver extends IDriver {
     void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);
 
     /**
-     * Asserts the Title of an Alert is equal to a given String
+     * Asserts the Title of a Page is equal to a given String
      *
      * @param guid          A globally unique identifier associated with this call.
-     * @param comparingText String to compare against Alert Title.
+     * @param comparingText String to compare against Page Title.
      */
     void VerifyTitle(UUID guid, String comparingText);
 

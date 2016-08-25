@@ -5,15 +5,13 @@ import echo.core.common.web.selectors.By;
 import main.Sample;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
-/**
- * Created by DionnyS on 4/13/2016.
- */
-public class SampleTest {
-
+@Ignore
+public class OptionsCommandsTesting {
     private static Sample product;
 
     @Before
@@ -86,14 +84,6 @@ public class SampleTest {
     }
 
     @Test
-    //Only works on vTeam Sample Page
-    public void TestSelectedAndNotSelected_06() {
-//        product.StartPage.Checkbox100.NotSelected();
-//        product.StartPage.Checkbox100.Check();
-//        product.StartPage.Checkbox100.Selected();
-    }
-
-    @Test
     public void SampleTest2() {
         product.browser.Resize(BrowserSize.TabletLandscape);
         product.browser.Resize(BrowserSize.SmallTabletLandscape);
@@ -117,12 +107,6 @@ public class SampleTest {
     public void TestGetElementAttributeWithTextBoxNameAttribute() {
         String testAttributeValues = product.Login.UserNameTextBox.GetElementAttribute("name").toString();
         System.out.println("User Name text box name value: " + testAttributeValues);
-    }
-
-    @Test
-    public void TestDragAndDropNotUsingHTML5Events() {
-        product.browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
-        product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
     }
 
     @Test

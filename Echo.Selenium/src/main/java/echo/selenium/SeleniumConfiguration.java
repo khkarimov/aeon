@@ -35,7 +35,7 @@ public class SeleniumConfiguration extends Configuration {
         this.maximizeBrowser = true;
         this.useMobileUserAgent = false;
         this.proxyLocation = "";
-        this.ensureCleanEnvironment = false;
+        this.ensureCleanEnvironment = true;
 
         try {
             this.seleniumHubUrl = new URL("http://127.0.0.1");

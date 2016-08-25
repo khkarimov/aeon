@@ -169,8 +169,8 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void SwitchToMainWindow(UUID guid) {
-        adapter.SwitchToMainWindow(guid);
+    public void SwitchToMainWindow(UUID guid, String mainWindowHandle, Boolean waitForAllPopupWindowsToClose) {
+        adapter.SwitchToMainWindow(guid, mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 
     @Override

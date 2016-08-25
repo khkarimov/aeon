@@ -1,7 +1,9 @@
 package echo.core.test_abstraction.models;
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import echo.core.command_execution.AutomationInfo;
+import echo.core.command_execution.commands.CloseCommand;
 import echo.core.command_execution.commands.QuitCommand;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
@@ -19,6 +21,7 @@ import java.util.Collection;
  */
 public class Browser {
     private AutomationInfo info;
+    private String mainWindowHandle;
 
     public Browser(AutomationInfo info) {
         this.info = info;
@@ -117,7 +120,7 @@ public class Browser {
      * @param url The URL the navigate to.
      */
     public void GoToUrl(String url) {
-        info.getCommandExecutionFacade().Execute(info, new GoToUrlCommand(info.getLog(), URLUtil.CreateURL(url)));
+        mainWindowHandle = (String) info.getCommandExecutionFacade().Execute(info, new GoToUrlCommand(info.getLog(), URLUtil.CreateURL(url)));
     }
 
     /**
@@ -143,6 +146,12 @@ public class Browser {
     public void Quit() {
         info.getCommandExecutionFacade().Execute(info, new QuitCommand(info.getLog()));
     }
+
+    /**
+     * Closes the currently focused browser window.     *
+     */
+    public void Close() { info.getCommandExecutionFacade().Execute(info, new CloseCommand(info.getLog()));}
+
 
     /**
      * Refreshes the current window in the browser.
@@ -181,6 +190,23 @@ public class Browser {
      */
     public void SendKeysToAlert(String keys) {
         info.getCommandExecutionFacade().Execute(info, new SendKeysToAlertCommand(info.getLog(), keys));
+    }
+
+    /**
+     * Switches to the main window of the current browser.
+     *
+     */
+    public void SwitchToMainWindow() {
+        SwitchToMainWindow(false);
+    }
+
+    /**
+     * Switches to the main window of the current browser.
+     *
+     * @param waitForAllPopupsToClose Boolean switch to wait for all popup windows to be closed before switching,
+     */
+    public void SwitchToMainWindow(Boolean waitForAllPopupsToClose) {
+        info.getCommandExecutionFacade().Execute(info, new SwitchToMainWindowCommand(info.getLog(), mainWindowHandle, waitForAllPopupsToClose));
     }
 
     /**
