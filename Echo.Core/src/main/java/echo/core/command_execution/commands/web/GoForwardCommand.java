@@ -8,15 +8,14 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 
 /**
  * <p>Move forward a single entry in the browser's history.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.GoForward();</p>
- * <p>
+ *
  * Does nothing if we are on the latest page viewed.
  */
 public class GoForwardCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="GoForwardCommand"/> class.
+     * Initializes a new instance of the {@link GoForwardCommand} class.
      *
      * @param log The logger.
      */

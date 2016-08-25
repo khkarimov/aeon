@@ -13,7 +13,10 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 public class ClickCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link WebControlCommand} class.
+     * @param log The logger.
+     * @param selector The selector.
+     * @param initializer The command initializer.
      */
     public ClickCommand(ILog log, IBy selector, ICommandInitializer initializer) {
         super(log, String.format(Resources.getString("ClickCommand_Info"), selector), selector, initializer);

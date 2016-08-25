@@ -7,7 +7,7 @@ public abstract class JavaScriptFinalizer implements IJavaScriptFinalizer {
     protected IJavaScriptFinalizer Successor;
 
     /**
-     * Initializes a new instance of the <see cref="JavaScriptFinalizer"/> class.
+     * Initializes a new instance of the {@link JavaScriptFinalizer} class.
      *
      * @param successor The next finalizer for formatting.
      */
@@ -20,7 +20,7 @@ public abstract class JavaScriptFinalizer implements IJavaScriptFinalizer {
      *
      * @param javaScript The JavaScript code to format.
      * @return Formatted JavaScript code.
-     * @throws IllegalArgumentException If <paramref name="javaScript"/> is <see langword="null"/>.
+     * @throws IllegalArgumentException If {@code javaScript} is null.
      */
     public abstract String Prepare(String javaScript);
 }

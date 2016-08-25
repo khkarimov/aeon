@@ -1,14 +1,14 @@
 package echo.selenium.jquery;
 
 /**
- * The default <see cref="IJavaScriptFinalizerFactory"/> implementation for Web.
+ * The default {@link IJavaScriptFinalizerFactory} implementation for Web.
  */
 public class SeleniumJavaScriptFinalizerFactory implements IJavaScriptFinalizerFactory {
     /**
      * Creates an instance for the JavaScript finalizer.
      *
      * @param options The options.
-     * @return A new <see cref="IJavaScriptFinalizer"/> object.
+     * @return A new {@link IJavaScriptFinalizerFactory} object.
      */
     public final IJavaScriptFinalizer CreateInstance(JavaScriptFinalizerOptions options) {
         IJavaScriptFinalizer jQueryRegexPluginRegistration = new JQueryRegexPluginRegistration(new JavaScriptMinimizer());

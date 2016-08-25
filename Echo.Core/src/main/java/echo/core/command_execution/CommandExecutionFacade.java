@@ -11,7 +11,7 @@ public final class CommandExecutionFacade implements ICommandExecutionFacade {
     private IDelegateRunnerFactory delegateRunnerFactory;
 
     /**
-     * Initializes a new instance of the <see cref="CommandExecutionFacade"/> class.
+     * Initializes a new instance of the {@link CommandExecutionFacade} class.
      *
      * @param delegateRunnerFactory The delegate runner factory.
      */

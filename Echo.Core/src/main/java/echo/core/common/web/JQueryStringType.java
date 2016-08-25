@@ -1,7 +1,7 @@
 package echo.core.common.web;
 
 /**
- * Indicates how to format a <see cref="ByJQuery"/>.
+ * Indicates how to format a {@link echo.core.common.web.selectors.ByJQuery}.
  */
 public enum JQueryStringType {
     /**

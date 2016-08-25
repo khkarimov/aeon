@@ -19,7 +19,7 @@ public class SetCommand extends WebControlCommand {
     private String value;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link SetCommand} class.
      *
      * @param log         The log.
      * @param selector

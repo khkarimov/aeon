@@ -12,10 +12,10 @@ import java.net.URL;
  * <p>Navigate the currently focused browser to the URL provided.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.GoToUrl("url String")</p>
- * <p>      Context.browser.GoToUrl("url String", setMainWindowBoolean)</p>
- * <p>      Context.browser.GoToUrl(<see cref="Uri"/>)</p>
- * <p>      Context.browser.GoToUrl(<see cref="Uri"/>, setMainWindowBoolean)</p>
+ * <p>      Context.Browser.GoToUrl("url String")</p>
+ * <p>      Context.Browser.GoToUrl("url String", setMainWindowBoolean)</p>
+ * <p>      Context.Browser.GoToUrl({@link java.net.URI})</p>
+ * <p>      Context.Browser.GoToUrl({@link java.net.URI}, setMainWindowBoolean)</p>
  */
 public class GoToUrlCommand extends CommandWithReturn {
     private URL url;

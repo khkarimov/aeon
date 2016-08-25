@@ -24,7 +24,7 @@ public class GetElementAttributeCommand extends WebControlCommandWithReturn {
     private String attributeName;
 
     /**
-     * Initializes a new instance of the <see cref="GetElementAttributeCommand"/> class
+     * Initializes a new instance of the {@link GetElementAttributeCommand} class
      *
      * @param log           The log.
      * @param selector      The selector.

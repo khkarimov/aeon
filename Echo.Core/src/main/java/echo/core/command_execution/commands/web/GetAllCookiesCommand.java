@@ -16,8 +16,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 public class GetAllCookiesCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the <see cref="GetAllCookiesCommand"/> class.
-     *
+     * Initializes a new instance of the {@link GetAllCookiesCommand} class.
      * @param log The logger.
      */
     public GetAllCookiesCommand(ILog log) {
@@ -26,9 +25,8 @@ public class GetAllCookiesCommand extends CommandWithReturn {
 
     /**
      * Provides the logic for the command.
-     *
      * @param driver The framework abstraction facade.
-     * @return Returns a Collection<IWebCookie>.
+     * @return Returns a Collection of {@link echo.core.framework_abstraction.controls.web.IWebCookie}
      */
     @Override
     protected Object CommandDelegate(IDriver driver) {
