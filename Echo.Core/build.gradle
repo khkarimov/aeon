@@ -75,3 +75,14 @@ task copyToDistrib(type: Copy) {
 copyToDistrib.outputs.upToDateWhen { false }
 
 assemble.finalizedBy(copyToDistrib)
+
+apply plugin: "com.jfrog.artifactory"
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}

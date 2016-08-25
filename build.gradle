@@ -62,38 +62,44 @@ buildscript {
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.3"
     }
 }
+
+
 apply plugin: "com.jfrog.artifactory"
 apply plugin: 'maven-publish'
+subprojects {
+//}
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
+//    publishing {
+//        publications {
+//            mavenJava(MavenPublication) {
+//                from components.java
+//            }
+//        }
+//    }
+    artifactory {
+        contextUrl = 'http://artifactory.mia.ucloud.int/artifactory/'
+        publish {
+            repository {
+                repoKey = 'ultimate-gradle-local' // The Artifactory repository key to publish to
+                username = "${artifactory_username}" // The publisher user name
+                password = "${artifactory_password}" // The publisher password
+            }
+            defaults {
+                // Reference to Gradle publications defined in the build script.
+                // This is how we tell the Artifactory Plugin which artifacts should be
+                // published to Artifactory.
+                publications('mavenJava')
+                publishArtifacts = true
+                // Properties to be attached to the published artifacts.
+                properties = ['qa.level': 'basic', 'dev.team': 'core']
+                // Publish generated POM files to Artifactory (true by default)
+                publishPom = true
+            }
+        }
+        resolve {
+            repoKey = 'jcenter'
         }
     }
 }
 
-artifactory {
-    contextUrl = 'http://artifactory.mia.ucloud.int/artifactory/'
-    publish {
-        repository {
-            repoKey = 'ultimate-gradle-local' // The Artifactory repository key to publish to
-            username = "${artifactory_username}" // The publisher user name
-            password = "${artifactory_password}" // The publisher password
-        }
-        defaults {
-            // Reference to Gradle publications defined in the build script.
-            // This is how we tell the Artifactory Plugin which artifacts should be
-            // published to Artifactory.
-            publications('mavenJava')
-            publishArtifacts = true
-            // Properties to be attached to the published artifacts.
-            properties = ['qa.level': 'basic', 'dev.team' : 'core']
-            // Publish generated POM files to Artifactory (true by default)
-            publishPom = true
-        }
-    }
-    resolve {
-        repoKey = 'jcenter'
-    }
-}
+artifactoryPublish.skip = true
