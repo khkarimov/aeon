@@ -29,6 +29,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.MarionetteDriver;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.internal.ElementScrollBehavior;
@@ -68,6 +70,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         boolean moveMouseToOrigin = configuration.isMoveMouseToOrigin();
         String chromeDirectory = configuration.getChromeDirectory();
         String ieDirectory = configuration.getIEDirectory();
+        String marionetteDirectory = configuration.getGeckoDirectory();
         boolean ensureCleanEnvironment = configuration.isEnsureCleanEnvironment();
 
         switch (browserType) {
@@ -77,9 +80,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, log, browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
-                    driver = new FirefoxDriver(new FirefoxBinary(),
-                            GetFirefoxProfile(language, useMobileUserAgent),
-                            setProxySettings(DesiredCapabilities.firefox(), proxyLocation));
+//                    driver = new FirefoxDriver(new FirefoxBinary(),
+//                            GetFirefoxProfile(language, useMobileUserAgent),
+//                            setProxySettings(DesiredCapabilities.firefox(), proxyLocation));
+                    driver = new MarionetteDriver(new GeckoDriverService.Builder().usingDriverExecutable(
+                            new File(marionetteDirectory)).build(), GetMarionetteOptions(language, useMobileUserAgent));
                 }
 
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
@@ -141,6 +146,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 throw new ConfigurationException("BrowserType", "Configuration", String.format("%1$s is not a supported browser", browserType));
         }
 
+        return desiredCapabilities;
+    }
+
+    private static DesiredCapabilities GetMarionetteOptions(String browserAcceptedLanguageCodes, boolean useMobileUserAgent){
+        DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+        desiredCapabilities.setCapability(FirefoxDriver.PROFILE, GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
         return desiredCapabilities;
     }
 

@@ -20,15 +20,17 @@ public class SeleniumConfiguration extends Configuration {
     private boolean moveMouseToOrigin;
     private String chromeDirectory;
     private String ieDirectory;
+    private String geckoDirectory;
     private boolean ensureCleanEnvironment;
 
     public SeleniumConfiguration() {
         super(EchoWebDriver.class, SeleniumAdapter.class);
 
-        System.setProperty("user.chromeDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\chromedriver.exe");
-        System.setProperty("user.ieDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\IEDriverServer.exe");
+        //System.setProperty("user.chromeDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\chromedriver.exe");
+        //System.setProperty("user.ieDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\IEDriverServer.exe");
         this.chromeDirectory = System.getProperty("user.dir") + "\\lib\\chromedriver.exe";
         this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
+        this.geckoDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
         this.enableSeleniumGrid = false;
         this.language = "en-us";
         this.moveMouseToOrigin = true;
@@ -106,6 +108,14 @@ public class SeleniumConfiguration extends Configuration {
 
     public void setIEDirectory(String ieDirectory) {
         this.ieDirectory = ieDirectory;
+    }
+
+    public String getGeckoDirectory(){
+        return geckoDirectory;
+    }
+
+    public void setGeckoDirectory(String geckoDirectory){
+        this.geckoDirectory = geckoDirectory;
     }
 
     public boolean isEnsureCleanEnvironment() {
