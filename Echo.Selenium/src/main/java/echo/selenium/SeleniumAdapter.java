@@ -428,10 +428,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Finds an element within HTML code with the <select></select> tag.
+     * Finds an element within HTML code with the {@code <select></select>} tag.
      *
      * @param guid   A globally unique identifier associated with this call.
-     * @param findBy Selector object that we are using the find the <select></select> tag.
+     * @param findBy Selector object that we are using the find the {@code <select></select>} tag.
      * @return IWebSelectElementAdapter matching the findBy.
      */
     public final WebControl FindSelectElement(UUID guid, IBy findBy) {
@@ -455,10 +455,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Switches to the specified frame in the HTML - <frame></frame>
+     * Switches to the specified frame in the HTML {@code <frame></frame>}.
      *
      * @param guid   A globally unique identifier associated with this call.
-     * @param findBy The selector of the element <frame></frame> to switch to.
+     * @param findBy The selector of the element {@code <frame></frame>} to switch to.
      */
     public final void SwitchToFrame(UUID guid, IBy findBy) {
         WebControl webElement = FindElement(guid, findBy);

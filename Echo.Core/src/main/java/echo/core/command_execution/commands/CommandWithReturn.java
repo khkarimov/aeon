@@ -19,7 +19,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     private ICommandInitializer commandInitializer;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link CommandWithReturn} class.
      *
      * @param log     The logger.
      * @param message The message to log.
@@ -29,7 +29,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     }
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link CommandWithReturn} class.
      *
      * @param log     The log.
      * @param message The message to log.

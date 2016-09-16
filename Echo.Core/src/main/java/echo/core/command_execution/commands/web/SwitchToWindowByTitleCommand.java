@@ -21,7 +21,7 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
     private String title;
 
     /**
-     * Initializes a new instance of the <see cref="SwitchToWindowByTitleCommand"/> class.
+     * Initializes a new instance of the {@link SwitchToWindowByTitleCommand} class.
      *
      * @param log   The logger.
      * @param title The title of the desired window.

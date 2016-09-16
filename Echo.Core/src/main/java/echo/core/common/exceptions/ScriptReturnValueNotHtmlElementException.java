@@ -12,7 +12,7 @@ public class ScriptReturnValueNotHtmlElementException extends RuntimeException i
     private String script;
 
     /**
-     * Initializes a new instance of the <see cref="ScriptReturnValueNotHtmlElementException"/> class.
+     * Initializes a new instance of the {@link ScriptReturnValueNotHtmlElementException} class.
      *
      * @param returnValue The return value of the script.
      * @param script      The script that was executed.
@@ -24,7 +24,7 @@ public class ScriptReturnValueNotHtmlElementException extends RuntimeException i
     }
 
     /**
-     * Initializes a new instance of the <see cref="ScriptReturnValueNotHtmlElementException"/> class.
+     * Initializes a new instance of the {@link ScriptReturnValueNotHtmlElementException} class.
      *
      * @param returnValue    The return value of the script.
      * @param script         The script that was executed.

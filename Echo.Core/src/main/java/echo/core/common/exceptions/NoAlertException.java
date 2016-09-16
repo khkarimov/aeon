@@ -9,14 +9,14 @@ import java.io.Serializable;
  */
 public class NoAlertException extends RuntimeException implements Serializable {
     /**
-     * Initializes a new instance of the <see cref="NoAlertException"/> class.
+     * Initializes a new instance of the {@link NoAlertException} class.
      */
     public NoAlertException() {
         super(Resources.getString("NoAlertException_ctor_DefaultMessage"));
     }
 
     /**
-     * Initializes a new instance of the <see cref="NoAlertException"/> class.
+     * Initializes a new instance of the {@link NoAlertException} class.
      *
      * @param innerException The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.
      */

@@ -20,7 +20,7 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     private IBy selector;
 
     /**
-     * Initializes a new instance of the <see cref="CommandWithReturn"/> class.
+     * Initializes a new instance of the {@link CommandWithReturn} class.
      *
      * @param log     The logger.
      * @param message The message to log.
@@ -30,7 +30,7 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     }
 
     /**
-     * Initializes a new instance of the <see cref="CommandWithReturn"/> class.
+     * Initializes a new instance of the {@link CommandWithReturn} class.
      *
      * @param log         The log.
      * @param message     The message to log.

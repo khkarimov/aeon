@@ -7,7 +7,7 @@ import echo.core.common.Resources;
  */
 public class UnableToHoldClickException extends RuntimeException {
     /**
-     * Initializes a new instance of the <see cref="AlertExistsException"/> class.
+     * Initializes a new instance of the {@link UnableToHoldClickException} class.
      */
     public UnableToHoldClickException() {
         super(Resources.getString("UnableToHoldClickException_ctor_DefaultMessage"));
