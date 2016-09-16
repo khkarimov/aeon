@@ -35,7 +35,7 @@ public class OptionsCommandsTesting {
 
     @Test
     public void TestHasOptions_ListHasOptions_ByText() {
-        String[] validOptionTexts = {"Option0", "Option1", "Option2", "Option3"};
+        String[] validOptionTexts = {"option0", "option1", "option2", "option3"};
         product.StartPage.DropDown.Click();
         product.StartPage.DropDown.HasOptions(validOptionTexts, null, WebSelectOption.Text);
     }
