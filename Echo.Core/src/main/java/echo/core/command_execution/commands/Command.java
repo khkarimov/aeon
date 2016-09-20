@@ -19,7 +19,7 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
     private ICommandInitializer commandInitializer;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link Command} class.
      *
      * @param log     The logger.
      * @param message The message to log.
@@ -29,7 +29,7 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
     }
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link Command} class.
      *
      * @param log     The log.
      * @param message The message to log.

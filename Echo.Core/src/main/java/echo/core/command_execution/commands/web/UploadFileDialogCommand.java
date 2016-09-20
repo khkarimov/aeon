@@ -25,11 +25,12 @@ public class UploadFileDialogCommand extends Command {
     private String path;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class
+     * Initializes a new instance of the {@link UploadFileDialogCommand} class
      *
      * @param log         The log.
      * @param selector    The selector.
      * @param initializer The command initializer.
+     * @param path        The path of the file to select.
      */
     public UploadFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer, String path) {
         super(log, Resources.getString("UploadFileDialogCommand_Info"), initializer);

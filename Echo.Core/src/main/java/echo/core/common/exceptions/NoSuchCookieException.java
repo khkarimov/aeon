@@ -11,7 +11,7 @@ public class NoSuchCookieException extends RuntimeException implements Serializa
     private String cookie;
 
     /**
-     * Initializes a new instance of the <see cref="NoSuchCookieException"/> class.
+     * Initializes a new instance of the {@link NoSuchCookieException} class.
      *
      * @param cookie The cookie.
      */

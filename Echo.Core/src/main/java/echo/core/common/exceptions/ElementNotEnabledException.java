@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ElementNotEnabledException extends RuntimeException implements Serializable {
 
     /**
-     * Initializes a new instance of the <see cref="ElementNotEnabledException"/> class.
+     * Initializes a new instance of the {@link ElementNotEnabledException} class.
      */
     public ElementNotEnabledException() {
         super(Resources.getString("ElementNotEnabledException_ctor_DefaultMessage"));

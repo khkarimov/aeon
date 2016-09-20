@@ -11,7 +11,7 @@ public class ConfigurationException extends RuntimeException implements Serializ
     private String key, source, reason;
 
     /**
-     * Initializes a new instance of the <see cref="ConfigurationException"/> class.
+     * Initializes a new instance of the {@link ConfigurationException} class.
      *
      * @param key    The key.
      * @param source The source.
@@ -25,7 +25,7 @@ public class ConfigurationException extends RuntimeException implements Serializ
     }
 
     /**
-     * Initializes a new instance of the <see cref="ConfigurationException"/> class.
+     * Initializes a new instance of the {@link ConfigurationException} class.
      *
      * @param key            The key.
      * @param source         The source.

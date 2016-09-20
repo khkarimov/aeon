@@ -16,7 +16,7 @@ public abstract class WebControlCommand extends Command {
     private IBy selector;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link WebControlCommand} class.
      *
      * @param log     The logger.
      * @param message The message to log.
@@ -26,7 +26,7 @@ public abstract class WebControlCommand extends Command {
     }
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link WebControlCommand} class.
      *
      * @param log         The log.
      * @param message     The message to log.

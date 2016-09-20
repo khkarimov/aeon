@@ -7,7 +7,7 @@ import echo.core.common.Resources;
  */
 public class UnsupportedPlatformException extends RuntimeException {
     /**
-     * Initializes a new instance of the <see cref="UnsupportedPlatformException"/> class.
+     * Initializes a new instance of the {@link UnsupportedPlatformException} class.
      */
     public UnsupportedPlatformException() {
         super(Resources.getString("UnsupportedPlatformException_ctor_DefaultMessage"));

@@ -11,9 +11,9 @@ public class UnsupportedSelectElementException extends RuntimeException implemen
     private java.lang.Class forType;
 
     /**
-     * Initializes a new instance of the <see cref="UnsupportedSelectElementException"/> class.
+     * Initializes a new instance of the {@link UnsupportedSelectElementException} class.
      *
-     * @param forType The select element object's <see cref="Type"/> which is not supported.
+     * @param forType The select element object's {@code Type} which is not supported.
      */
     public UnsupportedSelectElementException(java.lang.Class forType) {
         super(String.format(Resources.getString("UnsupportedSelectElementException_ctor_DefaultMessage"), forType));

@@ -15,7 +15,7 @@ public interface IJavaScriptFlowExecutor {
     Function<JavaScriptFinalizerOptions, IJavaScriptFinalizer> getFinalizer();
 
     /**
-     * Gets a function return an object, as performed by <see cref="IWebDriverScriptExecutor"/>.
+     * Gets a function return an object, as performed by {@link IScriptExecutor}.
      */
     QuadFunction<IScriptExecutor, UUID, String, Iterable<Object>, Object> getExecutor();
 }

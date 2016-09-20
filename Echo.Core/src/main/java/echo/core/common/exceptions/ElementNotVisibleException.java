@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ElementNotVisibleException extends RuntimeException implements Serializable {
 
     /**
-     * Initializes a new instance of the <see cref="ElementNotVisibleException"/> class.
+     * Initializes a new instance of the {@link ElementNotVisibleException} class.
      */
     public ElementNotVisibleException() {
         super(Resources.getString("ElementNotVisibleException_ctor_DefaultMessage"));

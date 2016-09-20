@@ -8,7 +8,7 @@ public class NoSuchWindowException extends RuntimeException implements Serializa
     private String window;
 
     /**
-     * Initializes a new instance of the <see cref="NoSuchWindowException"/> class.
+     * Initializes a new instance of the {@link NoSuchWindowException} class.
      *
      * @param window The window.
      */

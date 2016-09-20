@@ -26,7 +26,7 @@ public class SeleniumElement extends WebControl {
     private ILog log;
 
     /**
-     * Initializes a new instance of the <see cref="SeleniumElement"/> class.
+     * Initializes a new instance of the {@link SeleniumElement} class.
      *
      * @param seleniumWebElement Underlying web element.
      * @param log                Record actions.
