@@ -18,7 +18,7 @@ public class SwitchToMainWindowCommand extends Command {
     private boolean waitForAllPopupWindowsToClose;
 
     /**
-     * Initializes a new instance of the <see cref="SwitchToMainWindowCommand"/> class.
+     * Initializes a new instance of the {@link SwitchToMainWindowCommand} class.
      *
      * @param log                           The logger.
      * @param mainWindowHandle              The handle of the main window.
@@ -41,6 +41,6 @@ public class SwitchToMainWindowCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).SwitchToMainWindow(getGuid());
+        ((IWebDriver) driver).SwitchToMainWindow(getGuid(), mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 }

@@ -222,10 +222,11 @@
             </div>
         </div>
         <div style="margin: 0px 20% 200px 20%; background-color: white;">
-            <h5>Test file dialog, checkbox, options, and enabled/disabled commands</h5>
+            <h5>Test file dialog, checkbox, options, popup and enabled/disabled commands</h5>
             <input id="file-dialog" type="file"><br/><br/>
             <input id="checkbox" type='checkbox'>Check Box Test<br/><br/>
-            <button id="disabled-button" disabled="true">Disabled</button>
+            <button id="disabled-button" disabled="true">Disabled</button><br/><br/>
+			<a id="popup-button" href="HeatLogo.jpg" onclick="return popup(this, 'notes')">Popup Button</a>
             <br/><br/>
             <select id="drop-down-list">
                 <!--Add a list options-->
@@ -252,6 +253,16 @@
     </main>
 </div>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript">
+	function popup(mylink, windowname) {
+	if (! window.focus) return true;
+	var href;
+	if (typeof(mylink) == 'string') href=mylink;
+	else href=mylink.href;
+	window.open(href, windowname, 'width=400,height=200,scrollbars=yes');
+	return false;
+}
+</script>
 <script>
     /*(function(open) {
      // event creation

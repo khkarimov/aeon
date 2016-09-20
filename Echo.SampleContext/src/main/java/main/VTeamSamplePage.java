@@ -23,6 +23,7 @@ public class VTeamSamplePage {
     public Checkbox Checkbox100;
     public WebElement div;
     private AutomationInfo info;
+    public Button popupButton;
 
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
@@ -43,5 +44,6 @@ public class VTeamSamplePage {
         Checkbox100 = (Checkbox) web.create(Checkbox.class, "input[id='checkbox100']");
         //TextBox Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
         div = new WebElement(info, By.CssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
+        popupButton = (Button) web.create(Button.class, "a[id='popup-button']");
     }
 }

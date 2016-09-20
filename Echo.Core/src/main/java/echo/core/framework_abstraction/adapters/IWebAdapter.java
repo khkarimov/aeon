@@ -519,8 +519,10 @@ public interface IWebAdapter extends IAdapter {
      * Switches to the Main Window
      *
      * @param guid
+     * @param mainWindowHandle
+     * @param waitForAllPopupWindowsToClose
      */
-    void SwitchToMainWindow(UUID guid);
+    void SwitchToMainWindow(UUID guid, String mainWindowHandle, Boolean waitForAllPopupWindowsToClose);
 
     /**
      * Blurs the current element, takes off focus.
@@ -829,10 +831,10 @@ public interface IWebAdapter extends IAdapter {
     void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);
 
     /**
-     * Asserts the Title of an Alert is equal to a given String
+     * Asserts the Title of a Page is equal to a given String
      *
      * @param guid           A globally unique identifier associated with this call.
-     * @param comparingTitle String to compare against Alert Title.
+     * @param comparingTitle String to compare against Page Title.
      */
     void VerifyTitle(UUID guid, String comparingTitle);
 
