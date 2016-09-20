@@ -9,10 +9,6 @@ import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IAdapterExtension;
 import echo.core.framework_abstraction.drivers.IDriver;
 import org.joda.time.Duration;
-import ro.fortsoft.pf4j.DefaultPluginManager;
-import ro.fortsoft.pf4j.PluginManager;
-
-import java.util.List;
 
 /**
  * Created by DionnyS on 4/12/2016.
@@ -24,7 +20,7 @@ public class Product {
     private Configuration configuration;
     private CommandExecutionFacade commandExecutionFacade;
 
-    public Product(){
+    public Product() {
 
     }
 
@@ -32,16 +28,12 @@ public class Product {
         this.automationInfo = automationInfo;
     }
 
-    public Capability getRequestedCapability(){
+    public Capability getRequestedCapability() {
         return Capability.WEB;
     }
 
     protected AutomationInfo getAutomationInfo() {
         return automationInfo;
-    }
-
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
     }
 
     protected void setAutomationInfo(AutomationInfo automationInfo) {
@@ -76,6 +68,10 @@ public class Product {
 
     protected Configuration getConfiguration() {
         return this.configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     protected void switchDriver(IAdapter adapter) {

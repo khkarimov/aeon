@@ -10,15 +10,15 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Switches focus to the original window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.SwitchToMainWindow();</p>
- * <p>      Context.Browser.SwitchToMainWindow(WaitForAllPopupWindowsToClose);</p>
+ * <p>      Context.browser.SwitchToMainWindow();</p>
+ * <p>      Context.browser.SwitchToMainWindow(WaitForAllPopupWindowsToClose);</p>
  */
 public class SwitchToMainWindowCommand extends Command {
     private String mainWindowHandle;
     private boolean waitForAllPopupWindowsToClose;
 
     /**
-     * Initializes a new instance of the <see cref="SwitchToMainWindowCommand"/> class.
+     * Initializes a new instance of the {@link SwitchToMainWindowCommand} class.
      *
      * @param log                           The logger.
      * @param mainWindowHandle              The handle of the main window.
@@ -41,6 +41,6 @@ public class SwitchToMainWindowCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).SwitchToMainWindow(getGuid());
+        ((IWebDriver) driver).SwitchToMainWindow(getGuid(), mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 }

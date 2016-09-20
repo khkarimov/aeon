@@ -1,9 +1,8 @@
 package echo.core.common.helpers;
 
 import com.sun.glass.ui.Size;
-import echo.core.common.web.BrowserType;
-import echo.core.common.helpers.OsCheck;
 import echo.core.common.logging.ILog;
+import echo.core.common.web.BrowserType;
 
 import java.awt.*;
 import java.util.UUID;
@@ -21,7 +20,7 @@ public final class ClientEnvironmentManager {
 
         switch (browserType) {
             case InternetExplorer:
-                // TODO: JAVA_CONVERSION
+                // TODO(DionnyS): JAVA_CONVERSION
                 // ConfigureInternetExplorerSettings(guid, log, browserAcceptedLanguageCodes);
                 break;
             case Firefox:
@@ -34,17 +33,17 @@ public final class ClientEnvironmentManager {
         switch (browserType) {
             case InternetExplorer:
                 log.Info(guid, "Killing Internet Explorer related processes.");
-                // TODO: JAVA_CONVERSION
+                // TODO(DionnyS): JAVA_CONVERSION
                 // KillProcesses(guid, log, new String[]{"iexplore", "IEDriverServer"});
                 break;
             case Firefox:
                 log.Info(guid, "Killing Firefox related processes.");
-                // TODO: JAVA_CONVERSION
+                // TODO(DionnyS): JAVA_CONVERSION
                 // KillProcesses(guid, log, new String[]{"firefox"});
                 break;
             case Chrome:
                 log.Info(guid, "Killing Chrome related processes.");
-                // TODO: JAVA_CONVERSION
+                // TODO(DionnyS): JAVA_CONVERSION
                 // KillProcesses(guid, log, new String[]{"chrome", "chromedriver"});
                 break;
         }

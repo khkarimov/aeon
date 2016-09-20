@@ -1,6 +1,5 @@
 package echo.core.command_execution.commands.web;
 
-import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.CommandWithReturn;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
@@ -17,14 +16,16 @@ public class GetAlertTextCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the GetAlertTextCommand
+     *
      * @param log The logger
      */
-    public GetAlertTextCommand (ILog log) {
+    public GetAlertTextCommand(ILog log) {
         super(log, "GetAlertTextCommand_Info");
     }
 
     /**
      * Provides the logic for the command.
+     *
      * @param driver The framework abstraction facade.
      * @return The text of the Alert
      */

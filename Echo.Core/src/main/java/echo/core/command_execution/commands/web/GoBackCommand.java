@@ -10,11 +10,11 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Move back a single entry in the browser's history.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.GoBack();</p>
+ * <p>      Context.browser.GoBack();</p>
  */
 public class GoBackCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="GoBackCommand"/> class.
+     * Initializes a new instance of the {@link GoBackCommand} class.
      *
      * @param log The logger.
      */

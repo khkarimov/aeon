@@ -17,14 +17,16 @@ public class DeleteAllCookiesCommand extends Command {
 
     /**
      * Initializes a new instance of the DeleteAllCookiesCommand.
+     *
      * @param log The logger.
      */
-    public DeleteAllCookiesCommand (ILog log) {
+    public DeleteAllCookiesCommand(ILog log) {
         super(log, Resources.getString("DeleteAllCookieCommand_Info"));
     }
 
     /**
      * Provides the logic for the command.
+     *
      * @param driver The web driver.
      */
     @Override

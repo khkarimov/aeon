@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by DionnyS on 4/14/2016.
  */
 public class TimeoutExpiredException extends RuntimeException implements Serializable {
-    
+
     private final String operation;
     private final Duration timeout;
 

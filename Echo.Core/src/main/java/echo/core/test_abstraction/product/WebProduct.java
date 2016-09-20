@@ -7,19 +7,19 @@ import echo.core.test_abstraction.models.Browser;
  * Created by DionnyS on 4/21/2016.
  */
 public class WebProduct extends Product {
-    public Browser Browser;
+    public Browser browser;
 
-    public WebProduct(){
+    public WebProduct() {
 
     }
 
     protected WebProduct(AutomationInfo automationInfo) {
         super(automationInfo);
-        Browser = new Browser(automationInfo);
+        browser = new Browser(automationInfo);
     }
 
     @Override
     protected void afterLaunch() {
-        Browser = new Browser(getAutomationInfo());
+        browser = new Browser(getAutomationInfo());
     }
 }

@@ -10,7 +10,7 @@ import echo.core.common.web.interfaces.IByWithJavaScriptClick;
  */
 public class ByJQueryWithJavaScriptClick extends ByJQuery implements IByWithJavaScriptClick {
     /**
-     * Initializes a new instance of the <see cref="ByJQueryWithJavaScriptClick"/> class.
+     * Initializes a new instance of the {@link ByJQueryWithJavaScriptClick} class.
      *
      * @param selector The selector.
      */
@@ -19,7 +19,7 @@ public class ByJQueryWithJavaScriptClick extends ByJQuery implements IByWithJava
     }
 
     /**
-     * Initializes a new instance of the <see cref="ByJQueryWithJavaScriptClick"/> class.
+     * Initializes a new instance of the {@link ByJQueryWithJavaScriptClick} class.
      *
      * @param byJQuery The ByJQuery object.
      */

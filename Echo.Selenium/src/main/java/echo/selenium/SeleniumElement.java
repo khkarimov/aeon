@@ -3,7 +3,6 @@ package echo.selenium;
 import echo.core.common.exceptions.IncorrectElementTagException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.logging.ILog;
-import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import org.openqa.selenium.By;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Provides methods available for a web element.
@@ -28,15 +26,18 @@ public class SeleniumElement extends WebControl {
     private ILog log;
 
     /**
-     * Initializes a new instance of the <see cref="SeleniumElement"/> class.
+     * Initializes a new instance of the {@link SeleniumElement} class.
      *
      * @param seleniumWebElement Underlying web element.
      * @param log                Record actions.
      */
     public SeleniumElement(WebElement seleniumWebElement, ILog log) {
         underlyingWebElement = seleniumWebElement;
-        if (underlyingWebElement.getTagName().equalsIgnoreCase("select")) selectHelper  = new SeleniumSelectElement(new Select(underlyingWebElement), log);
-        else selectHelper = null;
+        if (underlyingWebElement.getTagName().equalsIgnoreCase("select")) {
+            selectHelper = new SeleniumSelectElement(new Select(underlyingWebElement), log);
+        } else {
+            selectHelper = null;
+        }
         this.log = log;
     }
 
@@ -153,16 +154,16 @@ public class SeleniumElement extends WebControl {
             WebElement seleniumElement = underlyingWebElement.findElement(By.cssSelector(findBy.toString()));
 
             return new SeleniumElement(seleniumElement, getLog());
-        }
-        catch (org.openqa.selenium.NoSuchElementException e) {
+        } catch (org.openqa.selenium.NoSuchElementException e) {
             throw new NoSuchElementException();
         }
     }
 
     /**
      * Finds element through its text or value.
+     *
      * @param guid Uniquely identifiable id associated with this call.
-     * @param by The selector.
+     * @param by   The selector.
      * @return The first web control found by the selector.
      */
     public WebControl FindElementByXPath(UUID guid, IBy by) {
@@ -170,30 +171,30 @@ public class SeleniumElement extends WebControl {
             throw new IllegalArgumentException("by");
         }
 
-       try {
-           return new SeleniumElement(underlyingWebElement.findElement(org.openqa.selenium.By.xpath(by.toString())), log);
-       }
-       catch (org.openqa.selenium.NoSuchElementException e) {
-           throw new NoSuchElementException();
-       }
+        try {
+            return new SeleniumElement(underlyingWebElement.findElement(org.openqa.selenium.By.xpath(by.toString())), log);
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            throw new NoSuchElementException();
+        }
     }
 
     /**
      * Finds all elements corresponding to a given selector.
+     *
      * @param guid A globally unique identifier associated with a call.
-     * @param by The selector.
+     * @param by   The selector.
      * @return A collection of WebControls.
      */
     public Collection<WebControl> FindElementsByXPath(UUID guid, IBy by) {
-       if (by  == null) {
-           throw new IllegalArgumentException("by");
-       }
+        if (by == null) {
+            throw new IllegalArgumentException("by");
+        }
 
         List<WebControl> result = new ArrayList<>();
 
         getLog().Trace(guid, String.format("WebElement.FindElementsByXPath(By.CssSelector(%1$s)),", by));
 
-        for (WebElement seleniumElement : underlyingWebElement.findElements(By.xpath(by.toString()))){
+        for (WebElement seleniumElement : underlyingWebElement.findElements(By.xpath(by.toString()))) {
             result.add(new SeleniumElement(seleniumElement, getLog()));
         }
 
@@ -330,7 +331,7 @@ public class SeleniumElement extends WebControl {
      * @param moveMouseToOrigin The move Mouse To Origin.
      */
     public final void Click(UUID guid, boolean moveMouseToOrigin) {
-        // TODO: Ensure this works in a grid instance
+        // TODO(DionnyS): Ensure this works in a grid instance
         if (moveMouseToOrigin) {
             try {
                 Robot robot = new Robot();
@@ -367,7 +368,7 @@ public class SeleniumElement extends WebControl {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-       return selectHelper.GetAllSelectedOptions(guid);
+        return selectHelper.GetAllSelectedOptions(guid);
     }
 
     public final WebControl GetSelectedOption(UUID guid) {

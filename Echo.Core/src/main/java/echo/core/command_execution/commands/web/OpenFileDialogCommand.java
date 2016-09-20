@@ -3,6 +3,7 @@ package echo.core.command_execution.commands.web;
 /**
  * Created by SebastianR on 5/31/2016.
  */
+
 import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.Resources;
@@ -23,23 +24,23 @@ public class OpenFileDialogCommand extends Command {
     private IBy selector;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class
+     * Initializes a new instance of the {@link Command} class
      *
-     * @param log           The log.
-     * @param selector      The selector.
-     * @param initializer   The command initializer.
+     * @param log         The log.
+     * @param selector    The selector.
+     * @param initializer The command initializer.
      */
-    public OpenFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer){
-        super(log, Resources.getString("OpenFiileDialogCommand_Info"), initializer);
+    public OpenFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer) {
+        super(log, Resources.getString("OpenFileDialogCommand_Info"), initializer);
         this.selector = selector;
     }
 
 
     @Override
     protected void DriverDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).OpenFileDialog(getGuid(),selector);
+        ((IWebDriver) driver).OpenFileDialog(getGuid(), selector);
     }
 }

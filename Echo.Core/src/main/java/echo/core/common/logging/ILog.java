@@ -1,7 +1,6 @@
 package echo.core.common.logging;
 
-import java.awt.Image;
-
+import java.awt.*;
 import java.util.UUID;
 
 /**

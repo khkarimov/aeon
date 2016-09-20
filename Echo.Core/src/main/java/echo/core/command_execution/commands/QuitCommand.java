@@ -6,7 +6,7 @@ import echo.core.framework_abstraction.drivers.IDriver;
 
 public class QuitCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="QuitCommand"/> class.
+     * Initializes a new instance of the {@link QuitCommand} class.
      *
      * @param log The logger.
      */

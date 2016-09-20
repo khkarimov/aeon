@@ -7,7 +7,7 @@ import echo.core.common.Resources;
  */
 public class UnableToTakeScreenshotException extends RuntimeException {
     /**
-     * Initializes a new instance of the <see cref="AlertExistsException"/> class.
+     * Initializes a new instance of the {@link UnableToTakeScreenshotException} class.
      */
     public UnableToTakeScreenshotException() {
         super(Resources.getString("UnableToTakeScreenshotException_ctor_DefaultMessage"));

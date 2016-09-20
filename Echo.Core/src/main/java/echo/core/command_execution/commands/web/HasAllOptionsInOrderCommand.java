@@ -22,13 +22,15 @@ public class HasAllOptionsInOrderCommand extends WebControlCommand {
 
     private CompareType compare;
     private String optGroup;
+
     /**
      * Initializes a new instance of the HasAllOptionsInOrderCommand.
-     * @param log The logger.
-     * @param selector The selector.
+     *
+     * @param log                The logger.
+     * @param selector           The selector.
      * @param commandInitializer The command initializer.
-     * @param compare The way that all the options in the select element will be compared.
-     * @param optGroup the optional option group that would be searched in isolation instead of the entire select.
+     * @param compare            The way that all the options in the select element will be compared.
+     * @param optGroup           the optional option group that would be searched in isolation instead of the entire select.
      */
     public HasAllOptionsInOrderCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, CompareType compare, String optGroup) {
         super(log, String.format(Locale.getDefault(), Resources.getString("CheckCommand_Info"), selector), selector, commandInitializer);
@@ -38,7 +40,8 @@ public class HasAllOptionsInOrderCommand extends WebControlCommand {
 
     /**
      * Provides the logic for the command.
-     * @param driver The web driver.
+     *
+     * @param driver  The web driver.
      * @param control Thw web control.
      */
     @Override

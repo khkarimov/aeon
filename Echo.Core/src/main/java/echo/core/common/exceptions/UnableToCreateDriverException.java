@@ -7,7 +7,8 @@ import echo.core.common.Resources;
  */
 public class UnableToCreateDriverException extends RuntimeException {
     /**
-     * Initializes a new instance of the <see cref="UnableToCreateDriverException"/> class.
+     * Initializes a new instance of the {@link UnableToCreateDriverException} class.
+     *
      * @param e
      */
     public UnableToCreateDriverException(Exception e) {

@@ -14,16 +14,16 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Scrolls to the end of the page.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.ScrollToEnd();</p>
+ * <p>      Context.browser.ScrollToEnd();</p>
  */
 
 public class ScrollToEndCommand extends Command {
     /**
-     * Initializes a new instance of the <see href="ScrollToTopCommand"/> class.
+     * Initializes a new instance of the {@link ScrollToTopCommand} class.
      *
      * @param log The logger.
      */
-    public ScrollToEndCommand(ILog log){
+    public ScrollToEndCommand(ILog log) {
         super(log, Resources.getString("ScrollToEndCommand_Info"));
     }
 
@@ -33,7 +33,7 @@ public class ScrollToEndCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver){
+    protected void DriverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

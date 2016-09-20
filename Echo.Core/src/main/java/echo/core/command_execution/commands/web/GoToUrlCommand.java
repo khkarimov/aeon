@@ -14,20 +14,20 @@ import java.net.URL;
  * <p>Usage:</p>
  * <p>      Context.Browser.GoToUrl("url String")</p>
  * <p>      Context.Browser.GoToUrl("url String", setMainWindowBoolean)</p>
- * <p>      Context.Browser.GoToUrl(<see cref="Uri"/>)</p>
- * <p>      Context.Browser.GoToUrl(<see cref="Uri"/>, setMainWindowBoolean)</p>
+ * <p>      Context.Browser.GoToUrl({@link java.net.URI})</p>
+ * <p>      Context.Browser.GoToUrl({@link java.net.URI}, setMainWindowBoolean)</p>
  */
 public class GoToUrlCommand extends CommandWithReturn {
     private URL url;
 
     /**
-     * Initializes a new instance of the <see cref="GoToUrlCommand"/> class.
+     * Initializes a new instance of the GoToUrlCommand class.
      *
      * @param log The logger.
      * @param url The title of the window.
      */
     public GoToUrlCommand(ILog log, URL url) {
-        super(log, String.format(Resources.getString("GoToUrlCommand_Info"), url));
+        super(log, String.format(Resources.getString("GoToUrlCommand_Info"), url.toString()));
         this.url = url;
     }
 

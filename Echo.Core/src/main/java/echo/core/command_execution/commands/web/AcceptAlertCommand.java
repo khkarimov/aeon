@@ -18,6 +18,7 @@ public class AcceptAlertCommand extends Command {
 
     /**
      * Initializes a new instance of the AcceptAlertCommand.
+     *
      * @param log The logger.
      */
     public AcceptAlertCommand(ILog log) {
@@ -26,6 +27,7 @@ public class AcceptAlertCommand extends Command {
 
     /**
      * Provides the logic for the command.
+     *
      * @param driver The web driver.
      */
     @Override

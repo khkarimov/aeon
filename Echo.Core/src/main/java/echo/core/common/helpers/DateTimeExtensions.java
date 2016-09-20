@@ -4,10 +4,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.Period;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Created by RafaelT on 7/1/2016.
  */
@@ -15,9 +11,10 @@ public class DateTimeExtensions {
 
     /**
      * Checks that the actual value is within a certain margin of error
-     * @param value The actual value encountered.
+     *
+     * @param value    The actual value encountered.
      * @param expected The expected value.
-     * @param delta The margin of error the actual value can be within.
+     * @param delta    The margin of error the actual value can be within.
      * @return Whether or not the actual value is within the margin of error.
      */
     public static boolean ApproximatelyEquals(DateTime value, DateTime expected, Period delta) {
@@ -28,11 +25,12 @@ public class DateTimeExtensions {
      * Adds up the days, hours, minutes, seconds, and milliseconds of a period object
      * to return the total amount of time the period encompases. The weeks, years and months
      * are ignored.
+     *
      * @param delta The period to be converted to milliseconds.
      * @return
      */
     public static long PeriodToMilliSeconds(Period delta) {
-        long dayMillis = delta.getDays()   * DateTimeConstants.MILLIS_PER_DAY;
+        long dayMillis = delta.getDays() * DateTimeConstants.MILLIS_PER_DAY;
         long hourMillis = delta.getHours() * DateTimeConstants.MILLIS_PER_HOUR;
         long minutesMillis = delta.getMinutes() * DateTimeConstants.MILLIS_PER_MINUTE;
         long secondsMillis = delta.getSeconds() * DateTimeConstants.MILLIS_PER_SECOND;

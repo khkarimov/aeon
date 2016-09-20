@@ -14,6 +14,11 @@ ext {
     chromeDriverVersion = '2.21'
 }
 
+clean {
+    delete 'log'
+    delete 'plugins'
+}
+
 dependencies {
     compile project(':Echo.SampleContext')
     testCompile group: 'junit', name: 'junit', version: '4.11'
@@ -30,12 +35,10 @@ dependencies {
 
     compile 'joda-time:joda-time:2.9.3'
 
-    // Drivers
-    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
-
     compile fileTree(dir: '../distrib/', include: 'Echo.Core-*.jar')
     compile fileTree(dir: '../distrib/', include: 'Echo.SampleContext-*.jar')
+}
+
+test {
+    maxParallelForks = 4
 }

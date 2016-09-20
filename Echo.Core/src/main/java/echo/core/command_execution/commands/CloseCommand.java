@@ -8,11 +8,11 @@ import echo.core.framework_abstraction.drivers.IDriver;
  * <p>Closes the currently focused browser window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.Close();</p>
+ * <p>      Context.browser.Close();</p>
  */
 public class CloseCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="CloseCommand"/> class.
+     * Initializes a new instance of the {@link CloseCommand} class.
      *
      * @param log The logger.
      */

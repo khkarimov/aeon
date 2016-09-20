@@ -13,19 +13,19 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>Resizes the currently focused browser window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.Resize(BrowserSize.Maximized);</p>
- * <p>      Context.Browser.Resize(800, 600);</p>
+ * <p>      Context.browser.Resize(BrowserSize.Maximized);</p>
+ * <p>      Context.browser.Resize(800, 600);</p>
  */
 public class ResizeCommand extends Command {
     private Size size;
 
     /**
-     * Initializes a new instance of the <see cref="ResizeCommand"/> class.
+     * Initializes a new instance of the {@link ResizeCommand} class.
      *
      * @param log  The logger.
      * @param size The new browser size.
      */
-    public ResizeCommand(ILog log,BrowserSize size) {
+    public ResizeCommand(ILog log, BrowserSize size) {
         super(log, Resources.getString("ResizeCommand_Info"));
         this.size = BrowserSizeMap.Map(size);
     }
@@ -41,6 +41,6 @@ public class ResizeCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).Resize(getGuid(), size);
+        ((IWebDriver) driver).Resize(getGuid(), size);
     }
 }

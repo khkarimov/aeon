@@ -1,12 +1,13 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
+import echo.core.common.Resources;
 import echo.core.common.exceptions.Select2Exception;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.drivers.IWebDriver;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import echo.core.framework_abstraction.drivers.IWebDriver;
 import org.openqa.selenium.Keys;
 
 /**
@@ -18,14 +19,14 @@ public class SetCommand extends WebControlCommand {
     private String value;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link SetCommand} class.
      *
      * @param log         The log.
      * @param selector
      * @param initializer
      */
     public SetCommand(ILog log, IBy selector, ICommandInitializer initializer, WebSelectOption selectOption, String value) {
-        super(log, "Setting", selector, initializer);
+        super(log, String.format(Resources.getString("SetCommand_Info"), value, selector), selector, initializer);
         this.selectOption = selectOption;
         this.value = value;
     }
@@ -93,10 +94,10 @@ public class SetCommand extends WebControlCommand {
             return false;
         }
 
-			/*
+            /*
              * This script returns the option ID if there is exactly one element with an exact match between the element's text and the variable 'value'.
-			 * Otherwise, it returns false.
-			 */
+             * Otherwise, it returns false.
+             */
         String scriptToDetermineIfSelect2HasExactlyThatOption = String.format("var theId;" + "var list = %1$s.select2().find(':contains(%2$s)').filter( function() { if($(this).text() === '%2$s') { theId = $(this).val(); return true; } return false; } );" + "if(list.length === 1) { return theId; }; return false;", webControl.getSelector().ToJQuery(), value);
 
         Object select2SpecifiedOption = driver.ExecuteScript(getGuid(), scriptToDetermineIfSelect2HasExactlyThatOption);

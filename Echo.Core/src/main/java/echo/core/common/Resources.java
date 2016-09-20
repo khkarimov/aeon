@@ -13,11 +13,11 @@ public class Resources {
     }
 
     public static String getString(String key) {
-        if(bundle.containsKey(key))
-        {
+        if (bundle.containsKey(key)) {
             return bundle.getString(key);
+        } else {
+            return key; //"No message in MessagesBundle in Echo.Core.Resources";
         }
-        else return key;//"No message in MessagesBundle in Echo.Core.Resources";
         //return bundle.getString(key);
         //return key;
     }

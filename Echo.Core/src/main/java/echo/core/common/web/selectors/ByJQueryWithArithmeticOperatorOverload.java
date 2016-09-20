@@ -18,10 +18,9 @@ public class ByJQueryWithArithmeticOperatorOverload {
     }
 
     /**
-     * Returns a <see cref="string"/> that represents the current <see cref="object"/>.
+     * Returns a {@link String} that represents the current {@link Object}.
      *
-     * @return A <see cref="string"/> that represents the current <see cref="object"/>.
-     * <filterpriority>2</filterpriority>
+     * @return A {@link String} that represents the current {@link Object}.
      */
     @Override
     public String toString() {

@@ -20,7 +20,6 @@ configurations {
 
 dependencies {
     compile project(':Echo.Core')
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 
     echo fileTree(dir: '../distrib/', include: 'Echo.Core-*.jar')
 }
@@ -41,18 +40,18 @@ jar {
 }
 
 task copyToDistrib(type: Copy) {
+    group 'copy'
     println('Copying output to distrib folder')
 
     def source = 'build/libs/' + base + '-' + version + '.jar'
     def destination = '../distrib'
-    def distribFolder =  new File('../distrib', '')
+    def distribFolder = new File('../distrib', '')
 
-    if(!distribFolder.exists()) {
+    if (!distribFolder.exists()) {
         println('Creating distrib folder')
 
         distribFolder.mkdir()
-    }
-    else {
+    } else {
         println('Distrib exists')
     }
 
@@ -60,6 +59,6 @@ task copyToDistrib(type: Copy) {
     into destination
 }
 
-copyToDistrib.outputs.upToDateWhen {false}
+copyToDistrib.outputs.upToDateWhen { false }
 
-build.finalizedBy(copyToDistrib)
+assemble.finalizedBy(copyToDistrib)

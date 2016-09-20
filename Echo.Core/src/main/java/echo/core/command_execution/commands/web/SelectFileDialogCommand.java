@@ -3,6 +3,7 @@ package echo.core.command_execution.commands.web;
 /**
  * Created by Salvador Gandara on 6/28/2016.
  */
+
 import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.Resources;
@@ -24,13 +25,13 @@ public class SelectFileDialogCommand extends Command {
     private String path;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class
+     * Initializes a new instance of the {@link SelectFileDialogCommand} class
      *
-     * @param log           The log.
-     * @param selector      The selector.
-     * @param initializer   The command initializer.
+     * @param log         The log.
+     * @param selector    The selector.
+     * @param initializer The command initializer.
      */
-    public SelectFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer, String path){
+    public SelectFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer, String path) {
         super(log, Resources.getString("SelectFileDialogCommand_Info"), initializer);
         this.selector = selector;
         this.path = path;
@@ -39,9 +40,9 @@ public class SelectFileDialogCommand extends Command {
 
     @Override
     protected void DriverDelegate(IDriver driver) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).SelectFileDialog(getGuid(),selector, path);
+        ((IWebDriver) driver).SelectFileDialog(getGuid(), selector, path);
     }
 }

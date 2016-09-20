@@ -20,8 +20,9 @@ public class RightClickCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the RightClickCommand.
-     * @param log The logger.
-     * @param selector The selector.
+     *
+     * @param log                The logger.
+     * @param selector           The selector.
      * @param commandInitializer The command initializer.
      */
     public RightClickCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
@@ -30,7 +31,8 @@ public class RightClickCommand extends WebControlCommand {
 
     /**
      * Provides the logic for the command.
-     * @param driver The web driver.
+     *
+     * @param driver  The web driver.
      * @param control The web control.
      */
     @Override

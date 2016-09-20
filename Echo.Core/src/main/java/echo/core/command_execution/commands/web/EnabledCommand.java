@@ -19,9 +19,10 @@ import java.util.Locale;
 public class EnabledCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the <see cref="EnabledCommand"/> class.
-     * @param log The logger.
-     * @param selector The selector.
+     * Initializes a new instance of the {@link WebControlCommand} class.
+     *
+     * @param log                The logger.
+     * @param selector           The selector.
      * @param commandInitializer The command initializer.
      */
     public EnabledCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
@@ -30,7 +31,8 @@ public class EnabledCommand extends WebControlCommand {
 
     /**
      * The method which provides the logic for the web element command.
-     * @param driver The web driver.
+     *
+     * @param driver  The web driver.
      * @param control The web element.
      */
     @Override

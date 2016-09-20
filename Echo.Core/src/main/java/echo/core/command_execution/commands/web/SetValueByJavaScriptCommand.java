@@ -10,7 +10,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by Administrator on 6/15/2016.
  */
-public class SetValueByJavaScriptCommand extends WebControlCommand{
+public class SetValueByJavaScriptCommand extends WebControlCommand {
 
     private String value;
 

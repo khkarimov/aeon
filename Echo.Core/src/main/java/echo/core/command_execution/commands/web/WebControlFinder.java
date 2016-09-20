@@ -1,10 +1,10 @@
 package echo.core.command_execution.commands.web;
 
-import echo.core.command_execution.commands.interfaces.IWebSelectorFinder;
 import echo.core.command_execution.commands.interfaces.IWebControlFinder;
+import echo.core.command_execution.commands.interfaces.IWebSelectorFinder;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.drivers.IWebDriver;
 import echo.core.framework_abstraction.controls.web.WebControl;
+import echo.core.framework_abstraction.drivers.IWebDriver;
 
 import java.util.UUID;
 
@@ -15,14 +15,14 @@ public class WebControlFinder implements IWebControlFinder {
     private IWebSelectorFinder selectorFinder;
 
     /**
-     * Initializes a new instance of the <see cref="WebControlFinder"/> class.
+     * Initializes a new instance of the {@link WebControlFinder} class.
      */
     public WebControlFinder() {
         this.selectorFinder = new WebSelectorFinder();
     }
 
     /**
-     * Initializes a new instance of the <see cref="WebControlFinder"/> class.
+     * Initializes a new instance of the {@link WebControlFinder} class.
      *
      * @param selectorFinder The finder.
      */

@@ -14,16 +14,16 @@ import java.util.Locale;
  */
 public class DisabledCommand extends WebControlCommand {
 
-    public DisabledCommand(ILog log, IBy selector, ICommandInitializer commandInitializer){
+    public DisabledCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
         super(log, String.format(Locale.getDefault(), Resources.getString("NotEnabledCommand_Info"), selector), selector, commandInitializer);
     }
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        if(control == null){
+        if (control == null) {
             throw new IllegalArgumentException("control");
         }
         driver.IsElementDisabled(getGuid(), control);

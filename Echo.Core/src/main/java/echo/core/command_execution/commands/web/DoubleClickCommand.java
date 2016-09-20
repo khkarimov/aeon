@@ -14,21 +14,23 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Double clicks an element.
  */
-public class DoubleClickCommand extends WebControlCommand{
+public class DoubleClickCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the DoubleClickCommand.
-     * @param log The logger.
-     * @param selector The selector.
+     *
+     * @param log         The logger.
+     * @param selector    The selector.
      * @param initializer The web command initializer.
      */
-    public DoubleClickCommand (ILog log, IBy selector, ICommandInitializer initializer) {
+    public DoubleClickCommand(ILog log, IBy selector, ICommandInitializer initializer) {
         super(log, Resources.getString("WebControlCommand_Info"), selector, initializer);
     }
 
     /**
      * Provides the logic for the command.
-     * @param driver The web driver.
+     *
+     * @param driver  The web driver.
      * @param control The web control.
      */
     @Override

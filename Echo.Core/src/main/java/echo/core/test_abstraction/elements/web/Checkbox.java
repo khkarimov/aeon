@@ -2,12 +2,8 @@ package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
-import echo.core.command_execution.commands.web.CheckCommand;
-import echo.core.command_execution.commands.web.UnCheckCommand;
-import echo.core.command_execution.commands.web.WebControlFinder;
-import echo.core.command_execution.commands.web.WebSelectorFinder;
+import echo.core.command_execution.commands.web.*;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.test_abstraction.elements.Element;
 
 import java.util.ArrayList;
 
@@ -15,13 +11,13 @@ public class Checkbox extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
-    public Checkbox(AutomationInfo info, IBy selector){
+    public Checkbox(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
-    public void Check(){
+    public void Check() {
         info.getCommandExecutionFacade().Execute(info,
                 new CheckCommand(
                         info.getLog(),
@@ -29,11 +25,25 @@ public class Checkbox extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
-    public void Uncheck(){
+    public void Uncheck() {
         info.getCommandExecutionFacade().Execute(info,
                 new UnCheckCommand(
                         info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
+
+    public void Selected() {
+        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
+    }
+
+    public void NotSelected() {
+        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer()));
     }
 }

@@ -1,6 +1,5 @@
 package echo.core.test_abstraction.elements.factories;
 
-import echo.core.command_execution.AutomationInfo;
 import echo.core.test_abstraction.elements.Element;
 
 import java.lang.reflect.Type;

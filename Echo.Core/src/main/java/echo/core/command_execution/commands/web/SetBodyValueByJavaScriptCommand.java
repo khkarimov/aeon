@@ -8,7 +8,6 @@ import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
 
-
 /**
  * Sets a body value by javascript
  */

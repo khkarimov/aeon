@@ -8,7 +8,8 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  */
 public interface IWebGridFinder extends IGridWebSelectorFinder {
     /**
-     * Gets the jQuery expression to find a grid within the table.
+     * Gets the jquery expression to find a grid within the table.
+     * @return The {@link ByJQuery} Grid Finder expression
      */
     ByJQuery getJQueryGridFinder();
 

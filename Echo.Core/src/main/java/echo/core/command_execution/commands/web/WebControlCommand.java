@@ -4,9 +4,9 @@ import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.initialization.ICommandInitializer;
 import echo.core.common.logging.ILog;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
-import echo.core.framework_abstraction.controls.web.WebControl;
 
 /**
  * Serves as the base class for all web element commands that need a finder
@@ -16,7 +16,7 @@ public abstract class WebControlCommand extends Command {
     private IBy selector;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link WebControlCommand} class.
      *
      * @param log     The logger.
      * @param message The message to log.
@@ -26,7 +26,7 @@ public abstract class WebControlCommand extends Command {
     }
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link WebControlCommand} class.
      *
      * @param log         The log.
      * @param message     The message to log.

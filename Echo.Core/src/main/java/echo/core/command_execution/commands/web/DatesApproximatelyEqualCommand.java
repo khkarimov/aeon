@@ -19,7 +19,7 @@ import java.util.Locale;
  * Checks that the date contained in an element attribute is approximately equal to an expected date within a certain margin of error.
  * The provided Period cannot contain any weeks or years or months since these vary in length.
  */
-public class DatesApproximatelyEqualCommand extends WebControlCommand{
+public class DatesApproximatelyEqualCommand extends WebControlCommand {
 
     String attributeName;
     DateTime expectedDate;
@@ -27,14 +27,15 @@ public class DatesApproximatelyEqualCommand extends WebControlCommand{
 
     /**
      * Initializes a new instance of the DatesApproximatelyEqualCommand
-     * @param log The logger.
-     * @param selector The selector.
+     *
+     * @param log                The logger.
+     * @param selector           The selector.
      * @param commandInitializer The comamnd initializer.
-     * @param attributeName The name of the attribute that has the date.
-     * @param expectedDate The expected date.
-     * @param acceptableDelta The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
+     * @param attributeName      The name of the attribute that has the date.
+     * @param expectedDate       The expected date.
+     * @param acceptableDelta    The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
      */
-    public DatesApproximatelyEqualCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String attributeName, DateTime expectedDate , Period acceptableDelta) {
+    public DatesApproximatelyEqualCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String attributeName, DateTime expectedDate, Period acceptableDelta) {
         super(log, String.format(Locale.getDefault(), Resources.getString("DatesApproximatelyEqualCommand_Info"), selector), selector, commandInitializer);
         this.attributeName = attributeName;
         this.expectedDate = expectedDate;
@@ -44,7 +45,8 @@ public class DatesApproximatelyEqualCommand extends WebControlCommand{
 
     /**
      * Provides the logic for the command.
-     * @param driver The WebDriver.
+     *
+     * @param driver  The WebDriver.
      * @param control The element with the date.
      */
     @Override

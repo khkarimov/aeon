@@ -39,7 +39,7 @@ Echo.Core/classes/production/Echo.Core/MessagesBundle.properties
 .idea/uiDesigner.xml
 
 # Gradle:
-.idea/gradle.xml
+#.idea/gradle.xml
 .idea/libraries
 
 # Mongo Explorer plugin:
@@ -68,7 +68,8 @@ fabric.properties
 ### Intellij Patch ###
 *.iml
 
-.idea/
+#.idea/
 distrib/
 log/
 */plugins
+plugins/

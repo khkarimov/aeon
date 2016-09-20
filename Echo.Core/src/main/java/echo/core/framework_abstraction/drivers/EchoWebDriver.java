@@ -34,7 +34,7 @@ public class EchoWebDriver implements IWebDriver {
 
     @Override
     public IDriver Configure(IAdapter adapter) {
-        this.adapter = (IWebAdapter)adapter;
+        this.adapter = (IWebAdapter) adapter;
         return this;
     }
 
@@ -54,7 +54,9 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void DoubleClick(UUID guid, IBy selector) {adapter.DoubleClick(guid, selector);}
+    public void DoubleClick(UUID guid, IBy selector) {
+        adapter.DoubleClick(guid, selector);
+    }
 
     @Override
     public void ScrollElementIntoView(UUID guid, WebControl control) {
@@ -62,12 +64,12 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void ScrollToTop(UUID guid){
+    public void ScrollToTop(UUID guid) {
         adapter.ScrollToTop(guid);
     }
 
     @Override
-    public void ScrollToEnd(UUID guid){
+    public void ScrollToEnd(UUID guid) {
         adapter.ScrollToEnd(guid);
     }
 
@@ -107,10 +109,14 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void DeleteCookie(UUID guid, String cookie) { adapter.DeleteCookie(guid, cookie);}
+    public void DeleteCookie(UUID guid, String cookie) {
+        adapter.DeleteCookie(guid, cookie);
+    }
 
     @Override
-    public void DeleteAllCookies(UUID guid) {adapter.DeleteAllCookies(guid);}
+    public void DeleteAllCookies(UUID guid) {
+        adapter.DeleteAllCookies(guid);
+    }
 
     @Override
     public void GoBack(UUID guid) {
@@ -118,7 +124,9 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void GoForward(UUID guid) { adapter.Forward(guid); }
+    public void GoForward(UUID guid) {
+        adapter.Forward(guid);
+    }
 
     @Override
     public String GoToUrl(UUID guid, URL url) {
@@ -161,13 +169,18 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void SwitchToMainWindow(UUID guid) {
-        adapter.SwitchToMainWindow(guid);
+    public void SwitchToMainWindow(UUID guid, String mainWindowHandle, Boolean waitForAllPopupWindowsToClose) {
+        adapter.SwitchToMainWindow(guid, mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 
     @Override
-    public String SwitchToWindowByTitle(UUID guid, String title){
+    public String SwitchToWindowByTitle(UUID guid, String title) {
         return adapter.SwitchToWindowByTitle(guid, title);
+    }
+
+    @Override
+    public String SwitchToWindowByUrl(UUID guid, String url) {
+        return adapter.SwitchToWindowByUrl(guid, url);
     }
 
     @Override
@@ -196,56 +209,82 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void AcceptAlert(UUID guid) {adapter.AcceptAlert(guid);}
+    public void AcceptAlert(UUID guid) {
+        adapter.AcceptAlert(guid);
+    }
 
     @Override
-    public void DismissAlert(UUID guid) {adapter.DismissAlert(guid);}
+    public void DismissAlert(UUID guid) {
+        adapter.DismissAlert(guid);
+    }
 
     @Override
-    public String GetAlertText(UUID guid) {return adapter.GetAlertText(guid);}
+    public String GetAlertText(UUID guid) {
+        return adapter.GetAlertText(guid);
+    }
 
     @Override
-    public void Blur(UUID guid, WebControl element) {adapter.Blur(guid, element);}
+    public void Blur(UUID guid, WebControl element) {
+        adapter.Blur(guid, element);
+    }
 
     @Override
-    public void RightClick(UUID guid, WebControl element) {adapter.RightClick(guid, element.getSelector());}
+    public void RightClick(UUID guid, WebControl element) {
+        adapter.RightClick(guid, element.getSelector());
+    }
 
     @Override
-	public void Check(UUID guid, WebControl element) {adapter.CheckElement(guid, element);}
+    public void Check(UUID guid, WebControl element) {
+        adapter.CheckElement(guid, element);
+    }
 
     @Override
-    public void UnCheck(UUID guid, WebControl element) {adapter.UnCheckElement(guid, element);}
-
-	@Override
-	public void ClickAndHold(UUID guid, WebControl element, int duration) {adapter.ClickAndHold(guid, element, duration);}
-
-    @Override
-    public void IsElementEnabled(UUID guid, WebControl element) {adapter.IsElementEnabled(guid, element);}
+    public void UnCheck(UUID guid, WebControl element) {
+        adapter.UnCheckElement(guid, element);
+    }
 
     @Override
-    public void Exists(UUID guid, WebControl element) {adapter.Exists(guid, element);}
+    public void ClickAndHold(UUID guid, WebControl element, int duration) {
+        adapter.ClickAndHold(guid, element, duration);
+    }
 
     @Override
-    public void NotExists(UUID guid, WebControl element) {adapter.NotExists(guid, element);}
+    public void IsElementEnabled(UUID guid, WebControl element) {
+        adapter.IsElementEnabled(guid, element);
+    }
 
     @Override
-    public void HasOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {adapter.ElementHasOptions(guid, element, options, optgroup, select);}
+    public void Exists(UUID guid, WebControl element) {
+        adapter.Exists(guid, element);
+    }
 
     @Override
-    public void DoesNotHaveOptions(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {adapter.ElementDoesNotHaveOptions(guid, element, options, optgroup, select);}
+    public void NotExists(UUID guid, WebControl element) {
+        adapter.NotExists(guid, element);
+    }
 
     @Override
-    public void OpenFileDialog(UUID guid, IBy selector){
+    public void HasOptions(UUID guid, WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.ElementHasOptions(guid, element, options, optgroup, select);
+    }
+
+    @Override
+    public void DoesNotHaveOptions(UUID guid, WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.ElementDoesNotHaveOptions(guid, element, options, optgroup, select);
+    }
+
+    @Override
+    public void OpenFileDialog(UUID guid, IBy selector) {
         adapter.OpenFileDialog(guid, selector);
     }
 
     @Override
-    public void SelectFileDialog(UUID guid, IBy selector, String path){
+    public void SelectFileDialog(UUID guid, IBy selector, String path) {
         adapter.SelectFileDialog(guid, selector, path);
     }
 
     @Override
-    public void UploadFileDialog(UUID guid, IBy selector, String path){
+    public void UploadFileDialog(UUID guid, IBy selector, String path) {
         adapter.UploadFileDialog(guid, selector, path);
     }
 
@@ -275,22 +314,32 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void MouseOut(UUID guid,WebControl element) { adapter.MouseOut(guid, element); }
+    public void MouseOut(UUID guid, WebControl element) {
+        adapter.MouseOut(guid, element);
+    }
 
     @Override
-    public void MouseOver(UUID guid, WebControl element) { adapter.MouseOver(guid, element); }
+    public void MouseOver(UUID guid, WebControl element) {
+        adapter.MouseOver(guid, element);
+    }
 
     @Override
-    public void SetBodyValueByJavaScript(UUID guid,WebControl element, String value) { adapter.SetBodyValueByJavaScript(guid, element, value); }
+    public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
+        adapter.SetBodyValueByJavaScript(guid, element, value);
+    }
 
     @Override
-    public void SetValueByJavaScript(UUID guid, WebControl element, String value) { adapter.SetValueByJavaScript(guid, element, value); }
+    public void SetValueByJavaScript(UUID guid, WebControl element, String value) {
+        adapter.SetValueByJavaScript(guid, element, value);
+    }
 
     @Override
-    public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) { adapter.SetDivValueByJavaScript(guid, element, value); }
+    public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) {
+        adapter.SetDivValueByJavaScript(guid, element, value);
+    }
 
     @Override
-    public void HasOptionsInOrder(UUID guid, WebControl element, String [] options, String optgroup, WebSelectOption select) {
+    public void HasOptionsInOrder(UUID guid, WebControl element, String[] options, String optgroup, WebSelectOption select) {
         adapter.ElementHasOptionsInOrder(guid, element, options, optgroup, select);
     }
 
@@ -305,12 +354,22 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public Collection <IWebCookie> GetAllCookies(UUID guid) {
+    public Collection<IWebCookie> GetAllCookies(UUID guid) {
         return adapter.GetAllCookies(guid);
     }
 
     @Override
-    public void ModifyCookie (UUID guid, String name, String value) {
+    public String WindowDoesNotExistByTitle(UUID guid, String windowTitle) {
+        return adapter.WindowDoesNotExistByTitle(guid, windowTitle);
+    }
+
+    @Override
+    public String WindowDoesNotExistByUrl(UUID guid, String url) {
+        return adapter.WindowDoesNotExistByUrl(guid, url);
+    }
+
+    @Override
+    public void ModifyCookie(UUID guid, String name, String value) {
         adapter.ModifyCookie(guid, name, value);
     }
 
@@ -320,28 +379,28 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void Has(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void Has(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         adapter.Has(guid, element, messages, selector, option, attribute);
     }
 
     @Override
-    public void HasLike(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void HasLike(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         adapter.HasLike(guid, element, messages, selector, option, attribute);
     }
 
     @Override
-    public void DoesNotHave (UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void DoesNotHave(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         adapter.DoesNotHave(guid, element, messages, selector, option, attribute);
     }
 
     @Override
-    public void DoesNotHaveLike (UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
+    public void DoesNotHaveLike(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         adapter.DoesNotHaveLike(guid, element, messages, selector, option, attribute);
     }
 
     @Override
-    public void HasOnly(UUID guid, WebControl element, String [] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.HasOnly(guid, element, messages, selector,  option, attribute);
+    public void HasOnly(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasOnly(guid, element, messages, selector, option, attribute);
     }
 
     @Override
@@ -359,6 +418,27 @@ public class EchoWebDriver implements IWebDriver {
         adapter.IsElementDisabled(guid, element);
     }
 
+    @Override
+    public void NotSelected(UUID guid, WebControl element) {
+        adapter.NotSelected(guid, element);
+    }
+
+    @Override
+    public void NotVisible(UUID guid, WebControl element) {
+        adapter.NotVisible(guid, element);
+    }
+
+    @Override
+    public void Selected(UUID guid, WebControl element) {
+        adapter.Selected(guid, element);
+    }
+
+    @Override
+    public void Visible(UUID guid, WebControl element) {
+        adapter.Visible(guid, element);
+    }
+
+    //
     @Override
     public void VerifyAlertText(UUID guid, String comparingText) {
         adapter.VerifyAlertText(guid, comparingText);
@@ -400,7 +480,9 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {adapter.PressKeyboardKey(guid, element, key);}
+    public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {
+        adapter.PressKeyboardKey(guid, element, key);
+    }
 //
 //    /**
 //     * Checks an element.
@@ -494,7 +576,7 @@ public class EchoWebDriver implements IWebDriver {
 //     * @param parameterObject Parameter Object.
 //     */
 //    public final void ChooseSelectElementByText(ParameterObject parameterObject) {
-//        //TODO: WTF PARAMETER OBJECT getWeb()?
+//        //TODO(DionnyS): WTF PARAMETER OBJECT getWeb()?
 //        parameterObject.getWeb().getWebElement().SelectByText(parameterObject.getGuid(), parameterObject.getWeb().getValue());
 //    }
 //
@@ -1407,7 +1489,7 @@ public class EchoWebDriver implements IWebDriver {
 //            return BrowserType.Firefox;
 //        }
 //
-//        throw new RuntimeException("Browser type not recognized");
+//        throw new RuntimeException("browser type not recognized");
 //    }
 //
 //    /**

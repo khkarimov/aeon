@@ -6,10 +6,11 @@ import echo.core.common.Resources;
  * Created by RafaelT on 6/1/2016.
  */
 public class ElementDoesNotHaveOptionException extends RuntimeException {
-    public ElementDoesNotHaveOptionException () {
+    public ElementDoesNotHaveOptionException() {
         super(Resources.getString("ElementDoesNotHaveOptionException_ctor_DefaultMessage"));
     }
-    public ElementDoesNotHaveOptionException (String message) {
+
+    public ElementDoesNotHaveOptionException(String message) {
         super(Resources.getString("ElementDoesNotHaveOptionException_ctor_DefaultMessage") + message);
     }
 }

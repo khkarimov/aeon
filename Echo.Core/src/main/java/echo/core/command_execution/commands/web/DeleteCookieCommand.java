@@ -3,7 +3,6 @@ package echo.core.command_execution.commands.web;
 import echo.core.command_execution.commands.Command;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
-import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
@@ -19,10 +18,11 @@ public class DeleteCookieCommand extends Command {
 
     /**
      * Initializes a new instance of the DeleteCookieCommand class.
-     *
+     * <p>
      * * @param log    The logger.
+     *
      * @param cookie Name of the cookie to be deleted.
-    */
+     */
     public DeleteCookieCommand(ILog log, String cookie) {
         super(log, Resources.getString("DeleteCookieCommand_Info"));
         this.cookie = cookie;
@@ -30,6 +30,7 @@ public class DeleteCookieCommand extends Command {
 
     /**
      * The method that provides the logic for the command
+     *
      * @param driver The framework abstraction facade.
      */
     @Override

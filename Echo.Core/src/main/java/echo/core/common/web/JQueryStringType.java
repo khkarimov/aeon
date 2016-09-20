@@ -1,11 +1,11 @@
 package echo.core.common.web;
 
 /**
- * Indicates how to format a <see cref="ByJQuery"/>.
+ * Indicates how to format a {@link echo.core.common.web.selectors.ByJQuery}.
  */
 public enum JQueryStringType {
     /**
-     * Just the raw jQuery selector.
+     * Just the raw jquery selector.
      */
     JustTheJQuerySelector,
 
@@ -40,7 +40,7 @@ public enum JQueryStringType {
     MouseOver,
 
     /**
-     * Returns the jQuery formatted within $.makeArray().
+     * Returns the jquery formatted within $.makeArray().
      */
     ReturnElementArray,
 
@@ -94,11 +94,11 @@ public enum JQueryStringType {
      */
     GetOptions;
 
-    public int getValue() {
-        return this.ordinal();
-    }
-
     public static JQueryStringType forValue(int value) {
         return values()[value];
+    }
+
+    public int getValue() {
+        return this.ordinal();
     }
 }

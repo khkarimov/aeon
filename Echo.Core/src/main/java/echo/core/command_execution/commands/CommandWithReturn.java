@@ -19,7 +19,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     private ICommandInitializer commandInitializer;
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link CommandWithReturn} class.
      *
      * @param log     The logger.
      * @param message The message to log.
@@ -29,7 +29,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     }
 
     /**
-     * Initializes a new instance of the <see cref="Command"/> class.
+     * Initializes a new instance of the {@link CommandWithReturn} class.
      *
      * @param log     The log.
      * @param message The message to log.
@@ -72,13 +72,12 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     /**
      * Gets the delegate for the command.
      * <p>
-     * <p>
      * GetCommandDelegate is a wrapper for the delegate and actual command.
      * The internal virtual CmdDelegateProperty holds the logic for the delegate.
      * In this way, the logic can be used by an outside class, but only modified by internal classes.
      * This is intentionally not virtual.
      *
-     * @return The delegate property (<see cref="CmdDelegateProperty"/>).
+     * @return The delegate property {@link echo.core.command_execution.consumers.CommandDelegateRunner}.
      */
     public final Function<IDriver, Object> GetCommandDelegate() {
         Function<IDriver, Object> func;

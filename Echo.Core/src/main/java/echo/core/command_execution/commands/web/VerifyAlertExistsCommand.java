@@ -3,6 +3,7 @@ package echo.core.command_execution.commands.web;
 /**
  * Created by SebastianR on 6/1/2016.
  */
+
 import echo.core.command_execution.commands.Command;
 import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
@@ -16,13 +17,14 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * <p>      Context.Alert.Exists();</p>
  */
 
-public class VerifyAlertExistsCommand extends Command{
+public class VerifyAlertExistsCommand extends Command {
     /**
      * Initializes a new instance of the
-     * @see VerifyAlertExistsCommand class
+     *
      * @param log The logger.
+     * @see VerifyAlertExistsCommand class
      */
-    public VerifyAlertExistsCommand(ILog log){
+    public VerifyAlertExistsCommand(ILog log) {
         super(log, Resources.getString("VerifyAlertExistsCommand_Info"));
     }
 

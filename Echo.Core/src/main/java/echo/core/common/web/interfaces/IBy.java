@@ -7,9 +7,9 @@ import echo.core.common.web.selectors.ByJQuery;
  */
 public interface IBy {
     /**
-     * Converts the current instance to <see cref="ByJQuery"/>.
+     * Converts the current instance to {@link ByJQuery}.
      *
-     * @return A <see cref="ByJQuery"/> object.
+     * @return A {@link ByJQuery} object.
      */
     ByJQuery ToJQuery();
 }

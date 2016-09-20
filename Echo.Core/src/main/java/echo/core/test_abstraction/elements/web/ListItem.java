@@ -16,7 +16,7 @@ public class ListItem extends WebElement {
     private AutomationInfo info;
     private IBy selector;
 
-    public ListItem(AutomationInfo info, IBy selector){
+    public ListItem(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
