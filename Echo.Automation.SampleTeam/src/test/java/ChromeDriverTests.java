@@ -46,7 +46,7 @@ public class ChromeDriverTests {
 //endregion
 
     @Test
-    public void testSwitchToMainWindow(){
+    public void Test_SwitchToMainWindow_SwitchToWindowByTitle_VerifyTitle(){
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.popupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
@@ -63,7 +63,7 @@ public class ChromeDriverTests {
     }
 
     @Test
-    public void testSwitchToMainWindow_NotAllPopupsClosedException(){
+    public void TestSwitchToMainWindow_NotAllPopupsClosedException(){
         product.StartPage.popupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
@@ -81,7 +81,7 @@ public class ChromeDriverTests {
     }
 
     @Test
-    public void TestHasOptionsCommandsWith50000() {
+    public void TestHasOptionsCommandAndDoesNotHaveOptions_Success() {
         String[] texts = {"option499", "option8"};
         String[] shouldfail = {"Klingon", "Clicky Noises", "Reptilian Hissing"};
         String[] values = {"1", "2"};

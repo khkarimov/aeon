@@ -1281,7 +1281,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
                 }
             }
-        } catch (org.openqa.selenium.NoSuchElementException e) {
+        } catch (org.openqa.selenium.NoSuchElementException|echo.core.common.exceptions.NoSuchElementException e) {
             throw new ElementDoesNotHaveOptionException(e.toString());
         }
     }
@@ -1303,12 +1303,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         Collection<WebControl> options = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector("option"));
         if (options.size() != optnumber) {
-            throw new ElementDoesNotHaveNumberOfOptionsException();
+            throw new ElementDoesNotHaveNumberOfOptionsException(options.size(), optnumber);
         }
     }
 
     /**
-     * Asserts that a select has all of its options in order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
+     * Asserts that a select has all of its options in lexicographically order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
      *
      * @param guid     A globally unique identifier associated with this call. Can optionally be passed an option group which will be searched instead of the entire select.
      * @param element  The select element to be searched.
@@ -1327,22 +1327,24 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             currOption = (SeleniumElement) elementsIterator.next();
             switch (compare) {
                 case AscendingByText:
-                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
-                        throw new ElementsNotInOrderException();
-                    }
-                    break;
-                case DescendingByText:
                     if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;
+                case DescendingByText:
+                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
                 case AscendingByValue:
-                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;
                 case DescendingByValue:
-                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
+                    String preVal = prevOption.GetAttribute(guid, "value").toLowerCase();
+                    String curVal = currOption.GetAttribute(guid, "value");
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;

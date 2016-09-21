@@ -24,6 +24,8 @@ public class VTeamSamplePage {
     public WebElement div;
     private AutomationInfo info;
     public Button popupButton;
+    public Select LexoDropDown;
+    public Select RevLexoDropDown;
 
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
@@ -45,5 +47,7 @@ public class VTeamSamplePage {
         //TextBox Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
         div = new WebElement(info, By.CssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
         popupButton = (Button) web.create(Button.class, "a[id='popup-button']");
+        LexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down']");
+        RevLexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down-rev']");
     }
 }
