@@ -84,7 +84,7 @@ public class IEDriverTests {
     @Test
     public void TestDragAndDropNotUsingHTML5Events() {
         product.browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
-        product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
+        product.StartPage.DraggableListItem.DragAndDrop("ul[id='box2']");
     }
 
     @Test

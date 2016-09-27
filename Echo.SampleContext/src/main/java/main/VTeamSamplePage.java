@@ -9,6 +9,8 @@ import echo.core.test_abstraction.elements.web.*;
  * Created by Administrator on 6/3/2016.
  */
 public class VTeamSamplePage {
+    private AutomationInfo info;
+
     public Button DisabledButton;
     public Button OpenAlertButton;
     public Image UltimateLogoImage;
@@ -22,10 +24,15 @@ public class VTeamSamplePage {
     public Select DropDown;
     public Checkbox Checkbox100;
     public WebElement div;
-    private AutomationInfo info;
     public Button popupButton;
     public Select LexoDropDown;
     public Select RevLexoDropDown;
+    public Label DateLabel;
+    public Button InvisibleButton;
+    public Label NonExistentLabel;
+    public TextBox FormTextBox;
+    public RadioButton NextRadioButton;
+
 
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
@@ -49,5 +56,10 @@ public class VTeamSamplePage {
         popupButton = (Button) web.create(Button.class, "a[id='popup-button']");
         LexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down']");
         RevLexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down-rev']");
+        DateLabel = (Label) web.create(Label.class, "#date-text");
+        InvisibleButton = (Button) web.create(Button.class, "#invisible-button");
+        NonExistentLabel = (Label) web.create(Label.class, "fakeSelector");
+        FormTextBox = (TextBox) web.create(TextBox.class,  "#sample1");
+        NextRadioButton = (RadioButton) web.create(RadioButton.class, "#next-radio-button");
     }
 }

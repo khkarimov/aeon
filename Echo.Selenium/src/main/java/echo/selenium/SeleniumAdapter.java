@@ -243,7 +243,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void ChooseSelectElementByText(UUID uuid, WebControl element, String s) {
-        throw new NotImplementedException("ChooseSelectElementByText not implemented");
+        // at this point the SetCommand has determined the element is a select element
+        ((SeleniumElement) element).SelectByText(uuid,s);
     }
 
 
@@ -1608,13 +1609,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute The attribute.
      */
     public void IsLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
-        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+        if (option == ComparisonOption.Text && attribute.toUpperCase().equals("INNERHTML")) {
             if (!Like(value, ((SeleniumElement) element).GetText(guid), false)) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetText(guid), attribute);
+                throw new ValuesAreNotAlikeException(value, ((SeleniumElement) element).GetText(guid));
             }
         } else {
             if (!Like(value, ((SeleniumElement) element).GetAttribute(guid, attribute), false)) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetAttribute(guid, attribute), attribute);
+                throw new ValuesAreNotAlikeException(value, ((SeleniumElement) element).GetAttribute(guid, attribute));
             }
         }
     }
@@ -1651,7 +1652,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive) {
         if (!echo.core.common.helpers.StringUtils.Like(GetAlertText(guid), comparingText, caseSensitive)) {
-            throw new ValuesAreNotAlikeException();
+            throw new ValuesAreNotAlikeException(comparingText, GetAlertText(guid));
         }
     }
 

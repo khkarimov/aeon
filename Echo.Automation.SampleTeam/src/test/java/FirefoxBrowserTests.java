@@ -96,10 +96,10 @@ public class FirefoxBrowserTests {
         product.browser.Resize(BrowserSize.SmallTabletLandscape);
         product.browser.Resize(BrowserSize.MobileLandscape);
         product.browser.Maximize();
-        product.browser.GoToUrl("http://www.tutorialspoint.com");
+        product.browser.GoToUrl("http://www.tutorialspoint.com/");
         product.browser.ScrollToEnd();
         product.browser.ScrollToTop();
-        product.browser.VerifyURL("tutorialspoint.com");
+        product.browser.VerifyURL("http://www.tutorialspoint.com/");
         product.browser.GoBack();
         product.browser.GoForward();
     }
@@ -114,7 +114,7 @@ public class FirefoxBrowserTests {
     @Test
     public void TestDragAndDropNotUsingHTML5Events() {
         product.browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
-        product.StartPage.DraggableListItem.DragAndDrop(By.CssSelector("ul[id='box2']"));
+        product.StartPage.DraggableListItem.DragAndDrop("ul[id='box2']");
     }
 
     @Test
