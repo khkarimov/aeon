@@ -1,11 +1,8 @@
-import echo.core.command_execution.commands.web.GetElementAttributeCommand;
 import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
-import echo.core.common.web.selectors.By;
-import echo.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -16,7 +13,6 @@ import org.junit.rules.ExpectedException;
 import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
-import static org.hamcrest.core.Is.is;
 
 public class ChromeDriverTests {
 
@@ -47,6 +43,23 @@ public class ChromeDriverTests {
         product.browser.Quit();
     }
 //endregion
+
+    @Test
+    public void TestNotEnabled() {
+        product.StartPage.DisabledButton.IsDisabled();
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementIsEnabledException.class));
+        product.StartPage.OpenAlertButton.IsDisabled();
+    }
+
+    @Test
+    public void TestGetAlertText() {
+        product.StartPage.OpenAlertButton.Click();
+        String text = product.browser.GetAlertText();
+        assert(text.equals("Send some keys"));
+        product.browser.DismissAlert();
+        thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
+        product.browser.GetAlertText();
+    }
 
     @Test
     public void Test_SwitchToMainWindow_SwitchToWindowByTitle_VerifyTitle() {

@@ -596,9 +596,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return The description of the alert dialog box.
      */
     public final String GetAlertText(UUID guid) {
-        log.Trace(guid, "WebDriver.SwitchTo().Alert().get_Text();");
+        try {
+            log.Trace(guid, "WebDriver.SwitchTo().Alert().get_Text();");
+            return webDriver.switchTo().alert().getText();
+        } catch (NoAlertPresentException e) {
+            throw new NoAlertException(e);
+        }
 
-        return webDriver.switchTo().alert().getText();
+
     }
 
     /**
@@ -608,8 +613,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param keysToSend Keys to send to the alert.
      */
     public final void SendKeysToAlert(UUID guid, String keysToSend) {
-        log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
-        webDriver.switchTo().alert().sendKeys(keysToSend);
+        try {
+            log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
+            webDriver.switchTo().alert().sendKeys(keysToSend);
+        } catch (NoAlertPresentException e) {
+            throw new NoAlertException(e);
+        }
     }
 
     /**
