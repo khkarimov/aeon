@@ -10,18 +10,20 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
 /**
  * Created by Administrator on 6/15/2016.
  */
-public class SetValueByJavaScriptCommand extends WebControlCommand {
+public class SetTextByJavaScriptCommand extends WebControlCommand {
 
     private String value;
 
-    public SetValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
-        super(log, Resources.getString("SetValueByJavaScriptCommand_Info"), selector, initializer);
+    public SetTextByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
+        super(log, Resources.getString("SetTextByJavaScriptCommand_Info"), selector, initializer);
         this.value = value;
     }
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.SetValueByJavaScript(getGuid(), control, value);
-
+        if(driver == null){
+            throw new IllegalArgumentException("driver");
+        }
+        driver.SetTextByJavaScript(getGuid(), control, value);
     }
 }

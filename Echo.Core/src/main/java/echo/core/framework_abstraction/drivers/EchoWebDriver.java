@@ -324,13 +324,18 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void Set(UUID guid, WebControl element, WebSelectOption option, String setValue) {
+        adapter.Set(guid, element, option, setValue);
+    }
+
+    @Override
     public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
         adapter.SetBodyValueByJavaScript(guid, element, value);
     }
 
     @Override
-    public void SetValueByJavaScript(UUID guid, WebControl element, String value) {
-        adapter.SetValueByJavaScript(guid, element, value);
+    public void SetTextByJavaScript(UUID guid, WebControl element, String value) {
+        adapter.SetTextByJavaScript(guid, element, value);
     }
 
     @Override

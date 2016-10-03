@@ -378,6 +378,13 @@ public class SeleniumElement extends WebControl {
         return selectHelper.GetSelectedOption(guid);
     }
 
+    public final String GetSelectedOptionText(UUID guid){
+        if(selectHelper == null){
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        return selectHelper.GetSelectedOptionText(guid);
+    }
+
     public final List<WebControl> GetOptions(UUID guid) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());

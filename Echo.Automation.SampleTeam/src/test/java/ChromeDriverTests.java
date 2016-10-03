@@ -484,4 +484,28 @@ public class ChromeDriverTests {
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.StartPage.DropDown.HasOptionsInOrder(invalidoptions, WebSelectOption.Value);
     }
+
+    @Test
+    public void TestSet_WithSelect(){
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "10");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "dog");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+    }
+
+    @Test
+    public void TestSetValueByJavaScript(){
+        product.StartPage.FormTextBox.SetTextByJavaScript("Set text by javascript is working");
+    }
+
+    @Test
+    public void TestIs_IsLike_IsNotLike_WithSelect(){
+        product.StartPage.LexoDropDown.Is("apple");
+        product.StartPage.LexoDropDown.IsLike("APPLE");
+        product.StartPage.LexoDropDown.Is("01", "value");
+        product.StartPage.LexoDropDown.IsNotLike("appple");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        product.StartPage.LexoDropDown.Is("ZEBRA");
+
+    }
 }
