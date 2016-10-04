@@ -1,14 +1,14 @@
 package echo.selenium.jquery;
 
 /**
- * Factory for <see cref="IJavaScriptFinalizer"/>.
+ * Factory for {@link IJavaScriptFinalizerFactory}.
  */
 public interface IJavaScriptFinalizerFactory {
     /**
      * Creates an instance for the JavaScript finalizer.
      *
      * @param options The options.
-     * @return A new <see cref="IJavaScriptFinalizer"/> object.
+     * @return A new {@link IJavaScriptFinalizerFactory} object.
      */
     IJavaScriptFinalizer CreateInstance(JavaScriptFinalizerOptions options);
 }

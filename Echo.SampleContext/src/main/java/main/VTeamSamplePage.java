@@ -9,6 +9,8 @@ import echo.core.test_abstraction.elements.web.*;
  * Created by Administrator on 6/3/2016.
  */
 public class VTeamSamplePage {
+    private AutomationInfo info;
+
     public Button DisabledButton;
     public Button OpenAlertButton;
     public Image UltimateLogoImage;
@@ -22,7 +24,15 @@ public class VTeamSamplePage {
     public Select DropDown;
     public Checkbox Checkbox100;
     public WebElement div;
-    private AutomationInfo info;
+    public Button popupButton;
+    public Select LexoDropDown;
+    public Select RevLexoDropDown;
+    public Label DateLabel;
+    public Button InvisibleButton;
+    public Label NonExistentLabel;
+    public TextBox FormTextBox;
+    public RadioButton NextRadioButton;
+
 
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
@@ -43,5 +53,13 @@ public class VTeamSamplePage {
         Checkbox100 = (Checkbox) web.create(Checkbox.class, "input[id='checkbox100']");
         //TextBox Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
         div = new WebElement(info, By.CssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
+        popupButton = (Button) web.create(Button.class, "a[id='popup-button']");
+        LexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down']");
+        RevLexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down-rev']");
+        DateLabel = (Label) web.create(Label.class, "#date-text");
+        InvisibleButton = (Button) web.create(Button.class, "#invisible-button");
+        NonExistentLabel = (Label) web.create(Label.class, "fakeSelector");
+        FormTextBox = (TextBox) web.create(TextBox.class,  "#sample1");
+        NextRadioButton = (RadioButton) web.create(RadioButton.class, "#next-radio-button");
     }
 }

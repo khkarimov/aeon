@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public final class ConvertHelper {
     /**
-     * Converts a configuration element to type <paramref name="type"/>.
+     * Converts a configuration element to type {@code type}.
      *
      * @param value The value.
      * @param type  The type to which to convert.

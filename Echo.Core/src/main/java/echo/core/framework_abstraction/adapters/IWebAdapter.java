@@ -519,8 +519,10 @@ public interface IWebAdapter extends IAdapter {
      * Switches to the Main Window
      *
      * @param guid
+     * @param mainWindowHandle
+     * @param waitForAllPopupWindowsToClose
      */
-    void SwitchToMainWindow(UUID guid);
+    void SwitchToMainWindow(UUID guid, String mainWindowHandle, Boolean waitForAllPopupWindowsToClose);
 
     /**
      * Blurs the current element, takes off focus.
@@ -667,7 +669,7 @@ public interface IWebAdapter extends IAdapter {
      * @param element By The selector.
      * @param value   Html to be inserted into a value tag
      */
-    void SetValueByJavaScript(UUID guid, WebControl element, String value);
+    void SetTextByJavaScript(UUID guid, WebControl element, String value);
 
     /**
      * Sets the Value of a Div element by Javascript
@@ -829,10 +831,10 @@ public interface IWebAdapter extends IAdapter {
     void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive);
 
     /**
-     * Asserts the Title of an Alert is equal to a given String
+     * Asserts the Title of a Page is equal to a given String
      *
      * @param guid           A globally unique identifier associated with this call.
-     * @param comparingTitle String to compare against Alert Title.
+     * @param comparingTitle String to compare against Page Title.
      */
     void VerifyTitle(UUID guid, String comparingTitle);
 
@@ -883,8 +885,29 @@ public interface IWebAdapter extends IAdapter {
      */
     void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
 
+    /**
+     * Asserts a window with a given title does not exists.
+     * @param guid A globally unique identifier associated with the call.
+     * @param windowTitile The title of the window to search for.
+     * @return The title of the window
+     */
     String WindowDoesNotExistByTitle(UUID guid, String windowTitile);
 
+    /**
+     * Asserts a window with a given URL does not exists.
+     * @param guid A globally unique identifier associated with the call.
+     * @param url The URL of the window to search for.
+     * @return The URL of the window
+     */
     String WindowDoesNotExistByUrl(UUID guid, String url);
+
+    /**
+     * Sets the Text or Value of an element.
+     * @param guid A globally unique identifier associated with the call.
+     * @param element The web element that is being modified.
+     * @param option Enum which determined whether to set tht Text or the Value.
+     * @param setValue The new value for the Text or Value attribute of the control.
+     */
+    void Set(UUID guid, WebControl element, WebSelectOption option, String setValue);
 
 }

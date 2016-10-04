@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class AlertExistsException extends RuntimeException implements Serializable {
     /**
-     * Initializes a new instance of the <see cref="AlertExistsException"/> class.
+     * Initializes a new instance of the {@link AlertExistsException} class.
      */
     public AlertExistsException() {
         super(Resources.getString("AlertExistsException_ctor_DefaultMessage"));

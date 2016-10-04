@@ -60,11 +60,6 @@ public enum JQueryStringType {
     SetDivText,
 
     /**
-     * JavaScript code for setting a value's text.
-     */
-    SetValueText,
-
-    /**
      * JavaScript code for scrolling an element into view.
      */
     ScrollElementIntoView,

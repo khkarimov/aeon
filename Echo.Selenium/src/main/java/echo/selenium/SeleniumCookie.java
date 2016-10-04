@@ -15,7 +15,7 @@ public class SeleniumCookie implements IWebCookie {
     private Cookie underlyingCookie;
 
     /**
-     * Initializes a new instance of the <see cref="SeleniumCookie"/> class.
+     * Initializes a new instance of the {@link SeleniumCookie} class.
      *
      * @param underlyingCookie The underlying cookie from selenium.
      */

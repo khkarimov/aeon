@@ -222,14 +222,42 @@
             </div>
         </div>
         <div style="margin: 0px 20% 200px 20%; background-color: white;">
-            <h5>Test file dialog, checkbox, options, and enabled/disabled commands</h5>
+            <h5>Test file dialog, checkbox, options, popup and enabled/disabled commands</h5>
             <input id="file-dialog" type="file"><br/><br/>
             <input id="checkbox" type='checkbox'>Check Box Test<br/><br/>
-            <button id="disabled-button" disabled="true">Disabled</button>
+            <button id="disabled-button" disabled="true">Disabled</button><br/><br/>
+			<a id="popup-button" href="HeatLogo.jpg" onclick="return popup(this, 'notes')">Popup Button</a>
             <br/><br/>
             <select id="drop-down-list">
                 <!--Add a list options-->
             </select>
+			<select id="lexicographic-drop-down">
+				<option value="01">apple</option>
+				<option value="02">banana</option>
+				<option value="03">banana tree</option>
+				<option value="04">cat</option>
+				<option value="05">dog</option>
+				<option value="06">food</option>
+				<option value="07">hello</option>
+				<option value="08">jello</option>
+				<option value="09">slow</option>
+				<option value="10">zebra</option>
+			</select>
+			<select id="lexicographic-drop-down-rev">
+				<option value="10">zebra</option>
+				<option value="09">slow</option>
+				<option value="08">jello</option>
+				<option value="07">hello</option>
+				<option value="06">food</option>
+				<option value="05">dog</option>
+				<option value="04">cat</option>
+				<option value="03">banana tree</option>
+				<option value="02">banana</option>
+				<option value="01">apple</option>
+			</select>
+			<p id="date-text" name="2016-08-31">8/31/2016</p>
+			<button id ="invisible-button" hidden="false">Invisible text</button>
+			<input type="radio" name="Next" value="Next" id="next-radio-button"> Next<br>
         </div>
         <div style="margin: 50px 20% 200px 20%; background-color: white;">
             <h5>Drag and drop command</h5>
@@ -252,6 +280,16 @@
     </main>
 </div>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript">
+	function popup(mylink, windowname) {
+	if (! window.focus) return true;
+	var href;
+	if (typeof(mylink) == 'string') href=mylink;
+	else href=mylink.href;
+	window.open(href, windowname, 'width=400,height=200,scrollbars=yes');
+	return false;
+}
+</script>
 <script>
     /*(function(open) {
      // event creation

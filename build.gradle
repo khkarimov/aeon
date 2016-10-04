@@ -41,6 +41,7 @@ CopySeleniumPlugin.dependsOn(CopyDependencies)
 CopyDependencies.dependsOn(CopyPluginToDistrib)
 
 assemble.dependsOn(clean)
+assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
 
 clean {

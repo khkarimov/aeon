@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ElementIsSelectedException extends RuntimeException implements Serializable {
 
     /**
-     * Initializes a new instance of the <see cref="ElementIsSelectedException"/> class.
+     * Initializes a new instance of the {@link ElementIsSelectedException} class.
      */
     public ElementIsSelectedException() {
         super(Resources.getString("ElementIsSelectedException_ctor_DefaultMessage"));

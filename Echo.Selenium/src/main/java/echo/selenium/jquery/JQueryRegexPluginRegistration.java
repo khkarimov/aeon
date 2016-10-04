@@ -5,7 +5,7 @@ package echo.selenium.jquery;
  */
 public class JQueryRegexPluginRegistration extends JavaScriptFinalizer {
     /**
-     * Initializes a new instance of the <see cref="JQueryRegexPluginRegistration"/> class.
+     * Initializes a new instance of the {@link JQueryRegexPluginRegistration} class.
      *
      * @param successor The next finalizer for formatting.
      */
@@ -18,7 +18,7 @@ public class JQueryRegexPluginRegistration extends JavaScriptFinalizer {
      *
      * @param javaScript The JavaScript code to format.
      * @return Formatted JavaScript code.
-     * @throws IllegalArgumentException If <paramref name="javaScript"/> is <see langword="null"/>.
+     * @throws IllegalArgumentException If {@code javaScript} is {@code null}.
      */
     @Override
     public String Prepare(String javaScript) {

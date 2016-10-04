@@ -296,8 +296,8 @@ public class WebElement extends Element {
                 value));
     }
 
-    public void SetValueByJavaScript(String value) {
-        info.getCommandExecutionFacade().Execute(info, new SetValueByJavaScriptCommand(
+    public void SetTextByJavaScript(String value) {
+        info.getCommandExecutionFacade().Execute(info, new SetTextByJavaScriptCommand(
                 info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),

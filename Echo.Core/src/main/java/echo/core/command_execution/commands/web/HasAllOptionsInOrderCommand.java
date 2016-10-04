@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 
 /**
- * Asserts that a select element has all of its options in a specific order. Can either specify the options are ascending or descending by alphanumeric order, comparing either their value or
+ * Asserts that a select element has all of its options in lexicographic order. Can either specify the options are ascending or descending by alphanumeric order, comparing either their value or
  * text.
  */
 public class HasAllOptionsInOrderCommand extends WebControlCommand {

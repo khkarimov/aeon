@@ -11,7 +11,7 @@ public class ScriptExecutionException extends RuntimeException implements Serial
     private String script;
 
     /**
-     * Initializes a new instance of the <see cref="ScriptExecutionException"/> class.
+     * Initializes a new instance of the {@link ScriptExecutionException} class.
      *
      * @param script         The script that was executed.
      * @param innerException The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.

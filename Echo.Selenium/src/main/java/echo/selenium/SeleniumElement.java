@@ -26,7 +26,7 @@ public class SeleniumElement extends WebControl {
     private ILog log;
 
     /**
-     * Initializes a new instance of the <see cref="SeleniumElement"/> class.
+     * Initializes a new instance of the {@link SeleniumElement} class.
      *
      * @param seleniumWebElement Underlying web element.
      * @param log                Record actions.
@@ -376,6 +376,13 @@ public class SeleniumElement extends WebControl {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         return selectHelper.GetSelectedOption(guid);
+    }
+
+    public final String GetSelectedOptionText(UUID guid){
+        if(selectHelper == null){
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        return selectHelper.GetSelectedOptionText(guid);
     }
 
     public final List<WebControl> GetOptions(UUID guid) {

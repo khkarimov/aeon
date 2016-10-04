@@ -12,7 +12,7 @@ import echo.core.framework_abstraction.drivers.IDriver;
  */
 public class CloseCommand extends Command {
     /**
-     * Initializes a new instance of the <see cref="CloseCommand"/> class.
+     * Initializes a new instance of the {@link CloseCommand} class.
      *
      * @param log The logger.
      */
