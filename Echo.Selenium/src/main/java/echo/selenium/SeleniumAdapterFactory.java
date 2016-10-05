@@ -71,6 +71,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         String chromeDirectory = configuration.getChromeDirectory();
         String ieDirectory = configuration.getIEDirectory();
         String marionetteDirectory = configuration.getGeckoDirectory();
+
         boolean ensureCleanEnvironment = configuration.isEnsureCleanEnvironment();
 
         switch (browserType) {
@@ -80,11 +81,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, log, browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
+//                    driver = new FirefoxDriver(GetMarionetteCapabilites());
 //                    driver = new FirefoxDriver(new FirefoxBinary(),
-//                            GetFirefoxProfile(language, useMobileUserAgent),
-//                            setProxySettings(DesiredCapabilities.firefox(), proxyLocation));
+//                            setProxySettings(GetMarionetteCapabilites(), proxyLocation));
                     driver = new MarionetteDriver(new GeckoDriverService.Builder().usingDriverExecutable(
-                            new File(marionetteDirectory)).build(), GetMarionetteOptions(language, useMobileUserAgent));
+                            new File(marionetteDirectory)).build(), GetMarionetteCapabilites(language, useMobileUserAgent));
+
                 }
 
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
@@ -131,6 +133,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         switch (browserType) {
             case Firefox:
                 desiredCapabilities = DesiredCapabilities.firefox();
+                //desiredCapabilities.setCapability("marionette", true);
                 desiredCapabilities.setCapability("firefox_profile", GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
                 break;
 
@@ -149,8 +152,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private static DesiredCapabilities GetMarionetteOptions(String browserAcceptedLanguageCodes, boolean useMobileUserAgent){
+    private static DesiredCapabilities GetMarionetteCapabilites(String browserAcceptedLanguageCodes, boolean useMobileUserAgent){
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+        //desiredCapabilities.setCapability("marionette", true);
         desiredCapabilities.setCapability(FirefoxDriver.PROFILE, GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
         return desiredCapabilities;
     }

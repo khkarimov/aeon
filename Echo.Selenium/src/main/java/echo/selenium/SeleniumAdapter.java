@@ -8,6 +8,7 @@ import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.ElementNotVisibleException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.OsCheck;
 import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
@@ -553,8 +554,31 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void Quit(UUID guid) {
         log.Trace(guid, "WebDriver.Quit();");
-
+        System.out.println("try kill process");
+        // the plug in process should only be killed if the BrowserType if FF and
+        // the command to run will depened on the OS
+        BrowserType type = GetBrowserType(guid);
+        System.out.println(type.toString());
+//        if (type == BrowserType.Firefox) {
+//            KillPluginContainer();
+//        }
+        echo.core.common.helpers.Sleep.Wait(1000);
+        KillPluginContainer();
+        echo.core.common.helpers.Sleep.Wait(100);
         webDriver.quit();
+    }
+
+    /**
+     * This will kill the plugin-container.exe process associated with Firefox. For FF v49 and marionette v.0.9, the browser will throw and error
+     * when you attempt to run quit(). To  avoid this issue, you can simply kill the process that throws the error, after echo is done interacting with FF.
+     */
+    private final void KillPluginContainer(){
+        try {
+            String[] command = {"taskkill", "/F", "/IM", "plugin-container.exe"};
+            Runtime.getRuntime().exec(command);
+        }catch(Exception e){
+            System.out.println("Didnt work");
+        }
     }
 
     /**

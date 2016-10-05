@@ -35,7 +35,6 @@ public class FirefoxBrowserTests {
 
     @AfterClass
     public static void TearDown() {
-        product.browser.Quit();
     }
 
     @Before
@@ -513,4 +512,5 @@ public class FirefoxBrowserTests {
         product.StartPage.LexoDropDown.Is("ZEBRA");
 
     }
+
 }
