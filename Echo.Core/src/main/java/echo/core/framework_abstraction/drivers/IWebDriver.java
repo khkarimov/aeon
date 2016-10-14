@@ -60,9 +60,9 @@ public interface IWebDriver extends IDriver {
      * Double clicks an element.
      *
      * @param guid     A globally unique identifier associated with this call.
-     * @param selector The web element to double click.
+     * @param element The web element to double click.
      */
-    void DoubleClick(UUID guid, IBy selector);
+    void DoubleClick(UUID guid, WebControl element);
 
     /**
      * Accepts the currently active modal dialog for this particular driver instance.

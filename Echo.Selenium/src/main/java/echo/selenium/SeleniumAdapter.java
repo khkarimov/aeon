@@ -54,15 +54,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private ILog log;
     private boolean moveMouseToOrigin;
+    private BrowserType browserType;
 
     public SeleniumAdapter() {
     }
 
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, ILog log, boolean moveMouseToOrigin) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, ILog log, boolean moveMouseToOrigin, BrowserType browserType) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.log = log;
         this.moveMouseToOrigin = moveMouseToOrigin;
+        this.browserType = browserType;
     }
 
     public IAdapter Configure(Configuration configuration) {
@@ -554,30 +556,39 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void Quit(UUID guid) {
         log.Trace(guid, "WebDriver.Quit();");
-        System.out.println("try kill process");
         // the plug in process should only be killed if the BrowserType if FF and
         // the command to run will depened on the OS
-        BrowserType type = GetBrowserType(guid);
-        System.out.println(type.toString());
-//        if (type == BrowserType.Firefox) {
-//            KillPluginContainer();
-//        }
-        echo.core.common.helpers.Sleep.Wait(1000);
-        KillPluginContainer();
-        echo.core.common.helpers.Sleep.Wait(100);
+//        BrowserType type = GetBrowserType(guid);
+//        System.out.println(type.toString());
+        if (this.browserType == BrowserType.Firefox) {
+            echo.core.common.helpers.Sleep.Wait(1000);
+            KillPluginContainer();
+            echo.core.common.helpers.Sleep.Wait(100);
+        }
         webDriver.quit();
     }
 
     /**
-     * This will kill the plugin-container.exe process associated with Firefox. For FF v49 and marionette v.0.9, the browser will throw and error
+     * This will kill the plugin-container.exe process associated with Firefox. For FF v49 and marionette v.11.1, the browser will throw and error
      * when you attempt to run quit(). To  avoid this issue, you can simply kill the process that throws the error, after echo is done interacting with FF.
      */
     private final void KillPluginContainer(){
-        try {
-            String[] command = {"taskkill", "/F", "/IM", "plugin-container.exe"};
-            Runtime.getRuntime().exec(command);
-        }catch(Exception e){
-            System.out.println("Didnt work");
+        OsCheck.OSType osType = OsCheck.getOperatingSystemType();
+        String[] command = null;
+        switch(osType){
+            case Windows:
+                command = new String[]{"taskkill", "/F", "/IM", "plugin-container.exe"};
+                break;
+            case Linux:
+                //lookup how to kill process in different OS
+        }
+        if(command != null) {
+            try {
+
+                Runtime.getRuntime().exec(command);
+            } catch (Exception e) {
+                System.out.println("Didnt work");
+            }
         }
     }
 
@@ -639,7 +650,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public final void SendKeysToAlert(UUID guid, String keysToSend) {
         try {
             log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
-            webDriver.switchTo().alert().sendKeys(keysToSend);
+            Alert alert = webDriver.switchTo().alert();
+            if(this.browserType == BrowserType.Firefox){
+                try {
+                    echo.core.common.helpers.SendKeysHelper.SendKeysToKeyboard(keysToSend);
+                }catch(AWTException e){
+                    e.printStackTrace();
+                }
+            }else{
+                alert.sendKeys(keysToSend);
+            }
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
         }
@@ -902,36 +922,59 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Performs a RightClick on the element passed as an argument.
      *
      * @param guid     A globally unique identifier associated with this call.
-     * @param selector The element to perform the RightClick on.
+     * @param element The element to perform the RightClick on.
      */
-    public final void RightClick(UUID guid, IBy selector) {
+    public final void RightClick(UUID guid, WebControl element) {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
+        }
+        if(this.browserType == BrowserType.Firefox){
+            RightClickbyJavaScript(guid, element);
+            return;
         }
 
         log.Trace(guid, "new Actions(IWebDriver).ContextClick(IWebElement);");
 
         (new Actions(webDriver)).contextClick(
-                ((SeleniumElement) FindElement(guid, selector)).getUnderlyingWebElement())
+                ((SeleniumElement)element).getUnderlyingWebElement())
+                //((SeleniumElement) FindElement(guid, element.getSelector())).getUnderlyingWebElement()) SR - need to remove if it works
                 .perform();
+    }
+
+    public final void RightClickbyJavaScript(UUID guid, WebControl element){
+        log.Trace(guid, ""); //SR - need to trace correctly
+        String script = String.format("var a=%1$s;if(a.length>0)a.trigger({type:'mousedown', which: 3});return a.length;", element.getSelector().ToJQuery().toString());
+        System.out.println("The Script is - " + script);
+        ExecuteScript(guid, script);
     }
 
     /**
      * Performs a DoubleClick on the element passed as an argument.
      *
      * @param guid     A globally unique identifier associated with this call.
-     * @param selector The element to perform the DoubleClick on.
+     * @param element The element to perform the DoubleClick on.
      */
-    public final void DoubleClick(UUID guid, IBy selector) {
+    public final void DoubleClick(UUID guid, WebControl element) {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-
+        if(this.browserType == BrowserType.Firefox){
+            DoubleClickByJavaScript(guid, element);
+            return;
+        }
         log.Trace(guid, "new Actions(IWebDriver).DoubleClick(IWebElement);");
 
         (new Actions(webDriver)).doubleClick(
-                ((SeleniumElement) FindElement(guid, selector)).getUnderlyingWebElement())
+                ((SeleniumElement)element).getUnderlyingWebElement())
+                //((SeleniumElement) FindElement(guid, element.getSelector())).getUnderlyingWebElement()) SR - need to remvove this if it works
                 .perform();
+    }
+
+    public final void DoubleClickByJavaScript(UUID guid, WebControl element){
+        log.Trace(guid, "UPDATE THIS WITH THE CORRECT"); //SR - need to change this to the correct log trace
+        String script = String.format("%1s.dblclick()", element.getSelector().ToJQuery().toString());
+        System.out.println("The double click script - " + script);
+        ExecuteScript(guid, script);
     }
 
     /**

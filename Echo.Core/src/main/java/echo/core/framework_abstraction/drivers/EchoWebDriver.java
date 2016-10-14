@@ -54,8 +54,8 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void DoubleClick(UUID guid, IBy selector) {
-        adapter.DoubleClick(guid, selector);
+    public void DoubleClick(UUID guid, WebControl element) {
+        adapter.DoubleClick(guid, element);
     }
 
     @Override
@@ -230,7 +230,7 @@ public class EchoWebDriver implements IWebDriver {
 
     @Override
     public void RightClick(UUID guid, WebControl element) {
-        adapter.RightClick(guid, element.getSelector());
+        adapter.RightClick(guid, element);
     }
 
     @Override

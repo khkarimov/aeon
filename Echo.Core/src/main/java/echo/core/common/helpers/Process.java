@@ -10,6 +10,7 @@ import java.util.List;
  * Created by DionnyS on 4/1/2016.
  */
 public class Process {
+    // SR - we should make this agnostic of the OS
     public static List<String> GetWindowsProcessesByName(String name) {
         try {
             List<String> output = new ArrayList<>();

@@ -242,7 +242,7 @@ public class SeleniumElement extends WebControl {
 
         getLog().Trace(guid, String.format("WebElement.GetAttribute(%1$s);", attributeName));
 
-        return underlyingWebElement.getAttribute(attributeName);
+        return underlyingWebElement.getAttribute(attributeName) == null ? "" : underlyingWebElement.getAttribute(attributeName);
     }
 
     /**

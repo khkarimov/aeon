@@ -91,7 +91,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
                 //return new SeleniumFirefoxWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
+                return new SeleniumAdapter(driver, javaScriptFlowExecutor, log, moveMouseToOrigin, browserType);
 
             case Chrome:
                 if (enableSeleniumGrid) {
@@ -107,7 +107,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 }
 
                 //return new SeleniumChromeWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
+                return new SeleniumAdapter(driver, javaScriptFlowExecutor, log, moveMouseToOrigin, browserType);
 
             case InternetExplorer:
                 if (enableSeleniumGrid) {
@@ -120,7 +120,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 }
 
                 //return new SeleniumInternetExplorerWebDriver(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, log, moveMouseToOrigin);
+                return new SeleniumAdapter(driver, javaScriptFlowExecutor, log, moveMouseToOrigin, browserType);
             default:
                 throw new ConfigurationException("BrowserType", "Configuration",
                         String.format("%1$s is not a supported browser", browserType));

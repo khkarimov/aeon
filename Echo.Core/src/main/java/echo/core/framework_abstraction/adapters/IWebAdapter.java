@@ -350,9 +350,9 @@ public interface IWebAdapter extends IAdapter {
      * Right clicks an element.
      *
      * @param guid     A globally unique identifier associated with this call.
-     * @param selector The element to right click.
+     * @param element The element to right click.
      */
-    void RightClick(UUID guid, IBy selector);
+    void RightClick(UUID guid, WebControl element);
 
     /**
      * Clicks an element.
@@ -368,7 +368,7 @@ public interface IWebAdapter extends IAdapter {
      * @param guid    A globally unique identifier associated with this call.
      * @param element The web element to double click.
      */
-    void DoubleClick(UUID guid, IBy element);
+    void DoubleClick(UUID guid, WebControl element);
 
     /**
      * Holds a click on an element for the duration specified.
