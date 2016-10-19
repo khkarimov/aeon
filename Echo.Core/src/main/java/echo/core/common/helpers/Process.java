@@ -33,4 +33,33 @@ public class Process {
 
         return null;
     }
+
+    public static void KillProcessByName(String name){
+        OsCheck.OSType osType = OsCheck.getOperatingSystemType();
+        String[] command;
+        switch(osType){
+            case Windows:
+                command = new String[]{"taskkill", "/F", "/IM", name};
+                break;
+            case Linux:
+                command = new String[]{"pkill", "-9", name};
+                break;
+            case MacOS:
+                command = null; // need to look into killing a process with MacOS
+                break;
+            case Other :
+                command = null;
+                break;
+            default:
+                command = null;
+        }
+        if(command != null){
+            try{
+                Runtime.getRuntime().exec(command);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+        }
+    }
 }

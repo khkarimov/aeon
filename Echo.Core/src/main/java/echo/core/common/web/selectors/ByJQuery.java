@@ -225,6 +225,10 @@ public class ByJQuery implements IBy, IByJQuery {
                 return String.format("var a=%1$s;return a.length>0?a.children().length:-1;", toString());
             case GetClientRects:
                 return String.format("var rects = %1$s[0].getClientRects(); var arr = [rects.length, rects[0].bottom, rects[0].left, rects[0].right, rects[0].top]; return arr;", toString());
+            case ShowContextMenu:
+                return String.format("var a=%1$s;if(a.length>0)a.trigger({type:'mousedown', which: 3});return a.length;", toString());
+            case FireDoubleClick:
+                return String.format("%1s.dblclick()", toString());
             default:
                 throw new UnsupportedOperationException();
         }

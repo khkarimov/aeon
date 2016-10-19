@@ -58,7 +58,7 @@ public class SeleniumCookie implements IWebCookie {
         return underlyingCookie.getExpiry();
     }
 
-    /**`
+    /**
      * Gets a value indicating whether or not the cookie is Secure.
      */
     public final boolean getSecure() {

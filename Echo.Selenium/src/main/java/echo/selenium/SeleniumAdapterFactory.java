@@ -70,7 +70,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         boolean moveMouseToOrigin = configuration.isMoveMouseToOrigin();
         String chromeDirectory = configuration.getChromeDirectory();
         String ieDirectory = configuration.getIEDirectory();
-        String marionetteDirectory = configuration.getGeckoDirectory();
+        String marionetteDirectory = configuration.getMarionetteDirectory();
 
         boolean ensureCleanEnvironment = configuration.isEnsureCleanEnvironment();
 
@@ -81,11 +81,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, log, browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
-//                    driver = new FirefoxDriver(GetMarionetteCapabilites());
+//                    driver = new FirefoxDriver(GetMarionetteCapabilities());
 //                    driver = new FirefoxDriver(new FirefoxBinary(),
-//                            setProxySettings(GetMarionetteCapabilites(), proxyLocation));
+//                            setProxySettings(GetMarionetteCapabilities(), proxyLocation));
                     driver = new MarionetteDriver(new GeckoDriverService.Builder().usingDriverExecutable(
-                            new File(marionetteDirectory)).build(), GetMarionetteCapabilites(language, useMobileUserAgent));
+                            new File(marionetteDirectory)).build(), GetMarionetteCapabilities(language, useMobileUserAgent));
 
                 }
 
@@ -133,7 +133,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         switch (browserType) {
             case Firefox:
                 desiredCapabilities = DesiredCapabilities.firefox();
-                //desiredCapabilities.setCapability("marionette", true);
+                //desiredCapabilities.setCapability("marionette", true); this isn't necessary yet, the MarionetteDriver class will soon be deprecated and this will be important then
                 desiredCapabilities.setCapability("firefox_profile", GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
                 break;
 
@@ -152,9 +152,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private static DesiredCapabilities GetMarionetteCapabilites(String browserAcceptedLanguageCodes, boolean useMobileUserAgent){
+    private static DesiredCapabilities GetMarionetteCapabilities(String browserAcceptedLanguageCodes, boolean useMobileUserAgent){
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
-        //desiredCapabilities.setCapability("marionette", true);
+        //desiredCapabilities.setCapability("marionette", true); this isn't necessary yet, the MarionetteDriver class will soon be deprecated and this will be important then
         desiredCapabilities.setCapability(FirefoxDriver.PROFILE, GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
         return desiredCapabilities;
     }

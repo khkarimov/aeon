@@ -356,7 +356,8 @@ public class SeleniumElement extends WebControl {
         underlyingWebElement.submit();
     }
 
-    //functions specfically for select elements
+    //region functions specifically for select elements
+
     public final boolean IsMultiple(UUID guid) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
@@ -440,4 +441,5 @@ public class SeleniumElement extends WebControl {
         }
         selectHelper.SelectByValue(guid, value);
     }
+    //endregion
 }

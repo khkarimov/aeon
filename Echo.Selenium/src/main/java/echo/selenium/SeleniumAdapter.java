@@ -8,7 +8,7 @@ import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.ElementNotVisibleException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
-import echo.core.common.helpers.OsCheck;
+import echo.core.common.helpers.Process;
 import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
@@ -246,7 +246,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void ChooseSelectElementByText(UUID uuid, WebControl element, String value) {
-        // at this point the SetCommand has determined the element is a select element
         ((SeleniumElement) element).SelectByText(uuid,value);
     }
 
@@ -556,40 +555,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void Quit(UUID guid) {
         log.Trace(guid, "WebDriver.Quit();");
-        // the plug in process should only be killed if the BrowserType if FF and
-        // the command to run will depened on the OS
-//        BrowserType type = GetBrowserType(guid);
-//        System.out.println(type.toString());
+        // when quit() is called during an FF instance, a plugin process associated with FF will throw an error
+        // to avoid this, simply kill the process before it throws an error
+        // work around for marionette driver v.11.1
         if (this.browserType == BrowserType.Firefox) {
-            echo.core.common.helpers.Sleep.Wait(1000);
-            KillPluginContainer();
-            echo.core.common.helpers.Sleep.Wait(100);
+            Sleep.Wait(200);
+            Process.KillProcessByName("plugin-container.exe");
+            Sleep.Wait(200);
         }
         webDriver.quit();
-    }
-
-    /**
-     * This will kill the plugin-container.exe process associated with Firefox. For FF v49 and marionette v.11.1, the browser will throw and error
-     * when you attempt to run quit(). To  avoid this issue, you can simply kill the process that throws the error, after echo is done interacting with FF.
-     */
-    private final void KillPluginContainer(){
-        OsCheck.OSType osType = OsCheck.getOperatingSystemType();
-        String[] command = null;
-        switch(osType){
-            case Windows:
-                command = new String[]{"taskkill", "/F", "/IM", "plugin-container.exe"};
-                break;
-            case Linux:
-                //lookup how to kill process in different OS
-        }
-        if(command != null) {
-            try {
-
-                Runtime.getRuntime().exec(command);
-            } catch (Exception e) {
-                System.out.println("Didnt work");
-            }
-        }
     }
 
     /**
@@ -651,6 +625,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
             Alert alert = webDriver.switchTo().alert();
+            // work around for marionette driver v.11.1
             if(this.browserType == BrowserType.Firefox){
                 try {
                     echo.core.common.helpers.SendKeysHelper.SendKeysToKeyboard(keysToSend);
@@ -929,7 +904,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new IllegalStateException("The driver is null.");
         }
         if(this.browserType == BrowserType.Firefox){
-            RightClickbyJavaScript(guid, element);
+            RightClickByJavaScript(guid, element);
             return;
         }
 
@@ -937,15 +912,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         (new Actions(webDriver)).contextClick(
                 ((SeleniumElement)element).getUnderlyingWebElement())
-                //((SeleniumElement) FindElement(guid, element.getSelector())).getUnderlyingWebElement()) SR - need to remove if it works
                 .perform();
     }
 
-    public final void RightClickbyJavaScript(UUID guid, WebControl element){
-        log.Trace(guid, ""); //SR - need to trace correctly
-        String script = String.format("var a=%1$s;if(a.length>0)a.trigger({type:'mousedown', which: 3});return a.length;", element.getSelector().ToJQuery().toString());
-        System.out.println("The Script is - " + script);
-        ExecuteScript(guid, script);
+    // work around for marionette driver v.11.1
+    public final void RightClickByJavaScript(UUID guid, WebControl element){
+       log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.ShowContextMenu));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.ShowContextMenu));
     }
 
     /**
@@ -966,15 +939,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         (new Actions(webDriver)).doubleClick(
                 ((SeleniumElement)element).getUnderlyingWebElement())
-                //((SeleniumElement) FindElement(guid, element.getSelector())).getUnderlyingWebElement()) SR - need to remvove this if it works
                 .perform();
     }
 
+    // work around for marionette driver v.11.1
     public final void DoubleClickByJavaScript(UUID guid, WebControl element){
-        log.Trace(guid, "UPDATE THIS WITH THE CORRECT"); //SR - need to change this to the correct log trace
-        String script = String.format("%1s.dblclick()", element.getSelector().ToJQuery().toString());
-        System.out.println("The double click script - " + script);
-        ExecuteScript(guid, script);
+        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.FireDoubleClick));");
+        ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.FireDoubleClick));
     }
 
     /**
@@ -1385,7 +1356,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that a select has all of its options in lexicographically order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
+     * Asserts that a select has all of its options in lexicographic order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
      *
      * @param guid     A globally unique identifier associated with this call. Can optionally be passed an option group which will be searched instead of the entire select.
      * @param element  The select element to be searched.
@@ -1419,8 +1390,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     }
                     break;
                 case DescendingByValue:
-                    String preVal = prevOption.GetAttribute(guid, "value").toLowerCase();
-                    String curVal = currOption.GetAttribute(guid, "value");
                     if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
                         throw new ElementsNotInOrderException();
                     }
@@ -1788,7 +1757,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         } catch (ValuesAreNotAlikeException e){
             return; // that means the values are not alike
         }
-        if(option == ComparisonOption.Text){
+        if(option == ComparisonOption.Text){ // this is to make sure the correct exception is thrown
             throw new ValuesAreAlikeException(expectedValue, ((SeleniumElement)element).GetSelectedOptionText(guid));
         }else
             throw new ValuesAreAlikeException(expectedValue, GetElementAttribute(guid, ((SeleniumElement)element).GetSelectedOption(guid), attribute));
@@ -1948,11 +1917,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             case "SELECT":
                 switch (option) {
                     case Value:
-                        // When changing by value, Selenium updates the Select2 element properly.
                         ChooseSelectElementByValue(guid, control, setValue);
                         break;
                     case Text:
-                        // Handle Select2 code.
                             ChooseSelectElementByText(guid, control, setValue);
                         break;
                     default:

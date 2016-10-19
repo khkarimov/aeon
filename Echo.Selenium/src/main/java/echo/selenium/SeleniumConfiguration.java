@@ -20,7 +20,7 @@ public class SeleniumConfiguration extends Configuration {
     private boolean moveMouseToOrigin;
     private String chromeDirectory;
     private String ieDirectory;
-    private String geckoDirectory;
+    private String marionetteDirectory;
     private boolean ensureCleanEnvironment;
 
     public SeleniumConfiguration() {
@@ -28,7 +28,7 @@ public class SeleniumConfiguration extends Configuration {
 
         this.chromeDirectory = System.getProperty("user.dir") + "\\lib\\chromedriver.exe";
         this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
-        this.geckoDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
+        this.marionetteDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
         this.enableSeleniumGrid = false;
         this.language = "en-us";
         this.moveMouseToOrigin = true;
@@ -108,12 +108,12 @@ public class SeleniumConfiguration extends Configuration {
         this.ieDirectory = ieDirectory;
     }
 
-    public String getGeckoDirectory(){
-        return geckoDirectory;
+    public String getMarionetteDirectory(){
+        return marionetteDirectory;
     }
 
-    public void setGeckoDirectory(String geckoDirectory){
-        this.geckoDirectory = geckoDirectory;
+    public void setMarionetteDirectory(String marionetteDirectory){
+        this.marionetteDirectory = marionetteDirectory;
     }
 
     public boolean isEnsureCleanEnvironment() {
