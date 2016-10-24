@@ -1,13 +1,16 @@
 package echo.selenium;
 
 import com.sun.glass.ui.Size;
+import com.thoughtworks.selenium.Selenium;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.KeyboardKey;
+import echo.core.common.Point;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.ElementNotVisibleException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
+import echo.core.common.helpers.MouseHelper;
 import echo.core.common.helpers.Process;
 import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
@@ -32,6 +35,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -873,15 +877,29 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param dropElement   Element to be dragged.
      * @param targetElement Where the element will be dropped.
      */
-    public final void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
+    public final void DragAndDrop(UUID guid, WebControl dropElement, IBy targetElement) {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-
         log.Trace(guid, "new Actions(IWebDriver).DragAndDrop(IWebElement, IWebElement);");
-
-        WebElement drop = ((SeleniumElement) FindElement(guid, dropElement)).getUnderlyingWebElement();
+        WebElement drop = ((SeleniumElement)dropElement).getUnderlyingWebElement();
         WebElement target = ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement();
+
+        // work around for marionette drive v.11.1
+        if(browserType == BrowserType.Firefox){
+            Sleep.Wait(1000);
+            Locatable dropLoc = (Locatable)drop;
+            Locatable targetLoc = (Locatable)target;
+            // Get the offset
+            int offset = Math.toIntExact((long) ExecuteScript(guid, "var a = window.outerHeight - window.innerHeight; return a;"));
+
+            // Get element coordinates
+            org.openqa.selenium.Point dropPoint = dropLoc.getCoordinates().inViewPort();
+            org.openqa.selenium.Point targetPoint = targetLoc.getCoordinates().inViewPort();
+            MouseHelper.DragAndDrop(dropPoint.getX(), dropPoint.getY() + offset, targetPoint.getX(), targetPoint.getY() + offset);
+            return;
+        }
+
         Actions builder = new Actions(webDriver);
         builder.clickAndHold(drop).perform();
         Sleep.Wait(250);
@@ -1053,6 +1071,23 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void ClickAndHold(UUID guid, WebControl element, int duration) {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
+
+//        Dimension dimension = webDriver.manage().window().getSize();
+//        org.openqa.selenium.Point point = webDriver.manage().window().getPosition();
+//        System.out.println("Dimensions");
+//        System.out.println(dimension.getWidth() + ", " + dimension.getHeight());
+//        System.out.println("Position");
+//        System.out.println(point.getX()+ ", "+ point.getY());
+
+        if(browserType == BrowserType.Firefox){
+            // Get offset
+            int offset = Math.toIntExact((long) ExecuteScript(guid, "var a = window.outerHeight - window.innerHeight; return a;"));
+            WebElement webElement = seleniumElement.getUnderlyingWebElement();
+            org.openqa.selenium.Point elementPoint = ((Locatable) webElement).getCoordinates().inViewPort();
+
+            MouseHelper.ClickAndHold(elementPoint.getX(), elementPoint.getY() + offset, duration);
+            return;
+        }
 
         // Click.
         action.clickAndHold(seleniumElement.getUnderlyingWebElement()).perform();

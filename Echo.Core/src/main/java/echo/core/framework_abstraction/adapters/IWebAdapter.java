@@ -344,7 +344,7 @@ public interface IWebAdapter extends IAdapter {
      * @param dropElement   The element to drop.
      * @param targetElement The target element.
      */
-    void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
+    void DragAndDrop(UUID guid, WebControl dropElement, IBy targetElement);
 
     /**
      * Right clicks an element.

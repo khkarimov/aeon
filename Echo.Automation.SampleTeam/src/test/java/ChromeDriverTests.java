@@ -170,11 +170,11 @@ public class ChromeDriverTests {
         product.StartPage.div.Has(new String[]{"start"}, "button", "id");
         product.StartPage.div.HasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
         product.StartPage.div.HasLike(new String[]{"START"}, "button", "id");
-        product.StartPage.DropDown.Is("drop-down-list", "id");
-        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
-        product.StartPage.DropDown.IsNotLike("DROP-DOWN-LISTT", "id");
-        product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
-        product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
+//        product.StartPage.DropDown.Is("drop-down-list", "id");
+//        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
+//        product.StartPage.DropDown.IsNotLike("DROP-DOWN-LISTT", "id");
+//        product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
+//        product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
     }
 
     @Test

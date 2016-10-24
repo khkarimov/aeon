@@ -304,7 +304,7 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
+    public void DragAndDrop(UUID guid, WebControl dropElement, IBy targetElement) {
         adapter.DragAndDrop(guid, dropElement, targetElement);
     }
 

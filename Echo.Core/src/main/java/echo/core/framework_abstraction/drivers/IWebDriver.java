@@ -446,7 +446,7 @@ public interface IWebDriver extends IDriver {
      * @param dropElement   The element to drop.
      * @param targetElement The target element.
      */
-    void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
+    void DragAndDrop(UUID guid, WebControl dropElement, IBy targetElement);
 
     /**
      * Moves the mouse cursor off of an element
