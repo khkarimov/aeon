@@ -4,6 +4,7 @@ import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.commands.initialization.WebCommandInitializer;
 import echo.core.command_execution.commands.web.*;
 import echo.core.common.CompareType;
+import echo.core.common.ComparisonOption;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 
@@ -103,19 +104,20 @@ public class Select extends WebElement {
                 ));
     }
 
-    public void Selected() {
-        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
-                info.getLog(),
-                selector,
-                createWebCommandInitializer()));
-    }
-
-    public void NotSelected() {
-        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
-                info.getLog(),
-                selector,
-                createWebCommandInitializer()));
-    }
+    // These do not apply to select elements, they do however apply to options within a select element
+//    public void Selected() {
+//        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
+//                info.getLog(),
+//                selector,
+//                createWebCommandInitializer()));
+//    }
+//
+//    public void NotSelected() {
+//        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
+//                info.getLog(),
+//                selector,
+//                createWebCommandInitializer()));
+//    }
 
     public void Set(WebSelectOption selectOption, String value) {
         info.getCommandExecutionFacade().Execute(info, new SetCommand(
@@ -124,5 +126,80 @@ public class Select extends WebElement {
                 createWebCommandInitializer(),
                 selectOption,
                 value));
+    }
+
+    @Override
+    public void IsLike(String value) {
+        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Text,
+                "INNERHTML"));
+    }
+
+    @Override
+    public void IsLike(String value, String attribute) {
+        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Raw,
+                attribute));
+    }
+
+    @Override
+    public void IsNotLike(String value) {
+        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Text,
+                "INNERHTML"));
+    }
+
+    @Override
+    public void IsNotLike(String value, String attribute) {
+        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Raw,
+                attribute));
+    }
+
+    /**
+     * Asserts the text of the Select element's selected option.
+     * @param value The expected value of the selected option's text.
+     */
+    @Override
+    public void Is(String value) {
+        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Text,
+                "INNERHTML"));
+    }
+
+    /**
+     * Asserts the value of the Select element's attribute. However, if the attribute being checked is "VALUE" then Select element's selected option value will be checked.
+     * @param value The expected value of the attribute.
+     * @param attribute The attribute to check.
+     */
+    @Override
+    public void Is(String value, String attribute) {
+        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+                info.getLog(),
+                selector,
+                createWebCommandInitializer(),
+                value,
+                ComparisonOption.Raw,
+                attribute));
     }
 }

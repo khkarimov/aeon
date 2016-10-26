@@ -1,7 +1,6 @@
 package echo.selenium;
 
 import com.sun.glass.ui.Size;
-import com.thoughtworks.selenium.Selenium;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.KeyboardKey;
@@ -156,13 +155,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final IWebCookie GetCookie(UUID guid, String name) {
         log.Trace(guid, "WebDriver.get_Cookie();");
-
         Cookie cookie = getWebDriver().manage().getCookieNamed(name);
-        IWebCookie result = null;
-        if (cookie != null) {
-            result = new SeleniumCookie(cookie);
+        if (cookie == null) {
+            throw new echo.core.common.exceptions.NoSuchCookieException(name);
         }
-
+        IWebCookie result = new SeleniumCookie(cookie);
         getLog().Trace(guid, String.format("Result: %1$s", result));
         return result;
     }
@@ -180,7 +177,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // Check if cookie actually exists.
         if (cookie == null) {
-            throw new NoSuchCookieException(name);
+            throw new echo.core.common.exceptions.NoSuchCookieException(name);
         }
 
         // Delete old cookie, then add a new one with the new value.
@@ -630,7 +627,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
             Alert alert = webDriver.switchTo().alert();
             // work around for marionette driver v.11.1
-            if(this.browserType == BrowserType.Firefox){
+            // work around for chrome driver v2.24
+            if(this.browserType == BrowserType.Firefox || this.browserType == browserType.Chrome){
                 try {
                     echo.core.common.helpers.SendKeysHelper.SendKeysToKeyboard(keysToSend);
                 }catch(AWTException e){
@@ -1659,7 +1657,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that an element's attribute is equal to a given value.
+     * Asserts that an element's attribute is equal to a given value. Moreover, if the
+     * attribute it either INNERHTML or VALUE, and the control is a Select element, then
+     * the assertion will be evaluated against the selected option's text or value, respectively.
      *
      * @param guid      A globally unique identifier associated with this call.
      * @param element   The web element.
@@ -1669,15 +1669,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void Is(UUID guid, WebControl element, String expectedValue, ComparisonOption option, String attribute) {
         // special check for Select elements
-        if(GetElementTagName(guid, element).toUpperCase().equals("SELECT")){
-            IsWithSelect(guid, element, expectedValue, option, attribute);
+        // if the select element is checking value or innerhtml, check the selected option, otherwise check the element
+        if(((SeleniumElement) element).GetTagName(guid).equalsIgnoreCase("SELECT") && (attribute.equalsIgnoreCase("INNERHTML") || attribute.equalsIgnoreCase("VALUE"))){
+            IsWithSelect(guid, element, expectedValue, attribute);
             return;
         }
-        if (option == ComparisonOption.Text) { // this means that the INNERHTML, or text, of the element is being checked
+        // If Text option was selected then use GetText, otherwise use GetAttribute
+        if (option == ComparisonOption.Text) {
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetText(guid))) {
                 throw new ValuesAreNotEqualException(((SeleniumElement) element).GetText(guid), expectedValue,  attribute);
             }
-        } else {
+        } else{
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetAttribute(guid, attribute))) {
                 throw new ValuesAreNotEqualException(((SeleniumElement) element).GetAttribute(guid, attribute), expectedValue,  attribute);
             }
@@ -1689,24 +1691,30 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      * @param element The web element.
      * @param expectedValue The value the attribute should be.
-     * @param option Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute being checked.
      * @return
      */
-    private void IsWithSelect(UUID guid, WebControl element, String expectedValue, ComparisonOption option, String attribute){
-        if(option == ComparisonOption.Text){
-            if(!echo.core.common.helpers.StringUtils.Is(((SeleniumElement)element).GetSelectedOptionText(guid), expectedValue)){
-                throw new ValuesAreNotEqualException(((SeleniumElement)element).GetSelectedOptionText(guid), expectedValue, attribute);
+    private void IsWithSelect(UUID guid, WebControl element, String expectedValue, String attribute){
+        if(!((SeleniumElement) element).GetTagName(guid).equalsIgnoreCase("SELECT")){
+            throw new UnsupportedElementException(element.getClass());
+        }
+        if(attribute.equalsIgnoreCase("INNERHTML")){
+            String value = ((SeleniumElement) element).GetSelectedOptionText(guid);
+            if(!echo.core.common.helpers.StringUtils.Is(value, expectedValue)){
+                throw new ValuesAreNotEqualException(value, expectedValue);
             }
-        }else{
-            if(!echo.core.common.helpers.StringUtils.Is(GetElementAttribute(guid, ((SeleniumElement)element).GetSelectedOption(guid), attribute), expectedValue)){
-                throw new ValuesAreNotEqualException(GetElementAttribute(guid, ((SeleniumElement)element).GetSelectedOption(guid), attribute), expectedValue);
+        }else {
+            String value = GetElementAttribute(guid, ((SeleniumElement)element).GetSelectedOption(guid), attribute);
+            if(!echo.core.common.helpers.StringUtils.Is(value, expectedValue)){
+                throw new ValuesAreNotEqualException(value, expectedValue);
             }
         }
     }
 
     /**
      * Asserts that an element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
+     * Moreover, if the attribute it either INNERHTML or VALUE, and the control is a Select element, then
+     * the assertion will be evaluated against the selected option's text or value, respectively.
      *
      * @param guid      A globally unique identifier associated with this call.
      * @param element   The web element.
@@ -1716,11 +1724,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void IsLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
         // special check for Select elements
-        if(GetElementTagName(guid, element).toUpperCase().equals("SELECT")){
-            IsLikeWithSelect(guid, element, value, option, attribute);
+        if(((SeleniumElement) element).GetTagName(guid).equalsIgnoreCase("SELECT") && (attribute.equalsIgnoreCase("INNERHTML") || attribute.equalsIgnoreCase("VALUE"))){
+            IsLikeWithSelect(guid, element, value, attribute);
             return;
         }
-        if (option == ComparisonOption.Text && attribute.toUpperCase().equals("INNERHTML")) {
+        if (option == ComparisonOption.Text) {
             if (!Like(value, ((SeleniumElement) element).GetText(guid), false)) {
                 throw new ValuesAreNotAlikeException(value, ((SeleniumElement) element).GetText(guid));
             }
@@ -1736,23 +1744,29 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      * @param element The web element.
      * @param expectedValue The value the attribute should be.
-     * @param option Whether to compare the text or an attribute.
      * @param attribute The attribute being checked.
      */
-    private void IsLikeWithSelect(UUID guid, WebControl element, String expectedValue, ComparisonOption option, String attribute) {
-        if (option == ComparisonOption.Text) {
-            if (!echo.core.common.helpers.StringUtils.Like(((SeleniumElement) element).GetSelectedOptionText(guid), expectedValue, false)) {
-                throw new ValuesAreNotAlikeException(((SeleniumElement) element).GetSelectedOptionText(guid), expectedValue);
+    private void IsLikeWithSelect(UUID guid, WebControl element, String expectedValue, String attribute) {
+        if(!((SeleniumElement) element).GetTagName(guid).equalsIgnoreCase("SELECT")){
+            throw new UnsupportedElementException(element.getClass());
+        }
+        if(attribute.equalsIgnoreCase("INNERHTML")){
+            String value = ((SeleniumElement) element).GetSelectedOptionText(guid);
+            if(!echo.core.common.helpers.StringUtils.Like(value, expectedValue, false)){
+                throw new ValuesAreNotAlikeException(value, expectedValue);
             }
-        } else {
-            if (!echo.core.common.helpers.StringUtils.Like(GetElementAttribute(guid, ((SeleniumElement) element).GetSelectedOption(guid), attribute), expectedValue, false)) {
-                throw new ValuesAreNotEqualException(GetElementAttribute(guid, ((SeleniumElement) element).GetSelectedOption(guid), attribute), expectedValue);
+        }else {
+            String value = GetElementAttribute(guid, ((SeleniumElement)element).GetSelectedOption(guid), attribute);
+            if(!echo.core.common.helpers.StringUtils.Like(value, expectedValue, false)){
+                throw new ValuesAreNotAlikeException(value, expectedValue);
             }
         }
     }
 
     /**
      * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
+     * Moreover, if the attribute it either INNERHTML or VALUE, and the control is a Select element, then
+     * the assertion will be evaluated against the selected option's text or value, respectively.
      *
      * @param guid      A globally unique identifier associated with this call.
      * @param element   The web element.
@@ -1762,8 +1776,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void IsNotLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
-        if(GetElementTagName(guid, element).toUpperCase().equals("SELECT")){
-            IsNotLikeWithSelect(guid, element, value, option, attribute);
+        if(((SeleniumElement) element).GetTagName(guid).equalsIgnoreCase("SELECT") && (attribute.equalsIgnoreCase("INNERHTML") || attribute.equalsIgnoreCase("VALUE"))){
+            IsNotLikeWithSelect(guid, element, value, attribute);
             return;
         }
         if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
@@ -1783,16 +1797,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid      A globally unique identifier associated with this call.
      * @param element   The web element.
      * @param expectedValue     The value the attribute should be.
-     * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
-    private void IsNotLikeWithSelect(UUID guid, WebControl element, String expectedValue, ComparisonOption option, String attribute){
+    private void IsNotLikeWithSelect(UUID guid, WebControl element, String expectedValue, String attribute){
+        if(!((SeleniumElement) element).GetTagName(guid).equalsIgnoreCase("SELECT")){
+            throw new UnsupportedElementException(element.getClass());
+        }
         try{
-            IsLikeWithSelect(guid, element, expectedValue, option, attribute);
+            IsLikeWithSelect(guid, element, expectedValue, attribute);
         } catch (ValuesAreNotAlikeException e){
             return; // that means the values are not alike
         }
-        if(option == ComparisonOption.Text){ // this is to make sure the correct exception is thrown
+        if(attribute.equalsIgnoreCase("INNERHTML")){ // this is to make sure the correct exception is thrown
             throw new ValuesAreAlikeException(expectedValue, ((SeleniumElement)element).GetSelectedOptionText(guid));
         }else
             throw new ValuesAreAlikeException(expectedValue, GetElementAttribute(guid, ((SeleniumElement)element).GetSelectedOption(guid), attribute));
@@ -1858,20 +1874,21 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public BrowserType GetBrowserType(UUID guid) {
-        String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
-        String version = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appVersion; return browserType;");
-        String userAgent = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.userAgent; return browserType;");
-        if (name.toLowerCase().contains("internet") && name.toLowerCase().contains("explorer")) {
-            return BrowserType.InternetExplorer;
-        } else if (version.toLowerCase().contains("chrome")) {
-            return BrowserType.Chrome;
-        } else if (userAgent.toLowerCase().contains("trident/7.0")) {
-            return BrowserType.InternetExplorer;
-        } else if (userAgent.toLowerCase().contains("firefox")) {
-            return BrowserType.Firefox;
-        } else {
-            throw new BrowserTypeNotRecognizedException();
-        }
+        return this.browserType;
+//        String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
+//        String version = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appVersion; return browserType;");
+//        String userAgent = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.userAgent; return browserType;");
+//        if (name.toLowerCase().contains("internet") && name.toLowerCase().contains("explorer")) {
+//            return BrowserType.InternetExplorer;
+//        } else if (version.toLowerCase().contains("chrome")) {
+//            return BrowserType.Chrome;
+//        } else if (userAgent.toLowerCase().contains("trident/7.0")) {
+//            return BrowserType.InternetExplorer;
+//        } else if (userAgent.toLowerCase().contains("firefox")) {
+//            return BrowserType.Firefox;
+//        } else {
+//            throw new BrowserTypeNotRecognizedException();
+//        }
     }
 
     /**
