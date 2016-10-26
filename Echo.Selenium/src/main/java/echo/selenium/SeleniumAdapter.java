@@ -564,6 +564,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             Process.KillProcessByName("plugin-container.exe");
             Sleep.Wait(200);
         }
+        if(this.browserType == BrowserType.Chrome){
+            // Combination of Selenium 3.0 and chromedriver 2.24 cannot quit properly if there is an alert present
+            try{
+                webDriver.switchTo().alert().accept();
+            }catch(NoAlertPresentException ex){
+                // There is no alert to worry about
+            }
+        }
+        webDriver.close();
         webDriver.quit();
     }
 

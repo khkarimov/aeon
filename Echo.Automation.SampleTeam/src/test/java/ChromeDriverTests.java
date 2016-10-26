@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.openqa.selenium.NoAlertPresentException;
 
 import java.util.Date;
 
@@ -60,6 +61,7 @@ public class ChromeDriverTests {
         product.StartPage.OpenAlertButton.Click();
         product.browser.VerifyAlertExists();
         product.browser.SendKeysToAlert("Tester of Alerts");
+        product.browser.AcceptAlert();
     }
 
     @Test
@@ -313,6 +315,7 @@ public class ChromeDriverTests {
         product.browser.VerifyAlertText("Send some keys");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.VerifyAlertText("Send other keys");
+        product.browser.AcceptAlert();
     }
 
     @Test
@@ -322,6 +325,7 @@ public class ChromeDriverTests {
         product.browser.VerifyAlertTextLike("Send some keys", true);
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
         product.browser.VerifyAlertTextLike("send some keys", true);
+        product.browser.AcceptAlert();
     }
 
     @Test
