@@ -2,8 +2,10 @@ package echo.core.test_abstraction.product;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.CommandExecutionFacade;
+import echo.core.command_execution.WebCommandExecutionFacade;
 import echo.core.command_execution.consumers.DelegateRunnerFactory;
 import echo.core.common.Capability;
+import echo.core.common.helpers.AjaxWaiter;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IAdapterExtension;
@@ -18,7 +20,7 @@ public class Product {
     private Parameters parameters;
     private ILog log;
     private Configuration configuration;
-    private CommandExecutionFacade commandExecutionFacade;
+    private WebCommandExecutionFacade commandExecutionFacade;
 
     public Product() {
 
@@ -50,8 +52,8 @@ public class Product {
             driver = (IDriver) configuration.getDriver().newInstance();
             driver.Configure(adapter);
 
-            commandExecutionFacade = new CommandExecutionFacade(
-                    new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)));
+            commandExecutionFacade = new WebCommandExecutionFacade(
+                    new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)), new AjaxWaiter(driver, Duration.millis(10000)));
 
             this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());
             automationInfo.setCommandExecutionFacade(commandExecutionFacade);

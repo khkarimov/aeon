@@ -12,18 +12,7 @@ import echo.core.framework_abstraction.drivers.IWebDriver;
  * Serves as the base class for all web element commands that need a finder
  */
 public abstract class WebControlCommand extends Command {
-
     private IBy selector;
-
-    /**
-     * Initializes a new instance of the {@link WebControlCommand} class.
-     *
-     * @param log     The logger.
-     * @param message The message to log.
-     */
-    protected WebControlCommand(ILog log, String message) {
-        super(log, message);
-    }
 
     /**
      * Initializes a new instance of the {@link WebControlCommand} class.

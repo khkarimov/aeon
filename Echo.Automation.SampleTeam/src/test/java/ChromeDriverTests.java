@@ -1,6 +1,7 @@
 import echo.core.common.CompareType;
 import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
+import echo.core.common.helpers.Sleep;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
@@ -511,5 +512,11 @@ public class ChromeDriverTests {
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.StartPage.LexoDropDown.Is("ZEBRA");
 
+    }
+
+    @Test
+    public void TestWaiter(){
+        product.StartPage.Start.Click();
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "02");
     }
 }
