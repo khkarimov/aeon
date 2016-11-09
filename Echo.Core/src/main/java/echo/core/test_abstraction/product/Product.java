@@ -15,12 +15,12 @@ import org.joda.time.Duration;
 /**
  * Created by DionnyS on 4/12/2016.
  */
-public class Product {
-    private AutomationInfo automationInfo;
-    private Parameters parameters;
-    private ILog log;
-    private Configuration configuration;
-    private WebCommandExecutionFacade commandExecutionFacade;
+public abstract class Product {
+    protected AutomationInfo automationInfo;
+    protected Parameters parameters;
+    protected ILog log;
+    protected Configuration configuration;
+    protected WebCommandExecutionFacade commandExecutionFacade;
 
     public Product() {
 
@@ -30,9 +30,7 @@ public class Product {
         this.automationInfo = automationInfo;
     }
 
-    public Capability getRequestedCapability() {
-        return Capability.WEB;
-    }
+    public abstract Capability getRequestedCapability();
 
     protected AutomationInfo getAutomationInfo() {
         return automationInfo;
@@ -42,27 +40,7 @@ public class Product {
         this.automationInfo = automationInfo;
     }
 
-    protected void launch(IAdapterExtension plugin) {
-        IDriver driver;
-        IAdapter adapter;
-
-        try {
-            adapter = createAdapter(plugin);
-
-            driver = (IDriver) configuration.getDriver().newInstance();
-            driver.Configure(adapter);
-
-            commandExecutionFacade = new WebCommandExecutionFacade(
-                    new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)), new AjaxWaiter(driver, Duration.millis(10000)));
-
-            this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());
-            automationInfo.setCommandExecutionFacade(commandExecutionFacade);
-
-            afterLaunch();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    protected abstract void launch(IAdapterExtension plugin);
 
     protected IAdapter createAdapter(IAdapterExtension plugin) {
         return plugin.createAdapter(configuration);

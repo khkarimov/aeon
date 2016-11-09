@@ -1,8 +1,6 @@
 package echo.core.common.helpers;
 
-import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.ScriptExecutionException;
-import echo.core.common.web.selectors.By;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 import org.joda.time.DateTime;
@@ -22,6 +20,22 @@ public class AjaxWaiter {
         this.webDriver = (IWebDriver)driver;
         this.clock = new Clock();
         this.timeout = timeout;
+    }
+
+    public void setWebDriver(IWebDriver webDriver){
+        this.webDriver = webDriver;
+    }
+
+    public IWebDriver getWebDriver(){
+        return this.webDriver;
+    }
+
+    public void setTimeout(long millis){
+        this.timeout = Duration.millis(millis);
+    }
+
+    public long getTimeout(){
+        return timeout.getMillis();
     }
 
     public void InjectJS(UUID guid) {
@@ -48,7 +62,6 @@ public class AjaxWaiter {
             }
             Sleep.WaitInternal();
         }while(count != 0  && clock.getUtcNow().isBefore(end.toInstant()));
-
     }
 
     private final static String getAjaxWaiterJS(){

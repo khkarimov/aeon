@@ -1,13 +1,11 @@
 package echo.core.command_execution;
 
-
 import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.CommandWithReturn;
 import echo.core.command_execution.commands.QuitCommand;
 import echo.core.command_execution.consumers.interfaces.IDelegateRunnerFactory;
-
 import echo.core.common.helpers.AjaxWaiter;
-import echo.core.common.helpers.Sleep;
+
 /**
  * Created by SebastianR on 11/8/2016.
  */
@@ -16,13 +14,21 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
     private AjaxWaiter ajaxWaiter;
 
     /**
-     * Initializes a new instance of the {@link CommandExecutionFacade} class.
+     * Initializes a new instance of the {@link WebCommandExecutionFacade} class.
      *
      * @param delegateRunnerFactory The delegate runner factory.
      */
     public WebCommandExecutionFacade(IDelegateRunnerFactory delegateRunnerFactory, AjaxWaiter ajaxWaiter) {
         this.delegateRunnerFactory = delegateRunnerFactory;
         this.ajaxWaiter = ajaxWaiter;
+    }
+
+    public long getAjaxWaiterTimeoutMillis(){
+        return ajaxWaiter.getTimeout();
+    }
+
+    public void setAjaxWaiterTimeout(long millis){
+        ajaxWaiter.setTimeout(millis);
     }
 
     /**
