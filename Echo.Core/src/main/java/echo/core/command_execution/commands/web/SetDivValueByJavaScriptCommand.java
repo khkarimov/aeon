@@ -7,6 +7,8 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by Administrator on 6/15/2016.
  */
@@ -19,7 +21,7 @@ public class SetDivValueByJavaScriptCommand extends WebControlCommand {
     private String value;
 
     public SetDivValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
-        super(log, Resources.getString("SetDivValueByJavaScriptCommand_Info"), selector, initializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("SetValueByJavaScriptCommand_Info"), value, selector), selector, initializer);
         this.value = value;
     }
 

@@ -13,6 +13,6 @@ public class ElementIsEnabledException extends RuntimeException implements Seria
      * Initializes a new instance of the {@link ElementIsEnabledException} class.
      */
     public ElementIsEnabledException() {
-        super(Resources.getString("ElementIsEnabledException_ctor_DefaultMessage"));
+        super(Resources.getString("ElementEnabledException_ctor_DefaultMessage"));
     }
 }

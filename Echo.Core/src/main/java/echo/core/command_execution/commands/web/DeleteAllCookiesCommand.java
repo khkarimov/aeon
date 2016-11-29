@@ -21,7 +21,7 @@ public class DeleteAllCookiesCommand extends Command {
      * @param log The logger.
      */
     public DeleteAllCookiesCommand(ILog log) {
-        super(log, Resources.getString("DeleteAllCookieCommand_Info"));
+        super(log, Resources.getString("DeleteAllCookiesCommand_Info"));
     }
 
     /**

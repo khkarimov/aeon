@@ -33,7 +33,7 @@ public class HasAllOptionsInOrderCommand extends WebControlCommand {
      * @param optGroup           the optional option group that would be searched in isolation instead of the entire select.
      */
     public HasAllOptionsInOrderCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, CompareType compare, String optGroup) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("CheckCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("HasAllOptionsInOrderCommand_Info"), selector), selector, commandInitializer);
         this.compare = compare;
         this.optGroup = optGroup;
     }

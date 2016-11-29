@@ -33,6 +33,7 @@ import org.joda.time.Period;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.Quotes;
@@ -556,23 +557,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void Quit(UUID guid) {
         log.Trace(guid, "WebDriver.Quit();");
-        // when quit() is called during an FF instance, a plugin process associated with FF will throw an error
-        // to avoid this, simply kill the process before it throws an error
-        // work around for marionette driver v.11.1
-        if (this.browserType == BrowserType.Firefox) {
-            Sleep.Wait(200);
-            Process.KillProcessByName("plugin-container.exe");
-            Sleep.Wait(200);
-        }
-        if(this.browserType == BrowserType.Chrome){
-            // Combination of Selenium 3.0 and chromedriver 2.24 cannot quit properly if there is an alert present
-            try{
-                webDriver.switchTo().alert().accept();
-            }catch(NoAlertPresentException ex){
-                // There is no alert to worry about
-            }
-        }
-        webDriver.close();
         webDriver.quit();
     }
 
@@ -1418,22 +1402,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             switch (compare) {
                 case AscendingByText:
                     if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
                 case DescendingByText:
                     if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
                 case AscendingByValue:
                     if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
                 case DescendingByValue:
                     if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
             }

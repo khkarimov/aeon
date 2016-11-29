@@ -10,6 +10,8 @@ import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * <p>Switches focus to a specified window.</p>
  * <p></p>
@@ -27,7 +29,7 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
      * @param title The title of the desired window.
      */
     public SwitchToWindowByTitleCommand(ILog log, String title) {
-        super(log, Resources.getString("SwitchToWindowByTitle_Info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("SwitchToWindowByTitle_Info"), title));
         this.title = title;
     }
 

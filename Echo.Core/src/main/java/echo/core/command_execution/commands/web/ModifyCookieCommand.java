@@ -6,6 +6,8 @@ import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by RafaelT on 6/27/2016.
  */
@@ -25,7 +27,7 @@ public class ModifyCookieCommand extends Command {
      * @param value The value.
      */
     public ModifyCookieCommand(ILog log, String name, String value) {
-        super(log, Resources.getString("ModifyCookieCommand_Info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("ModifyCookieCommand_Info"), name, value));
         this.name = name;
         this.value = value;
     }

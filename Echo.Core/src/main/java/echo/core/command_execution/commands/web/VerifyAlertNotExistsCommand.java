@@ -22,7 +22,7 @@ public class VerifyAlertNotExistsCommand extends Command {
      * @see VerifyAlertNotExistsCommand class
      */
     public VerifyAlertNotExistsCommand(ILog log) {
-        super(log, Resources.getString("VerifyAlertExistsCommand_Info"));
+        super(log, Resources.getString("VerifyAlertNotExistsCommand_Info"));
     }
 
     @Override

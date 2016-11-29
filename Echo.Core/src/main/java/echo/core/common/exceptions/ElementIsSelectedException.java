@@ -13,6 +13,6 @@ public class ElementIsSelectedException extends RuntimeException implements Seri
      * Initializes a new instance of the {@link ElementIsSelectedException} class.
      */
     public ElementIsSelectedException() {
-        super(Resources.getString("ElementIsSelectedException_ctor_DefaultMessage"));
+        super(Resources.getString("ElementSelectedException_ctor_DefaultMessage"));
     }
 }
