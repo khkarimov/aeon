@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class WebElement extends Element {
     private IBy selector;
     private AutomationInfo info;
+    private Iterable<IBy> switchMechanism;
 
     public WebElement(AutomationInfo info, IBy selector) {
         super(selector);
@@ -29,6 +30,12 @@ public class WebElement extends Element {
 
     public WebElement(IBy selector) {
         this(null, selector);
+    }
+
+    public WebElement(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism){
+        this(info, selector);
+        this.switchMechanism = switchMechanism;
+
     }
 
     public void Blur() {
@@ -50,7 +57,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new ClickCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void ClickAllElements() {
