@@ -44,7 +44,7 @@ public class UltiproTests {
 //endregion
 
     @Test
-    public void Logintest(){
+    public void NewHireTest(){
         ultipro.loginPage.userNameTextBox.Set("wardenj");
         ultipro.loginPage.passwordTextBox.Set("password");
         ultipro.loginPage.loginButton.Click();
@@ -59,6 +59,18 @@ public class UltiproTests {
         ultipro.newHirePage.confirmSSNTextBox.Set("123987654");
         ultipro.newHirePage.cancelButton.Click();
         ultipro.browser.AcceptAlert();
+    }
+
+    @Test
+    public void SearchEmployeeTest(){
+        ultipro.loginPage.userNameTextBox.Set("wardenj");
+        ultipro.loginPage.passwordTextBox.Set("password");
+        ultipro.loginPage.loginButton.Click();
+        ultipro.homePage.menuButon.Click();
+        ultipro.homePage.myTeam.Click();
+        ultipro.homePage.myEmployees.Click();
+        Sleep.Wait(2000);
+        ultipro.myEmployeesPage.employeeSearchBox.Set("John");
     }
 }
 

@@ -20,52 +20,53 @@ public class WebFactory implements IElementFactory {
     }
 
     public Element create(Type elementType, String selector) {
-        if (elementType.equals(Button.class)) {
-            return new Button(info, By.CssSelector(selector));
-        } else if (elementType.equals(Select.class)) {
-            return new Select(info, By.CssSelector(selector));
-        } else if (elementType.equals(TextBox.class)) {
-            return new TextBox(info, By.CssSelector(selector));
-        } else if (elementType.equals(Link.class)) {
-            return new Link(info, By.CssSelector(selector));
-        } else if (elementType.equals(Label.class)) {
-            return new Label(info, By.CssSelector(selector));
-        } else if (elementType.equals(Image.class)) {
-            return new Image(info, By.CssSelector(selector));
-        } else if (elementType.equals(Checkbox.class)) {
-            return new Checkbox(info, By.CssSelector(selector));
-        } else if (elementType.equals(FileDialogInput.class)) {
-            return new FileDialogInput(info, By.CssSelector(selector));
-        } else if (elementType.equals(ListItem.class)) {
-            return new ListItem(info, By.CssSelector(selector));
-        } else if (elementType.equals(RadioButton.class)) {
-            return new RadioButton(info, By.CssSelector(selector));
-        } else {
-            throw new UnsupportedElementException(elementType.getClass());
-        }
+//        if (elementType.equals(Button.class)) {
+//            return new Button(info, By.CssSelector(selector));
+//        } else if (elementType.equals(Select.class)) {
+//            return new Select(info, By.CssSelector(selector));
+//        } else if (elementType.equals(TextBox.class)) {
+//            return new TextBox(info, By.CssSelector(selector));
+//        } else if (elementType.equals(Link.class)) {
+//            return new Link(info, By.CssSelector(selector));
+//        } else if (elementType.equals(Label.class)) {
+//            return new Label(info, By.CssSelector(selector));
+//        } else if (elementType.equals(Image.class)) {
+//            return new Image(info, By.CssSelector(selector));
+//        } else if (elementType.equals(Checkbox.class)) {
+//            return new Checkbox(info, By.CssSelector(selector));
+//        } else if (elementType.equals(FileDialogInput.class)) {
+//            return new FileDialogInput(info, By.CssSelector(selector));
+//        } else if (elementType.equals(ListItem.class)) {
+//            return new ListItem(info, By.CssSelector(selector));
+//        } else if (elementType.equals(RadioButton.class)) {
+//            return new RadioButton(info, By.CssSelector(selector));
+//        } else {
+//            throw new UnsupportedElementException(elementType.getClass());
+//        }
+        return this.create(elementType, selector, null);
     }
 
     public WebElement create(Type elementType, String selector, Iterable<IBy> frameSelector){
         if (elementType.equals(Button.class)) {
             return new Button(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(Select.class)) {
-            return new Select(info, By.CssSelector(selector));
+            return new Select(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(TextBox.class)) {
-            return new TextBox(info, By.CssSelector(selector));
+            return new TextBox(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(Link.class)) {
-            return new Link(info, By.CssSelector(selector));
+            return new Link(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(Label.class)) {
-            return new Label(info, By.CssSelector(selector));
+            return new Label(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(Image.class)) {
-            return new Image(info, By.CssSelector(selector));
+            return new Image(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(Checkbox.class)) {
-            return new Checkbox(info, By.CssSelector(selector));
+            return new Checkbox(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(FileDialogInput.class)) {
-            return new FileDialogInput(info, By.CssSelector(selector));
+            return new FileDialogInput(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(ListItem.class)) {
-            return new ListItem(info, By.CssSelector(selector));
+            return new ListItem(info, By.CssSelector(selector), frameSelector);
         } else if (elementType.equals(RadioButton.class)) {
-            return new RadioButton(info, By.CssSelector(selector));
+            return new RadioButton(info, By.CssSelector(selector), frameSelector);
         } else {
             throw new UnsupportedElementException(elementType.getClass());
         }

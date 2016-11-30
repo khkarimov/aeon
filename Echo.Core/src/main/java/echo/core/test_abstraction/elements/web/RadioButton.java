@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class RadioButton extends WebElement {
     private AutomationInfo info;
     private IBy selector;
+    private Iterable<IBy> switchMechanism;
 
     public RadioButton(AutomationInfo info, IBy selector) {
         super(info, selector);
@@ -20,12 +21,19 @@ public class RadioButton extends WebElement {
         this.selector = selector;
     }
 
+    public RadioButton(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
+        super(info, selector, switchMechanism);
+        this.info = info;
+        this.selector = selector;
+        this.switchMechanism = switchMechanism;
+    }
+
     public void Selected() {
         info.getCommandExecutionFacade().Execute(info,
                 new SelectedCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void NotSelected() {
@@ -33,7 +41,7 @@ public class RadioButton extends WebElement {
                 new NotSelectedCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void Check() {
@@ -41,6 +49,6 @@ public class RadioButton extends WebElement {
                 new CheckCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 }
