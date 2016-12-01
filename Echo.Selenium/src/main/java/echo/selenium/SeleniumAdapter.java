@@ -243,7 +243,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void ChooseSelectElementByText(UUID uuid, WebControl element, String s) {
-        throw new NotImplementedException("ChooseSelectElementByText not implemented");
+        // at this point the SetCommand has determined the element is a select element
+        ((SeleniumElement) element).SelectByText(uuid,s);
     }
 
 
@@ -595,9 +596,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return The description of the alert dialog box.
      */
     public final String GetAlertText(UUID guid) {
-        log.Trace(guid, "WebDriver.SwitchTo().Alert().get_Text();");
+        try {
+            log.Trace(guid, "WebDriver.SwitchTo().Alert().get_Text();");
+            return webDriver.switchTo().alert().getText();
+        } catch (NoAlertPresentException e) {
+            throw new NoAlertException(e);
+        }
 
-        return webDriver.switchTo().alert().getText();
+
     }
 
     /**
@@ -607,8 +613,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param keysToSend Keys to send to the alert.
      */
     public final void SendKeysToAlert(UUID guid, String keysToSend) {
-        log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
-        webDriver.switchTo().alert().sendKeys(keysToSend);
+        try {
+            log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
+            webDriver.switchTo().alert().sendKeys(keysToSend);
+        } catch (NoAlertPresentException e) {
+            throw new NoAlertException(e);
+        }
     }
 
     /**
@@ -1281,7 +1291,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     element.FindElementByXPath(guid, echo.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
                 }
             }
-        } catch (org.openqa.selenium.NoSuchElementException e) {
+        } catch (org.openqa.selenium.NoSuchElementException|echo.core.common.exceptions.NoSuchElementException e) {
             throw new ElementDoesNotHaveOptionException(e.toString());
         }
     }
@@ -1303,12 +1313,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         Collection<WebControl> options = ((SeleniumElement) element).FindElements(guid, echo.core.common.web.selectors.By.CssSelector("option"));
         if (options.size() != optnumber) {
-            throw new ElementDoesNotHaveNumberOfOptionsException();
+            throw new ElementDoesNotHaveNumberOfOptionsException(options.size(), optnumber);
         }
     }
 
     /**
-     * Asserts that a select has all of its options in order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
+     * Asserts that a select has all of its options in lexicographically order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
      *
      * @param guid     A globally unique identifier associated with this call. Can optionally be passed an option group which will be searched instead of the entire select.
      * @param element  The select element to be searched.
@@ -1327,22 +1337,24 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             currOption = (SeleniumElement) elementsIterator.next();
             switch (compare) {
                 case AscendingByText:
-                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
-                        throw new ElementsNotInOrderException();
-                    }
-                    break;
-                case DescendingByText:
                     if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;
+                case DescendingByText:
+                    if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
+                        throw new ElementsNotInOrderException();
+                    }
+                    break;
                 case AscendingByValue:
-                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;
                 case DescendingByValue:
-                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
+                    String preVal = prevOption.GetAttribute(guid, "value").toLowerCase();
+                    String curVal = currOption.GetAttribute(guid, "value");
+                    if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
                         throw new ElementsNotInOrderException();
                     }
                     break;
@@ -1606,13 +1618,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute The attribute.
      */
     public void IsLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
-        if (option == ComparisonOption.Text && value.toUpperCase().equals("INNERHTML")) {
+        if (option == ComparisonOption.Text && attribute.toUpperCase().equals("INNERHTML")) {
             if (!Like(value, ((SeleniumElement) element).GetText(guid), false)) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetText(guid), attribute);
+                throw new ValuesAreNotAlikeException(value, ((SeleniumElement) element).GetText(guid));
             }
         } else {
             if (!Like(value, ((SeleniumElement) element).GetAttribute(guid, attribute), false)) {
-                throw new ValuesAreNotEqualException(value, ((SeleniumElement) element).GetAttribute(guid, attribute), attribute);
+                throw new ValuesAreNotAlikeException(value, ((SeleniumElement) element).GetAttribute(guid, attribute));
             }
         }
     }
@@ -1649,7 +1661,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive) {
         if (!echo.core.common.helpers.StringUtils.Like(GetAlertText(guid), comparingText, caseSensitive)) {
-            throw new ValuesAreNotAlikeException();
+            throw new ValuesAreNotAlikeException(comparingText, GetAlertText(guid));
         }
     }
 

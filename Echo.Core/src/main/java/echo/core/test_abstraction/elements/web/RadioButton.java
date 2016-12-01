@@ -43,12 +43,4 @@ public class RadioButton extends WebElement {
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
-
-    public void UnCheck() {
-        info.getCommandExecutionFacade().Execute(info,
-                new UnCheckCommand(
-                        info.getLog(),
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
-    }
 }
