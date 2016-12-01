@@ -7,6 +7,6 @@ import echo.core.common.Resources;
  */
 public class ElementDoesNotHaveNumberOfOptionsException extends RuntimeException {
     public ElementDoesNotHaveNumberOfOptionsException(int actualValue, int expectedValue) {
-        super(Resources.getString("ValuesAreNotEqualException_ctor_DefaultMessage") + " " + actualValue + " does not equal " + expectedValue);
+        super(String.format(Resources.getString("ElementDoesNotHaveNumberOfOptionsException_ctor_DefaultMessage"),expectedValue,actualValue));
     }
 }

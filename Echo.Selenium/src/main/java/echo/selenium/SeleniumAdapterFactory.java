@@ -133,7 +133,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         switch (browserType) {
             case Firefox:
                 desiredCapabilities = DesiredCapabilities.firefox();
-                //desiredCapabilities.setCapability("marionette", true); this isn't necessary yet, the MarionetteDriver class will soon be deprecated and this will be important then
+                //TODO - the MarionetteDriver class will soon be deprecated and we will need to add the following line to use the driver
+                //desiredCapabilities.setCapability("marionette", true);
                 desiredCapabilities.setCapability("firefox_profile", GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
                 break;
 
@@ -154,7 +155,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
     private static DesiredCapabilities GetMarionetteCapabilities(String browserAcceptedLanguageCodes, boolean useMobileUserAgent){
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
-        //desiredCapabilities.setCapability("marionette", true); this isn't necessary yet, the MarionetteDriver class will soon be deprecated and this will be important then
+        //TODO - the MarionetteDriver class will soon be deprecated and we will need to add the following line to use the driver
+        //desiredCapabilities.setCapability("marionette", true);
         desiredCapabilities.setCapability(FirefoxDriver.PROFILE, GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
         return desiredCapabilities;
     }

@@ -1079,13 +1079,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 
-//        Dimension dimension = webDriver.manage().window().getSize();
-//        org.openqa.selenium.Point point = webDriver.manage().window().getPosition();
-//        System.out.println("Dimensions");
-//        System.out.println(dimension.getWidth() + ", " + dimension.getHeight());
-//        System.out.println("Position");
-//        System.out.println(point.getX()+ ", "+ point.getY());
-
         if(browserType == BrowserType.Firefox){
             // Get offset
             int offset = Math.toIntExact((long) ExecuteScript(guid, "var a = window.outerHeight - window.innerHeight; return a;"));
@@ -1884,20 +1877,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public BrowserType GetBrowserType(UUID guid) {
         return this.browserType;
-//        String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
-//        String version = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appVersion; return browserType;");
-//        String userAgent = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.userAgent; return browserType;");
-//        if (name.toLowerCase().contains("internet") && name.toLowerCase().contains("explorer")) {
-//            return BrowserType.InternetExplorer;
-//        } else if (version.toLowerCase().contains("chrome")) {
-//            return BrowserType.Chrome;
-//        } else if (userAgent.toLowerCase().contains("trident/7.0")) {
-//            return BrowserType.InternetExplorer;
-//        } else if (userAgent.toLowerCase().contains("firefox")) {
-//            return BrowserType.Firefox;
-//        } else {
-//            throw new BrowserTypeNotRecognizedException();
-//        }
     }
 
     /**

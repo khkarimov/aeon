@@ -104,21 +104,6 @@ public class Select extends WebElement {
                 ));
     }
 
-    // These do not apply to select elements, they do however apply to options within a select element
-//    public void Selected() {
-//        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
-//                info.getLog(),
-//                selector,
-//                createWebCommandInitializer()));
-//    }
-//
-//    public void NotSelected() {
-//        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
-//                info.getLog(),
-//                selector,
-//                createWebCommandInitializer()));
-//    }
-
     public void Set(WebSelectOption selectOption, String value) {
         info.getCommandExecutionFacade().Execute(info, new SetCommand(
                 info.getLog(),
