@@ -1063,13 +1063,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 
-//        Dimension dimension = webDriver.manage().window().getSize();
-//        org.openqa.selenium.Point point = webDriver.manage().window().getPosition();
-//        System.out.println("Dimensions");
-//        System.out.println(dimension.getWidth() + ", " + dimension.getHeight());
-//        System.out.println("Position");
-//        System.out.println(point.getX()+ ", "+ point.getY());
-
         if(browserType == BrowserType.Firefox){
             // Get offset
             int offset = Math.toIntExact((long) ExecuteScript(guid, "var a = window.outerHeight - window.innerHeight; return a;"));

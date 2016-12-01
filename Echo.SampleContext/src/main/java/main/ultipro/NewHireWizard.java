@@ -3,23 +3,29 @@ package main.ultipro;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.test_abstraction.elements.factories.WebFactory;
 import echo.core.test_abstraction.elements.web.Button;
-import echo.core.test_abstraction.elements.web.TextBox;
 
 /**
  * Created by SebastianR on 11/23/2016.
  */
-public class NewHirePage {
+public class NewHireWizard {
     private AutomationInfo automationInfo;
 
-    public TextBox SSNTextBox;
-    public TextBox confirmSSNTextBox;
+    public PersonalPage personalPage;
+    public StartPage startPage;
     public Button cancelButton;
+    public Button nextButton;
+    public Button backButton;
 
-    public NewHirePage(AutomationInfo automationInfo){
+    public NewHireWizard(AutomationInfo automationInfo){
         this.automationInfo = automationInfo;
         WebFactory web = new WebFactory(automationInfo);
-        SSNTextBox = (TextBox) web.create(TextBox.class, "#ctl00_Content_StartFV_txbSSN");
-        confirmSSNTextBox = (TextBox) web.create(TextBox.class, "#ctl00_Content_StartFV_txbSSNConfirmed");
+        // Pages
+        personalPage = new PersonalPage(automationInfo);
+        startPage = new StartPage(automationInfo);
+
+        // Controls
+        nextButton = (Button) web.create(Button.class, "#ctl00_btnNext");
+        backButton = (Button) web.create(Button.class, "#ctl00_btnPrev");
         cancelButton = (Button) web.create(Button.class, "#ctl00_btnCancel");
     }
 }

@@ -8,7 +8,6 @@ import echo.core.common.exceptions.*;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
-import echo.core.common.web.selectors.By;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
@@ -518,5 +517,14 @@ public class FirefoxBrowserTests {
 
 
     }
-
+// SR- I use this test to determine the state of the marionette driver. As of 12/1 the only problematic command is the Quit() command
+//    @Test
+//    public void TestGeckoDriver(){
+//        System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\lib\\wires.exe");
+//        DesiredCapabilities cap = DesiredCapabilities.firefox();
+//        cap.setCapability("marionette", "true");
+//        WebDriver driver = new FirefoxDriver(cap);
+//        driver.navigate().to("https://www.google.com/");
+//        driver.quit();
+//    }
 }

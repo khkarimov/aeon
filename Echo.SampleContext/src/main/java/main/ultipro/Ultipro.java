@@ -9,7 +9,7 @@ public class Ultipro extends WebProduct{
     public LoginPage loginPage;
     public HomePage homePage;
     public MyEmployeesPage myEmployeesPage;
-    public NewHirePage newHirePage;
+    public NewHireWizard newHireWizard;
 
     public Ultipro(){
     }
@@ -20,6 +20,6 @@ public class Ultipro extends WebProduct{
         loginPage = new LoginPage(getAutomationInfo());
         homePage = new HomePage(getAutomationInfo());
         myEmployeesPage = new MyEmployeesPage(getAutomationInfo());
-        newHirePage = new NewHirePage(getAutomationInfo());
+        newHireWizard = new NewHireWizard(getAutomationInfo());
     }
 }

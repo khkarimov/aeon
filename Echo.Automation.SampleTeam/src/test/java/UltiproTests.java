@@ -1,13 +1,8 @@
 import echo.core.common.helpers.Sleep;
 import echo.core.common.web.BrowserType;
-import main.Sample;
 import main.ultipro.Ultipro;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -34,7 +29,7 @@ public class UltiproTests {
     public void BeforeTests() {
         ultipro = Launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.Maximize();
-        ultipro.browser.GoToUrl("http://sr1web/Login.aspx");
+        ultipro.browser.GoToUrl("http://sr2web/Login.aspx");
     }
 
     @After
@@ -51,26 +46,24 @@ public class UltiproTests {
         ultipro.homePage.menuButon.Click();
         ultipro.homePage.myTeam.Click();
         ultipro.homePage.myEmployees.Click();
-        Sleep.Wait(2000);
+        Sleep.Wait(1000);
         ultipro.myEmployeesPage.addEmployeeButton.Click();
         ultipro.browser.SwitchToWindowByTitle("Hire an Employee");
         ultipro.browser.Maximize();
-        ultipro.newHirePage.SSNTextBox.Set("123987654");
-        ultipro.newHirePage.confirmSSNTextBox.Set("123987654");
-        ultipro.newHirePage.cancelButton.Click();
+        ultipro.newHireWizard.startPage.SSNTextBox.Set("123987654");
+        ultipro.newHireWizard.startPage.confirmSSNTextBox.Set("123987654");
+        ultipro.newHireWizard.startPage.firstName.Set("FirstName");
+        ultipro.newHireWizard.startPage.lastName.Set("LastName");
+        ultipro.newHireWizard.startPage.employeeNumber.Set("12345");
+        ultipro.newHireWizard.nextButton.Click();
+        ultipro.newHireWizard.personalPage.addressLine.Set("605 Sw 10th St");
+        ultipro.newHireWizard.backButton.Click();
+        ultipro.newHireWizard.cancelButton.Click();
         ultipro.browser.AcceptAlert();
-    }
-
-    @Test
-    public void SearchEmployeeTest(){
-        ultipro.loginPage.userNameTextBox.Set("wardenj");
-        ultipro.loginPage.passwordTextBox.Set("password");
-        ultipro.loginPage.loginButton.Click();
+        ultipro.browser.SwitchToWindowByTitle("John H Warden II - 823567403 - Ultimate Smoke Company");
+        Sleep.Wait(500);
         ultipro.homePage.menuButon.Click();
-        ultipro.homePage.myTeam.Click();
-        ultipro.homePage.myEmployees.Click();
-        Sleep.Wait(2000);
-        ultipro.myEmployeesPage.employeeSearchBox.Set("John");
+        ultipro.homePage.homeButton.Click();
     }
 }
 
