@@ -24,7 +24,7 @@ public class DoubleClickCommand extends WebControlCommand {
      * @param initializer The web command initializer.
      */
     public DoubleClickCommand(ILog log, IBy selector, ICommandInitializer initializer) {
-        super(log, Resources.getString("WebControlCommand_Info"), selector, initializer);
+        super(log, Resources.getString("DoubleClickCommand_info"), selector, initializer);
     }
 
     /**
@@ -35,6 +35,6 @@ public class DoubleClickCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.DoubleClick(getGuid(), control.getSelector());
+        driver.DoubleClick(getGuid(), control);
     }
 }

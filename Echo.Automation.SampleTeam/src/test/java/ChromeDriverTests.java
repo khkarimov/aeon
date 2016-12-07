@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.openqa.selenium.NoAlertPresentException;
 
 import java.util.Date;
 
@@ -60,6 +61,7 @@ public class ChromeDriverTests {
         product.StartPage.OpenAlertButton.Click();
         product.browser.VerifyAlertExists();
         product.browser.SendKeysToAlert("Tester of Alerts");
+        product.browser.AcceptAlert();
     }
 
     @Test
@@ -170,11 +172,11 @@ public class ChromeDriverTests {
         product.StartPage.div.Has(new String[]{"start"}, "button", "id");
         product.StartPage.div.HasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
         product.StartPage.div.HasLike(new String[]{"START"}, "button", "id");
-        product.StartPage.DropDown.Is("drop-down-list", "id");
-        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
-        product.StartPage.DropDown.IsNotLike("DROP-DOWN-LISTT", "id");
-        product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
-        product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
+//        product.StartPage.DropDown.Is("drop-down-list", "id");
+//        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
+//        product.StartPage.DropDown.IsNotLike("DROP-DOWN-LISTT", "id");
+//        product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
+//        product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
     }
 
     @Test
@@ -313,6 +315,7 @@ public class ChromeDriverTests {
         product.browser.VerifyAlertText("Send some keys");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.VerifyAlertText("Send other keys");
+        product.browser.AcceptAlert();
     }
 
     @Test
@@ -322,6 +325,7 @@ public class ChromeDriverTests {
         product.browser.VerifyAlertTextLike("Send some keys", true);
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
         product.browser.VerifyAlertTextLike("send some keys", true);
+        product.browser.AcceptAlert();
     }
 
     @Test
@@ -483,5 +487,29 @@ public class ChromeDriverTests {
         String[] invalidoptions = {"1", "2", "3", "40", "5"};
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.StartPage.DropDown.HasOptionsInOrder(invalidoptions, WebSelectOption.Value);
+    }
+
+    @Test
+    public void TestSet_WithSelect(){
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "10");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "dog");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+    }
+
+    @Test
+    public void TestSetValueByJavaScript(){
+        product.StartPage.FormTextBox.SetTextByJavaScript("Set text by javascript is working");
+    }
+
+    @Test
+    public void TestIs_IsLike_IsNotLike_WithSelect(){
+        product.StartPage.LexoDropDown.Is("apple");
+        product.StartPage.LexoDropDown.IsLike("APPLE");
+        product.StartPage.LexoDropDown.Is("01", "value");
+        product.StartPage.LexoDropDown.IsNotLike("appple");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        product.StartPage.LexoDropDown.Is("ZEBRA");
+
     }
 }

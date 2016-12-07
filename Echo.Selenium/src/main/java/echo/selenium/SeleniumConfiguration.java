@@ -20,15 +20,15 @@ public class SeleniumConfiguration extends Configuration {
     private boolean moveMouseToOrigin;
     private String chromeDirectory;
     private String ieDirectory;
+    private String marionetteDirectory;
     private boolean ensureCleanEnvironment;
 
     public SeleniumConfiguration() {
         super(EchoWebDriver.class, SeleniumAdapter.class);
 
-        System.setProperty("user.chromeDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\chromedriver.exe");
-        System.setProperty("user.ieDir", "C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\lib\\IEDriverServer.exe");
         this.chromeDirectory = System.getProperty("user.dir") + "\\lib\\chromedriver.exe";
         this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
+        this.marionetteDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
         this.enableSeleniumGrid = false;
         this.language = "en-us";
         this.moveMouseToOrigin = true;
@@ -106,6 +106,14 @@ public class SeleniumConfiguration extends Configuration {
 
     public void setIEDirectory(String ieDirectory) {
         this.ieDirectory = ieDirectory;
+    }
+
+    public String getMarionetteDirectory(){
+        return marionetteDirectory;
+    }
+
+    public void setMarionetteDirectory(String marionetteDirectory){
+        this.marionetteDirectory = marionetteDirectory;
     }
 
     public boolean isEnsureCleanEnvironment() {

@@ -10,6 +10,7 @@ import java.util.List;
  * Created by DionnyS on 4/1/2016.
  */
 public class Process {
+    // SR - we should make this agnostic of the OS
     public static List<String> GetWindowsProcessesByName(String name) {
         try {
             List<String> output = new ArrayList<>();
@@ -31,5 +32,34 @@ public class Process {
         }
 
         return null;
+    }
+
+    public static void KillProcessByName(String name){
+        OsCheck.OSType osType = OsCheck.getOperatingSystemType();
+        String[] command;
+        switch(osType){
+            case Windows:
+                command = new String[]{"taskkill", "/F", "/IM", name};
+                break;
+            case Linux:
+                command = new String[]{"pkill", "-9", name};
+                break;
+            case MacOS:
+                command = null; // need to look into killing a process with MacOS
+                break;
+            case Other :
+                command = null;
+                break;
+            default:
+                command = null;
+        }
+        if(command != null){
+            try{
+                Runtime.getRuntime().exec(command);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+        }
     }
 }

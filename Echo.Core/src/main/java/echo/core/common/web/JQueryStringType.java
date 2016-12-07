@@ -60,11 +60,6 @@ public enum JQueryStringType {
     SetDivText,
 
     /**
-     * JavaScript code for setting a value's text.
-     */
-    SetValueText,
-
-    /**
      * JavaScript code for scrolling an element into view.
      */
     ScrollElementIntoView,
@@ -92,7 +87,17 @@ public enum JQueryStringType {
     /**
      * JavaScript code getting the options of a select element
      */
-    GetOptions;
+    GetOptions,
+
+    /**
+     * JavaScript code for bringing up the context menu (right click menu)
+     */
+    ShowContextMenu,
+
+    /**
+     * JavaScript code to fire double click event on an element.
+     */
+    FireDoubleClick;
 
     public static JQueryStringType forValue(int value) {
         return values()[value];

@@ -60,9 +60,9 @@ public interface IWebDriver extends IDriver {
      * Double clicks an element.
      *
      * @param guid     A globally unique identifier associated with this call.
-     * @param selector The web element to double click.
+     * @param element The web element to double click.
      */
-    void DoubleClick(UUID guid, IBy selector);
+    void DoubleClick(UUID guid, WebControl element);
 
     /**
      * Accepts the currently active modal dialog for this particular driver instance.
@@ -446,7 +446,7 @@ public interface IWebDriver extends IDriver {
      * @param dropElement   The element to drop.
      * @param targetElement The target element.
      */
-    void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement);
+    void DragAndDrop(UUID guid, WebControl dropElement, IBy targetElement);
 
     /**
      * Moves the mouse cursor off of an element
@@ -480,7 +480,7 @@ public interface IWebDriver extends IDriver {
      * @param element The element whose value is set
      * @param value   The value to set to the element
      */
-    void SetValueByJavaScript(UUID guid, WebControl element, String value);
+    void SetTextByJavaScript(UUID guid, WebControl element, String value);
 
     /**
      * Sets the Value of a Div element by Javascript
@@ -739,11 +739,29 @@ public interface IWebDriver extends IDriver {
      */
     void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key);
 
-//NOT IMPLEMENTED OR DEPRECATED COMMANDS
+    /**
+     * Sets the Text or Value of an element.
+     * @param guid A globally unique identifier associated with the call.
+     * @param element The web element that is being modified.
+     * @param option Enum which determined whether to set tht Text or the Value.
+     * @param setValue The new value for the Text or Value attribute of the control.
+     */
+    void Set(UUID guid, WebControl element, WebSelectOption option, String setValue);
 
-
+    /**
+     * Asserts a window with a given title does not exists.
+     * @param guid A globally unique identifier associated with the call.
+     * @param windowTitle The title of the window to search for.
+     * @return The title of the window
+     */
     String WindowDoesNotExistByTitle(UUID guid, String windowTitle);
 
+    /**
+     * Asserts a window with a given URL does not exists.
+     * @param guid A globally unique identifier associated with the call.
+     * @param url The URL of the window to search for.
+     * @return The URL of the window
+     */
     String WindowDoesNotExistByUrl(UUID guid, String url);
 //    /**
 //
