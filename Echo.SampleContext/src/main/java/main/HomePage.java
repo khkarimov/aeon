@@ -14,8 +14,6 @@ public class HomePage {
 
     public HomePage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
-//        WebFactory web = new WebFactory(this.automationInfo);
-//        ViewPayStatement = (Link) web.create(Link.class, "a[id*='viewPayStatementLink']");
         ViewPayStatement = new Link(automationInfo, By.CssSelector("a[id*='viewPayStatementLink']"));
     }
 

@@ -21,12 +21,6 @@ public class LoginPage {
 
     public LoginPage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
-//        WebFactory web = new WebFactory(this.automationInfo);
-//        UserNameTextBox = (TextBox) web.create(TextBox.class, "input[id*='UserName']");
-//        PasswordTextBox = (TextBox) web.create(TextBox.class, "input[id*='Password']");
-//        LoginButton = (Button) web.create(Button.class, "input[id*='LoginButton']");
-//        LanguageSelect = (Select) web.create(Select.class, "select[name*='languagesSelection']");
-//        WarningMessage = (Label) web.create(Label.class, "div[id*='ctl00_Content_warnMsg']");
         UserNameTextBox = new TextBox(automationInfo, By.CssSelector( "input[id*='UserName']"));
         PasswordTextBox = new TextBox(automationInfo, By.CssSelector("input[id*='Password']"));
         LoginButton = new Button(automationInfo, By.CssSelector("input[id*='LoginButton']"));
