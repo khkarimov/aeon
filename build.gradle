@@ -64,19 +64,10 @@ buildscript {
     }
 }
 
-
 apply plugin: "com.jfrog.artifactory"
 apply plugin: 'maven-publish'
-subprojects {
-//}
 
-//    publishing {
-//        publications {
-//            mavenJava(MavenPublication) {
-//                from components.java
-//            }
-//        }
-//    }
+subprojects {
     artifactory {
         contextUrl = 'http://artifactory.mia.ucloud.int/artifactory/'
         publish {

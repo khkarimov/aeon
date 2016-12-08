@@ -54,9 +54,11 @@ import java.util.concurrent.TimeUnit;
 @Extension
 public final class SeleniumAdapterFactory implements IAdapterExtension {
     private static final String MobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+    private static SeleniumConfiguration configuration;
 
     public static IAdapter Create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.ManageEnvironment(guid, log, browserType, browserAcceptedLanguageCodes, ensureCleanEnvironment);
+        SeleniumAdapterFactory.configuration = configuration;
         BrowserType browserType = configuration.getBrowserType();
         UUID guid = UUID.randomUUID();
         ILog log = configuration.getLog();
@@ -81,12 +83,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, log, browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
-//                    driver = new FirefoxDriver(GetMarionetteCapabilities());
-//                    driver = new FirefoxDriver(new FirefoxBinary(),
-//                            setProxySettings(GetMarionetteCapabilities(), proxyLocation));
-                    driver = new MarionetteDriver(new GeckoDriverService.Builder().usingDriverExecutable(
-                            new File(marionetteDirectory)).build(), GetMarionetteCapabilities(language, useMobileUserAgent));
-
+                    String firefoxBinary = configuration.getFirefoxBinary();
+                    System.setProperty("webdriver.gecko.driver", marionetteDirectory);
+                    driver = new FirefoxDriver(new FirefoxBinary(firefoxBinary != null ? new File(firefoxBinary) : null),
+                            GetFirefoxProfile(language, useMobileUserAgent),
+                            setProxySettings(GetMarionetteCapabilities(), proxyLocation));
                 }
 
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
@@ -133,8 +134,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         switch (browserType) {
             case Firefox:
                 desiredCapabilities = DesiredCapabilities.firefox();
-                //TODO - the MarionetteDriver class will soon be deprecated and we will need to add the following line to use the driver
-                //desiredCapabilities.setCapability("marionette", true);
+                desiredCapabilities.setCapability("marionette", true);
                 desiredCapabilities.setCapability("firefox_profile", GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
                 break;
 
@@ -153,11 +153,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private static DesiredCapabilities GetMarionetteCapabilities(String browserAcceptedLanguageCodes, boolean useMobileUserAgent){
+    private static DesiredCapabilities GetMarionetteCapabilities(){
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
-        //TODO - the MarionetteDriver class will soon be deprecated and we will need to add the following line to use the driver
-        //desiredCapabilities.setCapability("marionette", true);
-        desiredCapabilities.setCapability(FirefoxDriver.PROFILE, GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
+        desiredCapabilities.setCapability("marionette", true);
         return desiredCapabilities;
     }
 
@@ -217,6 +215,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + MobileUserAgent);
+        }
+
+        String chromeBinary = configuration.getChromeBinary();
+        if (chromeBinary != null) {
+            chromeOptions.setBinary(chromeBinary);
         }
 
         // DS - This is some ugly stuff. Couldn't find a better way...
