@@ -2,7 +2,6 @@ package main;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.factories.WebFactory;
 import echo.core.test_abstraction.elements.web.Link;
 
 /**
