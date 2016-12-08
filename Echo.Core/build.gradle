@@ -14,7 +14,7 @@ repositories {
 }
 
 ext {
-    seleniumVersion = '2.53.1'
+    seleniumVersion = '3.0.1'
 }
 
 dependencies {

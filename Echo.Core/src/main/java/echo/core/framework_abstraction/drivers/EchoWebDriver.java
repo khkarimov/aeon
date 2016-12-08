@@ -54,8 +54,8 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void DoubleClick(UUID guid, IBy selector) {
-        adapter.DoubleClick(guid, selector);
+    public void DoubleClick(UUID guid, WebControl element) {
+        adapter.DoubleClick(guid, element);
     }
 
     @Override
@@ -230,7 +230,7 @@ public class EchoWebDriver implements IWebDriver {
 
     @Override
     public void RightClick(UUID guid, WebControl element) {
-        adapter.RightClick(guid, element.getSelector());
+        adapter.RightClick(guid, element);
     }
 
     @Override
@@ -304,7 +304,7 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
-    public void DragAndDrop(UUID guid, IBy dropElement, IBy targetElement) {
+    public void DragAndDrop(UUID guid, WebControl dropElement, IBy targetElement) {
         adapter.DragAndDrop(guid, dropElement, targetElement);
     }
 
@@ -324,13 +324,18 @@ public class EchoWebDriver implements IWebDriver {
     }
 
     @Override
+    public void Set(UUID guid, WebControl element, WebSelectOption option, String setValue) {
+        adapter.Set(guid, element, option, setValue);
+    }
+
+    @Override
     public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
         adapter.SetBodyValueByJavaScript(guid, element, value);
     }
 
     @Override
-    public void SetValueByJavaScript(UUID guid, WebControl element, String value) {
-        adapter.SetValueByJavaScript(guid, element, value);
+    public void SetTextByJavaScript(UUID guid, WebControl element, String value) {
+        adapter.SetTextByJavaScript(guid, element, value);
     }
 
     @Override

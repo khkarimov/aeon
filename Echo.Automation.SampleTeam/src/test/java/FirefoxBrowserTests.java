@@ -35,7 +35,6 @@ public class FirefoxBrowserTests {
 
     @AfterClass
     public static void TearDown() {
-        product.browser.Quit();
     }
 
     @Before
@@ -64,7 +63,7 @@ public class FirefoxBrowserTests {
         product.browser.VerifyAlertNotExists();
         product.StartPage.OpenAlertButton.Click();
         product.browser.VerifyAlertExists();
-        product.browser.SendKeysToAlert("Tester of Alerts");
+        product.browser.SendKeysToAlert("Sent some keys");
     }
 
     @Test
@@ -121,12 +120,13 @@ public class FirefoxBrowserTests {
         assert (secondCookie.getValue().equals(cookie.getValue()));
         assert (secondCookie.getSecure() == cookie.getSecure());
         assert (secondCookie.getPath().equals(cookie.getPath()));
-        assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
 
         product.browser.ModifyCookie(cookie.getName(), "CookieNewValue");
         secondCookie = product.browser.GetCookie(cookie.getName());
         assert (secondCookie.getValue().equals("CookieNewValue"));
         product.browser.DeleteCookie(cookie.getName());
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchCookieException.class));
+        product.browser.GetCookie(cookie.getName());
     }
 
     @Test
@@ -152,7 +152,7 @@ public class FirefoxBrowserTests {
 
     @Test
     public void TestClickAndHold() {
-        product.StartPage.Start.ClickAndHold(5000);
+        product.StartPage.DateLabel.ClickAndHold(5000);
     }
 
     @Test
@@ -175,11 +175,11 @@ public class FirefoxBrowserTests {
         product.StartPage.div.Has(new String[]{"start"}, "button", "id");
         product.StartPage.div.HasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
         product.StartPage.div.HasLike(new String[]{"START"}, "button", "id");
-        product.StartPage.DropDown.Is("drop-down-list", "id");
-        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
-        product.StartPage.DropDown.IsNotLike("DROP-DOWN-LISTT", "id");
-        product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
-        product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
+        product.StartPage.DropDown.Is("option0");
+        //product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
+        //product.StartPage.DropDown.IsNotLike("DROP-DOWN-LISTT", "id");
+        //product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
+        //product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
     }
 
     @Test
@@ -298,6 +298,7 @@ public class FirefoxBrowserTests {
     @Test
     public void TestRightClick() {
         product.StartPage.DateLabel.RightClick();
+        echo.core.common.helpers.Sleep.Wait(2000);
     }
 
     @Test
@@ -489,4 +490,33 @@ public class FirefoxBrowserTests {
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.StartPage.DropDown.HasOptionsInOrder(invalidoptions, WebSelectOption.Value);
     }
+
+    @Test
+    public void TestSet_WithSelect(){
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "10");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "dog");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+    }
+
+    @Test
+    public void TestSetValueByJavaScript(){
+        product.StartPage.FormTextBox.SetTextByJavaScript("Set text by javascript is working");
+    }
+
+    @Test
+    public void TestIs_IsLike_IsNotLike_WithSelect(){
+        product.StartPage.LexoDropDown.Is("apple");
+        product.StartPage.LexoDropDown.IsLike("APPLE");
+        product.StartPage.LexoDropDown.Is("lexicographic-drop-down", "id");
+        product.StartPage.LexoDropDown.IsLike("lexicographic-DROP-down", "id");
+        product.StartPage.LexoDropDown.Is("01", "VALUE");
+        product.StartPage.LexoDropDown.IsNotLike("appple");
+        product.StartPage.LexoDropDown.IsNotLike("anything", "id");
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        product.StartPage.LexoDropDown.Is("ZEBRA");
+
+
+    }
+
 }

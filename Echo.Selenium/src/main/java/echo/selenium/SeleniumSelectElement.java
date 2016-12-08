@@ -42,6 +42,11 @@ public class SeleniumSelectElement extends WebControl {
         return new SeleniumElement(getUnderlyingSelectElement().getFirstSelectedOption(), getLog());
     }
 
+    public final String GetSelectedOptionText(UUID guid){
+        log.Trace(guid, "SelectElement.get_SelectedOptionText();");
+        return getUnderlyingSelectElement().getFirstSelectedOption().getText();
+    }
+
     public final List<WebControl> GetOptions(UUID guid) {
         log.Trace(guid, "SelectElement.get_Options();");
         return underlyingSelectElement.getOptions().stream()

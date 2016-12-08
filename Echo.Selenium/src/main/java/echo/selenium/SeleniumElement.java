@@ -242,7 +242,7 @@ public class SeleniumElement extends WebControl {
 
         getLog().Trace(guid, String.format("WebElement.GetAttribute(%1$s);", attributeName));
 
-        return underlyingWebElement.getAttribute(attributeName);
+        return underlyingWebElement.getAttribute(attributeName) == null ? "" : underlyingWebElement.getAttribute(attributeName);
     }
 
     /**
@@ -356,7 +356,8 @@ public class SeleniumElement extends WebControl {
         underlyingWebElement.submit();
     }
 
-    //functions specfically for select elements
+    //region functions specifically for select elements
+
     public final boolean IsMultiple(UUID guid) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
@@ -376,6 +377,13 @@ public class SeleniumElement extends WebControl {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         return selectHelper.GetSelectedOption(guid);
+    }
+
+    public final String GetSelectedOptionText(UUID guid){
+        if(selectHelper == null){
+            throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
+        }
+        return selectHelper.GetSelectedOptionText(guid);
     }
 
     public final List<WebControl> GetOptions(UUID guid) {
@@ -433,4 +441,5 @@ public class SeleniumElement extends WebControl {
         }
         selectHelper.SelectByValue(guid, value);
     }
+    //endregion
 }
