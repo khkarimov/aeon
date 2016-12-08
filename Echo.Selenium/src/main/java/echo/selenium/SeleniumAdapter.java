@@ -70,10 +70,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.browserType = browserType;
     }
 
-    public IAdapter Configure(Configuration configuration) {
-        return SeleniumAdapterFactory.Create((SeleniumConfiguration) configuration);
-    }
-
     public void close() {
         webDriver.quit();
         webDriver = null;

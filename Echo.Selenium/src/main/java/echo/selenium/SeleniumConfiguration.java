@@ -22,11 +22,15 @@ public class SeleniumConfiguration extends Configuration {
     private String ieDirectory;
     private String marionetteDirectory;
     private boolean ensureCleanEnvironment;
+    private String chromeBinary;
+    private String firefoxBinary;
 
     public SeleniumConfiguration() {
         super(EchoWebDriver.class, SeleniumAdapter.class);
 
         this.chromeDirectory = System.getProperty("user.dir") + "\\lib\\chromedriver.exe";
+        setChromeBinary(System.getenv("google.chrome.binary"));
+        setFirefoxBinary(System.getenv("firefox.binary"));
         this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
         this.marionetteDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
         this.enableSeleniumGrid = false;
@@ -130,5 +134,21 @@ public class SeleniumConfiguration extends Configuration {
 
     public void setProxyLocation(String proxyLocation) {
         this.proxyLocation = proxyLocation;
+    }
+
+    private void setChromeBinary(String chromeBinary) {
+       this.chromeBinary = chromeBinary != null && !chromeBinary.trim().equals("") ? chromeBinary.trim() : null;
+    }
+
+    public String getChromeBinary() {
+        return chromeBinary;
+    }
+
+    private void setFirefoxBinary(String firefoxBinary) {
+        this.firefoxBinary = firefoxBinary != null && !firefoxBinary.trim().equals("") ? firefoxBinary.trim() : null;
+    }
+
+    public String getFirefoxBinary() {
+        return firefoxBinary;
     }
 }
