@@ -12,7 +12,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.openqa.selenium.NoAlertPresentException;
 
 import java.util.Date;
 
