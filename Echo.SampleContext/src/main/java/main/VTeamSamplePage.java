@@ -38,9 +38,6 @@ public class VTeamSamplePage {
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
         WebFactory web = new WebFactory(this.info);
-        // This is an example of how we can set the ajaxwaiter timeout from the page.
-        ((WebCommandExecutionFacade) info.getCommandExecutionFacade()).setAjaxWaiterTimeout(15000);
-
         DisabledButton = (Button) web.create(Button.class, "button[id='disabled-button']");
         UltimateLogoImage = (Image) web.create(Image.class, "img[id='dragtarget']");
         TestCheckbox = (Checkbox) web.create(Checkbox.class, "input[id='checkbox']");
