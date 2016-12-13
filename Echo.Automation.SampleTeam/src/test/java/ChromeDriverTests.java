@@ -1,7 +1,6 @@
 import echo.core.common.CompareType;
 import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
-import echo.core.common.helpers.Sleep;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
@@ -12,7 +11,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.openqa.selenium.NoAlertPresentException;
 
 import java.util.Date;
 
@@ -518,7 +516,5 @@ public class ChromeDriverTests {
     public void TestWaiter(){
         product.StartPage.Start.Click();
         product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "02");
-        product.StartPage.Start.Click();
-        product.StartPage.LexoDropDown.Is("02", "value");
     }
 }

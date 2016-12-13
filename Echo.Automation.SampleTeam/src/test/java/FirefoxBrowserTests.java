@@ -8,7 +8,6 @@ import echo.core.common.exceptions.*;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
-import echo.core.common.web.selectors.By;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
@@ -515,8 +514,11 @@ public class FirefoxBrowserTests {
         product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.StartPage.LexoDropDown.Is("ZEBRA");
-
-
     }
 
+    @Test
+    public void TestWaiter(){
+        product.StartPage.Start.Click();
+        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "02");
+    }
 }
