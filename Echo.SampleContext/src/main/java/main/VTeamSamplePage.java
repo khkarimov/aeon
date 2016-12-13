@@ -3,7 +3,6 @@ package main;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.command_execution.WebCommandExecutionFacade;
 import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.factories.WebFactory;
 import echo.core.test_abstraction.elements.web.*;
 
 /**
@@ -25,7 +24,7 @@ public class VTeamSamplePage {
     public Select DropDown;
     public Checkbox Checkbox100;
     public WebElement div;
-    public Button popupButton;
+    public Button PopupButton;
     public Select LexoDropDown;
     public Select RevLexoDropDown;
     public Label DateLabel;
@@ -37,30 +36,28 @@ public class VTeamSamplePage {
 
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
-        WebFactory web = new WebFactory(this.info);
-        DisabledButton = (Button) web.create(Button.class, "button[id='disabled-button']");
-        UltimateLogoImage = (Image) web.create(Image.class, "img[id='dragtarget']");
-        TestCheckbox = (Checkbox) web.create(Checkbox.class, "input[id='checkbox']");
-        TestFileDialogInput = (FileDialogInput) web.create(FileDialogInput.class, "input[id='file-dialog']");
-        OpenAlertButton = (Button) web.create(Button.class, "button[id='alertDialog']");
-        AlertTitleTextBox = (TextBox) web.create(TextBox.class, "input[id ='sample1']");
-        Start = (Button) web.create(Button.class, "button[id='start']");
-        CheckboxLabel = (Label) web.create(Label.class, "label[for='checkbox']");
-        TryLink = (Link) web.create(Link.class, "a[id='tryLink']");
-        DropDown = (Select) web.create(Select.class, "select[id='drop-down-list']");
+        DisabledButton = new Button(info, By.CssSelector( "button[id='disabled-button']"));
+        UltimateLogoImage = new Image(info, By.CssSelector("img[id='dragtarget']"));
+        TestCheckbox = new Checkbox(info, By.CssSelector( "input[id='checkbox']"));
+        TestFileDialogInput = new FileDialogInput(info, By.CssSelector("input[id='file-dialog']"));
+        OpenAlertButton = new Button(info, By.CssSelector("button[id='alertDialog']"));
+        AlertTitleTextBox = new TextBox(info, By.CssSelector("input[id ='sample1']"));
+        Start = new Button(info, By.CssSelector( "button[id='start']"));
+        CheckboxLabel = new Label(info, By.CssSelector("label[for='checkbox']"));
+        TryLink = new Link(info, By.CssSelector( "a[id='tryLink']"));
+        DropDown = new Select(info, By.CssSelector("select[id='drop-down-list']"));
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
-        DraggableListItem = (ListItem) web.create(ListItem.class, "li[id='dragtarget']");
-        DraggableListItem = (ListItem) web.create(ListItem.class, "li[id='node1']");
-        Checkbox100 = (Checkbox) web.create(Checkbox.class, "input[id='checkbox100']");
-        //TextBox Async = (TextBox) web.create(TextBox.class,"h2[id='form']");
+        DraggableListItem = new ListItem(info, By.CssSelector("li[id='node1']"));
+        Checkbox100 = new Checkbox(info, By.CssSelector("input[id='checkbox100']"));
         div = new WebElement(info, By.CssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
-        popupButton = (Button) web.create(Button.class, "a[id='popup-button']");
-        LexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down']");
-        RevLexoDropDown = (Select) web.create(Select.class, "select[id='lexicographic-drop-down-rev']");
-        DateLabel = (Label) web.create(Label.class, "#date-text");
-        InvisibleButton = (Button) web.create(Button.class, "#invisible-button");
-        NonExistentLabel = (Label) web.create(Label.class, "fakeSelector");
-        FormTextBox = (TextBox) web.create(TextBox.class,  "#sample1");
-        NextRadioButton = (RadioButton) web.create(RadioButton.class, "#next-radio-button");
+        PopupButton = new Button(info, By.CssSelector("a[id='popup-button']"));
+        LexoDropDown = new Select(info, By.CssSelector("select[id='lexicographic-drop-down']"));
+        RevLexoDropDown = new Select(info, By.CssSelector("select[id='lexicographic-drop-down-rev']"));
+        DateLabel = new Label(info, By.CssSelector("#date-text"));
+        InvisibleButton = new Button(info, By.CssSelector("#invisible-button"));
+        NonExistentLabel = new Label(info, By.CssSelector("fakeSelector"));
+        FormTextBox = new TextBox(info, By.CssSelector("#sample1"));
+        NextRadioButton = new RadioButton(info, By.CssSelector("#next-radio-button"));
+
     }
 }
