@@ -355,7 +355,7 @@ public class FirefoxBrowserTests {
     @Test
     public void TestSwitchToMainWindow() {
         product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         product.browser.VerifyTitle("HeatLogo.jpg (JPEG Image, 300 × 200 pixels)");
         product.browser.SwitchToMainWindow();
@@ -363,7 +363,7 @@ public class FirefoxBrowserTests {
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         product.browser.Close();
         product.browser.SwitchToMainWindow(true);
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.SwitchToMainWindow(true);
@@ -372,7 +372,7 @@ public class FirefoxBrowserTests {
     @Test
     public void TestSwitchToWindowByTitle() {
         product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         product.browser.VerifyTitle("HeatLogo.jpg (JPEG Image, 300 × 200 pixels)");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
@@ -383,7 +383,7 @@ public class FirefoxBrowserTests {
     @Test
     public void TestSwitchToWindowByUrl() {
         product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByUrl("HeatLogo.jpg");
         product.browser.VerifyTitle("HeatLogo.jpg (JPEG Image, 300 × 200 pixels)");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));

@@ -1,7 +1,7 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.test_abstraction.elements.factories.WebFactory;
+import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.web.Link;
 
 /**
@@ -13,8 +13,7 @@ public class HomePage {
 
     public HomePage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
-        WebFactory web = new WebFactory(this.automationInfo);
-        ViewPayStatement = (Link) web.create(Link.class, "a[id*='viewPayStatementLink']");
+        ViewPayStatement = new Link(automationInfo, By.CssSelector("a[id*='viewPayStatementLink']"));
     }
 
 
