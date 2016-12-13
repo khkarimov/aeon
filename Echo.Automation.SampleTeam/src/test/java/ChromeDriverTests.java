@@ -515,6 +515,6 @@ public class ChromeDriverTests {
     @Test
     public void TestWaiter(){
         product.StartPage.Start.Click();
-        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "02");
+        product.StartPage.SmileyFace1.Click();
     }
 }

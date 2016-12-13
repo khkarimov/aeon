@@ -32,6 +32,7 @@ public class VTeamSamplePage {
     public Label NonExistentLabel;
     public TextBox FormTextBox;
     public RadioButton NextRadioButton;
+    public Button SmileyFace1;
 
 
     public VTeamSamplePage(AutomationInfo info) {
@@ -58,6 +59,6 @@ public class VTeamSamplePage {
         NonExistentLabel = new Label(info, By.CssSelector("fakeSelector"));
         FormTextBox = new TextBox(info, By.CssSelector("#sample1"));
         NextRadioButton = new RadioButton(info, By.CssSelector("#next-radio-button"));
-
+        SmileyFace1 = new Button(info, By.CssSelector(".call-1 > button:nth-child(1)"));
     }
 }
