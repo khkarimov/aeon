@@ -1,6 +1,6 @@
 package echo.core.common.helpers;
 
-import org.openqa.selenium.WebElement;
+import echo.core.framework_abstraction.controls.web.WebControl;
 
 import java.net.URI;
 import java.util.Collection;
@@ -96,13 +96,13 @@ public final class ConvertHelper {
 
         if (value instanceof Collection<?> && ((Collection<?>) value).size() > 0) {
             try {
-                Collection<WebElement> elements = (Collection<WebElement>) value;
+                Collection<WebControl> elements = (Collection<WebControl>) value;
 
                 return String.format(
                         "%1$s: [\"%2$s\"]",
                         value.getClass(),
                         String.join("\", \"", elements.stream()
-                                .map(x -> x.getAttribute("id"))
+                                .map(x -> x.getSelector().toString())
                                 .collect(Collectors.toList())
                         ));
             } catch (Exception e) {

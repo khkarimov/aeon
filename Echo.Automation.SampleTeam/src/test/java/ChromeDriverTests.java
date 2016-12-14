@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.openqa.selenium.NoAlertPresentException;
 
 import java.util.Date;
 
@@ -511,5 +510,11 @@ public class ChromeDriverTests {
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.StartPage.LexoDropDown.Is("ZEBRA");
 
+    }
+
+    @Test
+    public void TestWaiter(){
+        product.StartPage.Start.Click();
+        product.StartPage.SmileyFace1.Click();
     }
 }

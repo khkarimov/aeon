@@ -506,6 +506,11 @@ public class IEDriverTests {
         product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.StartPage.LexoDropDown.Is("ZEBRA");
+    }
 
+    @Test
+    public void TestWaiter(){
+        product.StartPage.Start.Click();
+        product.StartPage.SmileyFace1.Click();
     }
 }
