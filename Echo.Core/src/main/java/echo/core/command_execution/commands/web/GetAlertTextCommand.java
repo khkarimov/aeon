@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.CommandWithReturn;
+import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
@@ -20,7 +21,7 @@ public class GetAlertTextCommand extends CommandWithReturn {
      * @param log The logger
      */
     public GetAlertTextCommand(ILog log) {
-        super(log, "GetAlertTextCommand_Info");
+        super(log, Resources.getString("GetAlertTextCommand_Info"));
     }
 
     /**

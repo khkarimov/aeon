@@ -7,6 +7,8 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Clicks an element
  */
@@ -19,7 +21,7 @@ public class ClickCommand extends WebControlCommand {
      * @param initializer The command initializer.
      */
     public ClickCommand(ILog log, IBy selector, ICommandInitializer initializer) {
-        super(log, String.format(Resources.getString("ClickCommand_Info"), selector), selector, initializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("ClickCommand_Info"), selector), selector, initializer);
     }
 
     @Override

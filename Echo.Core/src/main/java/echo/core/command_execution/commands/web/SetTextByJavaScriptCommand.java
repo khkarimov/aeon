@@ -7,6 +7,8 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by Administrator on 6/15/2016.
  */
@@ -15,7 +17,7 @@ public class SetTextByJavaScriptCommand extends WebControlCommand {
     private String value;
 
     public SetTextByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
-        super(log, Resources.getString("SetTextByJavaScriptCommand_Info"), selector, initializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("SetTextValueByJavaScriptCommand_Info"), value, selector), selector, initializer);
         this.value = value;
     }
 

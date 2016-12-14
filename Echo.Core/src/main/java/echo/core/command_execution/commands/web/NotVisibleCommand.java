@@ -22,7 +22,7 @@ public class NotVisibleCommand extends WebControlCommand {
      * @param commandInitializer The command initializer.
      */
     public NotVisibleCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("NotVisible_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("NotVisibleCommand_Info"), selector), selector, commandInitializer);
     }
 
     /**

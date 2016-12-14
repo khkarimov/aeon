@@ -7,6 +7,8 @@ import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Returns the name value pair for a cookie.
  */
@@ -20,7 +22,7 @@ public class AddCookieCommand extends Command {
      * @param cookie Cookie to be added.
      */
     public AddCookieCommand(ILog log, IWebCookie cookie) {
-        super(log, Resources.getString("AddCookieCommand_Info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("AddCookieCommand_Info"), cookie.getName()));
         this.cookie = cookie;
     }
 

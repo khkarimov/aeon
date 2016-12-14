@@ -33,7 +33,7 @@ public class IsLikeCommand extends WebControlCommand {
      * @param attribute          The attribute to be compared.
      */
     public IsLikeCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String value, ComparisonOption option, String attribute) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("LikeCommand_Info"),attribute, value, selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("IsLikeCommand_Info"),attribute, value, selector), selector, commandInitializer);
         this.value = value;
         this.option = option;
         this.attribute = attribute;
