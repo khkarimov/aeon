@@ -8,7 +8,10 @@ import static echo.core.test_abstraction.product.Echo.Launch;
 
 /**
  * Created by SebastianR on 11/23/2016.
+ * This test is currently being ignored because the environments used is not persistent.
  */
+
+@Ignore
 public class UltiproTests {
     private static Ultipro ultipro;
 

@@ -43,7 +43,7 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
-        if(command instanceof WebControlCommand && !(command instanceof QuitCommand)){
+        if(command instanceof WebControlCommand){
             ajaxWaiter.WaitForAsync(command.getGuid());
         }
         delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
