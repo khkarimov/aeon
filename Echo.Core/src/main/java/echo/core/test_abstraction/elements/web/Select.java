@@ -116,7 +116,7 @@ public class Select extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new SetCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 selectOption,
                 value));
     }
@@ -126,7 +126,7 @@ public class Select extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Text,
                 "INNERHTML"));
@@ -137,7 +137,7 @@ public class Select extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Raw,
                 attribute));
@@ -148,7 +148,7 @@ public class Select extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Text,
                 "INNERHTML"));
@@ -159,7 +159,7 @@ public class Select extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Raw,
                 attribute));
@@ -174,7 +174,7 @@ public class Select extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new IsCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Text,
                 "INNERHTML"));
@@ -190,7 +190,7 @@ public class Select extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new IsCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Raw,
                 attribute));
