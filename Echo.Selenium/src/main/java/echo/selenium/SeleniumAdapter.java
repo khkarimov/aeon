@@ -20,7 +20,7 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.selectors.ByJQuery;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
-import echo.core.framework_abstraction.controls.web.WebControl;s
+import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.selenium.jquery.IJavaScriptFlowExecutor;
 import echo.selenium.jquery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
