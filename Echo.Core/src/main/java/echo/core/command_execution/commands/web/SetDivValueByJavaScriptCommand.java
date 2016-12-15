@@ -21,7 +21,7 @@ public class SetDivValueByJavaScriptCommand extends WebControlCommand {
     private String value;
 
     public SetDivValueByJavaScriptCommand(ILog log, IBy selector, ICommandInitializer initializer, String value) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("SetValueByJavaScriptCommand_Info"), value, selector), selector, initializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("SetDivValueByJavaScriptCommand_Info"), value, selector), selector, initializer);
         this.value = value;
     }
 

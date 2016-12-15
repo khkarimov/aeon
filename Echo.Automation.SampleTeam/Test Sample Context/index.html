@@ -432,14 +432,14 @@
         $('.call-1, .call-2, .call-3').hide();
 
         $('#start').on('click', function () {
-            $.ajax("http://devvtwb100:9000/api/teams/getbuildsforteam/Compliance")
+            $.ajax("http://httpbin.org/delay/10")
                     .done(function () {
                         $('.call-1').show();
                     });
-            $.ajax("http://devvtwb100:9000/api/teams/getbuildsforteam/Payroll")
+            $.ajax("http://httpbin.org/delay/5")
                     .done(function () {
                         $('.call-2').show();
-                        load("http://devvtwb100:9000/api/teams/getbuildsforteam/V12%20Build", function () {
+                        load("http://httpbin.org/delay/1", function () {
                             $('.call-3').show();
                         })
                     });

@@ -6,6 +6,8 @@ import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by SebastianR on 8/9/2016.
  */
@@ -13,7 +15,7 @@ public class WindowDoesNotExistByUrlCommand extends CommandWithReturn {
     private String url;
 
     public WindowDoesNotExistByUrlCommand(ILog log, String url) {
-        super(log, Resources.getString("WindowDoesNotExistByUrlCommand_info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("WindowDoesNotExistByUrlCommand_Info"), url));
         this.url = url;
     }
 

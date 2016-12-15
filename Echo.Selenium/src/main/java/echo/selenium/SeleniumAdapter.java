@@ -4,13 +4,11 @@ import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.KeyboardKey;
-import echo.core.common.Point;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.ElementNotVisibleException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
 import echo.core.common.helpers.MouseHelper;
-import echo.core.common.helpers.Process;
 import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
@@ -20,11 +18,9 @@ import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.selectors.ByJQuery;
-import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
-import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jquery.IJavaScriptFlowExecutor;
 import echo.selenium.jquery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +29,6 @@ import org.joda.time.Period;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.Quotes;
@@ -69,10 +64,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.log = log;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
-    }
-
-    public IAdapter Configure(Configuration configuration) {
-        return SeleniumAdapterFactory.Create((SeleniumConfiguration) configuration);
     }
 
     public void close() {
@@ -1185,7 +1176,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 elementFound = false;
             } finally {
                 if (elementFound) {
-                    throw new ElementHasOptionException();
+                    throw new ElementHasOptionException(desiredOption);
                 }
             }
         }
@@ -1663,11 +1654,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         // If Text option was selected then use GetText, otherwise use GetAttribute
         if (option == ComparisonOption.Text) {
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetText(guid))) {
-                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetText(guid), expectedValue,  attribute);
+                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetText(guid), expectedValue);
             }
         } else{
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetAttribute(guid, attribute))) {
-                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetAttribute(guid, attribute), expectedValue,  attribute);
+                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetAttribute(guid, attribute), expectedValue);
             }
         }
     }
@@ -1861,20 +1852,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public BrowserType GetBrowserType(UUID guid) {
         return this.browserType;
-//        String name = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appName; return browserType;");
-//        String version = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.appVersion; return browserType;");
-//        String userAgent = (String) ExecuteScript(guid, "var browserType = \"\" + navigator.userAgent; return browserType;");
-//        if (name.toLowerCase().contains("internet") && name.toLowerCase().contains("explorer")) {
-//            return BrowserType.InternetExplorer;
-//        } else if (version.toLowerCase().contains("chrome")) {
-//            return BrowserType.Chrome;
-//        } else if (userAgent.toLowerCase().contains("trident/7.0")) {
-//            return BrowserType.InternetExplorer;
-//        } else if (userAgent.toLowerCase().contains("firefox")) {
-//            return BrowserType.Firefox;
-//        } else {
-//            throw new BrowserTypeNotRecognizedException();
-//        }
     }
 
     /**

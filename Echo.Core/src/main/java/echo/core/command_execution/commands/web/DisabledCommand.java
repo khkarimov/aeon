@@ -15,7 +15,7 @@ import java.util.Locale;
 public class DisabledCommand extends WebControlCommand {
 
     public DisabledCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("NotEnabledCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("DisabledCommand_Info"), selector), selector, commandInitializer);
     }
 
     @Override

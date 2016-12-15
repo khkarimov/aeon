@@ -25,7 +25,7 @@ public class SwitchToMainWindowCommand extends Command {
      * @param waitForAllPopupWindowsToClose Whether to wait for all popup windows to close.
      */
     public SwitchToMainWindowCommand(ILog log, String mainWindowHandle, boolean waitForAllPopupWindowsToClose) {
-        super(log, String.format(Resources.getString("SwitchToWindowCommand_Info"), mainWindowHandle));
+        super(log, String.format(Resources.getString("SwitchToMainWindowCommand_Info"), mainWindowHandle));
         this.mainWindowHandle = mainWindowHandle;
         this.waitForAllPopupWindowsToClose = waitForAllPopupWindowsToClose;
     }

@@ -13,6 +13,6 @@ public class ElementIsVisibleException extends RuntimeException implements Seria
      * Initializes a new instance of the {@link ElementIsVisibleException} class.
      */
     public ElementIsVisibleException() {
-        super(Resources.getString("ElementVisibleException_ctor_DefaultMessage"));
+        super(Resources.getString("ElementIsVisibleException_ctor_DefaultMessage"));
     }
 }

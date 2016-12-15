@@ -29,7 +29,7 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
      * @param title The title of the desired window.
      */
     public SwitchToWindowByTitleCommand(ILog log, String title) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("SwitchToWindowByTitle_Info"), title));
+        super(log, String.format(Locale.getDefault(), Resources.getString("SwitchToWindowByTitleCommand_Info"), title));
         this.title = title;
     }
 

@@ -6,6 +6,8 @@ import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by Administrator on 6/29/2016.
  */
@@ -14,7 +16,7 @@ public class VerifyAlertTextLikeCommand extends Command {
     private boolean caseSensitive;
 
     public VerifyAlertTextLikeCommand(ILog log, String comparingText, boolean caseSensitive) {
-        super(log, Resources.getString("VerifyAlertTextLikeCommand_info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("VerifyAlertTextLikeCommand_Info"), comparingText));
         this.comparingText = comparingText;
         this.caseSensitive = caseSensitive;
     }

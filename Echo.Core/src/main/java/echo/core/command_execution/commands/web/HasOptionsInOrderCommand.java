@@ -33,7 +33,7 @@ public class HasOptionsInOrderCommand extends WebControlCommand {
      * @param select             The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public HasOptionsInOrderCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String[] options, WebSelectOption select) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("CheckCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("HasOptionsInOrderCommand_Info"), options, selector), selector, commandInitializer);
         this.options = options;
         this.select = select;
     }

@@ -7,6 +7,8 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by Steve Foo on 6/6/2016.
  */
@@ -24,7 +26,7 @@ public class MouseOutCommand extends WebControlCommand {
      * @param initializer The initializer
      */
     public MouseOutCommand(ILog log, IBy selector, ICommandInitializer initializer) {
-        super(log, Resources.getString("MouseOutCommand_Info"), selector, initializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("MouseOutCommand_Info"), selector), selector, initializer);
     }
 
     @Override

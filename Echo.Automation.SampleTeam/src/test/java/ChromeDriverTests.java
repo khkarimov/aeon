@@ -1,7 +1,6 @@
 import echo.core.common.CompareType;
 import echo.core.common.KeyboardKey;
 import echo.core.common.exceptions.*;
-import echo.core.common.helpers.Sleep;
 import echo.core.common.web.BrowserSize;
 import echo.core.common.web.BrowserType;
 import echo.core.common.web.WebSelectOption;
@@ -12,7 +11,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.openqa.selenium.NoAlertPresentException;
 
 import java.util.Date;
 
@@ -354,7 +352,7 @@ public class ChromeDriverTests {
     @Test
     public void TestSwitchToMainWindow() {
         product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
         product.browser.SwitchToMainWindow();
@@ -362,7 +360,7 @@ public class ChromeDriverTests {
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         product.browser.Close();
         product.browser.SwitchToMainWindow(true);
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.SwitchToMainWindow(true);
@@ -371,7 +369,7 @@ public class ChromeDriverTests {
     @Test
     public void TestSwitchToWindowByTitle() {
         product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
         product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
@@ -382,7 +380,7 @@ public class ChromeDriverTests {
     @Test
     public void TestSwitchToWindowByUrl() {
         product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.popupButton.Click();
+        product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByUrl("HeatLogo.jpg");
         product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
@@ -517,8 +515,6 @@ public class ChromeDriverTests {
     @Test
     public void TestWaiter(){
         product.StartPage.Start.Click();
-        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "02");
-        //product.StartPage.Start.Click();
-        product.StartPage.LexoDropDown.Is("02", "value");
+        product.StartPage.SmileyFace1.Click();
     }
 }

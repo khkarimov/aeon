@@ -15,6 +15,14 @@ public class AutomationInfo {
     private IDriver driver;
     private ILog log;
 
+    /**
+     * Creates a new {@link AutomationInfo} instance.
+     *
+     * @param parameters
+     * @param driver
+     * @param adapter
+     * @param log
+     */
     public AutomationInfo(Parameters parameters, IDriver driver, IAdapter adapter, ILog log) {
         this.driver = driver;
         this.adapter = adapter;

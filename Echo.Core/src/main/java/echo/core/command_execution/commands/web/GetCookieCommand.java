@@ -6,6 +6,8 @@ import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by RafaelT on 6/27/2016.
  */
@@ -23,7 +25,7 @@ public class GetCookieCommand extends CommandWithReturn {
      * @param name The name of the cookie to get.
      */
     public GetCookieCommand(ILog log, String name) {
-        super(log, Resources.getString("GetCookieCommand_Info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("GetCookieCommand_Info"), name));
         this.name = name;
     }
 
