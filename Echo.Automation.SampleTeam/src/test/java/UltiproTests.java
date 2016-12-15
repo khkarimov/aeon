@@ -19,16 +19,6 @@ public class UltiproTests {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    //region Setup and Teardown
-    @BeforeClass
-    public static void SetUp() {
-    }
-
-    @AfterClass
-    public static void TearDown() {
-        //product.browser.Quit();
-    }
-
     @Before
     public void BeforeTests() {
         ultipro = Launch(Ultipro.class, BrowserType.Chrome);
@@ -40,17 +30,15 @@ public class UltiproTests {
     public void AfterTests() {
         ultipro.browser.Quit();
     }
-//endregion
 
     @Test
     public void NewHireTest(){
         ultipro.loginPage.UserNameTextBox.Set("wardenj");
         ultipro.loginPage.PasswordTextBox.Set("password");
         ultipro.loginPage.LoginButton.Click();
-        ultipro.homePage.menuButon.Click();
+        ultipro.homePage.menuButton.Click();
         ultipro.homePage.myTeam.Click();
         ultipro.homePage.myEmployees.Click();
-        Sleep.Wait(1000);
         ultipro.myEmployeesPage.addEmployeeButton.Click();
         ultipro.browser.SwitchToWindowByTitle("Hire an Employee");
         ultipro.browser.Maximize();
@@ -65,8 +53,7 @@ public class UltiproTests {
         ultipro.newHireWizard.cancelButton.Click();
         ultipro.browser.AcceptAlert();
         ultipro.browser.SwitchToWindowByTitle("John H Warden II - 823567403 - Ultimate Smoke Company");
-        Sleep.Wait(500);
-        ultipro.homePage.menuButon.Click();
+        ultipro.homePage.menuButton.Click();
         ultipro.homePage.homeButton.Click();
     }
 }

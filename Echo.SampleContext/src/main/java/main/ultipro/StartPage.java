@@ -8,8 +8,6 @@ import echo.core.test_abstraction.elements.web.TextBox;
  * Created by SebastianR on 11/30/2016.
  */
 public class StartPage {
-    private AutomationInfo automationInfo;
-
     public TextBox SSNTextBox;
     public TextBox confirmSSNTextBox;
     public TextBox firstName;
@@ -18,7 +16,6 @@ public class StartPage {
 
 
     public StartPage(AutomationInfo automationInfo){
-        this.automationInfo = automationInfo;
         //Controls
         SSNTextBox = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbSSN"));
         confirmSSNTextBox = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbSSNConfirmed"));

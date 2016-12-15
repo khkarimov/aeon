@@ -9,8 +9,6 @@ import echo.core.test_abstraction.elements.web.*;
  * Created by Administrator on 6/3/2016.
  */
 public class VTeamSamplePage {
-    private AutomationInfo info;
-
     public Button DisabledButton;
     public Button OpenAlertButton;
     public Image UltimateLogoImage;
@@ -36,7 +34,6 @@ public class VTeamSamplePage {
 
 
     public VTeamSamplePage(AutomationInfo info) {
-        this.info = info;
         DisabledButton = new Button(info, By.CssSelector( "button[id='disabled-button']"));
         UltimateLogoImage = new Image(info, By.CssSelector("img[id='dragtarget']"));
         TestCheckbox = new Checkbox(info, By.CssSelector( "input[id='checkbox']"));

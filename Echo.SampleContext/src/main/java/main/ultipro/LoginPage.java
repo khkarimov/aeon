@@ -16,10 +16,8 @@ public class LoginPage {
     public Button LoginButton;
     public Label WarningMessage;
     public Select LanguageSelect;
-    private AutomationInfo automationInfo;
 
     public LoginPage(AutomationInfo automationInfo) {
-        this.automationInfo = automationInfo;
         UserNameTextBox = new TextBox(automationInfo, By.CssSelector( "input[id*='UserName']"));
         PasswordTextBox = new TextBox(automationInfo, By.CssSelector("input[id*='Password']"));
         LoginButton = new Button(automationInfo, By.CssSelector("input[id*='LoginButton']"));

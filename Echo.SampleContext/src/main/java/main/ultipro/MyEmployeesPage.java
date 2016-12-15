@@ -13,13 +13,10 @@ import java.util.ArrayList;
  * Created by SebastianR on 11/23/2016.
  */
 public class MyEmployeesPage {
-    private AutomationInfo automationInfo;
-
     public Button addEmployeeButton;
     public TextBox employeeSearchBox;
 
     public MyEmployeesPage(AutomationInfo automationInfo) {
-        this.automationInfo = automationInfo;
         addEmployeeButton = new Button(automationInfo, By.CssSelector("#ctl00_btnAdd"), getSwitchForContentFrame());
         employeeSearchBox = new TextBox(automationInfo, By.CssSelector("#GridView1_TextEntryFilterControlInputBox_0"), getSwitchForContentFrame());
     }
