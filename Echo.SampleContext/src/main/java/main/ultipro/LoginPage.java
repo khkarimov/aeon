@@ -11,11 +11,11 @@ import echo.core.test_abstraction.elements.web.TextBox;
  * Created by DionnyS on 4/21/2016.
  */
 public class LoginPage {
-    public TextBox userNameTextBox;
-    public TextBox passwordTextBox;
-    public Button loginButton;
+    public TextBox UserNameTextBox;
+    public TextBox PasswordTextBox;
+    public Button LoginButton;
     public Label WarningMessage;
-    public Select languageSelect;
+    public Select LanguageSelect;
     private AutomationInfo automationInfo;
 
     public LoginPage(AutomationInfo automationInfo) {

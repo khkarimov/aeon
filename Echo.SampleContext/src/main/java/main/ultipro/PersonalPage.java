@@ -1,7 +1,7 @@
 package main.ultipro;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.test_abstraction.elements.factories.WebFactory;
+import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.web.TextBox;
 
 
@@ -15,10 +15,8 @@ public class PersonalPage {
 
     public PersonalPage(AutomationInfo automationInfo){
         this.automationInfo = automationInfo;
-        WebFactory webFactory = new WebFactory(automationInfo);
-
         // Controls
-        addressLine = (TextBox) webFactory.create(TextBox.class, "#ctl00_Content_NewHirePersonalFV_txbAddressLine1");
+        addressLine = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_NewHirePersonalFV_txbAddressLine1"));
 
     }
 }

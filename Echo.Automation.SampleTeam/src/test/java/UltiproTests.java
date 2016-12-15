@@ -32,7 +32,7 @@ public class UltiproTests {
     public void BeforeTests() {
         ultipro = Launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.Maximize();
-        ultipro.browser.GoToUrl("http://sr2web/Login.aspx");
+        ultipro.browser.GoToUrl("http://sr1webweb/Login.aspx");
     }
 
     @After
@@ -43,9 +43,9 @@ public class UltiproTests {
 
     @Test
     public void NewHireTest(){
-        ultipro.loginPage.userNameTextBox.Set("wardenj");
-        ultipro.loginPage.passwordTextBox.Set("password");
-        ultipro.loginPage.loginButton.Click();
+        ultipro.loginPage.UserNameTextBox.Set("wardenj");
+        ultipro.loginPage.PasswordTextBox.Set("password");
+        ultipro.loginPage.LoginButton.Click();
         ultipro.homePage.menuButon.Click();
         ultipro.homePage.myTeam.Click();
         ultipro.homePage.myEmployees.Click();

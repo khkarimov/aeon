@@ -1,7 +1,7 @@
 package main.ultipro;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.test_abstraction.elements.factories.WebFactory;
+import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.web.TextBox;
 
 /**
@@ -18,13 +18,12 @@ public class StartPage {
 
 
     public StartPage(AutomationInfo automationInfo){
-        WebFactory webFactory = new WebFactory(automationInfo);
-
+        this.automationInfo = automationInfo;
         //Controls
-        SSNTextBox = (TextBox) webFactory.create(TextBox.class, "#ctl00_Content_StartFV_txbSSN");
-        confirmSSNTextBox = (TextBox) webFactory.create(TextBox.class, "#ctl00_Content_StartFV_txbSSNConfirmed");
-        firstName = (TextBox) webFactory.create(TextBox.class, "#ctl00_Content_StartFV_txbNameFirst");
-        lastName = (TextBox) webFactory.create(TextBox.class, "#ctl00_Content_StartFV_txbNameLast");
-        employeeNumber = (TextBox) webFactory.create(TextBox.class, "#ctl00_Content_StartFV_txbEmpNo");
+        SSNTextBox = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbSSN"));
+        confirmSSNTextBox = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbSSNConfirmed"));
+        firstName = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbNameFirst"));
+        lastName = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbNameLast"));
+        employeeNumber = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbEmpNo"));
     }
 }
