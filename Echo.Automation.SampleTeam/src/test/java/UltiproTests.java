@@ -1,4 +1,3 @@
-import echo.core.common.helpers.Sleep;
 import echo.core.common.web.BrowserType;
 import main.ultipro.Ultipro;
 import org.junit.*;
