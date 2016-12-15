@@ -2,11 +2,13 @@ package echo.core.common.exceptions;
 
 import echo.core.common.Resources;
 
+import java.util.Locale;
+
 /**
  * Created by RafaelT on 6/28/2016.
  */
 public class ElementHasException extends RuntimeException {
     public ElementHasException(String message) {
-        super(Resources.getString("ElementHasException_ctor_DefaultMessage") + " " + message);
+        super(String.format(Locale.getDefault(), Resources.getString("ElementHasException_ctor_DefaultMessage"), message));
     }
 }

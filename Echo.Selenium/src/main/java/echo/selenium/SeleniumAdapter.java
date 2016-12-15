@@ -1181,7 +1181,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 elementFound = false;
             } finally {
                 if (elementFound) {
-                    throw new ElementHasOptionException();
+                    throw new ElementHasOptionException(desiredOption);
                 }
             }
         }
@@ -1659,11 +1659,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         // If Text option was selected then use GetText, otherwise use GetAttribute
         if (option == ComparisonOption.Text) {
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetText(guid))) {
-                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetText(guid), expectedValue,  attribute);
+                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetText(guid), expectedValue);
             }
         } else{
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetAttribute(guid, attribute))) {
-                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetAttribute(guid, attribute), expectedValue,  attribute);
+                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetAttribute(guid, attribute), expectedValue);
             }
         }
     }
