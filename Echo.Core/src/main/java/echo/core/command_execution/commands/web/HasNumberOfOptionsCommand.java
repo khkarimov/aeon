@@ -31,7 +31,7 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
      * @param optgroup           The visible text of the option group.
      */
     public HasNumberOfOptionsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, int numberofoptions, String optgroup) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("BlurCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("HasNumberOfOptionsCommand_Info"), selector, numberofoptions), selector, commandInitializer);
         this.number = numberofoptions;
         this.optgroup = optgroup;
     }

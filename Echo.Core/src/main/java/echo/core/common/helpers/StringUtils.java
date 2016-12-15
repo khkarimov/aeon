@@ -221,7 +221,7 @@ public class StringUtils {
             throw new IllegalArgumentException("value");
         }
         if (value.contains(" ")) {
-            throw new ContainsWhiteSpaceException();
+            throw new ContainsWhiteSpaceException(value);
         }
         return value;
     }

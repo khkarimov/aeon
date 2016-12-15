@@ -6,6 +6,8 @@ import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by RafaelT on 5/26/2016.
  */
@@ -24,7 +26,7 @@ public class DeleteCookieCommand extends Command {
      * @param cookie Name of the cookie to be deleted.
      */
     public DeleteCookieCommand(ILog log, String cookie) {
-        super(log, Resources.getString("DeleteCookieCommand_Info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("DeleteCookieCommand_Info"), cookie));
         this.cookie = cookie;
     }
 

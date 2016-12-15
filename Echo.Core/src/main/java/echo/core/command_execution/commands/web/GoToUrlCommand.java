@@ -7,6 +7,7 @@ import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
 import java.net.URL;
+import java.util.Locale;
 
 /**
  * <p>Navigate the currently focused browser to the URL provided.</p>
@@ -27,7 +28,7 @@ public class GoToUrlCommand extends CommandWithReturn {
      * @param url The title of the window.
      */
     public GoToUrlCommand(ILog log, URL url) {
-        super(log, String.format(Resources.getString("GoToUrlCommand_Info"), url.toString()));
+        super(log, String.format(Locale.getDefault(), Resources.getString("GoToUrlCommand_Info"), url.toString()));
         this.url = url;
     }
 

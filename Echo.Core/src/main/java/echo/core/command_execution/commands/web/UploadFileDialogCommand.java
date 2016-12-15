@@ -12,6 +12,8 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Clicks a type input type=file.
  */
@@ -33,7 +35,7 @@ public class UploadFileDialogCommand extends Command {
      * @param path        The path of the file to select.
      */
     public UploadFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer, String path) {
-        super(log, Resources.getString("UploadFileDialogCommand_Info"), initializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("UploadFileDialogCommand_Info"), path), initializer);
         this.selector = selector;
         this.path = path;
     }

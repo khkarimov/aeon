@@ -33,7 +33,7 @@ public class HasOptionsCommand extends WebControlCommand {
      * @param select             The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public HasOptionsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String[] options, WebSelectOption select) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), options, selector), selector, commandInitializer);
         this.options = options;
         this.optgroup = null;
         this.select = select;
@@ -50,7 +50,7 @@ public class HasOptionsCommand extends WebControlCommand {
      * @param select             The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public HasOptionsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String[] options, String optgroup, WebSelectOption select) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), options, selector), selector, commandInitializer);
         this.options = options;
         this.optgroup = optgroup;
         this.select = select;

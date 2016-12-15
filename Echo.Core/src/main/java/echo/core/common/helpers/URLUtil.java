@@ -14,7 +14,7 @@ public class URLUtil {
             return new URL(url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new UnableToCreateURLException();
+            throw new UnableToCreateURLException(url);
         }
     }
 }

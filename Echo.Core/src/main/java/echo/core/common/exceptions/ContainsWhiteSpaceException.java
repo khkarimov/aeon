@@ -3,6 +3,7 @@ package echo.core.common.exceptions;
 import echo.core.common.Resources;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Created by SebastianR on 6/28/2016.
@@ -12,7 +13,7 @@ public class ContainsWhiteSpaceException extends RuntimeException implements Ser
     /**
      * Initializes a new instance of the {@link ContainsWhiteSpaceException} class.
      */
-    public ContainsWhiteSpaceException() {
-        super(Resources.getString("ContainsWhiteSpaceException_ctor_DefaultMessage"));
+    public ContainsWhiteSpaceException(String value) {
+        super(String.format(Locale.getDefault(),Resources.getString("Argument_StringContainsWhiteSpace"),value));
     }
 }

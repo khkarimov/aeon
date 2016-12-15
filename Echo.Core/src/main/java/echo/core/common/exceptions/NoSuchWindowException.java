@@ -3,6 +3,7 @@ package echo.core.common.exceptions;
 import echo.core.common.Resources;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 public class NoSuchWindowException extends RuntimeException implements Serializable {
     private String window;
@@ -13,7 +14,7 @@ public class NoSuchWindowException extends RuntimeException implements Serializa
      * @param window The window.
      */
     public NoSuchWindowException(String window) {
-        super(String.format(Resources.getString("NoSuchWindowException_ctor_DefaultMessage"), window));
+        super(String.format(Locale.getDefault(), Resources.getString("NoSuchWindowException_ctor_DefaultMessage"), window));
         this.window = window;
     }
 }

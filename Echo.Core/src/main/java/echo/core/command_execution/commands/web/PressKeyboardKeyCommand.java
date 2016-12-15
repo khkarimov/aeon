@@ -17,7 +17,7 @@ public class PressKeyboardKeyCommand extends WebControlCommand {
     KeyboardKey key;
 
     public PressKeyboardKeyCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, KeyboardKey key) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("PressKeyboardKeyCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("PressKeyboardKeyCommand_Info"), key.toString(), selector), selector, commandInitializer);
         this.key = key;
     }
 

@@ -36,7 +36,7 @@ public class DatesApproximatelyEqualCommand extends WebControlCommand {
      * @param acceptableDelta    The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
      */
     public DatesApproximatelyEqualCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String attributeName, DateTime expectedDate, Period acceptableDelta) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("DatesApproximatelyEqualCommand_Info"), selector), selector, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("DatesApproximatelyEqualCommand_Info"), attributeName, selector, expectedDate, selector), selector, commandInitializer);
         this.attributeName = attributeName;
         this.expectedDate = expectedDate;
         this.acceptableDelta = acceptableDelta;

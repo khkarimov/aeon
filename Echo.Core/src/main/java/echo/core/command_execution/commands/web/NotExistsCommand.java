@@ -29,7 +29,7 @@ public class NotExistsCommand extends Command {
      * @param selector           The selector.
      */
     public NotExistsCommand(ILog log, IBy selector) {
-        super(log, Resources.getString("NotExistsCommand_Info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("NotExistsCommand_Info"), selector));
         this.selector = selector;
     }
 

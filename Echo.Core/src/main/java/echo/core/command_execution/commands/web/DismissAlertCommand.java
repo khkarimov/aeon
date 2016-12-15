@@ -1,6 +1,7 @@
 package echo.core.command_execution.commands.web;
 
 import echo.core.command_execution.commands.Command;
+import echo.core.common.Resources;
 import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
@@ -20,7 +21,7 @@ public class DismissAlertCommand extends Command {
      * @param log The logger.
      */
     public DismissAlertCommand(ILog log) {
-        super(log, "DismissAlertCommand_Info");
+        super(log, Resources.getString("DismissAlertCommand_Info"));
     }
 
     /**

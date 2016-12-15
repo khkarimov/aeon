@@ -7,6 +7,8 @@ import echo.core.common.web.interfaces.IBy;
 import echo.core.framework_abstraction.controls.web.WebControl;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * Created by SebastianR on 6/1/2016.
  */
@@ -26,7 +28,7 @@ public class DragAndDropCommand extends WebControlCommand {
      * @param commandInitializer The command initalizer
      */
     public DragAndDropCommand(ILog log, IBy dropElement, IBy targetElement, ICommandInitializer commandInitializer) {
-        super(log, Resources.getString("DragAndDropCommand_Info"), dropElement, commandInitializer);
+        super(log, String.format(Locale.getDefault(), Resources.getString("DragAndDropCommand_Info"), dropElement, targetElement), dropElement, commandInitializer);
         this.targetElement = targetElement;
     }
 

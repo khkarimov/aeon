@@ -10,6 +10,8 @@ import echo.core.common.logging.ILog;
 import echo.core.framework_abstraction.drivers.IDriver;
 import echo.core.framework_abstraction.drivers.IWebDriver;
 
+import java.util.Locale;
+
 /**
  * <p>Sends keys to an alert. If your code makes an alert popup this will send keys to the alert. Takes a string as a parameter that corresponds to the keys to send.</p>
  * <p></p>
@@ -27,7 +29,7 @@ public class SendKeysToAlertCommand extends Command {
      * @see SendKeysToAlertCommand class
      */
     public SendKeysToAlertCommand(ILog log, String keysToSend) {
-        super(log, Resources.getString("SendKeysToAlertCommand_Info"));
+        super(log, String.format(Locale.getDefault(), Resources.getString("SendKeysToAlertCommand_Info"), keysToSend));
         this.keysToSend = keysToSend;
     }
 

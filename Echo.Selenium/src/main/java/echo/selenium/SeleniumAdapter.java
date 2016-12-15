@@ -4,13 +4,11 @@ import com.sun.glass.ui.Size;
 import echo.core.common.CompareType;
 import echo.core.common.ComparisonOption;
 import echo.core.common.KeyboardKey;
-import echo.core.common.Point;
 import echo.core.common.exceptions.*;
 import echo.core.common.exceptions.ElementNotVisibleException;
 import echo.core.common.exceptions.NoSuchElementException;
 import echo.core.common.exceptions.NoSuchWindowException;
 import echo.core.common.helpers.MouseHelper;
-import echo.core.common.helpers.Process;
 import echo.core.common.helpers.SendKeysHelper;
 import echo.core.common.helpers.Sleep;
 import echo.core.common.logging.ILog;
@@ -20,11 +18,9 @@ import echo.core.common.web.JQueryStringType;
 import echo.core.common.web.WebSelectOption;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.selectors.ByJQuery;
-import echo.core.framework_abstraction.adapters.IAdapter;
 import echo.core.framework_abstraction.adapters.IWebAdapter;
 import echo.core.framework_abstraction.controls.web.IWebCookie;
 import echo.core.framework_abstraction.controls.web.WebControl;
-import echo.core.test_abstraction.product.Configuration;
 import echo.selenium.jquery.IJavaScriptFlowExecutor;
 import echo.selenium.jquery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
@@ -552,23 +548,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void Quit(UUID guid) {
         log.Trace(guid, "WebDriver.Quit();");
-        // when quit() is called during an FF instance, a plugin process associated with FF will throw an error
-        // to avoid this, simply kill the process before it throws an error
-        // work around for marionette driver v.11.1
-        if (this.browserType == BrowserType.Firefox) {
-            Sleep.Wait(200);
-            Process.KillProcessByName("plugin-container.exe");
-            Sleep.Wait(200);
-        }
-        if(this.browserType == BrowserType.Chrome){
-            // Combination of Selenium 3.0 and chromedriver 2.24 cannot quit properly if there is an alert present
-            try{
-                webDriver.switchTo().alert().accept();
-            }catch(NoAlertPresentException ex){
-                // There is no alert to worry about
-            }
-        }
-        webDriver.close();
         webDriver.quit();
     }
 
@@ -1197,7 +1176,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 elementFound = false;
             } finally {
                 if (elementFound) {
-                    throw new ElementHasOptionException();
+                    throw new ElementHasOptionException(desiredOption);
                 }
             }
         }
@@ -1407,22 +1386,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             switch (compare) {
                 case AscendingByText:
                     if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) > 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
                 case DescendingByText:
                     if (prevOption.GetText(guid).toLowerCase().compareTo(currOption.GetText(guid).toLowerCase()) < 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
                 case AscendingByValue:
                     if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) > 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
                 case DescendingByValue:
                     if (prevOption.GetAttribute(guid, "value").toLowerCase().compareTo(currOption.GetAttribute(guid, "value")) < 0) {
-                        throw new ElementsNotInOrderException();
+                        throw new ElementsNotInOrderException(compare);
                     }
                     break;
             }
@@ -1675,11 +1654,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         // If Text option was selected then use GetText, otherwise use GetAttribute
         if (option == ComparisonOption.Text) {
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetText(guid))) {
-                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetText(guid), expectedValue,  attribute);
+                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetText(guid), expectedValue);
             }
         } else{
             if (!echo.core.common.helpers.StringUtils.Is(expectedValue, ((SeleniumElement) element).GetAttribute(guid, attribute))) {
-                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetAttribute(guid, attribute), expectedValue,  attribute);
+                throw new ValuesAreNotEqualException(((SeleniumElement) element).GetAttribute(guid, attribute), expectedValue);
             }
         }
     }
