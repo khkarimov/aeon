@@ -8,7 +8,8 @@ import static echo.core.test_abstraction.product.Echo.Launch;
 
 /**
  * Created by SebastianR on 11/23/2016.
- * This test is currently being ignored because the environments used is not persistent.
+ * This test file was created to show Next working on a Ultipro environment and to test the switch mechansim.
+ * These tests are currently being ignored because the environment used is not persistent.
  */
 
 @Ignore

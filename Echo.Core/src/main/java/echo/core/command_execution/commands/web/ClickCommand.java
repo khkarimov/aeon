@@ -14,7 +14,6 @@ import java.util.Locale;
  * Clicks an element
  */
 public class ClickCommand extends WebControlCommand {
-    public Iterable<IBy> frameName;
     /**
      * Initializes a new instance of the {@link WebControlCommand} class.
      * @param log The logger.
@@ -23,11 +22,6 @@ public class ClickCommand extends WebControlCommand {
      */
     public ClickCommand(ILog log, IBy selector, ICommandInitializer initializer) {
         super(log, String.format(Locale.getDefault(), Resources.getString("ClickCommand_Info"), selector), selector, initializer);
-    }
-
-    public ClickCommand(ILog log, IBy selector, ICommandInitializer initializer, Iterable<IBy> frameName){
-        super(log, String.format(Resources.getString("ClickCommand_Info"), selector), selector, initializer);
-        this.frameName = frameName;
     }
 
     @Override
