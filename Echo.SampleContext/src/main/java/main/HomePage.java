@@ -2,9 +2,7 @@ package main;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.web.Grid;
-import echo.core.test_abstraction.elements.web.Link;
-import echo.core.test_abstraction.elements.web.RowElements;
+import echo.core.test_abstraction.elements.web.*;
 
 /**
  * Created by Salvador Gandara on 5/27/2016.
@@ -17,9 +15,10 @@ public class HomePage {
         this.automationInfo = automationInfo;
         ViewPayStatement = new Link(automationInfo, By.CssSelector("a[id*='viewPayStatementLink']"));
 
-        Grid<RowElements> test = new Grid<>();
+        MyGrid test = new MyGrid();
 
-        test.RowBy.Name.Click();
+        test.RowBy.name("test1").address("test").getRow().personName.Click();
+        test.RowBy.index(1).removeButton.Click();
     }
 
 
