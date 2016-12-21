@@ -177,6 +177,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         firefoxProfile.setPreference("intl.accept_languages", browserAcceptedLanguageCodes);
         firefoxProfile.setPreference("webdriver.enable.native.events", false);
         firefoxProfile.setPreference("layers.acceleration.disabled", true);
+        firefoxProfile.setPreference("toolkit.startup.max_resumed_crashes", "-1");
         if (useMobileUserAgent) {
             firefoxProfile.setPreference("general.useragent.override", MobileUserAgent);
         }
