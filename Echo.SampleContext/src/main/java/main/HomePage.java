@@ -14,11 +14,6 @@ public class HomePage {
     public HomePage(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
         ViewPayStatement = new Link(automationInfo, By.CssSelector("a[id*='viewPayStatementLink']"));
-
-        MyGrid test = new MyGrid();
-
-        test.RowBy.name("test1").address("test").getRow().personName.Click();
-        test.RowBy.index(1).removeButton.Click();
     }
 
 

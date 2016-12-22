@@ -33,7 +33,7 @@ public class VTeamSamplePage {
     public TextBox FormTextBox;
     public RadioButton NextRadioButton;
     public Button SmileyFace1;
-
+    public MyGrid myGrid;
 
     public VTeamSamplePage(AutomationInfo info) {
         this.info = info;
@@ -60,5 +60,10 @@ public class VTeamSamplePage {
         FormTextBox = new TextBox(info, By.CssSelector("#sample1"));
         NextRadioButton = new RadioButton(info, By.CssSelector("#next-radio-button"));
         SmileyFace1 = new Button(info, By.CssSelector(".call-1 > button:nth-child(1)"));
+        /*The two selectors are the same because the grid requires a By to have all the functionality of a WebElement
+        and the MyGridHeader uses the grid By as a base to navigate through the html table. Could look into refactoring it
+        so that it only needs to be declared once*/
+        By gridBase = By.CssSelector("#grid-table-id");
+        myGrid = new MyGrid(info, gridBase, new MyGridHeaders(info, gridBase));//Since MyGrid already knows that MyGridHeaders is going to be the RowActions class used, we could instantiate it in the Grid object.
     }
 }

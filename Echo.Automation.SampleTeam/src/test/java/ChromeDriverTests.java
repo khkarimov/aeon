@@ -517,4 +517,9 @@ public class ChromeDriverTests {
         product.StartPage.Start.Click();
         product.StartPage.SmileyFace1.Click();
     }
+
+    @Test
+    public void TestGrids(){
+        product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
+    }
 }

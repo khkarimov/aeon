@@ -3,16 +3,17 @@ package echo.core.test_abstraction.elements.web;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.interfaces.IByJQuery;
+import echo.core.common.web.selectors.By;
 
 /**
  * Created by AdamC on 4/13/2016.
  */
-public class RowElements extends WebElement {
-    public RowElements(AutomationInfo info, IBy selector) {
-        super(info, selector);
-    }
+public class RowElements {
+    protected AutomationInfo automationInfo;
+    protected By selector;
 
-    public RowElements(IBy selector) {
-        super(selector);
+    public RowElements(AutomationInfo info, By selector) {
+        this.automationInfo = info;
+        this.selector = selector;
     }
 }
