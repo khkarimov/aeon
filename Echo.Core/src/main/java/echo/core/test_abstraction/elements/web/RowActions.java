@@ -11,12 +11,12 @@ import java.lang.reflect.InvocationTargetException;
  * Created by AdamC on 4/13/2016.
  */
 public class RowActions<T extends RowActions, K extends RowElements> {
-    private By selector;
+    private IBy selector;
     private AutomationInfo automationInfo;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
 
-    public RowActions(AutomationInfo automationInfo, By selector, Class<T> rowActionsClass, Class<K> rowElementsClass) {
+    public RowActions(AutomationInfo automationInfo, IBy selector, Class<T> rowActionsClass, Class<K> rowElementsClass) {
         this.selector = selector;
         this.automationInfo = automationInfo;
         this.rowElementsClass = rowElementsClass;
@@ -28,35 +28,27 @@ public class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     protected K findRowByIndex(int index) {
-        //This is required when you are instantiating a generic object with parameters in the constructor
-        By newBy = By.CssSelector(selector.toString() + " tbody tr:nth-of-type(" + index + ")"); // should look into using the ByJquery class instead of the By
+        By newBy = By.CssSelector(String.format("%1$s tbody tr:nth-of-type(%2$s)", selector, index));//selector.toString() + " tbody tr:nth-of-type(" + index + ")"); // should look into using the ByJquery class instead of the By
 
         return newInstanceOfK(newBy);
     }
 
-    public T findRow(String value, IBy columnHeaderSelector) {
+    public T findRow(String value) {
         // Create a JQuery object and update By
-        columnHeaderSelector.ToJQuery().add(String.format("tr > td:contains(%1$s)", value)).parent("tr");
+        IBy updatedSelector = selector.ToJQuery().add(String.format("tr > td:contains(%1$s)", value)).parent("tr");
 
-        Class classToLoad = rowActionsClass;
-        Class[] cArg = new Class[4];
-        cArg[0] = AutomationInfo.class;
-        cArg[2] = By.class;
-        cArg[3] = rowActionsClass;
-        cArg[4] = rowElementsClass;
-
-
-        return (T) this;
+        return newInstanceOfT(updatedSelector);
     }
 
     public K getRow() {
-        try {
-            return rowElementsClass.newInstance();
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
+        return newInstanceOfK(selector);
     }
 
+    /**
+     * Creates a new instance of K with a new selector. The new selector references the row containing the row elements defined in the K class.
+     * @param updatedSelector The updated selector that references only 1 row.
+     * @return Returns an instance of K.
+     */
     private K newInstanceOfK(IBy updatedSelector){
         Class classToLoad = rowElementsClass;
         Class[] cArgs = new Class[2];
@@ -65,8 +57,27 @@ public class RowActions<T extends RowActions, K extends RowElements> {
 
         try {
             return (K) classToLoad.getDeclaredConstructor(cArgs).newInstance(automationInfo, updatedSelector);
-
         } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Creates a new instance of T with a new selector. The new selector refers to the rows that contain the row elements defined in the K class.
+     * @param updatedSelector The updated selector that references 1 or more rows.
+     * @return Returns a new instance of T.
+     */
+    private T newInstanceOfT(IBy updatedSelector){
+        Class classToLoad = rowActionsClass;
+        Class[] cArgs = new Class[4];
+        cArgs[0] = AutomationInfo.class;
+        cArgs[2] = IBy.class;
+        cArgs[3] = rowActionsClass;
+        cArgs[4] = rowElementsClass;
+
+        try{
+            return (T) classToLoad.getConstructor(cArgs).newInstance(automationInfo, updatedSelector, rowActionsClass, rowElementsClass);
+        }catch(Exception e){
             throw new RuntimeException(e);
         }
     }
