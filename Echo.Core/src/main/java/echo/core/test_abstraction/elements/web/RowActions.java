@@ -3,6 +3,7 @@ package echo.core.test_abstraction.elements.web;
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.selectors.By;
+import echo.core.common.web.selectors.ByJQuery;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -28,22 +29,15 @@ public class RowActions<T extends RowActions, K extends RowElements> {
 
     protected K findRowByIndex(int index) {
         //This is required when you are instantiating a generic object with parameters in the constructor
-        Class classToLoad = rowElementsClass;
-        Class[] cArg = new Class[2];
-        cArg[0] = AutomationInfo.class;
-        cArg[1] = By.class;
+        By newBy = By.CssSelector(selector.toString() + " tbody tr:nth-of-type(" + index + ")"); // should look into using the ByJquery class instead of the By
 
-        By newBy = By.CssSelector(selector.toString() + " tbody tr:nth-of-type(" + index + ")");
-
-        try {
-            K object =  (K) classToLoad.getDeclaredConstructor(cArg).newInstance(automationInfo, newBy);
-            return object;
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
+        return newInstanceOfK(newBy);
     }
 
-    protected T findRow(String value, By columnHeaderSelector) {
+    public T findRow(String value, IBy columnHeaderSelector) {
+        // Create a JQuery object and update By
+        columnHeaderSelector.ToJQuery().add(String.format("tr > td:contains(%1$s)", value)).parent("tr");
+
         Class classToLoad = rowActionsClass;
         Class[] cArg = new Class[4];
         cArg[0] = AutomationInfo.class;
@@ -51,13 +45,27 @@ public class RowActions<T extends RowActions, K extends RowElements> {
         cArg[3] = rowActionsClass;
         cArg[4] = rowElementsClass;
 
-        By newBy = By.CssSelector(selector.toString() + )
+
         return (T) this;
     }
 
     public K getRow() {
         try {
             return rowElementsClass.newInstance();
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    private K newInstanceOfK(IBy updatedSelector){
+        Class classToLoad = rowElementsClass;
+        Class[] cArgs = new Class[2];
+        cArgs[1] = AutomationInfo.class;
+        cArgs[2] = IBy.class;
+
+        try {
+            return (K) classToLoad.getDeclaredConstructor(cArgs).newInstance(automationInfo, updatedSelector);
+
         } catch (Exception e){
             throw new RuntimeException(e);
         }
