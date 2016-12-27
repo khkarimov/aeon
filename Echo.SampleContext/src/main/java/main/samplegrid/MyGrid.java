@@ -1,8 +1,8 @@
-package echo.core.test_abstraction.elements.web;
+package main.samplegrid;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.selectors.By;
+import echo.core.test_abstraction.elements.web.Grid;
 
 /**
  * Created by justinp on 12/20/16.

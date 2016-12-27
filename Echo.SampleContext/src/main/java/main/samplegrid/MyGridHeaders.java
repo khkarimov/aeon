@@ -1,8 +1,8 @@
-package echo.core.test_abstraction.elements.web;
+package main.samplegrid;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.common.web.selectors.By;
+import echo.core.test_abstraction.elements.web.RowActions;
 
 /**
  * Created by justinp on 12/20/16.
@@ -15,8 +15,13 @@ public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> 
     public MyGridHeaders material(String value) {
         return findRow(value);
     }
-//
-//    public MyGridHeaders address(String value) {
-//        return findRow(value, new By.ByCssSelector("[id$=header_address"));
-//    }
+
+    public MyGridHeaders quantity(String value){
+        return findRow(value);
+    }
+
+    public MyGridHeaders unitPrice(String value){
+        return findRow(value);
+    }
+
 }

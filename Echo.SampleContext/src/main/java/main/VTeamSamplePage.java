@@ -1,15 +1,18 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
-import echo.core.command_execution.WebCommandExecutionFacade;
 import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.web.*;
+import main.samplegrid.MyGrid;
+import main.samplegrid.MyGridHeaders;
 
 /**
  * Created by Administrator on 6/3/2016.
  */
 public class VTeamSamplePage {
     private AutomationInfo info;
+    // Grid selector
+    private final By gridSelector = By.CssSelector("#grid-table-id");
 
     public Button DisabledButton;
     public Button OpenAlertButton;
@@ -60,10 +63,9 @@ public class VTeamSamplePage {
         FormTextBox = new TextBox(info, By.CssSelector("#sample1"));
         NextRadioButton = new RadioButton(info, By.CssSelector("#next-radio-button"));
         SmileyFace1 = new Button(info, By.CssSelector(".call-1 > button:nth-child(1)"));
-        /*The two selectors are the same because the grid requires a By to have all the functionality of a WebElement
-        and the MyGridHeader uses the grid By as a base to navigate through the html table. Could look into refactoring it
-        so that it only needs to be declared once*/
-        By gridBase = By.CssSelector("#grid-table-id");
-        myGrid = new MyGrid(info, gridBase, new MyGridHeaders(info, gridBase));//Since MyGrid already knows that MyGridHeaders is going to be the RowActions class used, we could instantiate it in the Grid object.
+        // Currently the MyGrid object and the MyGridHeaders object require the same selector. This is done to give the grid all the functionality of a WebElement and
+        // to give the MyGridHeaders a base for which to navigate through the grid. We could instantiate an instance of MyGridHeaders in the grid object but then we should
+        // probably look into using a factory since this logic is already been implemented in the RowActions class.
+        myGrid = new MyGrid(info, gridSelector, new MyGridHeaders(info, gridSelector));
     }
 }

@@ -8,8 +8,8 @@ import echo.core.common.web.selectors.By;
  * Created by AdamC on 4/13/2016.
  */
 public class Grid<T extends RowActions> extends WebElement {
-//    public final T RowBy = (T) new Object();
     public T RowBy;
+    
     public Grid(AutomationInfo info, By selector, T rowBy) {
         super(info, selector);
         this.RowBy = rowBy;
