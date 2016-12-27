@@ -12,9 +12,9 @@ public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> 
         super(automationInfo, selector, MyGridHeaders.class, MyGridRowElements.class);
     }
 
-//    public MyGridHeaders name(String value) {
-//        return findRow(value, new By.ByCssSelector("[id$=header_name"));
-//    }
+    public MyGridHeaders material(String value) {
+        return findRow(value);
+    }
 //
 //    public MyGridHeaders address(String value) {
 //        return findRow(value, new By.ByCssSelector("[id$=header_address"));

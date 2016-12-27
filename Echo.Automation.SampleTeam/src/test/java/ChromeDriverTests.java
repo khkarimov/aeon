@@ -521,5 +521,6 @@ public class ChromeDriverTests {
     @Test
     public void TestGrids(){
         product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Acrylic").getRow().checkBoxButton.Click();
     }
 }

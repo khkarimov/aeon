@@ -28,14 +28,14 @@ public class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     protected K findRowByIndex(int index) {
-        By newBy = By.CssSelector(String.format("%1$s tbody tr:nth-of-type(%2$s)", selector, index));//selector.toString() + " tbody tr:nth-of-type(" + index + ")"); // should look into using the ByJquery class instead of the By
-
-        return newInstanceOfK(newBy);
+        //By updatedSelector = By.CssSelector(String.format("%1$s tbody tr:nth-of-type(%2$s)", selector, index));//selector.toString() + " tbody tr:nth-of-type(" + index + ")"); // should look into using the ByJquery class instead of the By
+        IBy updatedSelector = selector.ToJQuery().find(String.format("tbody tr:nth-of-type(%1$s)", index));
+        return newInstanceOfK(updatedSelector);
     }
 
     public T findRow(String value) {
         // Create a JQuery object and update By
-        IBy updatedSelector = selector.ToJQuery().add(String.format("tr > td:contains(%1$s)", value)).parent("tr");
+        IBy updatedSelector = selector.ToJQuery().find(String.format("tr > td:contains(%1$s)", value)).parent("tr");
 
         return newInstanceOfT(updatedSelector);
     }
@@ -52,8 +52,8 @@ public class RowActions<T extends RowActions, K extends RowElements> {
     private K newInstanceOfK(IBy updatedSelector){
         Class classToLoad = rowElementsClass;
         Class[] cArgs = new Class[2];
-        cArgs[1] = AutomationInfo.class;
-        cArgs[2] = IBy.class;
+        cArgs[0] = AutomationInfo.class;
+        cArgs[1] = IBy.class;
 
         try {
             return (K) classToLoad.getDeclaredConstructor(cArgs).newInstance(automationInfo, updatedSelector);
@@ -69,14 +69,12 @@ public class RowActions<T extends RowActions, K extends RowElements> {
      */
     private T newInstanceOfT(IBy updatedSelector){
         Class classToLoad = rowActionsClass;
-        Class[] cArgs = new Class[4];
+        Class[] cArgs = new Class[2];
         cArgs[0] = AutomationInfo.class;
-        cArgs[2] = IBy.class;
-        cArgs[3] = rowActionsClass;
-        cArgs[4] = rowElementsClass;
+        cArgs[1] = IBy.class;
 
         try{
-            return (T) classToLoad.getConstructor(cArgs).newInstance(automationInfo, updatedSelector, rowActionsClass, rowElementsClass);
+            return (T) classToLoad.getConstructor(cArgs).newInstance(automationInfo, updatedSelector);
         }catch(Exception e){
             throw new RuntimeException(e);
         }

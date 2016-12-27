@@ -10,9 +10,9 @@ import echo.core.common.web.selectors.By;
  */
 public class RowElements {
     protected AutomationInfo automationInfo;
-    protected By selector;
+    protected IBy selector;
 
-    public RowElements(AutomationInfo info, By selector) {
+    public RowElements(AutomationInfo info, IBy selector) {
         this.automationInfo = info;
         this.selector = selector;
     }
