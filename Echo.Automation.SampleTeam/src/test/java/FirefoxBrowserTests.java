@@ -521,4 +521,11 @@ public class FirefoxBrowserTests {
         product.StartPage.Start.Click();
         product.StartPage.SmileyFace1.Click();
     }
+
+    @Test
+    public void TestGrids(){
+        product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
+//        product.StartPage.myGrid.RowBy.material("Laminate").getRow().checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Laminate").material("9").getRow().checkBoxButton.Click();
+    }
 }

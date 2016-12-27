@@ -2,10 +2,6 @@ package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.interfaces.IBy;
-import echo.core.common.web.selectors.By;
-import echo.core.common.web.selectors.ByJQuery;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by AdamC on 4/13/2016.
@@ -28,14 +24,13 @@ public class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     protected K findRowByIndex(int index) {
-        //By updatedSelector = By.CssSelector(String.format("%1$s tbody tr:nth-of-type(%2$s)", selector, index));//selector.toString() + " tbody tr:nth-of-type(" + index + ")"); // should look into using the ByJquery class instead of the By
-        IBy updatedSelector = selector.ToJQuery().find(String.format("tbody tr:nth-of-type(%1$s)", index));
+        IBy updatedSelector = selector.ToJQuery().find(String.format("tr:nth-of-type(%1$s)", index));
+
         return newInstanceOfK(updatedSelector);
     }
 
     public T findRow(String value) {
-        // Create a JQuery object and update By
-        IBy updatedSelector = selector.ToJQuery().find(String.format("tr > td:contains(%1$s)", value)).parent("tr");
+        IBy updatedSelector = selector.ToJQuery().find(String.format("td:contains(%1$s)", value)).parents("tr");
 
         return newInstanceOfT(updatedSelector);
     }
