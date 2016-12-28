@@ -1,6 +1,7 @@
 package echo.selenium;
 
 
+import echo.core.common.helpers.OsCheck;
 import echo.core.framework_abstraction.drivers.EchoWebDriver;
 import echo.core.test_abstraction.product.Configuration;
 
@@ -28,11 +29,11 @@ public class SeleniumConfiguration extends Configuration {
     public SeleniumConfiguration() {
         super(EchoWebDriver.class, SeleniumAdapter.class);
 
-        this.chromeDirectory = System.getProperty("user.dir") + "\\lib\\chromedriver.exe";
+        this.chromeDirectory = System.getProperty("user.dir") + (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows ? "/lib/chromedriver.exe" : "/lib/chromedriver");
         setChromeBinary(System.getenv("google.chrome.binary"));
         setFirefoxBinary(System.getenv("firefox.binary"));
         this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
-        this.marionetteDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
+        this.marionetteDirectory = System.getProperty("user.dir") + (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows ? "/lib/wires.exe" : "/lib/wires");
         this.enableSeleniumGrid = false;
         this.language = "en-us";
         this.moveMouseToOrigin = true;
