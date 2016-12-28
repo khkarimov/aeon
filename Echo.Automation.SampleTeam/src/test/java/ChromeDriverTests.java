@@ -521,7 +521,9 @@ public class ChromeDriverTests {
     @Test
     public void TestGrids(){
         product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
-//        product.StartPage.myGrid.RowBy.material("Laminate").getRow().checkBoxButton.Click();
-        product.StartPage.myGrid.RowBy.material("Laminate").material("9").getRow().checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.Click();
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
+        product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.Click();
     }
 }

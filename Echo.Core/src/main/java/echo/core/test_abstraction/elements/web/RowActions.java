@@ -2,11 +2,22 @@ package echo.core.test_abstraction.elements.web;
 
 import echo.core.command_execution.AutomationInfo;
 import echo.core.common.web.interfaces.IBy;
+import echo.core.framework_abstraction.drivers.IWebDriver;
+
+import java.util.UUID;
 
 /**
  * Created by AdamC on 4/13/2016.
  */
-public class RowActions<T extends RowActions, K extends RowElements> {
+
+/**
+ * This class serves as a base for all grid row actions.
+ * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
+ *           an IBy as the second parameter.
+ * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ *           an IBy as the second parameter.
+ */
+public abstract class RowActions<T extends RowActions, K extends RowElements> {
     private IBy selector;
     private AutomationInfo automationInfo;
     private Class<K> rowElementsClass;
@@ -29,8 +40,8 @@ public class RowActions<T extends RowActions, K extends RowElements> {
         return newInstanceOfK(updatedSelector);
     }
 
-    public T findRow(String value) {
-        IBy updatedSelector = selector.ToJQuery().find(String.format("td:contains(%1$s)", value)).parents("tr");
+    public T findRow(String value, IBy columnHeader) {
+        IBy updatedSelector = selector.ToJQuery().find(String.format("td:nth-of-type(%1$s)", getColumnIndex(columnHeader))).filter(String.format("td:contains(%1$s)", value)).parents("tr");
 
         return newInstanceOfT(updatedSelector);
     }
@@ -59,7 +70,6 @@ public class RowActions<T extends RowActions, K extends RowElements> {
 
     /**
      * Creates a new instance of T with a new selector. The new selector refers to the rows that contain the row elements defined in the K class.
-     * @param updatedSelector The updated selector that references 1 or more rows.
      * @return Returns a new instance of T.
      */
     private T newInstanceOfT(IBy updatedSelector){
@@ -75,4 +85,7 @@ public class RowActions<T extends RowActions, K extends RowElements> {
         }
     }
 
+    private long getColumnIndex(IBy columnSelector){
+        return (long)((IWebDriver)automationInfo.getDriver()).ExecuteScript(UUID.randomUUID(), String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
+    }
 }
