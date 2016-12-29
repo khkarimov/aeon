@@ -39,7 +39,6 @@ public class VTeamSamplePage {
     public MyGrid myGrid;
 
     public VTeamSamplePage(AutomationInfo info) {
-        this.info = info;
         DisabledButton = new Button(info, By.CssSelector( "button[id='disabled-button']"));
         UltimateLogoImage = new Image(info, By.CssSelector("img[id='dragtarget']"));
         TestCheckbox = new Checkbox(info, By.CssSelector( "input[id='checkbox']"));

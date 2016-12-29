@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class WebElement extends Element {
     private IBy selector;
     private AutomationInfo info;
+    private Iterable<IBy> switchMechanism;
 
     public WebElement(AutomationInfo info, IBy selector) {
         super(selector);
@@ -31,18 +32,24 @@ public class WebElement extends Element {
         this(null, selector);
     }
 
+    public WebElement(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism){
+        this(info, selector);
+        this.switchMechanism = switchMechanism;
+
+    }
+
     public void Blur() {
         info.getCommandExecutionFacade().Execute(info, new BlurCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void ClickAndHold(int duration) {
         info.getCommandExecutionFacade().Execute(info, new ClickAndHoldCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 duration));
     }
 
@@ -50,28 +57,28 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new ClickCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void ClickAllElements() {
         info.getCommandExecutionFacade().Execute(info, new ClickAllElementsCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void DoubleClick() {
         info.getCommandExecutionFacade().Execute(info, new DoubleClickCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void IsDisabled() {
         info.getCommandExecutionFacade().Execute(info, new DisabledCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void DragAndDrop(String dropTarget) {
@@ -79,21 +86,21 @@ public class WebElement extends Element {
                 info.getLog(),
                 selector,
                 By.CssSelector(dropTarget),
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void IsEnabled() {
         info.getCommandExecutionFacade().Execute(info, new EnabledCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void Exists() {
         info.getCommandExecutionFacade().Execute(info, new ExistsCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void NotExists() {
@@ -105,7 +112,7 @@ public class WebElement extends Element {
         return info.getCommandExecutionFacade().Execute(info, new GetElementAttributeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 attributeName));
     }
 
@@ -113,28 +120,28 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new RightClickCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void MouseOut() {
         info.getCommandExecutionFacade().Execute(info, new MouseOutCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void MouseOver() {
         info.getCommandExecutionFacade().Execute(info, new MouseOverCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void Is(String value) {
         info.getCommandExecutionFacade().Execute(info, new IsCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Text,
                 "INNERHTML"));
@@ -144,7 +151,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new IsCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Raw,
                 attribute));
@@ -154,7 +161,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Text,
                 "INNERHTML"));
@@ -164,7 +171,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Raw,
                 attribute));
@@ -174,7 +181,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Text,
                 "INNERHTML"));
@@ -184,7 +191,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.Raw,
                 attribute));
@@ -195,7 +202,7 @@ public class WebElement extends Element {
                 new HasCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
@@ -204,7 +211,7 @@ public class WebElement extends Element {
                 new HasCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
@@ -213,7 +220,7 @@ public class WebElement extends Element {
                 new HasLikeCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
@@ -222,7 +229,7 @@ public class WebElement extends Element {
                 new HasLikeCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
@@ -231,7 +238,7 @@ public class WebElement extends Element {
                 new DoesNotHaveCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
@@ -240,7 +247,7 @@ public class WebElement extends Element {
                 new DoesNotHaveCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
@@ -249,7 +256,7 @@ public class WebElement extends Element {
                 new DoesNotHaveLikeCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
@@ -258,7 +265,7 @@ public class WebElement extends Element {
                 new DoesNotHaveLikeCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
@@ -267,7 +274,7 @@ public class WebElement extends Element {
                 new HasOnlyCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
@@ -276,7 +283,7 @@ public class WebElement extends Element {
                 new HasOnlyCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
@@ -284,7 +291,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new SetDivValueByJavaScriptCommand(
                 info.getLog(),
                 selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
     }
 
@@ -292,7 +299,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new SetBodyValueByJavaScriptCommand(
                 info.getLog(),
                 selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
     }
 
@@ -300,7 +307,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new SetTextByJavaScriptCommand(
                 info.getLog(),
                 selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
     }
 
@@ -308,21 +315,21 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new VisibleCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void NotVisible() {
         info.getCommandExecutionFacade().Execute(info, new NotVisibleCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void DatesApproximatelyEqual(String attributeName, DateTime expectedDate, Period acceptableDelta) {
         info.getCommandExecutionFacade().Execute(info, new DatesApproximatelyEqualCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer(),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 attributeName, expectedDate, acceptableDelta
         ));
     }
@@ -331,7 +338,7 @@ public class WebElement extends Element {
         return (ClientRects) info.getCommandExecutionFacade().Execute(info, new GetClientRectsCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)
         ));
     }
 
@@ -339,11 +346,7 @@ public class WebElement extends Element {
         info.getCommandExecutionFacade().Execute(info, new PressKeyboardKeyCommand(
                 info.getLog(),
                 selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 key));
-    }
-
-    protected WebCommandInitializer createWebCommandInitializer() {
-        return new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>());
     }
 }
