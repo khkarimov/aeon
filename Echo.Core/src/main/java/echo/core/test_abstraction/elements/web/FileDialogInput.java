@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class FileDialogInput extends WebElement {
     private AutomationInfo info;
     private IBy selector;
+    private Iterable<IBy> switchMechanism;
 
     public FileDialogInput(AutomationInfo info, IBy selector) {
         super(info, selector);
@@ -20,12 +21,20 @@ public class FileDialogInput extends WebElement {
         this.selector = selector;
     }
 
+    public FileDialogInput(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
+        super(info, selector, switchMechanism);
+        this.info = info;
+        this.selector = selector;
+        this.switchMechanism = switchMechanism;
+    }
+
+
     public void OpenFileDialog() {
         info.getCommandExecutionFacade().Execute(info,
                 new OpenFileDialogCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     /**
@@ -40,7 +49,7 @@ public class FileDialogInput extends WebElement {
                 new SelectFileDialogCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         path));
     }
 
@@ -57,7 +66,7 @@ public class FileDialogInput extends WebElement {
                 new UploadFileDialogCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         path));
     }
 

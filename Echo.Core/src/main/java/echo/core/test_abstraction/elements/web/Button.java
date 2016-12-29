@@ -15,4 +15,10 @@ public class Button extends WebElement {
         this.info = info;
         this.selector = selector;
     }
+
+    public Button(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism){
+        super(info, selector, switchMechanism);
+        this.info = info;
+        this.selector = selector;
+    }
 }
