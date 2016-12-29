@@ -1,10 +1,13 @@
 package main;
 
 import echo.core.command_execution.AutomationInfo;
+import echo.core.common.web.interfaces.IBy;
 import echo.core.common.web.selectors.By;
 import echo.core.test_abstraction.elements.web.*;
 import main.samplegrid.MyGrid;
 import main.samplegrid.MyGridHeaders;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 6/3/2016.
@@ -62,9 +65,9 @@ public class VTeamSamplePage {
         FormTextBox = new TextBox(info, By.CssSelector("#sample1"));
         NextRadioButton = new RadioButton(info, By.CssSelector("#next-radio-button"));
         SmileyFace1 = new Button(info, By.CssSelector(".call-1 > button:nth-child(1)"));
-        // Currently the MyGrid object and the MyGridHeaders object require the same selector. This is done to give the grid all the functionality of a WebElement and
-        // to give the MyGridHeaders a base for which to navigate through the grid. We could instantiate an instance of MyGridHeaders in the grid object but then we should
-        // probably look into using a factory since this logic is already been implemented in the RowActions class.
-        myGrid = new MyGrid(info, gridSelector, new MyGridHeaders(info, gridSelector));
+        // The reason the grid selector is passed to the MyGridHeaders class instead of the grid is because the MyGridHeaders class
+        // uses the grid selector as a base to navigate through the html table. We can change this and instantiate and instance of
+        // MyGridHeaders inside the MyGrid class to avoid confusion.
+        myGrid = new MyGrid(new MyGridHeaders(info, gridSelector));
     }
 }

@@ -8,7 +8,7 @@ import echo.core.test_abstraction.elements.web.Grid;
  * Created by justinp on 12/20/16.
  */
 public class MyGrid extends Grid<MyGridHeaders> {
-    public MyGrid(AutomationInfo info, By selector, MyGridHeaders gridHeaders) {
-        super(info, selector, gridHeaders);
+    public MyGrid(MyGridHeaders gridHeaders) {
+        super(gridHeaders);
     }
 }
