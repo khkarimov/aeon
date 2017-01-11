@@ -16,7 +16,6 @@ import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
-@Ignore
 public class ChromeDriverTests {
 
     private static Sample product;

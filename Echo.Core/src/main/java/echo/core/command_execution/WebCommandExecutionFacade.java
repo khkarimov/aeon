@@ -3,6 +3,8 @@ package echo.core.command_execution;
 import echo.core.command_execution.commands.Command;
 import echo.core.command_execution.commands.CommandWithReturn;
 import echo.core.command_execution.commands.QuitCommand;
+import echo.core.command_execution.commands.web.WebControlCommand;
+import echo.core.command_execution.commands.web.WebControlCommandWithReturn;
 import echo.core.command_execution.consumers.interfaces.IDelegateRunnerFactory;
 import echo.core.common.helpers.AjaxWaiter;
 
@@ -41,7 +43,7 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
-        if(!(command instanceof QuitCommand)){
+        if(command instanceof WebControlCommand){
             ajaxWaiter.WaitForAsync(command.getGuid());
         }
         delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
@@ -58,7 +60,9 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
-        ajaxWaiter.WaitForAsync(command.getGuid());
+        if(command instanceof WebControlCommandWithReturn){
+            ajaxWaiter.WaitForAsync(command.getGuid());
+        }
         return delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
     }
 }

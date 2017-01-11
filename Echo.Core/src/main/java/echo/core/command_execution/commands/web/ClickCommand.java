@@ -13,7 +13,6 @@ import java.util.Locale;
  * Clicks an element
  */
 public class ClickCommand extends WebControlCommand {
-
     /**
      * Initializes a new instance of the {@link WebControlCommand} class.
      * @param log The logger.

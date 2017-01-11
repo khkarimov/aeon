@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Checkbox extends WebElement {
     private AutomationInfo info;
     private IBy selector;
+    private Iterable<IBy> switchMechanism;
 
     public Checkbox(AutomationInfo info, IBy selector) {
         super(info, selector);
@@ -17,12 +18,19 @@ public class Checkbox extends WebElement {
         this.selector = selector;
     }
 
+    public Checkbox(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
+        super(info, selector, switchMechanism);
+        this.info = info;
+        this.selector = selector;
+        this.switchMechanism = switchMechanism;
+    }
+
     public void Check() {
         info.getCommandExecutionFacade().Execute(info,
                 new CheckCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void Uncheck() {
@@ -30,20 +38,20 @@ public class Checkbox extends WebElement {
                 new UnCheckCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void Selected() {
         info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void NotSelected() {
         info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
                 info.getLog(),
                 selector,
-                createWebCommandInitializer()));
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 }
