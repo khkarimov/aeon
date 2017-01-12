@@ -522,4 +522,13 @@ public class FirefoxBrowserTests {
         product.StartPage.Start.Click();
         product.StartPage.SmileyFace1.Click();
     }
+
+    @Test
+    public void TestGrids(){
+        product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.Click();
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
+        product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.Click();
+    }
 }
