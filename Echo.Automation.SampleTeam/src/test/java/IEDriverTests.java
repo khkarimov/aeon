@@ -16,7 +16,6 @@ import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
-@Ignore
 public class IEDriverTests {
     private static Sample product;
 
@@ -350,7 +349,7 @@ public class IEDriverTests {
     public void TestSwitchToMainWindow() {
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
+        product.browser.SwitchToWindowByTitle("C:\\Projects\\javaecho\\Echo.Automation.SampleTeam\\Test Sample Context\\HeatLogo.jpg");
         product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
         product.browser.SwitchToMainWindow();
         product.browser.VerifyTitle("Material Design Lite");
