@@ -35,7 +35,7 @@ public class SeleniumConfiguration extends Configuration {
         this.marionetteDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
         this.enableSeleniumGrid = false;
         this.language = "en-us";
-        this.moveMouseToOrigin = true;
+        this.moveMouseToOrigin = false;
         this.maximizeBrowser = true;
         this.useMobileUserAgent = false;
         this.proxyLocation = "";

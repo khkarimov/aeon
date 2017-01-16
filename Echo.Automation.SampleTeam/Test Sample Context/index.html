@@ -437,17 +437,27 @@
         $('.call-1, .call-2, .call-3').hide();
 
         $('#start').on('click', function () {
-            $.ajax("http://httpbin.org/delay/10")
-                    .done(function () {
-                        $('.call-1').show();
-                    });
-            $.ajax("http://httpbin.org/delay/5")
-                    .done(function () {
-                        $('.call-2').show();
-                        load("http://httpbin.org/delay/1", function () {
-                            $('.call-3').show();
-                        })
-                    });
+            $.ajax({
+                crossDomain: true,
+                url: "http://mockbin.org/delay/5?__callback=?",
+                jsonp: "__callback",
+                dataType: "jsonp"
+            })
+            .done(function () {
+                $('.call-1').show();
+            });
+            $.ajax({
+                crossDomain: true,
+                url: "http://mockbin.org/delay/5?__callback=?",
+                jsonp: "__callback",
+                dataType: jsonp"
+            })
+            .done(function () {
+                $('.call-2').show();
+                load("http://httpbin.org/delay/1", function () {
+                    $('.call-3').show();
+                })
+            });
         });
 
     });

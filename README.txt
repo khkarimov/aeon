@@ -29,3 +29,13 @@ Echo re-write in Java
 * For classpath of module, point it to Echo.Automation.SampleTeam
 * For Test Kind, set to directory, and point it to SampleTeam -> src -> test -> java
 * Press Apply or OK and JUnit tests should now be executable
+
+##IE Registry Hacks
+* For tests to run locally, you need to change the Windows registry.
+* [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl]
+
+  [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN]
+  "iexplore.exe"=dword:00000000
+
+  [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
+  "LOCALMACHINE_CD_UNLOCK"=dword:00000000
