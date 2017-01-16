@@ -354,15 +354,15 @@ public class ChromeDriverTests {
     public void TestSwitchToMainWindow() {
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
-        product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
+        product.browser.SwitchToWindowByTitle("Google");
+        product.browser.VerifyTitle("Google");
         product.browser.SwitchToMainWindow();
         product.browser.VerifyTitle("Material Design Lite");
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
+        product.browser.SwitchToWindowByTitle("Google");
         product.browser.Close();
         product.browser.SwitchToMainWindow(true);
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
+        product.browser.SwitchToWindowByTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.SwitchToMainWindow(true);
     }
@@ -371,8 +371,8 @@ public class ChromeDriverTests {
     public void TestSwitchToWindowByTitle() {
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
-        product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
+        product.browser.SwitchToWindowByTitle("Google");
+        product.browser.VerifyTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.SwitchToWindowByTitle("Some Fake Title");
     }
@@ -382,8 +382,8 @@ public class ChromeDriverTests {
     public void TestSwitchToWindowByUrl() {
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByUrl("HeatLogo.jpg");
-        product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
+        product.browser.SwitchToWindowByUrl("https://www.google.com");
+        product.browser.VerifyTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.SwitchToWindowByUrl("www.fake.com");
     }
