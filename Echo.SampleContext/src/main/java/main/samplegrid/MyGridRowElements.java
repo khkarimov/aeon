@@ -13,8 +13,8 @@ import echo.core.test_abstraction.elements.web.RowElements;
 public class MyGridRowElements extends RowElements {
     public Button checkBoxButton;
 
-    public MyGridRowElements(AutomationInfo info, IBy selector) {
-        super(info, selector);
+    public MyGridRowElements(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
+        super(info, selector, switchMechanism);
         checkBoxButton = new Button(info, selector.ToJQuery().find("span.mdl-checkbox__ripple-container.mdl-js-ripple-effect.mdl-ripple--center"));
     }
 }

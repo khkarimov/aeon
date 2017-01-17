@@ -6,11 +6,10 @@ import echo.core.common.web.interfaces.IBy;
 /**
  * Created by AdamC on 4/13/2016.
  */
-public abstract class Grid<T extends RowActions> extends WebElement {
+public abstract class Grid<T extends RowActions>{
     public T RowBy;
     
-    public Grid(AutomationInfo info, IBy selector, T rowBy) {
-        super(info, selector);
+    public Grid(T rowBy) {
         this.RowBy = rowBy;
     }
 }
