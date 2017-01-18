@@ -72,13 +72,13 @@ public class AjaxWaiter {
                 "\n" +
                 "            if (document.createEvent) {\n" +
                 "                event = document.createEvent('HTMLEvents');\n" +
-                "                event.initEvent('echo.asyc.done', true, true);\n" +
+                "                event.initEvent('echo.async.done', true, true);\n" +
                 "            } else {\n" +
                 "                event = document.createEventObject();\n" +
-                "                event.eventType = 'echo.asyc.done';\n" +
+                "                event.eventType = 'echo.async.done';\n" +
                 "            }\n" +
                 "\n" +
-                "            event.eventName = 'echo.asyc.done';\n" +
+                "            event.eventName = 'echo.async.done';\n" +
                 "\n" +
                 "            document.getElementById('start').addEventListener('echo.asyc.done', function() {\n" +
                 "                document.getElementById('start').setAttribute('data-async', 'done');\n" +
