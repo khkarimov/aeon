@@ -89,7 +89,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     private long getColumnIndex(IBy columnSelector){
-        System.out.println(getScript(columnSelector));
         return (long)((IWebDriver)automationInfo.getDriver()).ExecuteScript(UUID.randomUUID(), getScript(columnSelector)) + 1;
     }
 
@@ -99,15 +98,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * @return The jQuery script that determines the zero-based column index.
      */
     private String getScript(IBy columnSelector){
-//        if(switchMechanism != null){
-//            StringBuilder stringBuilder = new StringBuilder("var a=$(\"html\").");
-//            for (IBy frameSelector: switchMechanism) {
-//                stringBuilder.append(String.format("find(\"%1$s\").contents().", frameSelector));
-//            }
-//            stringBuilder.append(String.format("find(\"%1$s\").index();return a;", columnSelector));
-//            return stringBuilder.toString();
-//        }else {
-            return String.format("var a=$(\"%1$s\").index();return a;", columnSelector);
-//        }
+        return String.format("var a=$(\"%1$s\").index();return a;", columnSelector);
     }
 }
