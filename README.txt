@@ -45,6 +45,9 @@ Echo re-write in Java
 * [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN]
   "iexplore.exe"=dword:00000000
 
+  [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE]
+  "iexplore.exe"=dword:00000000
+
   [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
   "LOCALMACHINE_CD_UNLOCK"=dword:00000000
 
