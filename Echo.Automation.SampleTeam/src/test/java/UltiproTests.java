@@ -67,9 +67,7 @@ public class UltiproTests {
         ultipro.homePage.myTeam.Click();
         ultipro.homePage.myEmployees.Click();
         ultipro.myEmployeesPage.searchButton.Click();
-        echo.core.common.helpers.Sleep.Wait(5000);
         ultipro.myEmployeesPage.myGrid.RowBy.employeeNumber("823567416").getRow().employeeLink.Click();
-        echo.core.common.helpers.Sleep.Wait(1500);
         ultipro.browser.SwitchToWindowByTitle("Wayan Bing");
         ultipro.browser.VerifyTitle("Wayan Bing - 823567416 - USA Smoke Company 1");
     }
