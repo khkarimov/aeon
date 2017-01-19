@@ -89,15 +89,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     private long getColumnIndex(IBy columnSelector){
-        return (long)((IWebDriver)automationInfo.getDriver()).ExecuteScript(UUID.randomUUID(), getScript(columnSelector)) + 1;
-    }
-
-    /**
-     * This function is used to determine the column position of the column header.
-     * @param columnSelector A unique selector for the column header;
-     * @return The jQuery script that determines the zero-based column index.
-     */
-    private String getScript(IBy columnSelector){
-        return String.format("var a=$(\"%1$s\").index();return a;", columnSelector);
+        return (long)((IWebDriver)automationInfo.getDriver()).ExecuteScript(UUID.randomUUID(), String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
     }
 }
