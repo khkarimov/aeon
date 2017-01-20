@@ -26,6 +26,8 @@ public class VTeamSamplePage {
     public Link TryLink;
     public Select DropDown;
     public Checkbox Checkbox100;
+    public WebElement DivWindow;
+    public Label BodyTag;
     public WebElement div;
     public Button PopupButton;
     public Select LexoDropDown;
@@ -66,5 +68,7 @@ public class VTeamSamplePage {
         // to give the MyGridHeaders a base for which to navigate through the grid. We could instantiate an instance of MyGridHeaders in the grid object but then we should
         // probably look into using a factory since this logic is already been implemented in the RowActions class.
         myGrid = new MyGrid(info, gridSelector, new MyGridHeaders(info, gridSelector));
+        DivWindow = new WebElement(info, By.CssSelector("div[id='drop-div']"));
+        BodyTag = new Label(info, By.CssSelector("label[for='sample5']"));
     }
 }
