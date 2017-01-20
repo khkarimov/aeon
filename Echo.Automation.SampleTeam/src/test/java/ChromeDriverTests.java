@@ -16,7 +16,6 @@ import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
-@Ignore
 public class ChromeDriverTests {
 
     private static Sample product;
@@ -354,15 +353,15 @@ public class ChromeDriverTests {
     public void TestSwitchToMainWindow() {
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
-        product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
+        product.browser.SwitchToWindowByTitle("Google");
+        product.browser.VerifyTitle("Google");
         product.browser.SwitchToMainWindow();
         product.browser.VerifyTitle("Material Design Lite");
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
+        product.browser.SwitchToWindowByTitle("Google");
         product.browser.Close();
         product.browser.SwitchToMainWindow(true);
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
+        product.browser.SwitchToWindowByTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.SwitchToMainWindow(true);
     }
@@ -371,8 +370,8 @@ public class ChromeDriverTests {
     public void TestSwitchToWindowByTitle() {
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("HeatLogo.jpg");
-        product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
+        product.browser.SwitchToWindowByTitle("Google");
+        product.browser.VerifyTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.SwitchToWindowByTitle("Some Fake Title");
     }
@@ -382,8 +381,8 @@ public class ChromeDriverTests {
     public void TestSwitchToWindowByUrl() {
         product.browser.VerifyTitle("Material Design Lite");
         product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByUrl("HeatLogo.jpg");
-        product.browser.VerifyTitle("HeatLogo.jpg (300×200)");
+        product.browser.SwitchToWindowByUrl("https://www.google.com");
+        product.browser.VerifyTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.SwitchToWindowByUrl("www.fake.com");
     }
@@ -517,5 +516,14 @@ public class ChromeDriverTests {
     public void TestWaiter(){
         product.StartPage.Start.Click();
         product.StartPage.SmileyFace1.Click();
+    }
+
+    @Test
+    public void TestGrids(){
+        product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.Click();
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
+        product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.Click();
     }
 }

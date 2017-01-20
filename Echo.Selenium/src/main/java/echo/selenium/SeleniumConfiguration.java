@@ -36,7 +36,7 @@ public class SeleniumConfiguration extends Configuration {
         this.marionetteDirectory = System.getProperty("user.dir") + (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows ? "/lib/wires.exe" : "/lib/wires");
         this.enableSeleniumGrid = false;
         this.language = "en-us";
-        this.moveMouseToOrigin = true;
+        this.moveMouseToOrigin = false;
         this.maximizeBrowser = true;
         this.useMobileUserAgent = false;
         this.proxyLocation = "";

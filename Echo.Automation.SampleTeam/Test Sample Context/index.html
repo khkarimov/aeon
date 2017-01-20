@@ -165,7 +165,7 @@
             <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
                 <a href="#dragtarget">try</a>
                 <h2>Table</h2>
-                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                <table id="grid-table-id" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
                     <thead>
                     <tr>
                         <th class="mdl-data-table__cell--non-numeric">Material</th>
@@ -181,12 +181,17 @@
                     </tr>
                     <tr>
                         <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-                        <td>50</td>
+                        <td>9</td>
                         <td>$1.25</td>
                     </tr>
                     <tr>
                         <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
                         <td>10</td>
+                        <td>9</td>
+                    </tr>
+					<tr>
+                        <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
+                        <td>9</td>
                         <td>$2.35</td>
                     </tr>
                     </tbody>
@@ -226,7 +231,7 @@
             <input id="file-dialog" type="file"><br/><br/>
             <input id="checkbox" type='checkbox'>Check Box Test<br/><br/>
             <button id="disabled-button" disabled="true">Disabled</button><br/><br/>
-			<a id="popup-button" href="HeatLogo.jpg" onclick="return popup(this, 'notes')">Popup Button</a>
+			<a id="popup-button" href="#" onclick="window.open('http://www.google.com', '', 'width: 1000');">Popup Button</a>
             <br/><br/>
             <select id="drop-down-list">
                 <!--Add a list options-->
@@ -432,17 +437,27 @@
         $('.call-1, .call-2, .call-3').hide();
 
         $('#start').on('click', function () {
-            $.ajax("http://httpbin.org/delay/10")
-                    .done(function () {
-                        $('.call-1').show();
-                    });
-            $.ajax("http://httpbin.org/delay/5")
-                    .done(function () {
-                        $('.call-2').show();
-                        load("http://httpbin.org/delay/1", function () {
-                            $('.call-3').show();
-                        })
-                    });
+            $.ajax({
+                crossDomain: true,
+                url: "http://mockbin.org/delay/5?__callback=?",
+                jsonp: "__callback",
+                dataType: "jsonp"
+            })
+            .done(function () {
+                $('.call-1').show();
+            });
+            $.ajax({
+                crossDomain: true,
+                url: "http://mockbin.org/delay/5?__callback=?",
+                jsonp: "__callback",
+                dataType: "jsonp"
+            })
+            .done(function () {
+                $('.call-2').show();
+                load("http://httpbin.org/delay/1", function () {
+                    $('.call-3').show();
+                })
+            });
         });
 
     });

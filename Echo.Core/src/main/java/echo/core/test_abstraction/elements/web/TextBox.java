@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class TextBox extends WebElement {
     private AutomationInfo info;
     private IBy selector;
+    private Iterable<IBy> switchMechanism;
 
     public TextBox(AutomationInfo info, IBy selector) {
         super(info, selector);
@@ -24,12 +25,19 @@ public class TextBox extends WebElement {
         this.selector = selector;
     }
 
+    public TextBox(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
+        super(info, selector, switchMechanism);
+        this.info = info;
+        this.selector = selector;
+        this.switchMechanism = switchMechanism;
+    }
+
     public void Set(String value) {
         info.getCommandExecutionFacade().Execute(info,
                 new SetCommand(
                         info.getLog(),
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>()),
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         WebSelectOption.Text,
                         value));
     }
@@ -38,7 +46,7 @@ public class TextBox extends WebElement {
         info.getCommandExecutionFacade().Execute(info, new ClearCommand(
                 this.info.getLog(),
                 this.selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)
         ));
     }
 }
