@@ -528,4 +528,18 @@ public class ChromeDriverTests {
         product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.Click();
 
     }
+
+    @Test
+    public void SetByDivJavaScript() {
+        product.StartPage.DivWindow.SetDivValueByJavaScript("Hello World Haha");
+        product.StartPage.DivWindow.Is("Hello World Haha");
+        product.StartPage.BodyTag.SetDivValueByJavaScript("Hello World Haha");
+        product.StartPage.BodyTag.Is("Hello World Haha");
+    }
+
+    @Test
+    public void SetByBodyJavaScript() {
+        product.StartPage.BodyTag.SetBodyValueByJavaScript("Hello World Haha");
+        product.StartPage.BodyTag.Is("Hello World Haha");
+    }
 }

@@ -29,6 +29,8 @@ public class VTeamSamplePage {
     public Link TryLink;
     public Select DropDown;
     public Checkbox Checkbox100;
+    public WebElement DivWindow;
+    public Label BodyTag;
     public WebElement div;
     public Button PopupButton;
     public Select LexoDropDown;
@@ -69,5 +71,7 @@ public class VTeamSamplePage {
         // uses the grid selector as a base to navigate through the html table. We can change this and instantiate and instance of
         // MyGridHeaders inside the MyGrid class to avoid confusion.
         myGrid = new MyGrid(new MyGridHeaders(info, gridSelector));
+        DivWindow = new WebElement(info, By.CssSelector("div[id='drop-div']"));
+        BodyTag = new Label(info, By.CssSelector("label[for='sample5']"));
     }
 }
