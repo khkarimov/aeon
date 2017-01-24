@@ -50,7 +50,7 @@ public class SeleniumConfiguration extends Configuration {
 
 	private void setBrowserDirectories() { 
         String output = System.getProperty("user.dir"); 
-        this.ieDirectory = output + "/lib/Windows/wires.exe"; 
+        this.ieDirectory = output + "/lib/Windows/IEDriverServer.exe";
         switch (OsCheck.getOperatingSystemType()) { 
             case Windows: 
                 this.marionetteDirectory = output + "/lib/Windows/wires.exe"; 
