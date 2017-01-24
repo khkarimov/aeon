@@ -4,6 +4,7 @@ import org.junit.*;
 import org.junit.rules.ExpectedException;
 
 import java.awt.*;
+import java.net.MalformedURLException;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
@@ -21,7 +22,7 @@ public class UltiproTests {
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
-    public void BeforeTests() {
+    public void BeforeTests() throws IllegalAccessException, InstantiationException, MalformedURLException {
         ultipro = Launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.Maximize();
         ultipro.browser.GoToUrl("http://Apertureweb/Login.aspx");

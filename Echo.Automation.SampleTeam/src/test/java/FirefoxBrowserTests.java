@@ -16,6 +16,7 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
+import java.net.MalformedURLException;
 import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
@@ -38,7 +39,7 @@ public class FirefoxBrowserTests {
     }
 
     @Before
-    public void BeforeTests() {
+    public void BeforeTests() throws IllegalAccessException, InstantiationException, MalformedURLException {
         product = Launch(Sample.class, BrowserType.Firefox);
         product.browser.Maximize();
         product.browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");

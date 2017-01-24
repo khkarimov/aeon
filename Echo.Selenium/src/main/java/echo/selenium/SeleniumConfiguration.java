@@ -27,7 +27,7 @@ public class SeleniumConfiguration extends Configuration {
     private String chromeBinary;
     private String firefoxBinary;
 
-    public SeleniumConfiguration() {
+    public SeleniumConfiguration() throws MalformedURLException {
         super(EchoWebDriver.class, SeleniumAdapter.class);
 	
 		setBrowserDirectories();
@@ -41,11 +41,7 @@ public class SeleniumConfiguration extends Configuration {
         this.proxyLocation = "";
         this.ensureCleanEnvironment = true;
 
-        try {
-            this.seleniumHubUrl = new URL("http://127.0.0.1");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        this.seleniumHubUrl = new URL("http://127.0.0.1");
     }
 
 	private void setBrowserDirectories() { 

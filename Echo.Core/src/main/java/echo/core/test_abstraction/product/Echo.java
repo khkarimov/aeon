@@ -7,6 +7,7 @@ import echo.core.framework_abstraction.adapters.IAdapterExtension;
 import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -15,31 +16,26 @@ import java.util.UUID;
  * Created by DionnyS on 4/13/2016.
  */
 public class Echo {
-    public static <T extends Product> T Launch(Class<T> productClass, BrowserType browserType) {
-        try {
-            T product = productClass.newInstance();
-            Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
+    public static <T extends Product> T Launch(Class<T> productClass, BrowserType browserType) throws IllegalAccessException, InstantiationException, MalformedURLException {
+        T product = productClass.newInstance();
+        Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
 
-            IAdapterExtension plugin = loadPlugins(product);
-            product.setConfiguration(plugin.getConfiguration());
+        IAdapterExtension plugin = loadPlugins(product);
+        product.setConfiguration(plugin.getConfiguration());
 
-            parameters.put("browserType", browserType);
-            product.getConfiguration().setBrowserType(browserType);
-            product.getConfiguration().setLog(createLogger());
-            product.setParameters(parameters);
+        parameters.put("browserType", browserType);
+        product.getConfiguration().setBrowserType(browserType);
+        product.getConfiguration().setLog(createLogger());
+        product.setParameters(parameters);
 
-            product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product on browser: " + browserType);
+        product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product on browser: " + browserType);
 
-            product.launch(plugin);
+        product.launch(plugin);
 
-            return product;
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return product;
     }
 
-    private static <T extends Product> IAdapterExtension loadPlugins(T product) throws Exception {
+    private static <T extends Product> IAdapterExtension loadPlugins(T product) throws RuntimeException {
         PluginManager pluginManager = new DefaultPluginManager();
         pluginManager.loadPlugins();
         pluginManager.startPlugins();
@@ -54,7 +50,7 @@ public class Echo {
             }
         }
 
-        throw new Exception("No valid adapter found");
+        throw new RuntimeException("No valid adapter found");
     }
 
     private static Parameters loadParameters(ISettingsProvider settingsProvider) {

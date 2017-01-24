@@ -40,6 +40,7 @@ import ro.fortsoft.pf4j.Extension;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -255,7 +256,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public Configuration getConfiguration() {
+    public Configuration getConfiguration() throws MalformedURLException {
         return new SeleniumConfiguration();
     }
 
