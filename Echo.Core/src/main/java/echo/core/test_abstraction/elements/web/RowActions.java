@@ -20,12 +20,14 @@ import java.util.UUID;
 public abstract class RowActions<T extends RowActions, K extends RowElements> {
     private IBy selector;
     private AutomationInfo automationInfo;
+    private Iterable<IBy> switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
 
-    public RowActions(AutomationInfo automationInfo, IBy selector, Class<T> rowActionsClass, Class<K> rowElementsClass) {
+    public RowActions(AutomationInfo automationInfo, IBy selector, Iterable<IBy> switchMechanism, Class<T> rowActionsClass, Class<K> rowElementsClass) {
         this.selector = selector;
         this.automationInfo = automationInfo;
+        this.switchMechanism = switchMechanism;
         this.rowElementsClass = rowElementsClass;
         this.rowActionsClass = rowActionsClass;
     }
@@ -40,7 +42,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
         return newInstanceOfK(updatedSelector);
     }
 
-    public T findRow(String value, IBy columnHeader) {
+    protected T findRow(String value, IBy columnHeader) {
         IBy updatedSelector = selector.ToJQuery().find(String.format("td:nth-of-type(%1$s)", getColumnIndex(columnHeader))).filter(String.format("td:contains(%1$s)", value)).parents("tr");
 
         return newInstanceOfT(updatedSelector);
@@ -57,12 +59,13 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      */
     private K newInstanceOfK(IBy updatedSelector){
         Class classToLoad = rowElementsClass;
-        Class[] cArgs = new Class[2];
+        Class[] cArgs = new Class[3];
         cArgs[0] = AutomationInfo.class;
         cArgs[1] = IBy.class;
+        cArgs[2] = Iterable.class;
 
         try {
-            return (K) classToLoad.getDeclaredConstructor(cArgs).newInstance(automationInfo, updatedSelector);
+            return (K) classToLoad.getDeclaredConstructor(cArgs).newInstance(automationInfo, updatedSelector, switchMechanism);
         } catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -74,12 +77,12 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      */
     private T newInstanceOfT(IBy updatedSelector){
         Class classToLoad = rowActionsClass;
-        Class[] cArgs = new Class[2];
+        Class[] cArgs = new Class[3];
         cArgs[0] = AutomationInfo.class;
         cArgs[1] = IBy.class;
-
+        cArgs[2] = Iterable.class;
         try{
-            return (T) classToLoad.getConstructor(cArgs).newInstance(automationInfo, updatedSelector);
+            return (T) classToLoad.getConstructor(cArgs).newInstance(automationInfo, updatedSelector, switchMechanism);
         }catch(Exception e){
             throw new RuntimeException(e);
         }

@@ -22,6 +22,8 @@ Echo re-write in Java
 * Click View -> Tool Windows -> Project to see a Solution Explorer like view of the project.
 * If required, navigate to File -> Settings -> Build,Execution,Deployment _> Maven -> Repositories and Update the Remote
 * The project will now be buildable.
+* Click View -> Tool Windows -> Gradle to see a Gradle Project Window
+* Expand Next.Echo -> Tasks -> Build and run assemble
 
 ##Executing Tests
 * Navigate to Run -> Edit Configuration
@@ -30,11 +32,26 @@ Echo re-write in Java
 * For Test Kind, set to directory, and point it to SampleTeam -> src -> test -> java
 * Press Apply or OK and JUnit tests should now be executable
 
+##IE Settings
+* IE settings have to be adjusted for the tests to run correctly.
+* Open Internet Explorer -> Click the settings button in the top right -> click internet options -> click the security tab
+* click reset all zones to default level -> turn off protected mode in all 4 zones
+
+
 ##IE Registry Hacks
 * For tests to run locally, you need to change the Windows registry.
-* [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl]
+* Not sure whether it has to be local machine or current user, but it has to be one or the other (definitely not both)
 
-  [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN]
+* [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN]
+  "iexplore.exe"=dword:00000000
+
+  [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE]
+  "iexplore.exe"=dword:00000000
+
+  [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
+  "LOCALMACHINE_CD_UNLOCK"=dword:00000000
+
+* [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN]
   "iexplore.exe"=dword:00000000
 
   [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]

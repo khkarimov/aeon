@@ -9,8 +9,12 @@ import echo.core.test_abstraction.elements.web.RowActions;
  * Created by justinp on 12/20/16.
  */
 public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> {
-    public MyGridHeaders(AutomationInfo automationInfo, IBy selector) {
-        super(automationInfo, selector, MyGridHeaders.class, MyGridRowElements.class);
+    public MyGridHeaders(AutomationInfo automationInfo, IBy selector, Iterable<IBy> switchMechanism) {
+        super(automationInfo, selector, switchMechanism, MyGridHeaders.class, MyGridRowElements.class);
+    }
+
+    public MyGridHeaders(AutomationInfo automationInfo, IBy selector){
+        this(automationInfo, selector, null);
     }
 
     public MyGridHeaders material(String value) {

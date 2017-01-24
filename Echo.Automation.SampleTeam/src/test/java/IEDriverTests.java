@@ -522,4 +522,18 @@ public class IEDriverTests {
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
         product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.Click();
     }
+
+    @Test
+    public void TestSetByDivJavaScript() {
+        product.StartPage.DivWindow.SetDivValueByJavaScript("Hello World Haha");
+        product.StartPage.DivWindow.Is("Hello World Haha");
+        product.StartPage.BodyTag.SetDivValueByJavaScript("Hello World Haha");
+        product.StartPage.BodyTag.Is("Hello World Haha");
+    }
+
+    @Test
+    public void TestSetByBodyJavaScript() {
+        product.StartPage.BodyTag.SetBodyValueByJavaScript("Hello World Haha");
+        product.StartPage.BodyTag.Is("Hello World Haha");
+    }
 }
