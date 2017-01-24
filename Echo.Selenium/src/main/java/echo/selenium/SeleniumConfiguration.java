@@ -1,11 +1,13 @@
 package echo.selenium;
 
 
+import echo.core.common.helpers.OsCheck;
 import echo.core.framework_abstraction.drivers.EchoWebDriver;
 import echo.core.test_abstraction.product.Configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.lang.RuntimeException;
 
 /**
  * Created by DionnyS on 4/14/2016.
@@ -27,12 +29,10 @@ public class SeleniumConfiguration extends Configuration {
 
     public SeleniumConfiguration() {
         super(EchoWebDriver.class, SeleniumAdapter.class);
-
-        this.chromeDirectory = System.getProperty("user.dir") + "\\lib\\chromedriver.exe";
+	
+		setBrowserDirectories();
         setChromeBinary(System.getenv("google.chrome.binary"));
         setFirefoxBinary(System.getenv("firefox.binary"));
-        this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
-        this.marionetteDirectory = System.getProperty("user.dir") + "\\lib\\wires.exe";
         this.enableSeleniumGrid = false;
         this.language = "en-us";
         this.moveMouseToOrigin = false;
@@ -47,6 +47,27 @@ public class SeleniumConfiguration extends Configuration {
             e.printStackTrace();
         }
     }
+
+	private void setBrowserDirectories() { 
+        String output = System.getProperty("user.dir"); 
+        this.ieDirectory = output + "/lib/Windows/wires.exe"; 
+        switch (OsCheck.getOperatingSystemType()) { 
+            case Windows: 
+                this.marionetteDirectory = output + "/lib/Windows/wires.exe"; 
+                this.chromeDirectory = output + "/lib/Windows/chromedriver.exe"; 
+                break; 
+            case MacOS: 
+                this.marionetteDirectory = output + "/lib/MacOS/wires"; 
+                this.chromeDirectory = output + "/lib/MacOS/chromedriver"; 
+                break; 
+            case Linux: 
+                this.marionetteDirectory = output + "/lib/Linux/wires"; 
+                this.chromeDirectory = output + "/lib/Linux/chromedriver"; 
+                break; 
+            default:
+                throw new IllegalStateException("Unsupported Operating System");
+        } 
+    } 
 
     public boolean isEnableSeleniumGrid() {
         return enableSeleniumGrid;

@@ -73,3 +73,5 @@ distrib/
 log/
 */plugins
 plugins/
+.DS_Store
+*~
