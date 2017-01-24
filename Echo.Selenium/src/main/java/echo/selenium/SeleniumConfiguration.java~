@@ -30,8 +30,11 @@ public class SeleniumConfiguration extends Configuration {
         super(EchoWebDriver.class, SeleniumAdapter.class);
 	
 		setBrowserDirectories();
+        //this.chromeDirectory = System.getProperty("user.dir") + (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows ? "/lib/chromedriver.exe" : "/lib/Linux/chromedriver");
         setChromeBinary(System.getenv("google.chrome.binary"));
         setFirefoxBinary(System.getenv("firefox.binary"));
+        //this.ieDirectory = System.getProperty("user.dir") + "\\lib\\IEDriverServer.exe";
+        //this.marionetteDirectory = System.getProperty("user.dir") + (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows ? "/lib/wires.exe" : "/lib/Linux/wires");
         this.enableSeleniumGrid = false;
         this.language = "en-us";
         this.moveMouseToOrigin = false;
