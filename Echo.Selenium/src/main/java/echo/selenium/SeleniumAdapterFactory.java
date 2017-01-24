@@ -256,7 +256,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public Configuration getConfiguration() throws MalformedURLException {
+    public Configuration getConfiguration() {
         return new SeleniumConfiguration();
     }
 

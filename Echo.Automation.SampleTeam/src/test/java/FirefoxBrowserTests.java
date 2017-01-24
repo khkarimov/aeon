@@ -39,7 +39,7 @@ public class FirefoxBrowserTests {
     }
 
     @Before
-    public void BeforeTests() throws IllegalAccessException, InstantiationException, MalformedURLException {
+    public void BeforeTests() {
         product = Launch(Sample.class, BrowserType.Firefox);
         product.browser.Maximize();
         product.browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");

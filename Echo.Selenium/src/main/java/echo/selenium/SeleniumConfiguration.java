@@ -4,10 +4,12 @@ package echo.selenium;
 import echo.core.common.helpers.OsCheck;
 import echo.core.framework_abstraction.drivers.EchoWebDriver;
 import echo.core.test_abstraction.product.Configuration;
+import echo.core.common.logging.ILog;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.lang.RuntimeException;
+import java.util.UUID;
 
 /**
  * Created by DionnyS on 4/14/2016.
@@ -27,7 +29,7 @@ public class SeleniumConfiguration extends Configuration {
     private String chromeBinary;
     private String firefoxBinary;
 
-    public SeleniumConfiguration() throws MalformedURLException {
+    public SeleniumConfiguration() {
         super(EchoWebDriver.class, SeleniumAdapter.class);
 	
 		setBrowserDirectories();
@@ -41,7 +43,11 @@ public class SeleniumConfiguration extends Configuration {
         this.proxyLocation = "";
         this.ensureCleanEnvironment = true;
 
-        this.seleniumHubUrl = new URL("http://127.0.0.1");
+        try {
+            this.seleniumHubUrl = new URL("http://127.0.0.1");
+        } catch (MalformedURLException e) {
+            getLog().Error(UUID.fromString(e.getMessage()), "MalformedURLException: " + e.getMessage());
+        }
     }
 
 	private void setBrowserDirectories() { 

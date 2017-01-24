@@ -22,7 +22,7 @@ public class UltiproTests {
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
-    public void BeforeTests() throws IllegalAccessException, InstantiationException, MalformedURLException {
+    public void BeforeTests() {
         ultipro = Launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.Maximize();
         ultipro.browser.GoToUrl("http://Apertureweb/Login.aspx");

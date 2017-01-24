@@ -16,23 +16,28 @@ import java.util.UUID;
  * Created by DionnyS on 4/13/2016.
  */
 public class Echo {
-    public static <T extends Product> T Launch(Class<T> productClass, BrowserType browserType) throws IllegalAccessException, InstantiationException, MalformedURLException {
-        T product = productClass.newInstance();
-        Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
+    public static <T extends Product> T Launch(Class<T> productClass, BrowserType browserType) {
+        try {
+            T product = productClass.newInstance();
+            Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
 
-        IAdapterExtension plugin = loadPlugins(product);
-        product.setConfiguration(plugin.getConfiguration());
+            IAdapterExtension plugin = loadPlugins(product);
+            product.setConfiguration(plugin.getConfiguration());
 
-        parameters.put("browserType", browserType);
-        product.getConfiguration().setBrowserType(browserType);
-        product.getConfiguration().setLog(createLogger());
-        product.setParameters(parameters);
+            parameters.put("browserType", browserType);
+            product.getConfiguration().setBrowserType(browserType);
+            product.getConfiguration().setLog(createLogger());
+            product.setParameters(parameters);
 
-        product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product on browser: " + browserType);
+            product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product on browser: " + browserType);
 
-        product.launch(plugin);
+            product.launch(plugin);
 
-        return product;
+            return product;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static <T extends Product> IAdapterExtension loadPlugins(T product) throws RuntimeException {
