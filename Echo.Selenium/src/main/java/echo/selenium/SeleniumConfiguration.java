@@ -7,6 +7,7 @@ import echo.core.test_abstraction.product.Configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.lang.RuntimeException;
 
 /**
  * Created by DionnyS on 4/14/2016.
@@ -63,8 +64,8 @@ public class SeleniumConfiguration extends Configuration {
                 this.marionetteDirectory = output + "/lib/Linux/wires"; 
                 this.chromeDirectory = output + "/lib/Linux/chromedriver"; 
                 break; 
-            case Other: 
-                break; 
+            default:
+                throw new IllegalStateException("Unsupported Operating System");
         } 
     } 
 
