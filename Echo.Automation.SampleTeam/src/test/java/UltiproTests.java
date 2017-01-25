@@ -14,7 +14,7 @@ import static echo.core.test_abstraction.product.Echo.Launch;
  * These tests are currently being ignored because the environment used is not persistent.
  */
 
-@Ignore
+
 public class UltiproTests {
     private static Ultipro ultipro;
 
@@ -25,7 +25,7 @@ public class UltiproTests {
     public void BeforeTests() {
         ultipro = Launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.Maximize();
-        ultipro.browser.GoToUrl("http://Apertureweb/Login.aspx");
+        ultipro.browser.GoToUrl("http://wheatleyweb/Login.aspx");
     }
 
     @After
