@@ -3,9 +3,6 @@ import main.ultipro.Ultipro;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import java.awt.*;
-import java.net.MalformedURLException;
-
 import static echo.core.test_abstraction.product.Echo.Launch;
 
 /**

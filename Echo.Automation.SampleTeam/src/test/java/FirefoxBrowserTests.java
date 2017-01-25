@@ -16,7 +16,6 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import java.net.MalformedURLException;
 import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;

@@ -7,7 +7,6 @@ import echo.core.framework_abstraction.adapters.IAdapterExtension;
 import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
 
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
