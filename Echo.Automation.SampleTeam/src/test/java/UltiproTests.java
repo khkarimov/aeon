@@ -25,7 +25,7 @@ public class UltiproTests {
     public void BeforeTests() {
         ultipro = Launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.Maximize();
-        ultipro.browser.GoToUrl("http://wheatleyweb/Login.aspx");
+        ultipro.browser.GoToUrl("http://apertureweb/Login.aspx");
     }
 
     @After
