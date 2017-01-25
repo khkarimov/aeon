@@ -39,7 +39,7 @@ public class Echo {
         }
     }
 
-    private static <T extends Product> IAdapterExtension loadPlugins(T product) throws Exception {
+    private static <T extends Product> IAdapterExtension loadPlugins(T product) throws RuntimeException {
         PluginManager pluginManager = new DefaultPluginManager();
         pluginManager.loadPlugins();
         pluginManager.startPlugins();
@@ -54,7 +54,7 @@ public class Echo {
             }
         }
 
-        throw new Exception("No valid adapter found");
+        throw new RuntimeException("No valid adapter found");
     }
 
     private static Parameters loadParameters(ISettingsProvider settingsProvider) {

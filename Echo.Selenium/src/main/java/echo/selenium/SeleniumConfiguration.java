@@ -7,7 +7,7 @@ import echo.core.test_abstraction.product.Configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.lang.RuntimeException;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Created by DionnyS on 4/14/2016.
@@ -44,7 +44,7 @@ public class SeleniumConfiguration extends Configuration {
         try {
             this.seleniumHubUrl = new URL("http://127.0.0.1");
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LogManager.getLogger().error("MalformedURLException: " + e.getMessage());
         }
     }
 

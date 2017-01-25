@@ -40,7 +40,7 @@ public abstract class Product {
         this.automationInfo = automationInfo;
     }
 
-    protected abstract void launch(IAdapterExtension plugin);
+    protected abstract void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException;
 
     protected IAdapter createAdapter(IAdapterExtension plugin) {
         return plugin.createAdapter(configuration);
