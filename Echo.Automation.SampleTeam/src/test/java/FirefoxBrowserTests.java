@@ -274,13 +274,6 @@ public class FirefoxBrowserTests {
     }
 
     @Test
-    public void TestSelectFileDialog_OpenFileDialog() {
-        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
-        product.StartPage.TestFileDialogInput.SelectFileDialog(path);
-    }
-
-    @Test
     public void TestSelected() {
         product.StartPage.TestCheckbox.Check();
         product.StartPage.TestCheckbox.Selected();
