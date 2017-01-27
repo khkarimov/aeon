@@ -20,7 +20,6 @@ import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
-@Ignore
 public class FirefoxBrowserTests {
 
     private static Sample product;

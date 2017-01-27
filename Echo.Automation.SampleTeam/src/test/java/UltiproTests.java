@@ -11,7 +11,6 @@ import static echo.core.test_abstraction.product.Echo.Launch;
  * These tests are currently being ignored because the environment used is not persistent.
  */
 
-@Ignore
 public class UltiproTests {
     private static Ultipro ultipro;
 
