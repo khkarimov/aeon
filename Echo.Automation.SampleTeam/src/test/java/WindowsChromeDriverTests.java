@@ -9,7 +9,6 @@ import static echo.core.test_abstraction.product.Echo.Launch;
  * Created by josepe on 1/26/2017.
  */
 
-@Ignore
 public class WindowsChromeDriverTests {
     private static Sample product;
 

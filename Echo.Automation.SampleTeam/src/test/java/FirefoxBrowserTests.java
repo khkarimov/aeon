@@ -20,7 +20,6 @@ import java.util.Date;
 
 import static echo.core.test_abstraction.product.Echo.Launch;
 
-@Ignore
 public class FirefoxBrowserTests {
 
     private static Sample product;
@@ -48,7 +47,7 @@ public class FirefoxBrowserTests {
     public void AfterTests() {
         product.browser.Quit();
     }
-//endregion
+    //endregion
 
     @Test
     public void TestAcceptAlert_VerifyAlertExists_VerifyAlertNotExists() {
