@@ -1,26 +1,14 @@
 /**
  * Created by josepe on 1/27/2017.
  */
-import echo.core.common.CompareType;
-import echo.core.common.KeyboardKey;
-import echo.core.common.exceptions.*;
-import echo.core.common.web.BrowserSize;
+
 import echo.core.common.web.BrowserType;
-import echo.core.common.web.WebSelectOption;
-import echo.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
-import org.hamcrest.core.IsInstanceOf;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-
-import java.util.Date;
-
 import static echo.core.test_abstraction.product.Echo.Launch;
 
 public class WindowsFirefoxBrowserTests {
-
     private static Sample product;
 
     @Rule

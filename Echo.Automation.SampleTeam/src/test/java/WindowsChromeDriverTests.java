@@ -1,13 +1,12 @@
+/**
+ * Created by josepe on 1/26/2017.
+ */
+
 import echo.core.common.web.BrowserType;
 import main.Sample;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import static echo.core.test_abstraction.product.Echo.Launch;
-
-
-/**
- * Created by josepe on 1/26/2017.
- */
 
 public class WindowsChromeDriverTests {
     private static Sample product;
