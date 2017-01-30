@@ -47,7 +47,7 @@ public class FirefoxBrowserTests {
     public void AfterTests() {
         product.browser.Quit();
     }
-//endregion
+    //endregion
 
     @Test
     public void TestAcceptAlert_VerifyAlertExists_VerifyAlertNotExists() {
@@ -271,13 +271,6 @@ public class FirefoxBrowserTests {
         product.StartPage.InvisibleButton.NotVisible();
         thrown.expectCause(IsInstanceOf.instanceOf(ElementIsVisibleException.class));
         product.StartPage.OpenAlertButton.NotVisible();
-    }
-
-    @Test
-    public void TestSelectFileDialog_OpenFileDialog() {
-        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
-        product.StartPage.TestFileDialogInput.SelectFileDialog(path);
     }
 
     @Test
