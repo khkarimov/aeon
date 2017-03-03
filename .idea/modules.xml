@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.Automation.SampleTeam/Aeon.Automation.SampleTeam.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.Automation.SampleTeam/Aeon.Automation.SampleTeam.iml" group="Aeon.Automation.SampleTeam" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.Automation.SampleTeam/Aeon.Automation.SampleTeam_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.Automation.SampleTeam/Aeon.Automation.SampleTeam_main.iml" group="Aeon.Automation.SampleTeam" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.Automation.SampleTeam/Aeon.Automation.SampleTeam_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.Automation.SampleTeam/Aeon.Automation.SampleTeam_test.iml" group="Aeon.Automation.SampleTeam" />
@@ -14,7 +15,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.Selenium/Aeon.Selenium.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.Selenium/Aeon.Selenium.iml" group="Aeon.Selenium" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.Selenium/Aeon.Selenium_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.Selenium/Aeon.Selenium_main.iml" group="Aeon.Selenium" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.Selenium/Aeon.Selenium_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.Selenium/Aeon.Selenium_test.iml" group="Aeon.Selenium" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon_main.iml" group="Aeon" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aeon_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Aeon_test.iml" group="Aeon" />
     </modules>
