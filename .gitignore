@@ -17,7 +17,7 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 #Resource Bundle
-Echo.Core/classes/production/Echo.Core/MessagesBundle.properties
+Aeon.Core/classes/production/Aeon.Core/MessagesBundle.properties
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm

@@ -19,16 +19,16 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Echo.Automation.SampleTeam_main" target="1.8" />
-      <module name="Echo.Automation.SampleTeam_test" target="1.8" />
-      <module name="Echo.Core_main" target="1.8" />
-      <module name="Echo.Core_test" target="1.8" />
-      <module name="Echo.SampleContext_main" target="1.8" />
-      <module name="Echo.SampleContext_test" target="1.8" />
-      <module name="Echo.Selenium_main" target="1.8" />
-      <module name="Echo.Selenium_test" target="1.8" />
-      <module name="Next.Echo_main" target="1.8" />
-      <module name="Next.Echo_test" target="1.8" />
+      <module name="Aeon.Automation.SampleTeam_main" target="1.8" />
+      <module name="Aeon.Automation.SampleTeam_test" target="1.8" />
+      <module name="Aeon.Core_main" target="1.8" />
+      <module name="Aeon.Core_test" target="1.8" />
+      <module name="Aeon.SampleContext_main" target="1.8" />
+      <module name="Aeon.SampleContext_test" target="1.8" />
+      <module name="Aeon.Selenium_main" target="1.8" />
+      <module name="Aeon.Selenium_test" target="1.8" />
+      <module name="Aeon_main" target="1.8" />
+      <module name="Aeon_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

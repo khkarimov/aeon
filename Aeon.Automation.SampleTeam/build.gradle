@@ -1,0 +1,50 @@
+group 'SampleTeam'
+version '0.0.1'
+apply plugin: 'java'
+compileTestJava.options.encoding = 'utf-8'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    seleniumVersion = '3.0.1'
+    chromeDriverVersion = '2.27'
+}
+
+clean {
+    delete 'log'
+    delete 'plugins'
+}
+
+dependencies {
+    compile project(':Aeon.SampleContext')
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile 'ro.fortsoft.pf4j:pf4j:0.13.1'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.1'
+
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
+    compile 'org.apache.logging.log4j:log4j-core:2.5'
+    compile 'org.apache.logging.log4j:log4j-api:2.5'
+
+    compile 'joda-time:joda-time:2.9.3'
+
+    compile fileTree(dir: '../distrib/', include: 'Aeon.Core-*.jar')
+    compile fileTree(dir: '../distrib/', include: 'Aeon.SampleContext-*.jar')
+
+    // Drivers
+    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+}
+
+//test {
+//    maxParallelForks = 4
+//}
