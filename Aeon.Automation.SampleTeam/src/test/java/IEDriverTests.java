@@ -1,10 +1,10 @@
-import echo.core.common.CompareType;
-import echo.core.common.KeyboardKey;
-import echo.core.common.exceptions.*;
-import echo.core.common.web.BrowserSize;
-import echo.core.common.web.BrowserType;
-import echo.core.common.web.WebSelectOption;
-import echo.core.framework_abstraction.controls.web.IWebCookie;
+import aeon.core.common.CompareType;
+import aeon.core.common.KeyboardKey;
+import aeon.core.common.exceptions.*;
+import aeon.core.common.web.BrowserSize;
+import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.WebSelectOption;
+import aeon.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -14,7 +14,7 @@ import org.junit.rules.ExpectedException;
 
 import java.util.Date;
 
-import static echo.core.test_abstraction.product.Aeon.Launch;
+import static aeon.core.test_abstraction.product.Aeon.Launch;
 
 public class IEDriverTests {
     private static Sample product;

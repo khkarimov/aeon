@@ -1,4 +1,4 @@
-package echo.selenium;
+package aeon.selenium;
 
 import ro.fortsoft.pf4j.Plugin;
 import ro.fortsoft.pf4j.PluginWrapper;

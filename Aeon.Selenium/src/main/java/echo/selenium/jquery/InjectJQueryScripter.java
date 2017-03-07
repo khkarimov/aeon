@@ -1,4 +1,4 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Wraps JavaScript within a code to inject jquery.
@@ -6,44 +6,44 @@ package echo.selenium.jquery;
 public class InjectJQueryScripter extends JavaScriptFinalizer {
     /* JavaScript to be wrapped around JQuery strings
      *
-     * var echoCallback = arguments[arguments.length-1];
-     * var echoNonCallbackArguments = (arguments.length == 1) ? [] : Array.prototype.slice.call(arguments, 0, arguments.length-2);
-     * function echoFunction() {
+     * var aeonCallback = arguments[arguments.length-1];
+     * var aeonNonCallbackArguments = (arguments.length == 1) ? [] : Array.prototype.slice.call(arguments, 0, arguments.length-2);
+     * function aeonFunction() {
      *     // insert code here
      * }
-     * var echoJQueryLoaded = false;
-     * function echoOnFinishJQueryLoading() {
-     *     if (echoJQueryLoaded) return;
-     *     echoJQueryLoaded = true;
+     * var aeonJQueryLoaded = false;
+     * function aeonOnFinishJQueryLoading() {
+     *     if (aeonJQueryLoaded) return;
+     *     aeonJQueryLoaded = true;
      *     var $ = window.jquery;
-     *     echoCallback(echoFunction(echoNonCallbackArguments));
+     *     aeonCallback(aeonFunction(aeonNonCallbackArguments));
      * }
      * if(!window.jquery) {
      *     var script = document.createElement('script');
      *     script.type = 'text/javascript';
      *     script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';
-     *     script.onreadystatechange= function () { if (this.readyState == 'loaded' || this.readyState == 'complete') echoOnFinishJQueryLoading(); };
-     *     script.onload = echoOnFinishJQueryLoading;
+     *     script.onreadystatechange= function () { if (this.readyState == 'loaded' || this.readyState == 'complete') aeonOnFinishJQueryLoading(); };
+     *     script.onload = aeonOnFinishJQueryLoading;
      *     document.getElementsByTagName('head')[0].appendChild(script);
      * } else
-     *     echoCallback(echoFunction(echoNonCallbackArguments));
+     *     aeonCallback(aeonFunction(aeonNonCallbackArguments));
      */
-    private static final String NeedJQueryScriptBefore = "var echoCallback=arguments[arguments.length-1];var echoNonCallbackArguments=arguments.length==1?[]:Array.prototype.slice.call(arguments,0,arguments.length-2);function echoFunction(){";
-    private static final String NeedJQueryScriptAfter = "}var echoJQueryLoaded=false;function echoOnFinishJQueryLoading(){if(echoJQueryLoaded)return;echoJQueryLoaded=true;var $=window.jquery;echoCallback(echoFunction(echoNonCallbackArguments))}" +
+    private static final String NeedJQueryScriptBefore = "var aeonCallback=arguments[arguments.length-1];var aeonNonCallbackArguments=arguments.length==1?[]:Array.prototype.slice.call(arguments,0,arguments.length-2);function aeonFunction(){";
+    private static final String NeedJQueryScriptAfter = "}var aeonJQueryLoaded=false;function aeonOnFinishJQueryLoading(){if(aeonJQueryLoaded)return;aeonJQueryLoaded=true;var $=window.jquery;aeonCallback(aeonFunction(aeonNonCallbackArguments))}" +
             "if(!window.jquery){var script=document.createElement('script');script.type='text/javascript';script.src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';script.onreadystatechange=function(){if(this.readyState=='loaded'||this.readyState=='complete')" +
-            "echoOnFinishJQueryLoading()};script.onload=echoOnFinishJQueryLoading;document.getElementsByTagName('head')[0].appendChild(script)}else echoCallback(echoFunction(echoNonCallbackArguments));";
+            "aeonOnFinishJQueryLoading()};script.onload=aeonOnFinishJQueryLoading;document.getElementsByTagName('head')[0].appendChild(script)}else aeonCallback(aeonFunction(aeonNonCallbackArguments));";
 
     /* JavaScript to be wrapped around non-JQuery strings
      *
-     * var echoCallback = arguments[arguments.length-1];
-     * var echoNonCallbackArguments = (arguments.length == 1) ? [] : Array.prototype.slice.call(arguments, 0, arguments.length-2);
-     * function echoFunction() {
+     * var aeonCallback = arguments[arguments.length-1];
+     * var aeonNonCallbackArguments = (arguments.length == 1) ? [] : Array.prototype.slice.call(arguments, 0, arguments.length-2);
+     * function aeonFunction() {
      *     // insert code here
      * }
-     * echoCallback(echoFunction(echoNonCallbackArguments));
+     * aeonCallback(aeonFunction(aeonNonCallbackArguments));
      */
-    private static final String DoNotNeedJQueryScriptBefore = "var echoCallback=arguments[arguments.length-1];var echoNonCallbackArguments=arguments.length==1?[]:Array.prototype.slice.call(arguments,0,arguments.length-2);function echoFunction(){";
-    private static final String DoNotNeedJQueryScriptAfter = "}echoCallback(echoFunction(echoNonCallbackArguments));";
+    private static final String DoNotNeedJQueryScriptBefore = "var aeonCallback=arguments[arguments.length-1];var aeonNonCallbackArguments=arguments.length==1?[]:Array.prototype.slice.call(arguments,0,arguments.length-2);function aeonFunction(){";
+    private static final String DoNotNeedJQueryScriptAfter = "}aeonCallback(aeonFunction(aeonNonCallbackArguments));";
 
     /**
      * Initializes a new instance of the {@link InjectJQueryScripter} class.

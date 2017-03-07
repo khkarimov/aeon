@@ -303,15 +303,15 @@
 
      if (document.createEvent) {
      event = document.createEvent("HTMLEvents");
-     event.initEvent("echo.asyc.done", true, true);
+     event.initEvent("aeon.asyc.done", true, true);
      } else {
      event = document.createEventObject();
-     event.eventType = "echo.asyc.done";
+     event.eventType = "aeon.asyc.done";
      }
 
-     event.eventName = "echo.asyc.done";
+     event.eventName = "aeon.asyc.done";
 
-     document.getElementById('start').addEventListener("echo.asyc.done", function() {
+     document.getElementById('start').addEventListener("aeon.asyc.done", function() {
      alert('all events have finished');
      });
 

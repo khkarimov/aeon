@@ -1,6 +1,6 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
-import echo.core.common.helpers.QuadFunction;
+import aeon.core.common.helpers.QuadFunction;
 
 import java.util.UUID;
 import java.util.function.Function;

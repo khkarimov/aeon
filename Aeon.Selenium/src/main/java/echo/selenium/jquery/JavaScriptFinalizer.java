@@ -1,4 +1,4 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Base class for finalizing JavaScript.

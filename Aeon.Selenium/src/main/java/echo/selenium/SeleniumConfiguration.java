@@ -1,9 +1,9 @@
-package echo.selenium;
+package aeon.selenium;
 
 
-import echo.core.common.helpers.OsCheck;
-import echo.core.framework_abstraction.drivers.AeonWebDriver;
-import echo.core.test_abstraction.product.Configuration;
+import aeon.core.common.helpers.OsCheck;
+import aeon.core.framework_abstraction.drivers.AeonWebDriver;
+import aeon.core.test_abstraction.product.Configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;

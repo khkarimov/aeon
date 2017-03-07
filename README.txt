@@ -12,7 +12,7 @@ Aeon re-write in Java
 * Checkout Java Aeon
 * Ensure "JAVA_HOME" system variable is set to your JDK path in Windows.
 * Open IntelliJ IDEA, select "Import Project"
-* Navigate to and highlight the "javaecho" directory, press "OK"
+* Navigate to and highlight the "javaaeon" directory, press "OK"
 * In the Event Log click on the link that states "Import Gradle Project".
 * In the dialog box that appears, ensure that "Create seperate module per source set" and "Use gradle wrapper task configuration" are checked
 * Press OK in the dialog that appears.

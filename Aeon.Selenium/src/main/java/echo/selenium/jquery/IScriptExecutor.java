@@ -1,4 +1,4 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
 import org.joda.time.Duration;
 

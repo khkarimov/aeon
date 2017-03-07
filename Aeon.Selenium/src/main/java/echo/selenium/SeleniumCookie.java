@@ -1,6 +1,6 @@
-package echo.selenium;
+package aeon.selenium;
 
-import echo.core.framework_abstraction.controls.web.IWebCookie;
+import aeon.core.framework_abstraction.controls.web.IWebCookie;
 import org.openqa.selenium.Cookie;
 
 import java.util.Date;

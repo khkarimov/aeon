@@ -1,4 +1,4 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Created by DionnyS on 4/14/2016.

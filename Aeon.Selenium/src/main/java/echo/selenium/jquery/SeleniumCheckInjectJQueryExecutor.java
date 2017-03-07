@@ -1,6 +1,6 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
-import echo.core.common.helpers.QuadFunction;
+import aeon.core.common.helpers.QuadFunction;
 import org.joda.time.Duration;
 
 import java.util.UUID;

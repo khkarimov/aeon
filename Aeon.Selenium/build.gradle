@@ -14,8 +14,8 @@ repositories {
 }
 
 configurations {
-    echo
-    compile.extendsFrom(echo)
+    aeon
+    compile.extendsFrom(aeon)
 }
 
 ext {
@@ -40,7 +40,7 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
 
-    echo fileTree(dir: '../distrib/', include: 'Aeon.Core-*.jar')
+    aeon fileTree(dir: '../distrib/', include: 'Aeon.Core-*.jar')
 }
 
 jar {
@@ -53,7 +53,7 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'SeleniumAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'echo.selenium.SeleniumPlugin'
+                'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
     }
 
 //    from configurations.compile.collect {

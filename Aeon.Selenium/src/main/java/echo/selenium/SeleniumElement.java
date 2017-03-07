@@ -1,10 +1,10 @@
-package echo.selenium;
+package aeon.selenium;
 
-import echo.core.common.exceptions.IncorrectElementTagException;
-import echo.core.common.exceptions.NoSuchElementException;
-import echo.core.common.logging.ILog;
-import echo.core.common.web.interfaces.IBy;
-import echo.core.framework_abstraction.controls.web.WebControl;
+import aeon.core.common.exceptions.IncorrectElementTagException;
+import aeon.core.common.exceptions.NoSuchElementException;
+import aeon.core.common.logging.ILog;
+import aeon.core.common.web.interfaces.IBy;
+import aeon.core.framework_abstraction.controls.web.WebControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -107,11 +107,11 @@ public class SeleniumElement extends WebControl {
      * @param guid Uniquely identify the web element.
      * @return Returns the location of the web element.
      */
-    public final echo.core.common.Point GetLocation(UUID guid) {
+    public final aeon.core.common.Point GetLocation(UUID guid) {
         getLog().Trace(guid, "WebElement.get_Location();");
         org.openqa.selenium.Point result = getUnderlyingWebElement().getLocation();
         getLog().Trace(guid, String.format("Result: %1$s", result));
-        return new echo.core.common.Point(result.getX(), result.getY());
+        return new aeon.core.common.Point(result.getX(), result.getY());
     }
 
     /**

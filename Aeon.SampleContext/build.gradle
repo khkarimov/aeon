@@ -14,14 +14,14 @@ repositories {
 }
 
 configurations {
-    echo
-    compile.extendsFrom(echo)
+    aeon
+    compile.extendsFrom(aeon)
 }
 
 dependencies {
     compile project(':Aeon.Core')
 
-    echo fileTree(dir: '../distrib/', include: 'Aeon.Core-*.jar')
+    aeon fileTree(dir: '../distrib/', include: 'Aeon.Core-*.jar')
 }
 
 jar {
@@ -34,7 +34,7 @@ jar {
                 'Implementation-Version': version
     }
 
-//    from configurations.echo.collect {
+//    from configurations.aeon.collect {
 //        it.isDirectory() ? it : zipTree(it)
 //    }
 }

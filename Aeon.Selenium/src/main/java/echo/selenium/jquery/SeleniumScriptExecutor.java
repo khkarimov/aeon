@@ -1,7 +1,7 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
-import echo.core.common.helpers.ConvertHelper;
-import echo.core.common.logging.ILog;
+import aeon.core.common.helpers.ConvertHelper;
+import aeon.core.common.logging.ILog;
 import org.joda.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

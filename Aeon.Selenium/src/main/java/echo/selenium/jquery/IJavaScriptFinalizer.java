@@ -1,4 +1,4 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Interface for preparing JavaScript according to formats specified by classes implementing this interface.

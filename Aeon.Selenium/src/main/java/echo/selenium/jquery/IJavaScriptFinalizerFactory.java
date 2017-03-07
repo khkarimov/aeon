@@ -1,4 +1,4 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Factory for {@link IJavaScriptFinalizerFactory}.

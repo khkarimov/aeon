@@ -1,8 +1,8 @@
 package main;
 
-import echo.core.common.web.selectors.By;
-import echo.core.test_abstraction.elements.Element;
-import echo.core.test_abstraction.models.Page;
+import aeon.core.common.web.selectors.By;
+import aeon.core.test_abstraction.elements.Element;
+import aeon.core.test_abstraction.models.Page;
 
 /**
  * Created by DionnyS on 4/13/2016.

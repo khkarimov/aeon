@@ -1,4 +1,4 @@
-package echo.selenium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * The default {@link IJavaScriptFinalizerFactory} implementation for Web.
