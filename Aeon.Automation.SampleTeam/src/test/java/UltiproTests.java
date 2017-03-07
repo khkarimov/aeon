@@ -1,9 +1,9 @@
-import aeon.core.common.web.BrowserType;
+import echo.core.common.web.BrowserType;
 import main.ultipro.Ultipro;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import static aeon.core.test_abstraction.product.Aeon.Launch;
+import static echo.core.test_abstraction.product.Aeon.Launch;
 
 /**
  * Created by SebastianR on 11/23/2016.

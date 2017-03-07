@@ -2,11 +2,11 @@
  * Created by josepe on 1/26/2017.
  */
 
-import aeon.core.common.web.BrowserType;
+import echo.core.common.web.BrowserType;
 import main.Sample;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import static aeon.core.test_abstraction.product.Aeon.Launch;
+import static echo.core.test_abstraction.product.Aeon.Launch;
 
 public class WindowsChromeDriverTests {
     private static Sample product;

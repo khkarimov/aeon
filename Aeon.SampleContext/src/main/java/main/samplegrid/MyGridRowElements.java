@@ -1,9 +1,11 @@
 package main.samplegrid;
 
-import aeon.core.command_execution.AutomationInfo;
-import aeon.core.common.web.interfaces.IBy;
-import aeon.core.test_abstraction.elements.web.Button;
-import aeon.core.test_abstraction.elements.web.RowElements;
+import echo.core.command_execution.AutomationInfo;
+import echo.core.common.web.interfaces.IBy;
+import echo.core.common.web.selectors.By;
+import echo.core.common.web.selectors.ByJQuery;
+import echo.core.test_abstraction.elements.web.Button;
+import echo.core.test_abstraction.elements.web.RowElements;
 
 /**
  * Created by justinp on 12/20/16.

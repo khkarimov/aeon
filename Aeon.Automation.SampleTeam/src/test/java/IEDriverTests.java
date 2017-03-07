@@ -1,9 +1,10 @@
-import aeon.core.common.CompareType;
-import aeon.core.common.KeyboardKey;
-import aeon.core.common.web.BrowserSize;
-import aeon.core.common.web.BrowserType;
-import aeon.core.common.web.WebSelectOption;
-import aeon.core.framework_abstraction.controls.web.IWebCookie;
+import echo.core.common.CompareType;
+import echo.core.common.KeyboardKey;
+import echo.core.common.exceptions.*;
+import echo.core.common.web.BrowserSize;
+import echo.core.common.web.BrowserType;
+import echo.core.common.web.WebSelectOption;
+import echo.core.framework_abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -13,7 +14,7 @@ import org.junit.rules.ExpectedException;
 
 import java.util.Date;
 
-import static aeon.core.test_abstraction.product.Aeon.Launch;
+import static echo.core.test_abstraction.product.Aeon.Launch;
 
 public class IEDriverTests {
     private static Sample product;
@@ -126,7 +127,7 @@ public class IEDriverTests {
     public void TestDatesApproximatelyEquals() {
         product.StartPage.DateLabel.DatesApproximatelyEqual("name", DateTime.parse("2016-08-31"), Period.days(0));
         product.StartPage.DateLabel.DatesApproximatelyEqual("name", DateTime.parse("2016-08-26"), Period.days(5));
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.DatesNotApproximatelyEqualException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(DatesNotApproximatelyEqualException.class));
         product.StartPage.DateLabel.DatesApproximatelyEqual("name", DateTime.parse("2016-08-08"), Period.days(5));
     }
 
@@ -151,7 +152,7 @@ public class IEDriverTests {
     @Test
     public void TestDisabled() {
         product.StartPage.DisabledButton.IsDisabled();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementIsEnabledException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementIsEnabledException.class));
         product.StartPage.Start.IsDisabled();
     }
 
@@ -190,14 +191,14 @@ public class IEDriverTests {
     @Test
     public void TestEnabled() {
         product.StartPage.Start.IsEnabled();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementNotEnabledException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementNotEnabledException.class));
         product.StartPage.DisabledButton.IsEnabled();
     }
 
     @Test
     public void TestExists(){
         product.StartPage.Start.Exists();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.NoSuchElementException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
         product.StartPage.NonExistentLabel.Exists();
     }
 
@@ -208,7 +209,7 @@ public class IEDriverTests {
 
         assert(text.equals("Send some keys"));
         product.browser.DismissAlert();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.NoAlertException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
         product.browser.GetAlertText();
     }
 
@@ -246,7 +247,7 @@ public class IEDriverTests {
     @Test
     public void TestNotExists(){
         product.StartPage.NonExistentLabel.NotExists();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementExistsException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementExistsException.class));
         product.StartPage.Start.NotExists();
     }
 
@@ -263,7 +264,7 @@ public class IEDriverTests {
     @Test
     public void TestNotVisible() {
         product.StartPage.InvisibleButton.NotVisible();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementIsVisibleException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementIsVisibleException.class));
         product.StartPage.OpenAlertButton.NotVisible();
     }
 
@@ -309,7 +310,7 @@ public class IEDriverTests {
         product.StartPage.OpenAlertButton.Click();
         product.browser.VerifyAlertExists();
         product.browser.VerifyAlertText("Send some keys");
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ValuesAreNotEqualException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.VerifyAlertText("Send other keys");
     }
 
@@ -318,14 +319,14 @@ public class IEDriverTests {
         product.StartPage.OpenAlertButton.Click();
         product.browser.VerifyAlertExists();
         product.browser.VerifyAlertTextLike("Send some keys", true);
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ValuesAreNotAlikeException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
         product.browser.VerifyAlertTextLike("send some keys", true);
     }
 
     @Test
     public void TestVerifyTitle() {
         product.browser.VerifyTitle("Material Design Lite");
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ValuesAreNotEqualException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.VerifyTitle("Fake Title");
     }
 
@@ -333,14 +334,14 @@ public class IEDriverTests {
     public void TestVerifyURL() {
         product.browser.GoToUrl("https://www.google.com");
         product.browser.VerifyURL("https://www.google.com/");
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ValuesAreNotEqualException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.VerifyURL("https://www.googley.com");
     }
 
     @Test
     public void TestVisible_Correct() {
         product.StartPage.DateLabel.Visible();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementNotVisibleException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementNotVisibleException.class));
         product.StartPage.InvisibleButton.Visible();
     }
 
@@ -357,7 +358,7 @@ public class IEDriverTests {
         product.browser.SwitchToMainWindow(true);
         product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.NotAllPopupWindowsClosedException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.SwitchToMainWindow(true);
     }
 
@@ -367,7 +368,7 @@ public class IEDriverTests {
         product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByTitle("Google");
         product.browser.VerifyTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.NoSuchWindowException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.SwitchToWindowByTitle("Some Fake Title");
     }
 
@@ -378,7 +379,7 @@ public class IEDriverTests {
         product.StartPage.PopupButton.Click();
         product.browser.SwitchToWindowByUrl("https://www.google.com/");
         product.browser.VerifyTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.NoSuchWindowException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.SwitchToWindowByUrl("www.fake.com");
     }
 
@@ -394,7 +395,7 @@ public class IEDriverTests {
         product.StartPage.DropDown.Click();
         product.StartPage.DropDown.HasOptions(validOptionValues, null, WebSelectOption.Value);
         String[] invalidOptionValues = {"0", "1", "fail"};
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementDoesNotHaveOptionException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.StartPage.DropDown.HasOptions(invalidOptionValues, null, WebSelectOption.Value);
     }
 
@@ -404,7 +405,7 @@ public class IEDriverTests {
         product.StartPage.DropDown.Click();
         product.StartPage.DropDown.HasOptions(validOptionTexts, null, WebSelectOption.Text);
         String[] invalidOptions = {"option0", "fail"};
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementDoesNotHaveOptionException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.StartPage.DropDown.HasOptions(invalidOptions, null, WebSelectOption.Text);
     }
 
@@ -414,7 +415,7 @@ public class IEDriverTests {
         product.StartPage.DropDown.Click();
         product.StartPage.DropDown.DoesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
         String[] validOptionValues = {"1", "2", "49"};
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementHasOptionException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementHasOptionException.class));
         product.StartPage.DropDown.DoesNotHaveOptions(validOptionValues, null, WebSelectOption.Value);
     }
 
@@ -424,35 +425,35 @@ public class IEDriverTests {
         product.StartPage.DropDown.Click();
         product.StartPage.DropDown.DoesNotHaveOptions(invalidOptionTexts, null, WebSelectOption.Text);
         String[] validOptionTexts = {"Option-1", "Klingon", "nothing", "option1"};
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementHasOptionException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementHasOptionException.class));
         product.StartPage.DropDown.DoesNotHaveOptions(validOptionTexts, null, WebSelectOption.Text);
     }
 
     @Test
     public void TestHasAllOptionsInOrder_ByValue_Ascending(){
         product.StartPage.LexoDropDown.HasAllOptionsInOrder(CompareType.AscendingByValue);
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementsNotInOrderException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.AscendingByValue);
     }
 
     @Test
     public void TestHasAllOptionsInOrder_ByValue_Descending(){
         product.StartPage.RevLexoDropDown.HasAllOptionsInOrder(CompareType.DescendingByValue);
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementsNotInOrderException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.DescendingByValue);
     }
 
     @Test
     public void TestHasAllOptionsInOrder_ByText_Ascending(){
         product.StartPage.LexoDropDown.HasAllOptionsInOrder(CompareType.AscendingByText);
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementsNotInOrderException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.AscendingByText);
     }
 
     @Test
     public void TestHasAllOptionsInOrder_ByText_Descending(){
         product.StartPage.RevLexoDropDown.HasAllOptionsInOrder(CompareType.DescendingByText);
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementsNotInOrderException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.DescendingByText);
     }
 
@@ -461,7 +462,7 @@ public class IEDriverTests {
         int totalOptions = 5000;
         product.StartPage.DropDown.HasNumberOfOptions(totalOptions);
         totalOptions = 50;
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementDoesNotHaveNumberOfOptionsException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveNumberOfOptionsException.class));
         product.StartPage.DropDown.HasNumberOfOptions(totalOptions);
     }
 
@@ -470,7 +471,7 @@ public class IEDriverTests {
         String[] validOptions = {"option1", "option2", "option3"};
         product.StartPage.DropDown.HasOptionsInOrder(validOptions, WebSelectOption.Text);
         String[] invalidoptions = {"option1", "option4", "option2"};
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementDoesNotHaveOptionException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.StartPage.DropDown.HasOptionsInOrder(invalidoptions, WebSelectOption.Text);
     }
 
@@ -479,7 +480,7 @@ public class IEDriverTests {
         String[] validoptions = {"1", "2", "3"};
         product.StartPage.DropDown.HasOptionsInOrder(validoptions, WebSelectOption.Value);
         String[] invalidoptions = {"1", "2", "3", "40", "5"};
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ElementDoesNotHaveOptionException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.StartPage.DropDown.HasOptionsInOrder(invalidoptions, WebSelectOption.Value);
     }
 
@@ -502,7 +503,7 @@ public class IEDriverTests {
         product.StartPage.LexoDropDown.Is("01", "value");
         product.StartPage.LexoDropDown.IsNotLike("appple");
         product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.ValuesAreNotEqualException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.StartPage.LexoDropDown.Is("ZEBRA");
     }
 
@@ -517,7 +518,7 @@ public class IEDriverTests {
         product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
         product.StartPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.Click();
         product.StartPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.Click();
-        thrown.expectCause(IsInstanceOf.instanceOf(aeon.core.common.exceptions.NoSuchElementException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
         product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.Click();
     }
 

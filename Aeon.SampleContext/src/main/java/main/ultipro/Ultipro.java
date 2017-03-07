@@ -1,6 +1,6 @@
 package main.ultipro;
 
-import aeon.core.test_abstraction.product.WebProduct;
+import echo.core.test_abstraction.product.WebProduct;
 
 /**
  * Created by SebastianR on 11/23/2016.
