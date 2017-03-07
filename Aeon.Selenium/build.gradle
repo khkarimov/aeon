@@ -1,0 +1,94 @@
+def baseProjectName = 'Aeon.Selenium'
+def baseProjectDescription = 'Aeon Selenium'
+def base = baseProjectName
+
+group 'Aeon.Selenium'
+version '0.2.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    aeon
+    compile.extendsFrom(aeon)
+}
+
+ext {
+    seleniumVersion = '3.0.1'
+    chromeDriverVersion = '2.24'
+}
+
+dependencies {
+    compile project(':Aeon.Core')
+
+    compile 'ro.fortsoft.pf4j:pf4j:0.13.1'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.1'
+
+    compile 'joda-time:joda-time:2.9.3'
+
+    // Drivers
+    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'SeleniumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
+    }
+
+//    from configurations.compile.collect {
+//        it.isDirectory() ? it : zipTree(it)
+//    }
+}
+
+
+task buildPlugin(type: Jar) {
+    group 'build'
+    baseName = base
+    version = version
+    into('classes') {
+        with jar
+    }
+    extension('zip')
+}
+
+task copyToDistrib(type: Copy) {
+    group 'copy'
+    println('Copying Aeon.Selenium to distrib folder')
+
+    def source = 'build/libs/' + base + '-' + version + '.jar'
+    def destination = '../distrib'
+    def distribFolder = new File('../distrib', '')
+
+    if (!distribFolder.exists()) {
+        println('Creating distrib folder')
+
+        distribFolder.mkdir()
+    } else {
+        println('Distrib exists')
+    }
+
+    from source
+    into destination
+}
+
+copyToDistrib.outputs.upToDateWhen { false }
+jar.finalizedBy(buildPlugin)

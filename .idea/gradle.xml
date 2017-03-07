@@ -3,16 +3,17 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.5-all/d3xh0kipe7wr2bvnx5sk0hao8/gradle-2.5" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Echo.Automation.SampleTeam" />
-            <option value="$PROJECT_DIR$/Echo.Core" />
-            <option value="$PROJECT_DIR$/Echo.SampleContext" />
-            <option value="$PROJECT_DIR$/Echo.Selenium" />
+            <option value="$PROJECT_DIR$/Aeon.Automation.SampleTeam" />
+            <option value="$PROJECT_DIR$/Aeon.Core" />
+            <option value="$PROJECT_DIR$/Aeon.SampleContext" />
+            <option value="$PROJECT_DIR$/Aeon.Selenium" />
           </set>
         </option>
       </GradleProjectSettings>
