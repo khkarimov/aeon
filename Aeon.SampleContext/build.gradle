@@ -20,8 +20,6 @@ configurations {
 
 dependencies {
     compile project(':Aeon.Core')
-
-    aeon fileTree(dir: '../distrib/', include: 'Aeon.Core-*.jar')
 }
 
 jar {

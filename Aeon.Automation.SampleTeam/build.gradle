@@ -35,9 +35,6 @@ dependencies {
 
     compile 'joda-time:joda-time:2.9.3'
 
-    compile fileTree(dir: '../distrib/', include: 'Aeon.Core-*.jar')
-    compile fileTree(dir: '../distrib/', include: 'Aeon.SampleContext-*.jar')
-
     // Drivers
     compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
