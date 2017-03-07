@@ -1,6 +1,6 @@
 package main;
 
-import echo.core.test_abstraction.product.WebProduct;
+import aeon.core.test_abstraction.product.WebProduct;
 import main.ultipro.HomePage;
 import main.ultipro.LoginPage;
 
