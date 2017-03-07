@@ -1,9 +1,9 @@
 package main.samplegrid;
 
-import aeon.core.command_execution.AutomationInfo;
+import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.common.web.selectors.By;
-import aeon.core.test_abstraction.elements.web.RowActions;
+import aeon.core.testabstraction.elements.web.RowActions;
 
 /**
  * Created by justinp on 12/20/16.

@@ -1,9 +1,9 @@
 package main.samplegrid;
 
-import aeon.core.command_execution.AutomationInfo;
+import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
-import aeon.core.test_abstraction.elements.web.Button;
-import aeon.core.test_abstraction.elements.web.RowElements;
+import aeon.core.testabstraction.elements.web.Button;
+import aeon.core.testabstraction.elements.web.RowElements;
 
 /**
  * Created by justinp on 12/20/16.

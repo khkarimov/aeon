@@ -8,7 +8,7 @@ import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
-import aeon.core.framework_abstraction.controls.web.IWebCookie;
+import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -18,7 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import java.util.Date;
 
-import static aeon.core.test_abstraction.product.Aeon.Launch;
+import static aeon.core.testabstraction.product.Aeon.Launch;
 
 public class FirefoxBrowserTests {
 

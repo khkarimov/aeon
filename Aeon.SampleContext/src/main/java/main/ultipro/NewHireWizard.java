@@ -1,8 +1,8 @@
 package main.ultipro;
 
-import aeon.core.command_execution.AutomationInfo;
+import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
-import aeon.core.test_abstraction.elements.web.Button;
+import aeon.core.testabstraction.elements.web.Button;
 
 /**
  * Created by SebastianR on 11/23/2016.

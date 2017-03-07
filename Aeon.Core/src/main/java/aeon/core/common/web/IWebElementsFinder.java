@@ -1,8 +1,8 @@
 package aeon.core.common.web;
 
 import aeon.core.common.web.interfaces.IBy;
-import aeon.core.framework_abstraction.controls.web.WebControl;
-import aeon.core.framework_abstraction.drivers.IWebDriver;
+import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Collection;
 

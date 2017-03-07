@@ -1,8 +1,8 @@
 package aeon.core.common.helpers;
 
 import aeon.core.common.exceptions.ScriptExecutionException;
-import aeon.core.framework_abstraction.drivers.IDriver;
-import aeon.core.framework_abstraction.drivers.IWebDriver;
+import aeon.core.framework.abstraction.drivers.IDriver;
+import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 

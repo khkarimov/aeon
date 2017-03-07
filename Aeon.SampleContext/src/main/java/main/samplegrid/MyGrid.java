@@ -1,6 +1,6 @@
 package main.samplegrid;
 
-import aeon.core.test_abstraction.elements.web.Grid;
+import aeon.core.testabstraction.elements.web.Grid;
 
 /**
  * Created by justinp on 12/20/16.

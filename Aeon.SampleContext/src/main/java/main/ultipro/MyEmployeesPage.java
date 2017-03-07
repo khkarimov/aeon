@@ -1,10 +1,10 @@
 package main.ultipro;
 
-import aeon.core.command_execution.AutomationInfo;
+import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.common.web.selectors.By;
-import aeon.core.test_abstraction.elements.web.Button;
-import aeon.core.test_abstraction.elements.web.TextBox;
+import aeon.core.testabstraction.elements.web.Button;
+import aeon.core.testabstraction.elements.web.TextBox;
 import main.ultipro.my_employees_grid.MyEmployeesGrid;
 import main.ultipro.my_employees_grid.MyEmployeesHeaders;
 

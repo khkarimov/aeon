@@ -1,9 +1,9 @@
 package main.ultipro.my_employees_grid;
 
-import aeon.core.command_execution.AutomationInfo;
+import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
-import aeon.core.test_abstraction.elements.web.Link;
-import aeon.core.test_abstraction.elements.web.RowElements;
+import aeon.core.testabstraction.elements.web.Link;
+import aeon.core.testabstraction.elements.web.RowElements;
 
 /**
  * Created by SebastianR on 12/29/2016.

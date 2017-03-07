@@ -1,6 +1,6 @@
 package aeon.core.common.helpers;
 
-import aeon.core.framework_abstraction.controls.web.WebControl;
+import aeon.core.framework.abstraction.controls.web.WebControl;
 
 import java.net.URI;
 import java.util.Collection;

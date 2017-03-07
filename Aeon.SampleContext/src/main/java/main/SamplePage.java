@@ -1,8 +1,8 @@
 package main;
 
 import aeon.core.common.web.selectors.By;
-import aeon.core.test_abstraction.elements.Element;
-import aeon.core.test_abstraction.models.Page;
+import aeon.core.testabstraction.elements.Element;
+import aeon.core.testabstraction.models.Page;
 
 /**
  * Created by DionnyS on 4/13/2016.

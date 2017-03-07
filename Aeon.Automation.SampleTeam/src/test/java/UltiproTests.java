@@ -3,7 +3,7 @@ import main.ultipro.Ultipro;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import static aeon.core.test_abstraction.product.Aeon.Launch;
+import static aeon.core.testabstraction.product.Aeon.Launch;
 
 /**
  * Created by SebastianR on 11/23/2016.

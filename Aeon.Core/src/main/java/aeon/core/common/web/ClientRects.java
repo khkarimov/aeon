@@ -1,7 +1,9 @@
 package aeon.core.common.web;
 
+import aeon.core.command.execution.commands.web.GetClientRectsCommand;
+
 /**
- * Class to easily manage the return value from {@link aeon.core.command_execution.commands.web.GetClientRectsCommand}. It also provides the script for that command.
+ * Class to easily manage the return value from {@link GetClientRectsCommand}. It also provides the script for that command.
  */
 public class ClientRects {
     private int top;
