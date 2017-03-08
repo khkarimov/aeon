@@ -219,7 +219,7 @@
                     <div>
                         <button id="alertDialog"
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-                                onclick="prompt('Send some keys');">
+                                onclick="promptTest();">
                             Create Alert Dialog
                         </button>
                     </div>
@@ -260,8 +260,9 @@
 				<option value="02">banana</option>
 				<option value="01">apple</option>
 			</select>
-			<p id="date-text" name="2016-08-31">8/31/2016</p>
-			<button id ="invisible-button" hidden="false">Invisible text</button>
+            <p id="date-text" name="2016-08-31" onmousedown="mouseDown(event);" onmouseup="mouseUp(event);">8/31/2016</p>
+            <p id="reaction-text" name="Reaction label">This will change</p>
+            <button id ="invisible-button" hidden="false">Invisible text</button>
 			<input type="radio" name="Next" value="Next" id="next-radio-button"> Next<br>
         </div>
         <div style="margin: 50px 20% 200px 20%; background-color: white;">
@@ -431,6 +432,33 @@
 
         xhr.open('GET', url, true);
         xhr.send('');
+    }
+
+    //extra test validation
+    var timeDown;
+    var timeUp;
+    var promptText;
+
+    function promptTest(){
+      promptText = prompt('Send some keys');
+      document.getElementById("reaction-text").textContent = promptText;
+    }
+
+    function mouseDown(e){
+      timeDown = new Date();
+      switch (e.which) {
+        case 1: document.getElementById("reaction-text").textContent = "left click"; break;
+        case 2: document.getElementById("reaction-text").textContent = "middle click"; break;
+        case 3: document.getElementById("reaction-text").textContent = "right click"; break;
+      }
+    }
+
+    function mouseUp(e){
+      timeUp = new Date();
+      var diff = timeUp - timeDown;
+      if (diff >= 4980 ) {
+        document.getElementById("reaction-text").textContent = "mouse held for 5000";
+      }
     }
 
     $(document).ready(function () {
