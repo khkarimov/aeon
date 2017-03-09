@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -19,13 +18,12 @@ public class SwitchToMainWindowCommand extends Command {
 
     /**
      * Initializes a new instance of the {@link SwitchToMainWindowCommand} class.
-     *
-     * @param log                           The logger.
+     *                           The logger.
      * @param mainWindowHandle              The handle of the main window.
      * @param waitForAllPopupWindowsToClose Whether to wait for all popup windows to close.
      */
-    public SwitchToMainWindowCommand(ILog log, String mainWindowHandle, boolean waitForAllPopupWindowsToClose) {
-        super(log, String.format(Resources.getString("SwitchToMainWindowCommand_Info"), mainWindowHandle));
+    public SwitchToMainWindowCommand(String mainWindowHandle, boolean waitForAllPopupWindowsToClose) {
+        super(String.format(Resources.getString("SwitchToMainWindowCommand_Info"), mainWindowHandle));
         this.mainWindowHandle = mainWindowHandle;
         this.waitForAllPopupWindowsToClose = waitForAllPopupWindowsToClose;
     }

@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -22,13 +21,12 @@ public class GetClientRectsCommand extends WebControlCommandWithReturn {
 
     /**
      * Initializes a new instance of the GetClientRectsCommand.
-     *
-     * @param log         The logger.
+     *         The logger.
      * @param selector    The selector.
      * @param initializer The command initializer.
      */
-    public GetClientRectsCommand(ILog log, IBy selector, ICommandInitializer initializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("GetClientRectsCommand_Info"), selector), selector, initializer);
+    public GetClientRectsCommand(IBy selector, ICommandInitializer initializer) {
+        super(String.format(Locale.getDefault(), Resources.getString("GetClientRectsCommand_Info"), selector), selector, initializer);
     }
 
     /**

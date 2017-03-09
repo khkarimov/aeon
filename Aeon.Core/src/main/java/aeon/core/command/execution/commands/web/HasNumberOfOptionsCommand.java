@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -24,14 +23,13 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
     /**
      * Initializes a new instance of the HasNumberOfOptionsCommand.
      *
-     * @param log                The logger.
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
      * @param numberofoptions    The number of options that the option group should have.
      * @param optgroup           The visible text of the option group.
      */
-    public HasNumberOfOptionsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, int numberofoptions, String optgroup) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("HasNumberOfOptionsCommand_Info"), selector, numberofoptions), selector, commandInitializer);
+    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int numberofoptions, String optgroup) {
+        super(String.format(Locale.getDefault(), Resources.getString("HasNumberOfOptionsCommand_Info"), selector, numberofoptions), selector, commandInitializer);
         this.number = numberofoptions;
         this.optgroup = optgroup;
     }
@@ -39,13 +37,12 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
     /**
      * Initializes a new instance of the HasNumberOfOptionsCommand.
      *
-     * @param log                The logger.
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
      * @param numberofoptions    The number of options the select should have.
      */
-    public HasNumberOfOptionsCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, int numberofoptions) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("BlurCommand_Info"), selector), selector, commandInitializer);
+    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int numberofoptions) {
+        super(String.format(Locale.getDefault(), Resources.getString("BlurCommand_Info"), selector), selector, commandInitializer);
         this.number = numberofoptions;
         this.optgroup = null;
     }

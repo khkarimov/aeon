@@ -1,17 +1,15 @@
 package aeon.core.command.execution.commands;
 
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
 public class QuitCommand extends Command {
     /**
      * Initializes a new instance of the {@link QuitCommand} class.
      *
-     * @param log The logger.
      */
-    public QuitCommand(ILog log) {
-        super(log, Resources.getString("QuitCommand_Info"));
+    public QuitCommand() {
+        super(Resources.getString("QuitCommand_Info"));
     }
 
     /**

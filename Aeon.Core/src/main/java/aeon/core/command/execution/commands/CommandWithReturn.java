@@ -2,8 +2,6 @@ package aeon.core.command.execution.commands;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.command.execution.commands.interfaces.ICommand;
-import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.command.execution.consumers.CommandDelegateRunner;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.apache.commons.lang3.StringUtils;
@@ -25,23 +23,18 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
      *
-     * @param log     The logger.
      * @param message The message to log.
      */
-    protected CommandWithReturn(ILog log, String message) {
-        this(log, message, null);
+    protected CommandWithReturn(String message) {
+        this(message, null);
     }
 
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
      *
-     * @param log     The log.
      * @param message The message to log.
      */
-    protected CommandWithReturn(ILog log, String message, ICommandInitializer initializer) {
-        if (log == null) {
-            throw new IllegalArgumentException("log");
-        }
+    protected CommandWithReturn(String message, ICommandInitializer initializer) {
 
         this.commandInitializer = initializer;
         this.guid = UUID.randomUUID();
@@ -50,10 +43,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
             message = this.getClass().getSimpleName();
         }
 
-//        log.Info(
-//                guid,
-//                String.format(Resources.getString("CommandInstantiated_Info"), message));
-        this.log.info(message);
+        log.info(message);
     }
 
     /**

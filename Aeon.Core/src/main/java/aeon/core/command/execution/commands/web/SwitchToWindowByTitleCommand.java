@@ -6,7 +6,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -24,12 +23,11 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the {@link SwitchToWindowByTitleCommand} class.
-     *
-     * @param log   The logger.
+     *   The logger.
      * @param title The title of the desired window.
      */
-    public SwitchToWindowByTitleCommand(ILog log, String title) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("SwitchToWindowByTitleCommand_Info"), title));
+    public SwitchToWindowByTitleCommand(String title) {
+        super(String.format(Locale.getDefault(), Resources.getString("SwitchToWindowByTitleCommand_Info"), title));
         this.title = title;
     }
 

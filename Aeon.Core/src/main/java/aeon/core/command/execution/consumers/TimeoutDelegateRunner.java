@@ -6,6 +6,8 @@ import aeon.core.common.exceptions.TimeoutExpiredException;
 import aeon.core.common.helpers.IClock;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.framework.abstraction.drivers.IDriver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
@@ -20,6 +22,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     private IDriver driver;
     private IClock clock;
     private Duration timeout;
+    private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
 
     public TimeoutDelegateRunner(UUID guid, IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
         super(guid, successor);
@@ -54,15 +57,15 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             try {
                 tries++;
                 Object returnValue = commandDelegateWrapper.get();
-                getLog().Debug(guid, String.format(Resources.getString("TimWtr_Success_Debug"), tries));
+                log.debug(String.format(Resources.getString("TimWtr_Success_Debug"), tries));
                 return returnValue;
             } catch (OutOfMemoryError e) {
-                getLog().Error(guid, Resources.getString("TimWtr_OutOfMemoryException_Error"));
-                getLog().Error(guid, Resources.getString("StackTraceMessage") + e.getMessage() + e.getStackTrace());
+                log.error(Resources.getString("TimWtr_OutOfMemoryException_Error"));
+                log.error(Resources.getString("StackTraceMessage") + e.getMessage() + e.getStackTrace());
                 throw e;
             } catch (RuntimeException e) {
                 lastCaughtException = e;
-                getLog().Debug(guid, String.format(Resources.getString("TimWtr_Exception_Debug"), tries,
+                log.debug(String.format(Resources.getString("TimWtr_Exception_Debug"), tries,
                         lastCaughtException.getClass().getSimpleName(), lastCaughtException.getMessage()));
             }
 
@@ -85,11 +88,11 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         }
 
         if (screenshot == null) {
-            getLog().Error(guid, ex.getMessage(), /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
-            getLog().Error(Resources.getString("StackTraceMessage"), lastCaughtException);
+            log.error(ex.getMessage(), /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
+            log.error(Resources.getString("StackTraceMessage"), lastCaughtException);
         } else {
-            getLog().Error(guid, ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
-            getLog().Error(Resources.getString("StackTraceMessage"), lastCaughtException);
+            log.error(ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
+            log.error(Resources.getString("StackTraceMessage"), lastCaughtException);
         }
 
         String pageSource = null;
@@ -101,7 +104,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         }
 
         if (pageSource != null) {
-            getLog().Trace(guid, ex.getMessage(), pageSource);
+            log.trace(ex.getMessage(), pageSource);
         }
 
         throw ex;

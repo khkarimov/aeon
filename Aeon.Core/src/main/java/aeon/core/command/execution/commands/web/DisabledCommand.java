@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -14,8 +13,8 @@ import java.util.Locale;
  */
 public class DisabledCommand extends WebControlCommand {
 
-    public DisabledCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("DisabledCommand_Info"), selector), selector, commandInitializer);
+    public DisabledCommand(IBy selector, ICommandInitializer commandInitializer) {
+        super(String.format(Locale.getDefault(), Resources.getString("DisabledCommand_Info"), selector), selector, commandInitializer);
     }
 
     @Override

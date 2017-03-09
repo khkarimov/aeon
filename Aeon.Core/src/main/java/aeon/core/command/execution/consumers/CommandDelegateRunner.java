@@ -1,23 +1,19 @@
 package aeon.core.command.execution.consumers;
 
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class CommandDelegateRunner implements IDelegateRunner {
     private IDriver driver;
-    private ILog log;
+    private static Logger log = LogManager.getLogger(CommandDelegateRunner.class);
 
-    public CommandDelegateRunner(IDriver driver, ILog log) {
+    public CommandDelegateRunner(IDriver driver) {
         this.driver = driver;
-        this.log = log;
-    }
-
-    public final ILog getLog() {
-        return log;
     }
 
     public final void Execute(Consumer<IDriver> commandDelegate) {

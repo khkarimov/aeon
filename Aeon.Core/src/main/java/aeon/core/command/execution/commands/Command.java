@@ -2,8 +2,6 @@ package aeon.core.command.execution.commands;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.command.execution.commands.interfaces.ICommand;
-import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -24,20 +22,18 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
     /**
      * Initializes a new instance of the {@link Command} class.
      *
-     * @param log     The logger.
      * @param message The message to log.
      */
-    protected Command(ILog log, String message) {
-        this(log, message, null);
+    protected Command(String message) {
+        this(message, null);
     }
 
     /**
      * Initializes a new instance of the {@link Command} class.
      *
-     * @param log     The log.
      * @param message The message to log.
      */
-    protected Command(ILog log, String message, ICommandInitializer initializer) {
+    protected Command(String message, ICommandInitializer initializer) {
         if (log == null) {
             throw new IllegalArgumentException("log");
         }
@@ -52,7 +48,7 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
 //        log.Info(
 //                guid,
 //                String.format(Resources.getString("CommandInstantiated_Info"), message));
-        this.log.info(message);
+        log.info(message);
     }
 
     public final ICommandInitializer getCommandInitializer() {

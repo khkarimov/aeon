@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -21,13 +20,12 @@ public class ModifyCookieCommand extends Command {
 
     /**
      * Initializes a new instance of the ModifyCookieCommand.
-     *
-     * @param log   The logger.
+     *   The logger.
      * @param name  The name of the cookie.
      * @param value The value.
      */
-    public ModifyCookieCommand(ILog log, String name, String value) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("ModifyCookieCommand_Info"), name, value));
+    public ModifyCookieCommand(String name, String value) {
+        super(String.format(Locale.getDefault(), Resources.getString("ModifyCookieCommand_Info"), name, value));
         this.name = name;
         this.value = value;
     }

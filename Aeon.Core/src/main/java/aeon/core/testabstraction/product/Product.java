@@ -3,7 +3,6 @@ package aeon.core.testabstraction.product;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.Capability;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 
@@ -13,7 +12,6 @@ import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 public abstract class Product {
     protected AutomationInfo automationInfo;
     protected Parameters parameters;
-    protected ILog log;
     protected Configuration configuration;
     protected WebCommandExecutionFacade commandExecutionFacade;
 
@@ -55,10 +53,6 @@ public abstract class Product {
 
     protected void setParameters(Parameters parameters) {
         this.parameters = parameters;
-    }
-
-    protected void setLog(ILog log) {
-        this.log = log;
     }
 
     protected void afterLaunch() {

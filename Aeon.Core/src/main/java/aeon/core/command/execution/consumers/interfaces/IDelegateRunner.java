@@ -1,6 +1,5 @@
 package aeon.core.command.execution.consumers.interfaces;
 
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
 import java.util.function.Consumer;
@@ -10,10 +9,6 @@ import java.util.function.Function;
  * A delegate runner.
  */
 public interface IDelegateRunner {
-    /**
-     * Gets a log.
-     */
-    ILog getLog();
 
     /**
      * Executes a command.

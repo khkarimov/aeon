@@ -39,7 +39,7 @@ public class WebProduct extends Product {
         commandExecutionFacade = new WebCommandExecutionFacade(
                 new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)), new AjaxWaiter(driver, Duration.millis(20000)));
 
-        this.automationInfo = new AutomationInfo(parameters, driver, adapter, configuration.getLog());
+        this.automationInfo = new AutomationInfo(parameters, driver, adapter);
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
 
         afterLaunch();

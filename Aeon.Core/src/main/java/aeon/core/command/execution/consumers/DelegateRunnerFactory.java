@@ -53,7 +53,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
         // TODO(DionnyS): JAVA_CONVERSION Use an IoC container to resolve the factory.
         IDriver driver = automationInfo.getDriver();
 
-        CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver, automationInfo.getLog());
+        CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver);
         TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(guid, commandDelegateRunner, driver, clock, defaultTimeout);
         ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(guid, timeoutDelegateRunner, new SeleniumExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
         return new ThrottledDelegateRunner(guid, exceptionHandlingDelegateRunner, throttleFactor);

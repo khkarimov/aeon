@@ -3,7 +3,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.Command;
 import com.sun.glass.ui.Size;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserSizeMap;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -22,11 +21,10 @@ public class ResizeCommand extends Command {
     /**
      * Initializes a new instance of the {@link ResizeCommand} class.
      *
-     * @param log  The logger.
      * @param size The new browser size.
      */
-    public ResizeCommand(ILog log, BrowserSize size) {
-        super(log, Resources.getString("ResizeCommand_Info"));
+    public ResizeCommand(BrowserSize size) {
+        super(Resources.getString("ResizeCommand_Info"));
         this.size = BrowserSizeMap.Map(size);
     }
 

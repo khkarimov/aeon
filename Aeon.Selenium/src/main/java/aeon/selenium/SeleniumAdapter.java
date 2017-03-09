@@ -11,7 +11,6 @@ import aeon.core.common.exceptions.NoSuchWindowException;
 import aeon.core.common.helpers.MouseHelper;
 import aeon.core.common.helpers.SendKeysHelper;
 import aeon.core.common.helpers.Sleep;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.JQueryStringType;
@@ -24,6 +23,8 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
@@ -51,17 +52,16 @@ import static aeon.core.common.helpers.StringUtils.NormalizeSpacing;
 public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
-    private ILog log;
     private boolean moveMouseToOrigin;
     private BrowserType browserType;
+    private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
 
     public SeleniumAdapter() {
     }
 
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, ILog log, boolean moveMouseToOrigin, BrowserType browserType) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
-        this.log = log;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
     }
@@ -83,10 +83,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         return javaScriptExecutor;
     }
 
-    protected final ILog getLog() {
-        return log;
-    }
-
     /**
      * Adds a cookie.
      *
@@ -94,7 +90,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param cookie The cookie to be added.
      */
     public final void AddCookie(UUID guid, IWebCookie cookie) {
-        log.Trace(guid, "WebDriver.add_Cookie();");
+        log.trace("WebDriver.add_Cookie();");
         Cookie c = new Cookie(cookie.getName(), cookie.getValue(), cookie.getDomain(), cookie.getPath(), cookie.getExpiration());
         getWebDriver().manage().addCookie(c);
     }
@@ -105,7 +101,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      */
     public final void DeleteAllCookies(UUID guid) {
-        log.Trace(guid, "WebDriver.delete_AllCookies();");
+        log.trace("WebDriver.delete_AllCookies();");
         getWebDriver().manage().deleteAllCookies();
     }
 
@@ -116,7 +112,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param name The name of the cookie to be deleted.
      */
     public final void DeleteCookie(UUID guid, String name) {
-        log.Trace(guid, "WebDriver.delete_Cookie();");
+        log.trace("WebDriver.delete_Cookie();");
         getWebDriver().manage().deleteCookieNamed(name);
     }
 
@@ -127,14 +123,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return The list of cookies.
      */
     public final List<IWebCookie> GetAllCookies(UUID guid) {
-        log.Trace(guid, "WebDriver.get_AllCookies();");
+        log.trace("WebDriver.get_AllCookies();");
 
         List<IWebCookie> result = getWebDriver().manage().getCookies()
                 .stream()
                 .map(x -> new SeleniumCookie(x))
                 .collect(Collectors.toList());
 
-        log.Trace(guid, String.format("Result: %1$s", result));
+        log.trace(String.format("Result: %1$s", result));
         return result;
     }
 
@@ -146,13 +142,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return The specified cookie.
      */
     public final IWebCookie GetCookie(UUID guid, String name) {
-        log.Trace(guid, "WebDriver.get_Cookie();");
+        log.trace("WebDriver.get_Cookie();");
         Cookie cookie = getWebDriver().manage().getCookieNamed(name);
         if (cookie == null) {
             throw new aeon.core.common.exceptions.NoSuchCookieException(name);
         }
         IWebCookie result = new SeleniumCookie(cookie);
-        getLog().Trace(guid, String.format("Result: %1$s", result));
+        log.trace(String.format("Result: %1$s", result));
         return result;
     }
 
@@ -164,7 +160,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param value The value of the cookie.
      */
     public final void ModifyCookie(UUID guid, String name, String value) {
-        log.Trace(guid, "WebDriver.modify_Cookie();");
+        log.trace("WebDriver.modify_Cookie();");
         Cookie cookie = getWebDriver().manage().getCookieNamed(name);
 
         // Check if cookie actually exists.
@@ -185,9 +181,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A string representation of the window's title.
      */
     public final String GetTitle(UUID guid) {
-        log.Trace(guid, "WebDriver.get_Title();");
+        log.trace("WebDriver.get_Title();");
         String result = webDriver.getTitle();
-        log.Trace(guid, String.format("Result: %1$s", result));
+        log.trace(String.format("Result: %1$s", result));
         return result;
     }
 
@@ -198,9 +194,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A URI object of the URL of the browser's window.
      */
     public final URL GetUrl(UUID guid) {
-        log.Trace(guid, "WebDriver.get_Url();");
+        log.trace("WebDriver.get_Url();");
         String result = webDriver.getCurrentUrl();
-        getLog().Trace(guid, String.format("Result: %1$s", result));
+        log.trace(String.format("Result: %1$s", result));
         try {
             return new URL(result);
         } catch (MalformedURLException e) {
@@ -215,10 +211,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return The currently focused element.
      */
     public final WebControl GetFocusedElement(UUID guid) {
-        log.Trace(guid, "WebDriver.switch_To().active_Element()");
+        log.trace("WebDriver.switch_To().active_Element()");
         org.openqa.selenium.WebElement result = webDriver.switchTo().activeElement();
-        log.Trace(guid, String.format("Result: %1$s", result));
-        return new SeleniumElement(result, log);
+        log.trace(String.format("Result: %1$s", result));
+        return new SeleniumElement(result);
     }
 
     @Override
@@ -277,9 +273,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A string representation of the current browser window's handle.
      */
     public final String GetCurrentWindowHandle(UUID guid) {
-        log.Trace(guid, "WebDriver.get_CurrentWindowHandle();");
+        log.trace("WebDriver.get_CurrentWindowHandle();");
         String result = webDriver.getWindowHandle();
-        log.Trace(guid, String.format("Result: %1$s", result));
+        log.trace(String.format("Result: %1$s", result));
         return result;
     }
 
@@ -290,7 +286,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A collection of all handles in the current browser window.
      */
     public final Collection<String> GetWindowHandles(UUID guid) {
-        log.Trace(guid, "WebDriver.get_WindowHandles();");
+        log.trace("WebDriver.get_WindowHandles();");
         return webDriver.getWindowHandles();
     }
 
@@ -302,7 +298,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A string representation of the handle in which is navigating to the URL.
      */
     public final String GoToUrl(UUID guid, URL url) {
-        log.Trace(guid, String.format("WebDriver.Navigate().GoToUrl(\"%1$s\");", url));
+        log.trace(String.format("WebDriver.Navigate().GoToUrl(\"%1$s\");", url));
 
         webDriver.navigate().to(url);
 
@@ -340,9 +336,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                         ((findBy instanceof aeon.core.common.web.selectors.By) ? findBy : null);
 
         if (by != null) {
-            log.Trace(guid, String.format("WebDriver.FindElement(By.CssSelector(%1$s));", by));
+            log.trace(String.format("WebDriver.FindElement(By.CssSelector(%1$s));", by));
             try {
-                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())), log);
+                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new NoSuchElementException(e);
             }
@@ -367,12 +363,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         aeon.core.common.web.selectors.By by = (aeon.core.common.web.selectors.By) ((findBy instanceof aeon.core.common.web.selectors.By) ? findBy : null);
         if (by != null) {
             Collection<WebControl> collection;
-            log.Trace(guid, String.format("WebDriver.FindElements(By.CssSelector(%1$s));", by));
+            log.trace(String.format("WebDriver.FindElements(By.CssSelector(%1$s));", by));
 
             try {
                 collection = webDriver.findElements(org.openqa.selenium.By.cssSelector(findBy.toString()))
                         .stream()
-                        .map(e -> new SeleniumElement(e, log))
+                        .map(e -> new SeleniumElement(e))
                         .collect(Collectors.toList());
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new NoSuchElementsException(e);
@@ -416,7 +412,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             Collection<org.openqa.selenium.WebElement> elements =
                     (Collection<org.openqa.selenium.WebElement>) result;
 
-            return elements.stream().map(e -> new SeleniumElement(e, log))
+            return elements.stream().map(e -> new SeleniumElement(e))
                     .collect(Collectors.toList());
         } catch (Exception e) {
             throw new ScriptReturnValueNotHtmlElementException(result, script, e);
@@ -437,7 +433,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new UnsupportedSelectElementException(webElement.getClass());
         }
 
-        return new SeleniumSelectElement(new Select(elem.getUnderlyingWebElement()), log);
+        return new SeleniumSelectElement(new Select(elem.getUnderlyingWebElement()));
     }
 
     /**
@@ -446,7 +442,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      */
     public final void SwitchToDefaultContent(UUID guid) {
-        log.Trace(guid, "WebDriver.SwitchTo().DefaultContent();");
+        log.trace("WebDriver.SwitchTo().DefaultContent();");
         webDriver.switchTo().defaultContent();
     }
 
@@ -463,7 +459,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new UnsupportedElementException(webElement.getClass());
         }
 
-        log.Trace(guid, "WebDriver.SwitchTo().Frame(<IWebElement>);");
+        log.trace("WebDriver.SwitchTo().Frame(<IWebElement>);");
 
         webDriver.switchTo().frame(elem.getUnderlyingWebElement());
     }
@@ -480,7 +476,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new IllegalArgumentException("windowTitle is null or an empty string");
         }
         for (String window : GetWindowHandles(guid)) {
-            log.Trace(guid, String.format("WebDriver.SwitchTo().Window(%1$s);", window));
+            log.trace(String.format("WebDriver.SwitchTo().Window(%1$s);", window));
 
             webDriver.switchTo().window(window);
 
@@ -499,7 +495,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param handle The handle to switch to.
      */
     public final void SwitchToWindowByHandle(UUID guid, String handle) {
-        log.Trace(guid, String.format("WebDriver.SwitchTo().Window(%1$s);", handle));
+        log.trace(String.format("WebDriver.SwitchTo().Window(%1$s);", handle));
         webDriver.switchTo().window(handle);
     }
 
@@ -516,7 +512,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
 
         for (String window : GetWindowHandles(guid)) {
-            log.Trace(guid, String.format("WebDriver.SwitchTo().Window(%1$s);", window));
+            log.trace(String.format("WebDriver.SwitchTo().Window(%1$s);", window));
 
             webDriver.switchTo().window(window);
 
@@ -536,7 +532,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public final void Close(UUID guid) {
         SwitchToDefaultContent(guid);
 
-        log.Trace(guid, "WebDriver.Close();");
+        log.trace("WebDriver.Close();");
 
         webDriver.close();
     }
@@ -547,7 +543,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      */
     public final void Quit(UUID guid) {
-        log.Trace(guid, "WebDriver.Quit();");
+        log.trace("WebDriver.Quit();");
         webDriver.quit();
     }
 
@@ -557,7 +553,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      */
     public final void VerifyAlertExists(UUID guid) {
-        log.Trace(guid, "WebDriver.SwitchTo().Alert();");
+        log.trace("WebDriver.SwitchTo().Alert();");
 
         try {
             webDriver.switchTo().alert();
@@ -572,7 +568,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      */
     public final void VerifyAlertNotExists(UUID guid) {
-        log.Trace(guid, "WebDriver.SwitchTo().Alert();");
+        log.trace("WebDriver.SwitchTo().Alert();");
 
         try {
             webDriver.switchTo().alert();
@@ -591,7 +587,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final String GetAlertText(UUID guid) {
         try {
-            log.Trace(guid, "WebDriver.SwitchTo().Alert().get_Text();");
+            log.trace("WebDriver.SwitchTo().Alert().get_Text();");
             return webDriver.switchTo().alert().getText();
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
@@ -608,7 +604,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void SendKeysToAlert(UUID guid, String keysToSend) {
         try {
-            log.Trace(guid, String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
+            log.trace(String.format("WebDriver.SwitchTo().Alert().SendKeys(%1$s);", keysToSend));
             Alert alert = webDriver.switchTo().alert();
             // work around for marionette driver v.11.1
             // work around for chrome driver v2.24
@@ -633,7 +629,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void AcceptAlert(UUID guid) {
         try {
-            log.Trace(guid, "WebDriver.SwitchTo().Alert();");
+            log.trace("WebDriver.SwitchTo().Alert();");
             webDriver.switchTo().alert().accept();
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
@@ -647,7 +643,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void DismissAlert(UUID guid) {
         try {
-            log.Trace(guid, "WebDriver.SwitchTo().Alert().Dismiss();");
+            log.trace("WebDriver.SwitchTo().Alert().Dismiss();");
             webDriver.switchTo().alert().dismiss();
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
@@ -674,7 +670,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public final Object ExecuteScript(UUID guid, String script, Object... args) {
         try {
             return javaScriptExecutor.getExecutor()
-                    .apply(new SeleniumScriptExecutor(webDriver, log), guid, script, Arrays.asList(args));
+                    .apply(new SeleniumScriptExecutor(webDriver), guid, script, Arrays.asList(args));
 
         } catch (RuntimeException e) {
             throw new ScriptExecutionException(script, e);
@@ -705,7 +701,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param guid A globally unique identifier associated with this call.
      */
     public final void Refresh(UUID guid) {
-        log.Trace(guid, "WebDriver.Navigate().Refresh();");
+        log.trace("WebDriver.Navigate().Refresh();");
         webDriver.navigate().refresh();
     }
 
@@ -716,7 +712,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The element to be blurred
      */
     public final void Blur(UUID guid, WebControl element) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.BlurElement));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.BlurElement));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.BlurElement));
     }
 
@@ -727,10 +723,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void Maximize(UUID guid) {
         try {
-            log.Trace(guid, "WebDriver.Manage().Window.Maximize();");
+            log.trace("WebDriver.Manage().Window.Maximize();");
             webDriver.manage().window().maximize();
         } catch (IllegalStateException e) {
-            log.Trace(guid, "window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
+            log.trace("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
             ExecuteScript(guid, "window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
         }
     }
@@ -742,7 +738,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param size Desired dimensions to resize the window to.
      */
     public void Resize(UUID guid, Size size) {
-        log.Trace(guid, String.format("WebDriver.Manage().Window.set_Size(%1$s);", size));
+        log.trace(String.format("WebDriver.Manage().Window.set_Size(%1$s);", size));
         webDriver.manage().window().setSize(new Dimension(size.width, size.height));
     }
 
@@ -826,7 +822,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new IllegalStateException("Web IDriver does not support taking screenshot");
         }
 
-        log.Trace(guid, "webDriver.getScreenshotAs(bytes);");
+        log.trace("webDriver.getScreenshotAs(bytes);");
 
         byte[] bytes = driver.getScreenshotAs(OutputType.BYTES);
         try {
@@ -847,7 +843,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new IllegalStateException("The driver is null.");
         }
 
-        log.Trace(guid, "WebDriver.get_PageSource();");
+        log.trace("WebDriver.get_PageSource();");
 
         return webDriver.getPageSource();
     }
@@ -863,7 +859,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        log.Trace(guid, "new Actions(IWebDriver).DragAndDrop(IWebElement, IWebElement);");
+        log.trace("new Actions(IWebDriver).DragAndDrop(IWebElement, IWebElement);");
         WebElement drop = ((SeleniumElement)dropElement).getUnderlyingWebElement();
         WebElement target = ((SeleniumElement) FindElement(guid, targetElement)).getUnderlyingWebElement();
 
@@ -908,7 +904,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             return;
         }
 
-        log.Trace(guid, "new Actions(IWebDriver).ContextClick(IWebElement);");
+        log.trace("new Actions(IWebDriver).ContextClick(IWebElement);");
 
         (new Actions(webDriver)).contextClick(
                 ((SeleniumElement)element).getUnderlyingWebElement())
@@ -917,7 +913,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     // work around for marionette driver v.11.1
     public final void RightClickByJavaScript(UUID guid, WebControl element){
-       log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.ShowContextMenu));");
+       log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.ShowContextMenu));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.ShowContextMenu));
     }
 
@@ -935,7 +931,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             DoubleClickByJavaScript(guid, element);
             return;
         }
-        log.Trace(guid, "new Actions(IWebDriver).DoubleClick(IWebElement);");
+        log.trace("new Actions(IWebDriver).DoubleClick(IWebElement);");
 
         (new Actions(webDriver)).doubleClick(
                 ((SeleniumElement)element).getUnderlyingWebElement())
@@ -944,7 +940,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     // work around for marionette driver v.11.1
     public final void DoubleClickByJavaScript(UUID guid, WebControl element){
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.FireDoubleClick));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.FireDoubleClick));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.FireDoubleClick));
     }
 
@@ -1230,7 +1226,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void MouseOut(UUID guid, WebControl element) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOut));
     }
 
@@ -1240,7 +1236,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void MouseOver(UUID guid, WebControl element) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));");
         ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.MouseOver));
     }
 
@@ -1253,7 +1249,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText));");
         ExecuteScript(guid, String.format(element.getSelector().ToJQuery().toString(JQueryStringType.SetBodyText), Quotes.escape(value)));
 
     }
@@ -1267,7 +1263,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void SetTextByJavaScript(UUID guid, WebControl element, String value) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetValueText));");
         ExecuteScript(guid, String.format(element.getSelector().ToJQuery().toString(JQueryStringType.SetElementText), Quotes.escape(value)));
     }
 
@@ -1280,7 +1276,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText));");
         ExecuteScript(guid, String.format(element.getSelector().ToJQuery().toString(JQueryStringType.SetDivText), Quotes.escape(value)));
     }
 
@@ -1863,7 +1859,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public ClientRects GetClientRects(UUID guid, WebControl element) {
-        log.Trace(guid, "ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));");
+        log.trace("ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));");
         ArrayList rects = (ArrayList) ExecuteScript(guid, element.getSelector().ToJQuery().toString(JQueryStringType.GetClientRects));
         int bottom = ((Number) rects.get(1)).intValue();
         int left = ((Number) rects.get(2)).intValue();

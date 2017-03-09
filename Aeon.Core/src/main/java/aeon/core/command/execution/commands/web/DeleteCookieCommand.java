@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -25,8 +24,8 @@ public class DeleteCookieCommand extends Command {
      *
      * @param cookie Name of the cookie to be deleted.
      */
-    public DeleteCookieCommand(ILog log, String cookie) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("DeleteCookieCommand_Info"), cookie));
+    public DeleteCookieCommand(String cookie) {
+        super(String.format(Locale.getDefault(), Resources.getString("DeleteCookieCommand_Info"), cookie));
         this.cookie = cookie;
     }
 

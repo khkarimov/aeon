@@ -1,7 +1,8 @@
 package aeon.selenium.jquery;
 
 import aeon.core.common.helpers.ConvertHelper;
-import aeon.core.common.logging.ILog;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,12 +11,11 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class SeleniumScriptExecutor implements IScriptExecutor {
-    private ILog log;
     private WebDriver remoteWebDriver;
+    private static Logger log = LogManager.getLogger(SeleniumScriptExecutor.class);
 
-    public SeleniumScriptExecutor(WebDriver remoteWebDriver, ILog log) {
+    public SeleniumScriptExecutor(WebDriver remoteWebDriver) {
         setRemoteWebDriver(remoteWebDriver);
-        this.log = log;
     }
 
     protected final WebDriver getRemoteWebDriver() {
@@ -26,33 +26,29 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         remoteWebDriver = value;
     }
 
-    protected final ILog getLog() {
-        return log;
-    }
-
     public final void SetTimeout(UUID guid, Duration timeToWait) {
-        log.Trace(guid, String.format("WebDriver.Manage().Timeouts().SetScriptTimeout(%1$s);", timeToWait));
+        log.trace(String.format("WebDriver.Manage().Timeouts().SetScriptTimeout(%1$s);", timeToWait));
         getRemoteWebDriver().manage().timeouts().setScriptTimeout(timeToWait.getStandardSeconds(), TimeUnit.SECONDS);
     }
 
     public final Object ExecuteScript(UUID guid, String script, Object... args) {
-        log.Trace(guid, String.format("WebDriver.ExecuteScript(\"%1$s\");", script));
+        log.trace(String.format("WebDriver.ExecuteScript(\"%1$s\");", script));
         Object returnValue = ((JavascriptExecutor) getRemoteWebDriver()).executeScript(script, args);
 
         if (returnValue != null) {
-            getLog().Trace(guid, String.format("WebDriver.ExecuteScript() returned %1$s", ConvertHelper.ScriptReturnValueToReadableString(returnValue)));
+            log.trace(String.format("WebDriver.ExecuteScript() returned %1$s", ConvertHelper.ScriptReturnValueToReadableString(returnValue)));
         }
 
         return returnValue;
     }
 
     public final Object ExecuteAsyncScript(UUID guid, String script, Object... args) {
-        log.Trace(guid, String.format("WebDriver.ExecuteAsyncScript(\"%1$s\");", script));
+        log.trace(String.format("WebDriver.ExecuteAsyncScript(\"%1$s\");", script));
 
         Object returnValue = ((JavascriptExecutor) remoteWebDriver).executeAsyncScript(script, args);
 
         if (returnValue != null) {
-            getLog().Trace(guid, String.format("WebDriver.ExecuteAsyncScript() returned %1$s", ConvertHelper.ScriptReturnValueToReadableString(returnValue)));
+            log.trace(String.format("WebDriver.ExecuteAsyncScript() returned %1$s", ConvertHelper.ScriptReturnValueToReadableString(returnValue)));
         }
 
         return returnValue;

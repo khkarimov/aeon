@@ -26,7 +26,6 @@ public class Checkbox extends WebElement {
     public void Check() {
         info.getCommandExecutionFacade().Execute(info,
                 new CheckCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -34,21 +33,18 @@ public class Checkbox extends WebElement {
     public void Uncheck() {
         info.getCommandExecutionFacade().Execute(info,
                 new UnCheckCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void Selected() {
         info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
     public void NotSelected() {
         info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
