@@ -7,6 +7,8 @@ import aeon.core.common.logging.ILog;
 import aeon.core.command.execution.consumers.CommandDelegateRunner;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.UUID;
 import java.util.function.Function;
@@ -18,6 +20,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
 
     private UUID guid;
     private ICommandInitializer commandInitializer;
+    private static Logger log = LogManager.getLogger(CommandWithReturn.class);
 
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
@@ -47,9 +50,10 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
             message = this.getClass().getSimpleName();
         }
 
-        log.Info(
-                guid,
-                String.format(Resources.getString("CommandInstantiated_Info"), message));
+//        log.Info(
+//                guid,
+//                String.format(Resources.getString("CommandInstantiated_Info"), message));
+        this.log.info(message);
     }
 
     /**

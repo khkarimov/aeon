@@ -6,6 +6,8 @@ import aeon.core.common.Resources;
 import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -17,6 +19,7 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
 
     private UUID guid;
     private ICommandInitializer commandInitializer;
+    private static Logger log = LogManager.getLogger(Command.class);
 
     /**
      * Initializes a new instance of the {@link Command} class.
@@ -46,9 +49,10 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
             message = this.getClass().getSimpleName();
         }
 
-        log.Info(
-                guid,
-                String.format(Resources.getString("CommandInstantiated_Info"), message));
+//        log.Info(
+//                guid,
+//                String.format(Resources.getString("CommandInstantiated_Info"), message));
+        this.log.info(message);
     }
 
     public final ICommandInitializer getCommandInitializer() {
