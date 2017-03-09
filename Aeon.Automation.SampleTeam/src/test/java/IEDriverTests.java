@@ -43,7 +43,7 @@ public class IEDriverTests {
     public void AfterTests() {
         product.browser.Quit();
     }
-//endregion
+    //endregion
 
     @Test
     public void TestAcceptAlert_VerifyAlertExists_VerifyAlertNotExists() {
@@ -179,6 +179,8 @@ public class IEDriverTests {
     @Test
     public void TestDoubleClick() {
         product.StartPage.UltimateLogoImage.DoubleClick();
+        String src = product.StartPage.UltimateLogoImageDoubleClick.GetElementAttribute("src").toString();
+        assert(src.contains("ultimate-image.png"));
         //the ultimate logo should appear in the image element "dbl-click-image"
     }
 
@@ -292,6 +294,8 @@ public class IEDriverTests {
     @Test
     public void TestRightClick() {
         product.StartPage.DateLabel.RightClick();
+        String validationText = product.StartPage.ReactionLabel.GetElementAttribute("textContent").toString();
+        assert(validationText.equals("right click"));
     }
 
     @Test

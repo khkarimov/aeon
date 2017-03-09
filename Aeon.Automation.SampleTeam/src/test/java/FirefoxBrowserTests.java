@@ -184,6 +184,8 @@ public class FirefoxBrowserTests {
     @Test
     public void TestDoubleClick() {
         product.StartPage.UltimateLogoImage.DoubleClick();
+        String src = product.StartPage.UltimateLogoImageDoubleClick.GetElementAttribute("src").toString();
+        assert(src.contains("ultimate-image.png"));
         //the ultimate logo should appear in the image element "dbl-click-image"
     }
 
@@ -290,7 +292,8 @@ public class FirefoxBrowserTests {
     @Test
     public void TestRightClick() {
         product.StartPage.DateLabel.RightClick();
-        aeon.core.common.helpers.Sleep.Wait(2000);
+        String validationText = product.StartPage.ReactionLabel.GetElementAttribute("textContent").toString();
+        assert(validationText.equals("right click"));
     }
 
     @Test
