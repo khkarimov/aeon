@@ -23,6 +23,7 @@ public class SeleniumConfiguration extends Configuration {
     private String chromeDirectory;
     private String ieDirectory;
     private String marionetteDirectory;
+    private String edgeDirectory;
     private boolean ensureCleanEnvironment;
     private String chromeBinary;
     private String firefoxBinary;
@@ -51,6 +52,7 @@ public class SeleniumConfiguration extends Configuration {
 	private void setBrowserDirectories() { 
         String output = System.getProperty("user.dir"); 
         this.ieDirectory = output + "/lib/Windows/IEDriverServer.exe";
+        this.edgeDirectory = output + "/lib/Windows/MicrosoftWebDriver.exe";
         switch (OsCheck.getOperatingSystemType()) { 
             case Windows: 
                 this.marionetteDirectory = output + "/lib/Windows/wires.exe"; 
@@ -131,6 +133,14 @@ public class SeleniumConfiguration extends Configuration {
 
     public void setIEDirectory(String ieDirectory) {
         this.ieDirectory = ieDirectory;
+    }
+
+    public String getEdgeDirectory() {
+        return edgeDirectory;
+    }
+
+    public void setEdgeDirectory(String edgeDirectory) {
+        this.ieDirectory = edgeDirectory;
     }
 
     public String getMarionetteDirectory(){
