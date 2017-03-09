@@ -18,7 +18,6 @@ public class SwitchToMainWindowCommand extends Command {
 
     /**
      * Initializes a new instance of the {@link SwitchToMainWindowCommand} class.
-     *                           The logger.
      * @param mainWindowHandle              The handle of the main window.
      * @param waitForAllPopupWindowsToClose Whether to wait for all popup windows to close.
      */

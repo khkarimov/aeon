@@ -16,7 +16,6 @@ public class DeleteAllCookiesCommand extends Command {
 
     /**
      * Initializes a new instance of the DeleteAllCookiesCommand.
-     * The logger.
      */
     public DeleteAllCookiesCommand() {
         super(Resources.getString("DeleteAllCookiesCommand_Info"));

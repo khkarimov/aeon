@@ -23,7 +23,6 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the {@link SwitchToWindowByTitleCommand} class.
-     *   The logger.
      * @param title The title of the desired window.
      */
     public SwitchToWindowByTitleCommand(String title) {

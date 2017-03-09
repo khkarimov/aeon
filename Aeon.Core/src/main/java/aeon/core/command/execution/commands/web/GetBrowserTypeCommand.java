@@ -17,7 +17,6 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the GetBrowserTypeCommand.
-     * The logger.
      */
     public GetBrowserTypeCommand() {
         super(Resources.getString("GetBrowserTypeCommand_Info"));

@@ -20,8 +20,7 @@ import java.util.Locale;
 public class GetClientRectsCommand extends WebControlCommandWithReturn {
 
     /**
-     * Initializes a new instance of the GetClientRectsCommand.
-     *         The logger.
+     * Initializes a new instance of the GetClientRectsCommand..
      * @param selector    The selector.
      * @param initializer The command initializer.
      */

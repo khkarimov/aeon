@@ -310,7 +310,9 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         sbuf.append("</table>").append(Constants.LINE_SEPARATOR);
         sbuf.append("<br>").append(Constants.LINE_SEPARATOR);
         sbuf.append("</body></html>");
-        //return getBytes(sbuf.toString());
+        // Return empty byte array so we can log continuously
+        // rather than have closing tags ruin formatting
+        // return getBytes(sbuf.toString());
         return new byte[0];
     }
 

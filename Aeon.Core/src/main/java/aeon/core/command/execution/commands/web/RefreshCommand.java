@@ -12,7 +12,6 @@ public class RefreshCommand extends Command {
 
     /**
      * Initializes a new instance of RefreshCommand
-     * the logger
      */
     public RefreshCommand() {
         super(Resources.getString("RefreshCommand_Info"));

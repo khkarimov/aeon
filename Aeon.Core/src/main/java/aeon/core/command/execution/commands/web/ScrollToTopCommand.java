@@ -18,7 +18,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class ScrollToTopCommand extends Command {
     /**
      * Initializes a new instance of the {@link ScrollToTopCommand} class.
-     * The logger.
      */
     public ScrollToTopCommand() {
         super(Resources.getString("ScrollToTopCommand_Info"));

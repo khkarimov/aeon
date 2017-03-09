@@ -16,7 +16,6 @@ public class DismissAlertCommand extends Command {
 
     /**
      * Initializes a new instance of the DismissAlertCommand.
-     * The logger.
      */
     public DismissAlertCommand() {
         super(Resources.getString("DismissAlertCommand_Info"));

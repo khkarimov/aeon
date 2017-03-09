@@ -14,7 +14,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class MaximizeCommand extends Command {
     /**
      * Initializes a new instance of the MaximizeCommand class.
-     * The logger.
      */
     public MaximizeCommand() {
         super(Resources.getString("MaximizeCommand_Info"));

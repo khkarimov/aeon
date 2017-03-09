@@ -19,7 +19,6 @@ public class MouseOutCommand extends WebControlCommand {
 
     /**
      * Initializes a new MouseOutCommand
-     *         The logger
      * @param selector    The selector
      * @param initializer The initializer
      */

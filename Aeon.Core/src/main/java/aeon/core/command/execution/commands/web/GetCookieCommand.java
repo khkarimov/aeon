@@ -19,7 +19,6 @@ public class GetCookieCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the {@link GetCookieCommand} class.
-     *  The logger.
      * @param name The name of the cookie to get.
      */
     public GetCookieCommand(String name) {

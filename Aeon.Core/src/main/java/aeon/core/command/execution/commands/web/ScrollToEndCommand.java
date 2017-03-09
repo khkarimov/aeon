@@ -19,7 +19,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class ScrollToEndCommand extends Command {
     /**
      * Initializes a new instance of the {@link ScrollToTopCommand} class.
-     * The logger.
      */
     public ScrollToEndCommand() {
         super(Resources.getString("ScrollToEndCommand_Info"));

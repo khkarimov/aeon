@@ -45,9 +45,6 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
             message = this.getClass().getSimpleName();
         }
 
-//        log.Info(
-//                guid,
-//                String.format(Resources.getString("CommandInstantiated_Info"), message));
         log.info(message);
     }
 

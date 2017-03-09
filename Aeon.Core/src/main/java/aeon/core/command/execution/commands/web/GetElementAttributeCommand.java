@@ -24,7 +24,6 @@ public class GetElementAttributeCommand extends WebControlCommandWithReturn {
 
     /**
      * Initializes a new instance of the {@link GetElementAttributeCommand} class
-     *           The log.
      * @param selector      The selector.
      * @param initializer   The command initializer
      * @param attributeName The HTML attribute (e.g., class) or innerHTML.

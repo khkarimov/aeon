@@ -22,7 +22,6 @@ public class GoToUrlCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the GoToUrlCommand class.
-     * The logger.
      * @param url The title of the window.
      */
     public GoToUrlCommand(URL url) {

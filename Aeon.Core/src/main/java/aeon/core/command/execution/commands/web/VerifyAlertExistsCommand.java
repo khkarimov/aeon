@@ -19,7 +19,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class VerifyAlertExistsCommand extends Command {
     /**
      * Initializes a new instance of the
-     * The logger.
      * @see VerifyAlertExistsCommand class
      */
     public VerifyAlertExistsCommand() {

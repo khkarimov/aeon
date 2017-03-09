@@ -16,7 +16,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class GetAllCookiesCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the {@link GetAllCookiesCommand} class. The logger.
+     * Initializes a new instance of the {@link GetAllCookiesCommand} class.
      */
     public GetAllCookiesCommand() {
         super(Resources.getString("GetAllCookiesCommand_Info"));

@@ -15,7 +15,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class GoForwardCommand extends Command {
     /**
      * Initializes a new instance of the {@link GoForwardCommand} class.
-     * The logger.
      */
     public GoForwardCommand() {
         super(Resources.getString("GoForwardCommand_Info"));

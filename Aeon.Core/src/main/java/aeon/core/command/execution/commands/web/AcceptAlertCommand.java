@@ -17,7 +17,6 @@ public class AcceptAlertCommand extends Command {
 
     /**
      * Initializes a new instance of the AcceptAlertCommand.
-     * The logger.
      */
     public AcceptAlertCommand() {
         super(Resources.getString("AcceptAlertCommand_Info"));

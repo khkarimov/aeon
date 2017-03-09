@@ -14,7 +14,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class GoBackCommand extends Command {
     /**
      * Initializes a new instance of the {@link GoBackCommand} class.
-     * The logger.
      */
     public GoBackCommand() {
         super(Resources.getString("GoBackCommand_Info"));

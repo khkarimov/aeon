@@ -20,7 +20,6 @@ public class ModifyCookieCommand extends Command {
 
     /**
      * Initializes a new instance of the ModifyCookieCommand.
-     *   The logger.
      * @param name  The name of the cookie.
      * @param value The value.
      */

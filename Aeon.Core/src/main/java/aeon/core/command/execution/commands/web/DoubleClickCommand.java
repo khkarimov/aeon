@@ -18,8 +18,7 @@ import java.util.Locale;
 public class DoubleClickCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the DoubleClickCommand.
-     *         The logger.
+     * Initializes a new instance of the DoubleClickCommand..
      * @param selector    The selector.
      * @param initializer The web command initializer.
      */

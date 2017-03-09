@@ -16,7 +16,6 @@ public class GetAlertTextCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the GetAlertTextCommand
-     * The logger
      */
     public GetAlertTextCommand() {
         super(Resources.getString("GetAlertTextCommand_Info"));
