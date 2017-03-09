@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -28,15 +27,14 @@ public class DatesApproximatelyEqualCommand extends WebControlCommand {
     /**
      * Initializes a new instance of the DatesApproximatelyEqualCommand
      *
-     * @param log                The logger.
      * @param selector           The selector.
      * @param commandInitializer The comamnd initializer.
      * @param attributeName      The name of the attribute that has the date.
      * @param expectedDate       The expected date.
      * @param acceptableDelta    The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
      */
-    public DatesApproximatelyEqualCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String attributeName, DateTime expectedDate, Period acceptableDelta) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("DatesApproximatelyEqualCommand_Info"), attributeName, selector, expectedDate, selector), selector, commandInitializer);
+    public DatesApproximatelyEqualCommand(IBy selector, ICommandInitializer commandInitializer, String attributeName, DateTime expectedDate, Period acceptableDelta) {
+        super(String.format(Locale.getDefault(), Resources.getString("DatesApproximatelyEqualCommand_Info"), attributeName, selector, expectedDate, selector), selector, commandInitializer);
         this.attributeName = attributeName;
         this.expectedDate = expectedDate;
         this.acceptableDelta = acceptableDelta;

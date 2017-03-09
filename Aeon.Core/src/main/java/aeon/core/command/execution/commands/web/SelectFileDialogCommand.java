@@ -7,7 +7,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -29,12 +28,11 @@ public class SelectFileDialogCommand extends Command {
     /**
      * Initializes a new instance of the {@link SelectFileDialogCommand} class
      *
-     * @param log         The log.
      * @param selector    The selector.
      * @param initializer The command initializer.
      */
-    public SelectFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer, String path) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("SelectFileDialogCommand_Info"), path), initializer);
+    public SelectFileDialogCommand(IBy selector, ICommandInitializer initializer, String path) {
+        super(String.format(Locale.getDefault(), Resources.getString("SelectFileDialogCommand_Info"), path), initializer);
         this.selector = selector;
         this.path = path;
     }

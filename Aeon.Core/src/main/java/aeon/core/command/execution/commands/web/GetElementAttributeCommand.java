@@ -6,7 +6,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -25,14 +24,12 @@ public class GetElementAttributeCommand extends WebControlCommandWithReturn {
 
     /**
      * Initializes a new instance of the {@link GetElementAttributeCommand} class
-     *
-     * @param log           The log.
      * @param selector      The selector.
      * @param initializer   The command initializer
      * @param attributeName The HTML attribute (e.g., class) or innerHTML.
      */
-    public GetElementAttributeCommand(ILog log, IBy selector, ICommandInitializer initializer, String attributeName) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("GetElementAttributeCommand_Info"), attributeName, selector), selector, initializer);
+    public GetElementAttributeCommand(IBy selector, ICommandInitializer initializer, String attributeName) {
+        super(String.format(Locale.getDefault(), Resources.getString("GetElementAttributeCommand_Info"), attributeName, selector), selector, initializer);
         this.attributeName = attributeName;
     }
 

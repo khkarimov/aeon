@@ -1,6 +1,5 @@
 package aeon.core.testabstraction.product;
 
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -12,7 +11,6 @@ public class Configuration {
     private Class driver;
     private Class adapter;
     private BrowserType browserType;
-    private ILog log;
 
     public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) {
         this.driver = driver;
@@ -41,13 +39,5 @@ public class Configuration {
 
     public void setBrowserType(BrowserType browserType) {
         this.browserType = browserType;
-    }
-
-    public ILog getLog() {
-        return log;
-    }
-
-    public void setLog(ILog log) {
-        this.log = log;
     }
 }

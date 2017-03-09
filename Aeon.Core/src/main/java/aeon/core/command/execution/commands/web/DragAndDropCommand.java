@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -21,14 +20,13 @@ public class DragAndDropCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the DragAndDropCommand
-     *
-     * @param log                The logger
+     *                The logger
      * @param dropElement        The element to be dragged
      * @param targetElement      The target element.
      * @param commandInitializer The command initalizer
      */
-    public DragAndDropCommand(ILog log, IBy dropElement, IBy targetElement, ICommandInitializer commandInitializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("DragAndDropCommand_Info"), dropElement, targetElement), dropElement, commandInitializer);
+    public DragAndDropCommand(IBy dropElement, IBy targetElement, ICommandInitializer commandInitializer) {
+        super(String.format(Locale.getDefault(), Resources.getString("DragAndDropCommand_Info"), dropElement, targetElement), dropElement, commandInitializer);
         this.targetElement = targetElement;
     }
 

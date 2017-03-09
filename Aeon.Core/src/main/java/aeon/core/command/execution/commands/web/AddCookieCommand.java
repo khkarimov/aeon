@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -17,12 +16,11 @@ public class AddCookieCommand extends Command {
 
     /**
      * Initializes a new instance of the AddCookieCommand class.
-     *
-     * @param log    The logger.
+     *    The logger.
      * @param cookie Cookie to be added.
      */
-    public AddCookieCommand(ILog log, IWebCookie cookie) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("AddCookieCommand_Info"), cookie.getName()));
+    public AddCookieCommand(IWebCookie cookie) {
+        super(String.format(Locale.getDefault(), Resources.getString("AddCookieCommand_Info"), cookie.getName()));
         this.cookie = cookie;
     }
 

@@ -29,7 +29,6 @@ public class RadioButton extends WebElement {
     public void Selected() {
         info.getCommandExecutionFacade().Execute(info,
                 new SelectedCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -37,7 +36,6 @@ public class RadioButton extends WebElement {
     public void NotSelected() {
         info.getCommandExecutionFacade().Execute(info,
                 new NotSelectedCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -45,7 +43,6 @@ public class RadioButton extends WebElement {
     public void Check() {
         info.getCommandExecutionFacade().Execute(info,
                 new CheckCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }

@@ -3,7 +3,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -18,10 +17,9 @@ public class GetAllCookiesCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the {@link GetAllCookiesCommand} class.
-     * @param log The logger.
      */
-    public GetAllCookiesCommand(ILog log) {
-        super(log, Resources.getString("GetAllCookiesCommand_Info"));
+    public GetAllCookiesCommand() {
+        super(Resources.getString("GetAllCookiesCommand_Info"));
     }
 
     /**

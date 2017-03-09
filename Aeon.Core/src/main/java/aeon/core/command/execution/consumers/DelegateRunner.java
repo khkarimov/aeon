@@ -1,7 +1,6 @@
 package aeon.core.command.execution.consumers;
 
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
 import java.util.UUID;
@@ -16,10 +15,6 @@ public abstract class DelegateRunner implements IDelegateRunner {
     protected DelegateRunner(UUID guid, IDelegateRunner successor) {
         this.guid = guid;
         this.successor = successor;
-    }
-
-    public final ILog getLog() {
-        return successor.getLog();
     }
 
     public abstract void Execute(Consumer<IDriver> commandDelegate);

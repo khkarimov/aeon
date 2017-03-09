@@ -31,7 +31,6 @@ public class Select extends WebElement {
 
     public void HasOptions(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().Execute(info, new HasOptionsCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
@@ -39,7 +38,6 @@ public class Select extends WebElement {
 
     public void HasOptions(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().Execute(info, new HasOptionsCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
@@ -47,7 +45,6 @@ public class Select extends WebElement {
 
     public void HasOptionsInOrder(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().Execute(info, new HasOptionsInOrderCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
@@ -55,7 +52,6 @@ public class Select extends WebElement {
 
     public void HasOptionsInOrder(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().Execute(info, new HasOptionsInOrderCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
@@ -63,7 +59,6 @@ public class Select extends WebElement {
 
     public void DoesNotHaveOptions(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().Execute(info, new DoesNotHaveOptionsCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
@@ -71,7 +66,6 @@ public class Select extends WebElement {
 
     public void DoesNotHaveOptions(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().Execute(info, new DoesNotHaveOptionsCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
@@ -79,7 +73,6 @@ public class Select extends WebElement {
 
     public void HasNumberOfOptions(int optnumber, String optgroup) {
         info.getCommandExecutionFacade().Execute(info, new HasNumberOfOptionsCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), optnumber, optgroup
         ));
@@ -87,7 +80,6 @@ public class Select extends WebElement {
 
     public void HasNumberOfOptions(int optnumber) {
         info.getCommandExecutionFacade().Execute(info, new HasNumberOfOptionsCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), optnumber
         ));
@@ -96,7 +88,6 @@ public class Select extends WebElement {
     public void HasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
         info.getCommandExecutionFacade().Execute(info,
                 new HasAllOptionsInOrderCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), comparisonType, optgroup));
     }
@@ -104,7 +95,6 @@ public class Select extends WebElement {
     public void HasAllOptionsInOrder(CompareType comparisonType) {
         info.getCommandExecutionFacade().Execute(info,
                 new HasAllOptionsInOrderCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), comparisonType, null
                 ));
@@ -112,7 +102,6 @@ public class Select extends WebElement {
 
     public void Set(WebSelectOption selectOption, String value) {
         info.getCommandExecutionFacade().Execute(info, new SetCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 selectOption,
@@ -122,7 +111,6 @@ public class Select extends WebElement {
     @Override
     public void IsLike(String value) {
         info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -133,7 +121,6 @@ public class Select extends WebElement {
     @Override
     public void IsLike(String value, String attribute) {
         info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -144,7 +131,6 @@ public class Select extends WebElement {
     @Override
     public void IsNotLike(String value) {
         info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -155,7 +141,6 @@ public class Select extends WebElement {
     @Override
     public void IsNotLike(String value, String attribute) {
         info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -170,7 +155,6 @@ public class Select extends WebElement {
     @Override
     public void Is(String value) {
         info.getCommandExecutionFacade().Execute(info, new IsCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -186,7 +170,6 @@ public class Select extends WebElement {
     @Override
     public void Is(String value, String attribute) {
         info.getCommandExecutionFacade().Execute(info, new IsCommand(
-                info.getLog(),
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
