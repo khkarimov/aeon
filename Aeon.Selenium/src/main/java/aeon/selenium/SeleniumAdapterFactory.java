@@ -96,7 +96,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 }
 
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
-                //return new SeleniumFirefoxWebDriver(driver, javaScriptFlowExecutor, moveMouseToOrigin);
+
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case Chrome:
@@ -111,8 +111,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
                             setProxySettings(capabilities, proxyLocation));
                 }
-
-                //return new SeleniumChromeWebDriver(driver, javaScriptFlowExecutor, moveMouseToOrigin);
+                
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case InternetExplorer:
@@ -125,7 +124,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             GetInternetExplorerOptions(guid, ensureCleanEnvironment, proxyLocation));
                 }
                 
-                //return new SeleniumInternetExplorerWebDriver(driver, javaScriptFlowExecutor, moveMouseToOrigin);
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case Edge:
@@ -138,7 +136,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             GetEdgeOptions(guid, ensureCleanEnvironment, proxyLocation));
                 }
 
-                //return new SeleniumInternetExplorerWebDriver(driver, javaScriptFlowExecutor, moveMouseToOrigin);
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             default:
