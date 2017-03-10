@@ -20,7 +20,6 @@ configurations {
 
 ext {
     seleniumVersion = '3.0.1'
-    chromeDriverVersion = '2.27'
 }
 
 dependencies {
