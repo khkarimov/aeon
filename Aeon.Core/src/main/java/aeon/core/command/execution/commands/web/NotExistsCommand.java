@@ -39,11 +39,11 @@ public class NotExistsCommand extends Command {
     protected void DriverDelegate(IDriver driver) {
         WebControl control = null;
         try {
-            control = ((IWebDriver) driver).FindElement(getGuid(), selector);
+            control = ((IWebDriver) driver).FindElement(selector);
         } catch (NoSuchElementException e) {
             //If element does not exist it should catch the exception and return successfully
             return;
         }
-        ((IWebDriver) driver).NotExists(getGuid(), control);
+        ((IWebDriver) driver).NotExists(control);
     }
 }

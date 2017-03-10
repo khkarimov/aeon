@@ -39,6 +39,6 @@ public class ResizeCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).Resize(getGuid(), size);
+        ((IWebDriver) driver).Resize(size);
     }
 }

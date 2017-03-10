@@ -40,6 +40,6 @@ public class GoToUrlCommand extends CommandWithReturn {
             throw new IllegalArgumentException("driver");
         }
 
-        return ((IWebDriver) driver).GoToUrl(getGuid(), url);
+        return ((IWebDriver) driver).GoToUrl(url);
     }
 }

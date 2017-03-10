@@ -38,6 +38,6 @@ public class SwitchToMainWindowCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).SwitchToMainWindow(getGuid(), mainWindowHandle, waitForAllPopupWindowsToClose);
+        ((IWebDriver) driver).SwitchToMainWindow(mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 }

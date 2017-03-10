@@ -5,15 +5,14 @@ import aeon.core.common.helpers.Sleep;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.joda.time.Duration;
 
-import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ThrottledDelegateRunner extends DelegateRunner {
     private Duration throttleFactor;
 
-    public ThrottledDelegateRunner(UUID guid, IDelegateRunner successor, Duration throttleFactor) {
-        super(guid, successor);
+    public ThrottledDelegateRunner(IDelegateRunner successor, Duration throttleFactor) {
+        super(successor);
         this.throttleFactor = throttleFactor;
     }
 

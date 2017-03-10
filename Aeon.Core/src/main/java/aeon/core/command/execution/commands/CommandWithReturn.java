@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.UUID;
 import java.util.function.Function;
 
 /**
@@ -16,7 +15,6 @@ import java.util.function.Function;
  */
 public abstract class CommandWithReturn implements ICommand<Function<IDriver, Object>> {
 
-    private UUID guid;
     private ICommandInitializer commandInitializer;
     private static Logger log = LogManager.getLogger(CommandWithReturn.class);
 
@@ -37,7 +35,6 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     protected CommandWithReturn(String message, ICommandInitializer initializer) {
 
         this.commandInitializer = initializer;
-        this.guid = UUID.randomUUID();
 
         if (StringUtils.isEmpty(message)) {
             message = this.getClass().getSimpleName();
@@ -58,13 +55,6 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     }
 
     /**
-     * Gets the GUID for the command.
-     */
-    public final UUID getGuid() {
-        return guid;
-    }
-
-    /**
      * Gets the delegate for the command.
      * <p>
      * GetCommandDelegate is a wrapper for the delegate and actual command.
@@ -79,7 +69,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
 
         func = driver -> {
             if (commandInitializer != null) {
-                commandInitializer.SetContext(guid).accept(driver);
+                commandInitializer.SetContext().accept(driver);
             }
 
             return CommandDelegate(driver);

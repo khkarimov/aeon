@@ -6,52 +6,51 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
-import java.util.UUID;
 
 public final class ClientEnvironmentManager {
     private static final Size[] supportedResolutions = {new Size(1024, 768)};
     private static Logger log = LogManager.getLogger(ClientEnvironmentManager.class);
 
-    public static void ManageEnvironment(UUID guid, BrowserType browserType, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
+    public static void ManageEnvironment(BrowserType browserType, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
         if (ensureCleanEnvironment) {
             log.info("Cleaning Client Environment.");
-            EnsureCleanEnvironment(guid, browserType);
+            EnsureCleanEnvironment(browserType);
         }
 
-        verifyScreenResolution(guid);
+        verifyScreenResolution();
 
         switch (browserType) {
             case InternetExplorer:
                 // TODO(DionnyS): JAVA_CONVERSION
-                // ConfigureInternetExplorerSettings(guid, browserAcceptedLanguageCodes);
+                // ConfigureInternetExplorerSettings(browserAcceptedLanguageCodes);
                 break;
             case Firefox:
-                EnforceDPI(guid);
+                EnforceDPI();
                 break;
         }
     }
 
-    private static void EnsureCleanEnvironment(UUID guid, BrowserType browserType) {
+    private static void EnsureCleanEnvironment(BrowserType browserType) {
         switch (browserType) {
             case InternetExplorer:
                 log.info("Killing Internet Explorer related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(guid, new String[]{"iexplore", "IEDriverServer"});
+                // KillProcesses(new String[]{"iexplore", "IEDriverServer"});
                 break;
             case Firefox:
                 log.info("Killing Firefox related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(guid, new String[]{"firefox"});
+                // KillProcesses(new String[]{"firefox"});
                 break;
             case Chrome:
                 log.info("Killing Chrome related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(guid, new String[]{"chrome", "chromedriver"});
+                // KillProcesses(new String[]{"chrome", "chromedriver"});
                 break;
         }
     }
 
-    private static void EnforceDPI(UUID guid) {
+    private static void EnforceDPI() {
         if (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows) {
             int pixelPerInch = java.awt.Toolkit.getDefaultToolkit().getScreenResolution();
             log.info("Checking DPI setting are set to 100%");
@@ -63,7 +62,7 @@ public final class ClientEnvironmentManager {
         }
     }
 
-    private static void verifyScreenResolution(UUID guid) {
+    private static void verifyScreenResolution() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();

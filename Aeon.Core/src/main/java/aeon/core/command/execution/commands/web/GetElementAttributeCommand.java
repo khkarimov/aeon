@@ -47,6 +47,6 @@ public class GetElementAttributeCommand extends WebControlCommandWithReturn {
         } else if (element == null) {
             throw new IllegalArgumentException("control");
         }
-        return ((IWebDriver) driver).GetElementAttribute(getGuid(), element, this.attributeName);
+        return ((IWebDriver) driver).GetElementAttribute(element, this.attributeName);
     }
 }

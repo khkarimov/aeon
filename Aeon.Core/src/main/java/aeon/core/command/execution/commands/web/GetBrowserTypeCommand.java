@@ -30,6 +30,6 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
      */
     @Override
     protected Object CommandDelegate(IDriver driver) {
-        return (BrowserType) ((IWebDriver) driver).GetBrowserType(getGuid());
+        return (BrowserType) ((IWebDriver) driver).GetBrowserType();
     }
 }

@@ -9,7 +9,6 @@ import ro.fortsoft.pf4j.PluginManager;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 /**
  * Created by DionnyS on 4/13/2016.

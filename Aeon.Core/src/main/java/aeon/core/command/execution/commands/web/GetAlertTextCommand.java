@@ -29,6 +29,6 @@ public class GetAlertTextCommand extends CommandWithReturn {
      */
     @Override
     protected String CommandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).GetAlertText(getGuid());
+        return ((IWebDriver) driver).GetAlertText();
     }
 }

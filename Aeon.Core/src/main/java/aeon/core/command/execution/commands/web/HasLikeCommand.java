@@ -42,6 +42,6 @@ public class HasLikeCommand extends WebControlCommand {
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.HasLike(getGuid(), control, messages, childSelector, option, attribute);
+        driver.HasLike(control, messages, childSelector, option, attribute);
     }
 }

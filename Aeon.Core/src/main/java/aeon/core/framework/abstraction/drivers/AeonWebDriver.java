@@ -18,7 +18,6 @@ import org.joda.time.Period;
 import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * Web framework adapter.
@@ -39,456 +38,460 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public WebControl FindElement(UUID guid, IBy selector) {
-        return adapter.FindElement(guid, selector);
+    public WebControl FindElement(IBy selector) {
+        return adapter.FindElement(selector);
     }
 
     @Override
-    public Collection<WebControl> FindElements(UUID guid, IBy selector) {
-        return adapter.FindElements(guid, selector);
+    public Collection<WebControl> FindElements(IBy selector) {
+        return adapter.FindElements(selector);
     }
 
     @Override
-    public void Click(UUID guid, WebControl webControl) {
-        adapter.Click(guid, webControl);
+    public void Click(WebControl webControl) {
+        adapter.Click(webControl);
     }
 
     @Override
-    public void DoubleClick(UUID guid, WebControl element) {
-        adapter.DoubleClick(guid, element);
+    public void DoubleClick(WebControl element) {
+        adapter.DoubleClick(element);
     }
 
     @Override
-    public void ScrollElementIntoView(UUID guid, WebControl control) {
-        adapter.ScrollElementIntoView(guid, control);
+    public void ScrollElementIntoView(WebControl control) {
+        adapter.ScrollElementIntoView(control);
     }
 
     @Override
-    public void ScrollToTop(UUID guid) {
-        adapter.ScrollToTop(guid);
+    public void ScrollToTop() {
+        adapter.ScrollToTop();
     }
 
     @Override
-    public void ScrollToEnd(UUID guid) {
-        adapter.ScrollToEnd(guid);
+    public void ScrollToEnd() {
+        adapter.ScrollToEnd();
     }
 
     @Override
-    public void SwitchToDefaultContent(UUID guid) {
-        adapter.SwitchToDefaultContent(guid);
+    public void SwitchToDefaultContent() {
+        adapter.SwitchToDefaultContent();
     }
 
     @Override
-    public void FocusWindow(UUID guid) {
-        adapter.FocusWindow(guid);
+    public void FocusWindow() {
+        adapter.FocusWindow();
     }
 
     @Override
-    public void SwitchToFrame(UUID guid, IBy selector) {
-        adapter.SwitchToFrame(guid, selector);
+    public void SwitchToFrame(IBy selector) {
+        adapter.SwitchToFrame(selector);
     }
 
     @Override
-    public String GetElementTagName(UUID guid, WebControl element) {
-        return adapter.GetElementTagName(guid, element);
+    public String GetElementTagName(WebControl element) {
+        return adapter.GetElementTagName(element);
     }
 
     @Override
-    public Object ExecuteScript(UUID guid, String script) {
-        return adapter.ExecuteScript(guid, script);
+    public Object ExecuteScript(String script) {
+        return adapter.ExecuteScript(script);
     }
 
     @Override
-    public void ClearElement(UUID guid, WebControl element) {
-        adapter.ClearElement(guid, element);
+    public void ClearElement(WebControl element) {
+        adapter.ClearElement(element);
     }
 
     @Override
-    public void AddCookie(UUID guid, IWebCookie cookie) {
-        adapter.AddCookie(guid, cookie);
+    public void AddCookie(IWebCookie cookie) {
+        adapter.AddCookie(cookie);
     }
 
     @Override
-    public void DeleteCookie(UUID guid, String cookie) {
-        adapter.DeleteCookie(guid, cookie);
+    public void DeleteCookie(String cookie) {
+        adapter.DeleteCookie(cookie);
     }
 
     @Override
-    public void DeleteAllCookies(UUID guid) {
-        adapter.DeleteAllCookies(guid);
+    public void DeleteAllCookies() {
+        adapter.DeleteAllCookies();
     }
 
     @Override
-    public void GoBack(UUID guid) {
-        adapter.Back(guid);
+    public void GoBack() {
+        adapter.Back();
     }
 
     @Override
-    public void GoForward(UUID guid) {
-        adapter.Forward(guid);
+    public void GoForward() {
+        adapter.Forward();
     }
 
     @Override
-    public String GoToUrl(UUID guid, URL url) {
-        return adapter.GoToUrl(guid, url);
+    public String GoToUrl(URL url) {
+        return adapter.GoToUrl(url);
     }
 
     @Override
-    public void Maximize(UUID guid) {
-        adapter.Maximize(guid);
+    public void Maximize() {
+        adapter.Maximize();
     }
 
     @Override
-    public void Refresh(UUID guid) {
-        adapter.Refresh(guid);
+    public void Refresh() {
+        adapter.Refresh();
     }
 
     @Override
-    public void ChooseSelectElementByValue(UUID guid, WebControl element, String value) {
-        adapter.ChooseSelectElementByValue(guid, element, value);
+    public void ChooseSelectElementByValue(WebControl element, String value) {
+        adapter.ChooseSelectElementByValue(element, value);
     }
 
     @Override
-    public void ChooseSelectElementByText(UUID guid, WebControl element, String value) {
-        adapter.ChooseSelectElementByText(guid, element, value);
+    public void ChooseSelectElementByText(WebControl element, String value) {
+        adapter.ChooseSelectElementByText(element, value);
     }
 
     @Override
-    public void ClickElement(UUID guid, WebControl element) {
-        adapter.ClickElement(guid, element);
+    public void ClickElement(WebControl element) {
+        adapter.ClickElement(element);
     }
 
     @Override
-    public void SendKeysToElement(UUID guid, WebControl element, String value) {
-        adapter.SendKeysToElement(guid, element, value);
+    public void SendKeysToElement(WebControl element, String value) {
+        adapter.SendKeysToElement(element, value);
     }
 
     @Override
-    public String GetElementAttribute(UUID guid, WebControl element, String value) {
-        return adapter.GetElementAttribute(guid, element, value);
+    public String GetElementAttribute(WebControl element, String value) {
+        return adapter.GetElementAttribute(element, value);
     }
 
     @Override
-    public void SwitchToMainWindow(UUID guid, String mainWindowHandle, Boolean waitForAllPopupWindowsToClose) {
-        adapter.SwitchToMainWindow(guid, mainWindowHandle, waitForAllPopupWindowsToClose);
+    public void SwitchToMainWindow(String mainWindowHandle, Boolean waitForAllPopupWindowsToClose) {
+        adapter.SwitchToMainWindow(mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 
     @Override
-    public String SwitchToWindowByTitle(UUID guid, String title) {
-        return adapter.SwitchToWindowByTitle(guid, title);
+    public String SwitchToWindowByTitle(String title) {
+        return adapter.SwitchToWindowByTitle(title);
     }
 
     @Override
-    public String SwitchToWindowByUrl(UUID guid, String url) {
-        return adapter.SwitchToWindowByUrl(guid, url);
+    public String SwitchToWindowByUrl(String url) {
+        return adapter.SwitchToWindowByUrl(url);
     }
 
     @Override
-    public void Resize(UUID guid, Size size) {
-        adapter.Resize(guid, size);
+    public void Resize(Size size) {
+        adapter.Resize(size);
     }
 
     @Override
     public Image GetScreenshot() {
-        return adapter.GetScreenshot(UUID.randomUUID());
+        return adapter.GetScreenshot();
     }
 
     @Override
     public String GetSource() {
-        return adapter.GetPageSource(UUID.randomUUID());
+        return adapter.GetPageSource();
     }
 
     @Override
-    public void Close(UUID guid) {
-        adapter.Close(guid);
+    public void Close() {
+        adapter.Close();
     }
 
     @Override
-    public void Quit(UUID guid) {
-        adapter.Quit(guid);
+    public void Quit() {
+        adapter.Quit();
     }
 
     @Override
-    public void AcceptAlert(UUID guid) {
-        adapter.AcceptAlert(guid);
+    public void AcceptAlert() {
+        adapter.AcceptAlert();
     }
 
     @Override
-    public void DismissAlert(UUID guid) {
-        adapter.DismissAlert(guid);
+    public void DismissAlert() {
+        adapter.DismissAlert();
     }
 
     @Override
-    public String GetAlertText(UUID guid) {
-        return adapter.GetAlertText(guid);
+    public String GetAlertText() {
+        return adapter.GetAlertText();
     }
 
     @Override
-    public void Blur(UUID guid, WebControl element) {
-        adapter.Blur(guid, element);
+    public void Blur(WebControl element) {
+        adapter.Blur(element);
     }
 
     @Override
-    public void RightClick(UUID guid, WebControl element) {
-        adapter.RightClick(guid, element);
+    public void RightClick(WebControl element) {
+        adapter.RightClick(element);
     }
 
     @Override
-    public void Check(UUID guid, WebControl element) {
-        adapter.CheckElement(guid, element);
+    public void Check(WebControl element) {
+        adapter.CheckElement(element);
     }
 
     @Override
-    public void UnCheck(UUID guid, WebControl element) {
-        adapter.UnCheckElement(guid, element);
+    public void UnCheck(WebControl element) {
+        adapter.UnCheckElement(element);
     }
 
     @Override
-    public void ClickAndHold(UUID guid, WebControl element, int duration) {
-        adapter.ClickAndHold(guid, element, duration);
+    public void ClickAndHold(WebControl element, int duration) {
+        adapter.ClickAndHold(element, duration);
     }
 
     @Override
-    public void IsElementEnabled(UUID guid, WebControl element) {
-        adapter.IsElementEnabled(guid, element);
+    public void IsElementEnabled(WebControl element) {
+        adapter.IsElementEnabled(element);
     }
 
     @Override
-    public void Exists(UUID guid, WebControl element) {
-        adapter.Exists(guid, element);
+    public void Exists(WebControl element) {
+        adapter.Exists(element);
     }
 
     @Override
-    public void NotExists(UUID guid, WebControl element) {
-        adapter.NotExists(guid, element);
+    public void NotExists(WebControl element) {
+        adapter.NotExists(element);
     }
 
     @Override
-    public void HasOptions(UUID guid, WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        adapter.ElementHasOptions(guid, element, options, optgroup, select);
+    public void HasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.ElementHasOptions(element, options, optgroup, select);
     }
 
     @Override
-    public void DoesNotHaveOptions(UUID guid, WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        adapter.ElementDoesNotHaveOptions(guid, element, options, optgroup, select);
+    public void DoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.ElementDoesNotHaveOptions(element, options, optgroup, select);
     }
 
     @Override
-    public void OpenFileDialog(UUID guid, IBy selector) {
-        adapter.OpenFileDialog(guid, selector);
+    public void OpenFileDialog(IBy selector) {
+        adapter.OpenFileDialog(selector);
     }
 
     @Override
-    public void SelectFileDialog(UUID guid, IBy selector, String path) {
-        adapter.SelectFileDialog(guid, selector, path);
+    public void SelectFileDialog(IBy selector, String path) {
+        adapter.SelectFileDialog(selector, path);
     }
 
     @Override
-    public void UploadFileDialog(UUID guid, IBy selector, String path) {
-        adapter.UploadFileDialog(guid, selector, path);
+    public void UploadFileDialog(IBy selector, String path) {
+        adapter.UploadFileDialog(selector, path);
     }
 
     @Override
-    public void VerifyAlertExists(UUID guid) {
-        adapter.VerifyAlertExists(guid);
+    public void VerifyAlertExists() {
+        adapter.VerifyAlertExists();
     }
 
     @Override
-    public void VerifyAlertNotExists(UUID guid) {
-        adapter.VerifyAlertNotExists(guid);
+    public void VerifyAlertNotExists() {
+        adapter.VerifyAlertNotExists();
     }
 
     @Override
-    public void SendKeysToAlert(UUID guid, String keysToSend) {
-        adapter.SendKeysToAlert(guid, keysToSend);
+    public void SendKeysToAlert(String keysToSend) {
+        adapter.SendKeysToAlert(keysToSend);
     }
 
     @Override
-    public void DragAndDrop(UUID guid, WebControl dropElement, IBy targetElement) {
-        adapter.DragAndDrop(guid, dropElement, targetElement);
+    public void DragAndDrop(WebControl dropElement, IBy targetElement) {
+        adapter.DragAndDrop(dropElement, targetElement);
     }
 
     @Override
-    public void ClickAllElements(UUID guid, IBy elementsBy) {
-        adapter.ClickAllElements(guid, elementsBy);
+    public void ClickAllElements(IBy elementsBy) {
+        adapter.ClickAllElements(elementsBy);
     }
 
     @Override
-    public void MouseOut(UUID guid, WebControl element) {
-        adapter.MouseOut(guid, element);
+    public void MouseOut(WebControl element) {
+        adapter.MouseOut(element);
     }
 
     @Override
-    public void MouseOver(UUID guid, WebControl element) {
-        adapter.MouseOver(guid, element);
+    public void MouseOver(WebControl element) {
+        adapter.MouseOver(element);
     }
 
     @Override
-    public void Set(UUID guid, WebControl element, WebSelectOption option, String setValue) {
-        adapter.Set(guid, element, option, setValue);
+    public void Set(WebControl element, WebSelectOption option, String setValue) {
+        adapter.Set(element, option, setValue);
     }
 
     @Override
-    public void SetBodyValueByJavaScript(UUID guid, WebControl element, String value) {
-        adapter.SetBodyValueByJavaScript(guid, element, value);
+    public void SetBodyValueByJavaScript(WebControl element, String value) {
+        adapter.SetBodyValueByJavaScript(element, value);
     }
 
     @Override
-    public void SetTextByJavaScript(UUID guid, WebControl element, String value) {
-        adapter.SetTextByJavaScript(guid, element, value);
+    public void SetTextByJavaScript(WebControl element, String value) {
+        adapter.SetTextByJavaScript(element, value);
     }
 
     @Override
-    public void SetDivValueByJavaScript(UUID guid, WebControl element, String value) {
-        adapter.SetDivValueByJavaScript(guid, element, value);
+    public void SetDivValueByJavaScript(WebControl element, String value) {
+        adapter.SetDivValueByJavaScript(element, value);
     }
 
     @Override
-    public void HasOptionsInOrder(UUID guid, WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        adapter.ElementHasOptionsInOrder(guid, element, options, optgroup, select);
+    public void HasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.ElementHasOptionsInOrder(element, options, optgroup, select);
     }
 
     @Override
-    public void HasNumberOfOptions(UUID guid, WebControl element, int optnumber, String optgroup) {
-        adapter.HasNumberOfOptions(guid, element, optnumber, optgroup);
+    public void HasNumberOfOptions(WebControl element, int optnumber, String optgroup) {
+        adapter.HasNumberOfOptions(element, optnumber, optgroup);
     }
 
     @Override
-    public void HasAllOptionsInOrder(UUID guid, WebControl element, CompareType compare, String optGroup) {
-        adapter.HasAllOptionsInOrder(guid, element, compare, optGroup);
+    public void HasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup) {
+        adapter.HasAllOptionsInOrder(element, compare, optGroup);
     }
 
     @Override
-    public Collection<IWebCookie> GetAllCookies(UUID guid) {
-        return adapter.GetAllCookies(guid);
+    public Collection<IWebCookie> GetAllCookies() {
+        return adapter.GetAllCookies();
     }
 
     @Override
-    public String WindowDoesNotExistByTitle(UUID guid, String windowTitle) {
-        return adapter.WindowDoesNotExistByTitle(guid, windowTitle);
+    public String WindowDoesNotExistByTitle(String windowTitle) {
+        return adapter.WindowDoesNotExistByTitle(windowTitle);
     }
 
     @Override
-    public String WindowDoesNotExistByUrl(UUID guid, String url) {
-        return adapter.WindowDoesNotExistByUrl(guid, url);
+    public String WindowDoesNotExistByUrl(String url) {
+        return adapter.WindowDoesNotExistByUrl(url);
     }
 
     @Override
-    public void ModifyCookie(UUID guid, String name, String value) {
-        adapter.ModifyCookie(guid, name, value);
+    public void ModifyCookie(String name, String value) {
+        adapter.ModifyCookie(name, value);
     }
 
     @Override
-    public IWebCookie GetCookie(UUID guid, String name) {
-        return adapter.GetCookie(guid, name);
+    public IWebCookie GetCookie(String name) {
+        return adapter.GetCookie(name);
     }
 
     @Override
-    public void Has(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.Has(guid, element, messages, selector, option, attribute);
+    public void Has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.Has(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void HasLike(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.HasLike(guid, element, messages, selector, option, attribute);
+    public void HasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasLike(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void DoesNotHave(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.DoesNotHave(guid, element, messages, selector, option, attribute);
+    public void DoesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.DoesNotHave(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void DoesNotHaveLike(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.DoesNotHaveLike(guid, element, messages, selector, option, attribute);
+    public void DoesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.DoesNotHaveLike(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void HasOnly(UUID guid, WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.HasOnly(guid, element, messages, selector, option, attribute);
+    public void HasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.HasOnly(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void Is(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
-        adapter.Is(guid, element, value, option, attribute);
+    public void Is(WebControl element, String value, ComparisonOption option, String attribute) {
+        adapter.Is(element, value, option, attribute);
     }
 
     @Override
-    public void IsLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
-        adapter.IsLike(guid, element, value, option, attribute);
+    public void IsLike(WebControl element, String value, ComparisonOption option, String attribute) {
+        adapter.IsLike(element, value, option, attribute);
     }
 
     @Override
-    public void IsElementDisabled(UUID guid, WebControl element) {
-        adapter.IsElementDisabled(guid, element);
+    public void IsElementDisabled(WebControl element) {
+        adapter.IsElementDisabled(element);
     }
 
     @Override
-    public void NotSelected(UUID guid, WebControl element) {
-        adapter.NotSelected(guid, element);
+    public void NotSelected(WebControl element) {
+        adapter.NotSelected(element);
     }
 
     @Override
-    public void NotVisible(UUID guid, WebControl element) {
-        adapter.NotVisible(guid, element);
+    public void NotVisible(WebControl element) {
+        adapter.NotVisible(element);
     }
 
     @Override
-    public void Selected(UUID guid, WebControl element) {
-        adapter.Selected(guid, element);
+    public void Selected(WebControl element) {
+        adapter.Selected(element);
     }
 
     @Override
-    public void Visible(UUID guid, WebControl element) {
-        adapter.Visible(guid, element);
+    public void Visible(WebControl element) {
+        adapter.Visible(element);
     }
 
     //
     @Override
-    public void VerifyAlertText(UUID guid, String comparingText) {
-        adapter.VerifyAlertText(guid, comparingText);
+    public void VerifyAlertText(String comparingText) {
+        adapter.VerifyAlertText(comparingText);
     }
 
     @Override
-    public void VerifyAlertTextLike(UUID guid, String comparingText, boolean caseSensitive) {
-        adapter.VerifyAlertTextLike(guid, comparingText, caseSensitive);
+    public void VerifyAlertTextLike(String comparingText, boolean caseSensitive) {
+        adapter.VerifyAlertTextLike(comparingText, caseSensitive);
     }
 
     @Override
-    public void VerifyTitle(UUID guid, String comparingTitle) {
-        adapter.VerifyTitle(guid, comparingTitle);
+    public void VerifyTitle(String comparingTitle) {
+        adapter.VerifyTitle(comparingTitle);
     }
 
     @Override
-    public void VerifyURL(UUID guid, URL comparingURL) {
-        adapter.VerifyURL(guid, comparingURL);
+    public void VerifyURL(URL comparingURL) {
+        adapter.VerifyURL(comparingURL);
     }
 
     @Override
-    public void DatesApproximatelyEqual(UUID guid, WebControl element, String attributeName, DateTime expected, Period delta) {
-        adapter.DatesApproximatelyEqual(guid, element, attributeName, expected, delta);
+    public void DatesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta) {
+        adapter.DatesApproximatelyEqual(element, attributeName, expected, delta);
     }
 
     @Override
-    public BrowserType GetBrowserType(UUID guid) {
-        return adapter.GetBrowserType(guid);
+    public BrowserType GetBrowserType() {
+        return adapter.GetBrowserType();
     }
 
     @Override
-    public void IsNotLike(UUID guid, WebControl element, String value, ComparisonOption option, String attribute) {
-        adapter.IsNotLike(guid, element, value, option, attribute);
+    public void IsNotLike(WebControl element, String value, ComparisonOption option, String attribute) {
+        adapter.IsNotLike(element, value, option, attribute);
     }
 
     @Override
-    public ClientRects GetClientRects(UUID guid, WebControl element) {
-        return adapter.GetClientRects(guid, element);
+    public ClientRects GetClientRects(WebControl element) {
+        return adapter.GetClientRects(element);
     }
 
     @Override
-    public void PressKeyboardKey(UUID guid, WebControl element, KeyboardKey key) {
-        adapter.PressKeyboardKey(guid, element, key);
+    public void PressKeyboardKey(WebControl element, KeyboardKey key) {
+        adapter.PressKeyboardKey(element, key);
     }
-//
+
+    // Should we delete the commented code below?
+
+
+    //
 //    /**
 //     * Checks an element.
 //     *
@@ -1603,11 +1606,11 @@ public class AeonWebDriver implements IWebDriver {
 //
 //    @Override
 //    public String GetPageSource() {
-//        return adapter.GetPageSource(UUID.randomUUID());
+//        return adapter.GetPageSource();
 //    }
 //
 //    @Override
 //    public Image GetScreenshot() {
-//        return adapter.GetScreenshot(UUID.randomUUID());
+//        return adapter.GetScreenshot();
 //    }
 }

@@ -15,7 +15,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Provides methods available for a web element.
@@ -46,11 +45,10 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Gets a value indicating whether or not this element is displayed.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      * @return Returns true if the element is displayed, false if otherwise.
      */
-    public final boolean Displayed(UUID guid) {
+    public final boolean Displayed() {
         log.trace("WebElement.get_Displayed();");
         boolean result = getUnderlyingWebElement().isDisplayed();
         log.trace(String.format("Result: %1$s", result));
@@ -59,11 +57,10 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Gets a value indicating whether or not this element is enabled.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      * @return Returns true if the element is enabled, false if otherwise.
      */
-    public final boolean Enabled(UUID guid) {
+    public final boolean Enabled() {
         log.trace("WebElement.get_Enabled();");
         boolean result = getUnderlyingWebElement().isEnabled();
         log.trace(String.format("Result: %1$s", result));
@@ -72,11 +69,10 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Gets a value indicating whether or not this element is selected.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      * @return Returns true if the element is displayed, false if otherwise.
      */
-    public final boolean Selected(UUID guid) {
+    public final boolean Selected() {
         log.trace("WebElement.get_Selected();");
         boolean result = getUnderlyingWebElement().isSelected();
         log.trace(String.format("Result: %1$s", result));
@@ -85,11 +81,10 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Gets the tag name of this element.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      * @return Returns the tag name of the web element.
      */
-    public final String GetTagName(UUID guid) {
+    public final String GetTagName() {
         log.trace("WebElement.get_TagName();");
         String result = getUnderlyingWebElement().getTagName();
         log.trace(String.format("Result: %1$s", result));
@@ -98,11 +93,10 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Gets the location of this element.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      * @return Returns the location of the web element.
      */
-    public final aeon.core.common.Point GetLocation(UUID guid) {
+    public final aeon.core.common.Point GetLocation() {
         log.trace("WebElement.get_Location();");
         org.openqa.selenium.Point result = getUnderlyingWebElement().getLocation();
         log.trace(String.format("Result: %1$s", result));
@@ -111,11 +105,10 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Gets the innerText of this element, without any leading or trailing whitespace, and with other whitespace collapsed.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      * @return Returns the text of the web element.
      */
-    public final String GetText(UUID guid) {
+    public final String GetText() {
         log.trace("WebElement.get_Text();");
         String result = getUnderlyingWebElement().getText().trim();
         log.trace(String.format("Result: %1$s", result));
@@ -124,22 +117,20 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Clears the content of this element.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      */
-    public final void Clear(UUID guid) {
+    public final void Clear() {
         log.trace("WebElement.Clear();");
         underlyingWebElement.clear();
     }
 
     /**
      * Finds the first web element using the given method.
-     *
-     * @param guid   Uniquely identify the web element.
+     *   Uniquely identify the web element.
      * @param findBy Findby used to find the web element.
      * @return Returns the web element.
      */
-    public final WebControl FindElement(UUID guid, IBy findBy) {
+    public final WebControl FindElement(IBy findBy) {
         try {
             if (findBy == null) {
                 throw new IllegalArgumentException("findBy");
@@ -156,12 +147,11 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Finds element through its text or value.
-     *
-     * @param guid Uniquely identifiable id associated with this call.
+     * Uniquely identifiable id associated with this call.
      * @param by   The selector.
      * @return The first web control found by the selector.
      */
-    public WebControl FindElementByXPath(UUID guid, IBy by) {
+    public WebControl FindElementByXPath(IBy by) {
         if (by == null) {
             throw new IllegalArgumentException("by");
         }
@@ -175,12 +165,11 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Finds all elements corresponding to a given selector.
-     *
-     * @param guid A globally unique identifier associated with a call.
+     * A globally unique identifier associated with a call.
      * @param by   The selector.
      * @return A collection of WebControls.
      */
-    public Collection<WebControl> FindElementsByXPath(UUID guid, IBy by) {
+    public Collection<WebControl> FindElementsByXPath(IBy by) {
         if (by == null) {
             throw new IllegalArgumentException("by");
         }
@@ -198,12 +187,11 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Finds all web elements using the given method.
-     *
-     * @param guid   Uniquely identify the web element.
+     *   Uniquely identify the web element.
      * @param findBy Findby used to find the web elements.
      * @return Returns a collection of web elements.
      */
-    public final Collection<WebControl> FindElements(UUID guid, IBy findBy) {
+    public final Collection<WebControl> FindElements(IBy findBy) {
         if (findBy == null) {
             throw new IllegalArgumentException("findBy");
         }
@@ -222,11 +210,10 @@ public class SeleniumElement extends WebControl {
     /**
      * Gets the value of the specified attribute for this element.
      *
-     * @param guid          Uniquely identify the web element.
      * @param attributeName Attribute name of the web element.
      * @return Returns the attribute associated with the attribute name.
      */
-    public final String GetAttribute(UUID guid, String attributeName) {
+    public final String GetAttribute(String attributeName) {
         if (attributeName == null) {
             throw new IllegalArgumentException("attributeName");
         }
@@ -243,11 +230,10 @@ public class SeleniumElement extends WebControl {
     /**
      * Gets the value of a CSS property of this element.
      *
-     * @param guid         Uniquely identify the web element.
      * @param propertyName Property name of the web element.
      * @return Returns the CSS value of the property name.
      */
-    public final String GetCssValue(UUID guid, String propertyName) {
+    public final String GetCssValue(String propertyName) {
         if (propertyName == null) {
             throw new IllegalArgumentException("propertyName");
         }
@@ -260,10 +246,9 @@ public class SeleniumElement extends WebControl {
     /**
      * Simulates typing text into the element.
      *
-     * @param guid Uniquely identify the web element.
      * @param text Text that will be typed into the element.
      */
-    public final void SendKeys(UUID guid, String text) {
+    public final void SendKeys(String text) {
         if (text == null) {
             throw new IllegalArgumentException("text");
         }
@@ -273,10 +258,10 @@ public class SeleniumElement extends WebControl {
             String[] newText = text.split("[(]", -1);
             for (String s : newText) {
                 if (newText[newText.length - 1].equals(s)) {
-                    this.SendKeys(UUID.randomUUID(), s);
+                    this.SendKeys(s);
                 } else {
-                    this.SendKeys(UUID.randomUUID(), s);
-                    this.SendKeys(UUID.randomUUID(), Keys.SHIFT + "9" + Keys.SHIFT);
+                    this.SendKeys(s);
+                    this.SendKeys(Keys.SHIFT + "9" + Keys.SHIFT);
                 }
             }
 
@@ -311,21 +296,19 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Simulates typing text into the element.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      * @param key  Keyboard key that will be typed into the element.
      */
-    public final void SendKeys(UUID guid, Keys key) {
-        SendKeys(guid, key);
+    public final void SendKeys(Keys key) {
+        SendKeys(key);
     }
 
     /**
      * Clicks this element.
-     *
-     * @param guid              Uniquely identify the web element.
+     *              Uniquely identify the web element.
      * @param moveMouseToOrigin The move Mouse To Origin.
      */
-    public final void Click(UUID guid, boolean moveMouseToOrigin) {
+    public final void Click(boolean moveMouseToOrigin) {
         // TODO(DionnyS): Ensure this works in a grid instance
         if (moveMouseToOrigin) {
             try {
@@ -343,98 +326,97 @@ public class SeleniumElement extends WebControl {
 
     /**
      * Submits this element to the web server.
-     *
-     * @param guid Uniquely identify the web element.
+     * Uniquely identify the web element.
      */
-    public final void Submit(UUID guid) {
+    public final void Submit() {
         log.trace("WebElement.Submit();");
         underlyingWebElement.submit();
     }
 
     //region functions specifically for select elements
 
-    public final boolean IsMultiple(UUID guid) {
+    public final boolean IsMultiple() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.IsMultiple(guid);
+        return selectHelper.IsMultiple();
     }
 
-    public final List<WebControl> GetAllSelectedOptions(UUID guid) {
+    public final List<WebControl> GetAllSelectedOptions() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetAllSelectedOptions(guid);
+        return selectHelper.GetAllSelectedOptions();
     }
 
-    public final WebControl GetSelectedOption(UUID guid) {
+    public final WebControl GetSelectedOption() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetSelectedOption(guid);
+        return selectHelper.GetSelectedOption();
     }
 
-    public final String GetSelectedOptionText(UUID guid){
+    public final String GetSelectedOptionText(){
         if(selectHelper == null){
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetSelectedOptionText(guid);
+        return selectHelper.GetSelectedOptionText();
     }
 
-    public final List<WebControl> GetOptions(UUID guid) {
+    public final List<WebControl> GetOptions() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetOptions(guid);
+        return selectHelper.GetOptions();
     }
 
-    public final void DeselectAll(UUID guid) {
+    public final void DeselectAll() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectAll(guid);
+        selectHelper.DeselectAll();
     }
 
-    public final void DeselectByIndex(UUID guid, int index) {
+    public final void DeselectByIndex(int index) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectByIndex(guid, index);
+        selectHelper.DeselectByIndex(index);
     }
 
-    public final void DeselectByText(UUID guid, String text) {
+    public final void DeselectByText(String text) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectByText(guid, text);
+        selectHelper.DeselectByText(text);
     }
 
-    public final void DeselectByValue(UUID guid, String value) {
+    public final void DeselectByValue(String value) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectByValue(guid, value);
+        selectHelper.DeselectByValue(value);
     }
 
-    public final void SelectByIndex(UUID guid, int index) {
+    public final void SelectByIndex(int index) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.SelectByIndex(guid, index);
+        selectHelper.SelectByIndex(index);
     }
 
-    public final void SelectByText(UUID guid, String text) {
+    public final void SelectByText(String text) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.SelectByText(guid, text);
+        selectHelper.SelectByText(text);
     }
 
-    public final void SelectByValue(UUID guid, String value) {
+    public final void SelectByValue(String value) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.SelectByValue(guid, value);
+        selectHelper.SelectByValue(value);
     }
     //endregion
 }

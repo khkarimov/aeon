@@ -44,6 +44,6 @@ public class DragAndDropCommand extends WebControlCommand {
         if (control == null) {
             throw new IllegalArgumentException("control");
         }
-        driver.DragAndDrop(getGuid(), control, targetElement);
+        driver.DragAndDrop(control, targetElement);
     }
 }

@@ -28,6 +28,6 @@ public class RefreshCommand extends Command {
             throw new IllegalArgumentException();
         }
 
-        ((IWebDriver) driver).Refresh(getGuid());
+        ((IWebDriver) driver).Refresh();
     }
 }

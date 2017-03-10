@@ -26,7 +26,7 @@ public class SetDivValueByJavaScriptCommand extends WebControlCommand {
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.SetDivValueByJavaScript(getGuid(), control, value);
+        driver.SetDivValueByJavaScript(control, value);
 
     }
 }

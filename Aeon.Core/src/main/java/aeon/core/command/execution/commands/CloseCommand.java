@@ -29,6 +29,6 @@ public class CloseCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        driver.Close(getGuid());
+        driver.Close();
     }
 }

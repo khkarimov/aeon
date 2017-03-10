@@ -49,6 +49,6 @@ public class DatesApproximatelyEqualCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.DatesApproximatelyEqual(getGuid(), control, attributeName, expectedDate, acceptableDelta);
+        driver.DatesApproximatelyEqual(control, attributeName, expectedDate, acceptableDelta);
     }
 }

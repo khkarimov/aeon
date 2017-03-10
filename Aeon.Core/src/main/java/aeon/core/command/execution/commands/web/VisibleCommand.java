@@ -31,6 +31,6 @@ public class VisibleCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Visible(getGuid(), control);
+        driver.Visible(control);
     }
 }

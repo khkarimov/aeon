@@ -46,8 +46,8 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     @Override
     protected Object CommandDelegate(IDriver driver) {
         IWebDriver webDriver = (IWebDriver) driver;
-        WebControl control = (WebControl) getCommandInitializer().FindElement(getGuid(), driver, selector);
-        webDriver.ScrollElementIntoView(getGuid(), control);
+        WebControl control = (WebControl) getCommandInitializer().FindElement(driver, selector);
+        webDriver.ScrollElementIntoView(control);
         return CommandDelegateOverride(driver, control);
     }
 

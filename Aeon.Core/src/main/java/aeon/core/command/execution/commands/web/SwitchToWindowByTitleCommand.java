@@ -41,7 +41,7 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        return ((IWebDriver) driver).SwitchToWindowByTitle(getGuid(), title);
+        return ((IWebDriver) driver).SwitchToWindowByTitle(title);
     }
 
 }

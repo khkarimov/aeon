@@ -8,8 +8,6 @@ import aeon.core.common.helpers.IClock;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.joda.time.Duration;
 
-import java.util.UUID;
-
 /**
  * The Web delegate runner factory.
  */
@@ -49,13 +47,13 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     /**
      * Creates an instance of the {@link IDelegateRunner} class which is used to run delegates.
      */
-    public final IDelegateRunner CreateInstance(UUID guid, AutomationInfo automationInfo) {
+    public final IDelegateRunner CreateInstance(AutomationInfo automationInfo) {
         // TODO(DionnyS): JAVA_CONVERSION Use an IoC container to resolve the factory.
         IDriver driver = automationInfo.getDriver();
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver);
-        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(guid, commandDelegateRunner, driver, clock, defaultTimeout);
-        ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(guid, timeoutDelegateRunner, new SeleniumExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
-        return new ThrottledDelegateRunner(guid, exceptionHandlingDelegateRunner, throttleFactor);
+        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(commandDelegateRunner, driver, clock, defaultTimeout);
+        ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(timeoutDelegateRunner, new SeleniumExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
+        return new ThrottledDelegateRunner(exceptionHandlingDelegateRunner, throttleFactor);
     }
 }

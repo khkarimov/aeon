@@ -44,6 +44,6 @@ public class UploadFileDialogCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).UploadFileDialog(getGuid(), selector, path);
+        ((IWebDriver) driver).UploadFileDialog(selector, path);
     }
 }

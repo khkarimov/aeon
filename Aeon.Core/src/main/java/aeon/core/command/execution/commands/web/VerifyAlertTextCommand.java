@@ -27,6 +27,6 @@ public class VerifyAlertTextCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).VerifyAlertText(getGuid(), comparingText);
+        ((IWebDriver) driver).VerifyAlertText(comparingText);
     }
 }

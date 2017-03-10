@@ -31,6 +31,6 @@ public class SelectedCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Selected(getGuid(), control);
+        driver.Selected(control);
     }
 }

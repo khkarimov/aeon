@@ -2,7 +2,6 @@ package aeon.selenium.jquery;
 
 import aeon.core.common.helpers.QuadFunction;
 
-import java.util.UUID;
 import java.util.function.Function;
 
 /**
@@ -17,5 +16,5 @@ public interface IJavaScriptFlowExecutor {
     /**
      * Gets a function return an object, as performed by {@link IScriptExecutor}.
      */
-    QuadFunction<IScriptExecutor, UUID, String, Iterable<Object>, Object> getExecutor();
+    QuadFunction<IScriptExecutor, String, Iterable<Object>, Object> getExecutor();
 }

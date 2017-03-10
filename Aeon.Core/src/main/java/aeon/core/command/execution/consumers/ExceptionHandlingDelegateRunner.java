@@ -7,7 +7,6 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -16,8 +15,8 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
     private IExceptionHandlerFactory exceptionHandlerFactory;
     private static Logger log = LogManager.getLogger(ExceptionHandlingDelegateRunner.class);
 
-    public ExceptionHandlingDelegateRunner(UUID guid, IDelegateRunner successor, IExceptionHandlerFactory exceptionHandlerFactory) {
-        super(guid, successor);
+    public ExceptionHandlingDelegateRunner(IDelegateRunner successor, IExceptionHandlerFactory exceptionHandlerFactory) {
+        super(successor);
         this.exceptionHandlerFactory = exceptionHandlerFactory;
     }
 

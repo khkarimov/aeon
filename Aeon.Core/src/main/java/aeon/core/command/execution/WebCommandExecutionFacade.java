@@ -43,9 +43,9 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
         if(command instanceof WebControlCommand){
-            ajaxWaiter.WaitForAsync(command.getGuid());
+            ajaxWaiter.WaitForAsync();
         }
-        delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
+        delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
     }
 
     /**
@@ -60,8 +60,8 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
         if(command instanceof WebControlCommandWithReturn){
-            ajaxWaiter.WaitForAsync(command.getGuid());
+            ajaxWaiter.WaitForAsync();
         }
-        return delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
+        return delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
     }
 }

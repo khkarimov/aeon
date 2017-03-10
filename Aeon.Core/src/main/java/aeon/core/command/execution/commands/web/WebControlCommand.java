@@ -32,8 +32,8 @@ public abstract class WebControlCommand extends Command {
     @Override
     protected void DriverDelegate(IDriver driver) {
         IWebDriver webDriver = (IWebDriver) driver;
-        WebControl control = (WebControl) getCommandInitializer().FindElement(getGuid(), driver, selector);
-        webDriver.ScrollElementIntoView(getGuid(), control);
+        WebControl control = (WebControl) getCommandInitializer().FindElement(driver, selector);
+        webDriver.ScrollElementIntoView(control);
         CommandDelegate(webDriver, control);
     }
 
