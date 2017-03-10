@@ -30,7 +30,6 @@ public class FileDialogInput extends WebElement {
     public void OpenFileDialog() {
         info.getCommandExecutionFacade().Execute(info,
                 new OpenFileDialogCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -45,7 +44,6 @@ public class FileDialogInput extends WebElement {
     public void SelectFileDialog(String path) {
         info.getCommandExecutionFacade().Execute(info,
                 new SelectFileDialogCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         path));
@@ -62,7 +60,6 @@ public class FileDialogInput extends WebElement {
     public void UploadFileDialog(String path) {
         info.getCommandExecutionFacade().Execute(info,
                 new UploadFileDialogCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         path));

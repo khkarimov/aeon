@@ -1,9 +1,9 @@
 package aeon.core.testabstraction.product;
 
-import aeon.core.common.logging.ILog;
-import aeon.core.common.logging.Log;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
 
@@ -15,6 +15,9 @@ import java.util.UUID;
  * Created by DionnyS on 4/13/2016.
  */
 public class Aeon {
+
+    private static Logger log = LogManager.getLogger(Aeon.class);
+
     public static <T extends Product> T Launch(Class<T> productClass, BrowserType browserType) {
         try {
             T product = productClass.newInstance();
@@ -25,10 +28,9 @@ public class Aeon {
 
             parameters.put("browserType", browserType);
             product.getConfiguration().setBrowserType(browserType);
-            product.getConfiguration().setLog(createLogger());
             product.setParameters(parameters);
 
-            product.getConfiguration().getLog().Info(UUID.randomUUID(), "Launching product on browser: " + browserType);
+            log.info("Launching product on browser: " + browserType);
 
             product.launch(plugin);
 
@@ -70,9 +72,5 @@ public class Aeon {
         parameters.load(ResourceBundle.getBundle("config"));
 
         return parameters;
-    }
-
-    private static ILog createLogger() {
-        return new Log();
     }
 }

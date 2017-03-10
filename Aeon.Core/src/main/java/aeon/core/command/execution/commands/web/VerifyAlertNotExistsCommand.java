@@ -6,7 +6,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -18,11 +17,10 @@ public class VerifyAlertNotExistsCommand extends Command {
     /**
      * Initializes a new instance of
      *
-     * @param log
      * @see VerifyAlertNotExistsCommand class
      */
-    public VerifyAlertNotExistsCommand(ILog log) {
-        super(log, Resources.getString("VerifyAlertNotExistsCommand_Info"));
+    public VerifyAlertNotExistsCommand() {
+        super(Resources.getString("VerifyAlertNotExistsCommand_Info"));
     }
 
     @Override

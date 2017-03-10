@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -26,14 +25,13 @@ public class HasOptionsInOrderCommand extends WebControlCommand {
     /**
      * Initializes a new instance of the HasOptionsInOrderCommand.
      *
-     * @param log                The logger.
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
      * @param options            The options that the select should have, in the same descending order as they appear in the array.
      * @param select             The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
-    public HasOptionsInOrderCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String[] options, WebSelectOption select) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("HasOptionsInOrderCommand_Info"), options, selector), selector, commandInitializer);
+    public HasOptionsInOrderCommand(IBy selector, ICommandInitializer commandInitializer, String[] options, WebSelectOption select) {
+        super(String.format(Locale.getDefault(), Resources.getString("HasOptionsInOrderCommand_Info"), options, selector), selector, commandInitializer);
         this.options = options;
         this.select = select;
     }
@@ -41,15 +39,14 @@ public class HasOptionsInOrderCommand extends WebControlCommand {
     /**
      * Initializes a new instance of the HasOptionsInOrderCommand.
      *
-     * @param log                The logger.
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
      * @param options            The options that the option group should have, in the same descending order as they appear in the array.
      * @param optgroup           The label of the option group that will be searched.
      * @param select             The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
-    public HasOptionsInOrderCommand(ILog log, IBy selector, ICommandInitializer commandInitializer, String[] options, String optgroup, WebSelectOption select) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("CheckCommand_Info"), selector), selector, commandInitializer);
+    public HasOptionsInOrderCommand(IBy selector, ICommandInitializer commandInitializer, String[] options, String optgroup, WebSelectOption select) {
+        super(String.format(Locale.getDefault(), Resources.getString("CheckCommand_Info"), selector), selector, commandInitializer);
         this.options = options;
         this.select = select;
         this.optgroup = optgroup;

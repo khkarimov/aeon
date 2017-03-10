@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -13,11 +12,9 @@ public class RefreshCommand extends Command {
 
     /**
      * Initializes a new instance of RefreshCommand
-     *
-     * @param log the logger
      */
-    public RefreshCommand(ILog log) {
-        super(log, Resources.getString("RefreshCommand_Info"));
+    public RefreshCommand() {
+        super(Resources.getString("RefreshCommand_Info"));
     }
 
     /**

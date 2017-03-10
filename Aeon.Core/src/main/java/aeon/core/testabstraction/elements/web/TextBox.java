@@ -33,7 +33,6 @@ public class TextBox extends WebElement {
     public void Set(String value) {
         info.getCommandExecutionFacade().Execute(info,
                 new SetCommand(
-                        info.getLog(),
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         WebSelectOption.Text,
@@ -42,7 +41,6 @@ public class TextBox extends WebElement {
 
     public void Clear() {
         info.getCommandExecutionFacade().Execute(info, new ClearCommand(
-                this.info.getLog(),
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)
         ));

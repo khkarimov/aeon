@@ -8,6 +8,7 @@ import aeon.core.testabstraction.product.Configuration;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by DionnyS on 4/14/2016.
@@ -27,6 +28,7 @@ public class SeleniumConfiguration extends Configuration {
     private boolean ensureCleanEnvironment;
     private String chromeBinary;
     private String firefoxBinary;
+    private static Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
     public SeleniumConfiguration() {
         super(AeonWebDriver.class, SeleniumAdapter.class);
@@ -45,7 +47,7 @@ public class SeleniumConfiguration extends Configuration {
         try {
             this.seleniumHubUrl = new URL("http://127.0.0.1");
         } catch (MalformedURLException e) {
-            LogManager.getLogger().error("MalformedURLException: " + e.getMessage());
+            log.error("MalformedURLException: " + e.getMessage());
         }
     }
 

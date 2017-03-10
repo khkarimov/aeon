@@ -6,7 +6,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -22,22 +21,20 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
      *
-     * @param log     The logger.
      * @param message The message to log.
      */
-    protected WebControlCommandWithReturn(ILog log, String message) {
-        super(log, message);
+    protected WebControlCommandWithReturn(String message) {
+        super(message);
     }
 
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
      *
-     * @param log         The log.
      * @param message     The message to log.
      * @param initializer
      */
-    protected WebControlCommandWithReturn(ILog log, String message, IBy selector, ICommandInitializer initializer) {
-        super(log, message, initializer);
+    protected WebControlCommandWithReturn(String message, IBy selector, ICommandInitializer initializer) {
+        super(message, initializer);
         this.selector = selector;
     }
 

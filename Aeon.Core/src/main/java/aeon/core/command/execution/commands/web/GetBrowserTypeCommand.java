@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -18,11 +17,9 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
 
     /**
      * Initializes a new instance of the GetBrowserTypeCommand.
-     *
-     * @param log The logger.
      */
-    public GetBrowserTypeCommand(ILog log) {
-        super(log, Resources.getString("GetBrowserTypeCommand_Info"));
+    public GetBrowserTypeCommand() {
+        super(Resources.getString("GetBrowserTypeCommand_Info"));
     }
 
     /**

@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -12,8 +11,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class SwitchToWindowByUrlCommand extends CommandWithReturn {
     private String url;
 
-    public SwitchToWindowByUrlCommand(ILog log, String url) {
-        super(log, Resources.getString("SwitchToWindowByUrlCommand_Info"));
+    public SwitchToWindowByUrlCommand(String url) {
+        super(Resources.getString("SwitchToWindowByUrlCommand_Info"));
         this.url = url;
     }
 

@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
@@ -15,11 +14,9 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class MaximizeCommand extends Command {
     /**
      * Initializes a new instance of the MaximizeCommand class.
-     *
-     * @param log The logger.
      */
-    public MaximizeCommand(ILog log) {
-        super(log, Resources.getString("MaximizeCommand_Info"));
+    public MaximizeCommand() {
+        super(Resources.getString("MaximizeCommand_Info"));
     }
 
     /**

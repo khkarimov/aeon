@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -17,12 +16,11 @@ public class VisibleCommand extends WebControlCommand {
     /**
      * Initializes a new instance of the Visible.
      *
-     * @param log                The logger.
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
      */
-    public VisibleCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("VisibleCommand_Info"), selector), selector, commandInitializer);
+    public VisibleCommand(IBy selector, ICommandInitializer commandInitializer) {
+        super(String.format(Locale.getDefault(), Resources.getString("VisibleCommand_Info"), selector), selector, commandInitializer);
     }
 
     /**

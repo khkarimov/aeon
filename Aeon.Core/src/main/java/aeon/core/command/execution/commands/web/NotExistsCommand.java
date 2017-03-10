@@ -3,7 +3,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.NoSuchElementException;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -24,11 +23,10 @@ public class NotExistsCommand extends Command {
     /**
      * Initializes a new instance of the NotExistsCommand.
      *
-     * @param log                The logger.
      * @param selector           The selector.
      */
-    public NotExistsCommand(ILog log, IBy selector) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("NotExistsCommand_Info"), selector));
+    public NotExistsCommand(IBy selector) {
+        super(String.format(Locale.getDefault(), Resources.getString("NotExistsCommand_Info"), selector));
         this.selector = selector;
     }
 

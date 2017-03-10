@@ -3,7 +3,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.Select2Exception;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -17,12 +16,11 @@ public class ClearCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of Clear Command
-     *
-     * @param log      the logger
+     *      the logger
      * @param selector the selector
      */
-    public ClearCommand(ILog log, IBy selector, ICommandInitializer commandInitializer) {
-        super(log, String.format(Locale.getDefault(), Resources.getString("ClearCommand_Info"), selector), selector, commandInitializer);
+    public ClearCommand(IBy selector, ICommandInitializer commandInitializer) {
+        super(String.format(Locale.getDefault(), Resources.getString("ClearCommand_Info"), selector), selector, commandInitializer);
     }
 
     @Override

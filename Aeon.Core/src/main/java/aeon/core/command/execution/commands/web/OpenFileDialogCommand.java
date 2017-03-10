@@ -7,7 +7,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
-import aeon.core.common.logging.ILog;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -26,12 +25,11 @@ public class OpenFileDialogCommand extends Command {
     /**
      * Initializes a new instance of the {@link Command} class
      *
-     * @param log         The log.
      * @param selector    The selector.
      * @param initializer The command initializer.
      */
-    public OpenFileDialogCommand(ILog log, IBy selector, ICommandInitializer initializer) {
-        super(log, Resources.getString("OpenFileDialogCommand_Info"), initializer);
+    public OpenFileDialogCommand(IBy selector, ICommandInitializer initializer) {
+        super(Resources.getString("OpenFileDialogCommand_Info"), initializer);
         this.selector = selector;
     }
 
