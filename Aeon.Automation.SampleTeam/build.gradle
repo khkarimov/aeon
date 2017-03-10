@@ -11,7 +11,6 @@ repositories {
 
 ext {
     seleniumVersion = '3.0.1'
-    chromeDriverVersion = '2.27'
 }
 
 clean {
@@ -38,6 +37,7 @@ dependencies {
     // Drivers
     compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
 }

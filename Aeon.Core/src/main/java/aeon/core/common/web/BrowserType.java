@@ -8,6 +8,10 @@ public enum BrowserType {
      * Microsoft Internet Explorer.
      */
     InternetExplorer,
+    /**
+     * Microsoft Edge.
+     */
+    Edge,
 
     /**
      * Google Chrome.

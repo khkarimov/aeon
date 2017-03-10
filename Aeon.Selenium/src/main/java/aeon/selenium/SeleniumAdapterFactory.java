@@ -27,6 +27,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeDriverService;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -71,6 +74,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         boolean moveMouseToOrigin = configuration.isMoveMouseToOrigin();
         String chromeDirectory = configuration.getChromeDirectory();
         String ieDirectory = configuration.getIEDirectory();
+        String edgeDirectory = configuration.getEdgeDirectory();
         String marionetteDirectory = configuration.getMarionetteDirectory();
 
         boolean ensureCleanEnvironment = configuration.isEnsureCleanEnvironment();
@@ -92,7 +96,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 }
 
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
-                //return new SeleniumFirefoxWebDriver(driver, javaScriptFlowExecutor, moveMouseToOrigin);
+
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case Chrome:
@@ -107,8 +111,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
                             setProxySettings(capabilities, proxyLocation));
                 }
-
-                //return new SeleniumChromeWebDriver(driver, javaScriptFlowExecutor, moveMouseToOrigin);
+                
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case InternetExplorer:
@@ -120,9 +123,21 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
                             GetInternetExplorerOptions(guid, ensureCleanEnvironment, proxyLocation));
                 }
-
-                //return new SeleniumInternetExplorerWebDriver(driver, javaScriptFlowExecutor, moveMouseToOrigin);
+                
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+
+            case Edge:
+                if (enableSeleniumGrid) {
+                    driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(guid, browserType,
+                            language, maximizeBrowser, useMobileUserAgent));
+                } else {
+                    driver = new EdgeDriver(
+                            new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
+                            GetEdgeOptions(guid, ensureCleanEnvironment, proxyLocation));
+                }
+
+                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+
             default:
                 throw new ConfigurationException("BrowserType", "Configuration",
                         String.format("%1$s is not a supported browser", browserType));
@@ -205,6 +220,23 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         desiredCapabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, ensureCleanSession);
         desiredCapabilities.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, ElementScrollBehavior.TOP);
         desiredCapabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
+        setProxySettings(desiredCapabilities, proxyLocation);
+        return desiredCapabilities;
+    }
+
+    private static DesiredCapabilities GetEdgeOptions(UUID guid, boolean ensureCleanSession, String proxyLocation) {
+        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
+            throw new UnsupportedPlatformException();
+        }
+
+        if (Process.GetWindowsProcessesByName("MicrosoftEdge").size() > 0) {
+            log.info(Resources.getString("MicrosoftEdgeIsAlreadyRunning_Info"));
+        }
+
+        EdgeOptions edgeOptions = new EdgeOptions();
+
+        DesiredCapabilities desiredCapabilities = DesiredCapabilities.edge();
+        desiredCapabilities.setCapability(EdgeOptions.CAPABILITY, edgeOptions);
         setProxySettings(desiredCapabilities, proxyLocation);
         return desiredCapabilities;
     }
