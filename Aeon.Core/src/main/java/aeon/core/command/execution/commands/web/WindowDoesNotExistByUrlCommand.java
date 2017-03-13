@@ -23,6 +23,6 @@ public class WindowDoesNotExistByUrlCommand extends CommandWithReturn {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        return ((IWebDriver) driver).WindowDoesNotExistByUrl(getGuid(), url);
+        return ((IWebDriver) driver).WindowDoesNotExistByUrl(url);
     }
 }

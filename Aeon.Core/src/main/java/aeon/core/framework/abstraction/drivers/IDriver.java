@@ -3,7 +3,6 @@ package aeon.core.framework.abstraction.drivers;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 
 import java.awt.*;
-import java.util.UUID;
 
 /**
  * Created by DionnyS on 4/20/2016.
@@ -11,9 +10,9 @@ import java.util.UUID;
 public interface IDriver {
     IDriver Configure(IAdapter adapter);
 
-    void Close(UUID guid);
+    void Close();
 
-    void Quit(UUID guid);
+    void Quit();
 
     String GetSource();
 

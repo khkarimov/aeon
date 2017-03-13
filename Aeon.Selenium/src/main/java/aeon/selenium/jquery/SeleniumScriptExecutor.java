@@ -7,7 +7,6 @@ import org.joda.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class SeleniumScriptExecutor implements IScriptExecutor {
@@ -26,12 +25,12 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         remoteWebDriver = value;
     }
 
-    public final void SetTimeout(UUID guid, Duration timeToWait) {
+    public final void SetTimeout(Duration timeToWait) {
         log.trace(String.format("WebDriver.Manage().Timeouts().SetScriptTimeout(%1$s);", timeToWait));
         getRemoteWebDriver().manage().timeouts().setScriptTimeout(timeToWait.getStandardSeconds(), TimeUnit.SECONDS);
     }
 
-    public final Object ExecuteScript(UUID guid, String script, Object... args) {
+    public final Object ExecuteScript(String script, Object... args) {
         log.trace(String.format("WebDriver.ExecuteScript(\"%1$s\");", script));
         Object returnValue = ((JavascriptExecutor) getRemoteWebDriver()).executeScript(script, args);
 
@@ -42,7 +41,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         return returnValue;
     }
 
-    public final Object ExecuteAsyncScript(UUID guid, String script, Object... args) {
+    public final Object ExecuteAsyncScript(String script, Object... args) {
         log.trace(String.format("WebDriver.ExecuteAsyncScript(\"%1$s\");", script));
 
         Object returnValue = ((JavascriptExecutor) remoteWebDriver).executeAsyncScript(script, args);

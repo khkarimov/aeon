@@ -45,6 +45,6 @@ public class IsNotLikeCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.IsNotLike(getGuid(), control, value, option, attribute);
+        driver.IsNotLike(control, value, option, attribute);
     }
 }

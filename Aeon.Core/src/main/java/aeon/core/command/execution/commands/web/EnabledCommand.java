@@ -35,6 +35,6 @@ public class EnabledCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.IsElementEnabled(getGuid(), control);
+        driver.IsElementEnabled(control);
     }
 }

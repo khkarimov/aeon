@@ -28,6 +28,6 @@ public class DismissAlertCommand extends Command {
      */
     @Override
     protected void DriverDelegate(IDriver driver) {
-        ((IWebDriver) driver).DismissAlert(getGuid());
+        ((IWebDriver) driver).DismissAlert();
     }
 }

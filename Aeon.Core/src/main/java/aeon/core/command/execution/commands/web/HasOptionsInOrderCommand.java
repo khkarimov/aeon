@@ -60,6 +60,6 @@ public class HasOptionsInOrderCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.HasOptionsInOrder(getGuid(), control, options, optgroup, select);
+        driver.HasOptionsInOrder(control, options, optgroup, select);
     }
 }

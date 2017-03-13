@@ -34,6 +34,6 @@ public class DoubleClickCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.DoubleClick(getGuid(), control);
+        driver.DoubleClick(control);
     }
 }

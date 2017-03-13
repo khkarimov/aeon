@@ -43,6 +43,6 @@ public class SelectFileDialogCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).SelectFileDialog(getGuid(), selector, path);
+        ((IWebDriver) driver).SelectFileDialog(selector, path);
     }
 }

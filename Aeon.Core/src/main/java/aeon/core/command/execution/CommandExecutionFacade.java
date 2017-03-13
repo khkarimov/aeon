@@ -30,7 +30,7 @@ public final class CommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
 
-        delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
+        delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
     }
 
     /**
@@ -45,6 +45,6 @@ public final class CommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
 
-        return delegateRunnerFactory.CreateInstance(command.getGuid(), automationInfo).Execute(command.GetCommandDelegate());
+        return delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
     }
 }

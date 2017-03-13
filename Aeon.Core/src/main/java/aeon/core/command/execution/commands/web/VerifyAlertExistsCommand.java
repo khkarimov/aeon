@@ -30,6 +30,6 @@ public class VerifyAlertExistsCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).VerifyAlertExists(getGuid());
+        ((IWebDriver) driver).VerifyAlertExists();
     }
 }

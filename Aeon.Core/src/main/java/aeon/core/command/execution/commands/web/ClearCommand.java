@@ -29,16 +29,16 @@ public class ClearCommand extends WebControlCommand {
             throw new IllegalArgumentException("driver");
         }
 
-        String tag = driver.GetElementTagName(getGuid(), webControl).toUpperCase();
+        String tag = driver.GetElementTagName(webControl).toUpperCase();
         if (tag.equals("SELECT")) {
             String scriptToDetermineIfSelect2CanBeInvoked = String.format("return typeof %1$s.select2 === 'function'", webControl.getSelector().ToJQuery());
-            boolean select2IsDefined = (boolean) driver.ExecuteScript(getGuid(), scriptToDetermineIfSelect2CanBeInvoked);
+            boolean select2IsDefined = (boolean) driver.ExecuteScript(scriptToDetermineIfSelect2CanBeInvoked);
             if (select2IsDefined) {
                 // While we can clear a Select2 element, throwing an exception is what a regular select element would do.
                 throw new Select2Exception("Clear is not a valid command on a Select2 element.");
             }
         }
 
-        driver.ClearElement(getGuid(), webControl);
+        driver.ClearElement(webControl);
     }
 }

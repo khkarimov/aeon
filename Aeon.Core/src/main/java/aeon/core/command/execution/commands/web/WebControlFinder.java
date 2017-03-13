@@ -6,7 +6,6 @@ import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
-import java.util.UUID;
 
 /**
  * Finds a web element.
@@ -33,12 +32,12 @@ public class WebControlFinder implements IWebControlFinder {
     /**
      * Finds a web element utilizing a web driver.
      */
-    public final WebControl FindElement(UUID guid, IWebDriver driver, IBy selector) {
+    public final WebControl FindElement(IWebDriver driver, IBy selector) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        WebControl control = driver.FindElement(guid, selectorFinder.FindSelector(driver, selector));
+        WebControl control = driver.FindElement(selectorFinder.FindSelector(driver, selector));
         control.setSelector(selector);
         return control;
     }

@@ -35,6 +35,6 @@ public class CheckCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Check(getGuid(), control);
+        driver.Check(control);
     }
 }

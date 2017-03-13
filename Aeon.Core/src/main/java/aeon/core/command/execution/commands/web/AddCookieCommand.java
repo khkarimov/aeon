@@ -35,6 +35,6 @@ public class AddCookieCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).AddCookie(getGuid(), cookie);
+        ((IWebDriver) driver).AddCookie(cookie);
     }
 }

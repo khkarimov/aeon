@@ -25,6 +25,6 @@ public class WindowDoesNotExistByTitleCommand extends CommandWithReturn {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        return ((IWebDriver) driver).WindowDoesNotExistByTitle(getGuid(), windowTitle);
+        return ((IWebDriver) driver).WindowDoesNotExistByTitle(windowTitle);
     }
 }

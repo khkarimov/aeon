@@ -61,6 +61,6 @@ public class HasOptionsCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.HasOptions(getGuid(), control, options, optgroup, select);
+        driver.HasOptions(control, options, optgroup, select);
     }
 }

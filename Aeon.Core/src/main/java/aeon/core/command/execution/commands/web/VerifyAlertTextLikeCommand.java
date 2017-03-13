@@ -25,6 +25,6 @@ public class VerifyAlertTextLikeCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).VerifyAlertTextLike(getGuid(), comparingText, caseSensitive);
+        ((IWebDriver) driver).VerifyAlertTextLike(comparingText, caseSensitive);
     }
 }

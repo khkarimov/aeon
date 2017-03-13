@@ -6,7 +6,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
-import java.util.UUID;
 
 /**
  * Created by JustinP on 6/2/2016.
@@ -38,26 +37,26 @@ public class AjaxWaiter {
         return timeout.getMillis();
     }
 
-    public void InjectJS(UUID guid) {
+    public void InjectJS() {
         try {
             String InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
-            webDriver.ExecuteScript(guid, InjectScriptTag);
+            webDriver.ExecuteScript(InjectScriptTag);
             System.out.println("Injected JS");
         }catch (ScriptExecutionException e){
             System.out.println("Could not inject JS");
         }
     }
 
-    public void WaitForAsync(UUID guid) {
+    public void WaitForAsync() {
         long count;
         DateTime end = clock.getUtcNow().withDurationAdded(timeout.getMillis(), 1);
         do{
             try {
-                count = (long) webDriver.ExecuteScript(guid, "return aeonAjaxCounter");
+                count = (long) webDriver.ExecuteScript("return aeonAjaxCounter");
                 System.out.println("COUNT: " + count);
             }catch(ScriptExecutionException e){
-                InjectJS(guid);
+                InjectJS();
                 return;
             }
             Sleep.WaitInternal();

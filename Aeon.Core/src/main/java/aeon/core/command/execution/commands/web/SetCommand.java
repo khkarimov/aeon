@@ -32,6 +32,6 @@ public class SetCommand extends WebControlCommand {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        driver.Set(getGuid(), control, selectOption, value);
+        driver.Set(control, selectOption, value);
     }
 }

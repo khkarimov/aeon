@@ -37,6 +37,6 @@ public class GetClientRectsCommand extends WebControlCommandWithReturn {
      */
     @Override
     protected Object CommandDelegateOverride(IDriver driver, WebControl control) {
-        return (ClientRects) ((IWebDriver) driver).GetClientRects(getGuid(), control);
+        return (ClientRects) ((IWebDriver) driver).GetClientRects(control);
     }
 }

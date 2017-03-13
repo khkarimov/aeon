@@ -28,7 +28,7 @@ public class MouseOutCommand extends WebControlCommand {
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl element) {
-        driver.MouseOut(getGuid(), element);
+        driver.MouseOut(element);
 
     }
 

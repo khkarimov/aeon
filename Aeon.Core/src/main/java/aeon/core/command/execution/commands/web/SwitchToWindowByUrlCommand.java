@@ -21,6 +21,6 @@ public class SwitchToWindowByUrlCommand extends CommandWithReturn {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        return ((IWebDriver) driver).SwitchToWindowByUrl(getGuid(), url);
+        return ((IWebDriver) driver).SwitchToWindowByUrl(url);
     }
 }

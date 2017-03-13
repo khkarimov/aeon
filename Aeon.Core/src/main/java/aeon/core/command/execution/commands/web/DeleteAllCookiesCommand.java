@@ -28,6 +28,6 @@ public class DeleteAllCookiesCommand extends Command {
      */
     @Override
     protected void DriverDelegate(IDriver driver) {
-        ((IWebDriver) driver).DeleteAllCookies(getGuid());
+        ((IWebDriver) driver).DeleteAllCookies();
     }
 }

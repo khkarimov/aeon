@@ -39,6 +39,6 @@ public class OpenFileDialogCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).OpenFileDialog(getGuid(), selector);
+        ((IWebDriver) driver).OpenFileDialog(selector);
     }
 }

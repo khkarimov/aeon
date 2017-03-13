@@ -27,6 +27,6 @@ public class GoForwardCommand extends Command {
      */
     @Override
     protected void DriverDelegate(IDriver driver) {
-        ((IWebDriver) driver).GoForward(getGuid());
+        ((IWebDriver) driver).GoForward();
     }
 }

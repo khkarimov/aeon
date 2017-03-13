@@ -4,8 +4,6 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
-import java.util.UUID;
-
 /**
  * Created by AdamC on 4/13/2016.
  */
@@ -89,6 +87,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     private long getColumnIndex(IBy columnSelector){
-        return (long)((IWebDriver)automationInfo.getDriver()).ExecuteScript(UUID.randomUUID(), String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
+        return (long)((IWebDriver)automationInfo.getDriver()).ExecuteScript(String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
     }
 }

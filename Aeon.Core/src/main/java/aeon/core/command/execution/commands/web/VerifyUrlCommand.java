@@ -29,6 +29,6 @@ public class VerifyUrlCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).VerifyURL(getGuid(), comparingURL);
+        ((IWebDriver) driver).VerifyURL(comparingURL);
     }
 }

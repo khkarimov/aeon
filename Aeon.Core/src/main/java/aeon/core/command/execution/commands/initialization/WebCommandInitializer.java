@@ -7,7 +7,6 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
-import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -26,24 +25,24 @@ public class WebCommandInitializer implements ICommandInitializer {
     /**
      * Finds the web element and gives the reference to the Parameter Object.
      */
-    public final Control FindElement(UUID guid, IDriver driver, IBy selector) {
+    public final Control FindElement(IDriver driver, IBy selector) {
         IWebDriver webDriver = (IWebDriver) driver;
-        WebControl element = finder.FindElement(guid, webDriver, selector);
-        webDriver.ScrollElementIntoView(guid, element);
+        WebControl element = finder.FindElement(webDriver, selector);
+        webDriver.ScrollElementIntoView(element);
         return element;
     }
 
     @Override
-    public Consumer<IDriver> SetContext(UUID guid) {
+    public Consumer<IDriver> SetContext() {
         Consumer<IDriver> action = driver ->
         {
             IWebDriver webDriver = (IWebDriver) driver;
             if (switchMechanism != null) {
-                webDriver.SwitchToDefaultContent(guid);
-                webDriver.FocusWindow(guid);
+                webDriver.SwitchToDefaultContent();
+                webDriver.FocusWindow();
 
                 for (IBy selector : switchMechanism) {
-                    webDriver.SwitchToFrame(guid, selector);
+                    webDriver.SwitchToFrame(selector);
                 }
             }
         };

@@ -23,6 +23,6 @@ public class QuitCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        driver.Quit(getGuid());
+        driver.Quit();
     }
 }

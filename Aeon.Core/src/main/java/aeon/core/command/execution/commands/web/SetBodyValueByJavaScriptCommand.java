@@ -23,7 +23,7 @@ public class SetBodyValueByJavaScriptCommand extends WebControlCommand {
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.SetBodyValueByJavaScript(getGuid(), control, value);
+        driver.SetBodyValueByJavaScript(control, value);
 
     }
 }

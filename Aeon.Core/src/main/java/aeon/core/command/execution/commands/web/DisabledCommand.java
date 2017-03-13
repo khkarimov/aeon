@@ -25,6 +25,6 @@ public class DisabledCommand extends WebControlCommand {
         if (control == null) {
             throw new IllegalArgumentException("control");
         }
-        driver.IsElementDisabled(getGuid(), control);
+        driver.IsElementDisabled(control);
     }
 }

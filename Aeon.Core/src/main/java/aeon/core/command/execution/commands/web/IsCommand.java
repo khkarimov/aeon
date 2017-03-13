@@ -40,6 +40,6 @@ public class IsCommand extends WebControlCommand {
 
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Is(getGuid(), control, value, option, attribute);
+        driver.Is(control, value, option, attribute);
     }
 }

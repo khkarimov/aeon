@@ -39,6 +39,6 @@ public class DeleteCookieCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("Driver");
         }
-        ((IWebDriver) driver).DeleteCookie(getGuid(), this.cookie);
+        ((IWebDriver) driver).DeleteCookie(this.cookie);
     }
 }

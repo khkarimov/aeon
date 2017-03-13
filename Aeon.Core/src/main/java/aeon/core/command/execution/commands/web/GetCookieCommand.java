@@ -34,6 +34,6 @@ public class GetCookieCommand extends CommandWithReturn {
      */
     @Override
     protected Object CommandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).GetCookie(getGuid(), name);
+        return ((IWebDriver) driver).GetCookie(name);
     }
 }

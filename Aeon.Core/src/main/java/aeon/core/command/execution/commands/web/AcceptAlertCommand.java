@@ -32,6 +32,6 @@ public class AcceptAlertCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("Driver");
         }
-        ((IWebDriver) driver).AcceptAlert(getGuid());
+        ((IWebDriver) driver).AcceptAlert();
     }
 }

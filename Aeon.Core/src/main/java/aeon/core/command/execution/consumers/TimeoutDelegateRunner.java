@@ -13,7 +13,6 @@ import org.joda.time.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -24,8 +23,8 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     private Duration timeout;
     private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
 
-    public TimeoutDelegateRunner(UUID guid, IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
-        super(guid, successor);
+    public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
+        super(successor);
         this.driver = driver;
         this.clock = clock;
         this.timeout = timeout;

@@ -36,6 +36,6 @@ public class SendKeysToAlertCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).SendKeysToAlert(getGuid(), keysToSend);
+        ((IWebDriver) driver).SendKeysToAlert(keysToSend);
     }
 }

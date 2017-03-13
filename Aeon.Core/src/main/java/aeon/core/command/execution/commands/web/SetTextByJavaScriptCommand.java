@@ -25,6 +25,6 @@ public class SetTextByJavaScriptCommand extends WebControlCommand {
         if(driver == null){
             throw new IllegalArgumentException("driver");
         }
-        driver.SetTextByJavaScript(getGuid(), control, value);
+        driver.SetTextByJavaScript(control, value);
     }
 }

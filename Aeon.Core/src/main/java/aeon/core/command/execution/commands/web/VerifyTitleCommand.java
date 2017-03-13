@@ -23,6 +23,6 @@ public class VerifyTitleCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).VerifyTitle(getGuid(), comparingText);
+        ((IWebDriver) driver).VerifyTitle(comparingText);
     }
 }

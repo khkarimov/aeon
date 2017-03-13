@@ -31,6 +31,6 @@ public class NotSelectedCommand extends WebControlCommand {
      */
     @Override
     protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.NotSelected(getGuid(), control);
+        driver.NotSelected(control);
     }
 }
