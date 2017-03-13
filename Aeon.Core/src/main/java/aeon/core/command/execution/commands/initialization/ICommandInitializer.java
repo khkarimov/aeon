@@ -10,8 +10,7 @@ import java.util.function.Consumer;
  * Command Initializer.
  */
 public interface ICommandInitializer {
-    // Should we change this method name now that
-    // we don't actually accept a GUID?
+    // TODO: Delete/change the name of this method.
     Consumer<IDriver> SetContext();
 
     Control FindElement(IDriver driver, IBy selector);
