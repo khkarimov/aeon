@@ -57,15 +57,15 @@ public class SeleniumConfiguration extends Configuration {
         this.edgeDirectory = output + "/lib/Windows/MicrosoftWebDriver.exe";
         switch (OsCheck.getOperatingSystemType()) { 
             case Windows: 
-                this.marionetteDirectory = output + "/lib/Windows/wires.exe"; 
-                this.chromeDirectory = output + "/lib/Windows/chromedriver.exe"; 
+                this.marionetteDirectory = output + "/lib/Windows/geckodriver.exe";
+                this.chromeDirectory = output + "/lib/Windows/chromedriver.exe";
                 break; 
             case MacOS: 
-                this.marionetteDirectory = output + "/lib/MacOS/wires"; 
+                this.marionetteDirectory = output + "/lib/MacOS/geckodriver";
                 this.chromeDirectory = output + "/lib/MacOS/chromedriver"; 
                 break; 
             case Linux: 
-                this.marionetteDirectory = output + "/lib/Linux/wires"; 
+                this.marionetteDirectory = output + "/lib/Linux/geckodriver";
                 this.chromeDirectory = output + "/lib/Linux/chromedriver"; 
                 break; 
             default:

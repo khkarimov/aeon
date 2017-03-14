@@ -10,7 +10,7 @@ repositories {
 }
 
 ext {
-    seleniumVersion = '3.3.0'
+    seleniumVersion = '3.3.1'
 }
 
 clean {
