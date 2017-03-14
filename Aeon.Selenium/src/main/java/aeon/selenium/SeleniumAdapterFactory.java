@@ -86,7 +86,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 } else {
                     String firefoxBinary = configuration.getFirefoxBinary();
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    FirefoxBinary firefox = new FirefoxBinary(firefoxBinary != null ? new File(firefoxBinary) : null);
+                    FirefoxBinary firefox = (firefoxBinary != null) ? new FirefoxBinary(new File(firefoxBinary)) : new FirefoxBinary();
                     firefox.addCommandLineOptions("-safe-mode");
                     driver = new FirefoxDriver(firefox,
                             GetFirefoxProfile(language, useMobileUserAgent),
