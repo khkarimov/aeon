@@ -14,12 +14,8 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 import static aeon.core.testabstraction.product.Aeon.Launch;
 
@@ -75,7 +71,7 @@ public class IEDriverTests {
             String name = "CookieName";
             String domain = "google.com";
             String value = "CookieValue";
-            Date expiration = new Date(getNextYearInMillis());
+            Date expiration = getNextYear();
             String path = "/";
             boolean secure = false;
             boolean session = true;
@@ -115,12 +111,12 @@ public class IEDriverTests {
                 return session;
             }
 
-            private long getNextYearInMillis() {
-                // Added two because of leap days
-                int nextYear = LocalDate.now().getYear() + 2;
-                int yearsSinceEpoch = nextYear - 1970;
-                long millisInYear = TimeUnit.DAYS.toMillis(365);
-                return yearsSinceEpoch * millisInYear;
+            private Date getNextYear() {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new Date(Long.parseLong("18000000")));
+                int yearsSinceEpoch = DateTime.now().getYear() - cal.get(Calendar.YEAR);
+                cal.add(Calendar.YEAR, yearsSinceEpoch + 1);
+                return cal.getTime();
             }
         };
         product.browser.AddCookie(cookie);
