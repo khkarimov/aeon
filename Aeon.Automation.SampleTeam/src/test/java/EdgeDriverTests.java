@@ -17,7 +17,9 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static aeon.core.testabstraction.product.Aeon.Launch;
 
@@ -63,9 +65,9 @@ public class EdgeDriverTests {
         product.browser.GoToUrl("http://google.com");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = ".google.com";
+            String domain = "google.com";
             String value = "CookieValue";
-            Date expiration = new Date(2099, 1, 1, 1, 1);
+            Date expiration = new Date(getNextYearInMillis());
             String path = "/";
             boolean secure = false;
             boolean session = true;
@@ -103,6 +105,14 @@ public class EdgeDriverTests {
             @Override
             public boolean getSession() {
                 return session;
+            }
+
+            private long getNextYearInMillis() {
+                // Added two because of leap days
+                int nextYear = LocalDate.now().getYear() + 2;
+                int yearsSinceEpoch = nextYear - 1970;
+                long millisInYear = TimeUnit.DAYS.toMillis(365);
+                return yearsSinceEpoch * millisInYear;
             }
         };
         product.browser.AddCookie(cookie);
