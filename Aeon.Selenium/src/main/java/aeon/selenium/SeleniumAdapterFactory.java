@@ -31,6 +31,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -48,6 +49,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 /**
  * The driver factory for Web.
@@ -84,15 +86,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
-                    String firefoxBinary = configuration.getFirefoxBinary();
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    FirefoxBinary firefox = (firefoxBinary != null) ? new FirefoxBinary(new File(firefoxBinary)) : new FirefoxBinary();
-                    firefox.addCommandLineOptions("-safe-mode");
-                    driver = new FirefoxDriver(firefox,
-                            GetFirefoxProfile(language, useMobileUserAgent),
-                            setProxySettings(GetMarionetteCapabilities(), proxyLocation));
+                    driver = new FirefoxDriver(GetFirefoxOptions(language, useMobileUserAgent, proxyLocation));
                 }
-
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
 
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
@@ -198,6 +194,20 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         return firefoxProfile;
+    }
+
+    private static FirefoxOptions GetFirefoxOptions(String language, boolean useMobileUserAgent, String proxyLocation){
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        String binaryPath = configuration.getFirefoxBinary();
+        if (binaryPath != null) {
+            FirefoxBinary firefoxBinary = new FirefoxBinary(new File(binaryPath));
+            firefoxBinary.addCommandLineOptions("-safe-mode");
+            firefoxOptions.setBinary(firefoxBinary);
+        }
+        firefoxOptions.setProfile(GetFirefoxProfile(language, useMobileUserAgent));
+        firefoxOptions.addDesiredCapabilities(setProxySettings(GetMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.setLogLevel(Level.WARNING);
+        return firefoxOptions;
     }
 
     private static DesiredCapabilities GetInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
