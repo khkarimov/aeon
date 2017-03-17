@@ -12,6 +12,7 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static aeon.core.testabstraction.product.Aeon.Launch;
@@ -70,7 +71,7 @@ public class ChromeDriverTests {
             String name = "CookieName";
             String domain = ".google.com";
             String value = "CookieValue";
-            Date expiration = new Date(2099, 1, 1, 1, 1);
+            Date expiration = getNextYear();
             String path = "/";
             boolean secure = false;
             boolean session = true;
@@ -108,6 +109,14 @@ public class ChromeDriverTests {
             @Override
             public boolean getSession() {
                 return session;
+            }
+
+            private Date getNextYear() {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new Date(Long.parseLong("18000000")));
+                int yearsSinceEpoch = DateTime.now().getYear() - cal.get(Calendar.YEAR);
+                cal.add(Calendar.YEAR, yearsSinceEpoch + 1);
+                return cal.getTime();
             }
         };
         product.browser.AddCookie(cookie);
