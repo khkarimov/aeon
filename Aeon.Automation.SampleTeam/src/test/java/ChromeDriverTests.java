@@ -342,10 +342,10 @@ public class ChromeDriverTests {
 
     @Test
     public void TestVerifyURL() {
-        product.browser.GoToUrl("https://www.google.com");
-        product.browser.VerifyURL("https://www.google.com/");
+        product.browser.GoToUrl("http://www.espn.com/");
+        product.browser.VerifyURL("http://www.espn.com/");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.browser.VerifyURL("https://www.googley.com");
+        product.browser.VerifyURL("http://www.espne.com/");
     }
 
     @Test
