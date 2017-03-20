@@ -156,6 +156,10 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = GetInternetExplorerOptions(false, null);
                 break;
 
+            case Edge:
+                desiredCapabilities = GetEdgeOptions(false, null);
+                break;
+
             default:
                 throw new ConfigurationException("BrowserType", "Configuration", String.format("%1$s is not a supported browser", browserType));
         }
@@ -199,11 +203,10 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private static FirefoxOptions GetFirefoxOptions(String language, boolean useMobileUserAgent, String proxyLocation){
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getFirefoxBinary();
-        if (binaryPath != null) {
-            FirefoxBinary firefoxBinary = new FirefoxBinary(new File(binaryPath));
-            firefoxBinary.addCommandLineOptions("-safe-mode");
-            firefoxOptions.setBinary(firefoxBinary);
-        }
+        FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
+        firefoxBinary.addCommandLineOptions("-safe-mode");
+        firefoxOptions.setBinary(firefoxBinary);
+
         firefoxOptions.setProfile(GetFirefoxProfile(language, useMobileUserAgent));
         firefoxOptions.addDesiredCapabilities(setProxySettings(GetMarionetteCapabilities(), proxyLocation));
         firefoxOptions.setLogLevel(Level.WARNING);
