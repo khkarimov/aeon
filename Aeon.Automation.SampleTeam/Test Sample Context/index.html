@@ -231,7 +231,19 @@
             <input id="file-dialog" type="file"><br/><br/>
             <input id="checkbox" type='checkbox'>Check Box Test<br/><br/>
             <button id="disabled-button" disabled="true">Disabled</button><br/><br/>
-			<a id="popup-button" href="#" onclick="window.open('http://www.google.com', '', 'width: 1000');">Popup Button</a>
+            <script>
+                function popUp() {
+                    //http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+                    var isEdge = !(/*@cc_on!@*/false || !!document.documentMode) && !!window.StyleMedia;
+                    if (isEdge) {
+                        var x = window.open('file:///C:/Projects/aeon/Aeon.Automation.SampleTeam/Test%20Sample%20Context/index.html', 'Material Design Lite', 'width:500');
+                        x.location.href = "http://www.google.com";
+                    } else {
+                        window.open('http://google.com', 'Google', 'width:300');
+                    }
+                }
+            </script>
+            <a id="popup-button" href="#" onclick="popUp();">Popup Button</a>
             <br/><br/>
             <select id="drop-down-list">
                 <!--Add a list options-->
