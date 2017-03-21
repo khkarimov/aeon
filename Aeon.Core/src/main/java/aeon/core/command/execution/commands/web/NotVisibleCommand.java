@@ -14,7 +14,7 @@ import java.util.Locale;
 public class NotVisibleCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the NotVisible.
+     * Initializes a new instance of the notVisible.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
@@ -30,7 +30,7 @@ public class NotVisibleCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.NotVisible(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.notVisible(control);
     }
 }

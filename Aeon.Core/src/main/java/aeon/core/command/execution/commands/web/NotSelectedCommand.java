@@ -14,7 +14,7 @@ import java.util.Locale;
 public class NotSelectedCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the NotSelected.
+     * Initializes a new instance of the notSelected.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
@@ -30,7 +30,7 @@ public class NotSelectedCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.NotSelected(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.notSelected(control);
     }
 }

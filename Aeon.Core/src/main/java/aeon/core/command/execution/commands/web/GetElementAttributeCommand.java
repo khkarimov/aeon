@@ -41,12 +41,12 @@ public class GetElementAttributeCommand extends WebControlCommandWithReturn {
      * @return The value of the html attribute
      */
     @Override
-    protected Object CommandDelegateOverride(IDriver driver, WebControl element) {
+    protected Object commandDelegateOverride(IDriver driver, WebControl element) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         } else if (element == null) {
             throw new IllegalArgumentException("control");
         }
-        return ((IWebDriver) driver).GetElementAttribute(element, this.attributeName);
+        return ((IWebDriver) driver).getElementAttribute(element, this.attributeName);
     }
 }

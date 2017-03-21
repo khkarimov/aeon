@@ -30,12 +30,12 @@ public abstract class WebControlCommand extends Command {
      * @param driver the framework abstraction facade
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         IWebDriver webDriver = (IWebDriver) driver;
-        WebControl control = (WebControl) getCommandInitializer().FindElement(driver, selector);
-        webDriver.ScrollElementIntoView(control);
-        CommandDelegate(webDriver, control);
+        WebControl control = (WebControl) getCommandInitializer().findElement(driver, selector);
+        webDriver.scrollElementIntoView(control);
+        commandDelegate(webDriver, control);
     }
 
-    protected abstract void CommandDelegate(IWebDriver driver, WebControl control);
+    protected abstract void commandDelegate(IWebDriver driver, WebControl control);
 }

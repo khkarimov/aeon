@@ -4,7 +4,7 @@ package aeon.selenium.jquery;
  * Created by DionnyS on 4/14/2016.
  */
 public class StringUtils {
-    public static String MinimizeWhiteSpace(String value) {
+    public static String minimizeWhiteSpace(String value) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }

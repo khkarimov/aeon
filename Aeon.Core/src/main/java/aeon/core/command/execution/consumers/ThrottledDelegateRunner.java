@@ -17,14 +17,14 @@ public class ThrottledDelegateRunner extends DelegateRunner {
     }
 
     @Override
-    public void Execute(Consumer<IDriver> commandDelegate) {
-        Sleep.WaitDuration(throttleFactor);
-        successor.Execute(commandDelegate);
+    public void execute(Consumer<IDriver> commandDelegate) {
+        Sleep.waitDuration(throttleFactor);
+        successor.execute(commandDelegate);
     }
 
     @Override
-    public Object Execute(Function<IDriver, Object> commandDelegate) {
-        Sleep.WaitDuration(throttleFactor);
-        return successor.Execute(commandDelegate);
+    public Object execute(Function<IDriver, Object> commandDelegate) {
+        Sleep.waitDuration(throttleFactor);
+        return successor.execute(commandDelegate);
     }
 }

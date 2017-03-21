@@ -33,7 +33,7 @@ public class GetCookieCommand extends CommandWithReturn {
      * @return A IWebCookie representing the cookie.
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).GetCookie(name);
+    protected Object commandDelegate(IDriver driver) {
+        return ((IWebDriver) driver).getCookie(name);
     }
 }

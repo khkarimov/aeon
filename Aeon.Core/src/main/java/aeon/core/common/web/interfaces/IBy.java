@@ -11,5 +11,5 @@ public interface IBy {
      *
      * @return A {@link ByJQuery} object.
      */
-    ByJQuery ToJQuery();
+    ByJQuery toJQuery();
 }

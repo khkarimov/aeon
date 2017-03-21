@@ -48,7 +48,7 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      * @return Returns true if the element is displayed, false if otherwise.
      */
-    public final boolean Displayed() {
+    public final boolean displayed() {
         log.trace("WebElement.get_Displayed();");
         boolean result = getUnderlyingWebElement().isDisplayed();
         log.trace(String.format("Result: %1$s", result));
@@ -120,7 +120,7 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      */
     public final void Clear() {
-        log.trace("WebElement.Clear();");
+        log.trace("WebElement.clear();");
         underlyingWebElement.clear();
     }
 
@@ -136,7 +136,7 @@ public class SeleniumElement extends WebControl {
                 throw new IllegalArgumentException("findBy");
             }
 
-            log.trace(String.format("WebElement.FindElement(By.CssSelector(%1$s));", findBy));
+            log.trace(String.format("WebElement.findElement(by.cssSelector(%1$s));", findBy));
             WebElement seleniumElement = underlyingWebElement.findElement(By.cssSelector(findBy.toString()));
 
             return new SeleniumElement(seleniumElement);
@@ -176,7 +176,7 @@ public class SeleniumElement extends WebControl {
 
         List<WebControl> result = new ArrayList<>();
 
-        log.trace(String.format("WebElement.FindElementsByXPath(By.CssSelector(%1$s)),", by));
+        log.trace(String.format("WebElement.FindElementsByXPath(by.cssSelector(%1$s)),", by));
 
         for (WebElement seleniumElement : underlyingWebElement.findElements(By.xpath(by.toString()))) {
             result.add(new SeleniumElement(seleniumElement));
@@ -198,7 +198,7 @@ public class SeleniumElement extends WebControl {
 
         List<WebControl> result = new ArrayList<>();
 
-        log.trace(String.format("WebElement.FindElements(By.CssSelector(%1$s));", findBy));
+        log.trace(String.format("WebElement.findElements(by.cssSelector(%1$s));", findBy));
 
         for (WebElement seleniumElement : underlyingWebElement.findElements(By.cssSelector(findBy.toString()))) {
             result.add(new SeleniumElement(seleniumElement));
@@ -319,7 +319,7 @@ public class SeleniumElement extends WebControl {
             }
         }
 
-        log.trace("WebElement.Click();");
+        log.trace("WebElement.click();");
 
         underlyingWebElement.click();
     }
@@ -339,84 +339,84 @@ public class SeleniumElement extends WebControl {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.IsMultiple();
+        return selectHelper.isMultiple();
     }
 
     public final List<WebControl> GetAllSelectedOptions() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetAllSelectedOptions();
+        return selectHelper.getAllSelectedOptions();
     }
 
     public final WebControl GetSelectedOption() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetSelectedOption();
+        return selectHelper.getSelectedOption();
     }
 
     public final String GetSelectedOptionText(){
         if(selectHelper == null){
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetSelectedOptionText();
+        return selectHelper.getSelectedOptionText();
     }
 
     public final List<WebControl> GetOptions() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        return selectHelper.GetOptions();
+        return selectHelper.getOptions();
     }
 
     public final void DeselectAll() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectAll();
+        selectHelper.deselectAll();
     }
 
     public final void DeselectByIndex(int index) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectByIndex(index);
+        selectHelper.deselectByIndex(index);
     }
 
     public final void DeselectByText(String text) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectByText(text);
+        selectHelper.deselectByText(text);
     }
 
     public final void DeselectByValue(String value) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.DeselectByValue(value);
+        selectHelper.deselectByValue(value);
     }
 
     public final void SelectByIndex(int index) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.SelectByIndex(index);
+        selectHelper.selectByIndex(index);
     }
 
     public final void SelectByText(String text) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.SelectByText(text);
+        selectHelper.selectByText(text);
     }
 
     public final void SelectByValue(String value) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
-        selectHelper.SelectByValue(value);
+        selectHelper.selectByValue(value);
     }
     //endregion
 }

@@ -17,10 +17,10 @@ public class SwitchToWindowByUrlCommand extends CommandWithReturn {
     }
 
     @Override
-    protected Object CommandDelegate(IDriver driver) {
+    protected Object commandDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        return ((IWebDriver) driver).SwitchToWindowByUrl(url);
+        return ((IWebDriver) driver).switchToWindowByUrl(url);
     }
 }

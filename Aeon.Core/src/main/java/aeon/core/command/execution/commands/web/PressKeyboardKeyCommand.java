@@ -21,7 +21,7 @@ public class PressKeyboardKeyCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl element) {
-        driver.PressKeyboardKey(element, key);
+    protected void commandDelegate(IWebDriver driver, WebControl element) {
+        driver.pressKeyboardKey(element, key);
     }
 }

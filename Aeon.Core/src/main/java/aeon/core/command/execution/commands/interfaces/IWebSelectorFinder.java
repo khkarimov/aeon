@@ -14,5 +14,5 @@ public interface IWebSelectorFinder {
      * @param selector Element locator.
      * @return An {@link IBy}.
      */
-    IBy FindSelector(IWebDriver driver, IBy selector);
+    IBy findSelector(IWebDriver driver, IBy selector);
 }

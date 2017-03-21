@@ -7,7 +7,7 @@ import aeon.core.common.exceptions.ContainsWhiteSpaceException;
  */
 public class StringUtils {
 
-    public static String ToQuotedAndEscapedString(String value) {
+    public static String toQuotedAndEscapedString(String value) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
@@ -68,7 +68,7 @@ public class StringUtils {
      * @param value The current instance.
      * @return The normalized string value;
      */
-    public static String NormalizeSpacing(String value) {
+    public static String normalizeSpacing(String value) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
@@ -113,7 +113,7 @@ public class StringUtils {
      * @param value The current instance
      * @return A string where all the spacing is the same, i.e. tabs, new line, etc..
      */
-    public static String MinimizeWhiteSpace(String value) {
+    public static String minimizeWhiteSpace(String value) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
@@ -144,14 +144,14 @@ public class StringUtils {
      * @param expectedValue The value your comparing against the current instance.
      * @return Whether or not the current instance matches the expected value.
      */
-    public static boolean Is(String value, String expectedValue) {
+    public static boolean is(String value, String expectedValue) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
         if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");
         }
-        return NormalizeSpacing(value).equals(NormalizeSpacing(expectedValue));
+        return normalizeSpacing(value).equals(normalizeSpacing(expectedValue));
     }
 
 
@@ -163,8 +163,8 @@ public class StringUtils {
      * @param expectedValue The value your comparing against the current instance.
      * @return Whether or not the current instance equals the expected value.
      */
-    public static boolean Like(String value, String expectedValue) {
-        return Like(value, expectedValue, true);
+    public static boolean like(String value, String expectedValue) {
+        return like(value, expectedValue, true);
     }
 
     /**
@@ -175,7 +175,7 @@ public class StringUtils {
      * @param expectedValue The value your comparing against the current instance.
      * @return Whether or not the current instance equals the expected value.
      */
-    public static boolean Like(String value, String expectedValue, boolean caseSensitive) {
+    public static boolean like(String value, String expectedValue, boolean caseSensitive) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
@@ -186,9 +186,9 @@ public class StringUtils {
             throw new IllegalArgumentException("zero length expected value");
         }
         if (caseSensitive) {
-            return NormalizeSpacing(value).equals(NormalizeSpacing(expectedValue));
+            return normalizeSpacing(value).equals(normalizeSpacing(expectedValue));
         } else {
-            return NormalizeSpacing(value).equalsIgnoreCase(NormalizeSpacing(expectedValue));
+            return normalizeSpacing(value).equalsIgnoreCase(normalizeSpacing(expectedValue));
         }
     }
 
@@ -199,14 +199,14 @@ public class StringUtils {
      * @param word  The word for which to search.
      * @return Whether or not the current instance contains the word.
      */
-    public static boolean ContainsWord(String value, String word) {
+    public static boolean containsWord(String value, String word) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
         if (word == null) {
             throw new IllegalArgumentException("word");
         }
-        String normalizedSpacinValue = MinimizeWhiteSpace(value);
+        String normalizedSpacinValue = minimizeWhiteSpace(value);
         return normalizedSpacinValue.contains(' ' + word + ' ') || normalizedSpacinValue.startsWith(word) || normalizedSpacinValue.endsWith(word);
     }
 
@@ -216,7 +216,7 @@ public class StringUtils {
      * @param value The current instance.
      * @return The current instance, if not exception is thrown.
      */
-    public static String AssertNoWhiteSpace(String value) {
+    public static String assertNoWhiteSpace(String value) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }
@@ -233,7 +233,7 @@ public class StringUtils {
      * @param values Values to remove from the current instance.
      * @return The current instance with values removed.
      */
-    public static String Remove(String value, Object... values) {
+    public static String remove(String value, Object... values) {
         if (value == null) {
             throw new IllegalArgumentException("value");
         }

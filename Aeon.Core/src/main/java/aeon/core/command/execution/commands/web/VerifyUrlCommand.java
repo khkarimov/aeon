@@ -21,14 +21,14 @@ public class VerifyUrlCommand extends Command {
 
     public VerifyUrlCommand(String comparingURL) {
         super(String.format(Locale.getDefault(), Resources.getString("VerifyUrlCommand_Info"), comparingURL));
-        this.comparingURL = URLUtil.CreateURL(comparingURL);
+        this.comparingURL = URLUtil.createURL(comparingURL);
     }
 
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).VerifyURL(comparingURL);
+        ((IWebDriver) driver).verifyURL(comparingURL);
     }
 }

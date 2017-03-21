@@ -28,19 +28,19 @@ public final class BrowserSizeMap {
         sizes.put(new Size(1024, 768), BrowserSize.TabletLandscape);
     }
 
-    public static boolean Contains(Size size) {
+    public static boolean contains(Size size) {
         return sizes.containsKey(size);
     }
 
-    public static boolean Contains(BrowserSize browserSize) {
+    public static boolean contains(BrowserSize browserSize) {
         return browserSizes.containsKey(browserSize);
     }
 
-    public static BrowserSize Map(Size size) {
+    public static BrowserSize map(Size size) {
         return sizes.get(size);
     }
 
-    public static Size Map(BrowserSize browserSize) {
+    public static Size map(BrowserSize browserSize) {
         return browserSizes.get(browserSize);
     }
 }

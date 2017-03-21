@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  */
 public interface ICommandInitializer {
     // TODO: Delete/change the name of this method.
-    Consumer<IDriver> SetContext();
+    Consumer<IDriver> setContext();
 
-    Control FindElement(IDriver driver, IBy selector);
+    Control findElement(IDriver driver, IBy selector);
 }

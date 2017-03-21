@@ -13,6 +13,6 @@ public class MyGridRowElements extends RowElements {
 
     public MyGridRowElements(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         super(info, selector, switchMechanism);
-        checkBoxButton = new Button(info, selector.ToJQuery().find("span.mdl-checkbox__ripple-container.mdl-js-ripple-effect.mdl-ripple--center"));
+        checkBoxButton = new Button(info, selector.toJQuery().find("span.mdl-checkbox__ripple-container.mdl-js-ripple-effect.mdl-ripple--center"));
     }
 }

@@ -37,13 +37,13 @@ public class DragAndDropCommand extends WebControlCommand {
      * @param control The web element
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         if (control == null) {
             throw new IllegalArgumentException("control");
         }
-        driver.DragAndDrop(control, targetElement);
+        driver.dragAndDrop(control, targetElement);
     }
 }

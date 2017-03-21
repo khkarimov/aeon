@@ -21,7 +21,7 @@ public class JQueryRegexPluginRegistration extends JavaScriptFinalizer {
      * @throws IllegalArgumentException If {@code javaScript} is {@code null}.
      */
     @Override
-    public String Prepare(String javaScript) {
+    public String prepare(String javaScript) {
         if (javaScript == null) {
             throw new IllegalArgumentException("javaScript");
         }
@@ -41,6 +41,6 @@ public class JQueryRegexPluginRegistration extends JavaScriptFinalizer {
              * }
              */
         return javaScript.contains(":regex") ? ("if(!jquery.expr[':'].regex)jquery.expr[':'].regex=function(elem,index,match){var matchParams=match[3].split(','),validLabels=/^(data|css):/,attr={method:matchParams[0].match(validLabels)?matchParams[0].split(':')[0]:'attr',property:matchParams.shift().replace(validLabels,'')}," +
-                "regexFlags='ig',regex=new RegExp(matchParams.join('').replace(/^\\s+|\\s+$/g,''),regexFlags);return regex.test(jquery(elem)[attr.method](attr.property))};" + Successor.Prepare(javaScript)) : Successor.Prepare(javaScript);
+                "regexFlags='ig',regex=new RegExp(matchParams.join('').replace(/^\\s+|\\s+$/g,''),regexFlags);return regex.test(jquery(elem)[attr.method](attr.property))};" + Successor.prepare(javaScript)) : Successor.prepare(javaScript);
     }
 }

@@ -12,10 +12,10 @@ import java.util.Locale;
  * <p>Navigate the currently focused browser to the URL provided.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.Browser.GoToUrl("url String")</p>
- * <p>      Context.Browser.GoToUrl("url String", setMainWindowBoolean)</p>
- * <p>      Context.Browser.GoToUrl({@link java.net.URI})</p>
- * <p>      Context.Browser.GoToUrl({@link java.net.URI}, setMainWindowBoolean)</p>
+ * <p>      Context.Browser.goToUrl("url String")</p>
+ * <p>      Context.Browser.goToUrl("url String", setMainWindowBoolean)</p>
+ * <p>      Context.Browser.goToUrl({@link java.net.URI})</p>
+ * <p>      Context.Browser.goToUrl({@link java.net.URI}, setMainWindowBoolean)</p>
  */
 public class GoToUrlCommand extends CommandWithReturn {
     private URL url;
@@ -35,11 +35,11 @@ public class GoToUrlCommand extends CommandWithReturn {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
+    protected Object commandDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        return ((IWebDriver) driver).GoToUrl(url);
+        return ((IWebDriver) driver).goToUrl(url);
     }
 }

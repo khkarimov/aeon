@@ -34,7 +34,7 @@ public class UnCheckCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.UnCheck(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.unCheck(control);
     }
 }

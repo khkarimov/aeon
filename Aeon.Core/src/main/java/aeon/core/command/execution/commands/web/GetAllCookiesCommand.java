@@ -28,7 +28,7 @@ public class GetAllCookiesCommand extends CommandWithReturn {
      * @return Returns a Collection of {@link IWebCookie}
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).GetAllCookies();
+    protected Object commandDelegate(IDriver driver) {
+        return ((IWebDriver) driver).getAllCookies();
     }
 }

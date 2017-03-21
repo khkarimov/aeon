@@ -18,7 +18,7 @@ import java.util.Locale;
 public class ClickAllElementsCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the ClickAllElementsCommand.
+     * Initializes a new instance of the clickAllElementsCommand.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
@@ -34,7 +34,7 @@ public class ClickAllElementsCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.ClickAllElements(control.getSelector());
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.clickAllElements(control.getSelector());
     }
 }

@@ -17,7 +17,7 @@ public class Aeon {
 
     private static Logger log = LogManager.getLogger(Aeon.class);
 
-    public static <T extends Product> T Launch(Class<T> productClass, BrowserType browserType) {
+    public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
         try {
             T product = productClass.newInstance();
             Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());

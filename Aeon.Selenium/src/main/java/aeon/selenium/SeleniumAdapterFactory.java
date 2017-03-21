@@ -12,7 +12,6 @@ import aeon.core.common.helpers.Process;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import aeon.core.testabstraction.product.Configuration;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
@@ -58,8 +57,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private static SeleniumConfiguration configuration;
     private static Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
 
-    public static IAdapter Create(SeleniumConfiguration configuration) {
-        //ClientEnvironmentManager.ManageEnvironment(browserType, browserAcceptedLanguageCodes, ensureCleanEnvironment);
+    public static IAdapter create(SeleniumConfiguration configuration) {
+        //ClientEnvironmentManager.manageEnvironment(browserType, browserAcceptedLanguageCodes, ensureCleanEnvironment);
         SeleniumAdapterFactory.configuration = configuration;
         BrowserType browserType = configuration.getBrowserType();
         boolean enableSeleniumGrid = configuration.isEnableSeleniumGrid();
@@ -81,7 +80,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
             case Firefox:
                 WebDriver driver;
                 if (enableSeleniumGrid) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(browserType,
+                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities(browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     String firefoxBinary = configuration.getFirefoxBinary();
@@ -89,8 +88,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     FirefoxBinary firefox = (firefoxBinary != null) ? new FirefoxBinary(new File(firefoxBinary)) : new FirefoxBinary();
                     firefox.addCommandLineOptions("-safe-mode");
                     driver = new FirefoxDriver(firefox,
-                            GetFirefoxProfile(language, useMobileUserAgent),
-                            setProxySettings(GetMarionetteCapabilities(), proxyLocation));
+                            getFirefoxProfile(language, useMobileUserAgent),
+                            setProxySettings(getMarionetteCapabilities(), proxyLocation));
                 }
 
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
@@ -99,11 +98,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Chrome:
                 if (enableSeleniumGrid) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(browserType,
+                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities(browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     DesiredCapabilities capabilities =
-                            GetChromeOptions(language, maximizeBrowser, useMobileUserAgent, proxyLocation);
+                            getChromeOptions(language, maximizeBrowser, useMobileUserAgent, proxyLocation);
 
                     driver = new ChromeDriver(
                             new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
@@ -114,42 +113,42 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case InternetExplorer:
                 if (enableSeleniumGrid) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(browserType,
+                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities(browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     driver = new InternetExplorerDriver(
                             new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
-                            GetInternetExplorerOptions(ensureCleanEnvironment, proxyLocation));
+                            getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation));
                 }
                 
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case Edge:
                 if (enableSeleniumGrid) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, GetCapabilities(browserType,
+                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities(browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     driver = new EdgeDriver(
                             new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
-                            GetEdgeOptions(ensureCleanEnvironment, proxyLocation));
+                            getEdgeOptions(ensureCleanEnvironment, proxyLocation));
                 }
 
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             default:
-                throw new ConfigurationException("BrowserType", "Configuration",
+                throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
         }
     }
 
-    private static Capabilities GetCapabilities(BrowserType browserType, String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent) {
+    private static Capabilities getCapabilities(BrowserType browserType, String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent) {
         DesiredCapabilities desiredCapabilities;
 
         switch (browserType) {
             case Firefox:
                 desiredCapabilities = DesiredCapabilities.firefox();
                 desiredCapabilities.setCapability("marionette", true);
-                desiredCapabilities.setCapability("firefox_profile", GetFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
+                desiredCapabilities.setCapability("firefox_profile", getFirefoxProfile(browserAcceptedLanguageCodes, useMobileUserAgent));
                 break;
 
             case Chrome:
@@ -157,17 +156,17 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case InternetExplorer:
-                desiredCapabilities = GetInternetExplorerOptions(false, null);
+                desiredCapabilities = getInternetExplorerOptions(false, null);
                 break;
 
             default:
-                throw new ConfigurationException("BrowserType", "Configuration", String.format("%1$s is not a supported browser", browserType));
+                throw new ConfigurationException("BrowserType", "configuration", String.format("%1$s is not a supported browser", browserType));
         }
 
         return desiredCapabilities;
     }
 
-    private static DesiredCapabilities GetMarionetteCapabilities(){
+    private static DesiredCapabilities getMarionetteCapabilities(){
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
         desiredCapabilities.setCapability("marionette", true);
         return desiredCapabilities;
@@ -185,7 +184,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private static FirefoxProfile GetFirefoxProfile(String browserAcceptedLanguageCodes, boolean useMobileUserAgent) {
+    private static FirefoxProfile getFirefoxProfile(String browserAcceptedLanguageCodes, boolean useMobileUserAgent) {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("webdriver.firefox.logfile", "firefoxdriver.log");
         firefoxProfile.setPreference("intl.accept_languages", browserAcceptedLanguageCodes);
@@ -200,12 +199,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return firefoxProfile;
     }
 
-    private static DesiredCapabilities GetInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
+    private static DesiredCapabilities getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
             throw new UnsupportedPlatformException();
         }
 
-        if (Process.GetWindowsProcessesByName("iexplore").size() > 0) {
+        if (Process.getWindowsProcessesByName("iexplore").size() > 0) {
             log.info(Resources.getString("InternetExplorerIsAlreadyRunning_Info"));
         }
 
@@ -222,12 +221,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private static DesiredCapabilities GetEdgeOptions(boolean ensureCleanSession, String proxyLocation) {
+    private static DesiredCapabilities getEdgeOptions(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
             throw new UnsupportedPlatformException();
         }
 
-        if (Process.GetWindowsProcessesByName("MicrosoftEdge").size() > 0) {
+        if (Process.getWindowsProcessesByName("MicrosoftEdge").size() > 0) {
             log.info(Resources.getString("MicrosoftEdgeIsAlreadyRunning_Info"));
         }
 
@@ -239,7 +238,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private static DesiredCapabilities GetChromeOptions(String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent, String proxyLocation) {
+    private static DesiredCapabilities getChromeOptions(String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent, String proxyLocation) {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
@@ -281,12 +280,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public IAdapter createAdapter(Configuration configuration) {
-        return Create((SeleniumConfiguration) configuration);
+    public IAdapter createAdapter(aeon.core.testabstraction.product.configuration configuration) {
+        return create((SeleniumConfiguration) configuration);
     }
 
     @Override
-    public Configuration getConfiguration() {
+    public aeon.core.testabstraction.product.configuration getConfiguration() {
         return new SeleniumConfiguration();
     }
 

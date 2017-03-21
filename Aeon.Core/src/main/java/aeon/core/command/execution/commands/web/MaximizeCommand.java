@@ -9,7 +9,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * <p>Maximizes the currently focused browser window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.Maximize();</p>
+ * <p>      Context.browser.maximize();</p>
  */
 public class MaximizeCommand extends Command {
     /**
@@ -25,11 +25,11 @@ public class MaximizeCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).Maximize();
+        ((IWebDriver) driver).maximize();
     }
 }

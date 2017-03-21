@@ -14,7 +14,7 @@ public class SeleniumExceptionHandlerFactory implements IExceptionHandlerFactory
         return promptUserForContinueDecision;
     }
 
-    public final IExceptionHandler CreateHandlerFor(java.lang.Class typeOfexceptionToHandle) {
+    public final IExceptionHandler createHandlerFor(java.lang.Class typeOfexceptionToHandle) {
         if (getPromptUserForContinueDecision()) {
             return new ContinueAtUserExceptionHandler();
         }

@@ -5,15 +5,15 @@ import aeon.core.common.web.interfaces.IBy;
 /**
  * Class for selecting elements (default is via a CSS selector).
  */
-public class By implements IBy {
+public class by implements IBy {
     private String selector;
 
     /**
-     * Initializes a new instance of the {@link By} class.
+     * Initializes a new instance of the {@link by} class.
      *
      * @param selector The CSS selector.
      */
-    protected By(String selector) {
+    protected by(String selector) {
         this.selector = selector;
     }
 
@@ -21,19 +21,19 @@ public class By implements IBy {
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
-     * @return A new {@link By} instance.
+     * @return A new {@link by} instance.
      */
-    public static By CssSelector(String selector) {
-        return new By(selector);
+    public static by CssSelector(String selector) {
+        return new by(selector);
     }
 
     /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
-     * @return A new {@link By} instance.
+     * @return A new {@link by} instance.
      */
-    public static ByJQuery JQuery(String selector) {
+    public static ByJQuery jQuery(String selector) {
         return new ByJQuery(selector);
     }
 
@@ -43,7 +43,7 @@ public class By implements IBy {
      * @param obj An existing jquery object to clone.
      * @return A new {@link ByJQuery} instance.
      */
-    public static ByJQuery JQuery(ByJQuery obj) {
+    public static ByJQuery jQuery(ByJQuery obj) {
         return new ByJQuery(obj);
     }
 
@@ -59,7 +59,7 @@ public class By implements IBy {
      *
      * @return A {@link ByJQuery} object.
      */
-    public final ByJQuery ToJQuery() {
+    public final ByJQuery toJQuery() {
         return new ByJQuery(getSelector());
     }
 

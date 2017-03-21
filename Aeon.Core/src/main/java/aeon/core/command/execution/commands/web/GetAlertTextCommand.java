@@ -28,7 +28,7 @@ public class GetAlertTextCommand extends CommandWithReturn {
      * @return The text of the Alert
      */
     @Override
-    protected String CommandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).GetAlertText();
+    protected String commandDelegate(IDriver driver) {
+        return ((IWebDriver) driver).getAlertText();
     }
 }

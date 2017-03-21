@@ -53,13 +53,13 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
         commandInitializer = value;
     }
 
-    public Consumer<IDriver> GetCommandDelegate() {
+    public Consumer<IDriver> getCommandDelegate() {
         Consumer<IDriver> action = driver -> {
             if (commandInitializer != null) {
-                commandInitializer.SetContext().accept(driver);
+                commandInitializer.setContext().accept(driver);
             }
 
-            DriverDelegate(driver);
+            driverDelegate(driver);
         };
 
         return action;
@@ -70,5 +70,5 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
      *
      * @param driver The framework abstraction facade.
      */
-    protected abstract void DriverDelegate(IDriver driver);
+    protected abstract void driverDelegate(IDriver driver);
 }

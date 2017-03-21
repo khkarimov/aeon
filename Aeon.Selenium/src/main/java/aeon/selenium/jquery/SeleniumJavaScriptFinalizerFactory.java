@@ -10,7 +10,7 @@ public class SeleniumJavaScriptFinalizerFactory implements IJavaScriptFinalizerF
      * @param options The options.
      * @return A new {@link IJavaScriptFinalizerFactory} object.
      */
-    public final IJavaScriptFinalizer CreateInstance(JavaScriptFinalizerOptions options) {
+    public final IJavaScriptFinalizer createInstance(JavaScriptFinalizerOptions options) {
         IJavaScriptFinalizer jQueryRegexPluginRegistration = new JQueryRegexPluginRegistration(new JavaScriptMinimizer());
 
         return options == JavaScriptFinalizerOptions.IncludeJQueryInjection ?

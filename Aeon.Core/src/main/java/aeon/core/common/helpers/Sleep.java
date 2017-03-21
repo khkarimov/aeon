@@ -16,7 +16,7 @@ public final class Sleep {
     /**
      * Waits. May be used between browser calls.
      */
-    public static void WaitBrowser() {
+    public static void waitBrowser() {
         try {
             Thread.sleep(TimeForBrowser);
         } catch (InterruptedException e) {
@@ -27,7 +27,7 @@ public final class Sleep {
     /**
      * Waits. May be used between OS calls.
      */
-    public static void WaitOperatingSystem() {
+    public static void waitOperatingSystem() {
         try {
             Thread.sleep(TimeForOperatingSystem);
         } catch (InterruptedException e) {
@@ -35,7 +35,7 @@ public final class Sleep {
         }
     }
 
-    public static void WaitInternal() {
+    public static void waitInternal() {
         try {
             Thread.sleep(TimeForInternal);
         } catch (InterruptedException e) {
@@ -43,7 +43,7 @@ public final class Sleep {
         }
     }
 
-    public static void WaitInternalLong() {
+    public static void waitInternalLong() {
         try {
             Thread.sleep(TimeForInternalLong);
         } catch (InterruptedException e) {
@@ -51,7 +51,7 @@ public final class Sleep {
         }
     }
 
-    public static void WaitDriverQuit() {
+    public static void waitDriverQuit() {
         try {
             Thread.sleep(TimeForDriverQuit);
         } catch (InterruptedException e) {
@@ -59,7 +59,7 @@ public final class Sleep {
         }
     }
 
-    public static void WaitDuration(org.joda.time.Duration duration) {
+    public static void waitDuration(org.joda.time.Duration duration) {
         try {
             Thread.sleep(duration.getMillis());
         } catch (InterruptedException e) {
@@ -67,7 +67,7 @@ public final class Sleep {
         }
     }
 
-    public static void Wait(int millis) {
+    public static void wait(int millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
@@ -75,7 +75,7 @@ public final class Sleep {
         }
     }
 
-    public static void WaitDuration(Duration duration) {
+    public static void waitDuration(Duration duration) {
         try {
             Thread.sleep(duration.toMillis());
         } catch (InterruptedException e) {

@@ -29,28 +29,28 @@ public interface IWebAdapter extends IAdapter {
      *
      * @return The title of the current browser window.
      */
-    String GetTitle();
+    String getTitle();
 
     /**
      * Gets the URL the browser is currently displaying.
      *
      * @return The URL the browser is currently displaying.
      */
-    URL GetUrl();
+    URL getUrl();
 
     /**
      * Gets the current window handle, which is an opaque handle to this window that uniquely identifies it within this driver instance.
      *
      * @return The current window handle, which is an opaque handle to this window that uniquely identifies it within this driver instance.
      */
-    String GetCurrentWindowHandle();
+    String getCurrentWindowHandle();
 
     /**
      * Gets the window handles of open browser windows.
      *
      * @return The window handles of open browser windows.
      */
-    Collection<String> GetWindowHandles();
+    Collection<String> getWindowHandles();
 
     /**
      * Load a new web page in the current browser window.
@@ -59,19 +59,19 @@ public interface IWebAdapter extends IAdapter {
      * @return The current handler after the change.
      * @throws IllegalArgumentException If URL is null.
      */
-    String GoToUrl(URL url);
+    String goToUrl(URL url);
 
     /**
      * Scrolls to the top of the window.
      *
      */
-    void ScrollToTop();
+    void scrollToTop();
 
     /**
      * Scrolls to the end of the window.
      *
      */
-    void ScrollToEnd();
+    void scrollToEnd();
 
     /**
      * Finds the first Element using the given mechanism.
@@ -81,7 +81,7 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException If FindBy is null.
      * @throws NoSuchElementException   If there is no such element.
      */
-    WebControl FindElement(IBy findBy);
+    WebControl findElement(IBy findBy);
 
     /**
      * Finds all Elements within the current product
@@ -93,7 +93,7 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException If FindBy is null.
      * @throws NoSuchElementException   If there is no such element.
      */
-    Collection<WebControl> FindElements(IBy findBy);
+    Collection<WebControl> findElements(IBy findBy);
 
     /**
      * Finds the first Select Element using the given mechanism.
@@ -105,13 +105,13 @@ public interface IWebAdapter extends IAdapter {
      * @throws ScriptReturnValueNotHtmlElementException If the JavaScript did not return an HTML element.
      * @throws UnsupportedSelectElementException        If the select element is not supported.
      */
-    WebControl FindSelectElement(IBy findBy);
+    WebControl findSelectElement(IBy findBy);
 
     /**
      * Selects either the first frame on the page or the main document when a page contains iframes.
      *
      */
-    void SwitchToDefaultContent();
+    void switchToDefaultContent();
 
     /**
      * Selects the first frame using the given method.
@@ -120,7 +120,7 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException    If FindBy is null.
      * @throws UnsupportedElementException If the element is not supported.
      */
-    void SwitchToFrame(IBy findBy);
+    void switchToFrame(IBy findBy);
 
     /**
      * Switches the focus of future commands for this driver to the window with the given title.
@@ -131,7 +131,7 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException If windowTitle is empty.
      * @throws NoSuchWindowException    If the window cannot be found.
      */
-    String SwitchToWindowByTitle(String windowTitle);
+    String switchToWindowByTitle(String windowTitle);
 
     /**
      * Switches the focus of future commands for this driver to the window with the given handle.
@@ -141,7 +141,7 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException If handle is empty.
      * @throws NoSuchWindowException    If the window cannot be found.
      */
-    void SwitchToWindowByHandle(String handle);
+    void switchToWindowByHandle(String handle);
 
     /**
      * Switches the focus of future commands for this driver to the window with the given url.
@@ -152,65 +152,65 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException If value is empty.
      * @throws NoSuchWindowException    If the window cannot be found.
      */
-    String SwitchToWindowByUrl(String value);
+    String switchToWindowByUrl(String value);
 
     /**
-     * Close the current window, quitting the browser if it is the last window currently open.
+     * close the current window, quitting the browser if it is the last window currently open.
      *
      */
-    void Close();
+    void close();
 
     /**
      * Quits this driver, closing every associated window.
      *
      */
-    void Quit();
+    void quit();
 
     /**
      * Checks whether an active modal dialog for this particular driver instance exists.
      *
      * @throws NoAlertException If the alert does not exist.
      */
-    void VerifyAlertExists();
+    void verifyAlertExists();
 
     /**
      * Checks whether an active modal dialog for this particular driver instance does not exist.
      *
      * @throws AlertExistsException If the alert exists.
      */
-    void VerifyAlertNotExists();
+    void verifyAlertNotExists();
 
     /**
      * Checks whether the text of the currently active modal dialog for this particular driver instance equals the expected value.
      *
      * @return The value of the text in the alert.
      */
-    String GetAlertText();
+    String getAlertText();
 
     /**
      * Sends keys to the currently active modal dialog for this particular driver instance.
      *
      * @param keysToSend The keystrokes to send.
      */
-    void SendKeysToAlert(String keysToSend);
+    void sendKeysToAlert(String keysToSend);
 
     /**
      * Accepts the currently active modal dialog for this particular driver instance.
      *
      */
-    void AcceptAlert();
+    void acceptAlert();
 
     /**
      * Dismisses the currently active modal dialog for this particular driver instance.
      *
      */
-    void DismissAlert();
+    void dismissAlert();
 
     /**
      * Focuses the currently selected window.
      *
      */
-    void FocusWindow();
+    void focusWindow();
 
     /**
      * Executes JavaScript in the product of the currently selected frame or window.
@@ -220,55 +220,55 @@ public interface IWebAdapter extends IAdapter {
      * @return The value returned by the script.
      * @throws ScriptExecutionException If the JavaScript encounters an error.
      */
-    Object ExecuteScript(String script, Object... args);
+    Object executeScript(String script, Object... args);
 
     /**
      * Move back a single entry in the browser's history.
      *
      */
-    void Back();
+    void back();
 
     /**
      * Move a single "item" forward in the browser's history.
      *
      *             Does nothing if we are on the latest page viewed.
      */
-    void Forward();
+    void forward();
 
     /**
      * Refreshes the current page.
      *
      */
-    void Refresh();
+    void refresh();
 
     /**
      * Maximizes the current window if it is not already maximized.
      *
      */
-    void Maximize();
+    void maximize();
 
     /**
      * Resizes the current window.
      *
      * @param size The new browser size.
      */
-    void Resize(Size size);
+    void resize(Size size);
 
     /**
      * Opens on a type input type=file.
      *
      * @param selector The selector for the element.
      */
-    void OpenFileDialog(IBy selector);
+    void openFileDialog(IBy selector);
 
     /**
      * Types keys of file indicated by provided path
-     * REQUIRES DIALOG BOX TO ALREADY BE OPENED BY OpenFileDialog
+     * REQUIRES DIALOG BOX TO ALREADY BE OPENED BY openFileDialog
      *
      * @param selector The selector for the element.
      * @param path     The path to the file to be selected.
      */
-    void SelectFileDialog(IBy selector, String path);
+    void selectFileDialog(IBy selector, String path);
 
     /**
      * Opens a windows select file dialog and selects
@@ -277,28 +277,28 @@ public interface IWebAdapter extends IAdapter {
      * @param selector The selector for the element.
      * @param path     The path to the file to be selected.
      */
-    void UploadFileDialog(IBy selector, String path);
+    void uploadFileDialog(IBy selector, String path);
 
     /**
      * Scrolls to the element on the page if in Chrome.
      *
      * @param element The selector.
      */
-    void ScrollElementIntoView(WebControl element);
+    void scrollElementIntoView(WebControl element);
 
     /**
      * Gets a screenshot of the currently focus browser window.
      *
      * @return Image of the browser window.
      */
-    Image GetScreenshot();
+    Image getScreenshot();
 
     /**
      * Gets the source of the current browser window.
      *
      * @return The current page's source as a string.
      */
-    String GetPageSource();
+    String getPageSource();
 
     /**
      * Drags one element and drops it into another.
@@ -306,36 +306,36 @@ public interface IWebAdapter extends IAdapter {
      * @param dropElement   The element to drop.
      * @param targetElement The target element.
      */
-    void DragAndDrop(WebControl dropElement, IBy targetElement);
+    void dragAndDrop(WebControl dropElement, IBy targetElement);
 
     /**
      * Right clicks an element.
      *
      * @param element The element to right click.
      */
-    void RightClick(WebControl element);
+    void rightClick(WebControl element);
 
     /**
      * Clicks an element.
      *
      * @param element The web element to click.
      */
-    void Click(WebControl element);
+    void click(WebControl element);
 
     /**
      * Double clicks an element.
      *
      * @param element The web element to double click.
      */
-    void DoubleClick(WebControl element);
+    void doubleClick(WebControl element);
 
     /**
      * Holds a click on an element for the duration specified.
      *
      * @param element  The web element to click.
-     * @param duration Click for at least this long (in milliseconds).
+     * @param duration click for at least this long (in milliseconds).
      */
-    void ClickAndHold(WebControl element, int duration);
+    void clickAndHold(WebControl element, int duration);
 
     /**
      * Clicks the element at the specified (x, y) offset.
@@ -344,20 +344,20 @@ public interface IWebAdapter extends IAdapter {
      * @param x       The x offset.
      * @param y       The y offset.
      */
-    void ClickAtOffset(WebControl element, int x, int y);
+    void clickAtOffset(WebControl element, int x, int y);
 
     /**
      * Refreshes a Frame.
      *
      */
-    void RefreshFrame();
+    void refreshFrame();
 
     /**
      * Gets the list of all cookies.
      *
      * @return The list of cookies.
      */
-    java.util.List<IWebCookie> GetAllCookies();
+    java.util.List<IWebCookie> getAllCookies();
 
     /**
      * Gets a cookie.
@@ -365,27 +365,27 @@ public interface IWebAdapter extends IAdapter {
      * @param name Name of the cookie to retrieve.
      * @return The specified cookie.
      */
-    IWebCookie GetCookie(String name);
+    IWebCookie getCookie(String name);
 
     /**
      * Adds a cookie.
      *
      * @param cookie The cookie to be added.
      */
-    void AddCookie(IWebCookie cookie);
+    void addCookie(IWebCookie cookie);
 
     /**
      * Deletes a cookie.
      *
      * @param name The name of the cookie to be modified.
      */
-    void DeleteCookie(String name);
+    void deleteCookie(String name);
 
     /**
      * Deletes all cookies.
      *
      */
-    void DeleteAllCookies();
+    void deleteAllCookies();
 
     /**
      * Modifies the value of a cookie.
@@ -393,14 +393,14 @@ public interface IWebAdapter extends IAdapter {
      * @param name  The name of the cookie to be modified.
      * @param value The value of the cookie.
      */
-    void ModifyCookie(String name, String value);
+    void modifyCookie(String name, String value);
 
     /**
      * Gets the currently focused element.
      *
      * @return The currently focused element.
      */
-    WebControl GetFocusedElement();
+    WebControl getFocusedElement();
 
     /**
      * Gets the HTML Tag type of the given element
@@ -408,14 +408,14 @@ public interface IWebAdapter extends IAdapter {
      * @param element The element to get the Tag of.
      * @return The type of Tag.
      */
-    String GetElementTagName(WebControl element);
+    String getElementTagName(WebControl element);
 
     /**
      * Clears the text of the given Element
      *
      * @param element The element to be cleared.
      */
-    void ClearElement(WebControl element);
+    void clearElement(WebControl element);
 
     /**
      * Choose a Select Element by its Value.
@@ -423,7 +423,7 @@ public interface IWebAdapter extends IAdapter {
      * @param element The element to be chosen by value.
      * @param value   The value to search for.
      */
-    void ChooseSelectElementByValue(WebControl element, String value);
+    void chooseSelectElementByValue(WebControl element, String value);
 
     /**
      * Choose a Select Element by its Text.
@@ -431,14 +431,14 @@ public interface IWebAdapter extends IAdapter {
      * @param element The element to be chosen by value.
      * @param value   The value to search for.
      */
-    void ChooseSelectElementByText(WebControl element, String value);
+    void chooseSelectElementByText(WebControl element, String value);
 
     /**
      * Clicks on the given element.
      *
      * @param element The element to be clicked.
      */
-    void ClickElement(WebControl element);
+    void clickElement(WebControl element);
 
     /**
      * Sends Keys to the given element programmatically
@@ -446,7 +446,7 @@ public interface IWebAdapter extends IAdapter {
      * @param element The element to receive the keys.
      * @param value   The keys to be sent to the element.
      */
-    void SendKeysToElement(WebControl element, String value);
+    void sendKeysToElement(WebControl element, String value);
 
     /**
      * Gets the value of a given attribute of a given element
@@ -455,7 +455,7 @@ public interface IWebAdapter extends IAdapter {
      * @param value   The name of the attribute to get the value of.
      * @return The value of the element attribute
      */
-    String GetElementAttribute(WebControl element, String value);
+    String getElementAttribute(WebControl element, String value);
 
     /**
      * Switches to the Main Window
@@ -463,77 +463,77 @@ public interface IWebAdapter extends IAdapter {
      * @param mainWindowHandle
      * @param waitForAllPopupWindowsToClose
      */
-    void SwitchToMainWindow(String mainWindowHandle, Boolean waitForAllPopupWindowsToClose);
+    void switchToMainWindow(String mainWindowHandle, Boolean waitForAllPopupWindowsToClose);
 
     /**
      * Blurs the current element, takes off focus.
      *    A globally unique identifier associated with this call
      * @param element The element to be blurred
      */
-    void Blur(WebControl element);
+    void blur(WebControl element);
 
     /**
      * Checks a checkbox.
      *
      * @param element The checkbox to be checked.
      */
-    void CheckElement(WebControl element);
+    void checkElement(WebControl element);
 
     /**
      * Unchecks a checkbox
      *
      * @param element The checkbox to be unchecked.
      */
-    void UnCheckElement(WebControl element);
+    void unCheckElement(WebControl element);
 
     /**
      * Checks that an element is enabled
      *
      * @param element The web element to check.
      */
-    void IsElementEnabled(WebControl element);
+    void isElementEnabled(WebControl element);
 
     /**
      * Checks that an element is disabled.
      *
      * @param element The web element to check.
      */
-    void IsElementDisabled(WebControl element);
+    void isElementDisabled(WebControl element);
 
     /**
      * Checks to see if a selected element's checkbox is selected
      *
      * @param element The select element.
      */
-    void Selected(WebControl element);
+    void selected(WebControl element);
 
     /**
      * Checks to see if a selected element's checkbox is not selected
      *
      * @param element The select element.
      */
-    void NotSelected(WebControl element);
+    void notSelected(WebControl element);
 
     /**
      * Checks to see if a selected element is visible
      *
      * @param element The select element.
      */
-    void Visible(WebControl element);
+    void visible(WebControl element);
 
     /**
      * Checks to see if a selected element is hidden
      *
      * @param element The select element.
      */
-    void NotVisible(WebControl element);
+    void notVisible(WebControl element);
 
     /**
      * If this method was called then the element exists. Logic done at command initialization
      *
      * @param element The web element.
      */
-    void Exists(WebControl element);
+    void exists(WebControl element);
 
     /**
      * If this method was reached then the element exists when it should not.
@@ -541,7 +541,7 @@ public interface IWebAdapter extends IAdapter {
      *
      * @param element The web element.
      */
-    void NotExists(WebControl element);
+    void notExists(WebControl element);
 
     /**
      * Asserts that a select element posseses all of the elements passed to it. It can optionally be passed an option group that if non-null will be searched instead of the entire
@@ -552,7 +552,7 @@ public interface IWebAdapter extends IAdapter {
      * @param optgroup The optional option group that which will be searched.
      * @param select   The method by which the options will be searched either by value or by text.
      */
-    void ElementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select);
+    void elementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select);
 
     /**
      * Asserts that a select element does not posses any of the options passed. Can optionally be passed an option group that if non-null will be searched instead of the entire
@@ -563,37 +563,37 @@ public interface IWebAdapter extends IAdapter {
      * @param optgroup The optional option group that will be searched.
      * @param select   The method by which the options will be searched for either by visible text or their value.
      */
-    void ElementDoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select);
+    void elementDoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select);
 
     /**
      * Moves the mouse cursor off of an element
      *
      * @param element The element to Mouse Out of
      */
-    void MouseOut(WebControl element);
+    void mouseOut(WebControl element);
 
     /**
      * Moves the mouse cursor on top of an element
      *
      * @param element The element to Mouse Over
      */
-    void MouseOver(WebControl element);
+    void mouseOver(WebControl element);
 
     /**
      * Asserts that the selected element's body tag will be changed into the provided String value
      *
-     * @param element By The selector.
+     * @param element by The selector.
      * @param value   Html to be inserted into body tag
      */
-    void SetBodyValueByJavaScript(WebControl element, String value);
+    void setBodyValueByJavaScript(WebControl element, String value);
 
     /**
      * Asserts that the selected element's value tag will be changed into the provided String value
      *
-     * @param element By The selector.
+     * @param element by The selector.
      * @param value   Html to be inserted into a value tag
      */
-    void SetTextByJavaScript(WebControl element, String value);
+    void setTextByJavaScript(WebControl element, String value);
 
     /**
      * Sets the Value of a Div element by Javascript
@@ -601,14 +601,14 @@ public interface IWebAdapter extends IAdapter {
      * @param element The element whose value is set
      * @param value   The value to set to the element
      */
-    void SetDivValueByJavaScript(WebControl element, String value);
+    void setDivValueByJavaScript(WebControl element, String value);
 
     /**
      * Clicks all elements that corresponding with the given IBy.
      *
      * @param elementsBy The selector.
      */
-    void ClickAllElements(IBy elementsBy);
+    void clickAllElements(IBy elementsBy);
 
     /**
      * Asserts that a select element not only has all of the options provided by that they are all in the order provided. Can optionally be passed an option group
@@ -619,7 +619,7 @@ public interface IWebAdapter extends IAdapter {
      * @param optgroup The visible text of the optional option group which would be searched.
      * @param select   The method by which the options will be searched, either by text or value.
      */
-    void ElementHasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select);
+    void elementHasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select);
 
     /**
      * Asserts that a select element has a certain amount of options. Can optionally be passed an option group that if non-null will be searched
@@ -629,7 +629,7 @@ public interface IWebAdapter extends IAdapter {
      * @param optnumber The amount of elements the select should have.
      * @param optgroup  The visible text of the optional option group which would be searched.
      */
-    void HasNumberOfOptions(WebControl element, int optnumber, String optgroup);
+    void hasNumberOfOptions(WebControl element, int optnumber, String optgroup);
 
     /**
      * Asserts that a select element has all of its options in a certain order, either ascending or descending alphanumerically by either their value
@@ -639,7 +639,7 @@ public interface IWebAdapter extends IAdapter {
      * @param compare  The method by which the options will be compared.
      * @param optGroup The optional option group which would be searched in isolation instead.
      */
-    void HasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup);
+    void hasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup);
 
     /**
      * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
@@ -650,7 +650,7 @@ public interface IWebAdapter extends IAdapter {
      * @param option    Whether the childrens visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
-    void Has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
+    void has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an elements children that match a given selector contain either the visible text or the named attribute.
@@ -662,7 +662,7 @@ public interface IWebAdapter extends IAdapter {
      * @param option    Whether the childrens visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
-    void HasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
+    void hasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an elements children do not posses a text.
@@ -671,7 +671,7 @@ public interface IWebAdapter extends IAdapter {
      * @param messages The text that the chilren should not posses.
      * @param selector The selector for the children to be searched.
      */
-    void DoesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
+    void doesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
@@ -680,7 +680,7 @@ public interface IWebAdapter extends IAdapter {
      * @param messages The text that the chilren should not posses.
      * @param selector The selector for the children to be searched.
      */
-    void DoesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
+    void doesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an elements children that match a given selector only contain either the visible text or the named attribute.
@@ -691,7 +691,7 @@ public interface IWebAdapter extends IAdapter {
      * @param option    Whether the childrens visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
-    void HasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
+    void hasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an element's attribute is equal to a given value.
@@ -701,7 +701,7 @@ public interface IWebAdapter extends IAdapter {
      * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
-    void Is(WebControl element, String value, ComparisonOption option, String attribute);
+    void is(WebControl element, String value, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
@@ -711,7 +711,7 @@ public interface IWebAdapter extends IAdapter {
      * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
-    void IsLike(WebControl element, String value, ComparisonOption option, String attribute);
+    void isLike(WebControl element, String value, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
@@ -721,40 +721,40 @@ public interface IWebAdapter extends IAdapter {
      * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
-    void IsNotLike(WebControl element, String value, ComparisonOption option, String attribute);
+    void isNotLike(WebControl element, String value, ComparisonOption option, String attribute);
 
     /**
      * Asserts that the Text of given Alert is same as given string
      *
      * @param comparingText String to compare against Alert Text.
      */
-    void VerifyAlertText(String comparingText);
+    void verifyAlertText(String comparingText);
 
     /**
-     * Asserts that the Text of an Alert is Like a given string(spacing and cases* ignored).
+     * Asserts that the Text of an Alert is like a given string(spacing and cases* ignored).
      * caseSensitive is an option
      *
      * @param comparingText String to compare against Alert Text.
      * @param caseSensitive Determine caseSensitive comparison
      */
-    void VerifyAlertTextLike(String comparingText, boolean caseSensitive);
+    void verifyAlertTextLike(String comparingText, boolean caseSensitive);
 
     /**
      * Asserts the Title of a Page is equal to a given String
      *           A globally unique identifier associated with this call.
      * @param comparingTitle String to compare against Page Title.
      */
-    void VerifyTitle(String comparingTitle);
+    void verifyTitle(String comparingTitle);
 
     /**
      * Asserts the URL is equal to the given URL
      *         A globally unique identifier associated with this call.
      * @param comparingURL The URL to compare against
      */
-    void VerifyURL(URL comparingURL);
+    void verifyURL(URL comparingURL);
 
     /**
-     * Obtains a date from an elements attribute and compares it with an expected date. Has a
+     * Obtains a date from an elements attribute and compares it with an expected date. has a
      * Margin of error. The date must be in the ISO-8601 standard.
      *
      * @param element       The element that posseses the date.
@@ -763,14 +763,14 @@ public interface IWebAdapter extends IAdapter {
      * @param delta         The margin of error that the date can be within. Cannot posses any weeks, months or years due to
      *                      them having variable lengths.
      */
-    void DatesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta);
+    void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta);
 
     /**
      * Returns the enumerable BrowserType representing the current browser.
      *
      * @return Returns the BrowserType associated with this browser.
      */
-    BrowserType GetBrowserType();
+    BrowserType getBrowserType();
 
     /**
      * Gets the bounding rectangle for an element.
@@ -778,7 +778,7 @@ public interface IWebAdapter extends IAdapter {
      * @param element The element whose rects are to be returned.
      * @return Returns a ClientRects object with the four sides of the bounding rectangle.
      */
-    ClientRects GetClientRects(WebControl element);
+    ClientRects getClientRects(WebControl element);
 
     /**
      * Sends a non-alphanumeric keys to an element.
@@ -786,21 +786,21 @@ public interface IWebAdapter extends IAdapter {
      * @param element The element to recieve the keys.
      * @param key     The key to be sent.
      */
-    void PressKeyboardKey(WebControl element, KeyboardKey key);
+    void pressKeyboardKey(WebControl element, KeyboardKey key);
 
     /**
      * Asserts a window with a given title does not exists. A globally unique identifier associated with the call.
      * @param windowTitile The title of the window to search for.
      * @return The title of the window
      */
-    String WindowDoesNotExistByTitle(String windowTitile);
+    String windowDoesNotExistByTitle(String windowTitile);
 
     /**
      * Asserts a window with a given URL does not exists. A globally unique identifier associated with the call.
      * @param url The URL of the window to search for.
      * @return The URL of the window
      */
-    String WindowDoesNotExistByUrl(String url);
+    String windowDoesNotExistByUrl(String url);
 
     /**
      * Sets the Text or Value of an element. A globally unique identifier associated with the call.
@@ -808,6 +808,6 @@ public interface IWebAdapter extends IAdapter {
      * @param option Enum which determined whether to set tht Text or the Value.
      * @param setValue The new value for the Text or Value attribute of the control.
      */
-    void Set(WebControl element, WebSelectOption option, String setValue);
+    void set(WebControl element, WebSelectOption option, String setValue);
 
 }

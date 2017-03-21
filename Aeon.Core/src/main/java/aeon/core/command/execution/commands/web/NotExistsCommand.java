@@ -36,14 +36,14 @@ public class NotExistsCommand extends Command {
      * @param driver  The web driver.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         WebControl control = null;
         try {
-            control = ((IWebDriver) driver).FindElement(selector);
+            control = ((IWebDriver) driver).findElement(selector);
         } catch (NoSuchElementException e) {
             //If element does not exist it should catch the exception and return successfully
             return;
         }
-        ((IWebDriver) driver).NotExists(control);
+        ((IWebDriver) driver).notExists(control);
     }
 }

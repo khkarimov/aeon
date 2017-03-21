@@ -22,7 +22,7 @@ public class ClickCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Click(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.click(control);
     }
 }

@@ -17,7 +17,7 @@ public final class ConvertHelper {
      * @param type  The type to which to convert.
      * @return The converted value.
      */
-    public static Object FromStringToObject(String value, java.lang.Class type) {
+    public static Object fromStringToObject(String value, java.lang.Class type) {
         if (value == null) {
             return null;
         }
@@ -89,7 +89,7 @@ public final class ConvertHelper {
         throw new UnsupportedOperationException();
     }
 
-    public static String ScriptReturnValueToReadableString(Object value) {
+    public static String scriptReturnValueToReadableString(Object value) {
         if (value == null) {
             return "";
         }

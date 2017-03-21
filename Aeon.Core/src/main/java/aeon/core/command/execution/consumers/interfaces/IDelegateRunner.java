@@ -15,7 +15,7 @@ public interface IDelegateRunner {
      *
      * @param commandDelegate A command delegate.
      */
-    void Execute(Consumer<IDriver> commandDelegate);
+    void execute(Consumer<IDriver> commandDelegate);
 
     /**
      * Executes a command.
@@ -23,5 +23,5 @@ public interface IDelegateRunner {
      * @param commandDelegate A command delegate.
      * @return An object.
      */
-    Object Execute(Function<IDriver, Object> commandDelegate);
+    Object execute(Function<IDriver, Object> commandDelegate);
 }

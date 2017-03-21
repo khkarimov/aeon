@@ -29,79 +29,79 @@ public class Select extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
-    public void HasOptions(String[] options, String optgroup, WebSelectOption select) {
-        info.getCommandExecutionFacade().Execute(info, new HasOptionsCommand(
+    public void hasOptions(String[] options, String optgroup, WebSelectOption select) {
+        info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
     }
 
-    public void HasOptions(String[] options, WebSelectOption select) {
-        info.getCommandExecutionFacade().Execute(info, new HasOptionsCommand(
+    public void hasOptions(String[] options, WebSelectOption select) {
+        info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
     }
 
-    public void HasOptionsInOrder(String[] options, String optgroup, WebSelectOption select) {
-        info.getCommandExecutionFacade().Execute(info, new HasOptionsInOrderCommand(
+    public void hasOptionsInOrder(String[] options, String optgroup, WebSelectOption select) {
+        info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
     }
 
-    public void HasOptionsInOrder(String[] options, WebSelectOption select) {
-        info.getCommandExecutionFacade().Execute(info, new HasOptionsInOrderCommand(
+    public void hasOptionsInOrder(String[] options, WebSelectOption select) {
+        info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
     }
 
-    public void DoesNotHaveOptions(String[] options, String optgroup, WebSelectOption select) {
-        info.getCommandExecutionFacade().Execute(info, new DoesNotHaveOptionsCommand(
+    public void doesNotHaveOptions(String[] options, String optgroup, WebSelectOption select) {
+        info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
     }
 
-    public void DoesNotHaveOptions(String[] options, WebSelectOption select) {
-        info.getCommandExecutionFacade().Execute(info, new DoesNotHaveOptionsCommand(
+    public void doesNotHaveOptions(String[] options, WebSelectOption select) {
+        info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
     }
 
-    public void HasNumberOfOptions(int optnumber, String optgroup) {
-        info.getCommandExecutionFacade().Execute(info, new HasNumberOfOptionsCommand(
+    public void hasNumberOfOptions(int optnumber, String optgroup) {
+        info.getCommandExecutionFacade().execute(info, new HasNumberOfOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), optnumber, optgroup
         ));
     }
 
-    public void HasNumberOfOptions(int optnumber) {
-        info.getCommandExecutionFacade().Execute(info, new HasNumberOfOptionsCommand(
+    public void hasNumberOfOptions(int optnumber) {
+        info.getCommandExecutionFacade().execute(info, new HasNumberOfOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), optnumber
         ));
     }
 
-    public void HasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void hasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasAllOptionsInOrderCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), comparisonType, optgroup));
     }
 
-    public void HasAllOptionsInOrder(CompareType comparisonType) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void hasAllOptionsInOrder(CompareType comparisonType) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasAllOptionsInOrderCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), comparisonType, null
                 ));
     }
 
-    public void Set(WebSelectOption selectOption, String value) {
-        info.getCommandExecutionFacade().Execute(info, new SetCommand(
+    public void set(WebSelectOption selectOption, String value) {
+        info.getCommandExecutionFacade().execute(info, new SetCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 selectOption,
@@ -109,8 +109,8 @@ public class Select extends WebElement {
     }
 
     @Override
-    public void IsLike(String value) {
-        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+    public void isLike(String value) {
+        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -119,8 +119,8 @@ public class Select extends WebElement {
     }
 
     @Override
-    public void IsLike(String value, String attribute) {
-        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+    public void isLike(String value, String attribute) {
+        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -129,8 +129,8 @@ public class Select extends WebElement {
     }
 
     @Override
-    public void IsNotLike(String value) {
-        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+    public void isNotLike(String value) {
+        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -139,8 +139,8 @@ public class Select extends WebElement {
     }
 
     @Override
-    public void IsNotLike(String value, String attribute) {
-        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+    public void isNotLike(String value, String attribute) {
+        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -153,8 +153,8 @@ public class Select extends WebElement {
      * @param value The expected value of the selected option's text.
      */
     @Override
-    public void Is(String value) {
-        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+    public void is(String value) {
+        info.getCommandExecutionFacade().execute(info, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -168,8 +168,8 @@ public class Select extends WebElement {
      * @param attribute The attribute to check.
      */
     @Override
-    public void Is(String value, String attribute) {
-        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+    public void is(String value, String attribute) {
+        info.getCommandExecutionFacade().execute(info, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,

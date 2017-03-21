@@ -7,12 +7,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Created by DionnyS on 4/14/2016.
  */
-public class Configuration {
+public class configuration {
     private Class driver;
     private Class adapter;
     private BrowserType browserType;
 
-    public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) {
+    public <D extends IWebDriver, A extends IAdapter> configuration(Class<D> driver, Class<A> adapter) {
         this.driver = driver;
         this.adapter = adapter;
     }

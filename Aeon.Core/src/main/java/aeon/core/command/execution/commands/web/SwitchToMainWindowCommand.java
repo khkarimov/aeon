@@ -9,8 +9,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * <p>Switches focus to the original window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.SwitchToMainWindow();</p>
- * <p>      Context.browser.SwitchToMainWindow(WaitForAllPopupWindowsToClose);</p>
+ * <p>      Context.browser.switchToMainWindow();</p>
+ * <p>      Context.browser.switchToMainWindow(WaitForAllPopupWindowsToClose);</p>
  */
 public class SwitchToMainWindowCommand extends Command {
     private String mainWindowHandle;
@@ -33,11 +33,11 @@ public class SwitchToMainWindowCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).SwitchToMainWindow(mainWindowHandle, waitForAllPopupWindowsToClose);
+        ((IWebDriver) driver).switchToMainWindow(mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 }

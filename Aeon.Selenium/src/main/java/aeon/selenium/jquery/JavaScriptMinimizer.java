@@ -10,7 +10,7 @@ public class JavaScriptMinimizer implements IJavaScriptFinalizer {
      * @param javaScript The JavaScript code to format.
      * @return Formatted JavaScript code.
      */
-    public final String Prepare(String javaScript) {
-        return StringUtils.MinimizeWhiteSpace(javaScript);
+    public final String prepare(String javaScript) {
+        return StringUtils.minimizeWhiteSpace(javaScript);
     }
 }

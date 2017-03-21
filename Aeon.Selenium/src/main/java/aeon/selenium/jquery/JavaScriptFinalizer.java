@@ -22,5 +22,5 @@ public abstract class JavaScriptFinalizer implements IJavaScriptFinalizer {
      * @return Formatted JavaScript code.
      * @throws IllegalArgumentException If {@code javaScript} is null.
      */
-    public abstract String Prepare(String javaScript);
+    public abstract String prepare(String javaScript);
 }

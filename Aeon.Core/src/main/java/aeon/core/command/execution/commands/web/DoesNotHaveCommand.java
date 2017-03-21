@@ -41,7 +41,7 @@ public class DoesNotHaveCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.DoesNotHave(control, messages, childSelector, option, attribute);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.doesNotHave(control, messages, childSelector, option, attribute);
     }
 }

@@ -34,9 +34,9 @@ public class ExistsCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
         //Will throw NoSuchElementException if it does not exist
-        getCommandInitializer().FindElement(driver, control.getSelector());
-        driver.Exists(control);
+        getCommandInitializer().findElement(driver, control.getSelector());
+        driver.exists(control);
     }
 }

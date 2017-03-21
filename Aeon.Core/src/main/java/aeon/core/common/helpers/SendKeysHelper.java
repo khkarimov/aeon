@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 public class SendKeysHelper {
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();
 
-    public static void SendKeysToKeyboard(String stringToSend) throws AWTException {
+    public static void sendKeysToKeyboard(String stringToSend) throws AWTException {
         Robot robot = new Robot();
         robot.setAutoDelay(50);
         for (int i = 0; i < stringToSend.length(); i++) {
@@ -71,7 +71,7 @@ public class SendKeysHelper {
         }
     }
 
-    public static void SendSingleKey(char c) throws AWTException {
+    public static void sendSingleKey(char c) throws AWTException {
         Robot robot = new Robot();
         robot.delay(250);
         robot.keyPress(KeyEvent.VK_N);
@@ -83,7 +83,7 @@ public class SendKeysHelper {
         robot.keyRelease(KeyEvent.getKeyCodeForChar(c));*/
     }
 
-    public static void SendEnterKey() throws AWTException {
+    public static void sendEnterKey() throws AWTException {
         Robot robot = new Robot();
         switch (OS_TYPE) {
             case Windows:

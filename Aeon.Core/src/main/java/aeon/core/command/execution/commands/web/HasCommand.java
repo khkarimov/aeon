@@ -41,7 +41,7 @@ public class HasCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Has(control, messages, childSelector, option, attribute);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.has(control, messages, childSelector, option, attribute);
     }
 }

@@ -10,5 +10,5 @@ public interface IJavaScriptFinalizer {
      * @param javaScript The JavaScript code to format.
      * @return Formatted JavaScript code.
      */
-    String Prepare(String javaScript);
+    String prepare(String javaScript);
 }

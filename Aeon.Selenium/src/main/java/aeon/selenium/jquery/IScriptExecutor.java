@@ -12,7 +12,7 @@ public interface IScriptExecutor {
      *
      * @param timeToWait A {@link Duration} structure defining the amount of time to wait.
      */
-    void SetTimeout(Duration timeToWait);
+    void setTimeout(Duration timeToWait);
 
     /**
      * Executes JavaScript in the context of the currently selected frame or window.
@@ -21,7 +21,7 @@ public interface IScriptExecutor {
      * @param args   The arguments to the script.
      * @return The value returned by the script.
      */
-    Object ExecuteScript(String script, Object... args);
+    Object executeScript(String script, Object... args);
 
     /**
      * Executes JavaScript asynchronously in the context of the currently selected frame or window.
@@ -30,5 +30,5 @@ public interface IScriptExecutor {
      * @param args   The arguments to the script.
      * @return The value returned by the script.
      */
-    Object ExecuteAsyncScript(String script, Object... args);
+    Object executeAsyncScript(String script, Object... args);
 }

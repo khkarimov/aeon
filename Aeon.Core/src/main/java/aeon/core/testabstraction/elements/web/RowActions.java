@@ -35,13 +35,13 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     protected K findRowByIndex(int index) {
-        IBy updatedSelector = selector.ToJQuery().find(String.format("tr:nth-of-type(%1$s)", index));
+        IBy updatedSelector = selector.toJQuery().find(String.format("tr:nth-of-type(%1$s)", index));
 
         return newInstanceOfK(updatedSelector);
     }
 
     protected T findRow(String value, IBy columnHeader) {
-        IBy updatedSelector = selector.ToJQuery().find(String.format("td:nth-of-type(%1$s)", getColumnIndex(columnHeader))).filter(String.format("td:contains(%1$s)", value)).parents("tr");
+        IBy updatedSelector = selector.toJQuery().find(String.format("td:nth-of-type(%1$s)", getColumnIndex(columnHeader))).filter(String.format("td:contains(%1$s)", value)).parents("tr");
 
         return newInstanceOfT(updatedSelector);
     }
@@ -87,6 +87,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     private long getColumnIndex(IBy columnSelector){
-        return (long)((IWebDriver)automationInfo.getDriver()).ExecuteScript(String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
+        return (long)((IWebDriver)automationInfo.getDriver()).executeScript(String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
     }
 }

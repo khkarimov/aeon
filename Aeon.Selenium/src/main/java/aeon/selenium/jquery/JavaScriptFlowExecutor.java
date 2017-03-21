@@ -16,7 +16,7 @@ public abstract class JavaScriptFlowExecutor implements IJavaScriptFlowExecutor 
     }
 
     public final Function<JavaScriptFinalizerOptions, IJavaScriptFinalizer> getFinalizer() {
-        return (options) -> getFinalizerFactory().CreateInstance(options);
+        return (options) -> getFinalizerFactory().createInstance(options);
     }
 
     public abstract QuadFunction<IScriptExecutor, String, Iterable<Object>, Object> getExecutor();
