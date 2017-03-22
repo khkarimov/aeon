@@ -2,11 +2,11 @@ package main.samplegrid;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
-import aeon.core.common.web.selectors.By;
+import aeon.core.common.web.selectors.by;
 import aeon.core.testabstraction.elements.web.RowActions;
 
 /**
- * Created By justinp on 12/20/16.
+ * Created by justinp on 12/20/16.
  */
 public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> {
     public MyGridHeaders(AutomationInfo automationInfo, IBy selector, Iterable<IBy> switchMechanism) {
@@ -18,15 +18,15 @@ public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> 
     }
 
     public MyGridHeaders material(String value) {
-        return findRow(value, By.CssSelector("#grid-table-id th:contains(Material)"));
+        return findRow(value, by.CssSelector("#grid-table-id th:contains(Material)"));
     }
 
     public MyGridHeaders quantity(String value){
-        return findRow(value, By.CssSelector("#grid-table-id th:contains(Quantity)"));
+        return findRow(value, by.CssSelector("#grid-table-id th:contains(Quantity)"));
     }
 
     public MyGridHeaders unitPrice(String value){
-        return findRow(value, By.CssSelector("#grid-table-id th:contains(Unit price)"));
+        return findRow(value, by.CssSelector("#grid-table-id th:contains(Unit price)"));
     }
 
 }

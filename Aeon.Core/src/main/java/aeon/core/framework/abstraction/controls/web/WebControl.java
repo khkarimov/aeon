@@ -4,7 +4,7 @@ import aeon.core.framework.abstraction.controls.Control;
 import aeon.core.common.web.interfaces.IBy;
 
 /**
- * Created By DionnyS on 4/20/2016.
+ * Created by DionnyS on 4/20/2016.
  */
 public class WebControl extends Control {
     private IBy selector;

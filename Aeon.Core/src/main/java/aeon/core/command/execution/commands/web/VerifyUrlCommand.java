@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Locale;
 
 /**
- * Created By SebastianR on 6/29/2016.
+ * Created by SebastianR on 6/29/2016.
  */
 
 /**

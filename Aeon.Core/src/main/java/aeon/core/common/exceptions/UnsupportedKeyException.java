@@ -6,7 +6,7 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created By RafaelT on 7/5/2016.
+ * Created by RafaelT on 7/5/2016.
  */
 public class UnsupportedKeyException extends RuntimeException {
     public UnsupportedKeyException(KeyboardKey key) {

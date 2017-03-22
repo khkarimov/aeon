@@ -1,7 +1,7 @@
 package aeon.core.command.execution.commands.web;
 
 /**
- * Created By RafaelT on 6/28/2016.
+ * Created by RafaelT on 6/28/2016.
  */
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
@@ -14,7 +14,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created By RafaelT on 6/28/2016.
+ * Created by RafaelT on 6/28/2016.
  */
 
 /**

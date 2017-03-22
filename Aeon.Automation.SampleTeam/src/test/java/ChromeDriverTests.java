@@ -503,7 +503,7 @@ public class ChromeDriverTests {
 
     @Test
     public void testSetValueByJavaScript(){
-        product.StartPage.FormTextBox.setTextByJavaScript("set text By javascript is working");
+        product.StartPage.FormTextBox.setTextByJavaScript("set text by javascript is working");
     }
 
     @Test

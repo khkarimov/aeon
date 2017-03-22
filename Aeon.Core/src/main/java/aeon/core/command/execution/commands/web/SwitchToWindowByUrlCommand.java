@@ -6,7 +6,7 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Created By SebastianR on 8/9/2016.
+ * Created by SebastianR on 8/9/2016.
  */
 public class SwitchToWindowByUrlCommand extends CommandWithReturn {
     private String url;

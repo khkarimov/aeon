@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.function.Function;
 
 /**
- * Created By DionnyS on 4/20/2016.
+ * Created by DionnyS on 4/20/2016.
  */
 public abstract class CommandWithReturn implements ICommand<Function<IDriver, Object>> {
 
@@ -59,7 +59,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
      * <p>
      * getCommandDelegate is a wrapper for the delegate and actual command.
      * The internal virtual CmdDelegateProperty holds the logic for the delegate.
-     * In this way, the logic can be used By an outside class, but only modified By internal classes.
+     * In this way, the logic can be used by an outside class, but only modified by internal classes.
      * This is intentionally not virtual.
      *
      * @return The delegate property {@link CommandDelegateRunner}.

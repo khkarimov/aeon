@@ -1,7 +1,7 @@
 package aeon.core.common;
 
 /**
- * Created By DionnyS on 3/31/2016.
+ * Created by DionnyS on 3/31/2016.
  */
 public class Point {
     public int x;
@@ -37,7 +37,7 @@ public class Point {
     @Override
     public int hashCode() {
         // Assuming x,y rarely exceed 4096 pixels, shifting
-        // By 12 should provide a good hash value.
+        // by 12 should provide a good hash value.
         return x << 12 + y;
     }
 

@@ -5,7 +5,7 @@ import aeon.core.common.Resources;
 import java.io.Serializable;
 
 /**
- * Created By Administrator on 6/27/2016.
+ * Created by Administrator on 6/27/2016.
  */
 public class ElementIsEnabledException extends RuntimeException implements Serializable {
 

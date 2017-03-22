@@ -6,7 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created By DionnyS on 4/21/2016.
+ * Created by DionnyS on 4/21/2016.
  */
 public class URLUtil {
     public static URL createURL(String url) {

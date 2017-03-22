@@ -1,11 +1,11 @@
 package main.ultipro;
 
 import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.selectors.By;
+import aeon.core.common.web.selectors.by;
 import aeon.core.testabstraction.elements.web.TextBox;
 
 /**
- * Created By SebastianR on 11/30/2016.
+ * Created by SebastianR on 11/30/2016.
  */
 public class StartPage {
     public TextBox SSNTextBox;
@@ -17,10 +17,10 @@ public class StartPage {
 
     public StartPage(AutomationInfo automationInfo){
         //Controls
-        SSNTextBox = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbSSN"));
-        confirmSSNTextBox = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbSSNConfirmed"));
-        firstName = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbNameFirst"));
-        lastName = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbNameLast"));
-        employeeNumber = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_StartFV_txbEmpNo"));
+        SSNTextBox = new TextBox(automationInfo, by.CssSelector("#ctl00_Content_StartFV_txbSSN"));
+        confirmSSNTextBox = new TextBox(automationInfo, by.CssSelector("#ctl00_Content_StartFV_txbSSNConfirmed"));
+        firstName = new TextBox(automationInfo, by.CssSelector("#ctl00_Content_StartFV_txbNameFirst"));
+        lastName = new TextBox(automationInfo, by.CssSelector("#ctl00_Content_StartFV_txbNameLast"));
+        employeeNumber = new TextBox(automationInfo, by.CssSelector("#ctl00_Content_StartFV_txbEmpNo"));
     }
 }

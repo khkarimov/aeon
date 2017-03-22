@@ -4,7 +4,7 @@ package aeon.selenium.jquery;
  * Wraps JavaScript within a code to inject jquery.
  */
 public class InjectJQueryScripter extends JavaScriptFinalizer {
-    /* JavaScript to be wrapped around JQuery strings
+    /* JavaScript to be wrapped around jQuery strings
      *
      * var aeonCallback = arguments[arguments.length-1];
      * var aeonNonCallbackArguments = (arguments.length == 1) ? [] : Array.prototype.slice.call(arguments, 0, arguments.length-2);

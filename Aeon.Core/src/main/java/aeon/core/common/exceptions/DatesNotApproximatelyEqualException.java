@@ -7,7 +7,7 @@ import org.joda.time.Period;
 import java.util.Locale;
 
 /**
- * Created By RafaelT on 7/1/2016.
+ * Created by RafaelT on 7/1/2016.
  */
 public class DatesNotApproximatelyEqualException extends RuntimeException {
     public DatesNotApproximatelyEqualException(DateTime expected, DateTime actual, Period delta) {

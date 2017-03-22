@@ -136,7 +136,7 @@ public class SeleniumElement extends WebControl {
                 throw new IllegalArgumentException("findBy");
             }
 
-            log.trace(String.format("WebElement.findElement(By.cssSelector(%1$s));", findBy));
+            log.trace(String.format("WebElement.findElement(by.cssSelector(%1$s));", findBy));
             WebElement seleniumElement = underlyingWebElement.findElement(By.cssSelector(findBy.toString()));
 
             return new SeleniumElement(seleniumElement);
@@ -149,11 +149,11 @@ public class SeleniumElement extends WebControl {
      * Finds element through its text or value.
      * Uniquely identifiable id associated with this call.
      * @param by   The selector.
-     * @return The first web control found By the selector.
+     * @return The first web control found by the selector.
      */
     public WebControl FindElementByXPath(IBy by) {
         if (by == null) {
-            throw new IllegalArgumentException("By");
+            throw new IllegalArgumentException("by");
         }
 
         try {
@@ -171,12 +171,12 @@ public class SeleniumElement extends WebControl {
      */
     public Collection<WebControl> FindElementsByXPath(IBy by) {
         if (by == null) {
-            throw new IllegalArgumentException("By");
+            throw new IllegalArgumentException("by");
         }
 
         List<WebControl> result = new ArrayList<>();
 
-        log.trace(String.format("WebElement.FindElementsByXPath(By.cssSelector(%1$s)),", by));
+        log.trace(String.format("WebElement.FindElementsByXPath(by.cssSelector(%1$s)),", by));
 
         for (WebElement seleniumElement : underlyingWebElement.findElements(By.xpath(by.toString()))) {
             result.add(new SeleniumElement(seleniumElement));
@@ -198,7 +198,7 @@ public class SeleniumElement extends WebControl {
 
         List<WebControl> result = new ArrayList<>();
 
-        log.trace(String.format("WebElement.findElements(By.cssSelector(%1$s));", findBy));
+        log.trace(String.format("WebElement.findElements(by.cssSelector(%1$s));", findBy));
 
         for (WebElement seleniumElement : underlyingWebElement.findElements(By.cssSelector(findBy.toString()))) {
             result.add(new SeleniumElement(seleniumElement));

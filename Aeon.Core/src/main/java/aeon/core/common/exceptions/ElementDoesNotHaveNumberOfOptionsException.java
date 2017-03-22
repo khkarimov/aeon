@@ -5,7 +5,7 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created By RafaelT on 6/14/2016.
+ * Created by RafaelT on 6/14/2016.
  */
 public class ElementDoesNotHaveNumberOfOptionsException extends RuntimeException {
     public ElementDoesNotHaveNumberOfOptionsException(int actualValue, int expectedValue) {

@@ -3,7 +3,7 @@ package aeon.core.common;
 import java.util.ResourceBundle;
 
 /**
- * Created By DionnyS on 3/31/2016.
+ * Created by DionnyS on 3/31/2016.
  */
 public class Resources {
     private static final ResourceBundle bundle;

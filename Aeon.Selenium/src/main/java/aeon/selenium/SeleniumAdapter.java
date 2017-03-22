@@ -1,6 +1,6 @@
 package aeon.selenium;
 
-import aeon.core.common.web.selectors.*;
+import aeon.core.common.web.selectors.by;
 import com.sun.glass.ui.Size;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
@@ -17,6 +17,7 @@ import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
+import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -311,12 +312,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return An IWebElementAdapter matching the findBy.
      */
     public WebControl findElement(IBy findBy) {
-        aeon.core.common.web.selectors.By by =
-                (aeon.core.common.web.selectors.By)
-                        ((findBy instanceof aeon.core.common.web.selectors.By) ? findBy : null);
+        by by =
+                (aeon.core.common.web.selectors.by)
+                        ((findBy instanceof aeon.core.common.web.selectors.by) ? findBy : null);
 
         if (by != null) {
-            log.trace(String.format("WebDriver.findElement(By.cssSelector(%1$s));", by));
+            log.trace(String.format("WebDriver.findElement(by.cssSelector(%1$s));", by));
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
@@ -339,10 +340,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A ReadOnlyCollection of IWebElementAdapter.
      */
     public final Collection<WebControl> findElements(IBy findBy) {
-        aeon.core.common.web.selectors.By by = (aeon.core.common.web.selectors.By) ((findBy instanceof aeon.core.common.web.selectors.By) ? findBy : null);
+        by by = (aeon.core.common.web.selectors.by) ((findBy instanceof aeon.core.common.web.selectors.by) ? findBy : null);
         if (by != null) {
             Collection<WebControl> collection;
-            log.trace(String.format("WebDriver.findElements(By.cssSelector(%1$s));", by));
+            log.trace(String.format("WebDriver.findElements(by.cssSelector(%1$s));", by));
 
             try {
                 collection = webDriver.findElements(org.openqa.selenium.By.cssSelector(findBy.toString()))
@@ -750,7 +751,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Scrolls the element specified By the provided 'selector' into view.
+     * Scrolls the element specified by the provided 'selector' into view.
      *
      * @param selector Element to scroll into view.
      */
@@ -965,7 +966,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Clicks and holds for the duration specified.
      *
      * @param element  The web element to click.
-     * @param duration Click for at least this long (in milliseconds).
+     * @param duration click for at least this long (in milliseconds).
      *                 <p>
      *                 <p>
      *                 Due to the way Windows handles event messages, thread context switches, thread sleep/awake, and Windows time ticks,
@@ -1001,7 +1002,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             return;
         }
 
-        // Click.
+        // click.
         action.clickAndHold(seleniumElement.getUnderlyingWebElement()).perform();
 
         // Hold the click.
@@ -1084,9 +1085,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             for (String desiredOption : options) {
                 if (select == WebSelectOption.Text) {
-                    element.FindElementByXPath(aeon.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                    element.FindElementByXPath(by.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
                 } else {
-                    element.FindElement(aeon.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
+                    element.FindElement(by.CssSelector("option[value='".concat(desiredOption).concat("']")));
                 }
             }
         } catch (NoSuchElementException e) {
@@ -1099,9 +1100,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             boolean elementFound = true;
             try {
                 if (select == WebSelectOption.Text) {
-                    element.FindElementByXPath(aeon.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
+                    element.FindElementByXPath(by.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(desiredOption) + "]"));
                 } else {
-                    element.FindElement(aeon.core.common.web.selectors.By.CssSelector("option[value='".concat(desiredOption).concat("']")));
+                    element.FindElement(by.CssSelector("option[value='".concat(desiredOption).concat("']")));
                 }
             } catch (NoSuchElementException e) {
                 elementFound = false;
@@ -1119,14 +1120,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element  The select element which should contain the options.
      * @param options  The options.
      * @param optgroup The optional option group.
-     * @param select   The method By which the options are identifed, either their value or their visible text.
+     * @param select   The method by which the options are identifed, either their value or their visible text.
      */
     public void elementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
         if (!((SeleniumElement) element).GetTagName().equals("select")) {
             throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(), "select");
         }
         if (optgroup != null) {
-            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(aeon.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
+            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(by.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
             hasOptions(group, options, select);
         } else {
             hasOptions((SeleniumElement) element, options, select);
@@ -1139,14 +1140,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element  The select element which should not contain the options.
      * @param options  The options.
      * @param optgroup The optional option group.
-     * @param select   The method By which the options are identified, either their value or their visible text.
+     * @param select   The method by which the options are identified, either their value or their visible text.
      */
     public void elementDoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
         if (!((SeleniumElement) element).GetTagName().equals("select")) {
             throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(), "select");
         }
         if (optgroup != null) {
-            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(aeon.core.common.web.selectors.By.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
+            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(by.CssSelector("optgroup[label='".concat(optgroup).concat("']")));
             DoesNotHaveOptions(group, options, select);
         } else {
             DoesNotHaveOptions((SeleniumElement) element, options, select);
@@ -1174,7 +1175,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Method asserts that the selected element's body tag will be changed into the provided String value
      *
-     * @param element By The selector.
+     * @param element by The selector.
      * @param value   Html to be inserted into body tag
      */
     @Override
@@ -1187,7 +1188,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Method asserts that the selected element's value tag will be changed into the provided String value
      *
-     * @param element By The selector.
+     * @param element by The selector.
      * @param value   Html to be inserted into a value tag
      */
     @Override
@@ -1199,7 +1200,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Method asserts that the selected element's div tag will be changed into the provided String value
      *
-     * @param element By The selector.
+     * @param element by The selector.
      * @param value   Html to be inserted into div tag
      */
     @Override
@@ -1226,14 +1227,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element  The select element to search.
      * @param options  The options the element should have in the same order.
      * @param optgroup The option group the options should be a part of.
-     * @param select   The method By which the options are identifed, either their value, or their visible text.
+     * @param select   The method by which the options are identifed, either their value, or their visible text.
      */
     public void elementHasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select) {
         if (!((SeleniumElement) element).GetTagName().equals("select")) {
             throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(), "select");
         }
         if (optgroup != null) {
-            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(aeon.core.common.web.selectors.By.CssSelector("optgroup[label='" + optgroup + "']"));
+            SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).FindElement(by.CssSelector("optgroup[label='" + optgroup + "']"));
             ElementHasOptionsInOrder(group, options, select);
         } else {
             ElementHasOptionsInOrder((SeleniumElement) element, options, select);
@@ -1244,21 +1245,21 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             if (options.length > 1) {
                 if (select == WebSelectOption.Text) {
-                    element = (SeleniumElement) element.FindElementByXPath(aeon.core.common.web.selectors.By.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
+                    element = (SeleniumElement) element.FindElementByXPath(by.CssSelector(".//option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
                 }
 
                 for (int i = 1; i < options.length; i++) {
                     if (select == WebSelectOption.Value) {
-                        element.FindElement(aeon.core.common.web.selectors.By.CssSelector("option[value='" + options[i - 1] + "'] ~ option[value='" + options[i] + "']"));
+                        element.FindElement(by.CssSelector("option[value='" + options[i - 1] + "'] ~ option[value='" + options[i] + "']"));
                     } else {
-                        element = (SeleniumElement) element.FindElementByXPath(aeon.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[i]) + "]"));
+                        element = (SeleniumElement) element.FindElementByXPath(by.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[i]) + "]"));
                     }
                 }
             } else {
                 if (select == WebSelectOption.Value) {
-                    element.FindElement(aeon.core.common.web.selectors.By.CssSelector("option[value='" + options[0] + "']"));
+                    element.FindElement(by.CssSelector("option[value='" + options[0] + "']"));
                 } else {
-                    element.FindElementByXPath(aeon.core.common.web.selectors.By.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
+                    element.FindElementByXPath(by.CssSelector(".//following-sibling::option[normalize-space(.) = " + Quotes.escape(options[0]) + "]"));
                 }
             }
         } catch (org.openqa.selenium.NoSuchElementException|aeon.core.common.exceptions.NoSuchElementException e) {
@@ -1278,26 +1279,26 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new IncorrectElementTagException(((SeleniumElement) element).GetTagName(), "select");
         }
         if (optgroup != null) {
-            element = (SeleniumElement) ((SeleniumElement) element).FindElement(aeon.core.common.web.selectors.By.CssSelector("optgroup[label='" + optgroup + "']"));
+            element = (SeleniumElement) ((SeleniumElement) element).FindElement(by.CssSelector("optgroup[label='" + optgroup + "']"));
         }
-        Collection<WebControl> options = ((SeleniumElement) element).FindElements(aeon.core.common.web.selectors.By.CssSelector("option"));
+        Collection<WebControl> options = ((SeleniumElement) element).FindElements(by.CssSelector("option"));
         if (options.size() != optnumber) {
             throw new ElementDoesNotHaveNumberOfOptionsException(options.size(), optnumber);
         }
     }
 
     /**
-     * Asserts that a select has all of its options in lexicographic order. The order can either be ascending or descending alphanumeric order By either the options value or their text.
+     * Asserts that a select has all of its options in lexicographic order. The order can either be ascending or descending alphanumeric order by either the options value or their text.
      * Can optionally be passed an option group which will be searched instead of the entire select.
      * @param element  The select element to be searched.
-     * @param compare  The method By which the options will be compared.
+     * @param compare  The method by which the options will be compared.
      * @param optGroup An optional option group which would be searched in isolation instad of all the options under select.
      */
     public void hasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup) {
         if (optGroup != null) {
-            element = ((SeleniumElement) element).FindElement(aeon.core.common.web.selectors.By.CssSelector("optgroup[label='" + optGroup + "']"));
+            element = ((SeleniumElement) element).FindElement(by.CssSelector("optgroup[label='" + optGroup + "']"));
         }
-        Collection<WebControl> elements = ((SeleniumElement) element).FindElements(aeon.core.common.web.selectors.By.CssSelector("option"));
+        Collection<WebControl> elements = ((SeleniumElement) element).FindElements(by.CssSelector("option"));
         Iterator<WebControl> elementsIterator = elements.iterator();
         SeleniumElement prevOption = (SeleniumElement) elementsIterator.next();
         SeleniumElement currOption;
@@ -1389,15 +1390,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetText())).collect(Collectors.toList());
             } else {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetAttribute(attribute))).collect(Collectors.toList());
             }
         } else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) element).FindElements(aeon.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(by.CssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).GetAttribute(attribute))).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1423,17 +1424,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> aeon.core.common.helpers.StringUtils.
                         normalizeSpacing(((SeleniumElement) e).GetText()).toLowerCase()).collect(Collectors.toList());
             } else {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> aeon.core.common.helpers.StringUtils.
                         normalizeSpacing(((SeleniumElement) e).GetAttribute(attribute)).toLowerCase()).collect(Collectors.toList());
             }
         } else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) element).FindElements(aeon.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(by.CssSelector(selector))
                     .stream().map(x -> aeon.core.common.helpers.StringUtils.
                             normalizeSpacing(((SeleniumElement) x).GetAttribute(attribute).toLowerCase())).collect(Collectors.toList());
         }
@@ -1457,15 +1458,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetText())).collect(Collectors.toList());
             } else {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetAttribute(attribute))).collect(Collectors.toList());
             }
         } else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) element).FindElements(aeon.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(by.CssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).GetAttribute(attribute))).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1488,15 +1489,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetText()).toLowerCase()).collect(Collectors.toList());
             } else {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetAttribute(attribute)).toLowerCase()).collect(Collectors.toList());
             }
         } else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) element).FindElements(aeon.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(by.CssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).GetAttribute(attribute)).toLowerCase()).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1522,15 +1523,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetText())).collect(Collectors.toList());
             } else {
                 elements = ((SeleniumElement) element).
-                        FindElements(aeon.core.common.web.selectors.By.CssSelector(selector)).
+                        FindElements(by.CssSelector(selector)).
                         stream().map(e -> normalizeSpacing(((SeleniumElement) e).GetAttribute(attribute))).collect(Collectors.toList());
             }
         } else if (option == ComparisonOption.Raw) {
-            elements = ((SeleniumElement) element).FindElements(aeon.core.common.web.selectors.By.CssSelector(selector))
+            elements = ((SeleniumElement) element).FindElements(by.CssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).GetAttribute(attribute))).collect(Collectors.toList());
         }
         for (String value : values) {
@@ -1551,7 +1552,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param element   The web element.
      * @param expectedValue     The value the attribute should be.
-     * @param option    Whether the innerhtml will be evaluated By the literal html code or the visible text.
+     * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
     public void is(WebControl element, String expectedValue, ComparisonOption option, String attribute) {
@@ -1604,7 +1605,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param element   The web element.
      * @param value     The value the attribute should be.
-     * @param option    Whether the innerhtml will be evaluated By the literal html code or the visible text.
+     * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
     public void isLike(WebControl element, String value, ComparisonOption option, String attribute) {
@@ -1654,7 +1655,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param element   The web element.
      * @param value     The value the attribute should be.
-     * @param option    Whether the innerhtml will be evaluated By the literal html code or the visible text.
+     * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
      * @param attribute The attribute.
      */
     @Override
@@ -1725,7 +1726,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Obtains a date from an elements attribute and compares it with an expected date. Has a
+     * Obtains a date from an elements attribute and compares it with an expected date. has a
      * Margin of error. The date must be in the ISO-8601 standard.
      *
      * @param element       The element that posseses the date.
@@ -1786,7 +1787,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Checks if a window does not exist By the title.
+     * Checks if a window does not exist by the title.
      *
      * @param windowTitle The title of the window to check for.
      * @return The title of the window.
@@ -1805,7 +1806,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Checks if a window does not exist By the url.
+     * Checks if a window does not exist by the url.
      *
      * @param url  The url of the window to check for.
      * @return The url of the window.

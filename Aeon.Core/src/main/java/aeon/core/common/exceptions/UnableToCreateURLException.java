@@ -5,7 +5,7 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created By DionnyS on 4/21/2016.
+ * Created by DionnyS on 4/21/2016.
  */
 public class UnableToCreateURLException extends RuntimeException {
     public UnableToCreateURLException(String url){

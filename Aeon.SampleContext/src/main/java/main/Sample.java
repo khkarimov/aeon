@@ -5,7 +5,7 @@ import main.ultipro.HomePage;
 import main.ultipro.LoginPage;
 
 /**
- * Created By DionnyS on 4/13/2016.
+ * Created by DionnyS on 4/13/2016.
  */
 public class Sample extends WebProduct {
     public SamplePage Main;

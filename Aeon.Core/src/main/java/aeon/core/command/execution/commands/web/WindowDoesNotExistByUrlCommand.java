@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created By SebastianR on 8/9/2016.
+ * Created by SebastianR on 8/9/2016.
  */
 public class WindowDoesNotExistByUrlCommand extends CommandWithReturn {
     private String url;

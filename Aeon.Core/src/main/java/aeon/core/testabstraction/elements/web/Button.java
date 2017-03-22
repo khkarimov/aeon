@@ -4,7 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 
 /**
- * Created By DionnyS on 4/21/2016.
+ * Created by DionnyS on 4/21/2016.
  */
 public class Button extends WebElement {
     private AutomationInfo info;

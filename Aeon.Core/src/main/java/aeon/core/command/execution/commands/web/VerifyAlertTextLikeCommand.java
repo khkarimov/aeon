@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created By Administrator on 6/29/2016.
+ * Created by Administrator on 6/29/2016.
  */
 public class VerifyAlertTextLikeCommand extends Command {
     private String comparingText;

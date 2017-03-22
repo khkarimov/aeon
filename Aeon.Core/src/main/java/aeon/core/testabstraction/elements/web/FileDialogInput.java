@@ -6,7 +6,7 @@ import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.interfaces.IBy;
 
 /**
- * Created By SebastianR on 6/3/2016.
+ * Created by SebastianR on 6/3/2016.
  */
 public class FileDialogInput extends WebElement {
     private AutomationInfo info;

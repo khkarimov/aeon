@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 /**
- * Created By SebastianR on 6/29/2016.
+ * Created by SebastianR on 6/29/2016.
  */
 public class ValuesAreNotAlikeException extends RuntimeException implements Serializable {
 

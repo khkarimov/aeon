@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
- * Created By DionnyS on 4/13/2016.
+ * Created by DionnyS on 4/13/2016.
  */
 public class Parameters extends HashMap<String, Object> {
     public <T> T getParameter(Class<T> cls, String name) {

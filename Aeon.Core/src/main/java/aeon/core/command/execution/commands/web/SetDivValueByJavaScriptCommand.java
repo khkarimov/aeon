@@ -9,11 +9,11 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created By Administrator on 6/15/2016.
+ * Created by Administrator on 6/15/2016.
  */
 
 /**
- * Sets a div value By JavaScript
+ * Sets a div value by JavaScript
  */
 public class SetDivValueByJavaScriptCommand extends WebControlCommand {
 

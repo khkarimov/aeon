@@ -4,7 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 
 /**
- * Created By AdamC on 4/13/2016.
+ * Created by AdamC on 4/13/2016.
  */
 public class Link extends WebElement {
     private AutomationInfo info;
