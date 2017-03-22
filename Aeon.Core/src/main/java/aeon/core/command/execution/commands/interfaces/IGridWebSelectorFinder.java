@@ -8,8 +8,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  */
 public interface IGridWebSelectorFinder extends IWebSelectorFinder {
     /**
-     * Gets the jquery expression to find a row within the table.
-     * @return jQuery Expression
+     * Gets the JQuery expression to find a row within the table.
+     * @return JQuery Expression
      */
     ByJQuery getJQueryRowFinder();
 

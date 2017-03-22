@@ -6,7 +6,7 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/17/2016.
+ * Created By RafaelT on 6/17/2016.
  */
 public class ElementsNotInOrderException extends RuntimeException {
     public ElementsNotInOrderException(CompareType compareType) {

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 /**
- * Created by SebastianR on 6/28/2016.
+ * Created By SebastianR on 6/28/2016.
  */
 public class ContainsWhiteSpaceException extends RuntimeException implements Serializable {
 

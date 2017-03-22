@@ -9,7 +9,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by Administrator on 6/15/2016.
+ * Created By Administrator on 6/15/2016.
  */
 public class SetTextByJavaScriptCommand extends WebControlCommand {
 

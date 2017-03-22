@@ -7,12 +7,12 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 
 /**
- * Created by DionnyS on 4/12/2016.
+ * Created By DionnyS on 4/12/2016.
  */
 public abstract class Product {
     protected AutomationInfo automationInfo;
     protected Parameters parameters;
-    protected aeon.core.testabstraction.product.configuration configuration;
+    protected Configuration configuration;
     protected WebCommandExecutionFacade commandExecutionFacade;
 
     public Product() {
@@ -39,11 +39,11 @@ public abstract class Product {
         return plugin.createAdapter(configuration);
     }
 
-    protected aeon.core.testabstraction.product.configuration getConfiguration() {
+    protected Configuration getConfiguration() {
         return this.configuration;
     }
 
-    public void setConfiguration(aeon.core.testabstraction.product.configuration configuration) {
+    public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
     }
 

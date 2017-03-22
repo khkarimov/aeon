@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 import static aeon.core.testabstraction.product.Aeon.launch;
 
 /**
- * Created by SebastianR on 11/23/2016.
+ * Created By SebastianR on 11/23/2016.
  * This test file was created to show Next working on a Ultipro environment and to test the switch mechansim.
  * These tests are currently being ignored because the environment used is not persistent.
  */

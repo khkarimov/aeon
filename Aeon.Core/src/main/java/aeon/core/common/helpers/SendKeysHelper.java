@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by Salvador Gandara on 6/28/2016.
+ * Created By Salvador Gandara on 6/28/2016.
  */
 public class SendKeysHelper {
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();

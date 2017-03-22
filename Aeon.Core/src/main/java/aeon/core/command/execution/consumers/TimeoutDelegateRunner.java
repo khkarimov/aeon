@@ -68,7 +68,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
                         lastCaughtException.getClass().getSimpleName(), lastCaughtException.getMessage()));
             }
 
-            // wait before retrying. Excessive attempts may cause WebDriver's client to lose connection with the server.
+            // Wait before retrying. Excessive attempts may cause WebDriver's client to lose connection with the server.
             Sleep.waitInternal();
         }
 

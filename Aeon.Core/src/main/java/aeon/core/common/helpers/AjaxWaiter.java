@@ -8,7 +8,7 @@ import org.joda.time.Duration;
 
 
 /**
- * Created by JustinP on 6/2/2016.
+ * Created By JustinP on 6/2/2016.
  */
 public class AjaxWaiter {
     private IWebDriver webDriver;

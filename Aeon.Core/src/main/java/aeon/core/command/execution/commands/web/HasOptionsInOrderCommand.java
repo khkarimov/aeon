@@ -10,12 +10,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/14/2016.
+ * Created By RafaelT on 6/14/2016.
  */
 
 /**
  * Asserts that a select has all the given options and in the order provided. Can optionally be passed an option group which will be
- * searched instead of the entire select. The two methods for searching through the options are either by their value or their visible text.
+ * searched instead of the entire select. The two methods for searching through the options are either By their value or their visible text.
  */
 public class HasOptionsInOrderCommand extends WebControlCommand {
     private String[] options;

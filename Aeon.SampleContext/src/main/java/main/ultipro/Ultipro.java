@@ -3,7 +3,7 @@ package main.ultipro;
 import aeon.core.testabstraction.product.WebProduct;
 
 /**
- * Created by SebastianR on 11/23/2016.
+ * Created By SebastianR on 11/23/2016.
  */
 public class Ultipro extends WebProduct{
     public LoginPage loginPage;

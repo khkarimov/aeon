@@ -12,7 +12,7 @@ import aeon.core.testabstraction.models.Browser;
 import org.joda.time.Duration;
 
 /**
- * Created by DionnyS on 4/21/2016.
+ * Created By DionnyS on 4/21/2016.
  */
 public class WebProduct extends Product {
     public Browser browser;

@@ -5,7 +5,7 @@ import org.joda.time.DateTimeConstants;
 import org.joda.time.Period;
 
 /**
- * Created by RafaelT on 7/1/2016.
+ * Created By RafaelT on 7/1/2016.
  */
 public class DateTimeExtensions {
 
@@ -38,7 +38,7 @@ public class DateTimeExtensions {
     }
 
 //    /**
-//     * Converts a string into a Date by using a specic format.
+//     * Converts a string into a Date By using a specic format.
 //     * @param format The format that the date is in.
 //     * @param date The string to be formatted.
 //     * @return A Date Object.

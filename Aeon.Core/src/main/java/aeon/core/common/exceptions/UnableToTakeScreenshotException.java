@@ -3,7 +3,7 @@ package aeon.core.common.exceptions;
 import aeon.core.common.Resources;
 
 /**
- * Created by DionnyS on 4/1/2016.
+ * Created By DionnyS on 4/1/2016.
  */
 public class UnableToTakeScreenshotException extends RuntimeException {
     /**

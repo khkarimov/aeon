@@ -1,5 +1,5 @@
 /**
- * Created by SebastianR on 6/6/2016.
+ * Created By SebastianR on 6/6/2016.
  */
 
 import aeon.core.common.CompareType;
@@ -504,7 +504,7 @@ public class FirefoxBrowserTests {
 
     @Test
     public void testSetValueByJavaScript(){
-        product.StartPage.FormTextBox.setTextByJavaScript("set text by javascript is working");
+        product.StartPage.FormTextBox.setTextByJavaScript("set text By javascript is working");
     }
 
     @Test

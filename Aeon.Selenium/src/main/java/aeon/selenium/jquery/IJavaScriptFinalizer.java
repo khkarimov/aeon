@@ -1,7 +1,7 @@
 package aeon.selenium.jquery;
 
 /**
- * Interface for preparing JavaScript according to formats specified by classes implementing this interface.
+ * Interface for preparing JavaScript according to formats specified By classes implementing this interface.
  */
 public interface IJavaScriptFinalizer {
     /**

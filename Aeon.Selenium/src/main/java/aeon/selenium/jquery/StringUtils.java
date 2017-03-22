@@ -1,7 +1,7 @@
 package aeon.selenium.jquery;
 
 /**
- * Created by DionnyS on 4/14/2016.
+ * Created By DionnyS on 4/14/2016.
  */
 public class StringUtils {
     public static String minimizeWhiteSpace(String value) {

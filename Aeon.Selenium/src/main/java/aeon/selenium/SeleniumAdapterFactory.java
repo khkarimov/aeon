@@ -1,5 +1,6 @@
 package aeon.selenium;
 
+import aeon.core.testabstraction.product.Configuration;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import aeon.core.common.Capability;
@@ -136,7 +137,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             default:
-                throw new ConfigurationException("BrowserType", "configuration",
+                throw new ConfigurationException("BrowserType", "Configuration",
                         String.format("%1$s is not a supported browser", browserType));
         }
     }
@@ -160,7 +161,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             default:
-                throw new ConfigurationException("BrowserType", "configuration", String.format("%1$s is not a supported browser", browserType));
+                throw new ConfigurationException("BrowserType", "Configuration", String.format("%1$s is not a supported browser", browserType));
         }
 
         return desiredCapabilities;
@@ -280,12 +281,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public IAdapter createAdapter(aeon.core.testabstraction.product.configuration configuration) {
+    public IAdapter createAdapter(Configuration configuration) {
         return create((SeleniumConfiguration) configuration);
     }
 
     @Override
-    public aeon.core.testabstraction.product.configuration getConfiguration() {
+    public Configuration getConfiguration() {
         return new SeleniumConfiguration();
     }
 

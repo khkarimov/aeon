@@ -58,7 +58,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
     private final long jvmStartTime = ManagementFactory.getRuntimeMXBean().getStartTime();
 
-    // Print no location info by default
+    // Print no location info By default
     private final boolean locationInfo;
     private final String title;
     private final String contentType;

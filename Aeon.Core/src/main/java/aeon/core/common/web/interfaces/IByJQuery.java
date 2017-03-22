@@ -9,7 +9,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * Created by DionnyS on 3/31/2016.
+ * Created By DionnyS on 3/31/2016.
  */
 public interface IByJQuery {
     /**
@@ -51,7 +51,7 @@ public interface IByJQuery {
     ByJQuery attr(String attributeName);
 
     /**
-     * Get the children of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the children of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery} for the children of the matched elements.
@@ -59,7 +59,7 @@ public interface IByJQuery {
     ByJQuery children(String selector);
 
     /**
-     * Get the children of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the children of each element in the set of matched elements, optionally filtered By a selector.
      * @return The {@link ByJQuery} for the children of the matched elements.
      */
     ByJQuery children();
@@ -141,7 +141,7 @@ public interface IByJQuery {
     ByJQuery filter(Expression<Function<Integer, Boolean>> function);
 
     /**
-     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
+     * Get the descendants of each element in the current set of matched elements, filtered By a selector, jquery object, or element.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -149,7 +149,7 @@ public interface IByJQuery {
     ByJQuery find(String selector);
 
     /**
-     * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
+     * Get the descendants of each element in the current set of matched elements, filtered By a selector, jquery object, or element.
      *
      * @param obj A jquery object to match elements against.
      * @return The {@link ByJQuery}
@@ -216,7 +216,7 @@ public interface IByJQuery {
     ByJQuery indexOf(String searchValue, int fromIndex);
 
     /**
-     * check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -268,13 +268,13 @@ public interface IByJQuery {
     ByJQuery next(String selector);
 
     /**
-     * Get all following siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get all following siblings of each element in the set of matched elements, optionally filtered By a selector.
      * @return The {@link ByJQuery}
      */
     ByJQuery nextAll();
 
     /**
-     * Get all following siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get all following siblings of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -282,7 +282,7 @@ public interface IByJQuery {
     ByJQuery nextAll(String selector);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
+     * Get all following siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @return The {@link ByJQuery}
@@ -290,7 +290,7 @@ public interface IByJQuery {
     ByJQuery nextUntil(String selector);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
+     * Get all following siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -299,7 +299,7 @@ public interface IByJQuery {
     ByJQuery nextUntil(String selector, String filter);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
+     * Get all following siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object passed.
      *
      * @param obj A jquery object indicating where to stop matching following sibling elements.
      * @return The {@link ByJQuery}
@@ -307,7 +307,7 @@ public interface IByJQuery {
     ByJQuery nextUntil(ByJQuery obj);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
+     * Get all following siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object passed.
      *
      * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
@@ -346,13 +346,13 @@ public interface IByJQuery {
     ByJQuery offsetParent();
 
     /**
-     * Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
+     * Get the parent of each element in the current set of matched elements, optionally filtered By a selector.
      * @return The {@link ByJQuery}
      */
     ByJQuery parent();
 
     /**
-     * Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
+     * Get the parent of each element in the current set of matched elements, optionally filtered By a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -360,13 +360,13 @@ public interface IByJQuery {
     ByJQuery parent(String selector);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
+     * Get the ancestors of each element in the current set of matched elements, optionally filtered By a selector.
      * @return The {@link ByJQuery}
      */
     ByJQuery parents();
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
+     * Get the ancestors of each element in the current set of matched elements, optionally filtered By a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -374,7 +374,7 @@ public interface IByJQuery {
     ByJQuery parents(String selector);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched By the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @return The {@link ByJQuery}
@@ -382,7 +382,7 @@ public interface IByJQuery {
     ByJQuery parentsUntil(String selector);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched By the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -391,7 +391,7 @@ public interface IByJQuery {
     ByJQuery parentsUntil(String selector, String filter);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched By the selector, DOM node, or jquery object.
      *
      * @param obj A jquery object indicating where to stop matching following sibling elements.
      * @return The {@link ByJQuery}
@@ -399,7 +399,7 @@ public interface IByJQuery {
     ByJQuery parentsUntil(ByJQuery obj);
 
     /**
-     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
+     * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched By the selector, DOM node, or jquery object.
      *
      * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
@@ -408,13 +408,13 @@ public interface IByJQuery {
     ByJQuery parentsUntil(ByJQuery obj, String filter);
 
     /**
-     * Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered By a selector.
      * @return The {@link ByJQuery}
      */
     ByJQuery prev();
 
     /**
-     * Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -422,13 +422,13 @@ public interface IByJQuery {
     ByJQuery prev(String selector);
 
     /**
-     * Get all preceding siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get all preceding siblings of each element in the set of matched elements, optionally filtered By a selector.
      * @return The {@link ByJQuery}
      */
     ByJQuery prevAll();
 
     /**
-     * Get all preceding siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get all preceding siblings of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -436,7 +436,7 @@ public interface IByJQuery {
     ByJQuery prevAll(String selector);
 
     /**
-     * Get all preceding siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object.
+     * Get all preceding siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
      * @return The {@link ByJQuery}
@@ -444,7 +444,7 @@ public interface IByJQuery {
     ByJQuery prevUntil(String selector);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
+     * Get all following siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
@@ -453,7 +453,7 @@ public interface IByJQuery {
     ByJQuery prevUntil(String selector, String filter);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
+     * Get all following siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object passed.
      *
      * @param obj A jquery object indicating where to stop matching preceding sibling elements.
      * @return The {@link ByJQuery}
@@ -461,7 +461,7 @@ public interface IByJQuery {
     ByJQuery prevUntil(ByJQuery obj);
 
     /**
-     * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
+     * Get all following siblings of each element up to but not including the element matched By the selector, DOM node, or jquery object passed.
      *
      * @param obj    A jquery object indicating where to stop matching preceding sibling elements.
      * @param filter A string containing a selector expression to match elements against.
@@ -470,13 +470,13 @@ public interface IByJQuery {
     ByJQuery prevUntil(ByJQuery obj, String filter);
 
     /**
-     * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the siblings of each element in the set of matched elements, optionally filtered By a selector.
      * @return The {@link ByJQuery}
      */
     ByJQuery siblings();
 
     /**
-     * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the siblings of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
@@ -484,7 +484,7 @@ public interface IByJQuery {
     ByJQuery siblings(String selector);
 
     /**
-     * Reduce the set of matched elements to a subset specified by a range of indices.
+     * Reduce the set of matched elements to a subset specified By a range of indices.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @return The {@link ByJQuery}
@@ -492,7 +492,7 @@ public interface IByJQuery {
     ByJQuery slice(int start);
 
     /**
-     * Reduce the set of matched elements to a subset specified by a range of indices.
+     * Reduce the set of matched elements to a subset specified By a range of indices.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @return The {@link ByJQuery}
@@ -500,7 +500,7 @@ public interface IByJQuery {
     ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start);
 
     /**
-     * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the siblings of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
@@ -509,7 +509,7 @@ public interface IByJQuery {
     ByJQuery slice(int start, int end);
 
     /**
-     * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the siblings of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
@@ -518,7 +518,7 @@ public interface IByJQuery {
     ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start, int end);
 
     /**
-     * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the siblings of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
@@ -527,7 +527,7 @@ public interface IByJQuery {
     ByJQuery slice(int start, ByJQueryWithArithmeticOperatorOverload end);
 
     /**
-     * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     * Get the siblings of each element in the set of matched elements, optionally filtered By a selector.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.

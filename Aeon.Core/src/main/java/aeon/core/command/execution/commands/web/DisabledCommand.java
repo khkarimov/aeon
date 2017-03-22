@@ -9,7 +9,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by Administrator on 6/27/2016.
+ * Created By Administrator on 6/27/2016.
  */
 public class DisabledCommand extends WebControlCommand {
 

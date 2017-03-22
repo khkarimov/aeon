@@ -19,7 +19,7 @@ public interface IScriptExecutor {
      *
      * @param script The JavaScript code to execute.
      * @param args   The arguments to the script.
-     * @return The value returned by the script.
+     * @return The value returned By the script.
      */
     Object executeScript(String script, Object... args);
 
@@ -28,7 +28,7 @@ public interface IScriptExecutor {
      *
      * @param script The JavaScript code to execute.
      * @param args   The arguments to the script.
-     * @return The value returned by the script.
+     * @return The value returned By the script.
      */
     Object executeAsyncScript(String script, Object... args);
 }

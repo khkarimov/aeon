@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 
 /**
- * Created by SebastianR on 10/19/2016.
+ * Created By SebastianR on 10/19/2016.
  */
 public class MouseHelper {
     // SR - I made this a boolean so that the Adapter can determine whether to throw an error or not

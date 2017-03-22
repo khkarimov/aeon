@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 /**
- * Created by DionnyS on 4/20/2016.
+ * Created By DionnyS on 4/20/2016.
  */
 public interface IWebAdapter extends IAdapter {
 
@@ -217,7 +217,7 @@ public interface IWebAdapter extends IAdapter {
      *
      * @param script The JavaScript code to execute.
      * @param args   The arguments to the script.
-     * @return The value returned by the script.
+     * @return The value returned By the script.
      * @throws ScriptExecutionException If the JavaScript encounters an error.
      */
     Object executeScript(String script, Object... args);
@@ -262,7 +262,7 @@ public interface IWebAdapter extends IAdapter {
     void openFileDialog(IBy selector);
 
     /**
-     * Types keys of file indicated by provided path
+     * Types keys of file indicated By provided path
      * REQUIRES DIALOG BOX TO ALREADY BE OPENED BY openFileDialog
      *
      * @param selector The selector for the element.
@@ -272,7 +272,7 @@ public interface IWebAdapter extends IAdapter {
 
     /**
      * Opens a windows select file dialog and selects
-     * file indicated by provided path
+     * file indicated By provided path
      *
      * @param selector The selector for the element.
      * @param path     The path to the file to be selected.
@@ -418,17 +418,17 @@ public interface IWebAdapter extends IAdapter {
     void clearElement(WebControl element);
 
     /**
-     * Choose a Select Element by its Value.
+     * Choose a Select Element By its Value.
      *
-     * @param element The element to be chosen by value.
+     * @param element The element to be chosen By value.
      * @param value   The value to search for.
      */
     void chooseSelectElementByValue(WebControl element, String value);
 
     /**
-     * Choose a Select Element by its Text.
+     * Choose a Select Element By its Text.
      *
-     * @param element The element to be chosen by value.
+     * @param element The element to be chosen By value.
      * @param value   The value to search for.
      */
     void chooseSelectElementByText(WebControl element, String value);
@@ -545,23 +545,23 @@ public interface IWebAdapter extends IAdapter {
 
     /**
      * Asserts that a select element posseses all of the elements passed to it. It can optionally be passed an option group that if non-null will be searched instead of the entire
-     * select tag. Options will be searched by either their value or their visible text.
+     * select tag. Options will be searched By either their value or their visible text.
      *
      * @param element  The select element.
      * @param options  The options that the element should posses.
      * @param optgroup The optional option group that which will be searched.
-     * @param select   The method by which the options will be searched either by value or by text.
+     * @param select   The method By which the options will be searched either By value or By text.
      */
     void elementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select);
 
     /**
      * Asserts that a select element does not posses any of the options passed. Can optionally be passed an option group that if non-null will be searched instead of the entire
-     * select tag. Options will be searched for either by their value or their visible text.
+     * select tag. Options will be searched for either By their value or their visible text.
      *
      * @param element  The select element.
      * @param options  The options that the select element should not have.
      * @param optgroup The optional option group that will be searched.
-     * @param select   The method by which the options will be searched for either by visible text or their value.
+     * @param select   The method By which the options will be searched for either By visible text or their value.
      */
     void elementDoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select);
 
@@ -582,7 +582,7 @@ public interface IWebAdapter extends IAdapter {
     /**
      * Asserts that the selected element's body tag will be changed into the provided String value
      *
-     * @param element by The selector.
+     * @param element By The selector.
      * @param value   Html to be inserted into body tag
      */
     void setBodyValueByJavaScript(WebControl element, String value);
@@ -590,13 +590,13 @@ public interface IWebAdapter extends IAdapter {
     /**
      * Asserts that the selected element's value tag will be changed into the provided String value
      *
-     * @param element by The selector.
+     * @param element By The selector.
      * @param value   Html to be inserted into a value tag
      */
     void setTextByJavaScript(WebControl element, String value);
 
     /**
-     * Sets the Value of a Div element by Javascript
+     * Sets the Value of a Div element By Javascript
      *
      * @param element The element whose value is set
      * @param value   The value to set to the element
@@ -611,13 +611,13 @@ public interface IWebAdapter extends IAdapter {
     void clickAllElements(IBy elementsBy);
 
     /**
-     * Asserts that a select element not only has all of the options provided by that they are all in the order provided. Can optionally be passed an option group
-     * that if non-null will be searched in isolation instead of the entire select. Options can be searched either by their value or their visible text.
+     * Asserts that a select element not only has all of the options provided By that they are all in the order provided. Can optionally be passed an option group
+     * that if non-null will be searched in isolation instead of the entire select. Options can be searched either By their value or their visible text.
      *
      * @param element  The select element.
      * @param options  The options to be searched for.
      * @param optgroup The visible text of the optional option group which would be searched.
-     * @param select   The method by which the options will be searched, either by text or value.
+     * @param select   The method By which the options will be searched, either By text or value.
      */
     void elementHasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select);
 
@@ -632,11 +632,11 @@ public interface IWebAdapter extends IAdapter {
     void hasNumberOfOptions(WebControl element, int optnumber, String optgroup);
 
     /**
-     * Asserts that a select element has all of its options in a certain order, either ascending or descending alphanumerically by either their value
+     * Asserts that a select element has all of its options in a certain order, either ascending or descending alphanumerically By either their value
      * or their visible text.
      *
      * @param element  The select element.
-     * @param compare  The method by which the options will be compared.
+     * @param compare  The method By which the options will be compared.
      * @param optGroup The optional option group which would be searched in isolation instead.
      */
     void hasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup);
@@ -698,7 +698,7 @@ public interface IWebAdapter extends IAdapter {
      *
      * @param element   The web element.
      * @param value     The value the attribute should be.
-     * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param option    Whether the innerhtml will be evaluated By the literal html code or the visible text.
      * @param attribute The attribute.
      */
     void is(WebControl element, String value, ComparisonOption option, String attribute);
@@ -708,7 +708,7 @@ public interface IWebAdapter extends IAdapter {
      *
      * @param element   The web element.
      * @param value     The value the attribute should be.
-     * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param option    Whether the innerhtml will be evaluated By the literal html code or the visible text.
      * @param attribute The attribute.
      */
     void isLike(WebControl element, String value, ComparisonOption option, String attribute);
@@ -718,7 +718,7 @@ public interface IWebAdapter extends IAdapter {
      *
      * @param element   The web element.
      * @param value     The value the attribute should be.
-     * @param option    Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param option    Whether the innerhtml will be evaluated By the literal html code or the visible text.
      * @param attribute The attribute.
      */
     void isNotLike(WebControl element, String value, ComparisonOption option, String attribute);

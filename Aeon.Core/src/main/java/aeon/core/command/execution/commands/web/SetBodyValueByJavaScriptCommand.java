@@ -10,7 +10,7 @@ import java.util.Locale;
 
 
 /**
- * Sets a body value by javascript
+ * Sets a body value By javascript
  */
 public class SetBodyValueByJavaScriptCommand extends WebControlCommand {
 

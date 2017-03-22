@@ -9,12 +9,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by Steve Foo on 6/29/2016.
+ * Created By Steve Foo on 6/29/2016.
  */
 public class NotVisibleCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the notVisible.
+     * Initializes a new instance of the NotVisible.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

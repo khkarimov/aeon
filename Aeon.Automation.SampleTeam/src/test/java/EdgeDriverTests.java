@@ -1,5 +1,5 @@
 /**
- * Created by josepe on 3/9/2017.
+ * Created By josepe on 3/9/2017.
  */
 
 
@@ -494,7 +494,7 @@ public class EdgeDriverTests {
 
     @Test
     public void testSetValueByJavaScript(){
-        product.StartPage.FormTextBox.setTextByJavaScript("set text by javascript is working");
+        product.StartPage.FormTextBox.setTextByJavaScript("set text By javascript is working");
     }
 
     @Test

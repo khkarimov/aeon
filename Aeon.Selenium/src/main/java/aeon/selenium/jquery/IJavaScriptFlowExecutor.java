@@ -14,7 +14,7 @@ public interface IJavaScriptFlowExecutor {
     Function<JavaScriptFinalizerOptions, IJavaScriptFinalizer> getFinalizer();
 
     /**
-     * Gets a function return an object, as performed by {@link IScriptExecutor}.
+     * Gets a function return an object, as performed By {@link IScriptExecutor}.
      */
     QuadFunction<IScriptExecutor, String, Iterable<Object>, Object> getExecutor();
 }

@@ -5,12 +5,12 @@ package aeon.core.common.web;
  */
 public enum WebSelectOption {
     /**
-     * Select by the value attribute.
+     * Select By the value attribute.
      */
     Value,
 
     /**
-     * Select by innerHTML.
+     * Select By innerHTML.
      */
     Text
 }
