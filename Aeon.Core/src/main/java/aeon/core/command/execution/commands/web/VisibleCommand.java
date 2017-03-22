@@ -14,7 +14,7 @@ import java.util.Locale;
 public class VisibleCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the visible.
+     * Initializes a new instance of the Visible.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

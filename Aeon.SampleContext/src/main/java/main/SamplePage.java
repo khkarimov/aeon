@@ -1,6 +1,6 @@
 package main;
 
-import aeon.core.common.web.selectors.by;
+import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.Element;
 import aeon.core.testabstraction.models.Page;
 
@@ -11,6 +11,6 @@ public class SamplePage extends Page {
     public Element Submit;
 
     public SamplePage() {
-        Submit = new Element(by.CssSelector("[id*=submit]"));
+        Submit = new Element(By.CssSelector("[id*=submit]"));
     }
 }

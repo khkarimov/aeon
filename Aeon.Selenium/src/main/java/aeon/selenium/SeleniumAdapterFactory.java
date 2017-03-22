@@ -1,5 +1,6 @@
 package aeon.selenium;
 
+import aeon.core.testabstraction.product.Configuration;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import aeon.core.common.Capability;
@@ -280,12 +281,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public IAdapter createAdapter(aeon.core.testabstraction.product.configuration configuration) {
+    public IAdapter createAdapter(Configuration configuration) {
         return create((SeleniumConfiguration) configuration);
     }
 
     @Override
-    public aeon.core.testabstraction.product.configuration getConfiguration() {
+    public Configuration getConfiguration() {
         return new SeleniumConfiguration();
     }
 

@@ -1,7 +1,7 @@
 package main.ultipro;
 
 import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.selectors.by;
+import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
 
 /**
@@ -20,8 +20,8 @@ public class NewHireWizard {
         startPage = new StartPage(automationInfo);
 
         // Controls
-        nextButton = new Button(automationInfo, by.CssSelector("#ctl00_btnNext"));
-        backButton = new Button(automationInfo, by.CssSelector("#ctl00_btnPrev"));
-        cancelButton = new Button(automationInfo, by.CssSelector("#ctl00_btnCancel"));
+        nextButton = new Button(automationInfo, By.CssSelector("#ctl00_btnNext"));
+        backButton = new Button(automationInfo, By.CssSelector("#ctl00_btnPrev"));
+        cancelButton = new Button(automationInfo, By.CssSelector("#ctl00_btnCancel"));
     }
 }

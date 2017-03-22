@@ -1,7 +1,7 @@
 package main.ultipro;
 
 import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.selectors.by;
+import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.Label;
 import aeon.core.testabstraction.elements.web.Select;
@@ -18,10 +18,10 @@ public class LoginPage {
     public Select LanguageSelect;
 
     public LoginPage(AutomationInfo automationInfo) {
-        UserNameTextBox = new TextBox(automationInfo, by.CssSelector( "input[id*='UserName']"));
-        PasswordTextBox = new TextBox(automationInfo, by.CssSelector("input[id*='Password']"));
-        LoginButton = new Button(automationInfo, by.CssSelector("input[id*='LoginButton']"));
-        LanguageSelect = new Select(automationInfo, by.CssSelector("select[name*='languagesSelection']"));
-        WarningMessage = new Label(automationInfo, by.CssSelector("div[id*='ctl00_Content_warnMsg']"));
+        UserNameTextBox = new TextBox(automationInfo, By.CssSelector( "input[id*='UserName']"));
+        PasswordTextBox = new TextBox(automationInfo, By.CssSelector("input[id*='Password']"));
+        LoginButton = new Button(automationInfo, By.CssSelector("input[id*='LoginButton']"));
+        LanguageSelect = new Select(automationInfo, By.CssSelector("select[name*='languagesSelection']"));
+        WarningMessage = new Label(automationInfo, By.CssSelector("div[id*='ctl00_Content_warnMsg']"));
     }
 }

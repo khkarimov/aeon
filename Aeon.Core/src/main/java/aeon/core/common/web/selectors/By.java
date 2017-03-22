@@ -5,15 +5,15 @@ import aeon.core.common.web.interfaces.IBy;
 /**
  * Class for selecting elements (default is via a CSS selector).
  */
-public class by implements IBy {
+public class By implements IBy {
     private String selector;
 
     /**
-     * Initializes a new instance of the {@link by} class.
+     * Initializes a new instance of the {@link By} class.
      *
      * @param selector The CSS selector.
      */
-    protected by(String selector) {
+    protected By(String selector) {
         this.selector = selector;
     }
 
@@ -21,17 +21,17 @@ public class by implements IBy {
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
-     * @return A new {@link by} instance.
+     * @return A new {@link By} instance.
      */
-    public static by CssSelector(String selector) {
-        return new by(selector);
+    public static By CssSelector(String selector) {
+        return new By(selector);
     }
 
     /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
-     * @return A new {@link by} instance.
+     * @return A new {@link By} instance.
      */
     public static ByJQuery jQuery(String selector) {
         return new ByJQuery(selector);

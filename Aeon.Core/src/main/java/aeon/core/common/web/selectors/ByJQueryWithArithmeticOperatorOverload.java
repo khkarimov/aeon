@@ -1,7 +1,7 @@
 package aeon.core.common.web.selectors;
 
 /**
- * Instantiated from jQuery + int, jQuery - int operator overload.
+ * Instantiated from JQuery + int, JQuery - int operator overload.
  */
 public class ByJQueryWithArithmeticOperatorOverload {
     private String script;

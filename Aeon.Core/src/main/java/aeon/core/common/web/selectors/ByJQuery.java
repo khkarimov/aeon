@@ -482,7 +482,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
+     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param selector A string containing a selector expression to match elements against.
      */

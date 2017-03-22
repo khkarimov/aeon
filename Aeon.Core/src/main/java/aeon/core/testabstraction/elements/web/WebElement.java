@@ -7,7 +7,7 @@ import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.interfaces.IBy;
-import aeon.core.common.web.selectors.by;
+import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.Element;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -76,7 +76,7 @@ public class WebElement extends Element {
     public void dragAndDrop(String dropTarget) {
         info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
                 selector,
-                by.CssSelector(dropTarget),
+                By.CssSelector(dropTarget),
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 

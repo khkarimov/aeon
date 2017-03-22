@@ -3,7 +3,7 @@ package aeon.selenium;
 
 import aeon.core.common.helpers.OsCheck;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
-import aeon.core.testabstraction.product.configuration;
+import aeon.core.testabstraction.product.Configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by DionnyS on 4/14/2016.
  */
-public class SeleniumConfiguration extends configuration {
+public class SeleniumConfiguration extends Configuration {
     private boolean enableSeleniumGrid;
     private URL seleniumHubUrl;
     private String language;

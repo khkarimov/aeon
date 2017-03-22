@@ -18,7 +18,7 @@ import java.util.Locale;
 public class ClickAllElementsCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the clickAllElementsCommand.
+     * Initializes a new instance of the ClickAllElementsCommand.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

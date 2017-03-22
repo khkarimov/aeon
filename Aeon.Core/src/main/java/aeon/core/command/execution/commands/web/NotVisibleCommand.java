@@ -14,7 +14,7 @@ import java.util.Locale;
 public class NotVisibleCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the notVisible.
+     * Initializes a new instance of the NotVisible.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

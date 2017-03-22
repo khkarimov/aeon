@@ -1,7 +1,7 @@
 package main.ultipro;
 
 import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.selectors.by;
+import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.TextBox;
 
 
@@ -13,7 +13,7 @@ public class PersonalPage {
 
     public PersonalPage(AutomationInfo automationInfo){
         // Controls
-        addressLine = new TextBox(automationInfo, by.CssSelector("#ctl00_Content_NewHirePersonalFV_txbAddressLine1"));
+        addressLine = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_NewHirePersonalFV_txbAddressLine1"));
 
     }
 }
