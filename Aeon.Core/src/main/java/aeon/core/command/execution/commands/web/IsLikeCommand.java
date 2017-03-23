@@ -38,7 +38,7 @@ public class IsLikeCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.IsLike(control, value, option, attribute);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.isLike(control, value, option, attribute);
     }
 }

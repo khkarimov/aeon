@@ -37,7 +37,7 @@ public class ClickAndHoldCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.ClickAndHold(control, duration);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.clickAndHold(control, duration);
     }
 }

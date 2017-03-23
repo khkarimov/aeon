@@ -34,7 +34,7 @@ public class RightClickCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.RightClick(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.rightClick(control);
     }
 }

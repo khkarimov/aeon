@@ -30,7 +30,7 @@ public class NotVisibleCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.NotVisible(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.notVisible(control);
     }
 }

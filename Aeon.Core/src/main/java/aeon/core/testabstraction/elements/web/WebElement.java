@@ -36,93 +36,93 @@ public class WebElement extends Element {
 
     }
 
-    public void Blur() {
-        info.getCommandExecutionFacade().Execute(info, new BlurCommand(
+    public void blur() {
+        info.getCommandExecutionFacade().execute(info, new BlurCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void ClickAndHold(int duration) {
-        info.getCommandExecutionFacade().Execute(info, new ClickAndHoldCommand(
+    public void clickAndHold(int duration) {
+        info.getCommandExecutionFacade().execute(info, new ClickAndHoldCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 duration));
     }
 
-    public void Click() {
-        info.getCommandExecutionFacade().Execute(info, new ClickCommand(
+    public void click() {
+        info.getCommandExecutionFacade().execute(info, new ClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void ClickAllElements() {
-        info.getCommandExecutionFacade().Execute(info, new ClickAllElementsCommand(
+    public void clickAllElements() {
+        info.getCommandExecutionFacade().execute(info, new ClickAllElementsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void DoubleClick() {
-        info.getCommandExecutionFacade().Execute(info, new DoubleClickCommand(
+    public void doubleClick() {
+        info.getCommandExecutionFacade().execute(info, new DoubleClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void IsDisabled() {
-        info.getCommandExecutionFacade().Execute(info, new DisabledCommand(
+    public void isDisabled() {
+        info.getCommandExecutionFacade().execute(info, new DisabledCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void DragAndDrop(String dropTarget) {
-        info.getCommandExecutionFacade().Execute(info, new DragAndDropCommand(
+    public void dragAndDrop(String dropTarget) {
+        info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
                 selector,
                 By.CssSelector(dropTarget),
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void IsEnabled() {
-        info.getCommandExecutionFacade().Execute(info, new EnabledCommand(
+    public void isEnabled() {
+        info.getCommandExecutionFacade().execute(info, new EnabledCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void Exists() {
-        info.getCommandExecutionFacade().Execute(info, new ExistsCommand(
+    public void exists() {
+        info.getCommandExecutionFacade().execute(info, new ExistsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void NotExists() {
-        info.getCommandExecutionFacade().Execute(info, new NotExistsCommand( selector));
+    public void notExists() {
+        info.getCommandExecutionFacade().execute(info, new NotExistsCommand( selector));
     }
 
-    public Object GetElementAttribute(String attributeName) {
-        return info.getCommandExecutionFacade().Execute(info, new GetElementAttributeCommand(
+    public Object getElementAttribute(String attributeName) {
+        return info.getCommandExecutionFacade().execute(info, new GetElementAttributeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 attributeName));
     }
 
-    public void RightClick() {
-        info.getCommandExecutionFacade().Execute(info, new RightClickCommand(
+    public void rightClick() {
+        info.getCommandExecutionFacade().execute(info, new RightClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void MouseOut() {
-        info.getCommandExecutionFacade().Execute(info, new MouseOutCommand(
+    public void mouseOut() {
+        info.getCommandExecutionFacade().execute(info, new MouseOutCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void MouseOver() {
-        info.getCommandExecutionFacade().Execute(info, new MouseOverCommand(
+    public void mouseOver() {
+        info.getCommandExecutionFacade().execute(info, new MouseOverCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void Is(String value) {
-        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+    public void is(String value) {
+        info.getCommandExecutionFacade().execute(info, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -130,8 +130,8 @@ public class WebElement extends Element {
                 "INNERHTML"));
     }
 
-    public void Is(String value, String attribute) {
-        info.getCommandExecutionFacade().Execute(info, new IsCommand(
+    public void is(String value, String attribute) {
+        info.getCommandExecutionFacade().execute(info, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -139,8 +139,8 @@ public class WebElement extends Element {
                 attribute));
     }
 
-    public void IsLike(String value) {
-        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+    public void isLike(String value) {
+        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -148,8 +148,8 @@ public class WebElement extends Element {
                 "INNERHTML"));
     }
 
-    public void IsLike(String value, String attribute) {
-        info.getCommandExecutionFacade().Execute(info, new IsLikeCommand(
+    public void isLike(String value, String attribute) {
+        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -157,8 +157,8 @@ public class WebElement extends Element {
                 attribute));
     }
 
-    public void IsNotLike(String value) {
-        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+    public void isNotLike(String value) {
+        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -166,8 +166,8 @@ public class WebElement extends Element {
                 "INNERHTML"));
     }
 
-    public void IsNotLike(String value, String attribute) {
-        info.getCommandExecutionFacade().Execute(info, new IsNotLikeCommand(
+    public void isNotLike(String value, String attribute) {
+        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -175,136 +175,136 @@ public class WebElement extends Element {
                 attribute));
     }
 
-    public void Has(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void has(String[] messages, String childSelector) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
-    public void Has(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void has(String[] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
-    public void HasLike(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void hasLike(String[] messages, String childSelector) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
-    public void HasLike(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void hasLike(String[] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
-    public void DoesNotHave(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void doesNotHave(String[] messages, String childSelector) {
+        info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
-    public void DoesNotHave(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void doesNotHave(String[] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
-    public void DoesNotHaveLike(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void doesNotHaveLike(String[] messages, String childSelector) {
+        info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
-    public void DoesNotHaveLike(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void doesNotHaveLike(String[] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
-    public void HasOnly(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void hasOnly(String[] messages, String childSelector) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasOnlyCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
                 ));
     }
 
-    public void HasOnly(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void hasOnly(String[] messages, String childSelector, String attribute) {
+        info.getCommandExecutionFacade().execute(info,
                 new HasOnlyCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
                 ));
     }
 
-    public void SetDivValueByJavaScript(String value) {
-        info.getCommandExecutionFacade().Execute(info, new SetDivValueByJavaScriptCommand(
+    public void setDivValueByJavaScript(String value) {
+        info.getCommandExecutionFacade().execute(info, new SetDivValueByJavaScriptCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
     }
 
-    public void SetBodyValueByJavaScript(String value) {
-        info.getCommandExecutionFacade().Execute(info, new SetBodyValueByJavaScriptCommand(
+    public void setBodyValueByJavaScript(String value) {
+        info.getCommandExecutionFacade().execute(info, new SetBodyValueByJavaScriptCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
     }
 
-    public void SetTextByJavaScript(String value) {
-        info.getCommandExecutionFacade().Execute(info, new SetTextByJavaScriptCommand(
+    public void setTextByJavaScript(String value) {
+        info.getCommandExecutionFacade().execute(info, new SetTextByJavaScriptCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
     }
 
-    public void Visible() {
-        info.getCommandExecutionFacade().Execute(info, new VisibleCommand(
+    public void visible() {
+        info.getCommandExecutionFacade().execute(info, new VisibleCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void NotVisible() {
-        info.getCommandExecutionFacade().Execute(info, new NotVisibleCommand(
+    public void notVisible() {
+        info.getCommandExecutionFacade().execute(info, new NotVisibleCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void DatesApproximatelyEqual(String attributeName, DateTime expectedDate, Period acceptableDelta) {
-        info.getCommandExecutionFacade().Execute(info, new DatesApproximatelyEqualCommand(
+    public void datesApproximatelyEqual(String attributeName, DateTime expectedDate, Period acceptableDelta) {
+        info.getCommandExecutionFacade().execute(info, new DatesApproximatelyEqualCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 attributeName, expectedDate, acceptableDelta
         ));
     }
 
-    public ClientRects GetClientRects() {
-        return (ClientRects) info.getCommandExecutionFacade().Execute(info, new GetClientRectsCommand(
+    public ClientRects getClientRects() {
+        return (ClientRects) info.getCommandExecutionFacade().execute(info, new GetClientRectsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)
         ));
     }
 
-    public void PressKeyboardKey(KeyboardKey key) {
-        info.getCommandExecutionFacade().Execute(info, new PressKeyboardKeyCommand(
+    public void pressKeyboardKey(KeyboardKey key) {
+        info.getCommandExecutionFacade().execute(info, new PressKeyboardKeyCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 key));

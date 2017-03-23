@@ -37,29 +37,29 @@ public class AjaxWaiter {
         return timeout.getMillis();
     }
 
-    public void InjectJS() {
+    public void injectJS() {
         try {
             String InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
-            webDriver.ExecuteScript(InjectScriptTag);
+            webDriver.executeScript(InjectScriptTag);
             System.out.println("Injected JS");
         }catch (ScriptExecutionException e){
             System.out.println("Could not inject JS");
         }
     }
 
-    public void WaitForAsync() {
+    public void waitForAsync() {
         long count;
         DateTime end = clock.getUtcNow().withDurationAdded(timeout.getMillis(), 1);
         do{
             try {
-                count = (long) webDriver.ExecuteScript("return aeonAjaxCounter");
+                count = (long) webDriver.executeScript("return aeonAjaxCounter");
                 System.out.println("COUNT: " + count);
             }catch(ScriptExecutionException e){
-                InjectJS();
+                injectJS();
                 return;
             }
-            Sleep.WaitInternal();
+            Sleep.waitInternal();
         }while(count != 0  && clock.getUtcNow().isBefore(end.toInstant()));
     }
 

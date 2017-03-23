@@ -12,7 +12,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * <p>Scrolls to the top of the page.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.ScrollToTop();</p>
+ * <p>      Context.browser.scrollToTop();</p>
  */
 
 public class ScrollToTopCommand extends Command {
@@ -29,10 +29,10 @@ public class ScrollToTopCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).ScrollToTop();
+        ((IWebDriver) driver).scrollToTop();
     }
 }

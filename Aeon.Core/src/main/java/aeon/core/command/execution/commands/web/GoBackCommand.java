@@ -9,7 +9,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * <p>Move back a single entry in the browser's history.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.GoBack();</p>
+ * <p>      Context.browser.goBack();</p>
  */
 public class GoBackCommand extends Command {
     /**
@@ -25,7 +25,7 @@ public class GoBackCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
-        ((IWebDriver) driver).GoBack();
+    protected void driverDelegate(IDriver driver) {
+        ((IWebDriver) driver).goBack();
     }
 }

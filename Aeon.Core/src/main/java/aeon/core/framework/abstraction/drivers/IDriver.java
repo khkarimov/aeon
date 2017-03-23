@@ -8,13 +8,13 @@ import java.awt.*;
  * Created by DionnyS on 4/20/2016.
  */
 public interface IDriver {
-    IDriver Configure(IAdapter adapter);
+    IDriver configure(IAdapter adapter);
 
-    void Close();
+    void close();
 
-    void Quit();
+    void quit();
 
-    String GetSource();
+    String getSource();
 
-    Image GetScreenshot();
+    Image getScreenshot();
 }

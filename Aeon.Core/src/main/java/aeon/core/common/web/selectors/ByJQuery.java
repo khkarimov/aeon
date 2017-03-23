@@ -156,7 +156,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @return A {@link ByJQuery} object.
      */
-    public final ByJQuery ToJQuery() {
+    public final ByJQuery toJQuery() {
         return this;
     }
 
@@ -487,27 +487,27 @@ public class ByJQuery implements IBy, IByJQuery {
      * @param selector A string containing a selector expression to match elements against.
      */
     @Override
-    public final ByJQuery Is(String selector) {
+    public final ByJQuery is(String selector) {
         return new ByJQuery(this, "is", selector);
     }
 
     /**
-     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
+     * check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param obj An existing jquery object to match the current set of elements against.
      */
     @Override
-    public final ByJQuery Is(ByJQuery obj) {
+    public final ByJQuery is(ByJQuery obj) {
         return new ByJQuery(this, "is", obj);
     }
 
     /**
-     * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
+     * check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param function A function used as a test for the set of elements. It accepts one argument which is the element's index in the jquery collection. Within the function, <code>this</code> refers to the current DOM element.
      */
     @Override
-    public final ByJQuery Is(Expression<Function<Integer, Boolean>> function) {
+    public final ByJQuery is(Expression<Function<Integer, Boolean>> function) {
         throw new UnsupportedOperationException();
     }
 
@@ -608,7 +608,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Remove elements from the set of matched elements.
+     * remove elements from the set of matched elements.
      *
      * @param selector A string containing a selector expression to match elements against.
      */
@@ -618,7 +618,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Remove elements from the set of matched elements.
+     * remove elements from the set of matched elements.
      *
      * @param obj An existing jquery object to match the current set of elements against.
      */
@@ -628,7 +628,7 @@ public class ByJQuery implements IBy, IByJQuery {
     }
 
     /**
-     * Remove elements from the set of matched elements.
+     * remove elements from the set of matched elements.
      *
      * @param function A function used as a test for each element in the set. <code>this</code> is the current DOM element.
      */

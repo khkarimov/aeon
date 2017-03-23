@@ -16,16 +16,16 @@ public class SeleniumCheckInjectJQueryExecutor extends JavaScriptFlowExecutor {
     public QuadFunction<IScriptExecutor, String, Iterable<Object>, Object> getExecutor() {
         return (executor, script, args) -> {
             if (script.contains("$(") || script.contains("jquery(")) {
-                boolean hasJQuery = (boolean) (executor.ExecuteScript("if(window.jquery)return true;return false;"));
+                boolean hasJQuery = (boolean) (executor.executeScript("if(window.jquery)return true;return false;"));
                 if (hasJQuery) {
-                    return executor.ExecuteScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).Prepare(script), args);
+                    return executor.executeScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).prepare(script), args);
                 }
 
-                executor.SetTimeout(timeout);
-                return executor.ExecuteAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.IncludeJQueryInjection).Prepare(script), args);
+                executor.setTimeout(timeout);
+                return executor.executeAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.IncludeJQueryInjection).prepare(script), args);
             }
 
-            return executor.ExecuteScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).Prepare(script), args);
+            return executor.executeScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).prepare(script), args);
         };
     }
 }

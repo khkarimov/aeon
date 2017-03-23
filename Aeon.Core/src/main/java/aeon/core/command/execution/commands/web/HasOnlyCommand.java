@@ -46,7 +46,7 @@ public class HasOnlyCommand extends WebControlCommand {
 
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.HasOnly(control, messages, childSelector, option, attribute);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.hasOnly(control, messages, childSelector, option, attribute);
     }
 }

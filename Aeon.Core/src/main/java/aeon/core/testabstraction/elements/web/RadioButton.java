@@ -26,22 +26,22 @@ public class RadioButton extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
-    public void Selected() {
-        info.getCommandExecutionFacade().Execute(info,
+    public void selected() {
+        info.getCommandExecutionFacade().execute(info,
                 new SelectedCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void NotSelected() {
-        info.getCommandExecutionFacade().Execute(info,
+    public void notSelected() {
+        info.getCommandExecutionFacade().execute(info,
                 new NotSelectedCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void Check() {
-        info.getCommandExecutionFacade().Execute(info,
+    public void check() {
+        info.getCommandExecutionFacade().execute(info,
                 new CheckCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));

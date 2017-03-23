@@ -7,7 +7,7 @@ import aeon.core.framework.abstraction.drivers.IDriver;
  * <p>Closes the currently focused browser window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.Close();</p>
+ * <p>      Context.browser.close();</p>
  */
 public class CloseCommand extends Command {
     /**
@@ -24,11 +24,11 @@ public class CloseCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        driver.Close();
+        driver.close();
     }
 }

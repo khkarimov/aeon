@@ -25,24 +25,24 @@ public class WebCommandInitializer implements ICommandInitializer {
     /**
      * Finds the web element and gives the reference to the Parameter Object.
      */
-    public final Control FindElement(IDriver driver, IBy selector) {
+    public final Control findElement(IDriver driver, IBy selector) {
         IWebDriver webDriver = (IWebDriver) driver;
-        WebControl element = finder.FindElement(webDriver, selector);
-        webDriver.ScrollElementIntoView(element);
+        WebControl element = finder.findElement(webDriver, selector);
+        webDriver.scrollElementIntoView(element);
         return element;
     }
 
     @Override
-    public Consumer<IDriver> SetContext() {
+    public Consumer<IDriver> setContext() {
         Consumer<IDriver> action = driver ->
         {
             IWebDriver webDriver = (IWebDriver) driver;
             if (switchMechanism != null) {
-                webDriver.SwitchToDefaultContent();
-                webDriver.FocusWindow();
+                webDriver.switchToDefaultContent();
+                webDriver.focusWindow();
 
                 for (IBy selector : switchMechanism) {
-                    webDriver.SwitchToFrame(selector);
+                    webDriver.switchToFrame(selector);
                 }
             }
         };

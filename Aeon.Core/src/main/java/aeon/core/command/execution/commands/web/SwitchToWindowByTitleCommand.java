@@ -37,11 +37,11 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
      * @return The current handler after the change.
      */
     @Override
-    public Object CommandDelegate(IDriver driver) {
+    public Object commandDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        return ((IWebDriver) driver).SwitchToWindowByTitle(title);
+        return ((IWebDriver) driver).switchToWindowByTitle(title);
     }
 
 }

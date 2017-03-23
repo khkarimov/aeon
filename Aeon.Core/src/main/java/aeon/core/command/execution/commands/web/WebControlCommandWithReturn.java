@@ -44,12 +44,12 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
      * @param driver the framework abstraction facade
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
+    protected Object commandDelegate(IDriver driver) {
         IWebDriver webDriver = (IWebDriver) driver;
-        WebControl control = (WebControl) getCommandInitializer().FindElement(driver, selector);
-        webDriver.ScrollElementIntoView(control);
-        return CommandDelegateOverride(driver, control);
+        WebControl control = (WebControl) getCommandInitializer().findElement(driver, selector);
+        webDriver.scrollElementIntoView(control);
+        return commandDelegateOverride(driver, control);
     }
 
-    protected abstract Object CommandDelegateOverride(IDriver driver, WebControl control);
+    protected abstract Object commandDelegateOverride(IDriver driver, WebControl control);
 }

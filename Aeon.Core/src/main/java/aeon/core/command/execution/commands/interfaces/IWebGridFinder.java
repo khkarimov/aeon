@@ -19,5 +19,5 @@ public interface IWebGridFinder extends IGridWebSelectorFinder {
      * @param driver The facade for the framework abstraction layer.
      * @return The index of the grid.
      */
-    int GetGridIndex(IWebDriver driver);
+    int getGridIndex(IWebDriver driver);
 }

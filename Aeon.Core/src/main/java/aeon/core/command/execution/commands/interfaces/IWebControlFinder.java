@@ -15,5 +15,5 @@ public interface IWebControlFinder {
      * @param selector The selector for the Element.
      * @return The {@link WebControl} of the found element.
      */
-    WebControl FindElement(IWebDriver driver, IBy selector);
+    WebControl findElement(IWebDriver driver, IBy selector);
 }

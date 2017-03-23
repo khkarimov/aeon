@@ -25,12 +25,12 @@ public final class CommandExecutionFacade implements ICommandExecutionFacade {
      * @param automationInfo The automation info.
      * @param command        The command to execute.
      */
-    public void Execute(AutomationInfo automationInfo, Command command) {
+    public void execute(AutomationInfo automationInfo, Command command) {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
 
-        delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
+        delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
     }
 
     /**
@@ -40,11 +40,11 @@ public final class CommandExecutionFacade implements ICommandExecutionFacade {
      * @param command        The command to execute.
      * @return The return value of the command.
      */
-    public Object Execute(AutomationInfo automationInfo, CommandWithReturn command) {
+    public Object execute(AutomationInfo automationInfo, CommandWithReturn command) {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
 
-        return delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
+        return delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
     }
 }

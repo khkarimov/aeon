@@ -28,10 +28,10 @@ public class SetCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        driver.Set(control, selectOption, value);
+        driver.set(control, selectOption, value);
     }
 }

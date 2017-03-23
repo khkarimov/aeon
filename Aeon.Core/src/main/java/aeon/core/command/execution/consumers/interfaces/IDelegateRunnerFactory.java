@@ -9,5 +9,5 @@ public interface IDelegateRunnerFactory {
     /**
      * Creates an instance of the {@link IDelegateRunner} class which is used to run delegates.
      */
-    IDelegateRunner CreateInstance(AutomationInfo automationInfo);
+    IDelegateRunner createInstance(AutomationInfo automationInfo);
 }

@@ -33,7 +33,7 @@ public class InjectJQueryScripter extends JavaScriptFinalizer {
             "if(!window.jquery){var script=document.createElement('script');script.type='text/javascript';script.src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';script.onreadystatechange=function(){if(this.readyState=='loaded'||this.readyState=='complete')" +
             "aeonOnFinishJQueryLoading()};script.onload=aeonOnFinishJQueryLoading;document.getElementsByTagName('head')[0].appendChild(script)}else aeonCallback(aeonFunction(aeonNonCallbackArguments));";
 
-    /* JavaScript to be wrapped around non-JQuery strings
+    /* JavaScript to be wrapped around non-jQuery strings
      *
      * var aeonCallback = arguments[arguments.length-1];
      * var aeonNonCallbackArguments = (arguments.length == 1) ? [] : Array.prototype.slice.call(arguments, 0, arguments.length-2);
@@ -62,7 +62,7 @@ public class InjectJQueryScripter extends JavaScriptFinalizer {
      * @throws IllegalArgumentException If {@code javaScript} is null.
      */
     @Override
-    public String Prepare(String javaScript) {
+    public String prepare(String javaScript) {
         if (javaScript == null) {
             throw new IllegalArgumentException("javaScript");
         }
@@ -70,7 +70,7 @@ public class InjectJQueryScripter extends JavaScriptFinalizer {
         // Commented out because this causes the unit tests to hang (a pop up opens and the test hangs until you hit the "ignore" button.
         // Debug.Assert(Successor != null, "Cannot use null reference for successor.");
         return javaScript.contains("$(") ?
-                NeedJQueryScriptBefore + Successor.Prepare(javaScript) + NeedJQueryScriptAfter :
-                DoNotNeedJQueryScriptBefore + Successor.Prepare(javaScript) + DoNotNeedJQueryScriptAfter;
+                NeedJQueryScriptBefore + Successor.prepare(javaScript) + NeedJQueryScriptAfter :
+                DoNotNeedJQueryScriptBefore + Successor.prepare(javaScript) + DoNotNeedJQueryScriptAfter;
     }
 }

@@ -29,7 +29,7 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
      * @return The enumerable BrowserType associated with the browser.
      */
     @Override
-    protected Object CommandDelegate(IDriver driver) {
-        return (BrowserType) ((IWebDriver) driver).GetBrowserType();
+    protected Object commandDelegate(IDriver driver) {
+        return (BrowserType) ((IWebDriver) driver).getBrowserType();
     }
 }

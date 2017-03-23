@@ -34,7 +34,7 @@ public class BlurCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Blur(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.blur(control);
     }
 }

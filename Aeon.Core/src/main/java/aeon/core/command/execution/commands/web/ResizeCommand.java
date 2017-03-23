@@ -12,8 +12,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * <p>Resizes the currently focused browser window.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.Resize(BrowserSize.Maximized);</p>
- * <p>      Context.browser.Resize(800, 600);</p>
+ * <p>      Context.browser.resize(BrowserSize.Maximized);</p>
+ * <p>      Context.browser.resize(800, 600);</p>
  */
 public class ResizeCommand extends Command {
     private Size size;
@@ -25,7 +25,7 @@ public class ResizeCommand extends Command {
      */
     public ResizeCommand(BrowserSize size) {
         super(Resources.getString("ResizeCommand_Info"));
-        this.size = BrowserSizeMap.Map(size);
+        this.size = BrowserSizeMap.map(size);
     }
 
     /**
@@ -34,11 +34,11 @@ public class ResizeCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).Resize(size);
+        ((IWebDriver) driver).resize(size);
     }
 }

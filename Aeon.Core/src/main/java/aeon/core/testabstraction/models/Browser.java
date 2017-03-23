@@ -26,8 +26,8 @@ public class Browser {
         this.info = info;
     }
 
-    public void AcceptAlert() {
-        info.getCommandExecutionFacade().Execute(info, new AcceptAlertCommand());
+    public void acceptAlert() {
+        info.getCommandExecutionFacade().execute(info, new AcceptAlertCommand());
     }
 
     /**
@@ -35,15 +35,15 @@ public class Browser {
      *
      * @param cookie The cookie to be added.
      */
-    public void AddCookie(IWebCookie cookie) {
-        info.getCommandExecutionFacade().Execute(info, new AddCookieCommand(cookie));
+    public void addCookie(IWebCookie cookie) {
+        info.getCommandExecutionFacade().execute(info, new AddCookieCommand(cookie));
     }
 
     /**
      * Deletes all the cookies.
      */
-    public void DeleteAllCookies() {
-        info.getCommandExecutionFacade().Execute(info, new DeleteAllCookiesCommand());
+    public void deleteAllCookies() {
+        info.getCommandExecutionFacade().execute(info, new DeleteAllCookiesCommand());
     }
 
     /**
@@ -51,15 +51,15 @@ public class Browser {
      *
      * @param cookie The name of the cookie to be deleted.
      */
-    public void DeleteCookie(String cookie) {
-        info.getCommandExecutionFacade().Execute(info, new DeleteCookieCommand(cookie));
+    public void deleteCookie(String cookie) {
+        info.getCommandExecutionFacade().execute(info, new DeleteCookieCommand(cookie));
     }
 
     /**
      * Dismisses an alert on a page.
      */
-    public void DismissAlert() {
-        info.getCommandExecutionFacade().Execute(info, new DismissAlertCommand());
+    public void dismissAlert() {
+        info.getCommandExecutionFacade().execute(info, new DismissAlertCommand());
     }
 
     /**
@@ -67,8 +67,8 @@ public class Browser {
      *
      * @return A collection of all the cookies in the browser.
      */
-    public Collection<IWebCookie> GetAllCookies() {
-        return (Collection<IWebCookie>) info.getCommandExecutionFacade().Execute(info, new GetAllCookiesCommand());
+    public Collection<IWebCookie> getAllCookies() {
+        return (Collection<IWebCookie>) info.getCommandExecutionFacade().execute(info, new GetAllCookiesCommand());
     }
 
     /**
@@ -76,8 +76,8 @@ public class Browser {
      *
      * @return The BrowserType for the current browser.
      */
-    public BrowserType GetBrowserType() {
-        return (BrowserType) info.getCommandExecutionFacade().Execute(info, new GetBrowserTypeCommand());
+    public BrowserType getBrowserType() {
+        return (BrowserType) info.getCommandExecutionFacade().execute(info, new GetBrowserTypeCommand());
     }
 
     /**
@@ -85,8 +85,8 @@ public class Browser {
      *
      * @return The description of the alert dialog box.
      */
-    public String GetAlertText() {
-        return info.getCommandExecutionFacade().Execute(info, new GetAlertTextCommand()).toString();
+    public String getAlertText() {
+        return info.getCommandExecutionFacade().execute(info, new GetAlertTextCommand()).toString();
     }
 
     /**
@@ -95,22 +95,22 @@ public class Browser {
      * @param name The name of the cookie to be retrieved.
      * @return The specified cookie.
      */
-    public IWebCookie GetCookie(String name) {
-        return (IWebCookie) info.getCommandExecutionFacade().Execute(info, new GetCookieCommand(name));
+    public IWebCookie getCookie(String name) {
+        return (IWebCookie) info.getCommandExecutionFacade().execute(info, new GetCookieCommand(name));
     }
 
     /**
      * Access the history of the browser to execute the Back function.
      */
-    public void GoBack() {
-        info.getCommandExecutionFacade().Execute(info, new GoBackCommand());
+    public void goBack() {
+        info.getCommandExecutionFacade().execute(info, new GoBackCommand());
     }
 
     /**
      * Access the history of the browser to execute the Forward function.
      */
-    public void GoForward() {
-        info.getCommandExecutionFacade().Execute(info, new GoForwardCommand());
+    public void goForward() {
+        info.getCommandExecutionFacade().execute(info, new GoForwardCommand());
     }
 
     /**
@@ -118,15 +118,15 @@ public class Browser {
      *
      * @param url The URL the navigate to.
      */
-    public void GoToUrl(String url) {
-        mainWindowHandle = (String) info.getCommandExecutionFacade().Execute(info, new GoToUrlCommand(URLUtil.CreateURL(url)));
+    public void goToUrl(String url) {
+        mainWindowHandle = (String) info.getCommandExecutionFacade().execute(info, new GoToUrlCommand(URLUtil.createURL(url)));
     }
 
     /**
      * Maximizes the browser window.
      */
-    public void Maximize() {
-        info.getCommandExecutionFacade().Execute(info, new MaximizeCommand());
+    public void maximize() {
+        info.getCommandExecutionFacade().execute(info, new MaximizeCommand());
     }
 
     /**
@@ -135,28 +135,28 @@ public class Browser {
      * @param name  The name of the cookie to be modified.
      * @param value The value of the cookie.
      */
-    public void ModifyCookie(String name, String value) {
-        info.getCommandExecutionFacade().Execute(info, new ModifyCookieCommand(name, value));
+    public void modifyCookie(String name, String value) {
+        info.getCommandExecutionFacade().execute(info, new ModifyCookieCommand(name, value));
     }
 
     /**
      * Closes and terminates the active instances of the browser and WebDriver.
      */
-    public void Quit() {
-        info.getCommandExecutionFacade().Execute(info, new QuitCommand());
+    public void quit() {
+        info.getCommandExecutionFacade().execute(info, new QuitCommand());
     }
 
     /**
      * Closes the currently focused browser window.     *
      */
-    public void Close() { info.getCommandExecutionFacade().Execute(info, new CloseCommand());}
+    public void close() { info.getCommandExecutionFacade().execute(info, new CloseCommand());}
 
 
     /**
      * Refreshes the current window in the browser.
      */
-    public void Refresh() {
-        info.getCommandExecutionFacade().Execute(info, new RefreshCommand());
+    public void refresh() {
+        info.getCommandExecutionFacade().execute(info, new RefreshCommand());
     }
 
     /**
@@ -164,22 +164,22 @@ public class Browser {
      *
      * @param size The new size of the browser window based off the enumerable BrowserSize.
      */
-    public void Resize(BrowserSize size) {
-        info.getCommandExecutionFacade().Execute(info, new ResizeCommand(size));
+    public void resize(BrowserSize size) {
+        info.getCommandExecutionFacade().execute(info, new ResizeCommand(size));
     }
 
     /**
      * Scrolls to the top of the current page.
      */
-    public void ScrollToTop() {
-        info.getCommandExecutionFacade().Execute(info, new ScrollToTopCommand());
+    public void scrollToTop() {
+        info.getCommandExecutionFacade().execute(info, new ScrollToTopCommand());
     }
 
     /**
      * Scrolls to the bottom of the current page.
      */
-    public void ScrollToEnd() {
-        info.getCommandExecutionFacade().Execute(info, new ScrollToEndCommand());
+    public void scrollToEnd() {
+        info.getCommandExecutionFacade().execute(info, new ScrollToEndCommand());
     }
 
     /**
@@ -187,16 +187,16 @@ public class Browser {
      *
      * @param keys The values to send to the alert.
      */
-    public void SendKeysToAlert(String keys) {
-        info.getCommandExecutionFacade().Execute(info, new SendKeysToAlertCommand(keys));
+    public void sendKeysToAlert(String keys) {
+        info.getCommandExecutionFacade().execute(info, new SendKeysToAlertCommand(keys));
     }
 
     /**
      * Switches to the main window of the current browser.
      *
      */
-    public void SwitchToMainWindow() {
-        SwitchToMainWindow(false);
+    public void switchToMainWindow() {
+        switchToMainWindow(false);
     }
 
     /**
@@ -204,8 +204,8 @@ public class Browser {
      *
      * @param waitForAllPopupsToClose Boolean switch to wait for all popup windows to be closed before switching,
      */
-    public void SwitchToMainWindow(Boolean waitForAllPopupsToClose) {
-        info.getCommandExecutionFacade().Execute(info, new SwitchToMainWindowCommand(mainWindowHandle, waitForAllPopupsToClose));
+    public void switchToMainWindow(Boolean waitForAllPopupsToClose) {
+        info.getCommandExecutionFacade().execute(info, new SwitchToMainWindowCommand(mainWindowHandle, waitForAllPopupsToClose));
     }
 
     /**
@@ -213,8 +213,8 @@ public class Browser {
      *
      * @param title The title of the window to switch to
      */
-    public void SwitchToWindowByTitle(String title) {
-        info.getCommandExecutionFacade().Execute(info, new SwitchToWindowByTitleCommand(title));
+    public void switchToWindowByTitle(String title) {
+        info.getCommandExecutionFacade().execute(info, new SwitchToWindowByTitleCommand(title));
     }
 
     /**
@@ -222,22 +222,22 @@ public class Browser {
      *
      * @param url The URL of the window to switch to.
      */
-    public void SwitchToWindowByUrl(String url) {
-        info.getCommandExecutionFacade().Execute(info, new SwitchToWindowByUrlCommand(url));
+    public void switchToWindowByUrl(String url) {
+        info.getCommandExecutionFacade().execute(info, new SwitchToWindowByUrlCommand(url));
     }
 
     /**
      * Asserts that an alert is not present on the current page.
      */
-    public void VerifyAlertExists() {
-        info.getCommandExecutionFacade().Execute(info, new VerifyAlertExistsCommand());
+    public void verifyAlertExists() {
+        info.getCommandExecutionFacade().execute(info, new VerifyAlertExistsCommand());
     }
 
     /**
      * Asserts that an alert is present on the current page.
      */
-    public void VerifyAlertNotExists() {
-        info.getCommandExecutionFacade().Execute(info, new VerifyAlertNotExistsCommand());
+    public void verifyAlertNotExists() {
+        info.getCommandExecutionFacade().execute(info, new VerifyAlertNotExistsCommand());
     }
 
     /**
@@ -245,36 +245,36 @@ public class Browser {
      *
      * @param comparingText The expected description on the alert.
      */
-    public void VerifyAlertText(String comparingText) {
-        info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextCommand(comparingText));
+    public void verifyAlertText(String comparingText) {
+        info.getCommandExecutionFacade().execute(info, new VerifyAlertTextCommand(comparingText));
     }
 
     /**
      * @param comparingText
      * @param caseSensitive
      */
-    public void VerifyAlertTextLike(String comparingText, boolean caseSensitive) {
-        info.getCommandExecutionFacade().Execute(info, new VerifyAlertTextLikeCommand(comparingText, caseSensitive));
+    public void verifyAlertTextLike(String comparingText, boolean caseSensitive) {
+        info.getCommandExecutionFacade().execute(info, new VerifyAlertTextLikeCommand(comparingText, caseSensitive));
     }
 
-    public void VerifyTitle(String comparingTitle) {
-        info.getCommandExecutionFacade().Execute(info, new VerifyTitleCommand(comparingTitle));
+    public void verifyTitle(String comparingTitle) {
+        info.getCommandExecutionFacade().execute(info, new VerifyTitleCommand(comparingTitle));
     }
 
-    public void VerifyURL(String comparingURL) {
-        info.getCommandExecutionFacade().Execute(info, new VerifyUrlCommand(comparingURL));
+    public void verifyURL(String comparingURL) {
+        info.getCommandExecutionFacade().execute(info, new VerifyUrlCommand(comparingURL));
     }
 
-    public void VerifyWindowDoesNotExistByTitle(String windowTitle) {
-        info.getCommandExecutionFacade().Execute(info, new WindowDoesNotExistByTitleCommand(windowTitle));
+    public void verifyWindowDoesNotExistByTitle(String windowTitle) {
+        info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByTitleCommand(windowTitle));
     }
 
-    public void VerifyWindowDoesNotExistByUrl(String url) {
-        info.getCommandExecutionFacade().Execute(info, new WindowDoesNotExistByUrlCommand(url));
+    public void verifyWindowDoesNotExistByUrl(String url) {
+        info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByUrlCommand(url));
     }
 
-    public void ClickAllElementsCommand(IBy selector) {
-        info.getCommandExecutionFacade().Execute(
+    public void clickAllElementsCommand(IBy selector) {
+        info.getCommandExecutionFacade().execute(
                 info,
                 new ClickAllElementsCommand(
                         selector,

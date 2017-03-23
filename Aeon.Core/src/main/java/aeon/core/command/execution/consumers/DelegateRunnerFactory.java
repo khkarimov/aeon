@@ -47,7 +47,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     /**
      * Creates an instance of the {@link IDelegateRunner} class which is used to run delegates.
      */
-    public final IDelegateRunner CreateInstance(AutomationInfo automationInfo) {
+    public final IDelegateRunner createInstance(AutomationInfo automationInfo) {
         // TODO(DionnyS): JAVA_CONVERSION Use an IoC container to resolve the factory.
         IDriver driver = automationInfo.getDriver();
 

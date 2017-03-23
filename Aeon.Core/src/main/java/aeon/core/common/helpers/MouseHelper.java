@@ -8,7 +8,7 @@ import java.awt.event.InputEvent;
  */
 public class MouseHelper {
     // SR - I made this a boolean so that the Adapter can determine whether to throw an error or not
-    public static boolean ClickAndHold(int xCoordinate, int yCoordinate, int durationMillis){
+    public static boolean clickAndHold(int xCoordinate, int yCoordinate, int durationMillis){
         //get the current coordinates
         Point pointLocation = MouseInfo.getPointerInfo().getLocation();
         int xOriginal = (int)pointLocation.getX();
@@ -19,7 +19,7 @@ public class MouseHelper {
             Robot mouseRobot = new Robot();
             mouseRobot.mouseMove(xCoordinate, yCoordinate);
             mouseRobot.mousePress(InputEvent.BUTTON1_MASK);
-            Sleep.Wait(durationMillis);
+            Sleep.wait(durationMillis);
             mouseRobot.mouseRelease(InputEvent.BUTTON1_MASK);
 
             //return mouse to original position
@@ -32,7 +32,7 @@ public class MouseHelper {
 
     }
 
-    public static boolean DragAndDrop(int startXCoordinate, int startYCoordinate, int endXCoordinate, int endYCoordinate){
+    public static boolean dragAndDrop(int startXCoordinate, int startYCoordinate, int endXCoordinate, int endYCoordinate){
         //get the current coordinates
         Point pointLocation = MouseInfo.getPointerInfo().getLocation();
         int xOriginal = (int)pointLocation.getX();
@@ -42,7 +42,7 @@ public class MouseHelper {
             Robot mouseRobot = new Robot();
             mouseRobot.mouseMove(startXCoordinate, startYCoordinate);
             mouseRobot.mousePress(InputEvent.BUTTON1_MASK);
-            Sleep.Wait(250);
+            Sleep.wait(250);
             mouseRobot.mouseMove(endXCoordinate, endYCoordinate);
             mouseRobot.mouseRelease(InputEvent.BUTTON1_MASK);
 

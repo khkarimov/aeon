@@ -36,7 +36,7 @@ public class GetClientRectsCommand extends WebControlCommandWithReturn {
      * @return A ClientRect with the bounding sides of the element.
      */
     @Override
-    protected Object CommandDelegateOverride(IDriver driver, WebControl control) {
-        return (ClientRects) ((IWebDriver) driver).GetClientRects(control);
+    protected Object commandDelegateOverride(IDriver driver, WebControl control) {
+        return (ClientRects) ((IWebDriver) driver).getClientRects(control);
     }
 }

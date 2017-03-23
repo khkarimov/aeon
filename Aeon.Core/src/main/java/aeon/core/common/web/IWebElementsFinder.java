@@ -17,5 +17,5 @@ public interface IWebElementsFinder {
      * @param selector Element locator.
      * @return A collection of {@link WebControl} objects .
      */
-    Collection<WebControl> FindElements(IWebDriver driver, IBy selector);
+    Collection<WebControl> findElements(IWebDriver driver, IBy selector);
 }

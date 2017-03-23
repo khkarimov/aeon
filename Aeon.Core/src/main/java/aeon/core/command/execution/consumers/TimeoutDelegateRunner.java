@@ -31,23 +31,23 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     }
 
     @Override
-    public void Execute(Consumer<IDriver> commandDelegate) {
-        ExecuteDelegate(() -> successor.Execute(commandDelegate));
+    public void execute(Consumer<IDriver> commandDelegate) {
+        executeDelegate(() -> successor.execute(commandDelegate));
     }
 
     @Override
-    public Object Execute(Function<IDriver, Object> commandDelegate) {
-        return ExecuteDelegateWithReturn(() -> successor.Execute(commandDelegate));
+    public Object execute(Function<IDriver, Object> commandDelegate) {
+        return executeDelegateWithReturn(() -> successor.execute(commandDelegate));
     }
 
-    private void ExecuteDelegate(Runnable commandDelegate) {
-        ExecuteDelegateWithReturn(() -> {
+    private void executeDelegate(Runnable commandDelegate) {
+        executeDelegateWithReturn(() -> {
             commandDelegate.run();
             return null;
         });
     }
 
-    private Object ExecuteDelegateWithReturn(Supplier<Object> commandDelegateWrapper) {
+    private Object executeDelegateWithReturn(Supplier<Object> commandDelegateWrapper) {
         RuntimeException lastCaughtException = null;
         int tries = 0;
 
@@ -69,7 +69,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             }
 
             // Wait before retrying. Excessive attempts may cause WebDriver's client to lose connection with the server.
-            Sleep.WaitInternal();
+            Sleep.waitInternal();
         }
 
         TimeoutExpiredException ex = new TimeoutExpiredException(
@@ -80,7 +80,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
         Image screenshot = null;
         try {
-            screenshot = driver.GetScreenshot();
+            screenshot = driver.getScreenshot();
         } catch (OutOfMemoryError e) {
             throw e;
         } catch (RuntimeException e2) {
@@ -96,7 +96,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
         String pageSource = null;
         try {
-            pageSource = driver.GetSource();
+            pageSource = driver.getSource();
         } catch (OutOfMemoryError e3) {
             throw e3;
         } catch (RuntimeException e4) {

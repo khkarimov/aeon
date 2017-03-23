@@ -44,7 +44,7 @@ public class IsNotLikeCommand extends WebControlCommand {
      * @param control The element whose attribute is to be compared.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.IsNotLike(control, value, option, attribute);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.isNotLike(control, value, option, attribute);
     }
 }

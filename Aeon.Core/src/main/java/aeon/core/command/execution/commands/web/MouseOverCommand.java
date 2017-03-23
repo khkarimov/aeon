@@ -18,8 +18,8 @@ public class MouseOverCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.MouseOver(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.mouseOver(control);
 
     }
 }

@@ -34,7 +34,7 @@ public class ClickAllElementsCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.ClickAllElements(control.getSelector());
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.clickAllElements(control.getSelector());
     }
 }

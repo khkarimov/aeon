@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Process {
     // SR - we should make this agnostic of the OS
-    public static List<String> GetWindowsProcessesByName(String name) {
+    public static List<String> getWindowsProcessesByName(String name) {
         try {
             List<String> output = new ArrayList<>();
             Runtime rt = Runtime.getRuntime();
@@ -34,7 +34,7 @@ public class Process {
         return null;
     }
 
-    public static void KillProcessByName(String name){
+    public static void killProcessByName(String name){
         OsCheck.OSType osType = OsCheck.getOperatingSystemType();
         String[] command;
         switch(osType){

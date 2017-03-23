@@ -12,6 +12,6 @@ public class MyEmployeesRowElements extends RowElements {
     public Link employeeLink;
     public MyEmployeesRowElements(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         super(info, selector, switchMechanism);
-        employeeLink = new Link(info, selector.ToJQuery().find("#ctl00_Content_GridView1_ctl02_clDetail"), switchMechanism);
+        employeeLink = new Link(info, selector.toJQuery().find("#ctl00_Content_GridView1_ctl02_clDetail"), switchMechanism);
     }
 }

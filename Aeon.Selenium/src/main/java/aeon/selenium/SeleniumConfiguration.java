@@ -7,6 +7,7 @@ import aeon.core.testabstraction.product.Configuration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

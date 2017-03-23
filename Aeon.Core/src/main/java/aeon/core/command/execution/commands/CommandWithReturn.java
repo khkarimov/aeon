@@ -57,22 +57,22 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     /**
      * Gets the delegate for the command.
      * <p>
-     * GetCommandDelegate is a wrapper for the delegate and actual command.
+     * getCommandDelegate is a wrapper for the delegate and actual command.
      * The internal virtual CmdDelegateProperty holds the logic for the delegate.
      * In this way, the logic can be used by an outside class, but only modified by internal classes.
      * This is intentionally not virtual.
      *
      * @return The delegate property {@link CommandDelegateRunner}.
      */
-    public final Function<IDriver, Object> GetCommandDelegate() {
+    public final Function<IDriver, Object> getCommandDelegate() {
         Function<IDriver, Object> func;
 
         func = driver -> {
             if (commandInitializer != null) {
-                commandInitializer.SetContext().accept(driver);
+                commandInitializer.setContext().accept(driver);
             }
 
-            return CommandDelegate(driver);
+            return commandDelegate(driver);
         };
 
         return func;
@@ -83,5 +83,5 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
      *
      * @param driver The framework abstraction facade.
      */
-    protected abstract Object CommandDelegate(IDriver driver);
+    protected abstract Object commandDelegate(IDriver driver);
 }

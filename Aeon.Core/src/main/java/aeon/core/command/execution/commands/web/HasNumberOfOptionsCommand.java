@@ -54,7 +54,7 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.HasNumberOfOptions(control, number, optgroup);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.hasNumberOfOptions(control, number, optgroup);
     }
 }

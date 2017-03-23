@@ -33,7 +33,7 @@ public final class Parameter {
         }
 
         String objString = (String) ((object instanceof String) ? object : null);
-        return objString == null ? String.valueOf(object) : StringUtils.ToQuotedAndEscapedString(objString);
+        return objString == null ? String.valueOf(object) : StringUtils.toQuotedAndEscapedString(objString);
     }
 
     /**

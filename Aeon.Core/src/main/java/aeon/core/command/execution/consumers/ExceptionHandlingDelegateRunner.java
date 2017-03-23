@@ -25,13 +25,13 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
     }
 
     @Override
-    public void Execute(Consumer<IDriver> commandDelegate) {
-        ExecuteDelegate(() -> successor.Execute(commandDelegate));
+    public void execute(Consumer<IDriver> commandDelegate) {
+        ExecuteDelegate(() -> successor.execute(commandDelegate));
     }
 
     @Override
-    public Object Execute(Function<IDriver, Object> commandDelegate) {
-        return ExecuteDelegateWithReturn(() -> successor.Execute(commandDelegate));
+    public Object execute(Function<IDriver, Object> commandDelegate) {
+        return executeDelegateWithReturn(() -> successor.execute(commandDelegate));
     }
 
     private void ExecuteDelegate(Runnable commandDelegateWrapper) {
@@ -42,14 +42,14 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
         } catch (TimeoutExpiredException e) {
             // Expects that TimeoutDelegateRunner is the first waiter decorating DelegateRunner and ExceptionHandlingDelegateRunner is after
             log.debug(e.getMessage());
-            getExceptionHandlerFactory().CreateHandlerFor(TimeoutExpiredException.class).Handle(e);
+            getExceptionHandlerFactory().createHandlerFor(TimeoutExpiredException.class).handle(e);
         } catch (RuntimeException e) {
             log.debug(e.getMessage());
-            getExceptionHandlerFactory().CreateHandlerFor(e.getClass()).Handle(e);
+            getExceptionHandlerFactory().createHandlerFor(e.getClass()).handle(e);
         }
     }
 
-    private Object ExecuteDelegateWithReturn(Supplier<Object> commandDelegateWrapper) {
+    private Object executeDelegateWithReturn(Supplier<Object> commandDelegateWrapper) {
         try {
             return commandDelegateWrapper.get();
         } catch (OutOfMemoryError e) {
@@ -57,11 +57,11 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
         } catch (TimeoutExpiredException e) {
             // Expects that TimeoutDelegateRunner is the first waiter decorating DelegateRunner and ExceptionHandlingDelegateRunner is after
             log.debug(e.getMessage());
-            getExceptionHandlerFactory().CreateHandlerFor(TimeoutExpiredException.class).Handle(e);
+            getExceptionHandlerFactory().createHandlerFor(TimeoutExpiredException.class).handle(e);
             return null;
         } catch (RuntimeException e) {
             log.debug(e.getMessage());
-            getExceptionHandlerFactory().CreateHandlerFor(e.getClass()).Handle(e);
+            getExceptionHandlerFactory().createHandlerFor(e.getClass()).handle(e);
             return null;
         }
     }

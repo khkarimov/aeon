@@ -17,8 +17,8 @@ public class DateTimeExtensions {
      * @param delta    The margin of error the actual value can be within.
      * @return Whether or not the actual value is within the margin of error.
      */
-    public static boolean ApproximatelyEquals(DateTime value, DateTime expected, Period delta) {
-        return Math.abs(value.getMillis() - expected.getMillis()) <= PeriodToMilliSeconds(delta);
+    public static boolean approximatelyEquals(DateTime value, DateTime expected, Period delta) {
+        return Math.abs(value.getMillis() - expected.getMillis()) <= periodToMilliSeconds(delta);
     }
 
     /**
@@ -29,7 +29,7 @@ public class DateTimeExtensions {
      * @param delta The period to be converted to milliseconds.
      * @return
      */
-    public static long PeriodToMilliSeconds(Period delta) {
+    public static long periodToMilliSeconds(Period delta) {
         long dayMillis = delta.getDays() * DateTimeConstants.MILLIS_PER_DAY;
         long hourMillis = delta.getHours() * DateTimeConstants.MILLIS_PER_HOUR;
         long minutesMillis = delta.getMinutes() * DateTimeConstants.MILLIS_PER_MINUTE;
