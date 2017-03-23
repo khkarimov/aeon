@@ -54,7 +54,6 @@ public class AjaxWaiter {
         do{
             try {
                 count = (long) webDriver.executeScript("return aeonAjaxCounter");
-                System.out.println("COUNT: " + count);
             }catch(ScriptExecutionException e){
                 injectJS();
                 return;
@@ -79,7 +78,7 @@ public class AjaxWaiter {
                 "\n" +
                 "            event.eventName = 'aeon.async.done';\n" +
                 "\n" +
-                "            document.getElementById('start').addEventListener('aeon.asyc.done', function() {\n" +
+                "            document.getElementById('start').addEventListener('aeon.async.done', function() {\n" +
                 "                document.getElementById('start').setAttribute('data-async', 'done');\n" +
                 "            });\n" +
                 "\n" +
