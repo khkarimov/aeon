@@ -87,7 +87,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    driver = new FirefoxDriver(GetFirefoxOptions(language, useMobileUserAgent, proxyLocation));
+                    driver = new FirefoxDriver(getFirefoxOptions(language, useMobileUserAgent, proxyLocation));
                 }
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
 
@@ -157,7 +157,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case Edge:
-                desiredCapabilities = GetEdgeOptions(false, null);
+                desiredCapabilities = getEdgeOptions(false, null);
                 break;
 
             default:
@@ -200,20 +200,20 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return firefoxProfile;
     }
 
-    private static FirefoxOptions GetFirefoxOptions(String language, boolean useMobileUserAgent, String proxyLocation){
+    private static FirefoxOptions getFirefoxOptions(String language, boolean useMobileUserAgent, String proxyLocation){
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getFirefoxBinary();
         FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
         firefoxBinary.addCommandLineOptions("-safe-mode");
         firefoxOptions.setBinary(firefoxBinary);
 
-        firefoxOptions.setProfile(GetFirefoxProfile(language, useMobileUserAgent));
-        firefoxOptions.addDesiredCapabilities(setProxySettings(GetMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.setProfile(getFirefoxProfile(language, useMobileUserAgent));
+        firefoxOptions.addDesiredCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
         firefoxOptions.setLogLevel(Level.WARNING);
         return firefoxOptions;
     }
 
-    private static DesiredCapabilities GetInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
+    private static DesiredCapabilities getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
             throw new UnsupportedPlatformException();
         }
