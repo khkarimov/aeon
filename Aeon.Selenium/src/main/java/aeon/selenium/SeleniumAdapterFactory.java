@@ -31,6 +31,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -48,6 +49,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 /**
  * The driver factory for Web.
@@ -84,15 +86,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities(browserType,
                             language, maximizeBrowser, useMobileUserAgent));
                 } else {
-                    String firefoxBinary = configuration.getFirefoxBinary();
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    FirefoxBinary firefox = (firefoxBinary != null) ? new FirefoxBinary(new File(firefoxBinary)) : new FirefoxBinary();
-                    firefox.addCommandLineOptions("-safe-mode");
-                    driver = new FirefoxDriver(firefox,
-                            getFirefoxProfile(language, useMobileUserAgent),
-                            setProxySettings(getMarionetteCapabilities(), proxyLocation));
+                    driver = new FirefoxDriver(getFirefoxOptions(language, useMobileUserAgent, proxyLocation));
                 }
-
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
 
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
@@ -160,6 +156,10 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = getInternetExplorerOptions(false, null);
                 break;
 
+            case Edge:
+                desiredCapabilities = getEdgeOptions(false, null);
+                break;
+
             default:
                 throw new ConfigurationException("BrowserType", "configuration", String.format("%1$s is not a supported browser", browserType));
         }
@@ -198,6 +198,19 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         return firefoxProfile;
+    }
+
+    private static FirefoxOptions getFirefoxOptions(String language, boolean useMobileUserAgent, String proxyLocation){
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        String binaryPath = configuration.getFirefoxBinary();
+        FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
+        firefoxBinary.addCommandLineOptions("-safe-mode");
+        firefoxOptions.setBinary(firefoxBinary);
+
+        firefoxOptions.setProfile(getFirefoxProfile(language, useMobileUserAgent));
+        firefoxOptions.addDesiredCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.setLogLevel(Level.WARNING);
+        return firefoxOptions;
     }
 
     private static DesiredCapabilities getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
