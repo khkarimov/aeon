@@ -3,7 +3,7 @@ import main.ultipro.Ultipro;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import static aeon.core.testabstraction.product.Aeon.Launch;
+import static aeon.core.testabstraction.product.Aeon.launch;
 
 /**
  * Created by SebastianR on 11/23/2016.
@@ -18,55 +18,55 @@ public class UltiproTests {
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
-    public void BeforeTests() {
-        ultipro = Launch(Ultipro.class, BrowserType.Chrome);
-        ultipro.browser.Maximize();
-        ultipro.browser.GoToUrl("http://apertureweb/Login.aspx");
+    public void beforeTests() {
+        ultipro = launch(Ultipro.class, BrowserType.Chrome);
+        ultipro.browser.maximize();
+        ultipro.browser.goToUrl("http://apertureweb/Login.aspx");
     }
 
     @After
-    public void AfterTests() {
-        ultipro.browser.Quit();
+    public void afterTests() {
+        ultipro.browser.quit();
     }
 
     @Test
-    public void NewHireTest(){
-        ultipro.loginPage.UserNameTextBox.Set("wardenj");
-        ultipro.loginPage.PasswordTextBox.Set("password");
-        ultipro.loginPage.LoginButton.Click();
-        ultipro.homePage.menuButton.Click();
-        ultipro.homePage.myTeam.Click();
-        ultipro.homePage.myEmployees.Click();
-        ultipro.myEmployeesPage.addEmployeeButton.Click();
-        ultipro.browser.SwitchToWindowByTitle("Hire an Employee");
-        ultipro.browser.Maximize();
-        ultipro.newHireWizard.startPage.SSNTextBox.Set("123987654");
-        ultipro.newHireWizard.startPage.confirmSSNTextBox.Set("123987654");
-        ultipro.newHireWizard.startPage.firstName.Set("FirstName");
-        ultipro.newHireWizard.startPage.lastName.Set("LastName");
-        ultipro.newHireWizard.startPage.employeeNumber.Set("12345");
-        ultipro.newHireWizard.nextButton.Click();
-        ultipro.newHireWizard.personalPage.addressLine.Set("605 Sw 10th St");
-        ultipro.newHireWizard.backButton.Click();
-        ultipro.newHireWizard.cancelButton.Click();
-        ultipro.browser.AcceptAlert();
-        ultipro.browser.SwitchToWindowByTitle("John H Warden II - 823567403 - Ultimate Smoke Company");
-        ultipro.homePage.menuButton.Click();
-        ultipro.homePage.homeButton.Click();
+    public void newHireTest(){
+        ultipro.loginPage.UserNameTextBox.set("wardenj");
+        ultipro.loginPage.PasswordTextBox.set("password");
+        ultipro.loginPage.LoginButton.click();
+        ultipro.homePage.menuButton.click();
+        ultipro.homePage.myTeam.click();
+        ultipro.homePage.myEmployees.click();
+        ultipro.myEmployeesPage.addEmployeeButton.click();
+        ultipro.browser.switchToWindowByTitle("Hire an Employee");
+        ultipro.browser.maximize();
+        ultipro.newHireWizard.startPage.SSNTextBox.set("123987654");
+        ultipro.newHireWizard.startPage.confirmSSNTextBox.set("123987654");
+        ultipro.newHireWizard.startPage.firstName.set("FirstName");
+        ultipro.newHireWizard.startPage.lastName.set("LastName");
+        ultipro.newHireWizard.startPage.employeeNumber.set("12345");
+        ultipro.newHireWizard.nextButton.click();
+        ultipro.newHireWizard.personalPage.addressLine.set("605 Sw 10th St");
+        ultipro.newHireWizard.backButton.click();
+        ultipro.newHireWizard.cancelButton.click();
+        ultipro.browser.acceptAlert();
+        ultipro.browser.switchToWindowByTitle("John H Warden II - 823567403 - Ultimate Smoke Company");
+        ultipro.homePage.menuButton.click();
+        ultipro.homePage.homeButton.click();
     }
 
     @Test
-    public void GridWithSwitchTest(){
-        ultipro.loginPage.UserNameTextBox.Set("wardenj");
-        ultipro.loginPage.PasswordTextBox.Set("password");
-        ultipro.loginPage.LoginButton.Click();
-        ultipro.homePage.menuButton.Click();
-        ultipro.homePage.myTeam.Click();
-        ultipro.homePage.myEmployees.Click();
-        ultipro.myEmployeesPage.searchButton.Click();
-        ultipro.myEmployeesPage.myGrid.RowBy.employeeNumber("823567416").getRow().employeeLink.Click();
-        ultipro.browser.SwitchToWindowByTitle("Wayan Bing");
-        ultipro.browser.VerifyTitle("Wayan Bing - 823567416 - USA Smoke Company 1");
+    public void gridWithSwitchTest(){
+        ultipro.loginPage.UserNameTextBox.set("wardenj");
+        ultipro.loginPage.PasswordTextBox.set("password");
+        ultipro.loginPage.LoginButton.click();
+        ultipro.homePage.menuButton.click();
+        ultipro.homePage.myTeam.click();
+        ultipro.homePage.myEmployees.click();
+        ultipro.myEmployeesPage.searchButton.click();
+        ultipro.myEmployeesPage.myGrid.RowBy.employeeNumber("823567416").getRow().employeeLink.click();
+        ultipro.browser.switchToWindowByTitle("Wayan Bing");
+        ultipro.browser.verifyTitle("Wayan Bing - 823567416 - USA Smoke Company 1");
     }
 }
 

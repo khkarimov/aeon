@@ -30,7 +30,7 @@ public class ModifyCookieCommand extends Command {
     }
 
     @Override
-    protected void DriverDelegate(IDriver driver) {
-        ((IWebDriver) driver).ModifyCookie(name, value);
+    protected void driverDelegate(IDriver driver) {
+        ((IWebDriver) driver).modifyCookie(name, value);
     }
 }

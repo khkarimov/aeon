@@ -14,7 +14,7 @@ public abstract class DelegateRunner implements IDelegateRunner {
         this.successor = successor;
     }
 
-    public abstract void Execute(Consumer<IDriver> commandDelegate);
+    public abstract void execute(Consumer<IDriver> commandDelegate);
 
-    public abstract Object Execute(Function<IDriver, Object> commandDelegate);
+    public abstract Object execute(Function<IDriver, Object> commandDelegate);
 }

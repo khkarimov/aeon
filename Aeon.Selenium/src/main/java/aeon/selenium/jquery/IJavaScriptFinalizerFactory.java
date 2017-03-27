@@ -10,5 +10,5 @@ public interface IJavaScriptFinalizerFactory {
      * @param options The options.
      * @return A new {@link IJavaScriptFinalizerFactory} object.
      */
-    IJavaScriptFinalizer CreateInstance(JavaScriptFinalizerOptions options);
+    IJavaScriptFinalizer createInstance(JavaScriptFinalizerOptions options);
 }

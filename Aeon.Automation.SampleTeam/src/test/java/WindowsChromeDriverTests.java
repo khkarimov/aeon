@@ -6,7 +6,7 @@ import aeon.core.common.web.BrowserType;
 import main.Sample;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import static aeon.core.testabstraction.product.Aeon.Launch;
+import static aeon.core.testabstraction.product.Aeon.launch;
 
 public class WindowsChromeDriverTests {
     private static Sample product;
@@ -16,32 +16,32 @@ public class WindowsChromeDriverTests {
 
     //region Setup and Teardown
     @BeforeClass
-    public static void SetUp() {
+    public static void setUp() {
     }
 
     @AfterClass
-    public static void TearDown() {
-        //product.browser.Quit();
+    public static void tearDown() {
+        //product.browser.quit();
     }
 
     @Before
-    public void BeforeTests() {
-        product = Launch(Sample.class, BrowserType.Chrome);
-        product.browser.Maximize();
-        product.browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+    public void beforeTests() {
+        product = launch(Sample.class, BrowserType.Chrome);
+        product.browser.maximize();
+        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
-    public void AfterTests() {
-        product.browser.Quit();
+    public void afterTests() {
+        product.browser.quit();
     }
     //endregion
 
 
     @Test
-    public void TestSelectFileDialog_OpenFileDialog() {
+    public void testSelectFileDialog_OpenFileDialog() {
         String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
-        product.StartPage.TestFileDialogInput.OpenFileDialog();
-        product.StartPage.TestFileDialogInput.SelectFileDialog(path);
+        product.StartPage.TestFileDialogInput.openFileDialog();
+        product.StartPage.TestFileDialogInput.selectFileDialog(path);
     }
 }

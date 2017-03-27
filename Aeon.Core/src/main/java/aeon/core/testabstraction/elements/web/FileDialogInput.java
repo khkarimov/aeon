@@ -27,8 +27,8 @@ public class FileDialogInput extends WebElement {
     }
 
 
-    public void OpenFileDialog() {
-        info.getCommandExecutionFacade().Execute(info,
+    public void openFileDialog() {
+        info.getCommandExecutionFacade().execute(info,
                 new OpenFileDialogCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
@@ -37,12 +37,12 @@ public class FileDialogInput extends WebElement {
     /**
      * Takes in the path of a file
      * And then types in the path of the file.
-     * REQUIRES OpenFileDialog to be called first.
+     * REQUIRES openFileDialog to be called first.
      *
      * @param path
      */
-    public void SelectFileDialog(String path) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void selectFileDialog(String path) {
+        info.getCommandExecutionFacade().execute(info,
                 new SelectFileDialogCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
@@ -53,12 +53,12 @@ public class FileDialogInput extends WebElement {
      * Takes in the path of a file,
      * Clicks upload file button to open dialog box,
      * And then types in the path of the file using the keyboard.
-     * DOES NOT REQUIRE OpenFileDialog to be called first.
+     * DOES NOT REQUIRE openFileDialog to be called first.
      *
      * @param path
      */
-    public void UploadFileDialog(String path) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void uploadFileDialog(String path) {
+        info.getCommandExecutionFacade().execute(info,
                 new UploadFileDialogCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),

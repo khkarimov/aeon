@@ -32,459 +32,459 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public IDriver Configure(IAdapter adapter) {
+    public IDriver configure(IAdapter adapter) {
         this.adapter = (IWebAdapter) adapter;
         return this;
     }
 
     @Override
-    public WebControl FindElement(IBy selector) {
-        return adapter.FindElement(selector);
+    public WebControl findElement(IBy selector) {
+        return adapter.findElement(selector);
     }
 
     @Override
-    public Collection<WebControl> FindElements(IBy selector) {
-        return adapter.FindElements(selector);
+    public Collection<WebControl> findElements(IBy selector) {
+        return adapter.findElements(selector);
     }
 
     @Override
-    public void Click(WebControl webControl) {
-        adapter.Click(webControl);
+    public void click(WebControl webControl) {
+        adapter.click(webControl);
     }
 
     @Override
-    public void DoubleClick(WebControl element) {
-        adapter.DoubleClick(element);
+    public void doubleClick(WebControl element) {
+        adapter.doubleClick(element);
     }
 
     @Override
-    public void ScrollElementIntoView(WebControl control) {
-        adapter.ScrollElementIntoView(control);
+    public void scrollElementIntoView(WebControl control) {
+        adapter.scrollElementIntoView(control);
     }
 
     @Override
-    public void ScrollToTop() {
-        adapter.ScrollToTop();
+    public void scrollToTop() {
+        adapter.scrollToTop();
     }
 
     @Override
-    public void ScrollToEnd() {
-        adapter.ScrollToEnd();
+    public void scrollToEnd() {
+        adapter.scrollToEnd();
     }
 
     @Override
-    public void SwitchToDefaultContent() {
-        adapter.SwitchToDefaultContent();
+    public void switchToDefaultContent() {
+        adapter.switchToDefaultContent();
     }
 
     @Override
-    public void FocusWindow() {
-        adapter.FocusWindow();
+    public void focusWindow() {
+        adapter.focusWindow();
     }
 
     @Override
-    public void SwitchToFrame(IBy selector) {
-        adapter.SwitchToFrame(selector);
+    public void switchToFrame(IBy selector) {
+        adapter.switchToFrame(selector);
     }
 
     @Override
-    public String GetElementTagName(WebControl element) {
-        return adapter.GetElementTagName(element);
+    public String getElementTagName(WebControl element) {
+        return adapter.getElementTagName(element);
     }
 
     @Override
-    public Object ExecuteScript(String script) {
-        return adapter.ExecuteScript(script);
+    public Object executeScript(String script) {
+        return adapter.executeScript(script);
     }
 
     @Override
-    public void ClearElement(WebControl element) {
-        adapter.ClearElement(element);
+    public void clearElement(WebControl element) {
+        adapter.clearElement(element);
     }
 
     @Override
-    public void AddCookie(IWebCookie cookie) {
-        adapter.AddCookie(cookie);
+    public void addCookie(IWebCookie cookie) {
+        adapter.addCookie(cookie);
     }
 
     @Override
-    public void DeleteCookie(String cookie) {
-        adapter.DeleteCookie(cookie);
+    public void deleteCookie(String cookie) {
+        adapter.deleteCookie(cookie);
     }
 
     @Override
-    public void DeleteAllCookies() {
-        adapter.DeleteAllCookies();
+    public void deleteAllCookies() {
+        adapter.deleteAllCookies();
     }
 
     @Override
-    public void GoBack() {
-        adapter.Back();
+    public void goBack() {
+        adapter.back();
     }
 
     @Override
-    public void GoForward() {
-        adapter.Forward();
+    public void goForward() {
+        adapter.forward();
     }
 
     @Override
-    public String GoToUrl(URL url) {
-        return adapter.GoToUrl(url);
+    public String goToUrl(URL url) {
+        return adapter.goToUrl(url);
     }
 
     @Override
-    public void Maximize() {
-        adapter.Maximize();
+    public void maximize() {
+        adapter.maximize();
     }
 
     @Override
-    public void Refresh() {
-        adapter.Refresh();
+    public void refresh() {
+        adapter.refresh();
     }
 
     @Override
-    public void ChooseSelectElementByValue(WebControl element, String value) {
-        adapter.ChooseSelectElementByValue(element, value);
+    public void chooseSelectElementByValue(WebControl element, String value) {
+        adapter.chooseSelectElementByValue(element, value);
     }
 
     @Override
-    public void ChooseSelectElementByText(WebControl element, String value) {
-        adapter.ChooseSelectElementByText(element, value);
+    public void chooseSelectElementByText(WebControl element, String value) {
+        adapter.chooseSelectElementByText(element, value);
     }
 
     @Override
-    public void ClickElement(WebControl element) {
-        adapter.ClickElement(element);
+    public void clickElement(WebControl element) {
+        adapter.clickElement(element);
     }
 
     @Override
-    public void SendKeysToElement(WebControl element, String value) {
-        adapter.SendKeysToElement(element, value);
+    public void sendKeysToElement(WebControl element, String value) {
+        adapter.sendKeysToElement(element, value);
     }
 
     @Override
-    public String GetElementAttribute(WebControl element, String value) {
-        return adapter.GetElementAttribute(element, value);
+    public String getElementAttribute(WebControl element, String value) {
+        return adapter.getElementAttribute(element, value);
     }
 
     @Override
-    public void SwitchToMainWindow(String mainWindowHandle, Boolean waitForAllPopupWindowsToClose) {
-        adapter.SwitchToMainWindow(mainWindowHandle, waitForAllPopupWindowsToClose);
+    public void switchToMainWindow(String mainWindowHandle, Boolean waitForAllPopupWindowsToClose) {
+        adapter.switchToMainWindow(mainWindowHandle, waitForAllPopupWindowsToClose);
     }
 
     @Override
-    public String SwitchToWindowByTitle(String title) {
-        return adapter.SwitchToWindowByTitle(title);
+    public String switchToWindowByTitle(String title) {
+        return adapter.switchToWindowByTitle(title);
     }
 
     @Override
-    public String SwitchToWindowByUrl(String url) {
-        return adapter.SwitchToWindowByUrl(url);
+    public String switchToWindowByUrl(String url) {
+        return adapter.switchToWindowByUrl(url);
     }
 
     @Override
-    public void Resize(Size size) {
-        adapter.Resize(size);
+    public void resize(Size size) {
+        adapter.resize(size);
     }
 
     @Override
-    public Image GetScreenshot() {
-        return adapter.GetScreenshot();
+    public Image getScreenshot() {
+        return adapter.getScreenshot();
     }
 
     @Override
-    public String GetSource() {
-        return adapter.GetPageSource();
+    public String getSource() {
+        return adapter.getPageSource();
     }
 
     @Override
-    public void Close() {
-        adapter.Close();
+    public void close() {
+        adapter.close();
     }
 
     @Override
-    public void Quit() {
-        adapter.Quit();
+    public void quit() {
+        adapter.quit();
     }
 
     @Override
-    public void AcceptAlert() {
-        adapter.AcceptAlert();
+    public void acceptAlert() {
+        adapter.acceptAlert();
     }
 
     @Override
-    public void DismissAlert() {
-        adapter.DismissAlert();
+    public void dismissAlert() {
+        adapter.dismissAlert();
     }
 
     @Override
-    public String GetAlertText() {
-        return adapter.GetAlertText();
+    public String getAlertText() {
+        return adapter.getAlertText();
     }
 
     @Override
-    public void Blur(WebControl element) {
-        adapter.Blur(element);
+    public void blur(WebControl element) {
+        adapter.blur(element);
     }
 
     @Override
-    public void RightClick(WebControl element) {
-        adapter.RightClick(element);
+    public void rightClick(WebControl element) {
+        adapter.rightClick(element);
     }
 
     @Override
-    public void Check(WebControl element) {
-        adapter.CheckElement(element);
+    public void check(WebControl element) {
+        adapter.checkElement(element);
     }
 
     @Override
-    public void UnCheck(WebControl element) {
-        adapter.UnCheckElement(element);
+    public void unCheck(WebControl element) {
+        adapter.unCheckElement(element);
     }
 
     @Override
-    public void ClickAndHold(WebControl element, int duration) {
-        adapter.ClickAndHold(element, duration);
+    public void clickAndHold(WebControl element, int duration) {
+        adapter.clickAndHold(element, duration);
     }
 
     @Override
-    public void IsElementEnabled(WebControl element) {
-        adapter.IsElementEnabled(element);
+    public void isElementEnabled(WebControl element) {
+        adapter.isElementEnabled(element);
     }
 
     @Override
-    public void Exists(WebControl element) {
-        adapter.Exists(element);
+    public void exists(WebControl element) {
+        adapter.exists(element);
     }
 
     @Override
-    public void NotExists(WebControl element) {
-        adapter.NotExists(element);
+    public void notExists(WebControl element) {
+        adapter.notExists(element);
     }
 
     @Override
-    public void HasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        adapter.ElementHasOptions(element, options, optgroup, select);
+    public void hasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.elementHasOptions(element, options, optgroup, select);
     }
 
     @Override
-    public void DoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        adapter.ElementDoesNotHaveOptions(element, options, optgroup, select);
+    public void doesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.elementDoesNotHaveOptions(element, options, optgroup, select);
     }
 
     @Override
-    public void OpenFileDialog(IBy selector) {
-        adapter.OpenFileDialog(selector);
+    public void openFileDialog(IBy selector) {
+        adapter.openFileDialog(selector);
     }
 
     @Override
-    public void SelectFileDialog(IBy selector, String path) {
-        adapter.SelectFileDialog(selector, path);
+    public void selectFileDialog(IBy selector, String path) {
+        adapter.selectFileDialog(selector, path);
     }
 
     @Override
-    public void UploadFileDialog(IBy selector, String path) {
-        adapter.UploadFileDialog(selector, path);
+    public void uploadFileDialog(IBy selector, String path) {
+        adapter.uploadFileDialog(selector, path);
     }
 
     @Override
-    public void VerifyAlertExists() {
-        adapter.VerifyAlertExists();
+    public void verifyAlertExists() {
+        adapter.verifyAlertExists();
     }
 
     @Override
-    public void VerifyAlertNotExists() {
-        adapter.VerifyAlertNotExists();
+    public void verifyAlertNotExists() {
+        adapter.verifyAlertNotExists();
     }
 
     @Override
-    public void SendKeysToAlert(String keysToSend) {
-        adapter.SendKeysToAlert(keysToSend);
+    public void sendKeysToAlert(String keysToSend) {
+        adapter.sendKeysToAlert(keysToSend);
     }
 
     @Override
-    public void DragAndDrop(WebControl dropElement, IBy targetElement) {
-        adapter.DragAndDrop(dropElement, targetElement);
+    public void dragAndDrop(WebControl dropElement, IBy targetElement) {
+        adapter.dragAndDrop(dropElement, targetElement);
     }
 
     @Override
-    public void ClickAllElements(IBy elementsBy) {
-        adapter.ClickAllElements(elementsBy);
+    public void clickAllElements(IBy elementsBy) {
+        adapter.clickAllElements(elementsBy);
     }
 
     @Override
-    public void MouseOut(WebControl element) {
-        adapter.MouseOut(element);
+    public void mouseOut(WebControl element) {
+        adapter.mouseOut(element);
     }
 
     @Override
-    public void MouseOver(WebControl element) {
-        adapter.MouseOver(element);
+    public void mouseOver(WebControl element) {
+        adapter.mouseOver(element);
     }
 
     @Override
-    public void Set(WebControl element, WebSelectOption option, String setValue) {
-        adapter.Set(element, option, setValue);
+    public void set(WebControl element, WebSelectOption option, String setValue) {
+        adapter.set(element, option, setValue);
     }
 
     @Override
-    public void SetBodyValueByJavaScript(WebControl element, String value) {
-        adapter.SetBodyValueByJavaScript(element, value);
+    public void setBodyValueByJavaScript(WebControl element, String value) {
+        adapter.setBodyValueByJavaScript(element, value);
     }
 
     @Override
-    public void SetTextByJavaScript(WebControl element, String value) {
-        adapter.SetTextByJavaScript(element, value);
+    public void setTextByJavaScript(WebControl element, String value) {
+        adapter.setTextByJavaScript(element, value);
     }
 
     @Override
-    public void SetDivValueByJavaScript(WebControl element, String value) {
-        adapter.SetDivValueByJavaScript(element, value);
+    public void setDivValueByJavaScript(WebControl element, String value) {
+        adapter.setDivValueByJavaScript(element, value);
     }
 
     @Override
-    public void HasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        adapter.ElementHasOptionsInOrder(element, options, optgroup, select);
+    public void hasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select) {
+        adapter.elementHasOptionsInOrder(element, options, optgroup, select);
     }
 
     @Override
-    public void HasNumberOfOptions(WebControl element, int optnumber, String optgroup) {
-        adapter.HasNumberOfOptions(element, optnumber, optgroup);
+    public void hasNumberOfOptions(WebControl element, int optnumber, String optgroup) {
+        adapter.hasNumberOfOptions(element, optnumber, optgroup);
     }
 
     @Override
-    public void HasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup) {
-        adapter.HasAllOptionsInOrder(element, compare, optGroup);
+    public void hasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup) {
+        adapter.hasAllOptionsInOrder(element, compare, optGroup);
     }
 
     @Override
-    public Collection<IWebCookie> GetAllCookies() {
-        return adapter.GetAllCookies();
+    public Collection<IWebCookie> getAllCookies() {
+        return adapter.getAllCookies();
     }
 
     @Override
-    public String WindowDoesNotExistByTitle(String windowTitle) {
-        return adapter.WindowDoesNotExistByTitle(windowTitle);
+    public String windowDoesNotExistByTitle(String windowTitle) {
+        return adapter.windowDoesNotExistByTitle(windowTitle);
     }
 
     @Override
-    public String WindowDoesNotExistByUrl(String url) {
-        return adapter.WindowDoesNotExistByUrl(url);
+    public String windowDoesNotExistByUrl(String url) {
+        return adapter.windowDoesNotExistByUrl(url);
     }
 
     @Override
-    public void ModifyCookie(String name, String value) {
-        adapter.ModifyCookie(name, value);
+    public void modifyCookie(String name, String value) {
+        adapter.modifyCookie(name, value);
     }
 
     @Override
-    public IWebCookie GetCookie(String name) {
-        return adapter.GetCookie(name);
+    public IWebCookie getCookie(String name) {
+        return adapter.getCookie(name);
     }
 
     @Override
-    public void Has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.Has(element, messages, selector, option, attribute);
+    public void has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.has(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void HasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.HasLike(element, messages, selector, option, attribute);
+    public void hasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.hasLike(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void DoesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.DoesNotHave(element, messages, selector, option, attribute);
+    public void doesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.doesNotHave(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void DoesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.DoesNotHaveLike(element, messages, selector, option, attribute);
+    public void doesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.doesNotHaveLike(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void HasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
-        adapter.HasOnly(element, messages, selector, option, attribute);
+    public void hasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
+        adapter.hasOnly(element, messages, selector, option, attribute);
     }
 
     @Override
-    public void Is(WebControl element, String value, ComparisonOption option, String attribute) {
-        adapter.Is(element, value, option, attribute);
+    public void is(WebControl element, String value, ComparisonOption option, String attribute) {
+        adapter.is(element, value, option, attribute);
     }
 
     @Override
-    public void IsLike(WebControl element, String value, ComparisonOption option, String attribute) {
-        adapter.IsLike(element, value, option, attribute);
+    public void isLike(WebControl element, String value, ComparisonOption option, String attribute) {
+        adapter.isLike(element, value, option, attribute);
     }
 
     @Override
-    public void IsElementDisabled(WebControl element) {
-        adapter.IsElementDisabled(element);
+    public void isElementDisabled(WebControl element) {
+        adapter.isElementDisabled(element);
     }
 
     @Override
-    public void NotSelected(WebControl element) {
-        adapter.NotSelected(element);
+    public void notSelected(WebControl element) {
+        adapter.notSelected(element);
     }
 
     @Override
-    public void NotVisible(WebControl element) {
-        adapter.NotVisible(element);
+    public void notVisible(WebControl element) {
+        adapter.notVisible(element);
     }
 
     @Override
-    public void Selected(WebControl element) {
-        adapter.Selected(element);
+    public void selected(WebControl element) {
+        adapter.selected(element);
     }
 
     @Override
-    public void Visible(WebControl element) {
-        adapter.Visible(element);
+    public void visible(WebControl element) {
+        adapter.visible(element);
     }
 
     //
     @Override
-    public void VerifyAlertText(String comparingText) {
-        adapter.VerifyAlertText(comparingText);
+    public void verifyAlertText(String comparingText) {
+        adapter.verifyAlertText(comparingText);
     }
 
     @Override
-    public void VerifyAlertTextLike(String comparingText, boolean caseSensitive) {
-        adapter.VerifyAlertTextLike(comparingText, caseSensitive);
+    public void verifyAlertTextLike(String comparingText, boolean caseSensitive) {
+        adapter.verifyAlertTextLike(comparingText, caseSensitive);
     }
 
     @Override
-    public void VerifyTitle(String comparingTitle) {
-        adapter.VerifyTitle(comparingTitle);
+    public void verifyTitle(String comparingTitle) {
+        adapter.verifyTitle(comparingTitle);
     }
 
     @Override
-    public void VerifyURL(URL comparingURL) {
-        adapter.VerifyURL(comparingURL);
+    public void verifyURL(URL comparingURL) {
+        adapter.verifyURL(comparingURL);
     }
 
     @Override
-    public void DatesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta) {
-        adapter.DatesApproximatelyEqual(element, attributeName, expected, delta);
+    public void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta) {
+        adapter.datesApproximatelyEqual(element, attributeName, expected, delta);
     }
 
     @Override
-    public BrowserType GetBrowserType() {
-        return adapter.GetBrowserType();
+    public BrowserType getBrowserType() {
+        return adapter.getBrowserType();
     }
 
     @Override
-    public void IsNotLike(WebControl element, String value, ComparisonOption option, String attribute) {
-        adapter.IsNotLike(element, value, option, attribute);
+    public void isNotLike(WebControl element, String value, ComparisonOption option, String attribute) {
+        adapter.isNotLike(element, value, option, attribute);
     }
 
     @Override
-    public ClientRects GetClientRects(WebControl element) {
-        return adapter.GetClientRects(element);
+    public ClientRects getClientRects(WebControl element) {
+        return adapter.getClientRects(element);
     }
 
     @Override
-    public void PressKeyboardKey(WebControl element, KeyboardKey key) {
-        adapter.PressKeyboardKey(element, key);
+    public void pressKeyboardKey(WebControl element, KeyboardKey key) {
+        adapter.pressKeyboardKey(element, key);
     }
 }

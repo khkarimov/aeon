@@ -15,7 +15,7 @@ import org.junit.rules.ExpectedException;
 import java.util.Calendar;
 import java.util.Date;
 
-import static aeon.core.testabstraction.product.Aeon.Launch;
+import static aeon.core.testabstraction.product.Aeon.launch;
 
 public class ChromeDriverTests {
 
@@ -26,47 +26,47 @@ public class ChromeDriverTests {
 
     //region Setup and Teardown
     @BeforeClass
-    public static void SetUp() {
+    public static void setUp() {
     }
 
     @AfterClass
-    public static void TearDown() {
-        //product.browser.Quit();
+    public static void tearDown() {
+        //product.browser.quit();
     }
 
     @Before
-    public void BeforeTests() {
-        product = Launch(Sample.class, BrowserType.Chrome);
-        product.browser.Maximize();
-        product.browser.GoToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+    public void beforeTests() {
+        product = launch(Sample.class, BrowserType.Chrome);
+        product.browser.maximize();
+        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
-    public void AfterTests() {
-        product.browser.Quit();
+    public void afterTests() {
+        product.browser.quit();
     }
     //endregion
 
     @Test
-    public void TestAcceptAlert_VerifyAlertExists_VerifyAlertNotExists() {
-        product.browser.VerifyAlertNotExists();
-        product.StartPage.OpenAlertButton.Click();
-        product.browser.VerifyAlertExists();
-        product.browser.AcceptAlert();
+    public void testAcceptAlert_VerifyAlertExists_VerifyAlertNotExists() {
+        product.browser.verifyAlertNotExists();
+        product.StartPage.OpenAlertButton.click();
+        product.browser.verifyAlertExists();
+        product.browser.acceptAlert();
     }
 
     @Test
-    public void TestSendKeysToAlert_VerifyAlertExists_VerifyAlertNotExists () {
-        product.browser.VerifyAlertNotExists();
-        product.StartPage.OpenAlertButton.Click();
-        product.browser.VerifyAlertExists();
-        product.browser.SendKeysToAlert("Tester of Alerts");
-        product.browser.AcceptAlert();
+    public void testSendKeysToAlert_VerifyAlertExists_VerifyAlertNotExists () {
+        product.browser.verifyAlertNotExists();
+        product.StartPage.OpenAlertButton.click();
+        product.browser.verifyAlertExists();
+        product.browser.sendKeysToAlert("Tester of Alerts");
+        product.browser.acceptAlert();
     }
 
     @Test
-    public void TestAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
-        product.browser.GoToUrl("http://google.com");
+    public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
+        product.browser.goToUrl("http://google.com");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
             String domain = ".google.com";
@@ -119,8 +119,8 @@ public class ChromeDriverTests {
                 return cal.getTime();
             }
         };
-        product.browser.AddCookie(cookie);
-        IWebCookie secondCookie = product.browser.GetCookie(cookie.getName());
+        product.browser.addCookie(cookie);
+        IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
         assert (secondCookie.getName().equals(cookie.getName()));
         assert (secondCookie.getDomain().equals(cookie.getDomain()));
         assert (secondCookie.getValue().equals(cookie.getValue()));
@@ -128,424 +128,424 @@ public class ChromeDriverTests {
         assert (secondCookie.getPath().equals(cookie.getPath()));
         assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
 
-        product.browser.ModifyCookie(cookie.getName(), "CookieNewValue");
-        secondCookie = product.browser.GetCookie(cookie.getName());
+        product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
+        secondCookie = product.browser.getCookie(cookie.getName());
         assert (secondCookie.getValue().equals("CookieNewValue"));
-        product.browser.DeleteCookie(cookie.getName());
+        product.browser.deleteCookie(cookie.getName());
     }
 
     @Test
-    public void TestDatesApproximatelyEquals() {
-        product.StartPage.DateLabel.DatesApproximatelyEqual("name", DateTime.parse("2016-08-31"), Period.days(0));
-        product.StartPage.DateLabel.DatesApproximatelyEqual("name", DateTime.parse("2016-08-26"), Period.days(5));
+    public void testDatesApproximatelyEquals() {
+        product.StartPage.DateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-31"), Period.days(0));
+        product.StartPage.DateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-26"), Period.days(5));
         thrown.expectCause(IsInstanceOf.instanceOf(DatesNotApproximatelyEqualException.class));
-        product.StartPage.DateLabel.DatesApproximatelyEqual("name", DateTime.parse("2016-08-08"), Period.days(5));
+        product.StartPage.DateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-08"), Period.days(5));
     }
 
     @Test
-    public void TestBlur() {
+    public void testBlur() {
         //used to be set command
-        product.StartPage.AlertTitleTextBox.Click();
-        product.StartPage.AlertTitleTextBox.Blur();
+        product.StartPage.AlertTitleTextBox.click();
+        product.StartPage.AlertTitleTextBox.blur();
     }
 
     @Test
-    public void TestCheck_UnCheck() {
-        product.StartPage.TestCheckbox.Check();
-        product.StartPage.TestCheckbox.Uncheck();
+    public void testCheck_UnCheck() {
+        product.StartPage.TestCheckbox.check();
+        product.StartPage.TestCheckbox.uncheck();
     }
 
     @Test
-    public void TestClickAndHold() {
-        product.StartPage.Start.ClickAndHold(5000);
+    public void testClickAndHold() {
+        product.StartPage.Start.clickAndHold(5000);
     }
 
     @Test
-    public void TestDisabled() {
-        product.StartPage.DisabledButton.IsDisabled();
+    public void testDisabled() {
+        product.StartPage.DisabledButton.isDisabled();
         thrown.expectCause(IsInstanceOf.instanceOf(ElementIsEnabledException.class));
-        product.StartPage.Start.IsDisabled();
+        product.StartPage.Start.isDisabled();
     }
 
     @Test
-    public void TestDismissAlertWhenThereIsAnAlert() {
-        product.StartPage.OpenAlertButton.Click();
-        product.browser.VerifyAlertExists();
-        product.browser.DismissAlert();
+    public void testDismissAlertWhenThereIsAnAlert() {
+        product.StartPage.OpenAlertButton.click();
+        product.browser.verifyAlertExists();
+        product.browser.dismissAlert();
     }
 
     @Test
-    public void TestHas_HasLike_Is_IsLike_IsNotLike_DoesNotHave_DoesNotHaveLike() {
-        product.StartPage.div.Has(new String[]{"Async Call 1", "Async Call 2", "Async Call 2"}, "h3");
-        product.StartPage.div.Has(new String[]{"start"}, "button", "id");
-        product.StartPage.div.HasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
-        product.StartPage.div.HasLike(new String[]{"START"}, "button", "id");
-//        product.StartPage.DropDown.Is("drop-down-list", "id");
-//        product.StartPage.DropDown.IsLike("DROP-DOWN-LIST", "id");
-//        product.StartPage.DropDown.IsNotLike("DROP-DOWN-LISTT", "id");
-//        product.StartPage.div.DoesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
-//        product.StartPage.div.DoesNotHaveLike(new String[]{"async call 3"}, "h3");
+    public void testHas_HasLike_Is_IsLike_IsNotLike_DoesNotHave_DoesNotHaveLike() {
+        product.StartPage.div.has(new String[]{"Async Call 1", "Async Call 2", "Async Call 2"}, "h3");
+        product.StartPage.div.has(new String[]{"start"}, "button", "id");
+        product.StartPage.div.hasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
+        product.StartPage.div.hasLike(new String[]{"START"}, "button", "id");
+//        product.StartPage.DropDown.is("drop-down-list", "id");
+//        product.StartPage.DropDown.isLike("DROP-DOWN-LIST", "id");
+//        product.StartPage.DropDown.isNotLike("DROP-DOWN-LISTT", "id");
+//        product.StartPage.div.doesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
+//        product.StartPage.div.doesNotHaveLike(new String[]{"async call 3"}, "h3");
     }
 
     @Test
-    public void TestDoubleClick() {
-        product.StartPage.UltimateLogoImage.DoubleClick();
-        String src = product.StartPage.UltimateLogoImageDoubleClick.GetElementAttribute("src").toString();
+    public void testDoubleClick() {
+        product.StartPage.UltimateLogoImage.doubleClick();
+        String src = product.StartPage.UltimateLogoImageDoubleClick.getElementAttribute("src").toString();
         assert(src.contains("ultimate-image.png"));
         //the ultimate logo should appear in the image element "dbl-click-image"
     }
 
     @Test
-    public void TestDragAndDrop() {
-        product.browser.GoToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
-        product.StartPage.DraggableListItem.DragAndDrop("ul[id='box2']");
+    public void testDragAndDrop() {
+        product.browser.goToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.StartPage.DraggableListItem.dragAndDrop("ul[id='box2']");
     }
 
     @Test
-    public void TestEnabled() {
-        product.StartPage.Start.IsEnabled();
+    public void testEnabled() {
+        product.StartPage.Start.isEnabled();
         thrown.expectCause(IsInstanceOf.instanceOf(ElementNotEnabledException.class));
-        product.StartPage.DisabledButton.IsEnabled();
+        product.StartPage.DisabledButton.isEnabled();
     }
 
     @Test
-    public void TestExists(){
-        product.StartPage.Start.Exists();
+    public void testExists(){
+        product.StartPage.Start.exists();
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
-        product.StartPage.NonExistentLabel.Exists();
+        product.StartPage.NonExistentLabel.exists();
     }
 
     @Test
-    public void TestGetAlertText() {
-        product.StartPage.OpenAlertButton.Click();
-        String text = product.browser.GetAlertText();
+    public void testGetAlertText() {
+        product.StartPage.OpenAlertButton.click();
+        String text = product.browser.getAlertText();
 
         assert(text.equals("Send some keys"));
-        product.browser.DismissAlert();
+        product.browser.dismissAlert();
         thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
-        product.browser.GetAlertText();
+        product.browser.getAlertText();
     }
 
     @Test
-    public void TestGetBrowserType() {
-        assert (product.browser.GetBrowserType().equals(BrowserType.Chrome));
+    public void testGetBrowserType() {
+        assert (product.browser.getBrowserType().equals(BrowserType.Chrome));
     }
 
     @Test
-    public void TestGetElementAttributes() {
-        String classAttribute = product.StartPage.FormTextBox.GetElementAttribute("class").toString();
+    public void testGetElementAttributes() {
+        String classAttribute = product.StartPage.FormTextBox.getElementAttribute("class").toString();
         assert (classAttribute.equals("mdl-textfield__input"));
     }
 
     @Test
-    public void TestWindowResizing_GoBack_GoForward_ScrollToEnd_ScrollToTop() {
-        product.browser.Resize(BrowserSize.TabletLandscape);
-        product.browser.Resize(BrowserSize.SmallTabletLandscape);
-        product.browser.Resize(BrowserSize.MobileLandscape);
-        product.browser.Maximize();
-        product.browser.GoToUrl("http://www.tutorialspoint.com");
-        product.browser.ScrollToEnd();
-        product.browser.ScrollToTop();
-        product.browser.GoBack();
-        product.browser.GoForward();
+    public void testWindowResizing_GoBack_GoForward_ScrollToEnd_ScrollToTop() {
+        product.browser.resize(BrowserSize.TabletLandscape);
+        product.browser.resize(BrowserSize.SmallTabletLandscape);
+        product.browser.resize(BrowserSize.MobileLandscape);
+        product.browser.maximize();
+        product.browser.goToUrl("http://www.tutorialspoint.com");
+        product.browser.scrollToEnd();
+        product.browser.scrollToTop();
+        product.browser.goBack();
+        product.browser.goForward();
     }
 
     @Test
-    public void TestMouseOver_MouseOut_Refresh() {
-        product.StartPage.Start.MouseOver();
-        product.StartPage.Start.MouseOut();
-        product.browser.Refresh();
+    public void testMouseOver_MouseOut_Refresh() {
+        product.StartPage.Start.mouseOver();
+        product.StartPage.Start.mouseOut();
+        product.browser.refresh();
     }
 
     @Test
-    public void TestNotExists(){
-        product.StartPage.NonExistentLabel.NotExists();
+    public void testNotExists(){
+        product.StartPage.NonExistentLabel.notExists();
         thrown.expectCause(IsInstanceOf.instanceOf(ElementExistsException.class));
-        product.StartPage.Start.NotExists();
+        product.StartPage.Start.notExists();
     }
 
     @Test
-    public void TestNotSelected() {
-        product.StartPage.TestCheckbox.NotSelected();
-        product.StartPage.NextRadioButton.NotSelected();
-        product.StartPage.TestCheckbox.Check();
-        product.StartPage.TestCheckbox.Uncheck();
-        product.StartPage.TestCheckbox.NotSelected();
-        product.StartPage.NextRadioButton.NotSelected();
+    public void testNotSelected() {
+        product.StartPage.TestCheckbox.notSelected();
+        product.StartPage.NextRadioButton.notSelected();
+        product.StartPage.TestCheckbox.check();
+        product.StartPage.TestCheckbox.uncheck();
+        product.StartPage.TestCheckbox.notSelected();
+        product.StartPage.NextRadioButton.notSelected();
     }
 
     @Test
-    public void TestNotVisible() {
-        product.StartPage.InvisibleButton.NotVisible();
+    public void testNotVisible() {
+        product.StartPage.InvisibleButton.notVisible();
         thrown.expectCause(IsInstanceOf.instanceOf(ElementIsVisibleException.class));
-        product.StartPage.OpenAlertButton.NotVisible();
+        product.StartPage.OpenAlertButton.notVisible();
     }
 
     @Test
-    public void TestSelected() {
-        product.StartPage.TestCheckbox.Check();
-        product.StartPage.TestCheckbox.Selected();
-        product.StartPage.NextRadioButton.Check();
-        product.StartPage.NextRadioButton.Selected();
+    public void testSelected() {
+        product.StartPage.TestCheckbox.check();
+        product.StartPage.TestCheckbox.selected();
+        product.StartPage.NextRadioButton.check();
+        product.StartPage.NextRadioButton.selected();
     }
 
     @Test
-    public void TestPressKeyboardKey() {
-        product.StartPage.FormTextBox.PressKeyboardKey(KeyboardKey.SPACE);
-        product.StartPage.FormTextBox.PressKeyboardKey(KeyboardKey.SPACE);
+    public void testPressKeyboardKey() {
+        product.StartPage.FormTextBox.pressKeyboardKey(KeyboardKey.SPACE);
+        product.StartPage.FormTextBox.pressKeyboardKey(KeyboardKey.SPACE);
     }
 
     @Test
-    public void TestRightClick() {
-        product.StartPage.DateLabel.RightClick();
-        String validationText = product.StartPage.ReactionLabel.GetElementAttribute("textContent").toString();
+    public void testRightClick() {
+        product.StartPage.DateLabel.rightClick();
+        String validationText = product.StartPage.ReactionLabel.getElementAttribute("textContent").toString();
         assert(validationText.equals("right click"));
     }
 
     @Test
-    public void TestSetWithNonSelectElement_Clear() {
-        product.StartPage.FormTextBox.Set("Set the value to this");
-        product.StartPage.FormTextBox.Clear();
+    public void testSetWithNonSelectElement_Clear() {
+        product.StartPage.FormTextBox.set("set the value to this");
+        product.StartPage.FormTextBox.clear();
     }
 
     @Ignore
-    public void TestUploadFile() {
-        product.StartPage.TestFileDialogInput.UploadFileDialog("asdasd#@$@#$");
+    public void testUploadFile() {
+        product.StartPage.TestFileDialogInput.uploadFileDialog("asdasd#@$@#$");
     }
 
     @Test
-    public void TestVerifyAlertText() {
-        product.StartPage.OpenAlertButton.Click();
-        product.browser.VerifyAlertExists();
-        product.browser.VerifyAlertText("Send some keys");
+    public void testVerifyAlertText() {
+        product.StartPage.OpenAlertButton.click();
+        product.browser.verifyAlertExists();
+        product.browser.verifyAlertText("Send some keys");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.browser.VerifyAlertText("Send other keys");
-        product.browser.AcceptAlert();
+        product.browser.verifyAlertText("Send other keys");
+        product.browser.acceptAlert();
     }
 
     @Test
-    public void TestVerifyAlertTextLike() {
-        product.StartPage.OpenAlertButton.Click();
-        product.browser.VerifyAlertExists();
-        product.browser.VerifyAlertTextLike("Send some keys", true);
+    public void testVerifyAlertTextLike() {
+        product.StartPage.OpenAlertButton.click();
+        product.browser.verifyAlertExists();
+        product.browser.verifyAlertTextLike("Send some keys", true);
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
-        product.browser.VerifyAlertTextLike("send some keys", true);
-        product.browser.AcceptAlert();
+        product.browser.verifyAlertTextLike("send some keys", true);
+        product.browser.acceptAlert();
     }
 
     @Test
-    public void TestVerifyTitle() {
-        product.browser.VerifyTitle("Material Design Lite");
+    public void testVerifyTitle() {
+        product.browser.verifyTitle("Material Design Lite");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.browser.VerifyTitle("Fake Title");
+        product.browser.verifyTitle("Fake Title");
     }
 
     @Test
-    public void TestVerifyURL() {
-        product.browser.GoToUrl("https://www.google.com");
-        product.browser.VerifyURL("https://www.google.com/");
+    public void testVerifyURL() {
+        product.browser.goToUrl("http://www.espn.com/");
+        product.browser.verifyURL("http://www.espn.com/");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.browser.VerifyURL("https://www.googley.com");
+        product.browser.verifyURL("http://www.espne.com/");
     }
 
     @Test
-    public void TestVisible_Correct() {
-        product.StartPage.DateLabel.Visible();
+    public void testVisible_Correct() {
+        product.StartPage.DateLabel.visible();
         thrown.expectCause(IsInstanceOf.instanceOf(ElementNotVisibleException.class));
-        product.StartPage.InvisibleButton.Visible();
+        product.StartPage.InvisibleButton.visible();
     }
 
     @Test
-    public void TestSwitchToMainWindow() {
-        product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("Google");
-        product.browser.VerifyTitle("Google");
-        product.browser.SwitchToMainWindow();
-        product.browser.VerifyTitle("Material Design Lite");
-        product.browser.SwitchToWindowByTitle("Google");
-        product.browser.Close();
-        product.browser.SwitchToMainWindow(true);
-        product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("Google");
+    public void testSwitchToMainWindow() {
+        product.browser.verifyTitle("Material Design Lite");
+        product.StartPage.PopupButton.click();
+        product.browser.switchToWindowByTitle("Google");
+        product.browser.verifyTitle("Google");
+        product.browser.switchToMainWindow();
+        product.browser.verifyTitle("Material Design Lite");
+        product.browser.switchToWindowByTitle("Google");
+        product.browser.close();
+        product.browser.switchToMainWindow(true);
+        product.StartPage.PopupButton.click();
+        product.browser.switchToWindowByTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
-        product.browser.SwitchToMainWindow(true);
+        product.browser.switchToMainWindow(true);
     }
 
     @Test
-    public void TestSwitchToWindowByTitle() {
-        product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByTitle("Google");
-        product.browser.VerifyTitle("Google");
+    public void testSwitchToWindowByTitle() {
+        product.browser.verifyTitle("Material Design Lite");
+        product.StartPage.PopupButton.click();
+        product.browser.switchToWindowByTitle("Google");
+        product.browser.verifyTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
-        product.browser.SwitchToWindowByTitle("Some Fake Title");
+        product.browser.switchToWindowByTitle("Some Fake Title");
     }
 
 
     @Test
-    public void TestSwitchToWindowByUrl() {
-        product.browser.VerifyTitle("Material Design Lite");
-        product.StartPage.PopupButton.Click();
-        product.browser.SwitchToWindowByUrl("https://www.google.com");
-        product.browser.VerifyTitle("Google");
+    public void testSwitchToWindowByUrl() {
+        product.browser.verifyTitle("Material Design Lite");
+        product.StartPage.PopupButton.click();
+        product.browser.switchToWindowByUrl("https://www.google.com");
+        product.browser.verifyTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
-        product.browser.SwitchToWindowByUrl("www.fake.com");
+        product.browser.switchToWindowByUrl("www.fake.com");
     }
 
     @Test
-    public void TestVerifyWindowDoesNotExistByUrl_VerifyWindowDoesNotExistByTitle() {
-        product.browser.VerifyWindowDoesNotExistByTitle("fakeTitle");
-        product.browser.VerifyWindowDoesNotExistByUrl("fakeUrl");
+    public void testVerifyWindowDoesNotExistByUrl_VerifyWindowDoesNotExistByTitle() {
+        product.browser.verifyWindowDoesNotExistByTitle("fakeTitle");
+        product.browser.verifyWindowDoesNotExistByUrl("fakeUrl");
     }
 
     @Test
-    public void TestHasOptions_ByValue() {
+    public void testHasOptions_ByValue() {
         String[] validOptionValues = {"0", "1", "2", "3"};
-        product.StartPage.DropDown.Click();
-        product.StartPage.DropDown.HasOptions(validOptionValues, null, WebSelectOption.Value);
+        product.StartPage.DropDown.click();
+        product.StartPage.DropDown.hasOptions(validOptionValues, null, WebSelectOption.Value);
         String[] invalidOptionValues = {"0", "1", "fail"};
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.StartPage.DropDown.HasOptions(invalidOptionValues, null, WebSelectOption.Value);
+        product.StartPage.DropDown.hasOptions(invalidOptionValues, null, WebSelectOption.Value);
     }
 
     @Test
-    public void TestHasOptions_ByText() {
+    public void testHasOptions_ByText() {
         String[] validOptionTexts = {"option0", "option1", "option2", "option3"};
-        product.StartPage.DropDown.Click();
-        product.StartPage.DropDown.HasOptions(validOptionTexts, null, WebSelectOption.Text);
+        product.StartPage.DropDown.click();
+        product.StartPage.DropDown.hasOptions(validOptionTexts, null, WebSelectOption.Text);
         String[] invalidOptions = {"option0", "fail"};
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.StartPage.DropDown.HasOptions(invalidOptions, null, WebSelectOption.Text);
+        product.StartPage.DropDown.hasOptions(invalidOptions, null, WebSelectOption.Text);
     }
 
     @Test
-    public void TestDoesNotHaveOptions_ByValue() {
+    public void testDoesNotHaveOptions_ByValue() {
         String[] invalidOptionValues = {"-1", "h", "Klingon"};
-        product.StartPage.DropDown.Click();
-        product.StartPage.DropDown.DoesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
+        product.StartPage.DropDown.click();
+        product.StartPage.DropDown.doesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
         String[] validOptionValues = {"1", "2", "49"};
         thrown.expectCause(IsInstanceOf.instanceOf(ElementHasOptionException.class));
-        product.StartPage.DropDown.DoesNotHaveOptions(validOptionValues, null, WebSelectOption.Value);
+        product.StartPage.DropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.Value);
     }
 
     @Test
-    public void TestDoesNotHaveOptions_ByText() {
+    public void testDoesNotHaveOptions_ByText() {
         String[] invalidOptionTexts = {"Option-1", "Klingon", "nothing"};
-        product.StartPage.DropDown.Click();
-        product.StartPage.DropDown.DoesNotHaveOptions(invalidOptionTexts, null, WebSelectOption.Text);
+        product.StartPage.DropDown.click();
+        product.StartPage.DropDown.doesNotHaveOptions(invalidOptionTexts, null, WebSelectOption.Text);
         String[] validOptionTexts = {"Option-1", "Klingon", "nothing", "option1"};
         thrown.expectCause(IsInstanceOf.instanceOf(ElementHasOptionException.class));
-        product.StartPage.DropDown.DoesNotHaveOptions(validOptionTexts, null, WebSelectOption.Text);
+        product.StartPage.DropDown.doesNotHaveOptions(validOptionTexts, null, WebSelectOption.Text);
     }
 
     @Test
-    public void TestHasAllOptionsInOrder_ByValue_Ascending(){
-        product.StartPage.LexoDropDown.HasAllOptionsInOrder(CompareType.AscendingByValue);
+    public void testHasAllOptionsInOrder_ByValue_Ascending(){
+        product.StartPage.LexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
         thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.AscendingByValue);
+        product.StartPage.DropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
     }
 
     @Test
-    public void TestHasAllOptionsInOrder_ByValue_Descending(){
-        product.StartPage.RevLexoDropDown.HasAllOptionsInOrder(CompareType.DescendingByValue);
+    public void testHasAllOptionsInOrder_ByValue_Descending(){
+        product.StartPage.RevLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
         thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.DescendingByValue);
+        product.StartPage.DropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
     }
 
     @Test
-    public void TestHasAllOptionsInOrder_ByText_Ascending(){
-        product.StartPage.LexoDropDown.HasAllOptionsInOrder(CompareType.AscendingByText);
+    public void testHasAllOptionsInOrder_ByText_Ascending(){
+        product.StartPage.LexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
         thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.AscendingByText);
+        product.StartPage.DropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
     }
 
     @Test
-    public void TestHasAllOptionsInOrder_ByText_Descending(){
-        product.StartPage.RevLexoDropDown.HasAllOptionsInOrder(CompareType.DescendingByText);
+    public void testHasAllOptionsInOrder_ByText_Descending(){
+        product.StartPage.RevLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
         thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.StartPage.DropDown.HasAllOptionsInOrder(CompareType.DescendingByText);
+        product.StartPage.DropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
     }
 
     @Test
-    public void TestHasNumberOfOptions(){
+    public void testHasNumberOfOptions(){
         int totalOptions = 5000;
-        product.StartPage.DropDown.HasNumberOfOptions(totalOptions);
+        product.StartPage.DropDown.hasNumberOfOptions(totalOptions);
         totalOptions = 50;
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveNumberOfOptionsException.class));
-        product.StartPage.DropDown.HasNumberOfOptions(totalOptions);
+        product.StartPage.DropDown.hasNumberOfOptions(totalOptions);
     }
 
     @Test
-    public void TestHasOptionsInOrder_ByText() {
+    public void testHasOptionsInOrder_ByText() {
         String[] validOptions = {"option1", "option2", "option3"};
-        product.StartPage.DropDown.HasOptionsInOrder(validOptions, WebSelectOption.Text);
+        product.StartPage.DropDown.hasOptionsInOrder(validOptions, WebSelectOption.Text);
         String[] invalidoptions = {"option1", "option4", "option2"};
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.StartPage.DropDown.HasOptionsInOrder(invalidoptions, WebSelectOption.Text);
+        product.StartPage.DropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Text);
     }
 
     @Test
-    public void TestHasOptionsInOrder_ByValue(){
+    public void testHasOptionsInOrder_ByValue(){
         String[] validoptions = {"1", "2", "3"};
-        product.StartPage.DropDown.HasOptionsInOrder(validoptions, WebSelectOption.Value);
+        product.StartPage.DropDown.hasOptionsInOrder(validoptions, WebSelectOption.Value);
         String[] invalidoptions = {"1", "2", "3", "40", "5"};
         thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.StartPage.DropDown.HasOptionsInOrder(invalidoptions, WebSelectOption.Value);
+        product.StartPage.DropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Value);
     }
 
     @Test
-    public void TestSet_WithSelect(){
-        product.StartPage.LexoDropDown.Set(WebSelectOption.Value, "10");
-        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "dog");
-        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+    public void testSet_WithSelect(){
+        product.StartPage.LexoDropDown.set(WebSelectOption.Value, "10");
+        product.StartPage.LexoDropDown.set(WebSelectOption.Text, "dog");
+        product.StartPage.LexoDropDown.set(WebSelectOption.Text, "zebra");
     }
 
     @Test
-    public void TestSetValueByJavaScript(){
-        product.StartPage.FormTextBox.SetTextByJavaScript("Set text by javascript is working");
+    public void testSetValueByJavaScript(){
+        product.StartPage.FormTextBox.setTextByJavaScript("set text by javascript is working");
     }
 
     @Test
-    public void TestIs_IsLike_IsNotLike_WithSelect(){
-        product.StartPage.LexoDropDown.Is("apple");
-        product.StartPage.LexoDropDown.IsLike("APPLE");
-        product.StartPage.LexoDropDown.Is("01", "value");
-        product.StartPage.LexoDropDown.IsNotLike("appple");
-        product.StartPage.LexoDropDown.Set(WebSelectOption.Text, "zebra");
+    public void testIs_IsLike_IsNotLike_WithSelect(){
+        product.StartPage.LexoDropDown.is("apple");
+        product.StartPage.LexoDropDown.isLike("APPLE");
+        product.StartPage.LexoDropDown.is("01", "value");
+        product.StartPage.LexoDropDown.isNotLike("appple");
+        product.StartPage.LexoDropDown.set(WebSelectOption.Text, "zebra");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.StartPage.LexoDropDown.Is("ZEBRA");
+        product.StartPage.LexoDropDown.is("ZEBRA");
 
     }
 
     @Test
-    public void TestWaiter(){
-        product.StartPage.Start.Click();
-        product.StartPage.SmileyFace1.Click();
+    public void testWaiter(){
+        product.StartPage.Start.click();
+        product.StartPage.SmileyFace1.click();
     }
 
     @Test
-    public void TestGrids(){
-        product.StartPage.myGrid.RowBy.index(2).checkBoxButton.Click();
-        product.StartPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.Click();
-        product.StartPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.Click();
-        product.StartPage.myGrid.RowBy.material("Acrylic").getRow().Exists();
+    public void testGrids(){
+        product.StartPage.myGrid.RowBy.index(2).checkBoxButton.click();
+        product.StartPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
+        product.StartPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
+        product.StartPage.myGrid.RowBy.material("Acrylic").getRow().exists();
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
-        product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.Click();
+        product.StartPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
 
     }
 
     @Test
-    public void SetByDivJavaScript() {
-        product.StartPage.DivWindow.SetDivValueByJavaScript("Hello World Haha");
-        product.StartPage.DivWindow.Is("Hello World Haha");
-        product.StartPage.BodyTag.SetDivValueByJavaScript("Hello World Haha");
-        product.StartPage.BodyTag.Is("Hello World Haha");
+    public void setByDivJavaScript() {
+        product.StartPage.DivWindow.setDivValueByJavaScript("Hello World Haha");
+        product.StartPage.DivWindow.is("Hello World Haha");
+        product.StartPage.BodyTag.setDivValueByJavaScript("Hello World Haha");
+        product.StartPage.BodyTag.is("Hello World Haha");
     }
 
     @Test
-    public void SetByBodyJavaScript() {
-        product.StartPage.BodyTag.SetBodyValueByJavaScript("Hello World Haha");
-        product.StartPage.BodyTag.Is("Hello World Haha");
+    public void setByBodyJavaScript() {
+        product.StartPage.BodyTag.setBodyValueByJavaScript("Hello World Haha");
+        product.StartPage.BodyTag.is("Hello World Haha");
     }
 }

@@ -30,8 +30,8 @@ public class TextBox extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
-    public void Set(String value) {
-        info.getCommandExecutionFacade().Execute(info,
+    public void set(String value) {
+        info.getCommandExecutionFacade().execute(info,
                 new SetCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
@@ -39,8 +39,8 @@ public class TextBox extends WebElement {
                         value));
     }
 
-    public void Clear() {
-        info.getCommandExecutionFacade().Execute(info, new ClearCommand(
+    public void clear() {
+        info.getCommandExecutionFacade().execute(info, new ClearCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)
         ));

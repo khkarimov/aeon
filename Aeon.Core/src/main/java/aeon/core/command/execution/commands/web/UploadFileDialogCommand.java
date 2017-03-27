@@ -40,10 +40,10 @@ public class UploadFileDialogCommand extends Command {
 
 
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).UploadFileDialog(selector, path);
+        ((IWebDriver) driver).uploadFileDialog(selector, path);
     }
 }

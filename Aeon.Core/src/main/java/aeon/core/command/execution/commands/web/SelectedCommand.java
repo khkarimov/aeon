@@ -30,7 +30,7 @@ public class SelectedCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Selected(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.selected(control);
     }
 }

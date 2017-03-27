@@ -34,7 +34,7 @@ public class WebProduct extends Product {
         adapter = createAdapter(plugin);
 
         driver = (IWebDriver) configuration.getDriver().newInstance();
-        driver.Configure(adapter);
+        driver.configure(adapter);
 
         commandExecutionFacade = new WebCommandExecutionFacade(
                 new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)), new AjaxWaiter(driver, Duration.millis(20000)));

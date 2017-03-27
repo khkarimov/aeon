@@ -38,14 +38,14 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
      * @param automationInfo The automation info.
      * @param command        The command to execute.
      */
-    public void Execute(AutomationInfo automationInfo, Command command) {
+    public void execute(AutomationInfo automationInfo, Command command) {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
         if(command instanceof WebControlCommand){
-            ajaxWaiter.WaitForAsync();
+            ajaxWaiter.waitForAsync();
         }
-        delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
+        delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
     }
 
     /**
@@ -55,13 +55,13 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
      * @param command        The command to execute.
      * @return The return value of the command.
      */
-    public Object Execute(AutomationInfo automationInfo, CommandWithReturn command) {
+    public Object execute(AutomationInfo automationInfo, CommandWithReturn command) {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
         if(command instanceof WebControlCommandWithReturn){
-            ajaxWaiter.WaitForAsync();
+            ajaxWaiter.waitForAsync();
         }
-        return delegateRunnerFactory.CreateInstance(automationInfo).Execute(command.GetCommandDelegate());
+        return delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
     }
 }

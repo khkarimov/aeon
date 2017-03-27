@@ -30,7 +30,7 @@ public class VisibleCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.Visible(control);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.visible(control);
     }
 }

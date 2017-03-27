@@ -11,10 +11,10 @@ public final class ClientEnvironmentManager {
     private static final Size[] supportedResolutions = {new Size(1024, 768)};
     private static Logger log = LogManager.getLogger(ClientEnvironmentManager.class);
 
-    public static void ManageEnvironment(BrowserType browserType, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
+    public static void manageEnvironment(BrowserType browserType, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
         if (ensureCleanEnvironment) {
             log.info("Cleaning Client Environment.");
-            EnsureCleanEnvironment(browserType);
+            ensureCleanEnvironment(browserType);
         }
 
         verifyScreenResolution();
@@ -25,12 +25,12 @@ public final class ClientEnvironmentManager {
                 // ConfigureInternetExplorerSettings(browserAcceptedLanguageCodes);
                 break;
             case Firefox:
-                EnforceDPI();
+                enforceDPI();
                 break;
         }
     }
 
-    private static void EnsureCleanEnvironment(BrowserType browserType) {
+    private static void ensureCleanEnvironment(BrowserType browserType) {
         switch (browserType) {
             case InternetExplorer:
                 log.info("Killing Internet Explorer related processes.");
@@ -50,7 +50,7 @@ public final class ClientEnvironmentManager {
         }
     }
 
-    private static void EnforceDPI() {
+    private static void enforceDPI() {
         if (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows) {
             int pixelPerInch = java.awt.Toolkit.getDefaultToolkit().getScreenResolution();
             log.info("Checking DPI setting are set to 100%");

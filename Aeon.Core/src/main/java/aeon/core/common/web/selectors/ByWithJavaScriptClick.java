@@ -21,7 +21,7 @@ public class ByWithJavaScriptClick extends By implements IByWithJavaScriptClick 
      * @param selector A string containing a selector expression.
      * @return A new {@link By} instance.
      */
-    public static ByWithJavaScriptClick CssSelector(String selector) {
+    public static ByWithJavaScriptClick cssSelector(String selector) {
         return new ByWithJavaScriptClick(selector);
     }
 }

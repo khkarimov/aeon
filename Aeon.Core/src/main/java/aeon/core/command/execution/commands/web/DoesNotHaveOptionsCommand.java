@@ -61,7 +61,7 @@ public class DoesNotHaveOptionsCommand extends WebControlCommand {
      * @param control The webcontrol.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.DoesNotHaveOptions(control, options, optgroup, select);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.doesNotHaveOptions(control, options, optgroup, select);
     }
 }

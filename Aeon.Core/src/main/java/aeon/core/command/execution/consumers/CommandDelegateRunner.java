@@ -13,7 +13,7 @@ public class CommandDelegateRunner implements IDelegateRunner {
         this.driver = driver;
     }
 
-    public final void Execute(Consumer<IDriver> commandDelegate) {
+    public final void execute(Consumer<IDriver> commandDelegate) {
         if (commandDelegate == null) {
             return;
         }
@@ -21,7 +21,7 @@ public class CommandDelegateRunner implements IDelegateRunner {
         commandDelegate.accept(driver);
     }
 
-    public final Object Execute(Function<IDriver, Object> commandDelegate) {
+    public final Object execute(Function<IDriver, Object> commandDelegate) {
         return commandDelegate == null ? null : commandDelegate.apply(driver);
     }
 }

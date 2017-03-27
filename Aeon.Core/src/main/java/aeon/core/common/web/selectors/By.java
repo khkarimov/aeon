@@ -33,7 +33,7 @@ public class By implements IBy {
      * @param selector A string containing a selector expression.
      * @return A new {@link By} instance.
      */
-    public static ByJQuery JQuery(String selector) {
+    public static ByJQuery jQuery(String selector) {
         return new ByJQuery(selector);
     }
 
@@ -43,7 +43,7 @@ public class By implements IBy {
      * @param obj An existing jquery object to clone.
      * @return A new {@link ByJQuery} instance.
      */
-    public static ByJQuery JQuery(ByJQuery obj) {
+    public static ByJQuery jQuery(ByJQuery obj) {
         return new ByJQuery(obj);
     }
 
@@ -59,7 +59,7 @@ public class By implements IBy {
      *
      * @return A {@link ByJQuery} object.
      */
-    public final ByJQuery ToJQuery() {
+    public final ByJQuery toJQuery() {
         return new ByJQuery(getSelector());
     }
 

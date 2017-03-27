@@ -23,28 +23,28 @@ public class Checkbox extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
-    public void Check() {
-        info.getCommandExecutionFacade().Execute(info,
+    public void check() {
+        info.getCommandExecutionFacade().execute(info,
                 new CheckCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void Uncheck() {
-        info.getCommandExecutionFacade().Execute(info,
+    public void uncheck() {
+        info.getCommandExecutionFacade().execute(info,
                 new UnCheckCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void Selected() {
-        info.getCommandExecutionFacade().Execute(info, new SelectedCommand(
+    public void selected() {
+        info.getCommandExecutionFacade().execute(info, new SelectedCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
-    public void NotSelected() {
-        info.getCommandExecutionFacade().Execute(info, new NotSelectedCommand(
+    public void notSelected() {
+        info.getCommandExecutionFacade().execute(info, new NotSelectedCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }

@@ -21,10 +21,10 @@ public class WindowDoesNotExistByTitleCommand extends CommandWithReturn {
     }
 
     @Override
-    protected Object CommandDelegate(IDriver driver) {
+    protected Object commandDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        return ((IWebDriver) driver).WindowDoesNotExistByTitle(windowTitle);
+        return ((IWebDriver) driver).windowDoesNotExistByTitle(windowTitle);
     }
 }

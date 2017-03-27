@@ -28,10 +28,10 @@ public class AcceptAlertCommand extends Command {
      * @param driver The web driver.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("Driver");
         }
-        ((IWebDriver) driver).AcceptAlert();
+        ((IWebDriver) driver).acceptAlert();
     }
 }

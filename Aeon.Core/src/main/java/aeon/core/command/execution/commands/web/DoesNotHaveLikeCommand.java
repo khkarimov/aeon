@@ -41,7 +41,7 @@ public class DoesNotHaveLikeCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.DoesNotHaveLike(control, messages, childSelector, option, attribute);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.doesNotHaveLike(control, messages, childSelector, option, attribute);
     }
 }

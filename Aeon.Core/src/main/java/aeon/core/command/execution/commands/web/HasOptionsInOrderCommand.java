@@ -59,7 +59,7 @@ public class HasOptionsInOrderCommand extends WebControlCommand {
      * @param control The web control.
      */
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
-        driver.HasOptionsInOrder(control, options, optgroup, select);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.hasOptionsInOrder(control, options, optgroup, select);
     }
 }

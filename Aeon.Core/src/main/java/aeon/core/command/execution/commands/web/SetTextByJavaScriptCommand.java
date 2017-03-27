@@ -21,10 +21,10 @@ public class SetTextByJavaScriptCommand extends WebControlCommand {
     }
 
     @Override
-    protected void CommandDelegate(IWebDriver driver, WebControl control) {
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
         if(driver == null){
             throw new IllegalArgumentException("driver");
         }
-        driver.SetTextByJavaScript(control, value);
+        driver.setTextByJavaScript(control, value);
     }
 }

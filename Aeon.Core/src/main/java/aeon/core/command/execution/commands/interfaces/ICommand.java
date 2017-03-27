@@ -11,5 +11,5 @@ public interface ICommand<T> {
      *
      * @return A delegate.
      */
-    T GetCommandDelegate();
+    T getCommandDelegate();
 }

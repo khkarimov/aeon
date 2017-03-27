@@ -15,7 +15,7 @@ public class WebSelectorFinder implements IWebSelectorFinder {
      * @param selector Element locator.
      * @return The narrowed down selector.
      */
-    public IBy FindSelector(IWebDriver driver, IBy selector) {
+    public IBy findSelector(IWebDriver driver, IBy selector) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }

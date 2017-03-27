@@ -13,7 +13,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * <p>Scrolls to the end of the page.</p>
  * <p></p>
  * <p>Usage:</p>
- * <p>      Context.browser.ScrollToEnd();</p>
+ * <p>      Context.browser.scrollToEnd();</p>
  */
 
 public class ScrollToEndCommand extends Command {
@@ -30,10 +30,10 @@ public class ScrollToEndCommand extends Command {
      * @param driver The framework abstraction facade.
      */
     @Override
-    protected void DriverDelegate(IDriver driver) {
+    protected void driverDelegate(IDriver driver) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).ScrollToEnd();
+        ((IWebDriver) driver).scrollToEnd();
     }
 }

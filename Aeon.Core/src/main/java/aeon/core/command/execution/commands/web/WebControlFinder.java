@@ -32,12 +32,12 @@ public class WebControlFinder implements IWebControlFinder {
     /**
      * Finds a web element utilizing a web driver.
      */
-    public final WebControl FindElement(IWebDriver driver, IBy selector) {
+    public final WebControl findElement(IWebDriver driver, IBy selector) {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
 
-        WebControl control = driver.FindElement(selectorFinder.FindSelector(driver, selector));
+        WebControl control = driver.findElement(selectorFinder.findSelector(driver, selector));
         control.setSelector(selector);
         return control;
     }
