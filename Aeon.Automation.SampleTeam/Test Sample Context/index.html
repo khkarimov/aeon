@@ -309,14 +309,42 @@
 }
 </script>
 <script>
-    /*(function(open) {
+
+var aeon = {
+	ajaxCounter: 0,
+  ajaxTimeout: 18000
+};
+
+(function(originalCreateElement) {
+	document.createElement = function(element) {
+    var domElement = originalCreateElement.call(document, element);
+    if(element === "script") {
+    	var timeout = setTimeout(function() {
+      	aeon.ajaxCounter--;
+        console.log(aeon.ajaxCounter);
+      },aeon.ajaxTimeout);
+    	aeon.ajaxCounter++;
+      console.log(aeon.ajaxCounter);
+      domElement.onload = function() {
+      	clearTimeout(timeout);
+        aeon.ajaxCounter--;
+        console.log(aeon.ajaxCounter);
+      };
+    }
+
+  	return domElement;
+  }
+})(document.createElement);
+
+
+    (function(open) {
      // event creation
      var asyncCallOccurred = false;
      var event;
 
      if (document.createEvent) {
      event = document.createEvent("HTMLEvents");
-     event.initEvent("aeon.asyc.done", true, true);
+     event.initEvent("c", true, true);
      } else {
      event = document.createEventObject();
      event.eventType = "aeon.asyc.done";
@@ -329,32 +357,21 @@
      });
 
      // injector for AJAX
-     var counter = 0;
      XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
-     $('#counter').html(++counter);
-
-     var readyStateChange = function() {
-     if (this.readyState === 4) {
-     $('#counter').html(--counter);
-
-     if(counter === 0) {
-     setTimeout(function() {
-     if (document.createEvent) {
-     document.getElementById('start').dispatchEvent(event);
-     } else {
-     document.getElementById('start').fireEvent("on" + event.eventType, event);
-     }
-     }, 1);
-     }
-     }
-     };
+       $('#counter').html(++aeon.ajaxCounter);
+       console.log(aeon.ajaxCounter);
+       var readyStateChange = function() {
+         if (this.readyState === 4) {
+           $('#counter').html(--aeon.ajaxCounter);
+           console.log(aeon.ajaxCounter);
+         }
+       };
 
      this.addEventListener("readystatechange", readyStateChange, false);
 
      open.call(this, method, url, async, user, pass);
      };
-
-     })(XMLHttpRequest.prototype.open);*/
+    })(XMLHttpRequest.prototype.open);/**/
 
     //this will populate the dropdown list with 10000 entries on page load
     for (i = 0; i < 5000; i++) {
@@ -478,17 +495,23 @@
 
         $('#start').on('click', function () {
             $.ajax({
-                url: "http://mockbin.org/delay/15000"
+                crossDomain: true,
+                url: "http://mockbin.org/delay/15000?__callback=?",
+                jsonp: "__callback",
+                dataType: "jsonp"
             })
             .done(function () {
                 $('.call-1').show();
             });
             $.ajax({
-                url: "http://mockbin.org/delay/10000"
+                crossDomain: true,
+                url: "http://mockbin.org/delay/13000?__callback=?",
+                jsonp: "__callback",
+                dataType: "jsonp"
             })
             .done(function () {
                 $('.call-2').show();
-                load("http://mockbin.org/delay/10000", function () {
+                load("http://mockbin.org/delay/3000", function () {
                     $('.call-3').show();
                 })
             });
