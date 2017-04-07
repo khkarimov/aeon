@@ -46,7 +46,6 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
             ajaxWaiter.waitForAsync();
         }
         delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
-        ajaxWaiter.waitForAsync();
     }
 
     /**

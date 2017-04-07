@@ -320,14 +320,14 @@ var aeon = {
     var domElement = originalCreateElement.call(document, element);
     if(element === "script") {
     	var timeout = setTimeout(function() {
-      	aeon.ajaxCounter--;
+        $('#counter').html(--aeon.ajaxCounter);
         console.log(aeon.ajaxCounter);
       },aeon.ajaxTimeout);
-    	aeon.ajaxCounter++;
+      $('#counter').html(++aeon.ajaxCounter);
       console.log(aeon.ajaxCounter);
       domElement.onload = function() {
       	clearTimeout(timeout);
-        aeon.ajaxCounter--;
+        $('#counter').html(--aeon.ajaxCounter);
         console.log(aeon.ajaxCounter);
       };
     }
@@ -338,24 +338,6 @@ var aeon = {
 
 
     (function(open) {
-     // event creation
-     var asyncCallOccurred = false;
-     var event;
-
-     if (document.createEvent) {
-     event = document.createEvent("HTMLEvents");
-     event.initEvent("c", true, true);
-     } else {
-     event = document.createEventObject();
-     event.eventType = "aeon.asyc.done";
-     }
-
-     event.eventName = "aeon.asyc.done";
-
-     document.getElementById('start').addEventListener("aeon.asyc.done", function() {
-     alert('all events have finished');
-     });
-
      // injector for AJAX
      XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
        $('#counter').html(++aeon.ajaxCounter);
