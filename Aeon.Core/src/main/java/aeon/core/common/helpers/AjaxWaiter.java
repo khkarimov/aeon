@@ -54,22 +54,24 @@ public class AjaxWaiter {
         }while(count != 0  && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
+    //JSONP needs to be injected first cause it declares the aeon variable used for the scripts.
     public void injectJS() {
         try {
             String InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
-                    getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
+                    getJSONPWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
             webDriver.executeScript(InjectScriptTag);
             InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
-                    getAjaxWaiterOpenJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
+                    getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
             webDriver.executeScript(InjectScriptTag);
+            webDriver.executeScript("aeon.ajaxTimeout = " + (timeout.getMillis() - 2000));
             System.out.println("Injected JS");
         }catch (ScriptExecutionException e){
             System.out.println("Could not inject JS");
         }
     }
 
-    public String getAjaxWaiterJS() {
-        File file = new File("../ajaxWaiter.js");
+    public String getJSONPWaiterJS() {
+        File file = new File("../JSONPWaiter.js");
         try {
             byte[] data = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
             return new String(data);
@@ -82,8 +84,8 @@ public class AjaxWaiter {
         }
         return "";
     }
-    public String getAjaxWaiterOpenJS() {
-        File file = new File("../ajaxWaiterOpen.js");
+    public String getAjaxWaiterJS() {
+        File file = new File("../AjaxWaiter.js");
         try {
             byte[] data = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
             return new String(data);
