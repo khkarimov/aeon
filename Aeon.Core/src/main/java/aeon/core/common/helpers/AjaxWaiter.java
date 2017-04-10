@@ -6,6 +6,9 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created by JustinP on 6/2/2016.
@@ -44,10 +47,53 @@ public class AjaxWaiter {
             try {
                 count = (long) webDriver.executeScript("return aeon.ajaxCounter;");
             }catch(ScriptExecutionException e){
+                injectJS();
                 return;
             }
             Sleep.waitInternal();
         }while(count != 0  && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
+    public void injectJS() {
+        try {
+            String InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
+                    getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
+            webDriver.executeScript(InjectScriptTag);
+            InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
+                    getAjaxWaiterOpenJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
+            webDriver.executeScript(InjectScriptTag);
+            System.out.println("Injected JS");
+        }catch (ScriptExecutionException e){
+            System.out.println("Could not inject JS");
+        }
+    }
+
+    public String getAjaxWaiterJS() {
+        File file = new File("../ajaxWaiter.js");
+        try {
+            byte[] data = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
+            return new String(data);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found on path");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Problem reading from file");
+            e.printStackTrace();
+        }
+        return "";
+    }
+    public String getAjaxWaiterOpenJS() {
+        File file = new File("../ajaxWaiterOpen.js");
+        try {
+            byte[] data = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
+            return new String(data);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found on path");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Problem reading from file");
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

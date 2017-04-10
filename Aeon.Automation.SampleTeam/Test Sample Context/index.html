@@ -309,52 +309,6 @@
 }
 </script>
 <script>
-
-var aeon = {
-	ajaxCounter: 0,
-  ajaxTimeout: 18000
-};
-
-(function(originalCreateElement) {
-	document.createElement = function(element) {
-    var domElement = originalCreateElement.call(document, element);
-    if(element === "script") {
-    	var timeout = setTimeout(function() {
-        $('#counter').html(--aeon.ajaxCounter);
-        console.log(aeon.ajaxCounter);
-      },aeon.ajaxTimeout);
-      $('#counter').html(++aeon.ajaxCounter);
-      console.log(aeon.ajaxCounter);
-      domElement.onload = function() {
-      	clearTimeout(timeout);
-        $('#counter').html(--aeon.ajaxCounter);
-        console.log(aeon.ajaxCounter);
-      };
-    }
-
-  	return domElement;
-  }
-})(document.createElement);
-
-
-    (function(open) {
-     // injector for AJAX
-     XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
-       $('#counter').html(++aeon.ajaxCounter);
-       console.log(aeon.ajaxCounter);
-       var readyStateChange = function() {
-         if (this.readyState === 4) {
-           $('#counter').html(--aeon.ajaxCounter);
-           console.log(aeon.ajaxCounter);
-         }
-       };
-
-     this.addEventListener("readystatechange", readyStateChange, false);
-
-     open.call(this, method, url, async, user, pass);
-     };
-    })(XMLHttpRequest.prototype.open);/**/
-
     //this will populate the dropdown list with 10000 entries on page load
     for (i = 0; i < 5000; i++) {
         var anOption = document.createElement("option");
