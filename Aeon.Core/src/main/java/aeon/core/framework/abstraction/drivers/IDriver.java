@@ -17,4 +17,8 @@ public interface IDriver {
     String getSource();
 
     Image getScreenshot();
+
+    void enableAjaxWaiting();
+
+    void disableAjaxWaiting();
 }

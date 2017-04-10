@@ -1,5 +1,6 @@
 package aeon.core.framework.abstraction.drivers;
 
+import aeon.core.common.helpers.Config;
 import com.sun.glass.ui.Size;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
@@ -24,7 +25,7 @@ import java.util.Collection;
  */
 public class AeonWebDriver implements IWebDriver {
     private IWebAdapter adapter;
-
+    Config config = Config.getInstance();
     /**
      * Initializes a new instance of the AeonWebDriver class.
      */
@@ -486,5 +487,15 @@ public class AeonWebDriver implements IWebDriver {
     @Override
     public void pressKeyboardKey(WebControl element, KeyboardKey key) {
         adapter.pressKeyboardKey(element, key);
+    }
+
+    @Override
+    public void disableAjaxWaiting() {
+        config.setWaitForAjaxWaiter(false);
+    }
+
+    @Override
+    public void enableAjaxWaiting() {
+        config.setWaitForAjaxWaiter(true);
     }
 }

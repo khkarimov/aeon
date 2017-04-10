@@ -54,7 +54,6 @@ public class AjaxWaiter {
         do{
             try {
                 count = (long) webDriver.executeScript("return aeonAjaxCounter");
-                System.out.println("COUNT: " + count);
             }catch(ScriptExecutionException e){
                 injectJS();
                 return;
