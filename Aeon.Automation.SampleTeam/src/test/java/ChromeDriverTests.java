@@ -515,7 +515,6 @@ public class ChromeDriverTests {
         product.StartPage.LexoDropDown.set(WebSelectOption.Text, "zebra");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.StartPage.LexoDropDown.is("ZEBRA");
-
     }
 
     @Test

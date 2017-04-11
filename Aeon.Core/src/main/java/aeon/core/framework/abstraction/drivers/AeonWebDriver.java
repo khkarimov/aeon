@@ -490,12 +490,12 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public void disableAjaxWaiting() {
-        config.setWaitForAjaxWaiter(false);
+    public void disableAjaxWaiting() {;
+        config.setBoolean("waitForAjaxResponse", false);
     }
 
     @Override
     public void enableAjaxWaiting() {
-        config.setWaitForAjaxWaiter(true);
+        config.setBoolean("waitForAjaxResponse", true);
     }
 }

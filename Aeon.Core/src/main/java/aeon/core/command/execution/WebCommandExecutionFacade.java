@@ -45,7 +45,7 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
-        if(command instanceof WebControlCommand && config.getWaitForAjaxWaiter() ){
+        if(command instanceof WebControlCommand && config.getBoolean("waitForAjaxResponse", true)) {
             ajaxWaiter.waitForAsync();
         }
         delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
@@ -62,7 +62,7 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
-        if(command instanceof WebControlCommandWithReturn && config.getWaitForAjaxWaiter()){
+        if(command instanceof WebControlCommandWithReturn && config.getBoolean("waitForAjaxResponse", true)){
             ajaxWaiter.waitForAsync();
         }
         return delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
