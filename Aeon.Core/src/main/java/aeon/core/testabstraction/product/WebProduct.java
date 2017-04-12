@@ -53,4 +53,18 @@ public class WebProduct extends Product {
     protected void afterLaunch() {
         browser = new Browser(getAutomationInfo());
     }
+
+    /**
+     * Disables the ajax waiter.
+     */
+    public void disableAjaxWaiting() {
+        parameters.setBoolean(Parameters.Keys.wait_for_ajax_response, false);
+    }
+
+    /**
+     * Enables the ajax waiter.
+     */
+    public void enableAjaxWaiting() {
+        parameters.setBoolean(Parameters.Keys.wait_for_ajax_response, true);
+    }
 }

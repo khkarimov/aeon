@@ -279,19 +279,4 @@ public class Browser {
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
-
-
-    /**
-     * Disables the ajax waiter.
-     */
-    public void disableAjaxWaiting() {
-        info.getCommandExecutionFacade().execute(info, new DisableAjaxWaitingCommand());
-    }
-
-    /**
-     * Enables the ajax waiter.
-     */
-    public void enableAjaxWaiting() {
-        info.getCommandExecutionFacade().execute(info, new EnableAjaxWaitingCommand());
-    }
 }

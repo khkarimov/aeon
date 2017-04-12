@@ -1,6 +1,7 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.selectors.Parameter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,8 +25,7 @@ public class Aeon {
 
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
-
-            parameters.put("browserType", browserType);
+            parameters.setString(Parameters.Keys.browser_type, browserType.toString());
             product.getConfiguration().setBrowserType(browserType);
             product.setParameters(parameters);
 
@@ -56,20 +56,5 @@ public class Aeon {
         }
 
         throw new RuntimeException("No valid adapter found");
-    }
-
-    private static Parameters loadParameters(ISettingsProvider settingsProvider) {
-        Parameters parameters = new Parameters();
-
-        // Load global settings.
-        parameters.load(new GlobalSettings().getSettings());
-
-        // Load driver-specific settings.
-        parameters.load(settingsProvider.getSettings());
-
-        // Load user settings.
-        parameters.load(ResourceBundle.getBundle("config"));
-
-        return parameters;
     }
 }

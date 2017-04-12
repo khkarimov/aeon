@@ -1,39 +1,98 @@
 package aeon.core.testabstraction.product;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
- * Created by DionnyS on 4/13/2016.
+ * Created by josepe on 4/7/2017.
  */
-public class Parameters extends HashMap<String, Object> {
-    public <T> T getParameter(Class<T> cls, String name) {
-        return cls.cast(get(name));
-    }
+public class Parameters {
+    private Properties properties;
+    private static Logger log = LogManager.getLogger(Parameters.class);
+    public enum Keys {
+        wait_for_ajax_response,
+        default_timeout,
+        prompt_user_for_continue_on_exception_decision,
+        ensure_clean_environment,
+        browser_type
+    };
+    public Parameters() {
+        properties = new Properties();
+        InputStream in = null;
+        try{
+            in = Parameters.class.getResourceAsStream("/aeon.properties");
+            properties.load(in);
+        } catch(IOException e){
+            log.error("No aeon.properties found");
+            e.printStackTrace();
+        } finally{
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
 
-    public boolean getBoolean(String name) {
-        return (boolean) get(name);
-    }
+        try{
+            in = Parameters.class.getResourceAsStream("/config.properties");
+            if(in != null)
+                properties.load(in);
+            else
+                log.info("No config file in use, using default values.");
+        } catch(IOException e){
+        } finally{
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
 
-    public String getString(String name) {
-        return get(name).toString();
-    }
-
-    public int getInt(String name) {
-        return (int) get(name);
-    }
-
-    public void load(ResourceBundle bundle) {
-        Enumeration<String> keys = bundle.getKeys();
-
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            put(key, bundle.getObject(key));
+        for(Keys key : Keys.values()){
+            String environmentValue = System.getenv("aeon." + key.toString());
+            if(environmentValue != null)
+                properties.setProperty(key.toString(), environmentValue);
         }
     }
 
-    public void load(HashMap<String, Object> settings) {
-        putAll(settings);
+    public void setBoolean(Keys key, boolean value){
+        set(key.toString(), Boolean.toString(value));
+    }
+
+    public void setString(Keys key, String value){
+        set(key.toString(), value);
+    }
+
+    public void setDouble(Keys key, double value){
+        set(key.toString(), Double.toString(value));
+    }
+
+    private void set(String key, String value){
+        properties.setProperty(key, value);
+        System.out.println(properties.getProperty(key));
+    }
+
+    public boolean getBoolean(Keys key, boolean defaultValue){
+        return Boolean.valueOf(get(key.toString(), Boolean.toString(defaultValue)));
+    }
+
+    public double getDouble(Keys key, double defaultValue){
+        return Double.parseDouble(get(key.toString(), Double.toString(defaultValue)));
+    }
+
+    public String getString(Keys key, String defaultValue){
+        return (get(key.toString(), defaultValue));
+    }
+
+    private String get(String key, String defaultValue){
+        return properties.getProperty(key, defaultValue);
     }
 }
