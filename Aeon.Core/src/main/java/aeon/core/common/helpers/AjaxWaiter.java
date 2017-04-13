@@ -58,7 +58,7 @@ public class AjaxWaiter {
     public void injectJS() {
         try {
             String InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
-                    getJSONPWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
+                    getJSONPWaiterJS() + "\";a.setAttribute('id', 'aeon.JSONP.waiter.script');document.body.appendChild(a);";
             webDriver.executeScript(InjectScriptTag);
             InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
