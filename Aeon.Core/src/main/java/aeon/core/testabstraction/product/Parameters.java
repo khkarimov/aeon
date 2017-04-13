@@ -10,10 +10,9 @@ import java.util.Properties;
 /**
  * Created by josepe on 4/7/2017.
  */
-public class Parameters {
-    private Properties properties;
+public class Parameters extends ParametersBase {
     private static Logger log = LogManager.getLogger(Parameters.class);
-    public enum Keys {
+    public enum Keys implements IKeys{
         wait_for_ajax_response,
         default_timeout,
         prompt_user_for_continue_on_exception_decision,
@@ -27,8 +26,8 @@ public class Parameters {
             in = Parameters.class.getResourceAsStream("/aeon.properties");
             properties.load(in);
         } catch(IOException e){
-            log.error("No aeon.properties found");
-            e.printStackTrace();
+             log.error("No aeon.properties found");
+             e.printStackTrace();
         } finally{
             if(in != null) {
                 try {
@@ -61,38 +60,5 @@ public class Parameters {
             if(environmentValue != null)
                 properties.setProperty(key.toString(), environmentValue);
         }
-    }
-
-    public void setBoolean(Keys key, boolean value){
-        set(key.toString(), Boolean.toString(value));
-    }
-
-    public void setString(Keys key, String value){
-        set(key.toString(), value);
-    }
-
-    public void setDouble(Keys key, double value){
-        set(key.toString(), Double.toString(value));
-    }
-
-    private void set(String key, String value){
-        properties.setProperty(key, value);
-        System.out.println(properties.getProperty(key));
-    }
-
-    public boolean getBoolean(Keys key, boolean defaultValue){
-        return Boolean.valueOf(get(key.toString(), Boolean.toString(defaultValue)));
-    }
-
-    public double getDouble(Keys key, double defaultValue){
-        return Double.parseDouble(get(key.toString(), Double.toString(defaultValue)));
-    }
-
-    public String getString(Keys key, String defaultValue){
-        return (get(key.toString(), defaultValue));
-    }
-
-    private String get(String key, String defaultValue){
-        return properties.getProperty(key, defaultValue);
     }
 }

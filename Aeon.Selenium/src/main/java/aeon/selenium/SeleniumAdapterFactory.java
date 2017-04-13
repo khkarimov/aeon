@@ -58,11 +58,13 @@ import java.util.logging.Level;
 public final class SeleniumAdapterFactory implements IAdapterExtension {
     private static final String MobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private static SeleniumConfiguration configuration;
+    private static SeleniumParameters parameters;
     private static Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
 
     public static IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(browserType, browserAcceptedLanguageCodes, ensureCleanEnvironment);
         SeleniumAdapterFactory.configuration = configuration;
+        parameters = new SeleniumParameters();
         BrowserType browserType = configuration.getBrowserType();
         boolean enableSeleniumGrid = configuration.isEnableSeleniumGrid();
         URL seleniumHubUrl = configuration.getSeleniumHubUrl();

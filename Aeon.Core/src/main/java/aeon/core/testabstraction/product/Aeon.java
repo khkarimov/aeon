@@ -22,7 +22,6 @@ public class Aeon {
         try {
             T product = productClass.newInstance();
             Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
-
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
             parameters.setString(Parameters.Keys.browser_type, browserType.toString());
