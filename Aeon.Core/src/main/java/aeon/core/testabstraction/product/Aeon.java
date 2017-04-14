@@ -1,7 +1,6 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.web.BrowserType;
-import aeon.core.common.web.selectors.Parameter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,7 +8,6 @@ import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by DionnyS on 4/13/2016.
@@ -21,12 +19,9 @@ public class Aeon {
     public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
         try {
             T product = productClass.newInstance();
-            Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
-            parameters.setString(Parameters.Keys.browser_type, browserType.toString());
             product.getConfiguration().setBrowserType(browserType);
-            product.setParameters(parameters);
 
             log.info("Launching product on browser: " + browserType);
 
