@@ -254,7 +254,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
     private static DesiredCapabilities getChromeOptions(String browserAcceptedLanguageCodes, boolean maximize, boolean useMobileUserAgent, String proxyLocation) {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions");
+        chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
         if (maximize) {
             chromeOptions.addArguments("--start-maximized");
