@@ -39,7 +39,7 @@ public class WebProduct extends Product {
         commandExecutionFacade = new WebCommandExecutionFacade(
                 new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)), new AjaxWaiter(driver, Duration.millis(20000)));
 
-        this.automationInfo = new AutomationInfo(parameters, driver, adapter);
+        this.automationInfo = new AutomationInfo(configuration, driver, adapter);
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
 
         afterLaunch();
@@ -52,5 +52,19 @@ public class WebProduct extends Product {
     @Override
     protected void afterLaunch() {
         browser = new Browser(getAutomationInfo());
+    }
+
+    /**
+     * Disables the ajax waiter.
+     */
+    public void disableAjaxWaiting() {
+        configuration.setBoolean(Configuration.Keys.ajaxWaiter, false);
+    }
+
+    /**
+     * Enables the ajax waiter.
+     */
+    public void enableAjaxWaiting() {
+        configuration.setBoolean(Configuration.Keys.ajaxWaiter, true);
     }
 }

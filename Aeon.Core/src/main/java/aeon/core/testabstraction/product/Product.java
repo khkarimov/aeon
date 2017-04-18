@@ -11,12 +11,10 @@ import aeon.core.framework.abstraction.adapters.IAdapterExtension;
  */
 public abstract class Product {
     protected AutomationInfo automationInfo;
-    protected Parameters parameters;
     protected Configuration configuration;
     protected WebCommandExecutionFacade commandExecutionFacade;
 
     public Product() {
-
     }
 
     protected Product(AutomationInfo automationInfo) {
@@ -51,10 +49,19 @@ public abstract class Product {
         this.automationInfo.setAdapter(adapter);
     }
 
-    protected void setParameters(Parameters parameters) {
-        this.parameters = parameters;
-    }
 
     protected void afterLaunch() {
+    }
+
+    public boolean getConfig(String key, boolean defaultValue){
+        return configuration.getBoolean(key, defaultValue);
+    }
+
+    public String getConfig(String key, String defaultValue){
+        return configuration.getString(key, defaultValue);
+    }
+
+    public double getConfig(String key, double defaultValue){
+        return configuration.getDouble(key, defaultValue);
     }
 }
