@@ -24,7 +24,6 @@ public class SeleniumConfiguration extends Configuration {
         static final String promptUserForContinueOnExceptionDecision = "prompt_user_for_continue_on_exception_decision";
         static final String ensureCleanEnvironment = "ensure_clean_environment";
         static final String browserType = "browser_type";
-        static final String PromptUserForContinueOnExceptionDecision = "prompt_user_for_continue_on_exception_decision";
         static final String enableSeleniumGrid = "enable_selenium_grid";
         static final String language = "language";
         static final String moveMouseToOrigin = "move_mouse_to_origin";
