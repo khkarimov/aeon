@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.util.Properties;
 
 public class SeleniumConfiguration extends Configuration {
@@ -40,7 +41,7 @@ public class SeleniumConfiguration extends Configuration {
         static final String firefoxBinary = "firefox_binary";
     };
 
-    public SeleniumConfiguration() throws IOException {
+    public SeleniumConfiguration() throws IOException, IllegalAccessException {
         super(AeonWebDriver.class, SeleniumAdapter.class);
     }
 
@@ -53,6 +54,18 @@ public class SeleniumConfiguration extends Configuration {
            throw e;
        }
         setBrowserDirectories();
+    }
+
+    @Override
+    public void loadEnvValues() throws IllegalAccessException {
+        Keys keysInstance = new SeleniumConfiguration.Keys();
+        for(Field key : SeleniumConfiguration.Keys.class.getDeclaredFields()){
+            key.setAccessible(true);
+            String keyValue =  key.get(keysInstance).toString();
+            String environmentValue = System.getenv("aeon." + keyValue);
+            if(environmentValue != null)
+                properties.setProperty(key.toString(), environmentValue);
+        }
     }
 
     private void setBrowserDirectories() {
@@ -76,4 +89,6 @@ public class SeleniumConfiguration extends Configuration {
                 throw new IllegalStateException("Unsupported Operating System");
         }
     }
+
+
 }

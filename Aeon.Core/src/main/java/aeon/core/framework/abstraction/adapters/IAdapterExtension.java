@@ -10,7 +10,7 @@ public interface IAdapterExtension extends ExtensionPoint {
 
     IAdapter createAdapter(Configuration configuration);
 
-    Configuration getConfiguration() throws IOException;
+    Configuration getConfiguration() throws IOException, IllegalAccessException;
 
     Capability getProvidedCapability();
 }

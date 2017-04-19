@@ -305,7 +305,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public Configuration getConfiguration() throws IOException {
+    public Configuration getConfiguration() throws IOException, IllegalAccessException {
         return new SeleniumConfiguration();
     }
 
