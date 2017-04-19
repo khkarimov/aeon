@@ -59,7 +59,7 @@ public class Configuration {
             String keyValue =  key.get(keysInstance).toString();
             String environmentValue = System.getenv("aeon." + keyValue);
             if(environmentValue != null)
-                properties.setProperty(key.toString(), environmentValue);
+                properties.setProperty(keyValue, environmentValue);
         }
     }
 
