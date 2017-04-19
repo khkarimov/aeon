@@ -30,6 +30,10 @@ public class Configuration {
     public Properties properties;
 
     public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
+        new Configuration(driver, adapter, Keys.class.getDeclaredFields());
+    }
+
+    protected  <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter, Field[] keys) throws IOException, IllegalAccessException {
         this.driver = driver;
         this.adapter = adapter;
         properties = new Properties();
@@ -49,14 +53,9 @@ public class Configuration {
             log.error("No aeon.properties found");
             throw e;
         }
-        loadEnvValues();
-    }
-
-    public void loadEnvValues() throws IllegalAccessException {
-        Keys keysInstance = new Configuration.Keys();
-        for(Field key : Configuration.Keys.class.getDeclaredFields()){
+        for(Field key : keys){
             key.setAccessible(true);
-            String keyValue =  key.get(keysInstance).toString();
+            String keyValue =  key.get(null).toString();
             String environmentValue = System.getenv("aeon." + keyValue);
             if(environmentValue != null)
                 properties.setProperty(keyValue, environmentValue);
