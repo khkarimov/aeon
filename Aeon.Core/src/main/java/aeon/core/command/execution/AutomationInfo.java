@@ -2,15 +2,13 @@ package aeon.core.command.execution;
 
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import aeon.core.testabstraction.product.Parameters;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import aeon.core.testabstraction.product.Configuration;
 
 /**
  * Provides access to data required for automation.
  */
 public class AutomationInfo {
-    private Parameters parameters;
+    private Configuration configuration;
     private ICommandExecutionFacade commandExecutionFacade;
     private IAdapter adapter;
     private IDriver driver;
@@ -18,14 +16,15 @@ public class AutomationInfo {
     /**
      * Creates a new {@link AutomationInfo} instance.
      *
-     * @param parameters
+     * @param configuration
      * @param driver
      * @param adapter
      */
-    public AutomationInfo(Parameters parameters, IDriver driver, IAdapter adapter) {
+    public AutomationInfo(Configuration configuration, IDriver driver, IAdapter adapter) {
         this.driver = driver;
+
         this.adapter = adapter;
-        this.parameters = parameters;
+        this.configuration = configuration;
     }
 
     public final IAdapter getAdapter() {
@@ -44,12 +43,12 @@ public class AutomationInfo {
         commandExecutionFacade = value;
     }
 
-    public Parameters getParameters() {
-        return parameters;
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
-    public void setParameters(Parameters parameters) {
-        this.parameters = parameters;
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public IDriver getDriver() {

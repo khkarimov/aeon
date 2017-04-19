@@ -6,6 +6,8 @@ import aeon.core.command.execution.commands.web.WebControlCommand;
 import aeon.core.command.execution.commands.web.WebControlCommandWithReturn;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunnerFactory;
 import aeon.core.common.helpers.AjaxWaiter;
+import aeon.core.testabstraction.product.Configuration;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 
 /**
  * Created by SebastianR on 11/8/2016.
@@ -42,7 +44,8 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
-        if(command instanceof WebControlCommand){
+        if(command instanceof WebControlCommand
+                && automationInfo.getConfiguration().getBoolean(Configuration.Keys.ajaxWaiter, true)) {
             ajaxWaiter.waitForAsync();
         }
         delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
@@ -59,7 +62,8 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
         if (command == null) {
             throw new IllegalArgumentException("command");
         }
-        if(command instanceof WebControlCommandWithReturn){
+        if(command instanceof WebControlCommandWithReturn
+                && automationInfo.getConfiguration().getBoolean(Configuration.Keys.ajaxWaiter, true)){
             ajaxWaiter.waitForAsync();
         }
         return delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());

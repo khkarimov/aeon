@@ -8,7 +8,6 @@ import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by DionnyS on 4/13/2016.
@@ -20,14 +19,9 @@ public class Aeon {
     public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
         try {
             T product = productClass.newInstance();
-            Parameters parameters = new Parameters(); //loadParameters(product.getSettingsProvider());
-
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
-
-            parameters.put("browserType", browserType);
             product.getConfiguration().setBrowserType(browserType);
-            product.setParameters(parameters);
 
             log.info("Launching product on browser: " + browserType);
 
@@ -56,20 +50,5 @@ public class Aeon {
         }
 
         throw new RuntimeException("No valid adapter found");
-    }
-
-    private static Parameters loadParameters(ISettingsProvider settingsProvider) {
-        Parameters parameters = new Parameters();
-
-        // Load global settings.
-        parameters.load(new GlobalSettings().getSettings());
-
-        // Load driver-specific settings.
-        parameters.load(settingsProvider.getSettings());
-
-        // Load user settings.
-        parameters.load(ResourceBundle.getBundle("config"));
-
-        return parameters;
     }
 }
