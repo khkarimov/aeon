@@ -3,12 +3,15 @@ package aeon.core.common.helpers;
 import aeon.core.common.exceptions.ScriptExecutionException;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 /**
  * Created by JustinP on 6/2/2016.
@@ -17,6 +20,7 @@ public class AjaxWaiter {
     private IWebDriver webDriver;
     private IClock clock;
     private Duration timeout;
+    private static Logger log = LogManager.getLogger(AjaxWaiter.class);
 
     public AjaxWaiter(IDriver driver, Duration timeout){
         this.webDriver = (IWebDriver)driver;
@@ -60,24 +64,22 @@ public class AjaxWaiter {
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeonAjaxWaiter');document.body.appendChild(a);";
             webDriver.executeScript(InjectScriptTag);
             webDriver.executeScript("aeon.ajaxTimeout = " + (timeout.getMillis() - 2000));
-            System.out.println("Injected JS");
+            log.info("Injected JS");
         }catch (ScriptExecutionException e){
-            System.out.println("Could not inject JS");
+            log.error("Could not inject JS");
         }
     }
 
     public String getAjaxWaiterJS() {
-        File file = new File("../ajax-waiter.js");
-        try {
-            byte[] data = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
-            return new String(data);
+        try(InputStream scriptReader = AjaxWaiter.class.getResourceAsStream("/ajax-waiter.js")) {
+            String content = new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
+            return  content;
         } catch (FileNotFoundException e) {
-            System.out.println("File not found on path");
-            e.printStackTrace();
+            log.error("File not found on path");
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            System.out.println("Problem reading from file");
-            e.printStackTrace();
+            log.error("Problem reading from file");
+            throw new RuntimeException(e);
         }
-        return "";
     }
 }
