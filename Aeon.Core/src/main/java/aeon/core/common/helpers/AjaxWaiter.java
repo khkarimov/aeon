@@ -56,12 +56,15 @@ public class AjaxWaiter {
         }while(count != 0  && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
+    /*ajaxJsonpElementTimeout defines a timeout for JSONP request on the HTML page.
+    / This is set to be less than the timeout so that page interactions can be executed.
+     */
     public void injectJS() {
         try {
             String injectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeonAjaxWaiter');document.body.appendChild(a);";
             webDriver.executeScript(injectScriptTag);
-            webDriver.executeScript("aeon.ajaxTimeout = " + (timeout.getMillis() - 2000));
+            webDriver.executeScript("aeon.ajaxJsonpElementTimeout = " + (timeout.getMillis() - 2000));
             log.info("Injected JS");
         }catch (ScriptExecutionException e){
             log.error("Could not inject JS");

@@ -1,6 +1,6 @@
 var aeon = {
     ajaxCounter: 0,
-    ajaxTimeout: 18000
+    ajaxJsonpElementTimeout: 18000
 };
 
 (function(originalCreateElement) {
@@ -9,7 +9,7 @@ var aeon = {
         if (element === 'script') {
             var timeout = setTimeout(function() {
                 --aeon.ajaxCounter;
-            }, aeon.ajaxTimeout);
+            }, aeon.ajaxJsonpElementTimeout);
             ++aeon.ajaxCounter;
             domElement.onload = function() {
                 clearTimeout(timeout);
