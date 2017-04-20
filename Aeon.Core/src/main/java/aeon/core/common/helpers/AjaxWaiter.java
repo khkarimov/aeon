@@ -54,14 +54,10 @@ public class AjaxWaiter {
         }while(count != 0  && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
-    //JSONP needs to be injected first cause it declares the aeon variable used for the scripts.
     public void injectJS() {
         try {
             String InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
-                    getJSONPWaiterJS() + "\";a.setAttribute('id', 'aeon.JSONP.waiter.script');document.body.appendChild(a);";
-            webDriver.executeScript(InjectScriptTag);
-            InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
-                    getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeon.ajax.waiter.script');document.body.appendChild(a);";
+                    getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeonAjaxWaiter');document.body.appendChild(a);";
             webDriver.executeScript(InjectScriptTag);
             webDriver.executeScript("aeon.ajaxTimeout = " + (timeout.getMillis() - 2000));
             System.out.println("Injected JS");
@@ -70,22 +66,8 @@ public class AjaxWaiter {
         }
     }
 
-    public String getJSONPWaiterJS() {
-        File file = new File("../JSONPWaiter.js");
-        try {
-            byte[] data = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
-            return new String(data);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found on path");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Problem reading from file");
-            e.printStackTrace();
-        }
-        return "";
-    }
     public String getAjaxWaiterJS() {
-        File file = new File("../AjaxWaiter.js");
+        File file = new File("../ajax-waiter.js");
         try {
             byte[] data = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
             return new String(data);
