@@ -9,8 +9,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 /**
@@ -60,13 +58,14 @@ public class AjaxWaiter {
 
     public void injectJS() {
         try {
-            String InjectScriptTag = "var a = document.createElement('script');a.text=\"" +
+            String injectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeonAjaxWaiter');document.body.appendChild(a);";
-            webDriver.executeScript(InjectScriptTag);
+            webDriver.executeScript(injectScriptTag);
             webDriver.executeScript("aeon.ajaxTimeout = " + (timeout.getMillis() - 2000));
             log.info("Injected JS");
         }catch (ScriptExecutionException e){
             log.error("Could not inject JS");
+            throw new RuntimeException(e);
         }
     }
 
