@@ -18,15 +18,15 @@ public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> 
     }
 
     public MyGridHeaders material(String value) {
-        return findRow(value, By.CssSelector("#grid-table-id th:contains(Material)"));
+        return findRow(value, By.cssSelector("#grid-table-id th:contains(Material)"));
     }
 
     public MyGridHeaders quantity(String value){
-        return findRow(value, By.CssSelector("#grid-table-id th:contains(Quantity)"));
+        return findRow(value, By.cssSelector("#grid-table-id th:contains(Quantity)"));
     }
 
     public MyGridHeaders unitPrice(String value){
-        return findRow(value, By.CssSelector("#grid-table-id th:contains(Unit price)"));
+        return findRow(value, By.cssSelector("#grid-table-id th:contains(Unit price)"));
     }
 
 }

@@ -76,7 +76,7 @@ public class WebElement extends Element {
     public void dragAndDrop(String dropTarget) {
         info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
                 selector,
-                By.CssSelector(dropTarget),
+                By.cssSelector(dropTarget),
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 

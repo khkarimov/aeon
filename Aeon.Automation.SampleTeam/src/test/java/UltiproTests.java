@@ -31,16 +31,16 @@ public class UltiproTests {
 
     @Test
     public void newHireTest(){
-        ultipro.loginPage.UserNameTextBox.set("wardenj");
-        ultipro.loginPage.PasswordTextBox.set("password");
-        ultipro.loginPage.LoginButton.click();
+        ultipro.loginPage.userNameTextBox.set("wardenj");
+        ultipro.loginPage.passwordTextBox.set("password");
+        ultipro.loginPage.loginButton.click();
         ultipro.homePage.menuButton.click();
         ultipro.homePage.myTeam.click();
         ultipro.homePage.myEmployees.click();
         ultipro.myEmployeesPage.addEmployeeButton.click();
         ultipro.browser.switchToWindowByTitle("Hire an Employee");
         ultipro.browser.maximize();
-        ultipro.newHireWizard.startPage.SSNTextBox.set("123987654");
+        ultipro.newHireWizard.startPage.ssnTextBox.set("123987654");
         ultipro.newHireWizard.startPage.confirmSSNTextBox.set("123987654");
         ultipro.newHireWizard.startPage.firstName.set("FirstName");
         ultipro.newHireWizard.startPage.lastName.set("LastName");
@@ -57,9 +57,9 @@ public class UltiproTests {
 
     @Test
     public void gridWithSwitchTest(){
-        ultipro.loginPage.UserNameTextBox.set("wardenj");
-        ultipro.loginPage.PasswordTextBox.set("password");
-        ultipro.loginPage.LoginButton.click();
+        ultipro.loginPage.userNameTextBox.set("wardenj");
+        ultipro.loginPage.passwordTextBox.set("password");
+        ultipro.loginPage.loginButton.click();
         ultipro.homePage.menuButton.click();
         ultipro.homePage.myTeam.click();
         ultipro.homePage.myEmployees.click();

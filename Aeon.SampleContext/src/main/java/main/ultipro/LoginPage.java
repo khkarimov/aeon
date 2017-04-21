@@ -11,17 +11,17 @@ import aeon.core.testabstraction.elements.web.TextBox;
  * Created by DionnyS on 4/21/2016.
  */
 public class LoginPage {
-    public TextBox UserNameTextBox;
-    public TextBox PasswordTextBox;
-    public Button LoginButton;
-    public Label WarningMessage;
-    public Select LanguageSelect;
+    public TextBox userNameTextBox;
+    public TextBox passwordTextBox;
+    public Button loginButton;
+    public Label warningMessage;
+    public Select languageSelect;
 
     public LoginPage(AutomationInfo automationInfo) {
-        UserNameTextBox = new TextBox(automationInfo, By.CssSelector( "input[id*='UserName']"));
-        PasswordTextBox = new TextBox(automationInfo, By.CssSelector("input[id*='Password']"));
-        LoginButton = new Button(automationInfo, By.CssSelector("input[id*='LoginButton']"));
-        LanguageSelect = new Select(automationInfo, By.CssSelector("select[name*='languagesSelection']"));
-        WarningMessage = new Label(automationInfo, By.CssSelector("div[id*='ctl00_Content_warnMsg']"));
+        userNameTextBox = new TextBox(automationInfo, By.cssSelector( "input[id*='UserName']"));
+        passwordTextBox = new TextBox(automationInfo, By.cssSelector("input[id*='Password']"));
+        loginButton = new Button(automationInfo, By.cssSelector("input[id*='loginButton']"));
+        languageSelect = new Select(automationInfo, By.cssSelector("select[name*='languagesSelection']"));
+        warningMessage = new Label(automationInfo, By.cssSelector("div[id*='ctl00_Content_warnMsg']"));
     }
 }

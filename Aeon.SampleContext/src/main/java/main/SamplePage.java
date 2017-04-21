@@ -8,9 +8,9 @@ import aeon.core.testabstraction.models.Page;
  * Created by DionnyS on 4/13/2016.
  */
 public class SamplePage extends Page {
-    public Element Submit;
+    public Element submit;
 
     public SamplePage() {
-        Submit = new Element(By.CssSelector("[id*=submit]"));
+        submit = new Element(By.cssSelector("[id*=submit]"));
     }
 }

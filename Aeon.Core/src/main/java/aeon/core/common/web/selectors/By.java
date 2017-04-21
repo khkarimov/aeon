@@ -23,7 +23,7 @@ public class By implements IBy {
      * @param selector A string containing a selector expression.
      * @return A new {@link By} instance.
      */
-    public static By CssSelector(String selector) {
+    public static By cssSelector(String selector) {
         return new By(selector);
     }
 

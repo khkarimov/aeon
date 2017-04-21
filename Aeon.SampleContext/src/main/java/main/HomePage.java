@@ -7,10 +7,10 @@ import aeon.core.common.web.selectors.By;
  * Created by Salvador Gandara on 5/27/2016.
  */
 public class HomePage {
-    public aeon.core.testabstraction.elements.web.Link ViewPayStatement;
+    public aeon.core.testabstraction.elements.web.Link viewPayStatement;
 
     public HomePage(AutomationInfo automationInfo) {
-        ViewPayStatement = new aeon.core.testabstraction.elements.web.Link(automationInfo, By.CssSelector("a[id*='viewPayStatementLink']"));
+        viewPayStatement = new aeon.core.testabstraction.elements.web.Link(automationInfo, By.cssSelector("a[id*='viewPayStatementLink']"));
     }
 
 
