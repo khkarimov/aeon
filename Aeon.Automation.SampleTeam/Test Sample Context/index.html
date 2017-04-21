@@ -309,53 +309,6 @@
 }
 </script>
 <script>
-    /*(function(open) {
-     // event creation
-     var asyncCallOccurred = false;
-     var event;
-
-     if (document.createEvent) {
-     event = document.createEvent("HTMLEvents");
-     event.initEvent("aeon.asyc.done", true, true);
-     } else {
-     event = document.createEventObject();
-     event.eventType = "aeon.asyc.done";
-     }
-
-     event.eventName = "aeon.asyc.done";
-
-     document.getElementById('start').addEventListener("aeon.asyc.done", function() {
-     alert('all events have finished');
-     });
-
-     // injector for AJAX
-     var counter = 0;
-     XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
-     $('#counter').html(++counter);
-
-     var readyStateChange = function() {
-     if (this.readyState === 4) {
-     $('#counter').html(--counter);
-
-     if(counter === 0) {
-     setTimeout(function() {
-     if (document.createEvent) {
-     document.getElementById('start').dispatchEvent(event);
-     } else {
-     document.getElementById('start').fireEvent("on" + event.eventType, event);
-     }
-     }, 1);
-     }
-     }
-     };
-
-     this.addEventListener("readystatechange", readyStateChange, false);
-
-     open.call(this, method, url, async, user, pass);
-     };
-
-     })(XMLHttpRequest.prototype.open);*/
-
     //this will populate the dropdown list with 10000 entries on page load
     for (i = 0; i < 5000; i++) {
         var anOption = document.createElement("option");
@@ -478,23 +431,23 @@
 
         $('#start').on('click', function () {
             $.ajax({
-                crossDomain: true,
-                url: "http://mockbin.org/delay/5?__callback=?",
-                jsonp: "__callback",
-                dataType: "jsonp"
+                crossDomain: true,
+                url: "http://mockbin.org/delay/15000?__callback=?",
+                jsonp: "__callback",
+                dataType: "jsonp"
             })
             .done(function () {
                 $('.call-1').show();
             });
             $.ajax({
                 crossDomain: true,
-                url: "http://mockbin.org/delay/5?__callback=?",
+                url: "http://mockbin.org/delay/13000?__callback=?",
                 jsonp: "__callback",
                 dataType: "jsonp"
             })
             .done(function () {
                 $('.call-2').show();
-                load("http://httpbin.org/delay/1", function () {
+                load("http://mockbin.org/delay/3000", function () {
                     $('.call-3').show();
                 })
             });
