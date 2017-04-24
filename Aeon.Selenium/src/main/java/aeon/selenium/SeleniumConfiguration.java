@@ -88,6 +88,4 @@ public class SeleniumConfiguration extends Configuration {
                 throw new IllegalStateException("Unsupported Operating System");
         }
     }
-
-
 }
