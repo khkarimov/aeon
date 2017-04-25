@@ -65,6 +65,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String browserAcceptedLanguageCodes;
     private boolean maximizeBrowser;
     private boolean useMobileUserAgent;
+    private boolean ensureCleanEnvironment;
+    private String proxyLocation;
 
     public IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(browserType, browserAcceptedLanguageCodes, ensureCleanEnvironment);
@@ -73,6 +75,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.language, "en-us");
         this.maximizeBrowser = configuration.getBoolean(SeleniumConfiguration.Keys.maximizeBrowser, true);
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.useMobileUserAgent, true);
+        this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ensureCleanEnvironment, true);
+        proxyLocation = configuration.getString(SeleniumConfiguration.Keys.proxyLocation, "");
 
         boolean enableSeleniumGrid = configuration.getBoolean(SeleniumConfiguration.Keys.enableSeleniumGrid, true);
         URL seleniumHubUrl = null;
@@ -81,15 +85,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        String proxyLocation = configuration.getString(SeleniumConfiguration.Keys.proxyLocation, "");
         JavaScriptFlowExecutor javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.standardSeconds(5));
         boolean moveMouseToOrigin = configuration.getBoolean(SeleniumConfiguration.Keys.moveMouseToOrigin, true);
         String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.chromeDirectory, null);
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.ieDirectory, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.edgeDirectory, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.marionetteDirectory, null);
-
-        boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ensureCleanEnvironment, true);
 
         switch (browserType) {
             case Firefox:
@@ -98,7 +99,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    driver = new FirefoxDriver(getFirefoxOptions(proxyLocation));
+                    driver = new FirefoxDriver(getFirefoxOptions());
                 }
                 driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
 
@@ -208,7 +209,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return firefoxProfile;
     }
 
-    private FirefoxOptions getFirefoxOptions(String proxyLocation){
+    private FirefoxOptions getFirefoxOptions(){
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.firefoxBinary, null);
         FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
