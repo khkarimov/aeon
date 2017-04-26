@@ -41,7 +41,7 @@ public class WindowsChromeDriverTests {
     @Test
     public void testSelectFileDialog_OpenFileDialog() {
         String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
-        product.StartPage.TestFileDialogInput.openFileDialog();
-        product.StartPage.TestFileDialogInput.selectFileDialog(path);
+        product.startPage.testFileDialogInput.openFileDialog();
+        product.startPage.testFileDialogInput.selectFileDialog(path);
     }
 }

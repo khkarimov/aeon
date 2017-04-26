@@ -13,7 +13,7 @@ public class PersonalPage {
 
     public PersonalPage(AutomationInfo automationInfo){
         // Controls
-        addressLine = new TextBox(automationInfo, By.CssSelector("#ctl00_Content_NewHirePersonalFV_txbAddressLine1"));
+        addressLine = new TextBox(automationInfo, By.cssSelector("#ctl00_Content_NewHirePersonalFV_txbAddressLine1"));
 
     }
 }
