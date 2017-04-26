@@ -2,8 +2,7 @@ package TestAbstraction;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
-import aeon.core.command.execution.commands.web.DismissAlertCommand;
-import aeon.core.command.execution.commands.web.SendKeysToAlertCommand;
+import aeon.core.command.execution.commands.web.*;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
@@ -19,6 +18,8 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import javax.swing.*;
+
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -67,5 +68,35 @@ public class WebUIObject {
     public void dismissAlert_CallsExecute() {
         browserObject.dismissAlert();
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(DismissAlertCommand.class));
+    }
+
+    @Test
+    public void acceptAlert_CallsExecute() {
+        browserObject.acceptAlert();
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(AcceptAlertCommand.class));
+    }
+
+    @Test
+    public void deleteAllCookies_CallsExecute() {
+        browserObject.deleteAllCookies();
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(DeleteAllCookiesCommand.class));
+    }
+
+    @Test
+    public void deleteCookie_CallsExecute() {
+        browserObject.deleteCookie("cookiename");
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(DeleteCookieCommand.class));
+    }
+
+    @Test
+    public void getBrowserType_CallsExecute() {
+        browserObject.getBrowserType();
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetBrowserTypeCommand.class));
+    }
+
+    @Test
+    public void getAlertText_CallsExecute() {
+        browserObject.getAlertText();
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAlertTextCommand.class));
     }
 }
