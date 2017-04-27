@@ -12,7 +12,7 @@ public class SwitchToWindowByUrlCommand extends CommandWithReturn {
     private String url;
 
     public SwitchToWindowByUrlCommand(String url) {
-        super(Resources.getString("SwitchToWindowByUrlCommand_Info"));
+        super(String.format(Resources.getString("SwitchToWindowByUrlCommand_Info"),url));
         this.url = url;
     }
 
