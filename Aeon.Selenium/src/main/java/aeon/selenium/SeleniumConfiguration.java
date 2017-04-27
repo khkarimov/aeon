@@ -37,9 +37,8 @@ public class SeleniumConfiguration extends Configuration {
     };
 
     @Override
-    protected List<Field> getAllFields(){
+    protected List<Field> getConfigurationFields(){
         List<Field> keys = new ArrayList<>();
-        keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getSuperclass().getDeclaredFields()));
         keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getDeclaredFields()));
         return keys;
     }

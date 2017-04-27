@@ -31,15 +31,13 @@ public class Configuration {
         public static final String browserType = "browser_type";
     }
 
-    protected List<Field> getAllFields(){
-        List<Field> keys = new ArrayList<>();
-        keys.addAll(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
-        return keys;
+    protected List<Field> getConfigurationFields(){
+       return new ArrayList<>();
     }
 
     public Properties properties;
 
-    protected  <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
+    public  <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
         this.driver = driver;
         this.adapter = adapter;
         properties = new Properties();
@@ -59,7 +57,10 @@ public class Configuration {
             log.error("No aeon.properties found");
             throw e;
         }
-        for(Field key : getAllFields()){
+
+        List<Field> keys = getConfigurationFields();
+        keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
+        for(Field key : keys){
             key.setAccessible(true);
             String keyValue =  key.get(null).toString();
             String environmentValue = System.getenv("aeon." + keyValue);
