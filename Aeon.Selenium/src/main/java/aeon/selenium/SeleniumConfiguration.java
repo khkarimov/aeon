@@ -12,18 +12,14 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.Member;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SeleniumConfiguration extends Configuration {
     Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
     static class Keys extends Configuration.Keys{
-        public static final String ajaxWaiter = "wait_for_ajax_response";
-        public static final String defaultTimeout = "default_timeout";
-        public static final String promptUserForContinueOnExceptionDecision = "prompt_user_for_continue_on_exception_decision";
-        public static final String ensureCleanEnvironment = "ensure_clean_environment";
-        public static final String browserType = "browser_type";
         public static final String enableSeleniumGrid = "enable_selenium_grid";
         public static final String language = "language";
         public static final String moveMouseToOrigin = "move_mouse_to_origin";
@@ -40,9 +36,16 @@ public class SeleniumConfiguration extends Configuration {
         public static final String firefoxBinary = "firefox_binary";
     };
 
+    @Override
+    protected List<Field> getAllFields(){
+        List<Field> keys = new ArrayList<>();
+        keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getSuperclass().getDeclaredFields()));
+        keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getDeclaredFields()));
+        return keys;
+    }
 
     public SeleniumConfiguration() throws IOException, IllegalAccessException {
-        super(AeonWebDriver.class, SeleniumAdapter.class, SeleniumConfiguration.Keys.class.getDeclaredFields());
+        super(AeonWebDriver.class, SeleniumAdapter.class);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class SeleniumConfiguration extends Configuration {
            log.error("selenium.properties resource could not be read");
            throw e;
        }
-        setBrowserDirectories();
+       setBrowserDirectories();
     }
 
     private void setBrowserDirectories() {
