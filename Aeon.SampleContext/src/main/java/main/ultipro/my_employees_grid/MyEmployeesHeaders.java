@@ -14,10 +14,10 @@ public class MyEmployeesHeaders extends RowActions<MyEmployeesHeaders, MyEmploye
     }
 
     public MyEmployeesHeaders employeeNumber(String value){
-        return findRow(value, By.CssSelector("#GridView1_colHeaders > th:nth-child(2)"));
+        return findRow(value, By.cssSelector("#GridView1_colHeaders > th:nth-child(2)"));
     }
 
     public MyEmployeesHeaders primaryWorkPhone(String value) {
-        return findRow(value, By.CssSelector("#GridView1_colHeaders > th:nth-child(3)"));
+        return findRow(value, By.cssSelector("#GridView1_colHeaders > th:nth-child(3)"));
     }
 }

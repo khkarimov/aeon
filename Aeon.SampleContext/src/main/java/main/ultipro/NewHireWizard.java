@@ -20,8 +20,8 @@ public class NewHireWizard {
         startPage = new StartPage(automationInfo);
 
         // Controls
-        nextButton = new Button(automationInfo, By.CssSelector("#ctl00_btnNext"));
-        backButton = new Button(automationInfo, By.CssSelector("#ctl00_btnPrev"));
-        cancelButton = new Button(automationInfo, By.CssSelector("#ctl00_btnCancel"));
+        nextButton = new Button(automationInfo, By.cssSelector("#ctl00_btnNext"));
+        backButton = new Button(automationInfo, By.cssSelector("#ctl00_btnPrev"));
+        cancelButton = new Button(automationInfo, By.cssSelector("#ctl00_btnCancel"));
     }
 }

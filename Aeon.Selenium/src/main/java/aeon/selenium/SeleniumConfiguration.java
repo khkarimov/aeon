@@ -11,6 +11,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Member;
+import java.util.Properties;
 
 public class SeleniumConfiguration extends Configuration {
     Logger log = LogManager.getLogger(SeleniumConfiguration.class);
@@ -36,6 +39,7 @@ public class SeleniumConfiguration extends Configuration {
         public static final String chromeBinary = "chrome_binary";
         public static final String firefoxBinary = "firefox_binary";
     };
+
 
     public SeleniumConfiguration() throws IOException, IllegalAccessException {
         super(AeonWebDriver.class, SeleniumAdapter.class, SeleniumConfiguration.Keys.class.getDeclaredFields());

@@ -8,20 +8,20 @@ import main.ultipro.LoginPage;
  * Created by DionnyS on 4/13/2016.
  */
 public class Sample extends WebProduct {
-    public SamplePage Main;
-    public LoginPage Login;
-    public HomePage Home;
-    public VTeamSamplePage StartPage;
+    public SamplePage main;
+    public LoginPage login;
+    public HomePage home;
+    public VTeamSamplePage startPage;
 
     public Sample() {
-        Main = new SamplePage();
+        main = new SamplePage();
     }
 
     @Override
     protected void afterLaunch() {
         super.afterLaunch();
-        Login = new LoginPage(getAutomationInfo());
-        Home = new HomePage(getAutomationInfo());
-        StartPage = new VTeamSamplePage(getAutomationInfo());
+        login = new LoginPage(getAutomationInfo());
+        home = new HomePage(getAutomationInfo());
+        startPage = new VTeamSamplePage(getAutomationInfo());
     }
 }

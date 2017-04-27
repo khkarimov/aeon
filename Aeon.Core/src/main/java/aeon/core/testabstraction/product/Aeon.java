@@ -21,6 +21,9 @@ public class Aeon {
             T product = productClass.newInstance();
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
+            if(browserType == null){
+                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.browserType, "Chrome"));
+            }
             product.getConfiguration().setBrowserType(browserType);
 
             log.info("Launching product on browser: " + browserType);
@@ -32,6 +35,9 @@ public class Aeon {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public static <T extends Product> T launch(Class<T> productClass) {
+        return launch(productClass, null);
     }
 
     private static <T extends Product> IAdapterExtension loadPlugins(T product) throws RuntimeException {
