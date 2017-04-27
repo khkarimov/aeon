@@ -2,14 +2,17 @@ package TestAbstraction;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
+import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
+import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import aeon.core.testabstraction.product.Configuration;
+import org.joda.time.DateTime;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
@@ -19,8 +22,11 @@ import org.mockito.junit.MockitoRule;
 
 import javax.swing.*;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -47,6 +53,8 @@ public class WebUIObject {
     private IDriver driver;
     @Mock
     private ICommandExecutionFacade commandExecutionFacade;
+    @Mock
+    private IWebCookie testCookie;
 
     // Setup Methods
     @Before
@@ -96,7 +104,30 @@ public class WebUIObject {
 
     @Test
     public void getAlertText_CallsExecute() {
-        browserObject.getAlertText();
+        String alertText = "This is an alert";
+        when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(alertText);
+        String returnedText = browserObject.getAlertText();
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAlertTextCommand.class));
+        assertTrue(alertText.equals(returnedText));
+    }
+
+    @Test
+    public void getCookie_CallsExecute() {
+        when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(testCookie);
+        IWebCookie returnedCookie = browserObject.getCookie("Placeholder");
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetCookieCommand.class));
+        assertTrue(testCookie == testCookie);
+    }
+
+    @Test
+    public void goBack_CallsExecute() {
+        browserObject.goBack();
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GoBackCommand.class));
+    }
+
+    @Test
+    public void goForward_CallsExecute() {
+        browserObject.goForward();
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GoForwardCommand.class));
     }
 }
