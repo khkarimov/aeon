@@ -9,6 +9,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -27,9 +30,14 @@ public class Configuration {
         public static final String ensureCleanEnvironment = "ensure_clean_environment";
         public static final String browserType = "browser_type";
     }
+
+    protected List<Field> getConfigurationFields(){
+       return new ArrayList<>();
+    }
+
     public Properties properties;
 
-    public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
+    public  <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
         this.driver = driver;
         this.adapter = adapter;
         properties = new Properties();
@@ -49,14 +57,12 @@ public class Configuration {
             log.error("No aeon.properties found");
             throw e;
         }
-        loadEnvValues();
-    }
 
-    public void loadEnvValues() throws IllegalAccessException {
-        Keys keysInstance = new Configuration.Keys();
-        for(Field key : Configuration.Keys.class.getDeclaredFields()){
+        List<Field> keys = getConfigurationFields();
+        keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
+        for(Field key : keys){
             key.setAccessible(true);
-            String keyValue =  key.get(keysInstance).toString();
+            String keyValue =  key.get(null).toString();
             String environmentValue = System.getenv("aeon." + keyValue);
             if(environmentValue != null)
                 properties.setProperty(keyValue, environmentValue);

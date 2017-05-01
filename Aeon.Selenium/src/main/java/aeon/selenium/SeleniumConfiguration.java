@@ -12,33 +12,36 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.Member;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SeleniumConfiguration extends Configuration {
     Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
     static class Keys extends Configuration.Keys{
-        static final String ajaxWaiter = "wait_for_ajax_response";
-        static final String defaultTimeout = "default_timeout";
-        static final String promptUserForContinueOnExceptionDecision = "prompt_user_for_continue_on_exception_decision";
-        static final String ensureCleanEnvironment = "ensure_clean_environment";
-        static final String browserType = "browser_type";
-        static final String enableSeleniumGrid = "enable_selenium_grid";
-        static final String language = "language";
-        static final String moveMouseToOrigin = "move_mouse_to_origin";
-        static final String maximizeBrowser = "maximize_browser";
-        static final String useMobileUserAgent = "use_mobile_user_agent";
-        static final String proxyLocation = "proxy_location";
-        static final String EnsureCleanEnvironment = "ensure_clean_environment";
-        static final String seleniumHubUrl = "selenium_hub_url";
-        static final String chromeDirectory = "chrome_directory";
-        static final String ieDirectory = "ie_directory";
-        static final String marionetteDirectory = "marionette_directory";
-        static final String edgeDirectory = "edge_directory";
-        static final String chromeBinary = "chrome_binary";
-        static final String firefoxBinary = "firefox_binary";
+        public static final String enableSeleniumGrid = "enable_selenium_grid";
+        public static final String language = "language";
+        public static final String moveMouseToOrigin = "move_mouse_to_origin";
+        public static final String maximizeBrowser = "maximize_browser";
+        public static final String useMobileUserAgent = "use_mobile_user_agent";
+        public static final String proxyLocation = "proxy_location";
+        public static final String EnsureCleanEnvironment = "ensure_clean_environment";
+        public static final String seleniumHubUrl = "selenium_hub_url";
+        public static final String chromeDirectory = "chrome_directory";
+        public static final String ieDirectory = "ie_directory";
+        public static final String marionetteDirectory = "marionette_directory";
+        public static final String edgeDirectory = "edge_directory";
+        public static final String chromeBinary = "chrome_binary";
+        public static final String firefoxBinary = "firefox_binary";
     };
+
+    @Override
+    protected List<Field> getConfigurationFields(){
+        List<Field> keys = new ArrayList<>();
+        keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getDeclaredFields()));
+        return keys;
+    }
 
     public SeleniumConfiguration() throws IOException, IllegalAccessException {
         super(AeonWebDriver.class, SeleniumAdapter.class);
@@ -52,19 +55,7 @@ public class SeleniumConfiguration extends Configuration {
            log.error("selenium.properties resource could not be read");
            throw e;
        }
-        setBrowserDirectories();
-    }
-
-    @Override
-    public void loadEnvValues() throws IllegalAccessException {
-        Keys keysInstance = new SeleniumConfiguration.Keys();
-        for(Field key : SeleniumConfiguration.Keys.class.getDeclaredFields()){
-            key.setAccessible(true);
-            String keyValue =  key.get(keysInstance).toString();
-            String environmentValue = System.getenv("aeon." + keyValue);
-            if(environmentValue != null)
-                properties.setProperty(keyValue, environmentValue);
-        }
+       setBrowserDirectories();
     }
 
     private void setBrowserDirectories() {
