@@ -85,7 +85,7 @@ public class Browser {
      * @return The description of the alert dialog box.
      */
     public String getAlertText() {
-        return info.getCommandExecutionFacade().execute(info, new GetAlertTextCommand()).toString();
+        return (String) info.getCommandExecutionFacade().execute(info, new GetAlertTextCommand());
     }
 
     /**
