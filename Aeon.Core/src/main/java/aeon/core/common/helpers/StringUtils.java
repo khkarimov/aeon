@@ -186,14 +186,36 @@ public class StringUtils {
             throw new IllegalArgumentException("zero length expected value");
         }
         if (caseSensitive) {
-            return normalizeSpacing(value).equals(normalizeSpacing(expectedValue));
+            return contains(normalizeSpacing(value), normalizeSpacing(expectedValue));
         } else {
-            return normalizeSpacing(value).equalsIgnoreCase(normalizeSpacing(expectedValue));
+            return containsIgnoreCase(normalizeSpacing(value), normalizeSpacing(expectedValue).toLowerCase());
         }
     }
 
     /**
      * Indicates whether the current instance contains the specified string.
+     *
+     * @param value The current instance.
+     * @param word  The word for which to search.
+     * @return Whether or not the current instance contains the word.
+     */
+    private static boolean contains(String value, String word) {
+        return value.contains(word);
+    }
+
+    /**
+     * Indicates whether the current instance contains the specified string, ignores case.
+     *
+     * @param value The current instance.
+     * @param word  The word for which to search.
+     * @return Whether or not the current instance contains the word.
+     */
+    private static boolean containsIgnoreCase(String value, String word){
+        return contains(value.toLowerCase(), word.toLowerCase());
+    }
+
+    /**
+     * Indicates whether the current instance contains the specified string as a word surrounded by spaces.
      *
      * @param value The current instance.
      * @param word  The word for which to search.

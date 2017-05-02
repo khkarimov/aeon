@@ -510,7 +510,7 @@ public class FirefoxBrowserTests {
     @Test
     public void testIs_IsLike_IsNotLike_WithSelect(){
         product.startPage.lexoDropDown.is("apple");
-        product.startPage.lexoDropDown.isLike("APPLE");
+        product.startPage.lexoDropDown.isLike("PPL");
         product.startPage.lexoDropDown.is("lexicographic-drop-down", "id");
         product.startPage.lexoDropDown.isLike("lexicographic-DROP-down", "id");
         product.startPage.lexoDropDown.is("01", "VALUE");
