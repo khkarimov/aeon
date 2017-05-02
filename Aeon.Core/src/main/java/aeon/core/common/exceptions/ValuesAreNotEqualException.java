@@ -11,6 +11,6 @@ import java.util.Locale;
 public class ValuesAreNotEqualException extends RuntimeException implements Serializable {
 
     public ValuesAreNotEqualException(String actualValue, String expectedValue) {
-        super(String.format(Locale.getDefault(), Resources.getString("ValuesAreNotEqualException_ctor_DefaultMessage"), actualValue, expectedValue));
+        super(String.format(Locale.getDefault(), Resources.getString("ValuesAreNotEqualException_ctor_DefaultMessage"), expectedValue, actualValue));
     }
 }
