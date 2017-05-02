@@ -4,6 +4,7 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
 import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
 
@@ -31,10 +32,14 @@ public class Aeon {
             log.info("Launching product on browser: " + browserType);
             product.launch(plugin);
 
+            protocol = product.getConfig(Configuration.Keys.protocol, "https");
             environment = product.getConfig(Configuration.Keys.environment, "");
-            protocol = product.getConfig(Configuration.Keys.protocol, "");
-            if(!environment.equals(""))
-                ((WebProduct)product).browser.goToUrl(protocol + "://" + environment);
+            if(StringUtils.isBlank(protocol)){
+                protocol = "https";
+            }
+            if(StringUtils.isNotBlank(environment)) {
+                ((WebProduct) product).browser.goToUrl(protocol + "://" + environment);
+            }
             return product;
         } catch (Exception e) {
             throw new RuntimeException(e);
