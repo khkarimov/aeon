@@ -29,6 +29,8 @@ public class Configuration {
         public static final String promptUserForContinueOnExceptionDecision = "prompt_user_for_continue_on_exception_decision";
         public static final String ensureCleanEnvironment = "ensure_clean_environment";
         public static final String browserType = "browser_type";
+        public static final String environment = "environment";
+        public static final String protocol = "protocol";
     }
 
     protected List<Field> getConfigurationFields(){
