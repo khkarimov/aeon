@@ -30,7 +30,7 @@ public class Aeon {
             product.getConfiguration().setBrowserType(browserType);
 
             log.info("Launching product on browser: " + browserType);
-            
+
             product.launch(plugin);
 
             environment = product.getConfig(Configuration.Keys.environment, "");
