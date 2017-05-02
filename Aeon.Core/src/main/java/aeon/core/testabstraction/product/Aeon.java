@@ -19,6 +19,7 @@ public class Aeon {
     public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
         try {
             String environment;
+            String protocol;
             T product = productClass.newInstance();
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
@@ -31,8 +32,9 @@ public class Aeon {
             product.launch(plugin);
 
             environment = product.getConfig(Configuration.Keys.environment, "");
+            protocol = product.getConfig(Configuration.Keys.protocol, "");
             if(!environment.equals(""))
-                ((WebProduct)product).browser.goToUrl(product.getConfig(Configuration.Keys.protocol, "") + environment);
+                ((WebProduct)product).browser.goToUrl(protocol + "://" + environment);
             return product;
         } catch (Exception e) {
             throw new RuntimeException(e);
