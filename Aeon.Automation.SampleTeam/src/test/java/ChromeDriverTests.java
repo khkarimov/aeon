@@ -519,8 +519,10 @@ public class ChromeDriverTests {
 
     @Test
     public void testWaiter(){
+        product.enableAjaxWaiting();
         product.startPage.start.click();
         product.startPage.smileyFace1.click();
+        product.disableAjaxWaiting();
     }
 
     @Test
