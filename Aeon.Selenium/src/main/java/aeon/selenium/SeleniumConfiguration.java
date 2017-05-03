@@ -20,19 +20,20 @@ public class SeleniumConfiguration extends Configuration {
     Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
     static class Keys extends Configuration.Keys{
-        public static final String enableSeleniumGrid = "aeon.enable_selenium_grid";
-        public static final String language = "aeon.language";
-        public static final String moveMouseToOrigin = "aeon.move_mouse_to_origin";
-        public static final String maximizeBrowser = "aeon.maximize_browser";
-        public static final String useMobileUserAgent = "aeon.use_mobile_user_agent";
-        public static final String proxyLocation = "aeon.proxy_location";
-        public static final String seleniumHubUrl = "aeon.selenium_hub_url";
-        public static final String chromeDirectory = "aeon.chrome_directory";
-        public static final String ieDirectory = "aeon.ie_directory";
-        public static final String marionetteDirectory = "aeon.marionette_directory";
-        public static final String edgeDirectory = "aeon.edge_directory";
-        public static final String chromeBinary = "aeon.chrome_binary";
-        public static final String firefoxBinary = "aeon.firefox_binary";
+        public static final String enableSeleniumGrid = "aeon.selenium.enable_selenium_grid";
+        public static final String language = "aeon.selenium.language";
+        public static final String moveMouseToOrigin = "aeon.selenium.move_mouse_to_origin";
+        public static final String maximizeBrowser = "aeon.selenium.maximize_browser";
+        public static final String useMobileUserAgent = "aeon.selenium.use_mobile_user_agent";
+        public static final String proxyLocation = "aeon.selenium.proxy_location";
+        public static final String seleniumHubUrl = "aeon.selenium.selenium_hub_url";
+        public static final String ensureCleanEnvironment = "aeon.selenium.ensure_clean_environment";
+        public static final String chromeDirectory = "aeon.selenium.chrome_directory";
+        public static final String ieDirectory = "aeon.selenium.ie_directory";
+        public static final String marionetteDirectory = "aeon.selenium.marionette_directory";
+        public static final String edgeDirectory = "aeon.selenium.edge_directory";
+        public static final String chromeBinary = "aeon.selenium.chrome_binary";
+        public static final String firefoxBinary = "aeon.selenium.firefox_binary";
     };
 
     @Override

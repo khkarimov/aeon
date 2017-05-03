@@ -25,9 +25,6 @@ public class Configuration {
 
     public static class Keys {
         public static final String waitForAjaxResponses = "aeon.wait_for_ajax_response";
-        public static final String defaultTimeout = "aeon.default_timeout";
-        public static final String promptUserForContinueOnExceptionDecision = "aeon.prompt_user_for_continue_on_exception_decision";
-        public static final String ensureCleanEnvironment = "aeon.ensure_clean_environment";
         public static final String browserType = "aeon.browser_type";
         public static final String environment = "aeon.environment";
         public static final String protocol = "aeon.protocol";
