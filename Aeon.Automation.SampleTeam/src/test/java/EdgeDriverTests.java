@@ -500,7 +500,7 @@ public class EdgeDriverTests {
     @Test
     public void testIs_IsLike_IsNotLike_WithSelect(){
         product.startPage.lexoDropDown.is("apple");
-        product.startPage.lexoDropDown.isLike("APPLE");
+        product.startPage.lexoDropDown.isLike("PPL");
         product.startPage.lexoDropDown.is("01", "value");
         product.startPage.lexoDropDown.isNotLike("appple");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
