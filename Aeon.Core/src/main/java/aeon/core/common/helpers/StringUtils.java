@@ -215,7 +215,8 @@ public class StringUtils {
     }
 
     /**
-     * Indicates whether the current instance contains the specified string as a word surrounded by spaces.
+     * Indicates whether the current instance contains the specified string at the start,
+     * at the end or as as a word surrounded by spaces
      *
      * @param value The current instance.
      * @param word  The word for which to search.
