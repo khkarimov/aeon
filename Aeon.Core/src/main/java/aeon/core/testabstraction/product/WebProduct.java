@@ -58,13 +58,13 @@ public class WebProduct extends Product {
      * Disables the ajax waiter.
      */
     public void disableAjaxWaiting() {
-        configuration.setBoolean(Configuration.Keys.ajaxWaiter, false);
+        configuration.setBoolean(Configuration.Keys.waitForAjaxResponses, false);
     }
 
     /**
      * Enables the ajax waiter.
      */
     public void enableAjaxWaiting() {
-        configuration.setBoolean(Configuration.Keys.ajaxWaiter, true);
+        configuration.setBoolean(Configuration.Keys.waitForAjaxResponses, true);
     }
 }
