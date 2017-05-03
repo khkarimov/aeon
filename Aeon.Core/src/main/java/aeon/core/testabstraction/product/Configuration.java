@@ -24,13 +24,13 @@ public class Configuration {
     private static Logger log = LogManager.getLogger(Configuration.class);
 
     public static class Keys {
-        public static final String ajaxWaiter = "wait_for_ajax_response";
-        public static final String defaultTimeout = "default_timeout";
-        public static final String promptUserForContinueOnExceptionDecision = "prompt_user_for_continue_on_exception_decision";
-        public static final String ensureCleanEnvironment = "ensure_clean_environment";
-        public static final String browserType = "browser_type";
-        public static final String environment = "environment";
-        public static final String protocol = "protocol";
+        public static final String waitForAjaxResponses = "aeon.wait_for_ajax_response";
+        public static final String defaultTimeout = "aeon.default_timeout";
+        public static final String promptUserForContinueOnExceptionDecision = "aeon.prompt_user_for_continue_on_exception_decision";
+        public static final String ensureCleanEnvironment = "aeon.ensure_clean_environment";
+        public static final String browserType = "aeon.browser_type";
+        public static final String environment = "aeon.environment";
+        public static final String protocol = "aeon.protocol";
     }
 
     protected List<Field> getConfigurationFields(){
@@ -65,7 +65,7 @@ public class Configuration {
         for(Field key : keys){
             key.setAccessible(true);
             String keyValue =  key.get(null).toString();
-            String environmentValue = System.getenv("aeon." + keyValue);
+            String environmentValue = System.getenv(keyValue);
             if(environmentValue != null)
                 properties.setProperty(keyValue, environmentValue);
         }
