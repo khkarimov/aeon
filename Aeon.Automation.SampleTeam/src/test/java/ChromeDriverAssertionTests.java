@@ -1,15 +1,10 @@
 /**
- * Created by josepe on 3/9/2017.
+ * Created by josepe on 5/4/2017.
  */
-
-
 import aeon.core.common.CompareType;
-import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
-import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
-import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -17,21 +12,28 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-public class EdgeDriverTests {
+public class ChromeDriverAssertionTests {
 
     private static Sample product;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    //region Setup and Teardown
+    @BeforeClass
+    public static void setUp() {
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        //product.browser.quit();
+    }
+
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.Edge);
+        product = launch(Sample.class, BrowserType.Chrome);
         product.browser.maximize();
         product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
@@ -51,82 +53,12 @@ public class EdgeDriverTests {
     }
 
     @Test
-    public void testSendKeysToAlert_VerifyAlertExists_VerifyAlertNotExists() {
+    public void testSendKeysToAlert_VerifyAlertExists_VerifyAlertNotExists () {
         product.browser.verifyAlertNotExists();
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
         product.browser.sendKeysToAlert("Tester of Alerts");
         product.browser.acceptAlert();
-    }
-
-    @Test
-    public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
-        product.browser.goToUrl("http://google.com");
-        IWebCookie cookie = new IWebCookie() {
-            String name = "CookieName";
-            String domain = "google.com";
-            String value = "CookieValue";
-            Date expiration = getNextYear();
-            String path = "/";
-            boolean secure = false;
-            boolean session = true;
-
-            @Override
-            public String getName() {
-                return name;
-            }
-
-            @Override
-            public String getValue() {
-                return value;
-            }
-
-            @Override
-            public String getPath() {
-                return path;
-            }
-
-            @Override
-            public String getDomain() {
-                return domain;
-            }
-
-            @Override
-            public Date getExpiration() {
-                return expiration;
-            }
-
-            @Override
-            public boolean getSecure() {
-                return secure;
-            }
-
-            @Override
-            public boolean getSession() {
-                return session;
-            }
-
-            private Date getNextYear() {
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(new Date(Long.parseLong("18000000")));
-                int yearsSinceEpoch = DateTime.now().getYear() - cal.get(Calendar.YEAR);
-                cal.add(Calendar.YEAR, yearsSinceEpoch + 1);
-                return cal.getTime();
-            }
-        };
-        product.browser.addCookie(cookie);
-        IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getName().equals(cookie.getName()));
-        assert (secondCookie.getDomain().equals(cookie.getDomain()));
-        assert (secondCookie.getValue().equals(cookie.getValue()));
-        assert (secondCookie.getSecure() == cookie.getSecure());
-        assert (secondCookie.getPath().equals(cookie.getPath()));
-        assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
-
-        product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
-        secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getValue().equals("CookieNewValue"));
-        product.browser.deleteCookie(cookie.getName());
     }
 
     @Test
@@ -138,35 +70,10 @@ public class EdgeDriverTests {
     }
 
     @Test
-    public void testBlur() {
-        //used to be set command
-        product.startPage.alertTitleTextBox.click();
-        product.startPage.alertTitleTextBox.blur();
-    }
-
-    @Test
-    public void testCheck_UnCheck() {
-        product.startPage.testCheckbox.check();
-        product.startPage.testCheckbox.uncheck();
-    }
-
-    @Test
-    public void testClickAndHold() {
-        product.startPage.start.clickAndHold(5000);
-    }
-
-    @Test
     public void testDisabled() {
         product.startPage.disabledButton.isDisabled();
         thrown.expectCause(IsInstanceOf.instanceOf(ElementIsEnabledException.class));
         product.startPage.start.isDisabled();
-    }
-
-    @Test
-    public void testDismissAlertWhenThereIsAnAlert() {
-        product.startPage.openAlertButton.click();
-        product.browser.verifyAlertExists();
-        product.browser.dismissAlert();
     }
 
     @Test
@@ -180,18 +87,6 @@ public class EdgeDriverTests {
 //        product.startPage.dropDown.isNotLike("DROP-DOWN-LISTT", "id");
 //        product.startPage.div.doesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
 //        product.startPage.div.doesNotHaveLike(new String[]{"async call 3"}, "h3");
-    }
-
-    @Test
-    public void testDoubleClick() {
-        product.startPage.ultimateLogoImage.doubleClick();
-        //the ultimate logo should appear in the image element "dbl-click-image"
-    }
-
-    @Test
-    public void testDragAndDrop() {
-        product.browser.goToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
-        product.startPage.draggableListItem.dragAndDrop("ul[id='box2']");
     }
 
     @Test
@@ -209,45 +104,14 @@ public class EdgeDriverTests {
     }
 
     @Test
-    public void testGetAlertText() {
-        product.startPage.openAlertButton.click();
-        String text = product.browser.getAlertText();
-
-        assert(text.equals("Send some keys"));
-        product.browser.dismissAlert();
-        thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
-        product.browser.getAlertText();
-    }
-
-    @Test
     public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(BrowserType.Edge));
+        assert (product.browser.getBrowserType().equals(BrowserType.Chrome));
     }
 
     @Test
     public void testGetElementAttributes() {
         String classAttribute = product.startPage.formTextBox.getElementAttribute("class").toString();
         assert (classAttribute.equals("mdl-textfield__input"));
-    }
-
-    @Test
-    public void testWindowResizing_GoBack_GoForward_ScrollToEnd_ScrollToTop() {
-        product.browser.resize(BrowserSize.TabletLandscape);
-        product.browser.resize(BrowserSize.SmallTabletLandscape);
-        product.browser.resize(BrowserSize.MobileLandscape);
-        product.browser.maximize();
-        product.browser.goToUrl("http://www.tutorialspoint.com");
-        product.browser.scrollToEnd();
-        product.browser.scrollToTop();
-        product.browser.goBack();
-        product.browser.goForward();
-    }
-
-    @Test
-    public void testMouseOver_MouseOut_Refresh() {
-        product.startPage.start.mouseOver();
-        product.startPage.start.mouseOut();
-        product.browser.refresh();
     }
 
     @Test
@@ -280,28 +144,6 @@ public class EdgeDriverTests {
         product.startPage.testCheckbox.selected();
         product.startPage.nextRadioButton.check();
         product.startPage.nextRadioButton.selected();
-    }
-
-    @Test
-    public void testPressKeyboardKey() {
-        product.startPage.formTextBox.pressKeyboardKey(KeyboardKey.SPACE);
-        product.startPage.formTextBox.pressKeyboardKey(KeyboardKey.SPACE);
-    }
-
-    @Test
-    public void testRightClick() {
-        product.startPage.dateLabel.rightClick();
-    }
-
-    @Test
-    public void testSetWithNonSelectElementClear() {
-        product.startPage.formTextBox.set("set the value to this");
-        product.startPage.formTextBox.clear();
-    }
-
-    @Ignore
-    public void testUploadFile() {
-        product.startPage.testFileDialogInput.uploadFileDialog("asdasd#@$@#$");
     }
 
     @Test
@@ -347,45 +189,7 @@ public class EdgeDriverTests {
     }
 
     @Test
-    public void testSwitchToMainWindow() {
-        product.browser.verifyTitle("Material Design Lite");
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.verifyTitle("Google");
-        product.browser.switchToMainWindow();
-        product.browser.verifyTitle("Material Design Lite");
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.close();
-        product.browser.switchToMainWindow(true);
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
-        product.browser.switchToMainWindow(true);
-    }
-
-    @Test
-    public void testSwitchToWindowByTitle() {
-        product.browser.verifyTitle("Material Design Lite");
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.verifyTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
-        product.browser.switchToWindowByTitle("Some Fake Title");
-    }
-
-
-    @Test
-    public void testSwitchToWindowByUrl() {
-        product.browser.verifyTitle("Material Design Lite");
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByUrl("https://www.google.com");
-        product.browser.verifyTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
-        product.browser.switchToWindowByUrl("www.fake.com");
-    }
-
-    @Test
-    public void testVerifyWindowDoesNotExistByUrlVerifyWindowDoesNotExistByTitle() {
+    public void testVerifyWindowDoesNotExistByUrl_VerifyWindowDoesNotExistByTitle() {
         product.browser.verifyWindowDoesNotExistByTitle("fakeTitle");
         product.browser.verifyWindowDoesNotExistByUrl("fakeUrl");
     }
@@ -486,18 +290,6 @@ public class EdgeDriverTests {
     }
 
     @Test
-    public void testSet_WithSelect(){
-        product.startPage.lexoDropDown.set(WebSelectOption.Value, "10");
-        product.startPage.lexoDropDown.set(WebSelectOption.Text, "dog");
-        product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
-    }
-
-    @Test
-    public void testSetValueByJavaScript(){
-        product.startPage.formTextBox.setTextByJavaScript("set text by javascript is working");
-    }
-
-    @Test
     public void testIs_IsLike_IsNotLike_WithSelect(){
         product.startPage.lexoDropDown.is("apple");
         product.startPage.lexoDropDown.isLike("PPL");
@@ -506,13 +298,6 @@ public class EdgeDriverTests {
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.startPage.lexoDropDown.is("ZEBRA");
-
-    }
-
-    @Test
-    public void testWaiter(){
-        product.startPage.start.click();
-        product.startPage.smileyFace1.click();
     }
 
     @Test
@@ -523,20 +308,5 @@ public class EdgeDriverTests {
         product.startPage.myGrid.RowBy.material("Acrylic").getRow().exists();
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
         product.startPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
-
-    }
-
-    @Test
-    public void setByDivJavaScript() {
-        product.startPage.divWindow.setDivValueByJavaScript("Hello World Haha");
-        product.startPage.divWindow.is("Hello World Haha");
-        product.startPage.bodyTag.setDivValueByJavaScript("Hello World Haha");
-        product.startPage.bodyTag.is("Hello World Haha");
-    }
-
-    @Test
-    public void setByBodyJavaScript() {
-        product.startPage.bodyTag.setBodyValueByJavaScript("Hello World Haha");
-        product.startPage.bodyTag.is("Hello World Haha");
     }
 }

@@ -7,7 +7,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
@@ -16,7 +15,7 @@ import java.util.Date;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-public class ChromeDriverActionsTests {
+public class ChromeDriverActionTests {
 
     private static Sample product;
 
@@ -124,7 +123,7 @@ public class ChromeDriverActionsTests {
     }
 
     @Test
-    public void testCheck_UnCheck() {
+    public void testCheckCheck_UnCheck() {
         product.startPage.testCheckbox.check();
         product.startPage.testCheckbox.uncheck();
     }
