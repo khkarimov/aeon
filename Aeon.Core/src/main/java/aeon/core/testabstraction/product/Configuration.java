@@ -24,7 +24,7 @@ public class Configuration {
     private static Logger log = LogManager.getLogger(Configuration.class);
 
     public static class Keys {
-        public static final String waitForAjaxResponses = "aeon.wait_for_ajax_response";
+        public static final String waitForAjaxResponses = "aeon.wait_for_ajax_responses";
         public static final String browserType = "aeon.browser_type";
         public static final String environment = "aeon.environment";
         public static final String protocol = "aeon.protocol";
