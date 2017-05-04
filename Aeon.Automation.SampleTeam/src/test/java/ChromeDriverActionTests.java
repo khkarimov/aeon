@@ -258,12 +258,10 @@ public class ChromeDriverActionTests {
         product.startPage.formTextBox.setTextByJavaScript("set text by javascript is working");
     }
 
-    @Test
+    @Ignore
     public void testWaiter(){
-        product.enableAjaxWaiting();
         product.startPage.start.click();
         product.startPage.smileyFace1.click();
-        product.disableAjaxWaiting();
     }
 
     @Test

@@ -250,7 +250,7 @@ public class EdgeDriverActionTests {
         product.startPage.formTextBox.setTextByJavaScript("set text by javascript is working");
     }
 
-    @Test
+    @Ignore
     public void testWaiter(){
         product.startPage.start.click();
         product.startPage.smileyFace1.click();
