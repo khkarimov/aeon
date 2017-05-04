@@ -91,7 +91,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.ieDirectory, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.edgeDirectory, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.marionetteDirectory, null);
-        long timeout = (long)configuration.getDouble(SeleniumConfiguration.Keys.timeout, 10);
+        long timeout = (long)configuration.getDouble(Configuration.Keys.timeout, 10);
 
         switch (browserType) {
             case Firefox:

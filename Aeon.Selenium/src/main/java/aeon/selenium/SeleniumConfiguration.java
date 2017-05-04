@@ -19,7 +19,7 @@ import java.util.List;
 public class SeleniumConfiguration extends Configuration {
     Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
-    static class Keys extends Configuration.Keys{
+    static class Keys{
         public static final String enableSeleniumGrid = "aeon.selenium.enable_selenium_grid";
         public static final String language = "aeon.selenium.language";
         public static final String moveMouseToOrigin = "aeon.selenium.move_mouse_to_origin";
