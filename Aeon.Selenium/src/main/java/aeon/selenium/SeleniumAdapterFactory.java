@@ -91,6 +91,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.ieDirectory, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.edgeDirectory, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.marionetteDirectory, null);
+        long timeout = (long)configuration.getDouble(SeleniumConfiguration.Keys.timeout, 10);
 
         switch (browserType) {
             case Firefox:
@@ -101,7 +102,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
                     driver = new FirefoxDriver(getFirefoxOptions());
                 }
-                driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
+                driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
