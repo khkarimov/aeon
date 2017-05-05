@@ -3,23 +3,6 @@ var aeon = {
     ajaxJsonpElementTimeout: 18000
 };
 
-(function(originalCreateElement) {
-    document.createElement = function(element) {
-        var domElement = originalCreateElement.call(document, element);
-        if (element === 'script') {
-            var timeout = setTimeout(function() {
-                --aeon.ajaxCounter;
-            }, aeon.ajaxJsonpElementTimeout);
-            ++aeon.ajaxCounter;
-            domElement.onload = function() {
-                clearTimeout(timeout);
-                --aeon.ajaxCounter;
-            };
-        }
-        return domElement;
-    }
-})(document.createElement);
-
 (function(open) {
     XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
         ++aeon.ajaxCounter;
