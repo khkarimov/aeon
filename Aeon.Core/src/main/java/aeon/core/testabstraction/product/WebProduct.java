@@ -35,9 +35,12 @@ public class WebProduct extends Product {
 
         driver = (IWebDriver) configuration.getDriver().newInstance();
         driver.configure(adapter);
+        long timeout = (long)configuration.getDouble(Configuration.Keys.timeout, 10);
+        long ajaxTimeout = (long)configuration.getDouble(Configuration.Keys.ajaxTimeout, 20);
+
 
         commandExecutionFacade = new WebCommandExecutionFacade(
-                new DelegateRunnerFactory(Duration.millis(250), Duration.millis(10000)), new AjaxWaiter(driver, Duration.millis(20000)));
+                new DelegateRunnerFactory(Duration.millis(250), Duration.standardSeconds(timeout)), new AjaxWaiter(driver, Duration.standardSeconds(ajaxTimeout)));
 
         this.automationInfo = new AutomationInfo(configuration, driver, adapter);
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);

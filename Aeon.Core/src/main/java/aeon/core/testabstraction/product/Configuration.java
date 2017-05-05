@@ -28,6 +28,8 @@ public class Configuration {
         public static final String browserType = "aeon.browser_type";
         public static final String environment = "aeon.environment";
         public static final String protocol = "aeon.protocol";
+        public static final String timeout = "aeon.timeout";
+        public static final String ajaxTimeout = "aeon.ajax_timeout";
     }
 
     protected List<Field> getConfigurationFields(){
