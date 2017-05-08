@@ -10,12 +10,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Clears an element
+ * Clears an element.
  */
 public class ClearCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of Clear Command
+     * Initializes a new instance of Clear Command.
      *      the logger
      * @param selector the selector
      */

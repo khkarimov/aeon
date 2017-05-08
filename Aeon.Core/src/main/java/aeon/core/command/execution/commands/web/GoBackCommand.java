@@ -7,7 +7,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * <p>Move back a single entry in the browser's history.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.goBack();</p>
  */

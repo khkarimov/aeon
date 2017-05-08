@@ -240,7 +240,7 @@ public interface IWebDriver extends IDriver {
      * Switches to the Main Window
      *
      * @param mainWindowHandle The handle of the main window
-     * @param waitForAllPopupWindowsToClose
+     * @param waitForAllPopupWindowsToClose Whether to wait for all popup windows to close.
      */
     void switchToMainWindow(String mainWindowHandle, Boolean waitForAllPopupWindowsToClose);
 
@@ -562,18 +562,22 @@ public interface IWebDriver extends IDriver {
     /**
      * Asserts that an elements children do not posses a text.
      *
-     * @param element  The web element to be searched.
-     * @param messages The text that the chilren should not posses.
-     * @param selector The selector for the children to be searched.
+     * @param element   The web element to be searched.
+     * @param messages  The text that the chilren should not posses.
+     * @param selector  The selector for the children to be searched.
+     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
      */
     void doesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
      * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
      *
-     * @param element  The web element to be searched.
-     * @param messages The text that the chilren should not posses.
-     * @param selector The selector for the children to be searched.
+     * @param element   The web element to be searched.
+     * @param messages  The text that the chilren should not posses.
+     * @param selector  The selector for the children to be searched.
+     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param attribute The attribute that will be searched.
      */
     void doesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 

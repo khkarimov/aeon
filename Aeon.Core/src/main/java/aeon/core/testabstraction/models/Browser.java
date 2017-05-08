@@ -249,8 +249,8 @@ public class Browser {
     }
 
     /**
-     * @param comparingText
-     * @param caseSensitive
+     * @param comparingText String to compare against Alert Text.
+     * @param caseSensitive Determine caseSensitive comparison
      */
     public void verifyAlertTextLike(String comparingText, boolean caseSensitive) {
         info.getCommandExecutionFacade().execute(info, new VerifyAlertTextLikeCommand(comparingText, caseSensitive));

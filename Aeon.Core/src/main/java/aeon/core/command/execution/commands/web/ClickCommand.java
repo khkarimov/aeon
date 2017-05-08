@@ -9,7 +9,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Clicks an element
+ * Clicks an element.
  */
 public class ClickCommand extends WebControlCommand {
     /**

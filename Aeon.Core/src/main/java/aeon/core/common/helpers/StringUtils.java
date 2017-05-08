@@ -173,6 +173,7 @@ public class StringUtils {
      *
      * @param value         The current instance.
      * @param expectedValue The value your comparing against the current instance.
+     * @param caseSensitive Determine caseSensitive comparison
      * @return Whether or not the current instance equals the expected value.
      */
     public static boolean like(String value, String expectedValue, boolean caseSensitive) {

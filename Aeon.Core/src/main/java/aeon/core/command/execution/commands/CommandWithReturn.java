@@ -30,7 +30,8 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
      *
-     * @param message The message to log.
+     * @param message     The message to log.
+     * @param initializer The command initializer.
      */
     protected CommandWithReturn(String message, ICommandInitializer initializer) {
 
@@ -45,6 +46,8 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
 
     /**
      * Gets or sets the command initializer.
+     *
+     * @return The initializer property {@link ICommandInitializer}.
      */
     public final ICommandInitializer getCommandInitializer() {
         return commandInitializer;

@@ -5,7 +5,6 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 
 /**
  * <p>Closes the currently focused browser window.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.close();</p>
  */

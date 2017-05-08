@@ -15,7 +15,6 @@ import java.util.Locale;
 
 /**
  * <p>Gets the specified web element attribute.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      n/a</p>
  */

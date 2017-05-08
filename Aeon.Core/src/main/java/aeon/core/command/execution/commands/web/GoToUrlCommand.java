@@ -10,7 +10,6 @@ import java.util.Locale;
 
 /**
  * <p>Navigate the currently focused browser to the URL provided.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.Browser.goToUrl("url String")</p>
  * <p>      Context.Browser.goToUrl("url String", setMainWindowBoolean)</p>

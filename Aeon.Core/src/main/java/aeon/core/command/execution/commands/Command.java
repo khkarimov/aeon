@@ -29,7 +29,8 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
     /**
      * Initializes a new instance of the {@link Command} class.
      *
-     * @param message The message to log.
+     * @param message     The message to log.
+     * @param initializer The command initializer.
      */
     protected Command(String message, ICommandInitializer initializer) {
         if (log == null) {

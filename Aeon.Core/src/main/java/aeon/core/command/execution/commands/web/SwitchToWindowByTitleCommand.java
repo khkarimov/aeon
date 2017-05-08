@@ -13,7 +13,6 @@ import java.util.Locale;
 
 /**
  * <p>Switches focus to a specified window.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.SwitchToWindow("windowTitle");</p>
  * <p>      Context.browser.SwitchToWindow("windowTitle", setMainWindowBoolean);</p>

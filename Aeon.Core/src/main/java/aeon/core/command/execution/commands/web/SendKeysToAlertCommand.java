@@ -13,7 +13,6 @@ import java.util.Locale;
 
 /**
  * <p>Sends keys to an alert. If your code makes an alert popup this will send keys to the alert. Takes a string as a parameter that corresponds to the keys to send.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.Alert.SendKeys("KeysToSend");</p>
  */

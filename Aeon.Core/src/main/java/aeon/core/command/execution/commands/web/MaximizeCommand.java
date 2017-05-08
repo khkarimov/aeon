@@ -7,7 +7,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * <p>Maximizes the currently focused browser window.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.maximize();</p>
  */

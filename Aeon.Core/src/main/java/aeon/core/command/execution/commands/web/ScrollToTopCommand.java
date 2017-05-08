@@ -10,7 +10,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * <p>Scrolls to the top of the page.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.scrollToTop();</p>
  */

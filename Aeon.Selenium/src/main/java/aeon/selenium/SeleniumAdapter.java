@@ -974,13 +974,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *                 depending on the system, it could be much worse. In some cases, the accuracy is much better, approaching
      *                 1ms. This can happen on Win7 and .Net 4 and higher, but having those do not guarantee it.
      *                 </p>
-     *                 <p></p>
      *                 <p>
      *                 Another consideration to take into account is the specific browser you are using this command with.
      *                 Initial testing showed IE and Firefox to have much worse response time with this command in comparison to
      *                 Chrome.
      *                 </p>
-     *                 <p></p>
      *                 <p>
      *                 If, for whatever reason, the command is interrupted and the click is not released, behavior can be quite weird.
      *                 The correct way to programatically recover from such a case would be to call Release() on the element that clickAndHold

@@ -30,6 +30,7 @@ public class SelectFileDialogCommand extends Command {
      *
      * @param selector    The selector.
      * @param initializer The command initializer.
+     * @param path        The path to the file to be selected.
      */
     public SelectFileDialogCommand(IBy selector, ICommandInitializer initializer, String path) {
         super(String.format(Locale.getDefault(), Resources.getString("SelectFileDialogCommand_Info"), path), initializer);

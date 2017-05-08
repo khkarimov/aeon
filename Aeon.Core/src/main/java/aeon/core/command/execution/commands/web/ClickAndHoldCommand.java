@@ -9,10 +9,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/31/2016.
- */
-
-/**
  * Clicks and holds on an element for a certain amount of time.
  */
 public class ClickAndHoldCommand extends WebControlCommand {

@@ -11,7 +11,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * <p>Scrolls to the end of the page.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.scrollToEnd();</p>
  */

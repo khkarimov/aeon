@@ -10,7 +10,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * <p>Resizes the currently focused browser window.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      Context.browser.resize(BrowserSize.Maximized);</p>
  * <p>      Context.browser.resize(800, 600);</p>
