@@ -22,13 +22,13 @@
 * On the Gradle window click the refresh button
 * Expand Aeon -> Tasks -> Build and run assemble
 
-##IE Settings
+## IE Settings
 * IE settings have to be adjusted for the tests to run correctly.
 * Open Internet Explorer -> Click the settings button in the top right -> click internet options -> click the security tab
 * click reset all zones to default level -> turn off protected mode in all 4 zones
 
 
-##IE Registry Hacks
+## IE Registry Hacks
 * For tests to run locally, you need to change the Windows registry.
 * Not sure whether it has to be local machine or current user, but it has to be one or the other (definitely not both)
 
