@@ -23,6 +23,14 @@
 * On the Gradle window click the refresh button
 * Expand Aeon -> Tasks -> Build and run assemble
 
+## Additional Setup for Mac
+* Run the following commands in Terminal
+*    echo export "JAVA_HOME=\$(/usr/libexec/java_home)" >> ~/.bash_profile
+* Ensure that Google Chrome is the latest version
+* Ensure "chromedriver" is an executable file
+*    Run the following commands in Terminal
+*       cd [INSERT DIRECTORY FOR chromedriver. Should be located at /aeon/Aeon.Automation.SampleTeam/lib/MacOS]
+*       chmod a+x chromedriver
 
 ## IE Settings
 * IE settings have to be adjusted for the tests to run correctly.
