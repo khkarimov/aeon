@@ -5,6 +5,7 @@
 * Java 8
 *** note: if machine has WebSense (Windows), must be done on TeamCity Test Server (Virtual machine)
 
+
 ## Setup
 * Install Java 8
 * Install IntelliJ 2017
@@ -22,6 +23,7 @@
 * On the Gradle window click the refresh button
 * Expand Aeon -> Tasks -> Build and run assemble
 
+
 ## IE Settings
 * IE settings have to be adjusted for the tests to run correctly.
 * Open Internet Explorer -> Click the settings button in the top right -> click internet options -> click the security tab
@@ -35,14 +37,14 @@
 * [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN]
   "iexplore.exe"=dword:00000000
 
-  [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE]
+*  [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE]
   "iexplore.exe"=dword:00000000
 
-  [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
+*  [HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
   "LOCALMACHINE_CD_UNLOCK"=dword:00000000
 
 * [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN]
   "iexplore.exe"=dword:00000000
 
-  [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
+*  [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
   "LOCALMACHINE_CD_UNLOCK"=dword:00000000
