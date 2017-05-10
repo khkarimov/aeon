@@ -46,4 +46,11 @@ public class AddCookieCommand_Test {
         action.accept(driver);
         verify(driver, times(1)).addCookie(cookie);
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testDriverDelegateNullDriver() {
+        Consumer<IDriver> action = cookieCommand.getCommandDelegate();
+        action.accept(null);
+        verify(driver, times(0)).addCookie(cookie);
+    }
 }
