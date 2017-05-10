@@ -51,18 +51,7 @@ public class Click_Test {
     public void setup() {
         clickCommandObject = new ClickCommand(selector, initializer);
     }
-    /*
-    @Test
-    public void clickCommandConstructor_getDefault(){
-        clickCommandObject = new ClickCommand(selector, initializer);
-        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(Locale.getDefault().class));
-    }
-    @Test
-    public void clickCommandConstructor_getString(){
-        clickCommandObject = new ClickCommand(selector, initializer);
-        verify(commandExecutionFacade, times( 1)).execute(Mockito.eq(automationInfo), any(Resources.getStringCommand.class));
-    }
-    */
+
     @Test
     public void commandDelegateClickCommand(){
         when(initializer.setContext()).thenReturn(action);
