@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.awt.*;
 
 public final class ClientEnvironmentManager {
+
     private static final Size[] supportedResolutions = {new Size(1024, 768)};
     private static Logger log = LogManager.getLogger(ClientEnvironmentManager.class);
 

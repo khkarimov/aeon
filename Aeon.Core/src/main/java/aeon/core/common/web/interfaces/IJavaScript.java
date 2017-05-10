@@ -8,6 +8,7 @@ import aeon.core.common.web.selectors.ByJQuery;
  * See https://developer.mozilla.org/en/JavaScript/Reference for detailed information.
  */
 public interface IJavaScript {
+
     /**
      * Returns the index within the calling {@link String} object of the first occurrence of the specified value, returns -1 if the value is not found.
      *
@@ -27,6 +28,7 @@ public interface IJavaScript {
 
     /**
      * Returns the calling string value converted to lowercase.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery toLowerCase();

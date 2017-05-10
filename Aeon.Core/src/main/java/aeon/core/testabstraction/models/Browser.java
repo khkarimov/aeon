@@ -2,7 +2,8 @@ package aeon.core.testabstraction.models;
 
 
 import aeon.core.command.execution.AutomationInfo;
-import aeon.core.command.execution.commands.*;
+import aeon.core.command.execution.commands.CloseCommand;
+import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.helpers.URLUtil;
@@ -18,6 +19,7 @@ import java.util.Collection;
  * Created by DionnyS on 4/21/2016.
  */
 public class Browser {
+
     private AutomationInfo info;
     private String mainWindowHandle;
 
@@ -148,7 +150,9 @@ public class Browser {
     /**
      * Closes the currently focused browser window.     *
      */
-    public void close() { info.getCommandExecutionFacade().execute(info, new CloseCommand());}
+    public void close() {
+        info.getCommandExecutionFacade().execute(info, new CloseCommand());
+    }
 
 
     /**
@@ -192,7 +196,6 @@ public class Browser {
 
     /**
      * Switches to the main window of the current browser.
-     *
      */
     public void switchToMainWindow() {
         switchToMainWindow(false);

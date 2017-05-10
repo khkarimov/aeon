@@ -15,8 +15,8 @@ import java.util.function.Function;
  */
 public abstract class CommandWithReturn implements ICommand<Function<IDriver, Object>> {
 
-    private ICommandInitializer commandInitializer;
     private static Logger log = LogManager.getLogger(CommandWithReturn.class);
+    private ICommandInitializer commandInitializer;
 
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.

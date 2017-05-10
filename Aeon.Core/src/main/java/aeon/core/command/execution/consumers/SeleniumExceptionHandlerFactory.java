@@ -4,6 +4,7 @@ import aeon.core.command.execution.consumers.interfaces.IExceptionHandler;
 import aeon.core.command.execution.consumers.interfaces.IExceptionHandlerFactory;
 
 public class SeleniumExceptionHandlerFactory implements IExceptionHandlerFactory {
+
     private boolean promptUserForContinueDecision;
 
     public SeleniumExceptionHandlerFactory(boolean promptUserForContinueDecision) {

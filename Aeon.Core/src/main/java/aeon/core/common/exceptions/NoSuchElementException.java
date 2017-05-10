@@ -8,6 +8,7 @@ import java.io.Serializable;
  * The exception that is thrown when an element does not exist.
  */
 public class NoSuchElementException extends RuntimeException implements Serializable {
+
     /**
      * Initializes a new instance of the {@link NoSuchElementException} class.
      */

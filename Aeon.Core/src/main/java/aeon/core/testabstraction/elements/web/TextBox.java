@@ -13,6 +13,7 @@ import aeon.core.common.web.interfaces.IBy;
  * Created by AdamC on 4/13/2016.
  */
 public class TextBox extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;

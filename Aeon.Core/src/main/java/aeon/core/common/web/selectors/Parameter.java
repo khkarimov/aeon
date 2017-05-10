@@ -6,6 +6,7 @@ import aeon.core.common.helpers.StringUtils;
  * Struct for parameters for {@link ByJQuery}.
  */
 public final class Parameter {
+
     private Object object;
 
     /**

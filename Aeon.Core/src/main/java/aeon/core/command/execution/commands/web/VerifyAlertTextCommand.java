@@ -8,13 +8,10 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by Salvador Gandara on 6/29/2016.
- */
-
-/**
- * Verifies the Text of an Alert
+ * Verifies the Text of an Alert.
  */
 public class VerifyAlertTextCommand extends Command {
+
     private String comparingText;
 
     public VerifyAlertTextCommand(String comparingText) {

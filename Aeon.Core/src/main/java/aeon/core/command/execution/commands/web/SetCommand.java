@@ -17,9 +17,6 @@ public class SetCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the {@link SetCommand} class.
-     *
-     * @param selector
-     * @param initializer
      */
     public SetCommand(IBy selector, ICommandInitializer initializer, WebSelectOption selectOption, String value) {
         super(String.format(Resources.getString("SetCommand_Info"), value, selector), selector, initializer);

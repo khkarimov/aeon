@@ -14,7 +14,7 @@ import java.util.Locale;
 public class BlurCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the BlurCommand.
+     * Initializes a new instance of the {@link BlurCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

@@ -10,6 +10,7 @@ import aeon.core.framework.abstraction.adapters.IAdapterExtension;
  * Created by DionnyS on 4/12/2016.
  */
 public abstract class Product {
+
     protected AutomationInfo automationInfo;
     protected Configuration configuration;
     protected WebCommandExecutionFacade commandExecutionFacade;
@@ -53,15 +54,15 @@ public abstract class Product {
     protected void afterLaunch() {
     }
 
-    public boolean getConfig(String key, boolean defaultValue){
+    public boolean getConfig(String key, boolean defaultValue) {
         return configuration.getBoolean(key, defaultValue);
     }
 
-    public String getConfig(String key, String defaultValue){
+    public String getConfig(String key, String defaultValue) {
         return configuration.getString(key, defaultValue);
     }
 
-    public double getConfig(String key, double defaultValue){
+    public double getConfig(String key, double defaultValue) {
         return configuration.getDouble(key, defaultValue);
     }
 }

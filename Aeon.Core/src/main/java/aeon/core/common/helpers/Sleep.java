@@ -6,6 +6,7 @@ import java.time.Duration;
  * Performs common routines regarding sleeping.
  */
 public final class Sleep {
+
     // Time is in milliseconds.
     private static final int TimeForBrowser = 1000;
     private static final int TimeForInternal = 70;

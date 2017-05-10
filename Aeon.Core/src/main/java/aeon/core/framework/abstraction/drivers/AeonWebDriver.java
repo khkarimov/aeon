@@ -23,7 +23,9 @@ import java.util.Collection;
  * Web framework adapter.
  */
 public class AeonWebDriver implements IWebDriver {
+
     private IWebAdapter adapter;
+
     /**
      * Initializes a new instance of the AeonWebDriver class.
      */

@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ThrottledDelegateRunner extends DelegateRunner {
+
     private Duration throttleFactor;
 
     public ThrottledDelegateRunner(IDelegateRunner successor, Duration throttleFactor) {

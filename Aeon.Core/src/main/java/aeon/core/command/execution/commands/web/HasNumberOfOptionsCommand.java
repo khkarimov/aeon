@@ -9,29 +9,26 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/1/2016.
- */
-
-/**
  * Asserts that a given select element has a certain number of options. Can optionally be passed an option group which will be searched
  * instead of the entire select.
  */
 public class HasNumberOfOptionsCommand extends WebControlCommand {
+
     private int number;
-    private String optgroup;
+    private String optGroup;
 
     /**
-     * Initializes a new instance of the HasNumberOfOptionsCommand.
+     * Initializes a new instance of the {@link HasNumberOfOptionsCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
-     * @param numberofoptions    The number of options that the option group should have.
-     * @param optgroup           The visible text of the option group.
+     * @param  numberOfOptions    The number of options that the option group should have.
+     * @param optGroup           The visible text of the option group.
      */
-    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int numberofoptions, String optgroup) {
-        super(String.format(Locale.getDefault(), Resources.getString("HasNumberOfOptionsCommand_Info"), selector, numberofoptions), selector, commandInitializer);
-        this.number = numberofoptions;
-        this.optgroup = optgroup;
+    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int  numberOfOptions, String optGroup) {
+        super(String.format(Locale.getDefault(), Resources.getString("HasNumberOfOptionsCommand_Info"), selector,  numberOfOptions), selector, commandInitializer);
+        this.number =  numberOfOptions;
+        this.optGroup = optGroup;
     }
 
     /**
@@ -39,12 +36,12 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
-     * @param numberofoptions    The number of options the select should have.
+     * @param  numberOfOptions    The number of options the select should have.
      */
-    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int numberofoptions) {
+    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int  numberOfOptions) {
         super(String.format(Locale.getDefault(), Resources.getString("BlurCommand_Info"), selector), selector, commandInitializer);
-        this.number = numberofoptions;
-        this.optgroup = null;
+        this.number =  numberOfOptions;
+        this.optGroup = null;
     }
 
     /**
@@ -55,6 +52,6 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
      */
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl control) {
-        driver.hasNumberOfOptions(control, number, optgroup);
+        driver.hasNumberOfOptions(control, number, optGroup);
     }
 }

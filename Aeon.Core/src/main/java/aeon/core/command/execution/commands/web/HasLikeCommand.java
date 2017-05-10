@@ -10,20 +10,17 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/29/2016.
- */
-
-/**
  * Asserts that an elements children that match a selector possess values like the given values.
  */
 public class HasLikeCommand extends WebControlCommand {
+
     private String[] messages;
     private String childSelector;
     private String attribute;
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the HasLikeCommand
+     * Initializes a new instance of the {@link HasLikeCommand} class.
      *
      * @param selector           The selector for the element.
      * @param commandInitializer The Command initializer.

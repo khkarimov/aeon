@@ -11,7 +11,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class AcceptAlertCommand extends Command {
 
     /**
-     * Initializes a new instance of the AcceptAlertCommand.
+     * Initializes a new instance of the {@link AcceptAlertCommand} class.
      */
     public AcceptAlertCommand() {
         super(Resources.getString("AcceptAlertCommand_Info"));

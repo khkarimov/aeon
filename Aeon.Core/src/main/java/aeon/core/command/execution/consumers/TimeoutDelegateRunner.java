@@ -18,10 +18,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class TimeoutDelegateRunner extends DelegateRunner {
+
+    private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
     private IDriver driver;
     private IClock clock;
     private Duration timeout;
-    private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
 
     public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
         super(successor);

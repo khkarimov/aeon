@@ -6,6 +6,7 @@ import java.util.Date;
  * Interface for cookie interactions.
  */
 public interface IWebCookie {
+
     /**
      * Gets the name of the cookie.
      */

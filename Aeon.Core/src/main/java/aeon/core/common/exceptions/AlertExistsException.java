@@ -8,6 +8,7 @@ import java.io.Serializable;
  * The exception that is thrown when an alert exists.
  */
 public class AlertExistsException extends RuntimeException implements Serializable {
+
     /**
      * Initializes a new instance of the {@link AlertExistsException} class.
      */

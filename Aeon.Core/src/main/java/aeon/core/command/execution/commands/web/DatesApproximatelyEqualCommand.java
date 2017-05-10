@@ -21,7 +21,7 @@ public class DatesApproximatelyEqualCommand extends WebControlCommand {
     private Period acceptableDelta;
 
     /**
-     * Initializes a new instance of the DatesApproximatelyEqualCommand.
+     * Initializes a new instance of the {@link DatesApproximatelyEqualCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

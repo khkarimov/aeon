@@ -9,6 +9,7 @@ import java.net.URL;
  * Created by DionnyS on 4/21/2016.
  */
 public class URLUtil {
+
     public static URL createURL(String url) {
         try {
             return new URL(url);

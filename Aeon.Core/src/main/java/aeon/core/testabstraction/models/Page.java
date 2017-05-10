@@ -7,6 +7,7 @@ import aeon.core.testabstraction.elements.Element;
  * Created by DionnyS on 4/12/2016.
  */
 public class Page {
+
     public Element createElement(IBy selector) {
         return new Element(selector);
     }

@@ -9,16 +9,13 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by Steve Foo on 6/6/2016.
- */
-
-/**
  * Takes the mouse pointer off of an element.
  */
 public class MouseOutCommand extends WebControlCommand {
 
     /**
-     * Initializes a new MouseOutCommand
+     * Initializes a new {@link MouseOutCommand}.
+     *
      * @param selector    The selector
      * @param initializer The initializer
      */
@@ -29,7 +26,5 @@ public class MouseOutCommand extends WebControlCommand {
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl element) {
         driver.mouseOut(element);
-
     }
-
 }

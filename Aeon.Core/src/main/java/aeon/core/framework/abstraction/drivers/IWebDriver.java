@@ -1,7 +1,5 @@
 package aeon.core.framework.abstraction.drivers;
 
-import aeon.core.framework.abstraction.controls.web.IWebCookie;
-import aeon.core.framework.abstraction.controls.web.WebControl;
 import com.sun.glass.ui.Size;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
@@ -11,6 +9,8 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
+import aeon.core.framework.abstraction.controls.web.IWebCookie;
+import aeon.core.framework.abstraction.controls.web.WebControl;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
@@ -61,13 +61,11 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Accepts the currently active modal dialog for this particular driver instance.
-     *
      */
     void acceptAlert();
 
     /**
      * Dismisses the currently active modal dialog for this particular driver instance.
-     *
      */
     void dismissAlert();
 
@@ -87,25 +85,21 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Scrolls to the top of the window.
-     *
      */
     void scrollToTop();
 
     /**
      * Scrolls to the end of the window.
-     *
      */
     void scrollToEnd();
 
     /**
      * Selects either the first frame on the page or the main document when a page contains iframes.
-     *
      */
     void switchToDefaultContent();
 
     /**
      * Focuses the currently selected window.
-     *
      */
     void focusWindow();
 
@@ -158,27 +152,25 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Deletes all cookies.
-     *
      */
     void deleteAllCookies();
 
     /**
      * Move back a single entry in the browser's history.
-     *
      */
     void goBack();
 
     /**
      * Move a single "item" forward in the browser's history.
      *
-     *             Does nothing if we are on the latest page viewed.
+     * Does nothing if we are on the latest page viewed.
      */
     void goForward();
 
     /**
      * Load a new web page in the current browser window.
      *
-     * @param url  The URL to load. It is best to use a fully qualified URL.
+     * @param url The URL to load. It is best to use a fully qualified URL.
      * @return The current handler after the change.
      * @throws IllegalArgumentException If URL is null.
      */
@@ -186,13 +178,11 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Maximizes the current window if it is not already maximized.
-     *
      */
     void maximize();
 
     /**
      * Refreshes the current page.
-     *
      */
     void refresh();
 
@@ -239,7 +229,7 @@ public interface IWebDriver extends IDriver {
     /**
      * Switches to the Main Window
      *
-     * @param mainWindowHandle The handle of the main window
+     * @param mainWindowHandle              The handle of the main window
      * @param waitForAllPopupWindowsToClose Whether to wait for all popup windows to close.
      */
     void switchToMainWindow(String mainWindowHandle, Boolean waitForAllPopupWindowsToClose);
@@ -266,7 +256,8 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Blurs the current element, takes off focus.
-     *    A globally unique identifier associated with this call
+     * A globally unique identifier associated with this call
+     *
      * @param element The element to be blurred
      */
     void blur(WebControl element);
@@ -499,7 +490,8 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Asserts the URL is equal to the given URL
-     *         A globally unique identifier associated with this call.
+     * A globally unique identifier associated with this call.
+     *
      * @param comparingURL The URL to compare against
      */
     void verifyURL(URL comparingURL);
@@ -666,14 +658,16 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Sets the Text or Value of an element. A globally unique identifier associated with the call.
-     * @param element The web element that is being modified.
-     * @param option Enum which determined whether to set tht Text or the Value.
+     *
+     * @param element  The web element that is being modified.
+     * @param option   Enum which determined whether to set tht Text or the Value.
      * @param setValue The new value for the Text or Value attribute of the control.
      */
     void set(WebControl element, WebSelectOption option, String setValue);
 
     /**
      * Asserts a window with a given title does not exists. A globally unique identifier associated with the call.
+     *
      * @param windowTitle The title of the window to search for.
      * @return The title of the window
      */
@@ -681,6 +675,7 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Asserts a window with a given URL does not exists. A globally unique identifier associated with the call.
+     *
      * @param url The URL of the window to search for.
      * @return The URL of the window
      */

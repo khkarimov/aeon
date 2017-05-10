@@ -14,8 +14,8 @@ import java.util.function.Consumer;
  */
 public abstract class Command implements ICommand<Consumer<IDriver>> {
 
-    private ICommandInitializer commandInitializer;
     private static Logger log = LogManager.getLogger(Command.class);
+    private ICommandInitializer commandInitializer;
 
     /**
      * Initializes a new instance of the {@link Command} class.

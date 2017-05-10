@@ -10,6 +10,7 @@ import java.util.function.Consumer;
  * Command Initializer.
  */
 public interface ICommandInitializer {
+
     // TODO: Delete/change the name of this method.
     Consumer<IDriver> setContext();
 

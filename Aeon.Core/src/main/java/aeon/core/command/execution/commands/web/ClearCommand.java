@@ -15,8 +15,8 @@ import java.util.Locale;
 public class ClearCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of Clear Command.
-     *      the logger
+     * Initializes a new instance of {@link ClearCommand} class.
+     *
      * @param selector the selector
      */
     public ClearCommand(IBy selector, ICommandInitializer commandInitializer) {

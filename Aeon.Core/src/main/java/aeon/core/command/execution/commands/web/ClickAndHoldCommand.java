@@ -12,10 +12,11 @@ import java.util.Locale;
  * Clicks and holds on an element for a certain amount of time.
  */
 public class ClickAndHoldCommand extends WebControlCommand {
+
     private int duration;
 
     /**
-     * Initializes a new instance of the ClickAndHoldCommand.
+     * Initializes a new instance of the {@link ClickAndHoldCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

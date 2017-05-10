@@ -9,16 +9,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/31/2016.
- */
-
-/**
  * Asserts that an element is enabled.
  */
 public class EnabledCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the {@link WebControlCommand} class.
+     * Initializes a new instance of the {@link EnabledCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

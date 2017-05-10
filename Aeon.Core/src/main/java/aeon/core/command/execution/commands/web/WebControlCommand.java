@@ -11,13 +11,13 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * Serves as the base class for all web element commands that need a finder
  */
 public abstract class WebControlCommand extends Command {
+
     private IBy selector;
 
     /**
      * Initializes a new instance of the {@link WebControlCommand} class.
      *
-     * @param message     The message to log.
-     * @param initializer
+     * @param message The message to log.
      */
     protected WebControlCommand(String message, IBy selector, ICommandInitializer initializer) {
         super(message, initializer);

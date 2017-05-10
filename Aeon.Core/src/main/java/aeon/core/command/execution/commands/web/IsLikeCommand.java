@@ -10,19 +10,16 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/29/2016.
- */
-
-/**
  * Checks if the value of a given attribute of an element is like a given value.
  */
 public class IsLikeCommand extends WebControlCommand {
+
     private String value;
     private String attribute;
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the IsLikeCommand. When comparing the case is ignored.
+     * Initializes a new instance of the {@link IsLikeCommand}. When comparing the case is ignored.
      *
      * @param selector           The selector.
      * @param commandInitializer The web command initializer.
@@ -31,7 +28,7 @@ public class IsLikeCommand extends WebControlCommand {
      * @param attribute          The attribute to be compared.
      */
     public IsLikeCommand(IBy selector, ICommandInitializer commandInitializer, String value, ComparisonOption option, String attribute) {
-        super(String.format(Locale.getDefault(), Resources.getString("IsLikeCommand_Info"),attribute, value, selector), selector, commandInitializer);
+        super(String.format(Locale.getDefault(), Resources.getString("IsLikeCommand_Info"), attribute, value, selector), selector, commandInitializer);
         this.value = value;
         this.option = option;
         this.attribute = attribute;

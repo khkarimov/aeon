@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  * Class for selecting elements with jquery.
  */
 public class ByJQuery implements IBy, IByJQuery {
+
     /**
      * Gets the function name.
      */
@@ -70,8 +71,8 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param appendee   The first {@link ByJQuery} object in the chain.
      * @param appendices The next {@link ByJQuery} objects in the chain.
-     * @throws IllegalArgumentException If {@code appendee} is {@code null}.
      * @return The {@link ByJQuery}
+     * @throws IllegalArgumentException If {@code appendee} is {@code null}.
      */
     public static ByJQuery Append(ByJQuery appendee, ByJQuery... appendices) {
         if (appendee == null) {

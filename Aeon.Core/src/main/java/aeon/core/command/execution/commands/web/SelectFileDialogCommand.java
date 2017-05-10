@@ -1,9 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-/**
- * Created by Salvador Gandara on 6/28/2016.
- */
-
 import aeon.core.command.execution.commands.Command;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
@@ -15,18 +11,16 @@ import java.util.Locale;
 
 /**
  * Clicks a type input type=file.
- */
-
-/**
  * Should consider extending from the WebControlCommand class since ultimately all its doing
- * is clicking on an HTML input tag
+ * is clicking on an HTML input tag.
  */
 public class SelectFileDialogCommand extends Command {
+
     private IBy selector;
     private String path;
 
     /**
-     * Initializes a new instance of the {@link SelectFileDialogCommand} class
+     * Initializes a new instance of the {@link SelectFileDialogCommand} class.
      *
      * @param selector    The selector.
      * @param initializer The command initializer.

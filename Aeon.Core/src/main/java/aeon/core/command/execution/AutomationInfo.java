@@ -8,6 +8,7 @@ import aeon.core.testabstraction.product.Configuration;
  * Provides access to data required for automation.
  */
 public class AutomationInfo {
+
     private Configuration configuration;
     private ICommandExecutionFacade commandExecutionFacade;
     private IAdapter adapter;
@@ -15,10 +16,6 @@ public class AutomationInfo {
 
     /**
      * Creates a new {@link AutomationInfo} instance.
-     *
-     * @param configuration
-     * @param driver
-     * @param adapter
      */
     public AutomationInfo(Configuration configuration, IDriver driver, IAdapter adapter) {
         this.driver = driver;

@@ -8,9 +8,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
-
 /**
- * Sets a body value by javascript
+ * Sets a body value by javascript.
  */
 public class SetBodyValueByJavaScriptCommand extends WebControlCommand {
 
@@ -24,6 +23,5 @@ public class SetBodyValueByJavaScriptCommand extends WebControlCommand {
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl control) {
         driver.setBodyValueByJavaScript(control, value);
-
     }
 }

@@ -1,9 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-/**
- * Created by SebastianR on 6/1/2016.
- */
-
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -12,18 +8,18 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * <p>Sends keys to an alert. If your code makes an alert popup this will send keys to the alert. Takes a string as a parameter that corresponds to the keys to send.</p>
- * <p>Usage:</p>
- * <p>      Context.Alert.SendKeys("KeysToSend");</p>
+ * Sends keys to an alert. If your code makes an alert popup this will send keys to the alert. Takes a string as a parameter that corresponds to the keys to send.
+ * Usage:
+ *       Context.Alert.SendKeys("KeysToSend");
  */
 public class SendKeysToAlertCommand extends Command {
+
     private String keysToSend;
 
     /**
-     * Initializes a new instance of
+     * Initializes a new instance of {@link SendKeysToAlertCommand} class.
      *
-     * @param keysToSend
-     * @see SendKeysToAlertCommand class
+     * @param keysToSend The keys to be send in the alert dialog.
      */
     public SendKeysToAlertCommand(String keysToSend) {
         super(String.format(Locale.getDefault(), Resources.getString("SendKeysToAlertCommand_Info"), keysToSend));

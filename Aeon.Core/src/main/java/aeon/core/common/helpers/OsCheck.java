@@ -3,6 +3,7 @@ package aeon.core.common.helpers;
 import java.util.Locale;
 
 public final class OsCheck {
+
     protected static OSType detectedOS;
 
     /**

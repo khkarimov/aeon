@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 @FunctionalInterface
 public interface QuadFunction<A, B, C, R> {
+
     R apply(A a, B b, C c);
 
     default <V> QuadFunction<A, B, C, V> andThen(

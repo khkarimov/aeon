@@ -9,6 +9,7 @@ import aeon.core.common.web.interfaces.IByWithJavaScriptClick;
  * the page too far, thus hiding the button under the floating header at the top of the page.
  */
 public class ByJQueryWithJavaScriptClick extends ByJQuery implements IByWithJavaScriptClick {
+
     /**
      * Initializes a new instance of the {@link ByJQueryWithJavaScriptClick} class.
      *

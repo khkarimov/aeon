@@ -6,13 +6,14 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * <p>Move forward a single entry in the browser's history.</p>
- * <p>Usage:</p>
- * <p>      Context.browser.goForward();</p>
+ * Move forward a single entry in the browser's history.
+ * Usage:
+ *       Context.browser.goForward();
  *
  * Does nothing if we are on the latest page viewed.
  */
 public class GoForwardCommand extends Command {
+
     /**
      * Initializes a new instance of the {@link GoForwardCommand} class.
      */

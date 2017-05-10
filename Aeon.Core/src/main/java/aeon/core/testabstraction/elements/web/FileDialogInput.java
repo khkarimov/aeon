@@ -9,6 +9,7 @@ import aeon.core.common.web.interfaces.IBy;
  * Created by SebastianR on 6/3/2016.
  */
 public class FileDialogInput extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;
@@ -64,6 +65,4 @@ public class FileDialogInput extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         path));
     }
-
-
 }

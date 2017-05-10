@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Created by DionnyS on 4/1/2016.
  */
 public class ConfigurationException extends RuntimeException implements Serializable {
+
     private String key, source, reason;
 
     /**

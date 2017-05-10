@@ -7,6 +7,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * Finds a web element.
  */
 public interface IWebSelectorFinder {
+
     /**
      * Finds a web element utilizing a web driver.
      *

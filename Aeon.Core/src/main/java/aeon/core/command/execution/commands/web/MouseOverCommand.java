@@ -8,9 +8,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
-/**
- * Created by Steve Foo on 6/6/2016.
- */
 public class MouseOverCommand extends WebControlCommand {
 
     public MouseOverCommand(IBy selector, ICommandInitializer initializer) {
@@ -20,6 +17,5 @@ public class MouseOverCommand extends WebControlCommand {
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl control) {
         driver.mouseOver(control);
-
     }
 }

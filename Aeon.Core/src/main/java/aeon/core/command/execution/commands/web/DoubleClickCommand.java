@@ -9,16 +9,13 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/26/2016.
- */
-
-/**
  * Double clicks an element.
  */
 public class DoubleClickCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the DoubleClickCommand..
+     * Initializes a new instance of the {@link DoubleClickCommand} class.
+     *
      * @param selector    The selector.
      * @param initializer The web command initializer.
      */

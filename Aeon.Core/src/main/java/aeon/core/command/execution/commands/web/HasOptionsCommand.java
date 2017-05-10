@@ -10,20 +10,17 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/1/2016.
- */
-
-/**
  * Asserts that a select element has all the given options. Can optionally be passed an option group which will be searched instead of
  * the entire select. The two methods for searching through the options are either by their value or their visible text.
  */
 public class HasOptionsCommand extends WebControlCommand {
+
     private String[] options;
-    private String optgroup;
+    private String optGroup;
     private WebSelectOption select;
 
     /**
-     * Initializes a new instance of HasOptionsCommand.
+     * Initializes a new instance of {@link HasOptionsCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
@@ -33,12 +30,12 @@ public class HasOptionsCommand extends WebControlCommand {
     public HasOptionsCommand(IBy selector, ICommandInitializer commandInitializer, String[] options, WebSelectOption select) {
         super(String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), options, selector), selector, commandInitializer);
         this.options = options;
-        this.optgroup = null;
+        this.optGroup = null;
         this.select = select;
     }
 
     /**
-     * Initializes a new instance of HasOptionsCommand.
+     * Initializes a new instance of {@link HasOptionsCommand}.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
@@ -49,7 +46,7 @@ public class HasOptionsCommand extends WebControlCommand {
     public HasOptionsCommand(IBy selector, ICommandInitializer commandInitializer, String[] options, String optgroup, WebSelectOption select) {
         super(String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), options, selector), selector, commandInitializer);
         this.options = options;
-        this.optgroup = optgroup;
+        this.optGroup = optgroup;
         this.select = select;
     }
 
@@ -61,6 +58,6 @@ public class HasOptionsCommand extends WebControlCommand {
      */
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl control) {
-        driver.hasOptions(control, options, optgroup, select);
+        driver.hasOptions(control, options, optGroup, select);
     }
 }

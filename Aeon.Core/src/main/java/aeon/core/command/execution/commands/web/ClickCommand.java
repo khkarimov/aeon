@@ -12,9 +12,11 @@ import java.util.Locale;
  * Clicks an element.
  */
 public class ClickCommand extends WebControlCommand {
+
     /**
-     * Initializes a new instance of the {@link WebControlCommand} class. The logger.
-     * @param selector The selector.
+     * Initializes a new instance of the {@link WebControlCommand} class.
+     *
+     * @param selector    The selector.
      * @param initializer The command initializer.
      */
     public ClickCommand(IBy selector, ICommandInitializer initializer) {

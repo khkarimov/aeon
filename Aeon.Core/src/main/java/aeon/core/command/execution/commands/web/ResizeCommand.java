@@ -1,7 +1,7 @@
 package aeon.core.command.execution.commands.web;
 
-import aeon.core.command.execution.commands.Command;
 import com.sun.glass.ui.Size;
+import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserSizeMap;
@@ -9,12 +9,13 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * <p>Resizes the currently focused browser window.</p>
- * <p>Usage:</p>
- * <p>      Context.browser.resize(BrowserSize.Maximized);</p>
- * <p>      Context.browser.resize(800, 600);</p>
+ * Resize the currently focused browser window.
+ * Usage:
+ *       Context.browser.resize(BrowserSize.Maximized);
+ *       Context.browser.resize(800, 600);
  */
 public class ResizeCommand extends Command {
+
     private Size size;
 
     /**

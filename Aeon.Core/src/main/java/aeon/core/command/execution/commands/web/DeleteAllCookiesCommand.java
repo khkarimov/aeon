@@ -11,7 +11,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class DeleteAllCookiesCommand extends Command {
 
     /**
-     * Initializes a new instance of the DeleteAllCookiesCommand.
+     * Initializes a new instance of the {@link DeleteAllCookiesCommand} class.
      */
     public DeleteAllCookiesCommand() {
         super(Resources.getString("DeleteAllCookiesCommand_Info"));

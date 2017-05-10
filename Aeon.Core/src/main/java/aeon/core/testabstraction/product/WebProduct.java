@@ -15,10 +15,15 @@ import org.joda.time.Duration;
  * Created by DionnyS on 4/21/2016.
  */
 public class WebProduct extends Product {
+
     public Browser browser;
 
     public WebProduct() {
 
+    }
+
+    protected WebProduct(AutomationInfo automationInfo) {
+        browser = new Browser(automationInfo);
     }
 
     @Override
@@ -35,8 +40,8 @@ public class WebProduct extends Product {
 
         driver = (IWebDriver) configuration.getDriver().newInstance();
         driver.configure(adapter);
-        long timeout = (long)configuration.getDouble(Configuration.Keys.timeout, 10);
-        long ajaxTimeout = (long)configuration.getDouble(Configuration.Keys.ajaxTimeout, 20);
+        long timeout = (long) configuration.getDouble(Configuration.Keys.timeout, 10);
+        long ajaxTimeout = (long) configuration.getDouble(Configuration.Keys.ajaxTimeout, 20);
 
 
         commandExecutionFacade = new WebCommandExecutionFacade(
@@ -46,10 +51,6 @@ public class WebProduct extends Product {
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
 
         afterLaunch();
-    }
-
-    protected WebProduct(AutomationInfo automationInfo) {
-        browser = new Browser(automationInfo);
     }
 
     @Override

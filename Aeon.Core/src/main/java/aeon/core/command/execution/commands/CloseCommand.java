@@ -9,9 +9,9 @@ import aeon.core.framework.abstraction.drivers.IDriver;
  * <p>      Context.browser.close();</p>
  */
 public class CloseCommand extends Command {
+
     /**
      * Initializes a new instance of the {@link CloseCommand} class.
-     *
      */
     public CloseCommand() {
         super(Resources.getString("CloseCommand_Info"));

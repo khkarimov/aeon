@@ -14,7 +14,7 @@ import java.util.Locale;
 public class CheckCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the CheckCommand.
+     * Initializes a new instance of the {@link CheckCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

@@ -21,13 +21,14 @@ import java.util.Locale;
  * Asserts that an elements children that match a selector only posses certain values.
  */
 public class HasOnlyCommand extends WebControlCommand {
+
     private String[] messages;
     private String childSelector;
     private String attribute;
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the HasOnlyCommand.
+     * Initializes a new instance of the {@link HasOnlyCommand}.
      *
      * @param selector           The selector for the element.
      * @param commandInitializer The Command initializer.
