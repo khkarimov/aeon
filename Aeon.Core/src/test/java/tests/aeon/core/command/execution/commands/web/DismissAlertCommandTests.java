@@ -13,9 +13,7 @@ import org.mockito.junit.MockitoRule;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 
-/**
- * Created by ryanc on 5/10/17. 
- */
+
 public class DismissAlertCommandTests {
     private DismissAlertCommand alertCommand;
 
@@ -32,7 +30,12 @@ public class DismissAlertCommandTests {
 
     @Test
     public void dismissAlert_executeDismissAlert() {
+        // Arrange
+
+        // Act
         alertCommand.getCommandDelegate().accept(driver);
+
+        // Assert
         verify(driver, times(1)).dismissAlert();
     }
 }
