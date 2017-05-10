@@ -18,10 +18,8 @@ import java.util.function.Consumer;
 
 public class ClickCommandTests {
 
-    //Variables
     private ClickCommand clickCommandObject;
 
-    //Mocks
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
@@ -44,7 +42,7 @@ public class ClickCommandTests {
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
-        
+
         // Act
         Consumer<IDriver> action = clickCommandObject.getCommandDelegate();
         action.accept(driver);
