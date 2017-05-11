@@ -28,18 +28,18 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
     }
 
     /**
-     * Gets the timeout of the ajax waiter.
+     * Gets the TIMEOUT of the ajax waiter.
      *
-     * @return the {@link long} for the timeout in milliseconds.
+     * @return the {@link long} for the TIMEOUT in milliseconds.
      */
     public long getAjaxWaiterTimeoutMillis() {
         return ajaxWaiter.getTimeout();
     }
 
     /**
-     * Sets the timeout of the ajax waiter.
+     * Sets the TIMEOUT of the ajax waiter.
      *
-     * @param millis the {@link long} for the new timeout in milliseconds.
+     * @param millis the {@link long} for the new TIMEOUT in milliseconds.
      */
     public void setAjaxWaiterTimeout(long millis) {
         ajaxWaiter.setTimeout(millis);
@@ -56,7 +56,7 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
         if (command instanceof WebControlCommand
-                && automationInfo.getConfiguration().getBoolean(Configuration.Keys.waitForAjaxResponses, true)) {
+                && automationInfo.getConfiguration().getBoolean(Configuration.Keys.WAIT_FOR_AJAX_RESPONSES, true)) {
             ajaxWaiter.waitForAsync();
         }
         delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());
@@ -74,7 +74,7 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
             throw new IllegalArgumentException("command");
         }
         if (command instanceof WebControlCommandWithReturn
-                && automationInfo.getConfiguration().getBoolean(Configuration.Keys.waitForAjaxResponses, true)) {
+                && automationInfo.getConfiguration().getBoolean(Configuration.Keys.WAIT_FOR_AJAX_RESPONSES, true)) {
             ajaxWaiter.waitForAsync();
         }
         return delegateRunnerFactory.createInstance(automationInfo).execute(command.getCommandDelegate());

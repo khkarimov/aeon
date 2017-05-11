@@ -57,8 +57,8 @@ public class AjaxWaiter {
         } while (count != 0 && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
-    /*ajaxJsonpElementTimeout defines a timeout for JSONP request on the HTML page.
-    / This is set to be less than the timeout so that page interactions can be executed.
+    /*ajaxJsonpElementTimeout defines a TIMEOUT for JSONP request on the HTML page.
+    / This is set to be less than the TIMEOUT so that page interactions can be executed.
      */
     public void injectJS() {
         try {

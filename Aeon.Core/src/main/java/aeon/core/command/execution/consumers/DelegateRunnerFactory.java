@@ -22,7 +22,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
      * Initializes a new instance of the {@link DelegateRunnerFactory} class.
      *
      * @param clock                                    The clock.
-     * @param defaultTimeout                           The timeout to wait for.
+     * @param defaultTimeout                           The TIMEOUT to wait for.
      * @param promptUserForContinueOnExceptionDecision Instructs the framework to show a popup when an unhandled exception occurs prompting the users to decide if the test should attempt to continue.
      * @param throttleFactor                           TimeSpan used to slow down test execution. This value will be used as a pause between test actions.
      */
@@ -37,7 +37,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
      * Initializes a new instance of the {@link DelegateRunnerFactory} class for bacho.
      *
      * @param throttleFactor The throttle factor.
-     * @param defaultTimeout The default timeout.
+     * @param defaultTimeout The default TIMEOUT.
      */
     public DelegateRunnerFactory(Duration throttleFactor, Duration defaultTimeout) {
         this.clock = new Clock();

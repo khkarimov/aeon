@@ -25,7 +25,7 @@ public class Aeon {
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
             if (browserType == null) {
-                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.browserType, "Chrome"));
+                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER_TYPE, "Chrome"));
             }
             product.getConfiguration().setBrowserType(browserType);
 
@@ -33,9 +33,9 @@ public class Aeon {
 
             product.launch(plugin);
 
-            environment = product.getConfig(Configuration.Keys.environment, "");
+            environment = product.getConfig(Configuration.Keys.ENVIRONMENT, "");
             if (StringUtils.isNotBlank(environment)) {
-                protocol = product.getConfig(Configuration.Keys.protocol, "https");
+                protocol = product.getConfig(Configuration.Keys.PROTOCOL, "https");
                 if (StringUtils.isBlank(protocol)) {
                     protocol = "https";
                 }

@@ -40,8 +40,8 @@ public class WebProduct extends Product {
 
         driver = (IWebDriver) configuration.getDriver().newInstance();
         driver.configure(adapter);
-        long timeout = (long) configuration.getDouble(Configuration.Keys.timeout, 10);
-        long ajaxTimeout = (long) configuration.getDouble(Configuration.Keys.ajaxTimeout, 20);
+        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+        long ajaxTimeout = (long) configuration.getDouble(Configuration.Keys.AJAX_TIMEOUT, 20);
 
 
         commandExecutionFacade = new WebCommandExecutionFacade(
@@ -62,13 +62,13 @@ public class WebProduct extends Product {
      * Disables the ajax waiter.
      */
     public void disableAjaxWaiting() {
-        configuration.setBoolean(Configuration.Keys.waitForAjaxResponses, false);
+        configuration.setBoolean(Configuration.Keys.WAIT_FOR_AJAX_RESPONSES, false);
     }
 
     /**
      * Enables the ajax waiter.
      */
     public void enableAjaxWaiting() {
-        configuration.setBoolean(Configuration.Keys.waitForAjaxResponses, true);
+        configuration.setBoolean(Configuration.Keys.WAIT_FOR_AJAX_RESPONSES, true);
     }
 }

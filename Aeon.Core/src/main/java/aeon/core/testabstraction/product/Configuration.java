@@ -123,11 +123,11 @@ public class Configuration {
 
     public static class Keys {
 
-        public static final String waitForAjaxResponses = "aeon.wait_for_ajax_responses";
-        public static final String browserType = "aeon.browser_type";
-        public static final String environment = "aeon.environment";
-        public static final String protocol = "aeon.protocol";
-        public static final String timeout = "aeon.timeout";
-        public static final String ajaxTimeout = "aeon.ajax_timeout";
+        public static final String WAIT_FOR_AJAX_RESPONSES = "aeon.wait_for_ajax_responses";
+        public static final String BROWSER_TYPE = "aeon.browser_type";
+        public static final String ENVIRONMENT = "aeon.environment";
+        public static final String PROTOCOL = "aeon.protocol";
+        public static final String TIMEOUT = "aeon.timeout";
+        public static final String AJAX_TIMEOUT = "aeon.ajax_timeout";
     }
 }
