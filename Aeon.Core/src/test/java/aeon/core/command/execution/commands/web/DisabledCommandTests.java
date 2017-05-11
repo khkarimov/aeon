@@ -36,22 +36,16 @@ public class DisabledCommandTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void DriverNullThrowsException(){
-        // Arrange
-        driver = null;
-
         // Act
-        disabledCommandObject.commandDelegate(driver, control);
+        disabledCommandObject.commandDelegate(null, control);
 
         // Assert
         thrown.expectMessage("driver");
     }
     @Test(expected = IllegalArgumentException.class)
     public void ControlNullThrowsException(){
-        // Arrange
-        control = null;
-
         // Act
-        disabledCommandObject.commandDelegate(driver, control);
+        disabledCommandObject.commandDelegate(null, control);
 
         // Assert
         thrown.expectMessage("control");
