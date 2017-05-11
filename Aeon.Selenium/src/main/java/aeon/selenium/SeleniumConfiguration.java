@@ -17,9 +17,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SeleniumConfiguration extends Configuration {
+
     Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
-    static class Keys{
+    static class Keys {
+
         public static final String enableSeleniumGrid = "aeon.selenium.enable_selenium_grid";
         public static final String language = "aeon.selenium.language";
         public static final String moveMouseToOrigin = "aeon.selenium.move_mouse_to_origin";
@@ -37,7 +39,7 @@ public class SeleniumConfiguration extends Configuration {
     };
 
     @Override
-    protected List<Field> getConfigurationFields(){
+    protected List<Field> getConfigurationFields() {
         List<Field> keys = new ArrayList<>();
         keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getDeclaredFields()));
         return keys;
@@ -49,19 +51,19 @@ public class SeleniumConfiguration extends Configuration {
 
     @Override
     public void loadPluginSettings() throws IOException {
-       try(InputStream  in = SeleniumConfiguration.class.getResourceAsStream("/selenium.properties")){
+        try (InputStream in = SeleniumConfiguration.class.getResourceAsStream("/selenium.properties")) {
             properties.load(in);
-       } catch (IOException e) {
-           log.error("selenium.properties resource could not be read");
-           throw e;
-       }
-       setBrowserDirectories();
+        } catch (IOException e) {
+            log.error("selenium.properties resource could not be read");
+            throw e;
+        }
+        setBrowserDirectories();
     }
 
     private void setBrowserDirectories() {
         String output = System.getProperty("user.dir");
-        properties.setProperty(Keys.ieDirectory , output + "/lib/Windows/IEDriverServer.exe");
-        properties.setProperty(Keys.edgeDirectory , output + "/lib/Windows/MicrosoftWebDriver.exe");
+        properties.setProperty(Keys.ieDirectory, output + "/lib/Windows/IEDriverServer.exe");
+        properties.setProperty(Keys.edgeDirectory, output + "/lib/Windows/MicrosoftWebDriver.exe");
         switch (OsCheck.getOperatingSystemType()) {
             case Windows:
                 properties.setProperty(Keys.marionetteDirectory, output + "/lib/Windows/geckodriver.exe");

@@ -1,9 +1,9 @@
 package aeon.core.common.web.interfaces;
 
-import com.sun.javafx.fxml.expression.Expression;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.common.web.selectors.ByJQueryWithArithmeticOperatorOverload;
+import com.sun.javafx.fxml.expression.Expression;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
