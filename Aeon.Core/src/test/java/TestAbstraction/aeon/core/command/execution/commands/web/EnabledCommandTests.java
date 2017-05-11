@@ -19,9 +19,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by rohanp on 5/10/17.
- */
 public class EnabledCommandTests {
 
     private EnabledCommand command;
@@ -45,19 +42,16 @@ public class EnabledCommandTests {
     IBy selector;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         command = new EnabledCommand(selector, commandInitializer);
     }
 
     @Test
-    public void enabledCommand_CallsExecute()
-    {
+    public void enabledCommand_CallsExecute() {
         when(commandInitializer.setContext()).thenReturn(driverConsumer);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
         verify(driver, times(1)).isElementEnabled(control);
     }
-
 }
