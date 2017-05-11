@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Maximizes the currently focused browser window.
  * Usage:
- *       Context.browser.maximize();
+ * Context.browser.maximize();
  */
 public class MaximizeCommand extends Command {
 

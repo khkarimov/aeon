@@ -1,6 +1,5 @@
 package aeon.core.framework.abstraction.drivers;
 
-import com.sun.glass.ui.Size;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
@@ -12,6 +11,7 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
+import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 

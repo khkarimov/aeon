@@ -22,12 +22,12 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
-     * @param  numberOfOptions    The number of options that the option group should have.
+     * @param numberOfOptions    The number of options that the option group should have.
      * @param optGroup           The visible text of the option group.
      */
-    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int  numberOfOptions, String optGroup) {
-        super(String.format(Locale.getDefault(), Resources.getString("HasNumberOfOptionsCommand_Info"), selector,  numberOfOptions), selector, commandInitializer);
-        this.number =  numberOfOptions;
+    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int numberOfOptions, String optGroup) {
+        super(String.format(Locale.getDefault(), Resources.getString("HasNumberOfOptionsCommand_Info"), selector, numberOfOptions), selector, commandInitializer);
+        this.number = numberOfOptions;
         this.optGroup = optGroup;
     }
 
@@ -36,11 +36,11 @@ public class HasNumberOfOptionsCommand extends WebControlCommand {
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.
-     * @param  numberOfOptions    The number of options the select should have.
+     * @param numberOfOptions    The number of options the select should have.
      */
-    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int  numberOfOptions) {
+    public HasNumberOfOptionsCommand(IBy selector, ICommandInitializer commandInitializer, int numberOfOptions) {
         super(String.format(Locale.getDefault(), Resources.getString("BlurCommand_Info"), selector), selector, commandInitializer);
-        this.number =  numberOfOptions;
+        this.number = numberOfOptions;
         this.optGroup = null;
     }
 

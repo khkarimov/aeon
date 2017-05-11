@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Scrolls to the end of the page.
  * Usage:
- *       Context.browser.scrollToEnd();
+ * Context.browser.scrollToEnd();
  */
 
 public class ScrollToEndCommand extends Command {

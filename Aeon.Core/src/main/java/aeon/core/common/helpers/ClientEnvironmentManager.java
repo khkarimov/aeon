@@ -1,7 +1,7 @@
 package aeon.core.common.helpers;
 
-import com.sun.glass.ui.Size;
 import aeon.core.common.web.BrowserType;
+import com.sun.glass.ui.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

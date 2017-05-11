@@ -7,7 +7,7 @@ import org.joda.time.Period;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 7/1/2016.
+ * The exception that is thrown when the dates compared are not close enough.
  */
 public class DatesNotApproximatelyEqualException extends RuntimeException {
 

@@ -10,7 +10,7 @@ import java.util.Locale;
 /**
  * Sends keys to an alert. If your code makes an alert popup this will send keys to the alert. Takes a string as a parameter that corresponds to the keys to send.
  * Usage:
- *       Context.Alert.SendKeys("KeysToSend");
+ * Context.Alert.SendKeys("KeysToSend");
  */
 public class SendKeysToAlertCommand extends Command {
 

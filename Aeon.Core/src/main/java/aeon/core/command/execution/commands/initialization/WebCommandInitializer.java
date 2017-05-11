@@ -34,8 +34,7 @@ public class WebCommandInitializer implements ICommandInitializer {
 
     @Override
     public Consumer<IDriver> setContext() {
-        Consumer<IDriver> action = driver ->
-        {
+        Consumer<IDriver> action = driver -> {
             IWebDriver webDriver = (IWebDriver) driver;
             if (switchMechanism != null) {
                 webDriver.switchToDefaultContent();

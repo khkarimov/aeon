@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Scrolls to the top of the page.
  * Usage:
- *      Context.browser.scrollToTop();
+ * Context.browser.scrollToTop();
  */
 
 public class ScrollToTopCommand extends Command {

@@ -5,7 +5,7 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 7/1/2016.
+ * The exception that is thrown when the element is not a date.
  */
 public class ElementAttributeNotADateException extends RuntimeException {
 

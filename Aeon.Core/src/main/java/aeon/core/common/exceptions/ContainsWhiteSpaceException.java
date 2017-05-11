@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 /**
- * Exception thrown when white spaced are found in a file that should not contain them.
+ * Exception thrown when white spaced are found in a string that should not contain them.
  */
 public class ContainsWhiteSpaceException extends RuntimeException implements Serializable {
 

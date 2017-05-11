@@ -9,7 +9,7 @@ import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.testabstraction.product.Configuration;
 
 /**
- * Created by SebastianR on 11/8/2016.
+ * The facade for the WebCommand Execution layer.
  */
 public class WebCommandExecutionFacade implements ICommandExecutionFacade {
 
@@ -20,16 +20,27 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
      * Initializes a new instance of the {@link WebCommandExecutionFacade} class.
      *
      * @param delegateRunnerFactory The delegate runner factory.
+     * @param ajaxWaiter            The ajax waiter.
      */
     public WebCommandExecutionFacade(IDelegateRunnerFactory delegateRunnerFactory, AjaxWaiter ajaxWaiter) {
         this.delegateRunnerFactory = delegateRunnerFactory;
         this.ajaxWaiter = ajaxWaiter;
     }
 
+    /**
+     * Gets the timeout of the ajax waiter.
+     *
+     * @return the {@link long} for the timeout in milliseconds.
+     */
     public long getAjaxWaiterTimeoutMillis() {
         return ajaxWaiter.getTimeout();
     }
 
+    /**
+     * Sets the timeout of the ajax waiter.
+     *
+     * @param millis the {@link long} for the new timeout in milliseconds.
+     */
     public void setAjaxWaiterTimeout(long millis) {
         ajaxWaiter.setTimeout(millis);
     }

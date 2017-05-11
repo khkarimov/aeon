@@ -8,8 +8,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Switches focus to the original window.
  * Usage:
- *       Context.browser.switchToMainWindow();
- *       Context.browser.switchToMainWindow(WaitForAllPopupWindowsToClose);
+ * Context.browser.switchToMainWindow();
+ * Context.browser.switchToMainWindow(WaitForAllPopupWindowsToClose);
  */
 public class SwitchToMainWindowCommand extends Command {
 
