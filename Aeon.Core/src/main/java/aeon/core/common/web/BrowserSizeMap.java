@@ -5,6 +5,7 @@ import com.sun.glass.ui.Size;
 import java.util.HashMap;
 
 public final class BrowserSizeMap {
+
     private static final HashMap<BrowserSize, Size> browserSizes = new HashMap<BrowserSize, Size>();
     private static final HashMap<Size, BrowserSize> sizes = new HashMap<Size, BrowserSize>();
 

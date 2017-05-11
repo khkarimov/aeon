@@ -6,14 +6,14 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * <p>Maximizes the currently focused browser window.</p>
- * <p></p>
- * <p>Usage:</p>
- * <p>      Context.browser.maximize();</p>
+ * Maximizes the currently focused browser window.
+ * Usage:
+ * Context.browser.maximize();
  */
 public class MaximizeCommand extends Command {
+
     /**
-     * Initializes a new instance of the MaximizeCommand class.
+     * Initializes a new instance of the {@link MaximizeCommand} class.
      */
     public MaximizeCommand() {
         super(Resources.getString("MaximizeCommand_Info"));

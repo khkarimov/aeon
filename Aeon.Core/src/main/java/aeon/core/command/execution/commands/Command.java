@@ -14,8 +14,8 @@ import java.util.function.Consumer;
  */
 public abstract class Command implements ICommand<Consumer<IDriver>> {
 
-    private ICommandInitializer commandInitializer;
     private static Logger log = LogManager.getLogger(Command.class);
+    private ICommandInitializer commandInitializer;
 
     /**
      * Initializes a new instance of the {@link Command} class.
@@ -29,7 +29,8 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
     /**
      * Initializes a new instance of the {@link Command} class.
      *
-     * @param message The message to log.
+     * @param message     The message to log.
+     * @param initializer The command initializer.
      */
     protected Command(String message, ICommandInitializer initializer) {
         if (log == null) {

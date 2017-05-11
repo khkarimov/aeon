@@ -16,6 +16,7 @@ import org.joda.time.Period;
  * Created by SebastianR on 6/20/2016.
  */
 public class WebElement extends Element {
+
     private IBy selector;
     private AutomationInfo info;
     private Iterable<IBy> switchMechanism;
@@ -30,10 +31,9 @@ public class WebElement extends Element {
         this(null, selector);
     }
 
-    public WebElement(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism){
+    public WebElement(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         this(info, selector);
         this.switchMechanism = switchMechanism;
-
     }
 
     public void blur() {
@@ -93,7 +93,7 @@ public class WebElement extends Element {
     }
 
     public void notExists() {
-        info.getCommandExecutionFacade().execute(info, new NotExistsCommand( selector));
+        info.getCommandExecutionFacade().execute(info, new NotExistsCommand(selector));
     }
 
     public Object getElementAttribute(String attributeName) {

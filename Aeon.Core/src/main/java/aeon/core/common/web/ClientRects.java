@@ -6,6 +6,7 @@ import aeon.core.command.execution.commands.web.GetClientRectsCommand;
  * Class to easily manage the return value from {@link GetClientRectsCommand}. It also provides the script for that command.
  */
 public class ClientRects {
+
     private int top;
     private int left;
     private int bottom;
@@ -37,6 +38,7 @@ public class ClientRects {
 
     /**
      * Gets the location of the top edge of the element relative to the document. In pixels.
+     *
      * @return The top pixel.
      */
     public final int getTop() {
@@ -49,6 +51,7 @@ public class ClientRects {
 
     /**
      * Gets the location of the left edge of the element relative to the document. In pixels.
+     *
      * @return The location of the left edge in pixels.
      */
     public final int getLeft() {
@@ -61,6 +64,7 @@ public class ClientRects {
 
     /**
      * Gets the location of the bottom edge of the element relative to the document. In pixels.
+     *
      * @return The location of the bottom edge in pixels.
      */
     public final int getBottom() {
@@ -73,6 +77,7 @@ public class ClientRects {
 
     /**
      * Gets the location of the right edge of the element relative to the document. In pixels.
+     *
      * @return The location of the right edge in pixels.
      */
     public final int getRight() {
@@ -85,6 +90,7 @@ public class ClientRects {
 
     /**
      * Gets the width of the element. In pixels.
+     *
      * @return The width of the element in pixels.
      */
     public final int getWidth() {
@@ -93,6 +99,7 @@ public class ClientRects {
 
     /**
      * Gets the height of the element. In pixels.
+     *
      * @return The height of the element in pixels.
      */
     public final int getHeight() {
@@ -101,6 +108,7 @@ public class ClientRects {
 
     /**
      * Gets the horizontal center of this element relative to the document. left + (Width / 2).
+     *
      * @return The horizontal center of an element in pixels relative to the document.
      */
     public final int getHorizontalCenter() {
@@ -109,6 +117,7 @@ public class ClientRects {
 
     /**
      * Gets the vertical center of this element relative to the document. top + (Height / 2).
+     *
      * @return The vertical center of an element in pixels relative to the document.
      */
     public final int getVerticalCenter() {
@@ -117,6 +126,7 @@ public class ClientRects {
 
     /**
      * Gets the horizontal middle relative to the element (origin at the element's top-left corner). (Width / 2).
+     *
      * @return The horizontal middle of an element relative to the element.
      */
     public final int getHorizontalMiddle() {
@@ -125,6 +135,7 @@ public class ClientRects {
 
     /**
      * Gets the vertical middle relative to the element (origin at the element's top-left corner). (Height / 2).
+     *
      * @return The vertical middle of an element relative to the element.
      */
     public final int getVerticalMiddle() {

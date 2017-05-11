@@ -10,6 +10,7 @@ import java.util.Collection;
  * Finds a collection of {@link WebControl} objects utilizing a web driver.
  */
 public interface IWebElementsFinder {
+
     /**
      * Finds a collection of web elements utilizing a web driver.
      *

@@ -9,6 +9,7 @@ import java.util.Locale;
  * The exception that is thrown when a cookie does not exist.
  */
 public class NoSuchCookieException extends RuntimeException implements Serializable {
+
     private String cookie;
 
     /**

@@ -8,6 +8,7 @@ import aeon.core.command.execution.consumers.interfaces.IDelegateRunnerFactory;
  * The facade for the Command Execution layer.
  */
 public final class CommandExecutionFacade implements ICommandExecutionFacade {
+
     private IDelegateRunnerFactory delegateRunnerFactory;
 
     /**

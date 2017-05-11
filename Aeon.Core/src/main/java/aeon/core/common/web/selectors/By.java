@@ -6,6 +6,7 @@ import aeon.core.common.web.interfaces.IBy;
  * Class for selecting elements (default is via a CSS selector).
  */
 public class By implements IBy {
+
     private String selector;
 
     /**

@@ -66,39 +66,8 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
     private final String fontSize;
     private final String headerSize;
 
-    /**
-     * Possible font sizes
-     */
-    public static enum FontSize {
-        SMALLER("smaller"), XXSMALL("xx-small"), XSMALL("x-small"), SMALL("small"), MEDIUM("medium"), LARGE("large"),
-        XLARGE("x-large"), XXLARGE("xx-large"), LARGER("larger");
-
-        private final String size;
-
-        private FontSize(final String size) {
-            this.size = size;
-        }
-
-        public String getFontSize() {
-            return size;
-        }
-
-        public static FontSize getFontSize(final String size) {
-            for (final FontSize fontSize : values()) {
-                if (fontSize.size.equals(size)) {
-                    return fontSize;
-                }
-            }
-            return SMALL;
-        }
-
-        public FontSize larger() {
-            return this.ordinal() < XXLARGE.ordinal() ? FontSize.values()[this.ordinal() + 1] : this;
-        }
-    }
-
     private AeonHtmlLayout(final boolean locationInfo, final String title, final String contentType, final Charset charset,
-                       final String font, final String fontSize, final String headerSize) {
+                           final String font, final String fontSize, final String headerSize) {
         super(charset);
         this.locationInfo = locationInfo;
         this.title = title;
@@ -106,6 +75,48 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         this.font = font;
         this.fontSize = fontSize;
         this.headerSize = headerSize;
+    }
+
+    /**
+     * Create an HTML Layout.
+     *
+     * @param locationInfo If "true", location information will be included. The default is false.
+     * @param title        The title to include in the file header. If none is specified the default title will be used.
+     * @param contentType  The content type. Defaults to "text/html".
+     * @param charset      The character set to use. If not specified, the default will be used.
+     * @param fontSize     The font size of the text.
+     * @param font         The font to use for the text.
+     * @return An HTML Layout.
+     */
+    @PluginFactory
+    public static AeonHtmlLayout createLayout(
+            @PluginAttribute(value = "locationInfo", defaultBoolean = false) final boolean locationInfo,
+            @PluginAttribute(value = "title", defaultString = DEFAULT_TITLE) final String title,
+            @PluginAttribute("contentType") String contentType,
+            @PluginAttribute(value = "charset", defaultString = "UTF-8") final Charset charset,
+            @PluginAttribute("fontSize") String fontSize,
+            @PluginAttribute(value = "fontName", defaultString = DEFAULT_FONT_FAMILY) final String font) {
+        final FontSize fs = FontSize.getFontSize(fontSize);
+        fontSize = fs.getFontSize();
+        final String headerSize = fs.larger().getFontSize();
+        if (contentType == null) {
+            contentType = DEFAULT_CONTENT_TYPE + "; charset=" + charset;
+        }
+        return new AeonHtmlLayout(locationInfo, title, contentType, charset, font, fontSize, headerSize);
+    }
+
+    /**
+     * Creates an HTML Layout using the default settings.
+     *
+     * @return an HTML Layout.
+     */
+    public static AeonHtmlLayout createDefaultLayout() {
+        return newBuilder().build();
+    }
+
+    @PluginBuilderFactory
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
     private String addCharsetToContentType(final String contentType) {
@@ -171,7 +182,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         sbuf.append(Transform.escapeHtmlTags(event.getMessage().getFormattedMessage()).replaceAll(REGEXP, "<br />"));
 
         Object[] parameters = event.getMessage().getParameters();
-        if (parameters != null && parameters.length > 0 && parameters[0] instanceof BufferedImage){
+        if (parameters != null && parameters.length > 0 && parameters[0] instanceof BufferedImage) {
             BufferedImage image = (BufferedImage) parameters[0];
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
@@ -317,45 +328,34 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
     }
 
     /**
-     * Create an HTML Layout.
-     *
-     * @param locationInfo If "true", location information will be included. The default is false.
-     * @param title        The title to include in the file header. If none is specified the default title will be used.
-     * @param contentType  The content type. Defaults to "text/html".
-     * @param charset      The character set to use. If not specified, the default will be used.
-     * @param fontSize     The font size of the text.
-     * @param font         The font to use for the text.
-     * @return An HTML Layout.
+     * Possible font sizes
      */
-    @PluginFactory
-    public static AeonHtmlLayout createLayout(
-            @PluginAttribute(value = "locationInfo", defaultBoolean = false) final boolean locationInfo,
-            @PluginAttribute(value = "title", defaultString = DEFAULT_TITLE) final String title,
-            @PluginAttribute("contentType") String contentType,
-            @PluginAttribute(value = "charset", defaultString = "UTF-8") final Charset charset,
-            @PluginAttribute("fontSize") String fontSize,
-            @PluginAttribute(value = "fontName", defaultString = DEFAULT_FONT_FAMILY) final String font) {
-        final FontSize fs = FontSize.getFontSize(fontSize);
-        fontSize = fs.getFontSize();
-        final String headerSize = fs.larger().getFontSize();
-        if (contentType == null) {
-            contentType = DEFAULT_CONTENT_TYPE + "; charset=" + charset;
+    public static enum FontSize {
+        SMALLER("smaller"), XXSMALL("xx-small"), XSMALL("x-small"), SMALL("small"), MEDIUM("medium"), LARGE("large"),
+        XLARGE("x-large"), XXLARGE("xx-large"), LARGER("larger");
+
+        private final String size;
+
+        private FontSize(final String size) {
+            this.size = size;
         }
-        return new AeonHtmlLayout(locationInfo, title, contentType, charset, font, fontSize, headerSize);
-    }
 
-    /**
-     * Creates an HTML Layout using the default settings.
-     *
-     * @return an HTML Layout.
-     */
-    public static AeonHtmlLayout createDefaultLayout() {
-        return newBuilder().build();
-    }
+        public static FontSize getFontSize(final String size) {
+            for (final FontSize fontSize : values()) {
+                if (fontSize.size.equals(size)) {
+                    return fontSize;
+                }
+            }
+            return SMALL;
+        }
 
-    @PluginBuilderFactory
-    public static Builder newBuilder() {
-        return new Builder();
+        public String getFontSize() {
+            return size;
+        }
+
+        public FontSize larger() {
+            return this.ordinal() < XXLARGE.ordinal() ? FontSize.values()[this.ordinal() + 1] : this;
+        }
     }
 
     public static class Builder implements org.apache.logging.log4j.core.util.Builder<AeonHtmlLayout> {

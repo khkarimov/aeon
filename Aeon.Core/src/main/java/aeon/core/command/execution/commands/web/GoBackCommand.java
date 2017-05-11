@@ -6,12 +6,12 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * <p>Move back a single entry in the browser's history.</p>
- * <p></p>
- * <p>Usage:</p>
- * <p>      Context.browser.goBack();</p>
+ * Move back a single entry in the browser's history.
+ * Usage:
+ *       Context.browser.goBack();
  */
 public class GoBackCommand extends Command {
+
     /**
      * Initializes a new instance of the {@link GoBackCommand} class.
      */

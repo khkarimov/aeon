@@ -12,6 +12,7 @@ import aeon.core.common.web.interfaces.IBy;
  * Created by RafaelT on 6/2/2016.
  */
 public class Select extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;
@@ -150,6 +151,7 @@ public class Select extends WebElement {
 
     /**
      * Asserts the text of the Select element's selected option.
+     *
      * @param value The expected value of the selected option's text.
      */
     @Override
@@ -164,7 +166,8 @@ public class Select extends WebElement {
 
     /**
      * Asserts the value of the Select element's attribute. However, if the attribute being checked is "VALUE" then Select element's selected option value will be checked.
-     * @param value The expected value of the attribute.
+     *
+     * @param value     The expected value of the attribute.
      * @param attribute The attribute to check.
      */
     @Override

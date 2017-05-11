@@ -8,6 +8,7 @@ import java.awt.*;
  * Created by DionnyS on 4/20/2016.
  */
 public interface IDriver {
+
     IDriver configure(IAdapter adapter);
 
     void close();

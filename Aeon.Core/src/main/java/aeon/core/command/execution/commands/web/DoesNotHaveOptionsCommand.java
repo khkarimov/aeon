@@ -10,21 +10,18 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/3/2016.
- */
-
-/**
  * Asserts that a select element does not have any of the given options. Can optionally be passed an option group which
  * will be searched instead of the entire select. The two methods for searching through the options are either by their value or their
  * visible text.
  */
 public class DoesNotHaveOptionsCommand extends WebControlCommand {
+
     private String[] options;
     private String optgroup;
     private WebSelectOption select;
 
     /**
-     * Initializes a new instance of DoesNotHaveOptionsCommand.
+     * Initializes a new instance of {@link DoesNotHaveOptionsCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

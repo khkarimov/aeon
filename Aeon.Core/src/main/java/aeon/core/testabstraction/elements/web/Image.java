@@ -8,6 +8,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 
 public class Image extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;
@@ -22,6 +23,6 @@ public class Image extends WebElement {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;
-        this. switchMechanism = switchMechanism;
+        this.switchMechanism = switchMechanism;
     }
 }

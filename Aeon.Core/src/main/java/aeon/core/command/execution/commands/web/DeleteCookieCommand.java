@@ -8,19 +8,14 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/26/2016.
- */
-
-/**
- * Deletes a cookie with a given name
+ * Deletes a cookie with a given name.
  */
 public class DeleteCookieCommand extends Command {
+
     private String cookie;
 
     /**
      * Initializes a new instance of the DeleteCookieCommand class.
-     * <p>
-     * * @param log    The logger.
      *
      * @param cookie Name of the cookie to be deleted.
      */
@@ -30,7 +25,7 @@ public class DeleteCookieCommand extends Command {
     }
 
     /**
-     * The method that provides the logic for the command
+     * The method that provides the logic for the command.
      *
      * @param driver The framework abstraction facade.
      */

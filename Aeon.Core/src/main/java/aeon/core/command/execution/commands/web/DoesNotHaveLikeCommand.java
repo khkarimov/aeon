@@ -17,13 +17,14 @@ import java.util.Locale;
  * Asserts that an elements children that match a given selector do not have certain values.
  */
 public class DoesNotHaveLikeCommand extends WebControlCommand {
+
     private String[] messages;
     private String childSelector;
     private String attribute;
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the DoesNotHaveLikeCommand. Ignores caps.
+     * Initializes a new instance of the {@link DoesNotHaveLikeCommand} class. Ignores caps.
      *
      * @param selector           The selector for the element.
      * @param commandInitializer The Command initializer.

@@ -6,18 +6,19 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * <p>Switches focus to the original window.</p>
- * <p></p>
- * <p>Usage:</p>
- * <p>      Context.browser.switchToMainWindow();</p>
- * <p>      Context.browser.switchToMainWindow(WaitForAllPopupWindowsToClose);</p>
+ * Switches focus to the original window.
+ * Usage:
+ * Context.browser.switchToMainWindow();
+ * Context.browser.switchToMainWindow(WaitForAllPopupWindowsToClose);
  */
 public class SwitchToMainWindowCommand extends Command {
+
     private String mainWindowHandle;
     private boolean waitForAllPopupWindowsToClose;
 
     /**
      * Initializes a new instance of the {@link SwitchToMainWindowCommand} class.
+     *
      * @param mainWindowHandle              The handle of the main window.
      * @param waitForAllPopupWindowsToClose Whether to wait for all popup windows to close.
      */

@@ -9,6 +9,7 @@ import aeon.core.common.web.interfaces.IBy;
  * Created by SebastianR on 8/3/2016.
  */
 public class RadioButton extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;

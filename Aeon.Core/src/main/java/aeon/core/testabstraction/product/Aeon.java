@@ -2,9 +2,9 @@ package aeon.core.testabstraction.product;
 
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.commons.lang3.StringUtils;
 import ro.fortsoft.pf4j.DefaultPluginManager;
 import ro.fortsoft.pf4j.PluginManager;
 
@@ -24,8 +24,8 @@ public class Aeon {
             T product = productClass.newInstance();
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
-            if(browserType == null){
-                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.browserType, "Chrome"));
+            if (browserType == null) {
+                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER_TYPE, "Chrome"));
             }
             product.getConfiguration().setBrowserType(browserType);
 
@@ -33,10 +33,10 @@ public class Aeon {
 
             product.launch(plugin);
 
-            environment = product.getConfig(Configuration.Keys.environment, "");
-            if(StringUtils.isNotBlank(environment)) {
-                protocol = product.getConfig(Configuration.Keys.protocol, "https");
-                if(StringUtils.isBlank(protocol)){
+            environment = product.getConfig(Configuration.Keys.ENVIRONMENT, "");
+            if (StringUtils.isNotBlank(environment)) {
+                protocol = product.getConfig(Configuration.Keys.PROTOCOL, "https");
+                if (StringUtils.isBlank(protocol)) {
                     protocol = "https";
                 }
                 ((WebProduct) product).browser.goToUrl(protocol + "://" + environment);
@@ -46,6 +46,7 @@ public class Aeon {
             throw new RuntimeException(e);
         }
     }
+
     public static <T extends Product> T launch(Class<T> productClass) {
         return launch(productClass, null);
     }

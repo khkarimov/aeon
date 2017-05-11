@@ -4,6 +4,7 @@ package aeon.core.common;
  * Created by DionnyS on 3/31/2016.
  */
 public class Point {
+
     public int x;
     public int y;
 

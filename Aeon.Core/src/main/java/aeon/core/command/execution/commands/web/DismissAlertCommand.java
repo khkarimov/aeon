@@ -6,16 +6,12 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Created by RafaelT on 5/26/2016.
- */
-
-/**
  * Dismisses an alert.
  */
 public class DismissAlertCommand extends Command {
 
     /**
-     * Initializes a new instance of the DismissAlertCommand.
+     * Initializes a new instance of the {@link DismissAlertCommand} class.
      */
     public DismissAlertCommand() {
         super(Resources.getString("DismissAlertCommand_Info"));

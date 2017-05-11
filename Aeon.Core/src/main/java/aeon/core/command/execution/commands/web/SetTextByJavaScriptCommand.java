@@ -8,9 +8,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
-/**
- * Created by Administrator on 6/15/2016.
- */
 public class SetTextByJavaScriptCommand extends WebControlCommand {
 
     private String value;
@@ -22,7 +19,7 @@ public class SetTextByJavaScriptCommand extends WebControlCommand {
 
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl control) {
-        if(driver == null){
+        if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
         driver.setTextByJavaScript(control, value);

@@ -6,6 +6,7 @@ import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.interfaces.IBy;
 
 public class Checkbox extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;

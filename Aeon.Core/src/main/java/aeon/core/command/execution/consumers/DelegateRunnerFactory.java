@@ -1,7 +1,7 @@
 package aeon.core.command.execution.consumers;
 
-import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
 import aeon.core.command.execution.AutomationInfo;
+import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunnerFactory;
 import aeon.core.common.helpers.Clock;
 import aeon.core.common.helpers.IClock;
@@ -12,6 +12,7 @@ import org.joda.time.Duration;
  * The Web delegate runner factory.
  */
 public class DelegateRunnerFactory implements IDelegateRunnerFactory {
+
     private IClock clock;
     private Duration defaultTimeout;
     private boolean promptUserForContinueOnExceptionDecision;

@@ -9,16 +9,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/31/2016.
- */
-
-/**
  * Blurs the current element.
  */
 public class BlurCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the BlurCommand.
+     * Initializes a new instance of the {@link BlurCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

@@ -11,19 +11,16 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/31/2016.
- */
-
-/**
  * Asserts that a certain element does not exist.
  */
 public class NotExistsCommand extends Command {
 
     private IBy selector;
+
     /**
-     * Initializes a new instance of the NotExistsCommand.
+     * Initializes a new instance of the {@link NotExistsCommand}.
      *
-     * @param selector           The selector.
+     * @param selector The selector.
      */
     public NotExistsCommand(IBy selector) {
         super(String.format(Locale.getDefault(), Resources.getString("NotExistsCommand_Info"), selector));
@@ -33,7 +30,7 @@ public class NotExistsCommand extends Command {
     /**
      * Provides the logic for the command.
      *
-     * @param driver  The web driver.
+     * @param driver The web driver.
      */
     @Override
     protected void driverDelegate(IDriver driver) {

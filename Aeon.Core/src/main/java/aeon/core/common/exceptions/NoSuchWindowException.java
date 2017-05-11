@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 public class NoSuchWindowException extends RuntimeException implements Serializable {
+
     private String window;
 
     /**
