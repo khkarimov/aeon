@@ -28,7 +28,7 @@ public class WebCommandExecutionFacade implements ICommandExecutionFacade {
     }
 
     /**
-     * Gets the TIMEOUT of the ajax waiter.
+     * Gets the timeout of the ajax waiter.
      *
      * @return the {@link long} for the TIMEOUT in milliseconds.
      */
