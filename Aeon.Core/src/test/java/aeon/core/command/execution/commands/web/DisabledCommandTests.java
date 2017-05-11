@@ -3,7 +3,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -13,13 +12,7 @@ import org.mockito.junit.MockitoRule;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import java.util.function.Consumer;
-
-/**
- * Created by coltonm on 5/11/17.
- */
 public class DisabledCommandTests {
 
     private DisabledCommand disabledCommandObject;
@@ -30,16 +23,15 @@ public class DisabledCommandTests {
     @Mock
     private IBy selector;
     @Mock
-    private ICommandInitializer initlializer;
+    private ICommandInitializer initializer;
     @Mock
     private IWebDriver driver;
     @Mock
     private WebControl control;
-    @Mock
-    private Consumer<IDriver> action;
+
     @Before
     public void setup(){
-        disabledCommandObject = new DisabledCommand(selector, initlializer);
+        disabledCommandObject = new DisabledCommand(selector, initializer);
     }
 
     @Test
