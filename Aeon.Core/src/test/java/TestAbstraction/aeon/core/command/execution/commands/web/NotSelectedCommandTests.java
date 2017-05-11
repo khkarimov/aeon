@@ -48,10 +48,15 @@ public class NotSelectedCommandTests {
 
     @Test
     public void notSelectedCommand_CallsExecute() {
+        //Arrange
         when(commandInitializer.setContext()).thenReturn(driverConsumer);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
+
+        //Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
+
+        //Assert
         verify(driver, times(1)).notSelected(control);
     }
 }
