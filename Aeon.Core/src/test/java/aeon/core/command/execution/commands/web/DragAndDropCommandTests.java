@@ -12,8 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-//import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -49,30 +49,33 @@ public class DragAndDropCommandTests
 
     @Test
     public void targetElementSetWhenObjectIsCreated(){
+        // Assert
         assertNotNull(dragAndDropCommandObject.targetElement);
-        //assertTrue(dragAndDropCommandObject.targetElement instanceof IBy);
+        assertEquals(dragAndDropCommandObject.targetElement, targetElement);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentThrownWhenDriverIsNull(){
         // Arrange
         driver = null;
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("driver");
 
         // Act
         dragAndDropCommandObject.commandDelegate(driver, control);
+
+        // Assert
+        thrown.expectMessage("driver");
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentThrownWhenControlIsNull(){
         // Arrange
         control = null;
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("control");
 
         // Act
         dragAndDropCommandObject.commandDelegate(driver, control);
+
+        // Assert
+        thrown.expectMessage("control");
     }
 
     @Test
