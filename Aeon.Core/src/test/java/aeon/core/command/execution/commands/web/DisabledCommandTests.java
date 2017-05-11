@@ -34,29 +34,32 @@ public class DisabledCommandTests {
         disabledCommandObject = new DisabledCommand(selector, initializer);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void DriverNullThrowsException(){
         // Arrange
         driver = null;
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("driver");
 
         // Act
         disabledCommandObject.commandDelegate(driver, control);
+
+        // Assert
+        thrown.expectMessage("driver");
     }
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void ControlNullThrowsException(){
         // Arrange
         control = null;
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("control");
 
         // Act
         disabledCommandObject.commandDelegate(driver, control);
+
+        // Assert
+        thrown.expectMessage("control");
+
     }
     @Test
     public void DisabledCommandElementDisabled(){
-        // Arrange and Act
+        // Act
         disabledCommandObject.commandDelegate(driver, control);
 
         // Verify
