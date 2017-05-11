@@ -1,4 +1,4 @@
-package TestAbstraction;
+package tests.aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
