@@ -24,16 +24,12 @@ public class VisibleCommandTests {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Mock
-    private Consumer<IDriver> driverConsumer;
-
-    @Mock
-    private IWebDriver driver;
-
     @Mock
     WebControl control;
-
+    @Mock
+    private Consumer<IDriver> driverConsumer;
+    @Mock
+    private IWebDriver driver;
     @Mock
     private ICommandInitializer commandInitializer;
 
@@ -49,10 +45,15 @@ public class VisibleCommandTests {
 
     @Test
     public void visibleCommand_CallsExecute() {
+        //Arrange
         when(commandInitializer.setContext()).thenReturn(driverConsumer);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
+
+        //Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
+
+        //Assert
         verify(driver, times(1)).visible(control);
     }
 
