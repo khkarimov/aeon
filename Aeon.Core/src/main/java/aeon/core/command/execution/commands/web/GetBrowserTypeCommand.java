@@ -2,13 +2,8 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.common.Resources;
-import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-
-/**
- * Created by RafaelT on 7/1/2016.
- */
 
 /**
  * Gets the corresponding enumerable BrowserType associated with the current browser.
@@ -16,7 +11,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class GetBrowserTypeCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the GetBrowserTypeCommand.
+     * Initializes a new instance of the {@link GetBrowserTypeCommand} class.
      */
     public GetBrowserTypeCommand() {
         super(Resources.getString("GetBrowserTypeCommand_Info"));
@@ -30,6 +25,6 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
      */
     @Override
     protected Object commandDelegate(IDriver driver) {
-        return (BrowserType) ((IWebDriver) driver).getBrowserType();
+        return ((IWebDriver) driver).getBrowserType();
     }
 }

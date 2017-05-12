@@ -17,27 +17,29 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SeleniumConfiguration extends Configuration {
-    Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
-    static class Keys{
-        public static final String enableSeleniumGrid = "aeon.selenium.enable_selenium_grid";
-        public static final String language = "aeon.selenium.language";
-        public static final String moveMouseToOrigin = "aeon.selenium.move_mouse_to_origin";
-        public static final String maximizeBrowser = "aeon.selenium.maximize_browser";
-        public static final String useMobileUserAgent = "aeon.selenium.use_mobile_user_agent";
-        public static final String proxyLocation = "aeon.selenium.proxy_location";
-        public static final String seleniumHubUrl = "aeon.selenium.selenium_hub_url";
-        public static final String ensureCleanEnvironment = "aeon.selenium.ensure_clean_environment";
-        public static final String chromeDirectory = "aeon.selenium.chrome_directory";
-        public static final String ieDirectory = "aeon.selenium.ie_directory";
-        public static final String marionetteDirectory = "aeon.selenium.marionette_directory";
-        public static final String edgeDirectory = "aeon.selenium.edge_directory";
-        public static final String chromeBinary = "aeon.selenium.chrome_binary";
-        public static final String firefoxBinary = "aeon.selenium.firefox_binary";
+    private Logger log = LogManager.getLogger(SeleniumConfiguration.class);
+
+    static class Keys {
+
+        public static final String ENABLE_SELENIUM_GRID = "aeon.selenium.enable_selenium_grid";
+        public static final String LANGUAGE = "aeon.selenium.language";
+        public static final String MOVE_MOUSE_TO_ORIGIN = "aeon.selenium.move_mouse_to_origin";
+        public static final String MAXIMIZE_BROWSER = "aeon.selenium.maximize_browser";
+        public static final String USE_MOBILE_USER_AGENT = "aeon.selenium.use_mobile_user_agent";
+        public static final String PROXY_LOCATION = "aeon.selenium.proxy_location";
+        public static final String SELENIUM_HUB_URL = "aeon.selenium.selenium_hub_url";
+        public static final String ENSURE_CLEAN_ENVIRONMENT = "aeon.selenium.ensure_clean_environment";
+        public static final String CHROME_DIRECTORY = "aeon.selenium.chrome_directory";
+        public static final String IE_DIRECTORY = "aeon.selenium.ie_directory";
+        public static final String MARIONETTE_DIRECTORY = "aeon.selenium.marionette_directory";
+        public static final String EDGE_DIRECTORY = "aeon.selenium.edge_directory";
+        public static final String CHROME_BINARY = "aeon.selenium.chrome_binary";
+        public static final String FIREFOX_BINARY = "aeon.selenium.firefox_binary";
     };
 
     @Override
-    protected List<Field> getConfigurationFields(){
+    protected List<Field> getConfigurationFields() {
         List<Field> keys = new ArrayList<>();
         keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getDeclaredFields()));
         return keys;
@@ -49,31 +51,31 @@ public class SeleniumConfiguration extends Configuration {
 
     @Override
     public void loadPluginSettings() throws IOException {
-       try(InputStream  in = SeleniumConfiguration.class.getResourceAsStream("/selenium.properties")){
+        try (InputStream in = SeleniumConfiguration.class.getResourceAsStream("/selenium.properties")) {
             properties.load(in);
-       } catch (IOException e) {
-           log.error("selenium.properties resource could not be read");
-           throw e;
-       }
-       setBrowserDirectories();
+        } catch (IOException e) {
+            log.error("selenium.properties resource could not be read");
+            throw e;
+        }
+        setBrowserDirectories();
     }
 
     private void setBrowserDirectories() {
         String output = System.getProperty("user.dir");
-        properties.setProperty(Keys.ieDirectory , output + "/lib/Windows/IEDriverServer.exe");
-        properties.setProperty(Keys.edgeDirectory , output + "/lib/Windows/MicrosoftWebDriver.exe");
+        properties.setProperty(Keys.IE_DIRECTORY, output + "/lib/Windows/IEDriverServer.exe");
+        properties.setProperty(Keys.EDGE_DIRECTORY, output + "/lib/Windows/MicrosoftWebDriver.exe");
         switch (OsCheck.getOperatingSystemType()) {
             case Windows:
-                properties.setProperty(Keys.marionetteDirectory, output + "/lib/Windows/geckodriver.exe");
-                properties.setProperty(Keys.chromeDirectory, output + "/lib/Windows/chromedriver.exe");
+                properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/Windows/geckodriver.exe");
+                properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/Windows/chromedriver.exe");
                 break;
             case MacOS:
-                properties.setProperty(Keys.marionetteDirectory, output + "/lib/MacOS/geckodriver");
-                properties.setProperty(Keys.chromeDirectory, output + "/lib/MacOS/chromedriver");
+                properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/MacOS/geckodriver");
+                properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/MacOS/chromedriver");
                 break;
             case Linux:
-                properties.setProperty(Keys.marionetteDirectory, output + "/lib/Linux/geckodriver");
-                properties.setProperty(Keys.chromeDirectory, output + "/lib/Linux/chromedriver");
+                properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/Linux/geckodriver");
+                properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/Linux/chromedriver");
                 break;
             default:
                 throw new IllegalStateException("Unsupported Operating System");

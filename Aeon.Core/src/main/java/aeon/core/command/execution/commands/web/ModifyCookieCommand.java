@@ -8,18 +8,16 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/27/2016.
- */
-
-/**
  * Modifies an existing cookie.
  */
 public class ModifyCookieCommand extends Command {
+
     private String name;
     private String value;
 
     /**
-     * Initializes a new instance of the ModifyCookieCommand.
+     * Initializes a new instance of the {@link ModifyCookieCommand}.
+     *
      * @param name  The name of the cookie.
      * @param value The value.
      */

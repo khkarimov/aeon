@@ -12,8 +12,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ExceptionHandlingDelegateRunner extends DelegateRunner {
-    private IExceptionHandlerFactory exceptionHandlerFactory;
+
     private static Logger log = LogManager.getLogger(ExceptionHandlingDelegateRunner.class);
+    private IExceptionHandlerFactory exceptionHandlerFactory;
 
     public ExceptionHandlingDelegateRunner(IDelegateRunner successor, IExceptionHandlerFactory exceptionHandlerFactory) {
         super(successor);

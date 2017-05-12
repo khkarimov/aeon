@@ -6,6 +6,7 @@ import aeon.core.common.web.selectors.ByJQuery;
  * Interface for selecting elements.
  */
 public interface IBy {
+
     /**
      * Converts the current instance to {@link ByJQuery}.
      *

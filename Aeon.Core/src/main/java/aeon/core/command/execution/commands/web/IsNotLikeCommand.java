@@ -10,19 +10,16 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 7/1/2016.
- */
-
-/**
  * Asserts that an elements attribute is not comparable to a value when ignoring differences in whitespace and case.
  */
 public class IsNotLikeCommand extends WebControlCommand {
+
     private String value;
     private String attribute;
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the IsNotLikeCommand. When comparing the case is ignored.
+     * Initializes a new instance of the {@link IsNotLikeCommand}. When comparing the case is ignored.
      *
      * @param selector           The selector.
      * @param commandInitializer The web command initializer.

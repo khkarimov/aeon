@@ -8,17 +8,15 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/27/2016.
- */
-
-/**
  * Gets a specific cookie.
  */
 public class GetCookieCommand extends CommandWithReturn {
+
     private String name;
 
     /**
      * Initializes a new instance of the {@link GetCookieCommand} class.
+     *
      * @param name The name of the cookie to get.
      */
     public GetCookieCommand(String name) {

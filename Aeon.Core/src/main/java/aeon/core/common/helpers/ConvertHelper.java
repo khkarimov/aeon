@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
  * Converts a base data type to another base data type.
  */
 public final class ConvertHelper {
+
     /**
      * Converts a Configuration element to type {@code type}.
      *

@@ -15,45 +15,46 @@ import java.util.stream.Collectors;
  * Created by JustinP on 6/2/2016.
  */
 public class AjaxWaiter {
+
+    private static Logger log = LogManager.getLogger(AjaxWaiter.class);
     private IWebDriver webDriver;
     private IClock clock;
     private Duration timeout;
-    private static Logger log = LogManager.getLogger(AjaxWaiter.class);
 
-    public AjaxWaiter(IDriver driver, Duration timeout){
-        this.webDriver = (IWebDriver)driver;
+    public AjaxWaiter(IDriver driver, Duration timeout) {
+        this.webDriver = (IWebDriver) driver;
         this.clock = new Clock();
         this.timeout = timeout;
     }
 
-    public void setWebDriver(IWebDriver webDriver){
-        this.webDriver = webDriver;
-    }
-
-    public IWebDriver getWebDriver(){
+    public IWebDriver getWebDriver() {
         return this.webDriver;
     }
 
-    public void setTimeout(long millis){
-        this.timeout = Duration.millis(millis);
+    public void setWebDriver(IWebDriver webDriver) {
+        this.webDriver = webDriver;
     }
 
-    public long getTimeout(){
+    public long getTimeout() {
         return timeout.getMillis();
+    }
+
+    public void setTimeout(long millis) {
+        this.timeout = Duration.millis(millis);
     }
 
     public void waitForAsync() {
         long count;
         DateTime end = clock.getUtcNow().withDurationAdded(timeout.getMillis(), 1);
-        do{
+        do {
             try {
                 count = (long) webDriver.executeScript("return aeon.ajaxCounter;");
-            }catch(ScriptExecutionException e){
+            } catch (ScriptExecutionException e) {
                 injectJS();
                 return;
             }
             Sleep.waitInternal();
-        }while(count != 0  && clock.getUtcNow().isBefore(end.toInstant()));
+        } while (count != 0 && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
     /*ajaxJsonpElementTimeout defines a timeout for JSONP request on the HTML page.
@@ -66,16 +67,16 @@ public class AjaxWaiter {
             webDriver.executeScript(injectScriptTag);
             webDriver.executeScript("aeon.ajaxJsonpElementTimeout = " + (timeout.getMillis() - 2000));
             log.info("Injected JS");
-        }catch (ScriptExecutionException e){
+        } catch (ScriptExecutionException e) {
             log.error("Could not inject JS");
             throw new RuntimeException(e);
         }
     }
 
     public String getAjaxWaiterJS() {
-        try(InputStream scriptReader = AjaxWaiter.class.getResourceAsStream("/ajax-waiter.js")) {
+        try (InputStream scriptReader = AjaxWaiter.class.getResourceAsStream("/ajax-waiter.js")) {
             String content = new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
-            return  content;
+            return content;
         } catch (FileNotFoundException e) {
             log.error("File not found on path");
             throw new RuntimeException(e);

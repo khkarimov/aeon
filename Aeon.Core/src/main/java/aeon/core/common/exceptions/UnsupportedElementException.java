@@ -9,6 +9,7 @@ import java.util.Locale;
  * The exception that is thrown when a select element is not supported.
  */
 public class UnsupportedElementException extends RuntimeException implements Serializable {
+
     private Class forType;
 
     /**

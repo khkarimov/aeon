@@ -18,7 +18,7 @@ import java.util.Locale;
 public class ExistsCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the ExistsCommand.
+     * Initializes a new instance of the {@link ExistsCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

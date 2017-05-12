@@ -9,16 +9,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/31/2016.
- */
-
-/**
  * Right clicks on an element.
  */
 public class RightClickCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the RightClickCommand.
+     * Initializes a new instance of the {@link RightClickCommand}.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

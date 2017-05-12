@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
  * Created by Salvador Gandara on 6/28/2016.
  */
 public class SendKeysHelper {
+
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();
 
     public static void sendKeysToKeyboard(String stringToSend) throws AWTException {
@@ -53,7 +54,6 @@ public class SendKeysHelper {
                             break;
                         default:
                             throw new UnsupportedSpecialCharacterException(character);
-
                     }
                 }
             } else {

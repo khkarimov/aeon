@@ -9,18 +9,15 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by SebastianR on 6/1/2016.
- */
-
-/**
- * Drag and Drop from one IBy to another IBy
+ * Drag and Drop from one IBy to another IBy.
  */
 public class DragAndDropCommand extends WebControlCommand {
+
     IBy targetElement;
 
     /**
-     * Initializes a new instance of the DragAndDropCommand
-     *                The logger
+     * Initializes a new instance of the {@link DragAndDropCommand} class.
+     *
      * @param dropElement        The element to be dragged
      * @param targetElement      The target element.
      * @param commandInitializer The command initalizer
@@ -31,7 +28,7 @@ public class DragAndDropCommand extends WebControlCommand {
     }
 
     /**
-     * Provides the logic for the command
+     * Provides the logic for the command.
      *
      * @param driver  The web driver
      * @param control The web element

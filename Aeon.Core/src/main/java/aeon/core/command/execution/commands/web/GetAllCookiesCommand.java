@@ -1,17 +1,13 @@
 package aeon.core.command.execution.commands.web;
 
-import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.common.Resources;
+import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Created by RafaelT on 6/27/2016.
- */
-
-/**
- * Returns all of the browsers cookies
+ * Returns all of the browsers cookies.
  */
 public class GetAllCookiesCommand extends CommandWithReturn {
 
@@ -24,6 +20,7 @@ public class GetAllCookiesCommand extends CommandWithReturn {
 
     /**
      * Provides the logic for the command.
+     *
      * @param driver The framework abstraction facade.
      * @return Returns a Collection of {@link IWebCookie}
      */

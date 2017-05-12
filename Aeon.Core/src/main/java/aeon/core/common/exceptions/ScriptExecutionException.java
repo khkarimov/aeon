@@ -9,6 +9,7 @@ import java.util.Locale;
  * The exception that is thrown when a script has an error.
  */
 public class ScriptExecutionException extends RuntimeException implements Serializable {
+
     private String script;
 
     /**

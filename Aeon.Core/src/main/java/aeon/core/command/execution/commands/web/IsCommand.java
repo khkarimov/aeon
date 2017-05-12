@@ -10,19 +10,16 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/28/2016.
- */
-
-/**
  * Asserts that an elements attribute is equal to a given value.
  */
 public class IsCommand extends WebControlCommand {
+
     private String value;
     private String attribute;
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the IsCommand
+     * Initializes a new instance of the {@link IsCommand}.
      *
      * @param selector           The selector.
      * @param commandInitializer The web command initializer.
@@ -31,7 +28,7 @@ public class IsCommand extends WebControlCommand {
      * @param attribute          The attribute to be compared.
      */
     public IsCommand(IBy selector, ICommandInitializer commandInitializer, String value, ComparisonOption option, String attribute) {
-        super(String.format(Locale.getDefault(), Resources.getString("IsCommand_Info"),attribute, value, selector), selector, commandInitializer);
+        super(String.format(Locale.getDefault(), Resources.getString("IsCommand_Info"), attribute, value, selector), selector, commandInitializer);
         this.value = value;
         this.option = option;
         this.attribute = attribute;

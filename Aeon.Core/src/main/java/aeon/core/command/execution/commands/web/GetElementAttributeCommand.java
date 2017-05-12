@@ -15,15 +15,16 @@ import java.util.Locale;
 
 /**
  * <p>Gets the specified web element attribute.</p>
- * <p></p>
  * <p>Usage:</p>
  * <p>      n/a</p>
  */
 public class GetElementAttributeCommand extends WebControlCommandWithReturn {
+
     private String attributeName;
 
     /**
      * Initializes a new instance of the {@link GetElementAttributeCommand} class
+     *
      * @param selector      The selector.
      * @param initializer   The command initializer
      * @param attributeName The HTML attribute (e.g., class) or innerHTML.

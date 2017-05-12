@@ -10,13 +10,10 @@ import java.net.URL;
 import java.util.Locale;
 
 /**
- * Created by SebastianR on 6/29/2016.
- */
-
-/**
- * Verifies the URL of the browser
+ * Verifies the URL of the browser.
  */
 public class VerifyUrlCommand extends Command {
+
     private URL comparingURL;
 
     public VerifyUrlCommand(String comparingURL) {

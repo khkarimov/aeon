@@ -1,4 +1,4 @@
-package TestAbstraction;
+package tests.aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
@@ -9,47 +9,34 @@ import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.adapters.IAdapter;
-import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
-import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import aeon.core.testabstraction.product.Configuration;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.joda.time.DateTime;
-import org.junit.*;
-import org.junit.rules.ExpectedException;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import javax.swing.*;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Logger;
-
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by josephb on 1/24/2017.
  */
 
 public class WebUIObject {
+
+    // Mocks
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
     // Variables
     private Browser browserObject;
     private AutomationInfo automationInfo;
-
-    // Mocks
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     @Mock
     private Configuration configuration;
     @Mock

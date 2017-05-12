@@ -27,7 +27,6 @@ public class DateTimeExtensions {
      * are ignored.
      *
      * @param delta The period to be converted to milliseconds.
-     * @return
      */
     public static long periodToMilliSeconds(Period delta) {
         long dayMillis = delta.getDays() * DateTimeConstants.MILLIS_PER_DAY;

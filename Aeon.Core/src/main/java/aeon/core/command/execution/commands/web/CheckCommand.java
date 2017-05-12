@@ -9,16 +9,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 5/31/2016.
- */
-
-/**
  * Checks a checkbox if it is currently unchecked.
  */
 public class CheckCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the CheckCommand.
+     * Initializes a new instance of the {@link CheckCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

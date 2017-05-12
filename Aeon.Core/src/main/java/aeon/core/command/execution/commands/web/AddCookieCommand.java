@@ -12,11 +12,12 @@ import java.util.Locale;
  * Returns the name value pair for a cookie.
  */
 public class AddCookieCommand extends Command {
+
     private IWebCookie cookie;
 
     /**
-     * Initializes a new instance of the AddCookieCommand class.
-     *    The logger.
+     * Initializes a new instance of the {@link AddCookieCommand} class.
+     *
      * @param cookie Cookie to be added.
      */
     public AddCookieCommand(IWebCookie cookie) {

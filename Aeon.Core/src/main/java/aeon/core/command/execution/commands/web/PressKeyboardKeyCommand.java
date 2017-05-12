@@ -9,10 +9,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
-/**
- * Created by RafaelT on 7/5/2016.
- */
 public class PressKeyboardKeyCommand extends WebControlCommand {
+
     KeyboardKey key;
 
     public PressKeyboardKeyCommand(IBy selector, ICommandInitializer commandInitializer, KeyboardKey key) {

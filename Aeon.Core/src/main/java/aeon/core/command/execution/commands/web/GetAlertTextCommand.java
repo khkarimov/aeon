@@ -10,12 +10,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  */
 
 /**
- * Gets the Text of an Alert
+ * Gets the Text of an Alert.
  */
 public class GetAlertTextCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the GetAlertTextCommand
+     * Initializes a new instance of the {@link GetAlertTextCommand} class.
      */
     public GetAlertTextCommand() {
         super(Resources.getString("GetAlertTextCommand_Info"));

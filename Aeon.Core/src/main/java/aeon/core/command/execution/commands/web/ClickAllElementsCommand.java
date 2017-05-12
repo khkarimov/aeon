@@ -9,16 +9,12 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/14/2016.
- */
-
-/**
  * Clicks all elements that correspond with the given elements selector.
  */
 public class ClickAllElementsCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the ClickAllElementsCommand.
+     * Initializes a new instance of the {@link ClickAllElementsCommand} class.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

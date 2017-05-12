@@ -6,6 +6,7 @@ import aeon.core.common.web.interfaces.IByWithJavaScriptClick;
  * Class for selecting elements using JavaScript (default is via a CSS selector).
  */
 public class ByWithJavaScriptClick extends By implements IByWithJavaScriptClick {
+
     /**
      * Initializes a new instance of the {@link ByJQueryWithJavaScriptClick} class.
      *

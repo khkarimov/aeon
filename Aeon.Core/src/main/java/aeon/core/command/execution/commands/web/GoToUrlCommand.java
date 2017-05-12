@@ -9,19 +9,20 @@ import java.net.URL;
 import java.util.Locale;
 
 /**
- * <p>Navigate the currently focused browser to the URL provided.</p>
- * <p></p>
- * <p>Usage:</p>
- * <p>      Context.Browser.goToUrl("url String")</p>
- * <p>      Context.Browser.goToUrl("url String", setMainWindowBoolean)</p>
- * <p>      Context.Browser.goToUrl({@link java.net.URI})</p>
- * <p>      Context.Browser.goToUrl({@link java.net.URI}, setMainWindowBoolean)</p>
+ * Navigate the currently focused browser to the URL provided.
+ * Usage:
+ *       Context.Browser.goToUrl("url String")
+ *       Context.Browser.goToUrl("url String", setMainWindowBoolean)
+ *       Context.Browser.goToUrl({@link java.net.URI})
+ *       Context.Browser.goToUrl({@link java.net.URI}, setMainWindowBoolean)
  */
 public class GoToUrlCommand extends CommandWithReturn {
+
     private URL url;
 
     /**
-     * Initializes a new instance of the GoToUrlCommand class.
+     * Initializes a new instance of the {@link GoToUrlCommand} class.
+     *
      * @param url The title of the window.
      */
     public GoToUrlCommand(URL url) {

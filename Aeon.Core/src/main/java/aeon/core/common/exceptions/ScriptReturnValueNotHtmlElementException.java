@@ -9,6 +9,7 @@ import java.util.Locale;
  * The exception that is thrown when a script does not return an HTML element.
  */
 public class ScriptReturnValueNotHtmlElementException extends RuntimeException implements Serializable {
+
     private Object returnValue;
     private String script;
 

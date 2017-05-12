@@ -10,20 +10,17 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/28/2016.
- */
-
-/**
  * Asserts that an elements children that match a given selector do not have certain values.
  */
 public class DoesNotHaveCommand extends WebControlCommand {
+
     private String[] messages;
     private String childSelector;
     private String attribute;
     private ComparisonOption option;
 
     /**
-     * Initializes a new instance of the DoesNotHaveCommand.
+     * Initializes a new instance of the {@link DoesNotHaveCommand} class.
      *
      * @param selector           The selector for the element.
      * @param commandInitializer The Command initializer.

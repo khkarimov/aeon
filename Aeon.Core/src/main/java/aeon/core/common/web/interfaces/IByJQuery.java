@@ -1,17 +1,15 @@
 package aeon.core.common.web.interfaces;
 
-import com.sun.javafx.fxml.expression.Expression;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.common.web.selectors.ByJQueryWithArithmeticOperatorOverload;
+import com.sun.javafx.fxml.expression.Expression;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-/**
- * Created by DionnyS on 3/31/2016.
- */
 public interface IByJQuery {
+
     /**
      * Returns a {@link String} that represents the current {@link Object}.
      *
@@ -38,6 +36,7 @@ public interface IByJQuery {
 
     /**
      * Add the previous set of elements on the stack to the current set.
+     *
      * @return The {@link ByJQuery} combining the previous and current set of matched elements.
      */
     ByJQuery andSelf();
@@ -60,6 +59,7 @@ public interface IByJQuery {
 
     /**
      * Get the children of each element in the set of matched elements, optionally filtered by a selector.
+     *
      * @return The {@link ByJQuery} for the children of the matched elements.
      */
     ByJQuery children();
@@ -82,6 +82,7 @@ public interface IByJQuery {
 
     /**
      * Get the children of each element in the set of matched elements, including text and comment nodes.
+     *
      * @return The {@link ByJQuery} of all children of each matched element, including text and comment nodes.
      */
     ByJQuery contents();
@@ -96,6 +97,7 @@ public interface IByJQuery {
 
     /**
      * End the most recent filtering operation in the current chain and return the set of matched elements to its previous state.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery end();
@@ -158,6 +160,7 @@ public interface IByJQuery {
 
     /**
      * Reduce the set of matched elements to the first in the set.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery first();
@@ -172,12 +175,14 @@ public interface IByJQuery {
 
     /**
      * Get the HTML contents of the first element in the set of matched elements.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery html();
 
     /**
      * Search for a given element from among the matched elements.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery index();
@@ -241,6 +246,7 @@ public interface IByJQuery {
 
     /**
      * Reduce the set of matched elements to the final one in the set.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery last();
@@ -255,6 +261,7 @@ public interface IByJQuery {
 
     /**
      * Get the immediately following sibling of each element in the set of matched elements. If a selector is provided, it retrieves the next sibling only if it matches that selector.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery next();
@@ -269,6 +276,7 @@ public interface IByJQuery {
 
     /**
      * Get all following siblings of each element in the set of matched elements, optionally filtered by a selector.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery nextAll();
@@ -341,12 +349,14 @@ public interface IByJQuery {
 
     /**
      * Get the closest ancestor element that is positioned.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery offsetParent();
 
     /**
      * Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery parent();
@@ -361,6 +371,7 @@ public interface IByJQuery {
 
     /**
      * Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery parents();
@@ -409,6 +420,7 @@ public interface IByJQuery {
 
     /**
      * Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered by a selector.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery prev();
@@ -423,6 +435,7 @@ public interface IByJQuery {
 
     /**
      * Get all preceding siblings of each element in the set of matched elements, optionally filtered by a selector.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery prevAll();
@@ -471,6 +484,7 @@ public interface IByJQuery {
 
     /**
      * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery siblings();
@@ -537,18 +551,21 @@ public interface IByJQuery {
 
     /**
      * Returns the calling string value converted to lowercase.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery toLowerCase();
 
     /**
      * Get the combined text contents of each element in the set of matched elements, including their descendants.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery text();
 
     /**
      * Get the current value of the first element in the set of matched elements.
+     *
      * @return The {@link ByJQuery}
      */
     ByJQuery val();

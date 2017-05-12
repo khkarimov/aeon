@@ -1,9 +1,9 @@
 package aeon.core.common.web.selectors;
 
-import com.sun.javafx.fxml.expression.Expression;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.common.web.interfaces.IByJQuery;
+import com.sun.javafx.fxml.expression.Expression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  * Class for selecting elements with jquery.
  */
 public class ByJQuery implements IBy, IByJQuery {
+
     /**
      * Gets the function name.
      */
@@ -36,7 +37,7 @@ public class ByJQuery implements IBy, IByJQuery {
      */
     public ByJQuery(String selector) {
         setFunction("$");
-        setParameters(new ArrayList<Parameter>(Arrays.asList(new Parameter[]{new Parameter(selector)})));
+        setParameters(new ArrayList<>(Arrays.asList(new Parameter[]{new Parameter(selector)})));
         setPredecessor(null);
     }
 
@@ -48,7 +49,7 @@ public class ByJQuery implements IBy, IByJQuery {
 
     public ByJQuery(ByJQuery obj) {
         setFunction("$");
-        setParameters(new ArrayList<Parameter>(Arrays.asList(new Parameter[]{new Parameter(obj)})));
+        setParameters(new ArrayList<>(Arrays.asList(new Parameter[]{new Parameter(obj)})));
         setPredecessor(null);
     }
 
@@ -70,8 +71,8 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param appendee   The first {@link ByJQuery} object in the chain.
      * @param appendices The next {@link ByJQuery} objects in the chain.
+     * @return The {@link ByJQuery} object for chaining.
      * @throws IllegalArgumentException If {@code appendee} is {@code null}.
-     * @return The {@link ByJQuery}
      */
     public static ByJQuery Append(ByJQuery appendee, ByJQuery... appendices) {
         if (appendee == null) {
@@ -122,31 +123,62 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param obj      A {@link ByJQuery} object representing a function which returns an integer.
      * @param constant A constant integer.
+     * @return The {@link ByJQueryWithArithmeticOperatorOverload} object for chaining.
      */
     public static ByJQueryWithArithmeticOperatorOverload OpSubtraction(ByJQuery obj, int constant) {
         return new ByJQueryWithArithmeticOperatorOverload(String.format("%1$s - %2$s", obj, constant));
     }
 
+    /**
+     * Gets the function name.
+     *
+     * @return the function name.
+     */
     protected final String getFunction() {
         return function;
     }
 
+    /**
+     * Sets the function name.
+     *
+     * @param value the new function name.
+     */
     private void setFunction(String value) {
         function = value;
     }
 
+    /**
+     * Gets the parameters.
+     *
+     * @return the parameters.
+     */
     protected final Iterable<Parameter> getParameters() {
         return parameters;
     }
 
+    /**
+     * Sets the parameters.
+     *
+     * @param value the new parameters.
+     */
     private void setParameters(Iterable<Parameter> value) {
         parameters = value;
     }
 
+    /**
+     * Gets the predecessor {@link ByJQuery}.
+     *
+     * @return the {@link ByJQuery} predecessor.
+     */
     protected final ByJQuery getPredecessor() {
         return predecessor;
     }
 
+    /**
+     * Sets the predecessor {@link ByJQuery}.
+     *
+     * @param value the new predecessor.
+     */
     private void setPredecessor(ByJQuery value) {
         predecessor = value;
     }
@@ -154,7 +186,7 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Converts the current instance to {@link ByJQuery}.
      *
-     * @return A {@link ByJQuery} object.
+     * @return The {@link ByJQuery} object for chaining.
      */
     public final ByJQuery toJQuery() {
         return this;
@@ -163,11 +195,11 @@ public class ByJQuery implements IBy, IByJQuery {
     /**
      * Clones the {@link ByJQuery} object by performing a deep copy.
      *
-     * @return A new {@link ByJQuery} object.
+     * @return The {@link ByJQuery} object for chaining.
      */
     public final ByJQuery Clone() {
         List<Object> objects = new ArrayList<>();
-        parameters.forEach(p -> objects.add((Object) p));
+        parameters.forEach(p -> objects.add(p));
         return new ByJQuery(predecessor == null ? null : predecessor.Clone(), function, objects);
     }
 
@@ -238,6 +270,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Add elements to the set of matched elements.
      *
      * @param selector A string representing a selector expression to find additional elements to add to the set of matched elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery add(String selector) {
@@ -248,6 +281,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Add elements to the set of matched elements.
      *
      * @param obj An existing jquery object to add to the set of matched elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery add(ByJQuery obj) {
@@ -256,6 +290,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Add the previous set of elements on the stack to the current set.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery andSelf() {
@@ -266,6 +302,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the value of an attribute for the first element in the set of matched elements.
      *
      * @param attributeName The name of the attribute to get.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery attr(String attributeName) {
@@ -276,6 +313,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the children of each element in the set of matched elements, optionally filtered by a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery children(String selector) {
@@ -284,6 +322,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the children of each element in the set of matched elements, optionally filtered by a selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery children() {
@@ -294,6 +334,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the first element that matches the selector, beginning at the current element and progressing up through the DOM tree.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery closest(String selector) {
@@ -304,6 +345,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the first element that matches the selector, beginning at the current element and progressing up through the DOM tree.
      *
      * @param obj A jquery object to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery closest(ByJQuery obj) {
@@ -312,6 +354,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the children of each element in the set of matched elements, including text and comment nodes.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery contents() {
@@ -322,6 +366,8 @@ public class ByJQuery implements IBy, IByJQuery {
      * Iterate over a jquery object, executing a function for each matched element.
      *
      * @param function A function to execute for each matched element.
+     * @return The {@link ByJQuery} object for chaining.
+     * @throws UnsupportedOperationException always?
      */
     @Override
     public final ByJQuery each(Expression<BiFunction<Integer, ByJQuery, Boolean>> function) {
@@ -330,6 +376,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * End the most recent filtering operation in the current chain and return the set of matched elements to its previous state.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery end() {
@@ -340,6 +388,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to the one at the specified index.
      *
      * @param index An integer indicating the 0-based position of the element.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery eq(int index) {
@@ -350,6 +399,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to the one at the specified index.
      *
      * @param index An integer indicating the 0-based position of the element.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery eq(ByJQueryWithArithmeticOperatorOverload index) {
@@ -360,6 +410,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to those that match the selector or pass the function's test.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery filter(String selector) {
@@ -370,6 +421,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to those that match the selector or pass the function's test.
      *
      * @param obj An existing jquery object to match the current set of elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery filter(ByJQuery obj) {
@@ -380,6 +432,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to those that match the selector or pass the function's test.
      *
      * @param function A function used as a test for each element in the set. <code>this</code> is the current DOM element.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery filter(Expression<Function<Integer, Boolean>> function) {
@@ -390,6 +443,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery find(String selector) {
@@ -400,6 +454,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
      *
      * @param obj A jquery object to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery find(ByJQuery obj) {
@@ -418,6 +473,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to those that have a descendant that matches the selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery has(String selector) {
@@ -426,6 +482,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the HTML contents of the first element in the set of matched elements.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery html() {
@@ -434,6 +492,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Search for a given element from among the matched elements.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery index() {
@@ -444,6 +504,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Search for a given element from among the matched elements.
      *
      * @param selector A selector representing a jquery collection in which to look for an element.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery index(String selector) {
@@ -454,6 +515,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Search for a given element from among the matched elements.
      *
      * @param obj The first element within the jquery object to look for.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery index(ByJQuery obj) {
@@ -464,6 +526,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Returns the index within the calling <code>String</code> object of the first occurrence of the specified value, returns <code>-1</code> if the value is not found.
      *
      * @param searchValue A string representing the value to search for.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery indexOf(String searchValue) {
@@ -475,6 +538,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param searchValue A string representing the value to search for.
      * @param fromIndex   The location within the calling string to start the search from. It can be any integer between 0 and the length of the string. The default value is 0.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery indexOf(String searchValue, int fromIndex) {
@@ -485,6 +549,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery is(String selector) {
@@ -495,6 +560,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param obj An existing jquery object to match the current set of elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery is(ByJQuery obj) {
@@ -505,6 +571,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
      *
      * @param function A function used as a test for the set of elements. It accepts one argument which is the element's index in the jquery collection. Within the function, <code>this</code> refers to the current DOM element.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery is(Expression<Function<Integer, Boolean>> function) {
@@ -513,6 +580,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Reduce the set of matched elements to the final one in the set.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery last() {
@@ -531,6 +600,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the immediately following sibling of each element in the set of matched elements. If a selector is provided, it retrieves the next sibling only if it matches that selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery next() {
@@ -541,6 +612,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the immediately following sibling of each element in the set of matched elements. If a selector is provided, it retrieves the next sibling only if it matches that selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery next(String selector) {
@@ -549,6 +621,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get all following siblings of each element in the set of matched elements, optionally filtered by a selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery nextAll() {
@@ -559,6 +633,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get all following siblings of each element in the set of matched elements, optionally filtered by a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery nextAll(String selector) {
@@ -569,6 +644,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery nextUntil(String selector) {
@@ -580,6 +656,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery nextUntil(String selector, String filter) {
@@ -590,6 +667,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param obj A jquery object indicating where to stop matching following sibling elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery nextUntil(ByJQuery obj) {
@@ -601,6 +679,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery nextUntil(ByJQuery obj, String filter) {
@@ -611,6 +690,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * remove elements from the set of matched elements.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery not(String selector) {
@@ -621,6 +701,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * remove elements from the set of matched elements.
      *
      * @param obj An existing jquery object to match the current set of elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery not(ByJQuery obj) {
@@ -631,6 +712,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * remove elements from the set of matched elements.
      *
      * @param function A function used as a test for each element in the set. <code>this</code> is the current DOM element.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery not(Expression<Function<Integer, Boolean>> function) {
@@ -639,6 +721,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the closest ancestor element that is positioned.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery offsetParent() {
@@ -647,6 +731,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parent() {
@@ -657,6 +743,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parent(String selector) {
@@ -665,6 +752,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parents() {
@@ -675,6 +764,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parents(String selector) {
@@ -685,6 +775,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parentsUntil(String selector) {
@@ -696,6 +787,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param selector A string containing a selector expression to indicate where to stop matching following sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parentsUntil(String selector, String filter) {
@@ -706,6 +798,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param obj A jquery object indicating where to stop matching following sibling elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parentsUntil(ByJQuery obj) {
@@ -717,6 +810,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param obj    A jquery object indicating where to stop matching following sibling elements.
      * @param filter A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery parentsUntil(ByJQuery obj, String filter) {
@@ -725,6 +819,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered by a selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prev() {
@@ -735,6 +831,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered by a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prev(String selector) {
@@ -743,6 +840,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get all preceding siblings of each element in the set of matched elements, optionally filtered by a selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prevAll() {
@@ -753,6 +852,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get all preceding siblings of each element in the set of matched elements, optionally filtered by a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prevAll(String selector) {
@@ -763,6 +863,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get all preceding siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object.
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prevUntil(String selector) {
@@ -774,6 +875,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param selector A string containing a selector expression to indicate where to stop matching preceding sibling elements.
      * @param filter   A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prevUntil(String selector, String filter) {
@@ -784,6 +886,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jquery object passed.
      *
      * @param obj A jquery object indicating where to stop matching preceding sibling elements.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prevUntil(ByJQuery obj) {
@@ -795,6 +898,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param obj    A jquery object indicating where to stop matching preceding sibling elements.
      * @param filter A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery prevUntil(ByJQuery obj, String filter) {
@@ -803,6 +907,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery siblings() {
@@ -813,6 +919,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
      *
      * @param selector A string containing a selector expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery siblings(String selector) {
@@ -823,6 +930,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to a subset specified by a range of indices.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery slice(int start) {
@@ -833,6 +941,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Reduce the set of matched elements to a subset specified by a range of indices.
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start) {
@@ -844,6 +953,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery slice(int start, int end) {
@@ -855,6 +965,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start, int end) {
@@ -866,6 +977,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery slice(int start, ByJQueryWithArithmeticOperatorOverload end) {
@@ -877,6 +989,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param start An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.
      * @param end   An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start, ByJQueryWithArithmeticOperatorOverload end) {
@@ -885,6 +998,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Returns the calling string value converted to lowercase.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery toLowerCase() {
@@ -893,6 +1008,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the combined text contents of each element in the set of matched elements, including their descendants.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery text() {
@@ -901,6 +1018,8 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Get the current value of the first element in the set of matched elements.
+     *
+     * @return The {@link ByJQuery} object for chaining.
      */
     @Override
     public final ByJQuery val() {

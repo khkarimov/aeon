@@ -5,18 +5,13 @@ import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
-
-/**
- * Created by RafaelT on 5/26/2016.
- */
-
 /**
  * Accepts an alert.
  */
 public class AcceptAlertCommand extends Command {
 
     /**
-     * Initializes a new instance of the AcceptAlertCommand.
+     * Initializes a new instance of the {@link AcceptAlertCommand} class.
      */
     public AcceptAlertCommand() {
         super(Resources.getString("AcceptAlertCommand_Info"));

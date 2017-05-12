@@ -9,6 +9,7 @@ import aeon.core.common.web.interfaces.IBy;
  * Created by SebastianR on 6/3/2016.
  */
 public class FileDialogInput extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;
@@ -39,7 +40,7 @@ public class FileDialogInput extends WebElement {
      * And then types in the path of the file.
      * REQUIRES openFileDialog to be called first.
      *
-     * @param path
+     * @param path The path to the file to be selected.
      */
     public void selectFileDialog(String path) {
         info.getCommandExecutionFacade().execute(info,
@@ -55,7 +56,7 @@ public class FileDialogInput extends WebElement {
      * And then types in the path of the file using the keyboard.
      * DOES NOT REQUIRE openFileDialog to be called first.
      *
-     * @param path
+     * @param path The path to the file to be selected.
      */
     public void uploadFileDialog(String path) {
         info.getCommandExecutionFacade().execute(info,
@@ -64,6 +65,4 @@ public class FileDialogInput extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         path));
     }
-
-
 }

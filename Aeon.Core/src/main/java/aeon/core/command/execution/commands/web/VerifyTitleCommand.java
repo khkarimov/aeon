@@ -8,9 +8,10 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Verifies the title of a page
+ * Verifies the title of a page.
  */
 public class VerifyTitleCommand extends Command {
+
     private String comparingText;
 
     public VerifyTitleCommand(String comparingText) {

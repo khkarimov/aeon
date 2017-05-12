@@ -8,13 +8,10 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
-/**
- * Created by Steve Foo on 6/29/2016.
- */
 public class VisibleCommand extends WebControlCommand {
 
     /**
-     * Initializes a new instance of the Visible.
+     * Initializes a new instance of the {@link VisibleCommand}.
      *
      * @param selector           The selector.
      * @param commandInitializer The command initializer.

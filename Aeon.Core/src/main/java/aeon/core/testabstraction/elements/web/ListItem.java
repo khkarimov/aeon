@@ -7,6 +7,7 @@ import aeon.core.common.web.interfaces.IBy;
  * Created by Administrator on 6/17/2016.
  */
 public class ListItem extends WebElement {
+
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;
@@ -23,5 +24,4 @@ public class ListItem extends WebElement {
         this.selector = selector;
         this.switchMechanism = switchMechanism;
     }
-
 }

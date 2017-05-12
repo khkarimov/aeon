@@ -4,9 +4,9 @@ import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
 public class QuitCommand extends Command {
+
     /**
      * Initializes a new instance of the {@link QuitCommand} class.
-     *
      */
     public QuitCommand() {
         super(Resources.getString("QuitCommand_Info"));

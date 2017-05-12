@@ -4,6 +4,7 @@ package aeon.core.common.web.selectors;
  * Instantiated from JQuery + int, JQuery - int operator overload.
  */
 public class ByJQueryWithArithmeticOperatorOverload {
+
     private String script;
 
     public ByJQueryWithArithmeticOperatorOverload(String script) {

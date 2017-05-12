@@ -5,9 +5,10 @@ import aeon.core.common.Resources;
 import java.io.Serializable;
 
 /**
- * Created by DionnyS on 4/1/2016.
+ * The exception that is thrown when there is a problem in the Configuration.
  */
 public class ConfigurationException extends RuntimeException implements Serializable {
+
     private String key, source, reason;
 
     /**
