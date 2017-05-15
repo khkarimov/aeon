@@ -44,6 +44,8 @@ public class DoesNotHaveOptionsTests {
 
     @Test
     public void commandDelegateExecutesDoesNotHaveOptions(){
+        // Arrange
+        
         // Act
         doesNotHaveOptionsCommandObject.commandDelegate(driver, control);
 
