@@ -564,7 +564,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 try {
                     aeon.core.common.helpers.SendKeysHelper.sendKeysToKeyboard(keysToSend);
                 } catch (AWTException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
+                    throw new RuntimeException(e);
                 }
             } else {
                 alert.sendKeys(keysToSend);
@@ -699,7 +700,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             SendKeysHelper.sendKeysToKeyboard(path);
             SendKeysHelper.sendEnterKey();
         } catch (AWTException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -716,7 +718,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             SendKeysHelper.sendKeysToKeyboard(path);
             SendKeysHelper.sendEnterKey();
         } catch (AWTException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

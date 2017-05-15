@@ -27,7 +27,7 @@ public class SeleniumConfiguration extends Configuration {
         public static final String MAXIMIZE_BROWSER = "aeon.selenium.maximize_browser";
         public static final String USE_MOBILE_USER_AGENT = "aeon.selenium.use_mobile_user_agent";
         public static final String PROXY_LOCATION = "aeon.selenium.proxy_location";
-        public static final String SELENIUM_HUB_URL = "aeon.selenium.selenium_hub_url";
+        public static final String SELENIUM_GRID_URL = "aeon.selenium.grid.url";
         public static final String ENSURE_CLEAN_ENVIRONMENT = "aeon.selenium.ensure_clean_environment";
         public static final String CHROME_DIRECTORY = "aeon.selenium.chrome_directory";
         public static final String IE_DIRECTORY = "aeon.selenium.ie_directory";

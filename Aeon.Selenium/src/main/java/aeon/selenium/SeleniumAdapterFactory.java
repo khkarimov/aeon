@@ -78,7 +78,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
 
-        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_HUB_URL, "");
+        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         URL seleniumHubUrl = null;
         if (StringUtils.isNotBlank(hubUrlString)) {
             try {
@@ -87,7 +87,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 }
                 seleniumHubUrl = new URL(hubUrlString);
             } catch (MalformedURLException e) {
-                log.error("MalformedURLException " + e.getMessage());
+                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
                 throw new RuntimeException(e);
             }
         }
