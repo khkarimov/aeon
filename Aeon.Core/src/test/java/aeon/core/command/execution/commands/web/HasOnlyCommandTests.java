@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
         import aeon.core.command.execution.commands.initialization.ICommandInitializer;
-        import aeon.core.common.CompareType;
         import aeon.core.common.ComparisonOption;
         import aeon.core.common.web.interfaces.IBy;
         import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -17,9 +16,6 @@ package aeon.core.command.execution.commands.web;
 public class HasOnlyCommandTests {
 
     private HasOnlyCommand hasOnlyCommand;
-
-    private CompareType compare = CompareType.AscendingByText;
-    private String optGroup = "Test";
 
     private String [] messages = {"test", "test1", "test2", "test3"};
     private String childSelector = "Child";
