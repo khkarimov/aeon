@@ -1,16 +1,16 @@
 package aeon.core.command.execution.commands.web;
 
-    import aeon.core.command.execution.commands.initialization.ICommandInitializer;
-    import aeon.core.common.ComparisonOption;
-    import aeon.core.common.web.interfaces.IBy;
-    import aeon.core.framework.abstraction.controls.web.WebControl;
-    import aeon.core.framework.abstraction.drivers.IWebDriver;
-    import org.junit.*;
-    import org.mockito.Mock;
-    import org.mockito.junit.MockitoJUnit;
-    import org.mockito.junit.MockitoRule;
-    import static org.mockito.Mockito.times;
-    import static org.mockito.Mockito.verify;
+import aeon.core.command.execution.commands.initialization.ICommandInitializer;
+import aeon.core.common.ComparisonOption;
+import aeon.core.common.web.interfaces.IBy;
+import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.framework.abstraction.drivers.IWebDriver;
+import org.junit.*;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class HasOnlyCommandTests {
 
