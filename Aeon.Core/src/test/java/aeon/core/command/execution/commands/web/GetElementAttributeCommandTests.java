@@ -38,6 +38,8 @@ public class GetElementAttributeCommandTests {
     @Test(expected = IllegalArgumentException.class)
     public void DriverNullThrowsException(){
 
+        // Arrange
+        
         // Act
         getElementAttributeCommand.commandDelegateOverride(null, control);
 
@@ -48,6 +50,8 @@ public class GetElementAttributeCommandTests {
     @Test(expected = IllegalArgumentException.class)
     public void ControlNullThrowsException(){
 
+        // Arrange
+
         // Act
         getElementAttributeCommand.commandDelegateOverride(driver, null);
 
@@ -57,6 +61,8 @@ public class GetElementAttributeCommandTests {
 
     @Test
     public void GetElementAttributeGetAttribute(){
+
+        // Arrange
 
         // Act
         getElementAttributeCommand.commandDelegateOverride(driver, control);
