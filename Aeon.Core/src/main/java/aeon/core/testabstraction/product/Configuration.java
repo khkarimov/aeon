@@ -128,6 +128,6 @@ public class Configuration {
         public static final String ENVIRONMENT = "aeon.environment";
         public static final String PROTOCOL = "aeon.protocol";
         public static final String TIMEOUT = "aeon.timeout";
-        public static final String TIMEOUT_AJAX = "aeon.timeout.ajax";
+        public static final String AJAX_TIMEOUT = "aeon.timeout.ajax";
     }
 }

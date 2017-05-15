@@ -41,7 +41,7 @@ public class WebProduct extends Product {
         driver = (IWebDriver) configuration.getDriver().newInstance();
         driver.configure(adapter);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-        long ajaxTimeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT_AJAX, 20);
+        long ajaxTimeout = (long) configuration.getDouble(Configuration.Keys.AJAX_TIMEOUT, 20);
 
 
         commandExecutionFacade = new WebCommandExecutionFacade(
