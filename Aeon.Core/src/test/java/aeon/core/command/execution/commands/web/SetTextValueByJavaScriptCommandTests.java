@@ -47,6 +47,8 @@ public class SetTextValueByJavaScriptCommandTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void illegalArguementThrownWhenDriverIsNull(){
+        // Arrange
+
         // Act
         setTextByJavaScriptCommandObject.commandDelegate(null, control);
 

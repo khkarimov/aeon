@@ -40,6 +40,8 @@ public class SetBodyValueByJavaScriptCommandTests {
 
     @Test
     public void commandDelegateExecutesSetDivValueByJavaScript(){
+        // Arrange
+
         // Act
         setBodyValueByJavaScriptCommandObject.commandDelegate(driver, control);
 
