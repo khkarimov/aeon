@@ -40,6 +40,8 @@ public class SetDivValueByJavaScriptCommandTests {
 
     @Test
     public void commandDelegateExecutesSetDivValueByJavaScript(){
+        // Arrange
+
         // Act
         setDivValueByJavaScriptCommandObject.commandDelegate(driver, control);
 
