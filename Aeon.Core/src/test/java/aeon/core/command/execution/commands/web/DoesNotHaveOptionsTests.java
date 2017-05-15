@@ -16,9 +16,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-/**
- * Created by bryant on 5/15/17.
- */
 public class DoesNotHaveOptionsTests {
     private DoesNotHaveOptionsCommand doesNotHaveOptionsCommandObject;
     private WebSelectOption select;
