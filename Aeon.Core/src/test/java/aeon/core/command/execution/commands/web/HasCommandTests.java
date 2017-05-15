@@ -24,9 +24,9 @@ public class HasCommandTests {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
-    WebControl control;
+    private WebControl control;
     @Mock
-    Consumer<IDriver> action;
+    private Consumer<IDriver> action;
     private String[] messages = {"test", "test1", "test2", "test3"};
     private String str = "teststes";
     private String atr = "testeests";
