@@ -1,4 +1,4 @@
-package tests.aeon.core.testabstraction.models;
+package aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * Created by josephb on 1/24/2017.
  */
 
-public class WebUIObject {
+public class BrowserTests {
 
     // Mocks
     @Rule
