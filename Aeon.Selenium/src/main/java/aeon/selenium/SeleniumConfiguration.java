@@ -22,7 +22,6 @@ public class SeleniumConfiguration extends Configuration {
 
     static class Keys {
 
-        public static final String ENABLE_SELENIUM_GRID = "aeon.selenium.enable_selenium_grid";
         public static final String LANGUAGE = "aeon.selenium.language";
         public static final String MOVE_MOUSE_TO_ORIGIN = "aeon.selenium.move_mouse_to_origin";
         public static final String MAXIMIZE_BROWSER = "aeon.selenium.maximize_browser";

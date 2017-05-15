@@ -1,8 +1,5 @@
 package aeon.selenium;
 
-import aeon.core.testabstraction.product.Configuration;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import aeon.core.common.Capability;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.ConfigurationException;
@@ -10,13 +7,16 @@ import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.exceptions.UnsupportedPlatformException;
 import aeon.core.common.helpers.OsCheck;
 import aeon.core.common.helpers.Process;
+import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import aeon.core.testabstraction.product.Configuration;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
-import org.apache.commons.lang3.StringUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
@@ -31,8 +31,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
@@ -57,6 +57,7 @@ import java.util.logging.Level;
  */
 @Extension
 public final class SeleniumAdapterFactory implements IAdapterExtension {
+
     private final String MobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
     private Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
@@ -77,12 +78,18 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
 
-        boolean enableSeleniumGrid = configuration.getBoolean(SeleniumConfiguration.Keys.ENABLE_SELENIUM_GRID, true);
+        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_HUB_URL, "");
         URL seleniumHubUrl = null;
-        try {
-            seleniumHubUrl = new URL(configuration.getString(SeleniumConfiguration.Keys.SELENIUM_HUB_URL, ""));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        if (StringUtils.isNotBlank(hubUrlString)) {
+            try {
+                if (!hubUrlString.endsWith("/wd/hub")) {
+                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
+                }
+                seleniumHubUrl = new URL(hubUrlString);
+            } catch (MalformedURLException e) {
+                log.error("MalformedURLException " + e.getMessage());
+                throw new RuntimeException(e);
+            }
         }
         JavaScriptFlowExecutor javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.standardSeconds(5));
         boolean moveMouseToOrigin = configuration.getBoolean(SeleniumConfiguration.Keys.MOVE_MOUSE_TO_ORIGIN, true);
@@ -90,12 +97,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
-        long timeout = (long)configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
         switch (browserType) {
             case Firefox:
                 WebDriver driver;
-                if (enableSeleniumGrid) {
+                if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
@@ -106,7 +113,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case Chrome:
-                if (enableSeleniumGrid) {
+                if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     DesiredCapabilities capabilities =
@@ -120,7 +127,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case InternetExplorer:
-                if (enableSeleniumGrid) {
+                if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     driver = new InternetExplorerDriver(
@@ -131,7 +138,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case Edge:
-                if (enableSeleniumGrid) {
+                if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     driver = new EdgeDriver(
@@ -176,7 +183,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private DesiredCapabilities getMarionetteCapabilities(){
+    private DesiredCapabilities getMarionetteCapabilities() {
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
         desiredCapabilities.setCapability("marionette", true);
         return desiredCapabilities;
@@ -194,7 +201,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private FirefoxProfile getFirefoxProfile( ) {
+    private FirefoxProfile getFirefoxProfile() {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("webdriver.firefox.logfile", "firefoxdriver.log");
         firefoxProfile.setPreference("intl.accept_languages", browserAcceptedLanguageCodes);
@@ -209,7 +216,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return firefoxProfile;
     }
 
-    private FirefoxOptions getFirefoxOptions(){
+    private FirefoxOptions getFirefoxOptions() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.FIREFOX_BINARY, null);
         FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();

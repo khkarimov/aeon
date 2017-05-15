@@ -1,8 +1,8 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ro.fortsoft.pf4j.DefaultPluginManager;
