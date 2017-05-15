@@ -38,7 +38,7 @@ public class HasAllOptionsInOrderCommandTests {
     public void HasAllOptionsInOrderCommandTestsInOrder(){
 
         // Arrange
-        
+
         // Act
         hasAllOptionsInOrderCommand.commandDelegate(driver, control);
 
