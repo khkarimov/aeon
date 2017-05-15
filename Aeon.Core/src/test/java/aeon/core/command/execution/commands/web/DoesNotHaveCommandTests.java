@@ -4,11 +4,9 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.web.interfaces.IBy;
-import aeon.core.framework.abstraction.controls.Control;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import jdk.internal.dynalink.linker.ConversionComparator;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,11 +33,11 @@ public class DoesNotHaveCommandTests {
     @Mock
     private ICommandInitializer initializer;
 
-    String [] messages = {"test", "test1", "test2", "test3"};
+    private String [] messages = {"test", "test1", "test2", "test3"};
 
-    String str = "teststes";
+    private String str = "teststes";
 
-    String atr = "testeests";
+    private String atr = "testeests";
 
     @Mock
     private IWebDriver driver;
