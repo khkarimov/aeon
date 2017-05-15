@@ -30,7 +30,7 @@ public class GetElementAttributeCommandTests {
     @Mock
     private WebControl control;
 
-    String attributeName = "Name";
+    private String attributeName = "Name";
 
     @Before
     public void setup() { getElementAttributeCommand = new GetElementAttributeCommand(selector, initializer, attributeName); }
