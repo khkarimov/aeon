@@ -1,7 +1,7 @@
-package TestAbstraction.aeon.core.command.execution.commands.web;
+package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
-import aeon.core.command.execution.commands.web.NotSelectedCommand;
+import aeon.core.command.execution.commands.web.EnabledCommand;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -19,44 +19,39 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class NotSelectedCommandTests {
+public class EnabledCommandTests {
+
+    private EnabledCommand command;
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
-    private Consumer<IDriver> driverConsumer;
-
-    @Mock
-    private IWebDriver driver;
+    IWebDriver driver;
 
     @Mock
     WebControl control;
 
     @Mock
+    private Consumer<IDriver> driverConsumer;
+
+    @Mock
     private ICommandInitializer commandInitializer;
 
     @Mock
-    private IBy selector;
-
-    private NotSelectedCommand command;
+    IBy selector;
 
     @Before
     public void setUp() {
-        command = new NotSelectedCommand(selector, commandInitializer);
+        command = new EnabledCommand(selector, commandInitializer);
     }
 
     @Test
-    public void notSelectedCommand_CallsExecute() {
-        //Arrange
+    public void enabledCommand_CallsExecute() {
         when(commandInitializer.setContext()).thenReturn(driverConsumer);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
-
-        //Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
-
-        //Assert
-        verify(driver, times(1)).notSelected(control);
+        verify(driver, times(1)).isElementEnabled(control);
     }
 }

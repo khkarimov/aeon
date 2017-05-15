@@ -1,4 +1,4 @@
-package tests.aeon.core.command.execution.commands.web;
+package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.web.DismissAlertCommand;
 import aeon.core.framework.abstraction.drivers.IDriver;

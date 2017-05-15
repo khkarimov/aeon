@@ -1,7 +1,7 @@
-package TestAbstraction.aeon.core.command.execution.commands.web;
+package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
-import aeon.core.command.execution.commands.web.ExistsCommand;
+import aeon.core.command.execution.commands.web.NotSelectedCommand;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -19,32 +19,35 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ExistsCommandTests {
-
-    private ExistsCommand command;
+public class NotSelectedCommandTests {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-    @Mock
-    private IWebDriver driver;
-    @Mock
-    private IBy selector;
-    @Mock
-    WebControl control;
-    @Mock
-    private ICommandInitializer commandInitializer;
+
     @Mock
     private Consumer<IDriver> driverConsumer;
 
+    @Mock
+    private IWebDriver driver;
+
+    @Mock
+    WebControl control;
+
+    @Mock
+    private ICommandInitializer commandInitializer;
+
+    @Mock
+    private IBy selector;
+
+    private NotSelectedCommand command;
+
     @Before
-    public void setUp()
-    {
-        command = new ExistsCommand(selector, commandInitializer);
+    public void setUp() {
+        command = new NotSelectedCommand(selector, commandInitializer);
     }
 
     @Test
-    public void existsCommand_CallsExecute()
-    {
+    public void notSelectedCommand_CallsExecute() {
         //Arrange
         when(commandInitializer.setContext()).thenReturn(driverConsumer);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
@@ -54,6 +57,6 @@ public class ExistsCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).exists(control);
+        verify(driver, times(1)).notSelected(control);
     }
 }
