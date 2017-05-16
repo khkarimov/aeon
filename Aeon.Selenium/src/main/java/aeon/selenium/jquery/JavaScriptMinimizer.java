@@ -1,5 +1,7 @@
 package aeon.selenium.jquery;
 
+import static aeon.core.common.helpers.StringUtils.minimizeWhiteSpace;
+
 /**
  * Minimizes whitespace in JavaScript.
  */
@@ -11,6 +13,6 @@ public class JavaScriptMinimizer implements IJavaScriptFinalizer {
      * @return Formatted JavaScript code.
      */
     public final String prepare(String javaScript) {
-        return StringUtils.minimizeWhiteSpace(javaScript);
+        return minimizeWhiteSpace(javaScript);
     }
 }

@@ -2,8 +2,8 @@ package aeon.core.command.execution.commands;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.command.execution.commands.interfaces.ICommand;
+import aeon.core.common.helpers.StringUtils;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,7 +39,7 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
 
         this.commandInitializer = initializer;
 
-        if (StringUtils.isEmpty(message)) {
+        if (StringUtils.isBlank(message)) {
             message = this.getClass().getSimpleName();
         }
 

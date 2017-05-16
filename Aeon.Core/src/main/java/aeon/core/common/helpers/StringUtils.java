@@ -271,4 +271,33 @@ public class StringUtils {
         }
         return value;
     }
+
+    /**
+     * Checks if a CharSequence is whitespace, empty ("") or null.
+     *
+     * @param cs the CharSequence to check, may be null
+     * @return true if the CharSequence is null, empty or whitespace
+     */
+    public static boolean isBlank(final CharSequence cs) {
+        int strLen;
+        if (cs == null || (strLen = cs.length()) == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if (Character.isWhitespace(cs.charAt(i)) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if a CharSequence is not whitespace, not empty ("") and not null.
+     *
+     * @param cs the CharSequence to check, may be null
+     * @return true if the CharSequence is not null, not empty and not whitespace
+     */
+    public static boolean isNotBlank(final CharSequence cs) {
+        return !isBlank(cs);
+    }
 }
