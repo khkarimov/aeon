@@ -17,6 +17,7 @@ import static aeon.core.testabstraction.product.Aeon.launch;
 
 public class IEDriverActionTests {
     private static Sample product;
+    private String path;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -34,8 +35,9 @@ public class IEDriverActionTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.InternetExplorer);
+        path = "file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html";
         product.browser.maximize();
-        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+        product.browser.goToUrl(path);
     }
 
     @After
@@ -46,10 +48,10 @@ public class IEDriverActionTests {
 
     @Test
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
-        product.browser.goToUrl("http://google.com");
+        product.browser.goToUrl("http://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = "google.com";
+            String domain = "ci.mia.ucloud.int";
             String value = "CookieValue";
             Date expiration = getNextYear();
             String path = "/";
