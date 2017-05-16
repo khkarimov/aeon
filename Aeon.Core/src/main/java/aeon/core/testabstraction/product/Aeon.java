@@ -25,7 +25,7 @@ public class Aeon {
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
             if (browserType == null) {
-                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER_TYPE, "Chrome"));
+                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER, "Chrome"));
             }
             product.getConfiguration().setBrowserType(browserType);
 
