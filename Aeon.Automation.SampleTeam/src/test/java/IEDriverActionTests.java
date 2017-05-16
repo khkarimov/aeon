@@ -17,7 +17,6 @@ import static aeon.core.testabstraction.product.Aeon.launch;
 
 public class IEDriverActionTests {
     private static Sample product;
-    private String path;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -35,9 +34,8 @@ public class IEDriverActionTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.InternetExplorer);
-        path = "file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html";
         product.browser.maximize();
-        product.browser.goToUrl(path);
+        product.browser.goToUrl(path = "file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
