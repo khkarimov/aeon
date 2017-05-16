@@ -35,7 +35,7 @@ public class IEDriverActionTests {
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.InternetExplorer);
         product.browser.maximize();
-        product.browser.goToUrl(path = "file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
