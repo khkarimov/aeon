@@ -31,6 +31,10 @@ public abstract class WebControlCommand extends Command {
      */
     @Override
     protected void driverDelegate(IDriver driver) {
+        if (driver == null) {
+            throw new IllegalArgumentException("driver");
+        }
+
         IWebDriver webDriver = (IWebDriver) driver;
         WebControl control = (WebControl) getCommandInitializer().findElement(driver, selector);
         webDriver.scrollElementIntoView(control);

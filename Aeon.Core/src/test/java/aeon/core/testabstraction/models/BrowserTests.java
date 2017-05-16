@@ -1,4 +1,4 @@
-package TestAbstraction;
+package aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
@@ -11,7 +11,6 @@ import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import aeon.core.testabstraction.models.Browser;
 import aeon.core.testabstraction.product.Configuration;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,7 +28,7 @@ import static org.mockito.Mockito.*;
  * Created by josephb on 1/24/2017.
  */
 
-public class WebUIObject {
+public class BrowserTests {
 
     // Mocks
     @Rule
