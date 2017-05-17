@@ -8,10 +8,20 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
+/**
+ * Sets the text of a field by JavaScript.
+ * */
 public class SetTextByJavaScriptCommand extends WebControlCommand {
 
     private String value;
 
+    /**
+     * Initializes a new instance of the {@link SetCommand} class.
+     *
+     * @param selector    The selector.
+     * @param initializer The command initializer.
+     * @param value       The new value to be set on the field.
+     */
     public SetTextByJavaScriptCommand(IBy selector, ICommandInitializer initializer, String value) {
         super(String.format(Locale.getDefault(), Resources.getString("SetTextValueByJavaScriptCommand_Info"), value, selector), selector, initializer);
         this.value = value;

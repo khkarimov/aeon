@@ -8,8 +8,17 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
+/**
+ * Asserts that an element is disabled.
+ */
 public class DisabledCommand extends WebControlCommand {
 
+    /**
+     * Initializes a new instance of the {@link DisabledCommand} class.
+     *
+     * @param selector           The selector.
+     * @param commandInitializer The command initializer.
+     */
     public DisabledCommand(IBy selector, ICommandInitializer commandInitializer) {
         super(String.format(Locale.getDefault(), Resources.getString("DisabledCommand_Info"), selector), selector, commandInitializer);
     }

@@ -1,9 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-/**
- * Created by SebastianR on 5/31/2016.
- */
-
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
 import aeon.core.common.web.interfaces.IBy;
@@ -14,16 +10,14 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * <p>Gets the specified web element attribute.</p>
- * <p>Usage:</p>
- * <p>      n/a</p>
+ * Gets the specified web element attribute.
  */
 public class GetElementAttributeCommand extends WebControlCommandWithReturn {
 
     private String attributeName;
 
     /**
-     * Initializes a new instance of the {@link GetElementAttributeCommand} class
+     * Initializes a new instance of the {@link GetElementAttributeCommand} class.
      *
      * @param selector      The selector.
      * @param initializer   The command initializer
@@ -35,7 +29,7 @@ public class GetElementAttributeCommand extends WebControlCommandWithReturn {
     }
 
     /**
-     * Provides the logic for the command
+     * Provides the logic for the command.
      *
      * @param driver  The web driver
      * @param element The web element

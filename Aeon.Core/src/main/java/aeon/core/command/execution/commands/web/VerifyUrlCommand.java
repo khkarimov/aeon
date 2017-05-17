@@ -16,6 +16,11 @@ public class VerifyUrlCommand extends Command {
 
     private URL comparingURL;
 
+    /**
+     * Initializes a new instance of {@link VerifyUrlCommand}.
+     *
+     * @param comparingURL The URL to compare against the current window's URL.
+     */
     public VerifyUrlCommand(String comparingURL) {
         super(String.format(Locale.getDefault(), Resources.getString("VerifyUrlCommand_Info"), comparingURL));
         this.comparingURL = URLUtil.createURL(comparingURL);
