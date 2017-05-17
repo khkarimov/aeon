@@ -50,10 +50,10 @@ public class FirefoxDriverActionTests {
 
     @Test
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
-        product.browser.goToUrl("http://google.com");
+        product.browser.goToUrl("http://www.ultimatesoftware.com");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = ".google.com";
+            String domain = "ultimatesoftware.com";
             String value = "CookieValue";
             Date expiration = getNextYear();
             String path = "/";

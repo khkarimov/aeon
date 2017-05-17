@@ -1,8 +1,8 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ro.fortsoft.pf4j.DefaultPluginManager;
@@ -25,7 +25,7 @@ public class Aeon {
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
             if (browserType == null) {
-                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER_TYPE, "Chrome"));
+                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER, "Chrome"));
             }
             product.getConfiguration().setBrowserType(browserType);
 

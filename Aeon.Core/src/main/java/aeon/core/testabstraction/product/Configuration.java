@@ -124,10 +124,10 @@ public class Configuration {
     public static class Keys {
 
         public static final String WAIT_FOR_AJAX_RESPONSES = "aeon.wait_for_ajax_responses";
-        public static final String BROWSER_TYPE = "aeon.browser_type";
+        public static final String BROWSER = "aeon.browser";
         public static final String ENVIRONMENT = "aeon.environment";
         public static final String PROTOCOL = "aeon.protocol";
         public static final String TIMEOUT = "aeon.timeout";
-        public static final String AJAX_TIMEOUT = "aeon.ajax_timeout";
+        public static final String AJAX_TIMEOUT = "aeon.timeout.ajax";
     }
 }

@@ -3,7 +3,7 @@ def baseProjectDescription = 'Aeon Core'
 def base = baseProjectName
 
 group 'Aeon'
-version '0.2.3'
+version '0.2.4'
 
 apply plugin: 'java'
 
@@ -18,7 +18,6 @@ dependencies {
     testCompile "org.mockito:mockito-core:2.7.22"
 
     compile 'ro.fortsoft.pf4j:pf4j:0.13.1'
-    compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.1'

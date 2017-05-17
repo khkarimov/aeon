@@ -82,7 +82,7 @@ public class IEDriverAssertionTests {
         product.startPage.div.hasLike(new String[]{"START"}, "button", "id");
         product.startPage.dropDown.is("drop-down-list", "id");
         product.startPage.dropDown.isLike("DROP-DOWN-LIST", "id");
-        product.startPage.dropDown.isNotLike("DROP-DOWN-LISTT", "id");
+        product.startPage.dropDown.isNotLike("THIS", "id");
         product.startPage.div.doesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
         product.startPage.div.doesNotHaveLike(new String[]{"async call 3"}, "h3");
     }
