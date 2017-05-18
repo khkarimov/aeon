@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by jadz on 5/17/17.
  */
-public class RightClockCommandTests {
+public class RightClickCommandTests {
     private RightClickCommand rightClickCommandObject;
 
     @Rule
@@ -43,7 +43,7 @@ public class RightClockCommandTests {
     }
 
     @Test
-    public void commandDelegateClickCommand(){
+    public void commandDelegateRightClickCommand(){
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
