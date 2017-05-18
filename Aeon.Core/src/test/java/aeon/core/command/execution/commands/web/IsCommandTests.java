@@ -46,19 +46,30 @@ public class IsCommandTests {
     }
 
     @Test
-    public void commandDelegateIsCommand(){
+    public void commandDelegateIsCommandWithRaw(){
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
         Consumer<IDriver> actionRaw = isCommandObjectRaw.getCommandDelegate();
-        Consumer<IDriver> actionText = isCommandObjectText.getCommandDelegate();
         actionRaw.accept(driver);
-        actionText.accept(driver);
 
         // Assert
         verify(driver, times(1)).is(control, value, rawOption, attribute);
+    }
+
+    @Test
+    public void commandDelegateIsCommandWithText(){
+        // Arrange
+        when(initializer.setContext()).thenReturn(action);
+        when(initializer.findElement(driver, selector)).thenReturn(control);
+
+        // Act
+        Consumer<IDriver> actionText = isCommandObjectText.getCommandDelegate();
+        actionText.accept(driver);
+
+        // Assert
         verify(driver, times(1)).is(control, value, textOption, attribute);
     }
 }
