@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Test for unchecking  on an element
+ * Test for unchecking on an element
  */
 public class UnCheckCommandTests {
 
