@@ -18,10 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by jadz on 5/18/17.
- */
-public class OpenFileDialogTests {
+public class OpenFileDialogCommandTests {
 
     private OpenFileDialogCommand openFileDialogCommandObject;
 
@@ -83,8 +80,4 @@ public class OpenFileDialogTests {
         openFileDialogCommandObject.driverDelegate(Nulldriver);
 
     }
-
-
-
-
 }
