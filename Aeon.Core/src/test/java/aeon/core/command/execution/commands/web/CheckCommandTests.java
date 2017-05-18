@@ -14,9 +14,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.function.Consumer;
 
-public class BlurCommandTests {
+public class CheckCommandTests {
 
-    private BlurCommand blurCommandObject;
+    private CheckCommand checkCommandObject;
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -32,7 +32,7 @@ public class BlurCommandTests {
     private Consumer<IDriver> action;
     @Before
     public void setup() {
-        blurCommandObject = new BlurCommand(selector, initializer);
+        checkCommandObject = new CheckCommand(selector, initializer);
     }
 
     @Test
@@ -42,10 +42,10 @@ public class BlurCommandTests {
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
-        Consumer<IDriver> action = blurCommandObject.getCommandDelegate();
+        Consumer<IDriver> action = checkCommandObject.getCommandDelegate();
         action.accept(driver);
 
         // Assert
-        verify(driver, times(1)).blur(control);
+        verify(driver, times(1)).check(control);
     }
 }
