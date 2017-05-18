@@ -45,7 +45,7 @@ public class UnCheckCommandTests {
     }
 
     @Test
-    public void commandDelegateClickCommand(){
+    public void commandDelegateUnCheckCommand(){
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
