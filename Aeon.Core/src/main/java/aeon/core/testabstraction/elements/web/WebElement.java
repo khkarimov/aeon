@@ -12,9 +12,6 @@ import aeon.core.testabstraction.elements.Element;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
-/**
- * Created by SebastianR on 6/20/2016.
- */
 public class WebElement extends Element {
 
     private IBy selector;
