@@ -18,9 +18,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by helene on 5/17/17.
- */
 public class MouseOverCommandTests {
 
     private MouseOverCommand mouseOverCommandObject;
@@ -45,7 +42,7 @@ public class MouseOverCommandTests {
     }
 
     @Test
-    public void commandDelegateClickCommand(){
+    public void mouseOverDelegateClickCommand(){
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
@@ -57,7 +54,4 @@ public class MouseOverCommandTests {
         // Assert
         verify(driver, times(1)).mouseOver(control);
     }
-
-
-
 }
