@@ -42,7 +42,7 @@ public class MouseOverCommandTests {
     }
 
     @Test
-    public void mouseOverDelegateClickCommand(){
+    public void commandDelegateMouseOverCommand(){
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
