@@ -11,33 +11,29 @@ import org.mockito.junit.MockitoRule;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-/**
- * Created by uriel k on 5/23/17.
- */
 public class GetAllCookiesCommandTests {
-    
-        private GetAllCookiesCommand getAllCookiesCommand;
 
-        @Rule
-        public MockitoRule mockitoRule = MockitoJUnit.rule();
+    private GetAllCookiesCommand getAllCookiesCommand;
 
-        @Mock
-        private IWebDriver driver;
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-        @Before
-        public void setup() { getAllCookiesCommand = new GetAllCookiesCommand(); }
+    @Mock
+    private IWebDriver driver;
 
-
+    @Before
+    public void setup() { getAllCookiesCommand = new GetAllCookiesCommand(); }
 
 
-        @Test
-        public void GetAllCookiesCommand(){
 
-            // Act
-            getAllCookiesCommand.commandDelegate(driver);
 
-            // Verify
-            verify(driver, times(1)).getAllCookies();
-        }
+    @Test
+    public void GetAllCookiesCommand(){
+        // Act
+        getAllCookiesCommand.commandDelegate(driver);
+
+        // Verify
+        verify(driver, times(1)).getAllCookies();
     }
+}
 
