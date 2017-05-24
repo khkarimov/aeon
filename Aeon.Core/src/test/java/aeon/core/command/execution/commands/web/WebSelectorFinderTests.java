@@ -17,8 +17,7 @@ public class WebSelectorFinderTests {
 
     private WebSelectorFinder webSelectorFinder;
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule public ExpectedException thrown = ExpectedException.none();
 
     @Mock
