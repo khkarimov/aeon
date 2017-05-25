@@ -1,17 +1,13 @@
 package aeon.core.command.execution.commands.web;
 
-
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 
 public class GetAlertTextCommandTests {
 
@@ -24,18 +20,16 @@ public class GetAlertTextCommandTests {
     private IWebDriver driver;
 
     @Before
-    public void setup() { getAlertTextCommand = new GetAlertTextCommand(); }
+    public void setup() {getAlertTextCommand = new GetAlertTextCommand();}
 
     @Test
-    public void GetElementAttributeGetAttribute(){
-
-        // Arrange
+    public void commandDelegateGetAlertText(){
 
         // Act
-        Object text = getAlertTextCommand.commandDelegate(driver);
+        getAlertTextCommand.commandDelegate(driver);
 
-        // Verify
+        // Assert
         verify(driver, times(1)).getAlertText();
-        assertTrue(text instanceof String);
     }
 }
+
