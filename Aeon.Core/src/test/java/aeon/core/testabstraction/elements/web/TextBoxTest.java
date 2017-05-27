@@ -72,6 +72,8 @@ public class TextBoxTest {
         textBox.clear();
 
         //Assert
+        //Must use eq b/c argument matching is all or nothing
+        //We are argument matching for all args of the execute func
         verify(commandExecutionFacade, times(1))
                 .execute(Mockito.eq(automationInfo), any(ClearCommand.class));
     }
