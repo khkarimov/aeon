@@ -3,6 +3,7 @@ package aeon.core.testabstraction.elements.web;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
+import aeon.core.command.execution.commands.web.ClearCommand;
 import aeon.core.command.execution.commands.web.SetCommand;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.adapters.IAdapter;
@@ -53,13 +54,23 @@ public class TextBoxTest {
     }
 
     @Test
-    public void set() {
+    public void setCommandExecute() {
        //Act
        textBox.set(null);
 
        //Assert
        verify(commandExecutionFacade, times(1))
                .execute(Mockito.eq(automationInfo), any(SetCommand.class));
+    }
+
+    @Test
+    public void clearCommandExecute() {
+        //Act
+        textBox.clear();
+
+        //Assert
+        verify(commandExecutionFacade, times(1))
+                .execute(Mockito.eq(automationInfo), any(ClearCommand.class));
     }
 
 }
