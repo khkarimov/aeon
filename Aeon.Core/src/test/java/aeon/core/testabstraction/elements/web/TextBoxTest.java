@@ -48,15 +48,18 @@ public class TextBoxTest {
 
     @Before
     public void setup() {
+        //creating an AutomationInfo b/c need to mock a CommandExecutionFacade
         automationInfo = new AutomationInfo(configuration, driver, adapter);
+        //Set the facade so the set and clear commands can get it
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
+        //new TextBox for each test
         textBox = new TextBox(automationInfo, selector);
     }
 
     @Test
     public void setCommandExecute() {
        //Act
-       textBox.set(null);
+       textBox.set(null);  //do not care about the value param
 
        //Assert
        verify(commandExecutionFacade, times(1))
