@@ -57,7 +57,7 @@ public class TextBoxTest {
     }
 
     @Test
-    public void setCommandExecute() {
+    public void setCallsExecuteWithAnyInput() {
        //Act
        textBox.set(null);  //do not care about the value param
 
@@ -67,7 +67,7 @@ public class TextBoxTest {
     }
 
     @Test
-    public void clearCommandExecute() {
+    public void clearCallsExecuteWithAnyInput() {
         //Act
         textBox.clear();
 
