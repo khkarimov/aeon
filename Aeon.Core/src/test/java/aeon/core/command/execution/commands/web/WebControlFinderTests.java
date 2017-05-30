@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
-import aeon.core.command.execution.commands.interfaces.ICommand;
 import aeon.core.command.execution.commands.interfaces.IWebSelectorFinder;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -13,27 +12,22 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
 import java.util.function.Consumer;
-
-import static com.sun.tools.doclint.Entity.times;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 
 public class WebControlFinderTests {
     private WebControlFinder webControlFinderObjectDefault;
     private WebControlFinder webControlFinderObjectSet;
+
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock private IBy selector;
     @Mock private ICommandInitializer initializer;
     @Mock private IWebDriver driver;
     @Mock private WebControl control;
     @Mock private Consumer<IDriver> action;
-
-    private IWebSelectorFinder selectorFinder;
+    @Mock private IWebSelectorFinder selectorFinder;
 
     @Before
     public void setup(){
@@ -43,32 +37,26 @@ public class WebControlFinderTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void throwIllegalArgumentExceptionIfDriverIsNull() {
-        //Arrange: nothing
-
-        //Act
         webControlFinderObjectDefault.findElement(null, selector);
         webControlFinderObjectSet.findElement(null, selector);
-
-        //Assert: nothing
     }
 
     @Test
-    public void findElement_GWebControlFinder(){ //Is this correct naming
-//        public void findElementWebControlFinder(){ //Is this correct naming
-        //Arrange
+    public void verify_webControl_Default_After_Calling_findElement(){
         when(initializer.setContext()).thenReturn(action);
-        when(initializer.findElement(driver, selector)).thenReturn(control);
+        when(driver.findElement(selector)).thenReturn(control);
 
-        //Act
-        //??
-        WebControl controler = webControlFinderObjectDefault.findElement(driver, selector);
-        action.accept(driver);
-
-        //Assert
-//        assertThat(controler, instanceOf(WebControl.class));
-
+        WebControl controlDefault = webControlFinderObjectDefault.findElement(driver, selector);
+        assertEquals(control, controlDefault);
     }
 
+    @Test
+    public void verify_webControl_Set_After_Calling_findElement(){
+        when(initializer.setContext()).thenReturn(action);
+        IBy selection = selectorFinder.findSelector(driver, selector);
+        when(driver.findElement(selection)).thenReturn(control);
+
+        WebControl controlerSet = webControlFinderObjectSet.findElement(driver, selector);
+        assertEquals(control, controlerSet);
+    }
 }
-
-
