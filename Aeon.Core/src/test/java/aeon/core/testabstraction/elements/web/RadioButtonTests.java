@@ -39,7 +39,7 @@ public class RadioButtonTests {
     private IBy selector;
 
     @Mock
-    Iterable<IBy> switchMechanism;
+    private Iterable<IBy> switchMechanism;
 
     @Mock
     private Configuration configuration;
@@ -102,6 +102,4 @@ public class RadioButtonTests {
         verify(commandExecutionFacade, times(1))
                 .execute(Mockito.eq(info2), any(CheckCommand.class));
     }
-
-
 }
