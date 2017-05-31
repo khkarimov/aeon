@@ -33,32 +33,50 @@ public class WebControlFinderTests {
     public void setup(){
         webControlFinderDefault = new WebControlFinder();
         webControlFinderSet = new WebControlFinder(selectorFinder);
-        when(initializer.setContext()).thenReturn(action);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void throwIllegalArgumentExceptionIfSetDriverIsNull() {
+        // Arrange
+        //      Nothing to do
+
+        // Act
         webControlFinderSet.findElement(null, selector);
     }
+
     @Test(expected = IllegalArgumentException.class)
     public void throwIllegalArgumentExceptionIfDefaultDriverIsNull() {
+        // Arrange
+        //      Nothing to do
+
+        // Act
         webControlFinderDefault.findElement(null, selector);
     }
 
     @Test
     public void verify_webControl_Default_After_Calling_findElement(){
+        //Arrange
+        when(initializer.setContext()).thenReturn(action);
         when(driver.findElement(selector)).thenReturn(control);
 
+        // Act
         WebControl controlDefault = webControlFinderDefault.findElement(driver, selector);
+
+        // Assert
         assertEquals(control, controlDefault);
     }
 
     @Test
     public void verify_webControl_Set_After_Calling_findElement(){
+        //Arrange
+        when(initializer.setContext()).thenReturn(action);
         IBy selection = selectorFinder.findSelector(driver, selector);
         when(driver.findElement(selection)).thenReturn(control);
 
+        // Act
         WebControl controlerSet = webControlFinderSet.findElement(driver, selector);
+
+        // Assert
         assertEquals(control, controlerSet);
     }
 }
