@@ -1,4 +1,4 @@
-package aeon.core.testabstraction.models.web;
+package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
@@ -8,7 +8,6 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import aeon.core.testabstraction.elements.web.Select;
 import aeon.core.testabstraction.product.Configuration;
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,6 +29,11 @@ public class SelectTests {
 
     private AutomationInfo info1;
     private AutomationInfo info2;
+    private WebSelectOption webSelectOption = WebSelectOption.Text;
+    private String[] messages = {"test", "message"};
+    private String dummy = "dummy";
+    private int dummyInt = 3;
+    private CompareType compareType = CompareType.DescendingByText;
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -48,13 +52,6 @@ public class SelectTests {
     private ICommandExecutionFacade commandExecutionFacade1;
     @Mock
     private ICommandExecutionFacade commandExecutionFacade2;
-
-    private WebSelectOption webSelectOption = WebSelectOption.Text;
-    private String[] messages = {"test", "message"};
-    private String dummy = "dummy";
-    private int dummyInt = 3;
-    private CompareType compareType = CompareType.DescendingByText;
-
 
     @Before
     public void setup() {
