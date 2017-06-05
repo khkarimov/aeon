@@ -32,7 +32,7 @@ public class Configuration {
 
         try (
                 InputStream inAeon = Configuration.class.getResourceAsStream("/aeon.properties");
-                InputStream inConfig = Configuration.class.getResourceAsStream("/config.properties")
+                InputStream inConfig = Configuration.class.getResourceAsStream("/test.properties")
         ) {
             properties.load(inAeon);
             loadPluginSettings();
