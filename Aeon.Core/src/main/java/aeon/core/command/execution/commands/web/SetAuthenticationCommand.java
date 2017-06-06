@@ -10,14 +10,14 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Created by helene on 6/2/17.
+ * Sets a username & password to a certain credential input.
  */
 public class SetAuthenticationCommand extends Command{
     private String username;
     private String password;
 
     /**
-     * Initializes a new instance of the {@link SetCommand} class.
+     * Initializes a new instance of the {@link SetAuthenticationCommand} class.
      */
     public SetAuthenticationCommand(String username, String password) {
         super(String.format(Resources.getString("SetAuthenticationCommand_Info"), username, password));
@@ -30,7 +30,7 @@ public class SetAuthenticationCommand extends Command{
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-        ((IWebDriver) driver).setAuthenticationCredentials("username", "password");    //add "enter"
+        ((IWebDriver) driver).setAuthenticationCredentials(username, password);
     }
 
 }

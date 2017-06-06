@@ -1848,7 +1848,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void setAuthenticationCredentials(String setUsername, String setPassword){
-        log.trace("WebDriver.SwitchTo().Alert();");
+        log.trace("WebDriver.setAuthenticationCredentials();");
         try {
             Alert alert = webDriver.switchTo().alert();
             UserAndPassword credentials = new UserAndPassword(setUsername, setPassword);
@@ -1858,5 +1858,4 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new NoAlertException(e);
         }
     }
-
 }
