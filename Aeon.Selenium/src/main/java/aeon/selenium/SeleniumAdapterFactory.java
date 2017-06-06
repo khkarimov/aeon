@@ -68,6 +68,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
     private String proxyLocation;
+    private String perfectoDomain;
     private String perfectoUser;
     private String perfectoPass;
     private String platformVersion;
@@ -84,6 +85,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
         if (browserType.equals(IOSSafari) || browserType.equals(AndroidChrome)) {
+            perfectoDomain = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_DOMAIN, "");
             perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
             perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
             platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
@@ -92,18 +94,16 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         URL seleniumHubUrl = null;
-        if (!browserType.equals(IOSSafari) && !browserType.equals(AndroidChrome)) {
-            String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
-            if (StringUtils.isNotBlank(hubUrlString)) {
-                try {
-                    if (!hubUrlString.endsWith("/wd/hub")) {
-                        throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
-                    }
-                    seleniumHubUrl = new URL(hubUrlString);
-                } catch (MalformedURLException e) {
-                    log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-                    throw new RuntimeException(e);
+        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        if (StringUtils.isNotBlank(hubUrlString)) {
+            try {
+                if (!hubUrlString.endsWith("/wd/hub")) {
+                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
                 }
+                seleniumHubUrl = new URL(hubUrlString);
+            } catch (MalformedURLException e) {
+                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
+                throw new RuntimeException(e);
             }
         }
         JavaScriptFlowExecutor javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.standardSeconds(5));
@@ -166,7 +166,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
             case IOSSafari:
                 DesiredCapabilities capabilities = (DesiredCapabilities)getCapabilities();
                 try {
-                    driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                    driver = new RemoteWebDriver(new URL("https://" + perfectoDomain + ".perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
                 } catch (MalformedURLException e) {
                     log.error("MalformedURLException for the Perfecto URL " + e.getMessage());
                     throw new RuntimeException(e);
@@ -179,7 +179,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
             case AndroidChrome:
                 capabilities = (DesiredCapabilities)getCapabilities();
                 try {
-                    driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                    driver = new RemoteWebDriver(new URL("https://" + perfectoDomain + ".perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
                 } catch (MalformedURLException e) {
                     log.error("MalformedURLException for the Perfecto URL " + e.getMessage());
                     throw new RuntimeException(e);
