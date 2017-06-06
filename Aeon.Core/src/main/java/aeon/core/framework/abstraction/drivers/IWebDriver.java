@@ -671,6 +671,18 @@ public interface IWebDriver extends IDriver {
      * @param windowTitle The title of the window to search for.
      * @return The title of the window
      */
+
+    /**
+     * Sets the Username and Password for an authentication alert. A globally unique identifier associated with the call.
+     *
+     * @param setUsername The new value for the Username attribute of the control.
+     * @param setPassword The new value for the Password attribute of the control.
+     */
+    void setAuthenticationCredentials(String setUsername, String setPassword);
+
+
+
+
     String windowDoesNotExistByTitle(String windowTitle);
 
     /**
@@ -680,4 +692,5 @@ public interface IWebDriver extends IDriver {
      * @return The URL of the window
      */
     String windowDoesNotExistByUrl(String url);
+
 }
