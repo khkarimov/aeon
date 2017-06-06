@@ -20,10 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -149,10 +146,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                         String.format("%1$s is not a supported browser", browserType));
         }
 
+        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
         if (maximizeBrowser){
-            driver.manage().window().maximize();
+            adapter.maximize();
         }
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+        return adapter;
     }
 
     private Capabilities getCapabilities() {
@@ -273,9 +271,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
-        if (maximizeBrowser) {
-            chromeOptions.addArguments("--kiosk");
-        }
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + MobileUserAgent);
