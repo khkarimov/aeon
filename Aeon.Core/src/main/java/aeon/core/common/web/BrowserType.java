@@ -21,5 +21,16 @@ public enum BrowserType {
     /**
      * Mozilla Firefox.
      */
-    Firefox
+    Firefox,
+
+    // Mobile Browsers
+    /**
+     * iOS Safari.
+     */
+    iOSSafari,
+
+    /**
+     * Android Chrome.
+     */
+    AndroidChrome
 }

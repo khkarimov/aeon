@@ -41,7 +41,6 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ro.fortsoft.pf4j.Extension;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -51,6 +50,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import static aeon.core.common.web.BrowserType.AndroidChrome;
+import static aeon.core.common.web.BrowserType.iOSSafari;
 
 /**
  * The driver factory for Web.
@@ -67,8 +68,13 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
     private String proxyLocation;
+    private String perfectoUser;
+    private String perfectoPass;
+    private String platformVersion;
+    private String browserVersion;
+    private String screenResolution;
 
-    public IAdapter create(SeleniumConfiguration configuration) {
+    public IAdapter create(SeleniumConfiguration configuration) throws MalformedURLException {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
         this.browserType = configuration.getBrowserType();
@@ -77,18 +83,27 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
+        if (browserType.equals(iOSSafari) || browserType.equals(AndroidChrome)) {
+            perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
+            perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
+            platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
+            browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
+            screenResolution = configuration.getString(SeleniumConfiguration.Keys.SCREEN_RESOLUTION, "");
+        }
 
-        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         URL seleniumHubUrl = null;
-        if (StringUtils.isNotBlank(hubUrlString)) {
-            try {
-                if (!hubUrlString.endsWith("/wd/hub")) {
-                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
+        if (!browserType.equals(iOSSafari) && !browserType.equals(AndroidChrome)) {
+            String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+            if (StringUtils.isNotBlank(hubUrlString)) {
+                try {
+                    if (!hubUrlString.endsWith("/wd/hub")) {
+                        throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
+                    }
+                    seleniumHubUrl = new URL(hubUrlString);
+                } catch (MalformedURLException e) {
+                    log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
+                    throw new RuntimeException(e);
                 }
-                seleniumHubUrl = new URL(hubUrlString);
-            } catch (MalformedURLException e) {
-                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-                throw new RuntimeException(e);
             }
         }
         JavaScriptFlowExecutor javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.standardSeconds(5));
@@ -148,6 +163,22 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
+            case iOSSafari:
+                DesiredCapabilities capabilities = (DesiredCapabilities)getCapabilities();
+                driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+
+                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+
+            case AndroidChrome:
+                capabilities = (DesiredCapabilities)getCapabilities();
+                driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+
+                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
@@ -174,6 +205,28 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Edge:
                 desiredCapabilities = getEdgeOptions(null);
+                break;
+
+            case iOSSafari:
+                desiredCapabilities = new DesiredCapabilities();
+                desiredCapabilities.setCapability("user" , perfectoUser);
+                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("platformName", "iOS");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("screenResolution", screenResolution);
+                break;
+
+            case AndroidChrome:
+                desiredCapabilities = new DesiredCapabilities();
+                desiredCapabilities.setCapability("user" , perfectoUser);
+                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("platformName", "Android");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("screenResolution", screenResolution);
                 break;
 
             default:
@@ -310,7 +363,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public IAdapter createAdapter(Configuration configuration) {
+    public IAdapter createAdapter(Configuration configuration) throws MalformedURLException {
         return create((SeleniumConfiguration) configuration);
     }
 

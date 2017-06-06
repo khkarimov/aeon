@@ -12,6 +12,7 @@ public class Sample extends WebProduct {
     public LoginPage login;
     public HomePage home;
     public VTeamSamplePage startPage;
+    public SampleGoogle google;
 
     public Sample() {
         main = new SamplePage();
@@ -23,5 +24,6 @@ public class Sample extends WebProduct {
         login = new LoginPage(getAutomationInfo());
         home = new HomePage(getAutomationInfo());
         startPage = new VTeamSamplePage(getAutomationInfo());
+        google = new SampleGoogle(getAutomationInfo());
     }
 }

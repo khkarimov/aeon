@@ -6,9 +6,8 @@ import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 
-/**
- * Created by DionnyS on 4/12/2016.
- */
+import java.net.MalformedURLException;
+
 public abstract class Product {
 
     protected AutomationInfo automationInfo;
@@ -32,9 +31,9 @@ public abstract class Product {
         this.automationInfo = automationInfo;
     }
 
-    protected abstract void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException;
+    protected abstract void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException, MalformedURLException;
 
-    protected IAdapter createAdapter(IAdapterExtension plugin) {
+    protected IAdapter createAdapter(IAdapterExtension plugin) throws MalformedURLException {
         return plugin.createAdapter(configuration);
     }
 

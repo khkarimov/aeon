@@ -3,8 +3,8 @@ package aeon.core.framework.abstraction.adapters;
 import aeon.core.common.Capability;
 import aeon.core.testabstraction.product.Configuration;
 import ro.fortsoft.pf4j.ExtensionPoint;
-
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 public interface IAdapterExtension extends ExtensionPoint {
 
@@ -14,7 +14,7 @@ public interface IAdapterExtension extends ExtensionPoint {
      * @param configuration The Configuration file to be used.
      * @return The new Adapter object;
      */
-    IAdapter createAdapter(Configuration configuration);
+    IAdapter createAdapter(Configuration configuration) throws MalformedURLException;
 
     /**
      * Gets the {@link Configuration} object for the adapter.
