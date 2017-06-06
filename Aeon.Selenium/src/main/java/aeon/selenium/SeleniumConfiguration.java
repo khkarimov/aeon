@@ -35,11 +35,11 @@ public class SeleniumConfiguration extends Configuration {
         public static final String EDGE_DIRECTORY = "aeon.selenium.edge_directory";
         public static final String CHROME_BINARY = "aeon.selenium.chrome_binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox_binary";
-        public static final String PERFECTO_USER = "aeon.selenium.perfecto_user";
-        public static final String PERFECTO_PASS = "aeon.selenium.perfecto_pass";
-        public static final String PLATFORM_VERSION = "aeon.selenium.platform_version";
-        public static final String BROWSER_VERSION = "aeon.selenium.browser_version";
-        public static final String SCREEN_RESOLUTION = "aeon.selenium.screen_resolution";
+        public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";
+        public static final String PERFECTO_PASS = "aeon.selenium.perfecto.pass";
+        public static final String PLATFORM_VERSION = "aeon.selenium.perfecto.platform_version";
+        public static final String BROWSER_VERSION = "aeon.selenium.perfecto.browser_version";
+        public static final String SCREEN_RESOLUTION = "aeon.selenium.perfecto.screen_resolution";
     };
 
     @Override

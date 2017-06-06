@@ -27,7 +27,7 @@ public enum BrowserType {
     /**
      * iOS Safari.
      */
-    iOSSafari,
+    IOSSafari,
 
     /**
      * Android Chrome.

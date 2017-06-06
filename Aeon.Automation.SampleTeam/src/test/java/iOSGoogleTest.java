@@ -9,7 +9,7 @@ public class iOSGoogleTest {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.iOSSafari);
+        product = launch(Sample.class, BrowserType.IOSSafari);
         product.browser.goToUrl("http://www.google.com");
     }
 

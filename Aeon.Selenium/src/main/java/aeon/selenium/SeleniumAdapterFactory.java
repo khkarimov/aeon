@@ -51,7 +51,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import static aeon.core.common.web.BrowserType.AndroidChrome;
-import static aeon.core.common.web.BrowserType.iOSSafari;
+import static aeon.core.common.web.BrowserType.IOSSafari;
 
 /**
  * The driver factory for Web.
@@ -74,7 +74,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String browserVersion;
     private String screenResolution;
 
-    public IAdapter create(SeleniumConfiguration configuration) throws MalformedURLException {
+    public IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
         this.browserType = configuration.getBrowserType();
@@ -83,7 +83,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
-        if (browserType.equals(iOSSafari) || browserType.equals(AndroidChrome)) {
+        if (browserType.equals(IOSSafari) || browserType.equals(AndroidChrome)) {
             perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
             perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
             platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
@@ -92,7 +92,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         URL seleniumHubUrl = null;
-        if (!browserType.equals(iOSSafari) && !browserType.equals(AndroidChrome)) {
+        if (!browserType.equals(IOSSafari) && !browserType.equals(AndroidChrome)) {
             String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
             if (StringUtils.isNotBlank(hubUrlString)) {
                 try {
@@ -163,9 +163,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                 return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
-            case iOSSafari:
+            case IOSSafari:
                 DesiredCapabilities capabilities = (DesiredCapabilities)getCapabilities();
-                driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                try {
+                    driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                } catch (MalformedURLException e) {
+                    log.error("MalformedURLException for the Perfecto URL " + e.getMessage());
+                    throw new RuntimeException(e);
+                }
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 
@@ -173,7 +178,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case AndroidChrome:
                 capabilities = (DesiredCapabilities)getCapabilities();
-                driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                try {
+                    driver = new RemoteWebDriver(new URL("https://ultimate.perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
+                } catch (MalformedURLException e) {
+                    log.error("MalformedURLException for the Perfecto URL " + e.getMessage());
+                    throw new RuntimeException(e);
+                }
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 
@@ -207,7 +217,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = getEdgeOptions(null);
                 break;
 
-            case iOSSafari:
+            case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability("user" , perfectoUser);
                 desiredCapabilities.setCapability("password" , perfectoPass);
