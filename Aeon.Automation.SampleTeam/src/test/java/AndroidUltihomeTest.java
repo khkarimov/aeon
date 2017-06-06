@@ -4,13 +4,13 @@ import org.junit.*;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-public class AndroidGoogleTest {
+public class AndroidUltihomeTest {
     private static Sample product;
 
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.AndroidChrome);
-        product.browser.goToUrl("http://www.google.com");
+        product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
     }
 
     @After
@@ -19,7 +19,9 @@ public class AndroidGoogleTest {
     }
 
     @Test
-    public void googleTest(){
-        product.google.formTextBox.set("let me google that for you\n");
+    public void ultihomeTest(){
+        product.ultihome.userField.set("test username");
+        product.ultihome.passField.set("test password");
+        product.ultihome.loginButton.click();
     }
 }

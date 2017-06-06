@@ -68,7 +68,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
     private String proxyLocation;
-    private String perfectoDomain;
     private String perfectoUser;
     private String perfectoPass;
     private String platformVersion;
@@ -85,7 +84,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
         if (browserType.equals(IOSSafari) || browserType.equals(AndroidChrome)) {
-            perfectoDomain = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_DOMAIN, "");
             perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
             perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
             platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
@@ -165,12 +163,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case IOSSafari:
                 DesiredCapabilities capabilities = (DesiredCapabilities)getCapabilities();
-                try {
-                    driver = new RemoteWebDriver(new URL("https://" + perfectoDomain + ".perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
-                } catch (MalformedURLException e) {
-                    log.error("MalformedURLException for the Perfecto URL " + e.getMessage());
-                    throw new RuntimeException(e);
-                }
+                driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 
@@ -178,12 +171,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case AndroidChrome:
                 capabilities = (DesiredCapabilities)getCapabilities();
-                try {
-                    driver = new RemoteWebDriver(new URL("https://" + perfectoDomain + ".perfectomobile.com/nexperience/perfectomobile/wd/hub") , capabilities);
-                } catch (MalformedURLException e) {
-                    log.error("MalformedURLException for the Perfecto URL " + e.getMessage());
-                    throw new RuntimeException(e);
-                }
+                driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 
@@ -373,7 +361,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public IAdapter createAdapter(Configuration configuration) throws MalformedURLException {
+    public IAdapter createAdapter(Configuration configuration) {
         return create((SeleniumConfiguration) configuration);
     }
 

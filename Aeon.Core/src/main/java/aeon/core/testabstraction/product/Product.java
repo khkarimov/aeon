@@ -5,7 +5,6 @@ import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import java.net.MalformedURLException;
 
 public abstract class Product {
 
@@ -30,9 +29,9 @@ public abstract class Product {
         this.automationInfo = automationInfo;
     }
 
-    protected abstract void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException, MalformedURLException;
+    protected abstract void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException;
 
-    protected IAdapter createAdapter(IAdapterExtension plugin) throws MalformedURLException {
+    protected IAdapter createAdapter(IAdapterExtension plugin) {
         return plugin.createAdapter(configuration);
     }
 

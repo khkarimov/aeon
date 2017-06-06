@@ -10,7 +10,6 @@ import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import org.joda.time.Duration;
-import java.net.MalformedURLException;
 
 public class WebProduct extends Product {
 
@@ -30,7 +29,7 @@ public class WebProduct extends Product {
     }
 
     @Override
-    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException, MalformedURLException {
+    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException {
         IWebDriver driver;
         IAdapter adapter;
 
