@@ -83,13 +83,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
-        if (browserType.equals(IOSSafari) || browserType.equals(AndroidChrome)) {
-            perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
-            perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
-            platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
-            browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
-            screenResolution = configuration.getString(SeleniumConfiguration.Keys.SCREEN_RESOLUTION, "");
-        }
+        perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
+        perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
+        platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
+        browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
+        screenResolution = configuration.getString(SeleniumConfiguration.Keys.SCREEN_RESOLUTION, "");
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
