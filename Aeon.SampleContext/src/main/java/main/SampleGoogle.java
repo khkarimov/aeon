@@ -13,7 +13,6 @@ public class SampleGoogle {
     private AutomationInfo info;
 
     public TextBox formTextBox;
-    public Button searchButton;
 
     public SampleGoogle(AutomationInfo info) {
         formTextBox = new TextBox(info, By.cssSelector("#lst-ib"));
