@@ -23,6 +23,7 @@ public class WebElement extends Element {
 
     /**
      * Initializes a new web element.
+     *
      * @param info The automation information.
      * @param selector The selector.
      */
@@ -34,6 +35,7 @@ public class WebElement extends Element {
 
     /**
      * Initializes a new web element with no automation information.
+     *
      * @param selector The selector.
      */
     public WebElement(IBy selector) {
@@ -42,6 +44,7 @@ public class WebElement extends Element {
 
     /**
      * Constructor for a WebElement with a mechanism to switch to other elements.
+     *
      * @param info
      * @param selector
      * @param switchMechanism
@@ -62,6 +65,7 @@ public class WebElement extends Element {
 
     /**
      * Executes click and hold command when a web element is clicked and held.
+     *
      * @param duration The amount of time, in milliseconds, that a web element is held after it has been clicked.
      */
     public void clickAndHold(int duration) {
@@ -109,6 +113,7 @@ public class WebElement extends Element {
 
     /**
      * Executes drag and drop command when a web element is dragged and dropped.
+     *
      * @param dropTarget The target location for which a web element is dragged to and dropped in.
      */
     public void dragAndDrop(String dropTarget) {
@@ -145,6 +150,7 @@ public class WebElement extends Element {
 
     /**
      * Executes get element attribute command when getting the attributes of a web element.
+     *
      * @param attributeName The name of the attribute to get from a web element.
      * @return The specified attribute of the web element.
      */
@@ -184,6 +190,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts the text of the web element's text.
+     *
      * @param value The expected value of the web element's text.
      */
     public void is(String value) {
@@ -197,6 +204,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts the value of the web element's attribute.
+     *
      * @param value The expected value of the attribute.
      * @param attribute The attribute to be compared.
      */
@@ -211,6 +219,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts the text of the web element's text is like a given value.
+     *
      * @param value The value the text should be like.
      */
     public void isLike(String value) {
@@ -224,6 +233,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts the value of the web element's attribute is like a given value.
+     *
      * @param value The value the attribute should be like.
      * @param attribute The attribute to be compared.
      */
@@ -238,6 +248,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts the text of the web element's text is not like a given value.
+     *
      * @param value The value the text should not be like.
      */
     public void isNotLike(String value) {
@@ -251,6 +262,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts the value of a web element's value is not like a given value.
+     *
      * @param value The value the attribute should not be like.
      * @param attribute The attribute to be compared.
      */
@@ -265,6 +277,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that a web element's children that match a given selector posses certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
@@ -278,6 +291,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that a web element's children that match a given selector posses certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with the messages.
@@ -292,6 +306,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that an elements children that match a selector possess values like the given values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
@@ -306,6 +321,7 @@ public class WebElement extends Element {
     /**
      *
      * Asserts that an elements children that match a selector possess values like the given values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
@@ -320,6 +336,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
@@ -333,6 +350,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
@@ -347,6 +365,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
@@ -360,6 +379,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
@@ -374,6 +394,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that an elements children that match a selector only posses certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
@@ -387,6 +408,7 @@ public class WebElement extends Element {
 
     /**
      * Asserts that an elements children that match a selector only posses certain values.
+     *
      * @param messages The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
@@ -401,6 +423,7 @@ public class WebElement extends Element {
 
     /**
      * Executes the setting of a div value by javascript.
+     *
      * @param value The div value to be set to.
      */
     public void setDivValueByJavaScript(String value) {
@@ -412,6 +435,7 @@ public class WebElement extends Element {
 
     /**
      * Executes the setting of a body value by javascript.
+     *
      * @param value The body value to be set to.
      */
     public void setBodyValueByJavaScript(String value) {
@@ -423,6 +447,7 @@ public class WebElement extends Element {
 
     /**
      * Executes the setting of a text value by javascript.
+     *
      * @param value The text value to be set to.
      */
     public void setTextByJavaScript(String value) {
@@ -453,6 +478,7 @@ public class WebElement extends Element {
     /**
      * Checks that the date contained in an element attribute is approximately equal to an expected date within a certain margin of error.
      * The provided Period cannot contain any weeks or years or months since these vary in length.
+     *
      * @param attributeName The name of the attribute that has the date.
      * @param expectedDate The expected date.
      * @param acceptableDelta The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
@@ -467,6 +493,7 @@ public class WebElement extends Element {
 
     /**
      * Gets the bounding rectangle for a web element.
+     *
      * @return A ClientRect with the bounding sides of the web element.
      */
     public ClientRects getClientRects() {
@@ -478,6 +505,7 @@ public class WebElement extends Element {
 
     /**
      * Executes a keyboard key press when a keyboard key is pressed.
+     *
      * @param key A valid keyboard key that is pressed.
      */
     public void pressKeyboardKey(KeyboardKey key) {
