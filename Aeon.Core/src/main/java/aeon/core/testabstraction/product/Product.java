@@ -6,9 +6,6 @@ import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 
-/**
- * Created by DionnyS on 4/12/2016.
- */
 public abstract class Product {
 
     protected AutomationInfo automationInfo;
