@@ -168,8 +168,8 @@ public class WebElementTests {
     @Test
     public void dragAndDropExecute_NonNullArgument() {
         //Act
-        webElement1.dragAndDrop(null);
-        webElement2.dragAndDrop(null);
+        webElement1.dragAndDrop(dummy);
+        webElement2.dragAndDrop(dummy);
 
         //Assert
         verify(commandExecutionFacade, times(1))
