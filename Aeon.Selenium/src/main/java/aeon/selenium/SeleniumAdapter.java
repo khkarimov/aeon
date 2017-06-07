@@ -655,6 +655,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Maximizes the browser window.
+     *
+     * Workaround implemented for chromiun browsers running in MacOS due to maximize default behaviour
+     * only expanding vertically. More information can be found at:
+     * https://bugs.chromium.org/p/chromedriver/issues/detail?id=985
      */
     public void maximize() {
         try {
