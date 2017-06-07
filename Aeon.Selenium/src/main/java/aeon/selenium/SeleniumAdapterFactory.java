@@ -157,16 +157,15 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                break;
 
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case AndroidChrome:
                 capabilities = (DesiredCapabilities)getCapabilities();
                 driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
@@ -174,7 +173,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
-        if (maximizeBrowser){
+        if (maximizeBrowser && !browserType.equals(BrowserType.AndroidChrome) && !browserType.equals(BrowserType.IOSSafari)){
             adapter.maximize();
         }
         return adapter;
