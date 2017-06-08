@@ -20,10 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -110,9 +107,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
+        WebDriver driver;
         switch (browserType) {
             case Firefox:
-                WebDriver driver;
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
@@ -120,8 +117,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new FirefoxDriver(getFirefoxOptions());
                 }
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             case Chrome:
                 if (seleniumHubUrl != null) {
@@ -134,8 +130,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
                             setProxySettings(capabilities, proxyLocation));
                 }
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             case InternetExplorer:
                 if (seleniumHubUrl != null) {
@@ -145,8 +140,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
                             getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation));
                 }
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             case Edge:
                 if (seleniumHubUrl != null) {
@@ -156,29 +150,33 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
                             getEdgeOptions(proxyLocation));
                 }
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             case IOSSafari:
                 DesiredCapabilities capabilities = (DesiredCapabilities)getCapabilities();
                 driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                break;
 
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
 
             case AndroidChrome:
                 capabilities = (DesiredCapabilities)getCapabilities();
                 driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
         }
+
+        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+        if (maximizeBrowser && !browserType.equals(BrowserType.AndroidChrome) && !browserType.equals(BrowserType.IOSSafari)){
+            adapter.maximize();
+        }
+        return adapter;
     }
 
     private Capabilities getCapabilities() {
@@ -321,9 +319,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
-        if (maximizeBrowser) {
-            chromeOptions.addArguments("--start-maximized");
-        }
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + MobileUserAgent);

@@ -7,10 +7,7 @@ import aeon.core.common.exceptions.*;
 import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
-import aeon.core.common.helpers.MouseHelper;
-import aeon.core.common.helpers.SendKeysHelper;
-import aeon.core.common.helpers.Sleep;
-import aeon.core.common.helpers.StringUtils;
+import aeon.core.common.helpers.*;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.JQueryStringType;
@@ -29,6 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.Quotes;
@@ -657,11 +655,25 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Maximizes the browser window.
+     *
+     * Workaround implemented for chromiun browsers running in MacOS due to maximize default behaviour
+     * only expanding vertically. More information can be found at:
+     * https://bugs.chromium.org/p/chromedriver/issues/detail?id=985
      */
     public void maximize() {
         try {
             log.trace("WebDriver.Manage().Window.maximize();");
-            webDriver.manage().window().maximize();
+            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) && browserType.equals(BrowserType.Chrome)) {
+                int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+                int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+                Point position = new Point(0, 0);
+                webDriver.manage().window().setPosition(position);
+                Dimension maximizedScreenSize =
+                        new Dimension(screenWidth, screenHeight);
+                webDriver.manage().window().setSize(maximizedScreenSize);
+            } else {
+                webDriver.manage().window().maximize();
+            }
         } catch (IllegalStateException e) {
             log.trace("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
             executeScript("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
