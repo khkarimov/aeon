@@ -27,7 +27,6 @@ public class WindowsChromeDriverTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Chrome);
-        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
@@ -39,7 +38,7 @@ public class WindowsChromeDriverTests {
 
     @Test
     public void testSelectFileDialog_OpenFileDialog() {
-        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
+        String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
         product.startPage.testFileDialogInput.openFileDialog();
         product.startPage.testFileDialogInput.selectFileDialog(path);
     }

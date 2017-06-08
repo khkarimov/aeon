@@ -33,7 +33,6 @@ public class IEDriverAssertionTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.InternetExplorer);
-        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
@@ -137,7 +136,7 @@ public class IEDriverAssertionTests {
 
     @Test
     public void testSelectFileDialog_OpenFileDialog() {
-        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
+        String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
         product.startPage.testFileDialogInput.openFileDialog();
         product.startPage.testFileDialogInput.selectFileDialog(path);
     }

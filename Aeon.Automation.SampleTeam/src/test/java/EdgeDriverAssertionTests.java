@@ -35,7 +35,6 @@ public class EdgeDriverAssertionTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Edge);
-        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
     }
 
     @After
