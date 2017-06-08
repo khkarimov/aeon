@@ -104,4 +104,3 @@ publishing {
         }
     }
 }
-artifactoryPublish.onlyIf {true}
