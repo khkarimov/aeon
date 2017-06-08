@@ -32,8 +32,9 @@ public class Aeon {
             log.info("Launching product on browser: " + browserType);
 
             product.launch(plugin);
-
-            environment = product.getConfig(Configuration.Keys.ENVIRONMENT, "");
+            
+            environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
+                    "/" + System.getProperty("user.dir") + "/Test-Sample-Context/index.html");
             if (StringUtils.isNotBlank(environment)) {
                 protocol = product.getConfig(Configuration.Keys.PROTOCOL, "https");
                 if (StringUtils.isBlank(protocol)) {
