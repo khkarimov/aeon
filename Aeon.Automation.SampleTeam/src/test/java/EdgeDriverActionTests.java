@@ -1,13 +1,10 @@
-/**
- * Created by josepe on 3/9/2017.
- */
-
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
+import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -29,6 +26,10 @@ public class EdgeDriverActionTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Edge);
+        String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
+                "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
+        String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
+        product.browser.goToUrl(protocol + "://" + environment);
     }
 
     @After

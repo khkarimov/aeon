@@ -1,8 +1,5 @@
-/**
- * Created by josepe on 1/26/2017.
- */
-
 import aeon.core.common.web.BrowserType;
+import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -27,6 +24,10 @@ public class WindowsChromeDriverTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Chrome);
+        String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
+                "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
+        String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
+        product.browser.goToUrl(protocol + "://" + environment);
     }
 
     @After
