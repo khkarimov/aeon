@@ -29,6 +29,18 @@ public class By implements IBy {
     }
 
     /**
+     * Accepts a string containing a input attribute which is then put into the correct cssSelector
+     * format and used to match a set of elements.
+     *
+     * @param input A string containing a the dataAutomation input.
+     * @return A new {@link By} instance.
+     */
+    public static By dataAutomationAttribute(String input) {
+        String selectorInput = "[data-automation=\""+input+"\"]";
+        return new By(selectorInput);
+    }
+
+    /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *
      * @param selector A string containing a selector expression.
