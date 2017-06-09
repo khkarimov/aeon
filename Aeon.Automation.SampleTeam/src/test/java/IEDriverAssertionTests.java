@@ -1,10 +1,8 @@
-/**
- * Created by josepe on 5/4/2017.
- */
 import aeon.core.common.CompareType;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
+import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -33,7 +31,10 @@ public class IEDriverAssertionTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.InternetExplorer);
-        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+        String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
+                "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
+        String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
+        product.browser.goToUrl(protocol + "://" + environment);
     }
 
     @After
@@ -137,7 +138,7 @@ public class IEDriverAssertionTests {
 
     @Test
     public void testSelectFileDialog_OpenFileDialog() {
-        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
+        String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
         product.startPage.testFileDialogInput.openFileDialog();
         product.startPage.testFileDialogInput.selectFileDialog(path);
     }
