@@ -99,7 +99,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact(file("$rootDir/Aeon.Selenium/build/libs/Aeon.Selenium-0.2.4.zip"))
+            artifact(file("$buildDir/libs/Aeon.Selenium-" + version + ".zip"))
             artifactId 'aeon.selenium'
         }
     }
