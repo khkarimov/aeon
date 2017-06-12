@@ -31,6 +31,7 @@ public class By implements IBy {
     /**
      * Accepts a string containing a input attribute which is then put into the correct cssSelector
      * format and used to match a set of elements.
+     * Ex: <div data-automation="my-selector">...</div>  ->   By.dataAutomationAttribute("my-selector")
      *
      * @param input A string containing a the dataAutomation input.
      * @return A new {@link By} instance.
