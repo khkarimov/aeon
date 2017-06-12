@@ -29,6 +29,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.security.Credentials;
+import org.openqa.selenium.security.UserAndPassword;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -1853,6 +1855,19 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
                 sendKeysToElement(control, setValue);
                 break;
+        }
+    }
+
+    @Override
+    public void setAuthenticationCredentials(String setUsername, String setPassword){
+        log.trace("WebDriver.setAuthenticationCredentials();");
+        try {
+            Alert alert = webDriver.switchTo().alert();
+            UserAndPassword credentials = new UserAndPassword(setUsername, setPassword);
+            alert.setCredentials(credentials);
+            alert.accept();
+        } catch (NoAlertPresentException e) {
+            throw new NoAlertException(e);
         }
     }
 }

@@ -804,4 +804,14 @@ public interface IWebAdapter extends IAdapter {
      * @param setValue The new value for the Text or Value attribute of the control.
      */
     void set(WebControl element, WebSelectOption option, String setValue);
+
+
+    /**
+     * Sets the Username and Password for an authentication input or alert.
+     *
+     * @param setUsername The new value for the Username attribute of the control.
+     * @param setPassword The new value for the Password attribute of the control.
+     */
+    void setAuthenticationCredentials(String setUsername, String setPassword);
+
 }
