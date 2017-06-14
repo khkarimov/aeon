@@ -1,7 +1,7 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.helpers.StringUtils;
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,19 +17,19 @@ public class Aeon {
 
     private static Logger log = LogManager.getLogger(Aeon.class);
 
-    public static <T extends Product> T launch(Class<T> productClass, AppRuntime appRuntime) {
+    public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
         try {
             String environment;
             String protocol;
             T product = productClass.newInstance();
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
-            if (appRuntime == null) {
-                appRuntime = AppRuntime.valueOf(product.getConfig(Configuration.Keys.BROWSER, "Chrome"));
+            if (browserType == null) {
+                browserType = BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER, "Chrome"));
             }
-            product.getConfiguration().setAppRuntime(appRuntime);
+            product.getConfiguration().setBrowserType(browserType);
 
-            log.info("Launching product on browser: " + appRuntime);
+            log.info("Launching product on browser: " + browserType);
 
             product.launch(plugin);
 

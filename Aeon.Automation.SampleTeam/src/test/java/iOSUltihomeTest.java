@@ -1,4 +1,4 @@
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import main.Sample;
 import org.junit.*;
 
@@ -9,7 +9,7 @@ public class iOSUltihomeTest {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, AppRuntime.IOSSafari);
+        product = launch(Sample.class, BrowserType.IOSSafari);
         product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
     }
 

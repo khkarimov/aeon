@@ -8,7 +8,7 @@ import aeon.core.common.exceptions.UnsupportedPlatformException;
 import aeon.core.common.helpers.OsCheck;
 import aeon.core.common.helpers.Process;
 import aeon.core.common.helpers.StringUtils;
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.testabstraction.product.Configuration;
@@ -59,7 +59,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private final String MobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
     private Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
-    private AppRuntime appRuntime;
+    private BrowserType browserType;
     private String browserAcceptedLanguageCodes;
     private boolean maximizeBrowser;
     private boolean useMobileUserAgent;
@@ -74,7 +74,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     public IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
-        this.appRuntime = configuration.getAppRuntime();
+        this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
         this.maximizeBrowser = configuration.getBoolean(SeleniumConfiguration.Keys.MAXIMIZE_BROWSER, true);
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
@@ -108,7 +108,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
         WebDriver driver;
-        switch (appRuntime) {
+        switch (browserType) {
             case Firefox:
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
@@ -178,12 +178,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             default:
-                throw new ConfigurationException("AppRuntime", "configuration",
-                        String.format("%1$s is not a supported browser", appRuntime));
+                throw new ConfigurationException("BrowserType", "configuration",
+                        String.format("%1$s is not a supported browser", browserType));
         }
 
-        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, appRuntime);
-        if (maximizeBrowser && !appRuntime.equals(AppRuntime.AndroidChrome) && !appRuntime.equals(AppRuntime.IOSSafari)){
+        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+        if (maximizeBrowser && !browserType.equals(BrowserType.AndroidChrome) && !browserType.equals(BrowserType.IOSSafari)){
             adapter.maximize();
         }
         return adapter;
@@ -192,7 +192,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private Capabilities getCapabilities() {
         DesiredCapabilities desiredCapabilities;
 
-        switch (appRuntime) {
+        switch (browserType) {
             case Firefox:
                 desiredCapabilities = DesiredCapabilities.firefox();
                 desiredCapabilities.setCapability("marionette", true);
@@ -234,7 +234,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             default:
-                throw new ConfigurationException("AppRuntime", "configuration", String.format("%1$s is not a supported browser", appRuntime));
+                throw new ConfigurationException("BrowserType", "configuration", String.format("%1$s is not a supported browser", browserType));
         }
 
         return desiredCapabilities;

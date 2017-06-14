@@ -4,7 +4,7 @@ import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
@@ -758,11 +758,11 @@ public interface IWebAdapter extends IAdapter {
     void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta);
 
     /**
-     * Returns the enumerable AppRuntime representing the current browser.
+     * Returns the enumerable BrowserType representing the current browser.
      *
-     * @return Returns the AppRuntime associated with this browser.
+     * @return Returns the BrowserType associated with this browser.
      */
-    AppRuntime getAppRuntime();
+    BrowserType getBrowserType();
 
     /**
      * Gets the bounding rectangle for an element.

@@ -1,4 +1,4 @@
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import main.ultipro.Ultipro;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -19,7 +19,7 @@ public class UltiproTests {
 
     @Before
     public void beforeTests() {
-        ultipro = launch(Ultipro.class, AppRuntime.Chrome);
+        ultipro = launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.maximize();
         ultipro.browser.goToUrl("http://apertureweb/Login.aspx");
     }

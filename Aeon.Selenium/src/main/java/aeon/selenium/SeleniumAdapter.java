@@ -8,7 +8,7 @@ import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
 import aeon.core.common.helpers.*;
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.WebSelectOption;
@@ -56,17 +56,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private boolean moveMouseToOrigin;
-    private AppRuntime appRuntime;
+    private BrowserType browserType;
     private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
 
     public SeleniumAdapter() {
     }
 
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, AppRuntime appRuntime) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
-        this.appRuntime = appRuntime;
+        this.browserType = browserType;
     }
 
     protected final WebDriver getWebDriver() {
@@ -563,7 +563,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             Alert alert = webDriver.switchTo().alert();
             // work around for marionette driver v.11.1
             // work around for chrome driver v2.24
-            if (this.appRuntime == AppRuntime.Firefox || this.appRuntime == appRuntime.Chrome) {
+            if (this.browserType == BrowserType.Firefox || this.browserType == browserType.Chrome) {
                 try {
                     aeon.core.common.helpers.SendKeysHelper.sendKeysToKeyboard(keysToSend);
                 } catch (AWTException e) {
@@ -668,7 +668,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void maximize() {
         try {
             log.trace("WebDriver.Manage().Window.maximize();");
-            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) && appRuntime.equals(AppRuntime.Chrome)) {
+            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
                 Point position = new Point(0, 0);
@@ -812,7 +812,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         WebElement target = ((SeleniumElement) findElement(targetElement)).getUnderlyingWebElement();
 
         // work around for marionette drive v.11.1
-        if (appRuntime == AppRuntime.Firefox) {
+        if (browserType == BrowserType.Firefox) {
             Sleep.wait(1000);
             Locatable dropLoc = (Locatable) drop;
             Locatable targetLoc = (Locatable) target;
@@ -846,7 +846,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        if (this.appRuntime == AppRuntime.Firefox) {
+        if (this.browserType == BrowserType.Firefox) {
             RightClickByJavaScript(element);
             return;
         }
@@ -873,7 +873,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        if (this.appRuntime == AppRuntime.Firefox) {
+        if (this.browserType == BrowserType.Firefox) {
             DoubleClickByJavaScript(element);
             return;
         }
@@ -989,7 +989,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 
-        if (appRuntime == AppRuntime.Firefox) {
+        if (browserType == BrowserType.Firefox) {
             // Get offset
             int offset = Math.toIntExact((long) executeScript("var a = window.outerHeight - window.innerHeight; return a;"));
             WebElement webElement = seleniumElement.getUnderlyingWebElement();
@@ -1748,13 +1748,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Returns the enumerable AppRuntime representing the current browser.
+     * Returns the enumerable BrowserType representing the current browser.
      *
-     * @return Returns the AppRuntime associated with this browser.
+     * @return Returns the BrowserType associated with this browser.
      */
     @Override
-    public AppRuntime getAppRuntime() {
-        return this.appRuntime;
+    public BrowserType getBrowserType() {
+        return this.browserType;
     }
 
     /**
@@ -1877,7 +1877,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void mobileSetPortrait()
     {
-        switch (appRuntime)
+        switch (browserType)
         {
             case AndroidHybridApp:
                 ((AndroidDriver) getWebDriver()).rotate(ScreenOrientation.PORTRAIT);
@@ -1891,7 +1891,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void mobileSetLandscape()
     {
-        switch (appRuntime)
+        switch (browserType)
         {
             case AndroidHybridApp:
                 ((AndroidDriver) getWebDriver()).rotate(ScreenOrientation.LANDSCAPE);
@@ -1905,7 +1905,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void mobileHideKeyboard()
     {
-        switch (appRuntime)
+        switch (browserType)
         {
             case AndroidHybridApp:
                 ((AndroidDriver) getWebDriver()).hideKeyboard();
@@ -1919,7 +1919,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void mobileLock()
     {
-        switch (appRuntime)
+        switch (browserType)
         {
             case AndroidHybridApp:
                 ((AndroidDriver) getWebDriver()).lockDevice();
@@ -1933,7 +1933,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void mobileLock(int seconds)
     {
-        switch (appRuntime)
+        switch (browserType)
         {
             case AndroidHybridApp:
                 ((AndroidDriver) getWebDriver()).lockDevice();
@@ -1947,7 +1947,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void mobileSwipe(int startx, int starty, int endx, int endy, int duration)
     {
-        switch (appRuntime)
+        switch (browserType)
         {
             case AndroidHybridApp:
                 ((AndroidDriver) getWebDriver()).swipe(startx, starty, endx, endy, duration);
@@ -1961,7 +1961,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void mobileSetGeoLocation(double latitude, double longitude, double altitude)
     {
-        switch (appRuntime)
+        switch (browserType)
         {
             case AndroidHybridApp:
                 ((AndroidDriver) getWebDriver()).setLocation(new Location(latitude, longitude, altitude));

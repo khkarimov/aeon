@@ -3,7 +3,7 @@ package aeon.core.common.web;
 /**
  * The browser on which to automate tests.
  */
-public enum AppRuntime {
+public enum BrowserType {
     /**
      * Microsoft Internet Explorer.
      */

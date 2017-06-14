@@ -1,6 +1,6 @@
 package aeon.core.common.helpers;
 
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import com.sun.glass.ui.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,15 +12,15 @@ public final class ClientEnvironmentManager {
     private static final Size[] supportedResolutions = {new Size(1024, 768)};
     private static Logger log = LogManager.getLogger(ClientEnvironmentManager.class);
 
-    public static void manageEnvironment(AppRuntime appRuntime, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
+    public static void manageEnvironment(BrowserType browserType, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
         if (ensureCleanEnvironment) {
             log.info("Cleaning Client Environment.");
-            ensureCleanEnvironment(appRuntime);
+            ensureCleanEnvironment(browserType);
         }
 
         verifyScreenResolution();
 
-        switch (appRuntime) {
+        switch (browserType) {
             case InternetExplorer:
                 // TODO(DionnyS): JAVA_CONVERSION
                 // ConfigureInternetExplorerSettings(browserAcceptedLanguageCodes);
@@ -31,8 +31,8 @@ public final class ClientEnvironmentManager {
         }
     }
 
-    private static void ensureCleanEnvironment(AppRuntime appRuntime) {
-        switch (appRuntime) {
+    private static void ensureCleanEnvironment(BrowserType browserType) {
+        switch (browserType) {
             case InternetExplorer:
                 log.info("Killing Internet Explorer related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION

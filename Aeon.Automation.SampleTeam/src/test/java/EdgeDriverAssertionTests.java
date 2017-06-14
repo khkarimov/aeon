@@ -1,6 +1,6 @@
 import aeon.core.common.CompareType;
 import aeon.core.common.exceptions.*;
-import aeon.core.common.web.AppRuntime;
+import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
@@ -31,7 +31,7 @@ public class EdgeDriverAssertionTests {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, AppRuntime.Edge);
+        product = launch(Sample.class, BrowserType.Edge);
         String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
                 "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
         String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
@@ -104,8 +104,8 @@ public class EdgeDriverAssertionTests {
     }
 
     @Test
-    public void testGetAppRuntime() {
-        assert (product.browser.getAppRuntime().equals(AppRuntime.Edge));
+    public void testGetBrowserType() {
+        assert (product.browser.getBrowserType().equals(BrowserType.Edge));
     }
 
     @Test

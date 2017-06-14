@@ -6,25 +6,25 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Gets the corresponding enumerable AppRuntime associated with the current browser.
+ * Gets the corresponding enumerable BrowserType associated with the current browser.
  */
-public class GetAppRuntimeCommand extends CommandWithReturn {
+public class GetBrowserTypeCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the {@link GetAppRuntimeCommand} class.
+     * Initializes a new instance of the {@link GetBrowserTypeCommand} class.
      */
-    public GetAppRuntimeCommand() {
-        super(Resources.getString("GetAppRuntimeCommand_Info"));
+    public GetBrowserTypeCommand() {
+        super(Resources.getString("GetBrowserTypeCommand_Info"));
     }
 
     /**
      * Provides the logic for the command.
      *
      * @param driver The framework abstraction facade.
-     * @return The enumerable AppRuntime associated with the browser.
+     * @return The enumerable BrowserType associated with the browser.
      */
     @Override
     protected Object commandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).getAppRuntime();
+        return ((IWebDriver) driver).getBrowserType();
     }
 }

@@ -83,9 +83,9 @@ public class BrowserTests {
     }
 
     @Test
-    public void getAppRuntime_CallsExecute() {
-        browserObject.getAppRuntime();
-        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAppRuntimeCommand.class));
+    public void getBrowserType_CallsExecute() {
+        browserObject.getBrowserType();
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetBrowserTypeCommand.class));
     }
 
     @Test
