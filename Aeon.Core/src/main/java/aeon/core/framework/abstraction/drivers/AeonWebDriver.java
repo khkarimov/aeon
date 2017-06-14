@@ -3,7 +3,7 @@ package aeon.core.framework.abstraction.drivers;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
@@ -475,8 +475,8 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public BrowserType getBrowserType() {
-        return adapter.getBrowserType();
+    public AppRuntime getBrowserType() {
+        return adapter.getAppRuntime();
     }
 
     @Override
@@ -492,5 +492,37 @@ public class AeonWebDriver implements IWebDriver {
     @Override
     public void pressKeyboardKey(WebControl element, KeyboardKey key) {
         adapter.pressKeyboardKey(element, key);
+    }
+
+    @Override
+    public void mobileLock() {
+        switch (getBrowserType()) {
+            case AndroidApp:
+                ((AndroidDriver)appiumDriver).lockDevice();
+                break;
+
+            case IOSApp:
+                ((IOSDriver)appiumDriver).lockDevice(0);
+                break;
+
+            default:
+                throw new Exception(WebUsingMobileCommandException);
+        }
+    }
+
+    @Override
+    public void mobileSwipes(int startx, int starty, int endx, int endy, int duration){
+        switch (getBrowserType()) {
+            case AndroidApp:
+                ((AndroidDriver)appiumDriver).lockDevice();
+                break;
+
+            case IOSApp:
+                ((IOSDriver)appiumDriver).lockDevice(0);
+                break;
+
+            default:
+                throw new Exception(WebUsingMobileCommandException);
+        }
     }
 }

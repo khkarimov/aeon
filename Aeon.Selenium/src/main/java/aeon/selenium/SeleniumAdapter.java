@@ -8,7 +8,7 @@ import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
 import aeon.core.common.helpers.*;
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.WebSelectOption;
@@ -29,7 +29,6 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.security.Credentials;
 import org.openqa.selenium.security.UserAndPassword;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
@@ -53,17 +52,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private boolean moveMouseToOrigin;
-    private BrowserType browserType;
+    private AppRuntime appRuntime;
     private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
 
     public SeleniumAdapter() {
     }
 
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, AppRuntime appRuntime) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
-        this.browserType = browserType;
+        this.appRuntime = appRuntime;
     }
 
     protected final WebDriver getWebDriver() {
@@ -560,7 +559,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             Alert alert = webDriver.switchTo().alert();
             // work around for marionette driver v.11.1
             // work around for chrome driver v2.24
-            if (this.browserType == BrowserType.Firefox || this.browserType == browserType.Chrome) {
+            if (this.appRuntime == AppRuntime.Firefox || this.appRuntime == appRuntime.Chrome) {
                 try {
                     aeon.core.common.helpers.SendKeysHelper.sendKeysToKeyboard(keysToSend);
                 } catch (AWTException e) {
@@ -665,7 +664,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void maximize() {
         try {
             log.trace("WebDriver.Manage().Window.maximize();");
-            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) && browserType.equals(BrowserType.Chrome)) {
+            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) && appRuntime.equals(AppRuntime.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
                 Point position = new Point(0, 0);
@@ -809,7 +808,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         WebElement target = ((SeleniumElement) findElement(targetElement)).getUnderlyingWebElement();
 
         // work around for marionette drive v.11.1
-        if (browserType == BrowserType.Firefox) {
+        if (appRuntime == AppRuntime.Firefox) {
             Sleep.wait(1000);
             Locatable dropLoc = (Locatable) drop;
             Locatable targetLoc = (Locatable) target;
@@ -843,7 +842,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        if (this.browserType == BrowserType.Firefox) {
+        if (this.appRuntime == AppRuntime.Firefox) {
             RightClickByJavaScript(element);
             return;
         }
@@ -870,7 +869,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        if (this.browserType == BrowserType.Firefox) {
+        if (this.appRuntime == AppRuntime.Firefox) {
             DoubleClickByJavaScript(element);
             return;
         }
@@ -986,7 +985,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 
-        if (browserType == BrowserType.Firefox) {
+        if (appRuntime == AppRuntime.Firefox) {
             // Get offset
             int offset = Math.toIntExact((long) executeScript("var a = window.outerHeight - window.innerHeight; return a;"));
             WebElement webElement = seleniumElement.getUnderlyingWebElement();
@@ -1745,13 +1744,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Returns the enumerable BrowserType representing the current browser.
+     * Returns the enumerable AppRuntime representing the current browser.
      *
-     * @return Returns the BrowserType associated with this browser.
+     * @return Returns the AppRuntime associated with this browser.
      */
     @Override
-    public BrowserType getBrowserType() {
-        return this.browserType;
+    public AppRuntime getAppRuntime() {
+        return this.appRuntime;
     }
 
     /**

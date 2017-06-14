@@ -6,7 +6,7 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Gets the corresponding enumerable BrowserType associated with the current browser.
+ * Gets the corresponding enumerable AppRuntime associated with the current browser.
  */
 public class GetBrowserTypeCommand extends CommandWithReturn {
 
@@ -21,7 +21,7 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
      * Provides the logic for the command.
      *
      * @param driver The framework abstraction facade.
-     * @return The enumerable BrowserType associated with the browser.
+     * @return The enumerable AppRuntime associated with the browser.
      */
     @Override
     protected Object commandDelegate(IDriver driver) {

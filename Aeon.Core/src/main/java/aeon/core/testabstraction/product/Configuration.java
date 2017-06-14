@@ -1,6 +1,6 @@
 package aeon.core.testabstraction.product;
 
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +23,7 @@ public class Configuration {
     public Properties properties;
     private Class driver;
     private Class adapter;
-    private BrowserType browserType;
+    private AppRuntime appRuntime;
 
     public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
         this.driver = driver;
@@ -81,12 +81,12 @@ public class Configuration {
     public void loadPluginSettings() throws IOException {
     }
 
-    public BrowserType getBrowserType() {
-        return browserType;
+    public AppRuntime getAppRuntime() {
+        return appRuntime;
     }
 
-    public void setBrowserType(BrowserType browserType) {
-        this.browserType = browserType;
+    public void setAppRuntime(AppRuntime appRuntime) {
+        this.appRuntime = appRuntime;
     }
 
     public void setBoolean(String key, boolean value) {
