@@ -689,4 +689,18 @@ public interface IWebDriver extends IDriver {
      */
     String windowDoesNotExistByUrl(String url);
 
+    /**
+     * Hides the keyboard on a mobile device.
+     */
+    void mobileHideKeyboard();
+
+    /**
+     * Sets the mobile device's orientation to landscape.
+     */
+    void mobileSetLandscape();
+
+    /**
+     * Sets the mobile device's orientation to portrait.
+     */
+    void mobileSetPortrait();
 }
