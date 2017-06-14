@@ -814,4 +814,40 @@ public interface IWebAdapter extends IAdapter {
      */
     void setAuthenticationCredentials(String setUsername, String setPassword);
 
+    /**
+     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     */
+    void mobileLock();
+
+    /**
+     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     *
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
+     */
+    void mobileLock(int seconds);
+
+    /**
+     * Executes a swipe on the device and throws an error if youre using it not on a mobile device
+     *
+     * @param startx Starting x coord.
+     * @param starty Starting y coord.
+     * @param endx Ending x coord.
+     * @param endy Ending y coord.
+     * @param duration The duration of the execution of the swipe
+     */
+    void mobileSwipes(int startx, int starty, int endx, int endy, int duration);
+    /**
+     * Hides the keyboard on a mobile device.
+     */
+    void mobileHideKeyboard();
+
+    /**
+     * Sets the mobile device's orientation to landscape.
+     */
+    void mobileSetLandscape();
+
+    /**
+     * Sets the mobile device's orientation to portrait.
+     */
+    void mobileSetPortrait();
 }

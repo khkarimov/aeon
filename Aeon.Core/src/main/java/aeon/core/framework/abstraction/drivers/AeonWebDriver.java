@@ -513,6 +513,22 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
+    public void mobileLock(int seconds) {
+        switch (getBrowserType()) {
+            case AndroidApp:
+                adapter.mobileLock();
+                break;
+
+            case IOSApp:
+                adapter.mobileLock(seconds);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
     public void mobileSwipes(int startx, int starty, int endx, int endy, int duration){
         switch (getBrowserType()) {
             case AndroidApp:
@@ -546,7 +562,7 @@ public class AeonWebDriver implements IWebDriver {
         switch(getBrowserType()){
             case AndroidApp:
             case IOSApp:
-                adapter.mobileRotate(ScreenOrientation.LANDSCAPE);
+                adapter.mobileSetLandscape();
                 break;
 
             default:
@@ -559,7 +575,7 @@ public class AeonWebDriver implements IWebDriver {
         switch(getBrowserType()){
             case AndroidApp:
             case IOSApp:
-                adapter.mobileRotate(ScreenOrientation.PORTRAIT);
+                adapter.mobileSetPortrait();
                 break;
 
             default:
