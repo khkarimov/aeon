@@ -1,4 +1,4 @@
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
 import main.Sample;
 import org.junit.*;
 
@@ -9,7 +9,7 @@ public class AndroidUltihomeTest {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.AndroidChrome);
+        product = launch(Sample.class, AppRuntime.AndroidChrome);
         product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
     }
 

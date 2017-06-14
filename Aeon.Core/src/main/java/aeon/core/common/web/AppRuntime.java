@@ -3,7 +3,7 @@ package aeon.core.common.web;
 /**
  * The browser on which to automate tests.
  */
-public enum BrowserType {
+public enum AppRuntime {
     /**
      * Microsoft Internet Explorer.
      */
@@ -32,5 +32,16 @@ public enum BrowserType {
     /**
      * Android Chrome.
      */
-    AndroidChrome
+    AndroidChrome,
+
+    //Apps
+    /**
+     * iOS app
+     */
+    IOSHybrid,
+
+    /**
+     * Android app
+     */
+    AndroidHybrid
 }
