@@ -500,15 +500,15 @@ public class AeonWebDriver implements IWebDriver {
     public void mobileLock() {
         switch (getBrowserType()) {
             case AndroidApp:
-                ((AndroidDriver)appiumDriver).lockDevice();
+                adapter.mobileLock();
                 break;
 
             case IOSApp:
-                ((IOSDriver)appiumDriver).lockDevice(0);
+                adapter.mobileLock(0);
                 break;
 
             default:
-                throw new Exception(WebUsingMobileCommandException);
+                throw new WebUsingMobileCommandException();
         }
     }
 
@@ -516,24 +516,24 @@ public class AeonWebDriver implements IWebDriver {
     public void mobileSwipes(int startx, int starty, int endx, int endy, int duration){
         switch (getBrowserType()) {
             case AndroidApp:
-                ((AndroidDriver)appiumDriver).lockDevice();
+                adapter.mobileLock();
                 break;
 
             case IOSApp:
-                ((IOSDriver)appiumDriver).lockDevice(0);
+                adapter.mobileLock(0);
                 break;
 
             default:
-                throw new Exception(WebUsingMobileCommandException);
+                throw new WebUsingMobileCommandException();
         }
     }
 
     @Override
     public void mobileHideKeyboard() {
-        switch(getAppRuntime()){
-            case(AppRuntime.AndroidApp):
-            case(AppRuntime.IOSApp):
-                adapter.hideKeyboard();
+        switch(getBrowserType()){
+            case AndroidApp:
+            case IOSApp:
+                adapter.mobileHideKeyboard();
                 break;
 
             default:
@@ -543,10 +543,10 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileSetLandscape() {
-        switch(getAppRuntime()){
-            case(AppRuntime.AndroidApp):
-            case(AppRuntime.IOSApp):
-                adapter.rotate(ScreenOrientation.LANDSCAPE);
+        switch(getBrowserType()){
+            case AndroidApp:
+            case IOSApp:
+                adapter.mobileRotate(ScreenOrientation.LANDSCAPE);
                 break;
 
             default:
@@ -556,10 +556,10 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileSetPortrait() {
-        switch(getAppRuntime()){
-            case(AppRuntime.AndroidApp):
-            case(AppRuntime.IOSApp):
-                adapter.rotate(ScreenOrientation.PORTRAIT);
+        switch(getBrowserType()){
+            case AndroidApp:
+            case IOSApp:
+                adapter.mobileRotate(ScreenOrientation.PORTRAIT);
                 break;
 
             default:

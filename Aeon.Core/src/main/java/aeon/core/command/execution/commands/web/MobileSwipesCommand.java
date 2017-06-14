@@ -23,7 +23,7 @@ public class MobileSwipesCommand extends Command {
      * Initializes a new instance of the {@link MobileSwipesCommand} class.
      */
     public MobileSwipesCommand(int startx, int starty, int endx, int endy, int duration) {
-        super(Resources.getString("MobileLockCommand_Info"));
+        super(Resources.getString("MobileSwipesCommand_Info"));
         this.startx = startx;
         this.starty = starty;
         this.endx = endx;
