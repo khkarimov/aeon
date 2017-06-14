@@ -836,6 +836,7 @@ public interface IWebAdapter extends IAdapter {
      * @param duration The duration of the execution of the swipe
      */
     void mobileSwipe(int startx, int starty, int endx, int endy, int duration);
+
     /**
      * Hides the keyboard on a mobile device.
      */

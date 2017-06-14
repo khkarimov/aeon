@@ -170,15 +170,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
             case IOSApp:
                 capabilities = (DesiredCapabilities)getCapabilities();
                 driver = new IOSDriver(seleniumHubUrl, capabilities);
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
             case AndroidApp:
                 capabilities = (DesiredCapabilities)getCapabilities();
                 driver = new AndroidDriver(seleniumHubUrl, capabilities);
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
             default:
