@@ -17,7 +17,7 @@ public class MobileSwipeCommand extends Command {
      * Initializes a new instance of the {@link MobileSwipeCommand} class.
      */
     public MobileSwipeCommand(int startx, int starty, int endx, int endy, int duration) {
-        super(Resources.getString("MobileSwipesCommand_Info"));
+        super(Resources.getString("MobileSwipeCommand_Info"));
         this.startx = startx;
         this.starty = starty;
         this.endx = endx;
@@ -31,6 +31,6 @@ public class MobileSwipeCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).mobileSwipes(startx, starty, endx, endy, duration);
+        ((IWebDriver) driver).mobileSwipe(startx, starty, endx, endy, duration);
     }
 }
