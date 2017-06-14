@@ -38,10 +38,10 @@ public enum AppRuntime {
     /**
      * iOS app
      */
-    IOSApp,
+    IOSHybrid,
 
     /**
      * Android app
      */
-    AndroidApp
+    AndroidHybrid
 }

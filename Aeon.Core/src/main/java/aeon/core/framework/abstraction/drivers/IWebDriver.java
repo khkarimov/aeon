@@ -690,19 +690,19 @@ public interface IWebDriver extends IDriver {
     String windowDoesNotExistByUrl(String url);
 
     /**
-     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     * Locks and immediately unlocks a mobile device.
      */
     void mobileLock();
 
     /**
-     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     * Locks and immediately unlocks a mobile device.
      *
      * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
     void mobileLock(int seconds);
 
     /**
-     * Executes a swipe on the device and throws an error if youre using it not on a mobile device
+     * Executes a swipe on a mobile device.
      *
      * @param startx Starting x coord.
      * @param starty Starting y coord.
@@ -710,7 +710,8 @@ public interface IWebDriver extends IDriver {
      * @param endy Ending y coord.
      * @param duration The duration of the execution of the swipe
      */
-    void mobileSwipes(int startx, int starty, int endx, int endy, int duration);
+    void mobileSwipe(int startx, int starty, int endx, int endy, int duration);
+
     /**
      * Hides the keyboard on a mobile device.
      */
@@ -725,4 +726,13 @@ public interface IWebDriver extends IDriver {
      * Sets the mobile device's orientation to portrait.
      */
     void mobileSetPortrait();
+
+    /**
+     * Sets the GPS location on a mobile device.
+     *
+     * @param latitude The GPS latitude.
+     * @param longitude The GPS longitude.
+     * @param altitude The GPS altitude.
+     */
+    void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 }
