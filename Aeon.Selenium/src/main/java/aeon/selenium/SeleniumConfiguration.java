@@ -35,13 +35,45 @@ public class SeleniumConfiguration extends Configuration {
         public static final String EDGE_DIRECTORY = "aeon.selenium.edge_directory";
         public static final String CHROME_BINARY = "aeon.selenium.chrome_binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox_binary";
-        public static final String PERFECTO_DOMAIN = "aeon.selenium.perfecto.domain";
+
+        // Perfecto
         public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";
         public static final String PERFECTO_PASS = "aeon.selenium.perfecto.pass";
         public static final String PLATFORM_VERSION = "aeon.selenium.perfecto.platform_version";
         public static final String BROWSER_VERSION = "aeon.selenium.perfecto.browser_version";
         public static final String SCREEN_RESOLUTION = "aeon.selenium.perfecto.screen_resolution";
-    };
+        public static final String AUTO_INSTRUMENT = "aeon.selenium.perfecto.auto_instrument";
+        public static final String FINGERPRINT_INSTRUMENT = "aeon.selenium.perfecto.fingerprint_instrument";
+        public static final String CAMERA_INSTRUMENT = "aeon.selenium.perfecto.camera_instrument";
+        public static final String TAKE_SCREENSHOT = "aeon.selenium.perfecto.take_screenshot";
+        public static final String SCREENSHOT_ON_ERROR = "aeon.selenium.perfecto.screenshot_on_error";
+        public static final String SCRIPT_NAME = "aeon.selenium.perfecto.script_name";
+        public static final String OUTPUT_REPORT = "aeon.selenium.perfecto.output_report";
+        public static final String OUTPUT_VIDEO = "aeon.selenium.perfecto.output_video";
+        public static final String OUTPUT_VISIBILITY = "aeon.selenium.perfecto.output_visibilitY";
+
+        // Appium
+        public static final String AUTOMATION_NAME = "aeon.selenium.appium.automation_name";
+        public static final String APP = "aeon.selenium.appium.app";
+        public static final String AUTO_LAUNCH = "aeon.selenium.appium.auto_launch";
+        public static final String UDID = "aeon.selenium.appium.udid";
+        public static final String ORIENTATION = "aeon.selenium.appium.orientation";
+        public static final String NO_RESET = "aeon.selenium.appium.no_reset";
+        public static final String FULL_RESET = "aeon.selenium.appium.full_reset";
+
+        // iOS
+        public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
+
+        // Android
+        public static final String APP_ACTIVITY = "aeon.selenium.android.app_activity";
+        public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
+        public static final String APP_WAIT_ACTIVITY = "aeon.selenium.android.app_wait_activity";
+        public static final String APP_WAIT_PACKAGE = "aeon.selenium.android.app_wait_package";
+        public static final String INTENT_ACTION = "aeon.selenium.android.intent_action";
+        public static final String INTENT_CATEGORY = "aeon.selenium.android.intent_category";
+        public static final String INTENT_FLAGS = "aeon.selenium.android.intent_flags";
+        public static final String OPTIONAL_INTENT_ARGUMENTS = "aeon.selenium.android.optional_intent_arguments";
+    }
 
     @Override
     protected List<Field> getConfigurationFields() {

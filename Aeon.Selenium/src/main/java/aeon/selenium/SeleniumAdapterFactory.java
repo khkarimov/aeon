@@ -70,6 +70,31 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String platformVersion;
     private String browserVersion;
     private String screenResolution;
+    private boolean autoInstrument;
+    private boolean fingerprintInstrument;
+    private boolean cameraInstrument;
+    private boolean takeScreenshot;
+    private boolean screenshotOnError;
+    private String scriptName;
+    private boolean outputReport;
+    private boolean outputVideo;
+    private String outputVisibility;
+    private String automationName;
+    private String app;
+    private boolean autoLaunch;
+    private String udid;
+    private String orientation;
+    private boolean noReset;
+    private boolean fullReset;
+    private String bundleId;
+    private String appActivity;
+    private String appPackage;
+    private String appWaitActivity;
+    private String appWaitPackage;
+    private String intentAction;
+    private String intentCategory;
+    private String intentFlags;
+    private String optionalIntentArguments;
 
     public IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
@@ -85,6 +110,33 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
         browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
         screenResolution = configuration.getString(SeleniumConfiguration.Keys.SCREEN_RESOLUTION, "");
+        autoInstrument = configuration.getBoolean(SeleniumConfiguration.Keys.AUTO_INSTRUMENT, false);
+        fingerprintInstrument = configuration.getBoolean(SeleniumConfiguration.Keys.FINGERPRINT_INSTRUMENT, false);
+        cameraInstrument = configuration.getBoolean(SeleniumConfiguration.Keys.CAMERA_INSTRUMENT, false);
+        takeScreenshot = configuration.getBoolean(SeleniumConfiguration.Keys.TAKE_SCREENSHOT, false);
+        screenshotOnError = configuration.getBoolean(SeleniumConfiguration.Keys.SCREENSHOT_ON_ERROR, false);
+        scriptName = configuration.getString(SeleniumConfiguration.Keys.SCRIPT_NAME, "");
+        outputReport = configuration.getBoolean(SeleniumConfiguration.Keys.OUTPUT_REPORT, false);
+        outputVideo = configuration.getBoolean(SeleniumConfiguration.Keys.OUTPUT_VIDEO, false);
+        outputVisibility = configuration.getString(SeleniumConfiguration.Keys.OUTPUT_VISIBILITY, "private");
+        automationName = configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, "Appium");
+        app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
+        autoLaunch = configuration.getBoolean(SeleniumConfiguration.Keys.AUTO_LAUNCH, true);
+        udid = configuration.getString(SeleniumConfiguration.Keys.UDID, "");
+        orientation = configuration.getString(SeleniumConfiguration.Keys.ORIENTATION, "PORTRAIT");
+        noReset = configuration.getBoolean(SeleniumConfiguration.Keys.NO_RESET, false);
+        fullReset = configuration.getBoolean(SeleniumConfiguration.Keys.FULL_RESET, false);
+        bundleId = configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, "");
+        appActivity = configuration.getString(SeleniumConfiguration.Keys.APP_ACTIVITY, "");
+        appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
+        appWaitActivity = configuration.getString(SeleniumConfiguration.Keys.APP_WAIT_ACTIVITY, "");
+        appWaitPackage = configuration.getString(SeleniumConfiguration.Keys.APP_WAIT_PACKAGE, "");
+        intentAction = configuration.getString(SeleniumConfiguration.Keys.INTENT_ACTION, "");
+        intentCategory = configuration.getString(SeleniumConfiguration.Keys.INTENT_CATEGORY, "");
+        intentFlags = configuration.getString(SeleniumConfiguration.Keys.INTENT_FLAGS, "");
+        optionalIntentArguments = configuration.getString(SeleniumConfiguration.Keys.OPTIONAL_INTENT_ARGUMENTS, "");
+
+
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
@@ -211,7 +263,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = getEdgeOptions(null);
                 break;
 
-            case IOSSafari: case IOSHybridApp:
+            case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability("user" , perfectoUser);
                 desiredCapabilities.setCapability("password" , perfectoPass);
@@ -222,8 +274,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("screenResolution", screenResolution);
                 break;
 
-            case AndroidChrome: case AndroidHybridApp:
+            case AndroidChrome:
                 desiredCapabilities = new DesiredCapabilities();
+                // Perfecto
                 desiredCapabilities.setCapability("user" , perfectoUser);
                 desiredCapabilities.setCapability("password" , perfectoPass);
                 desiredCapabilities.setCapability("platformName", "Android");
@@ -231,6 +284,79 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("screenResolution", screenResolution);
+                break;
+
+            case IOSHybridApp:
+                desiredCapabilities = new DesiredCapabilities();
+                // Perfecto
+                desiredCapabilities.setCapability("user" , perfectoUser);
+                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("platformName", "Android");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("screenResolution", screenResolution);
+                desiredCapabilities.setCapability("autoInstrument", autoInstrument);
+                desiredCapabilities.setCapability("fingerprintInstrument", fingerprintInstrument);
+                desiredCapabilities.setCapability("cameraInstrument", cameraInstrument);
+                desiredCapabilities.setCapability("takeScreenshot", takeScreenshot);
+                desiredCapabilities.setCapability("screenshotOnError", screenshotOnError);
+                desiredCapabilities.setCapability("scriptName", scriptName);
+                desiredCapabilities.setCapability("outputReport", outputReport);
+                desiredCapabilities.setCapability("outputVideo", outputVideo);
+                desiredCapabilities.setCapability("outputVisibility", outputVisibility);
+
+                // Appium
+                desiredCapabilities.setCapability("automationName", automationName);
+                desiredCapabilities.setCapability("app", app);
+                desiredCapabilities.setCapability("autoLaunch", autoLaunch);
+                desiredCapabilities.setCapability("udid", udid);
+                desiredCapabilities.setCapability("orientation", orientation);
+                desiredCapabilities.setCapability("noReset", noReset);
+                desiredCapabilities.setCapability("fullReset", fullReset);
+
+                // iOS Specific
+                desiredCapabilities.setCapability("bundleId", bundleId);
+                break;
+
+            case AndroidHybridApp:
+                desiredCapabilities = new DesiredCapabilities();
+                // Perfecto
+                desiredCapabilities.setCapability("user" , perfectoUser);
+                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("platformName", "Android");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("screenResolution", screenResolution);
+                desiredCapabilities.setCapability("autoInstrument", autoInstrument);
+                desiredCapabilities.setCapability("fingerprintInstrument", fingerprintInstrument);
+                desiredCapabilities.setCapability("cameraInstrument", cameraInstrument);
+                desiredCapabilities.setCapability("takeScreenshot", takeScreenshot);
+                desiredCapabilities.setCapability("screenshotOnError", screenshotOnError);
+                desiredCapabilities.setCapability("scriptName", scriptName);
+                desiredCapabilities.setCapability("outputReport", outputReport);
+                desiredCapabilities.setCapability("outputVideo", outputVideo);
+                desiredCapabilities.setCapability("outputVisibility", outputVisibility);
+
+                // Appium
+                desiredCapabilities.setCapability("automationName", automationName);
+                desiredCapabilities.setCapability("app", app);
+                desiredCapabilities.setCapability("autoLaunch", autoLaunch);
+                desiredCapabilities.setCapability("udid", udid);
+                desiredCapabilities.setCapability("orientation", orientation);
+                desiredCapabilities.setCapability("noReset", noReset);
+                desiredCapabilities.setCapability("fullReset", fullReset);
+
+                // Android Specific
+                desiredCapabilities.setCapability("appActivity", appActivity);
+                desiredCapabilities.setCapability("appPackage", appPackage);
+                desiredCapabilities.setCapability("appWaitActivity", appWaitActivity);
+                desiredCapabilities.setCapability("appWaitPackage", appWaitPackage);
+                desiredCapabilities.setCapability("intentAction", intentAction);
+                desiredCapabilities.setCapability("intentCategory", intentCategory);
+                desiredCapabilities.setCapability("intentFlags", intentFlags);
+                desiredCapabilities.setCapability("optionalIntentArguments", optionalIntentArguments);
                 break;
 
             default:
