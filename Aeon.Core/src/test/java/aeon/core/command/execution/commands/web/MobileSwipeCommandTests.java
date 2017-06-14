@@ -63,7 +63,7 @@ public class MobileSwipeCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).mobileSwipes(startx, starty, endx, endy, duration);
+        verify(driver, times(1)).mobileSwipe(startx, starty, endx, endy, duration);
     }
 
 }
