@@ -1869,4 +1869,46 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new NoAlertException(e);
         }
     }
+
+    @Override
+    public void mobileSetPortrait()
+    {
+
+    }
+
+    @Override
+    public void mobileSetLandscape()
+    {
+
+    }
+
+    @Override
+    public void mobileHideKeyboard()
+    {
+
+    }
+
+    @Override
+    public void mobileLock()
+    {
+
+    }
+
+    @Override
+    public void mobileLock(int seconds)
+    {
+
+    }
+
+    @Override
+    public void mobileSwipe(int startx, int starty, int endx, int endy, int duration)
+    {
+
+    }
+
+    @Override
+    public void mobileSetGeoLocation(double latitude, double longitude, double altitude)
+    {
+
+    }
 }

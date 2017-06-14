@@ -78,7 +78,7 @@ public class Browser {
      * @return The AppRuntime for the current browser.
      */
     public AppRuntime getAppRuntime() {
-        return (AppRuntime) info.getCommandExecutionFacade().execute(info, new GetBrowserTypeCommand());
+        return (AppRuntime) info.getCommandExecutionFacade().execute(info, new GetAppRuntimeCommand());
     }
 
     /**

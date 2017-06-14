@@ -104,7 +104,7 @@ public class EdgeDriverAssertionTests {
     }
 
     @Test
-    public void testGetBrowserType() {
+    public void testGetAppRuntime() {
         assert (product.browser.getAppRuntime().equals(AppRuntime.Edge));
     }
 

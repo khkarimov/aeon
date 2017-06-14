@@ -17,6 +17,8 @@ import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
@@ -165,6 +167,16 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
+            case IOSHybridApp:
+                capabilities = (DesiredCapabilities)getCapabilities();
+                driver = new IOSDriver(seleniumHubUrl, capabilities);
+                break;
+
+            case AndroidHybridApp:
+                capabilities = (DesiredCapabilities)getCapabilities();
+                driver = new AndroidDriver(seleniumHubUrl, capabilities);
+                break;
+
             default:
                 throw new ConfigurationException("AppRuntime", "configuration",
                         String.format("%1$s is not a supported browser", appRuntime));
@@ -199,7 +211,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = getEdgeOptions(null);
                 break;
 
-            case IOSSafari:
+            case IOSSafari: case IOSHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability("user" , perfectoUser);
                 desiredCapabilities.setCapability("password" , perfectoPass);
@@ -210,7 +222,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("screenResolution", screenResolution);
                 break;
 
-            case AndroidChrome:
+            case AndroidChrome: case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability("user" , perfectoUser);
                 desiredCapabilities.setCapability("password" , perfectoPass);

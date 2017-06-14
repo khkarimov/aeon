@@ -628,7 +628,7 @@ public interface IWebDriver extends IDriver {
      *
      * @return Returns the AppRuntime associated with this browser.
      */
-    AppRuntime getBrowserType();
+    AppRuntime getAppRuntime();
 
     /**
      * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
