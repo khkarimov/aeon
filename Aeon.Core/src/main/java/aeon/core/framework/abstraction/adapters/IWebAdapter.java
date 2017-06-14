@@ -820,7 +820,7 @@ public interface IWebAdapter extends IAdapter {
     void mobileLock();
 
     /**
-     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     * Locks a mobile device.
      *
      * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
@@ -835,7 +835,7 @@ public interface IWebAdapter extends IAdapter {
      * @param endy Ending y coord.
      * @param duration The duration of the execution of the swipe
      */
-    void mobileSwipes(int startx, int starty, int endx, int endy, int duration);
+    void mobileSwipe(int startx, int starty, int endx, int endy, int duration);
     /**
      * Hides the keyboard on a mobile device.
      */
@@ -850,4 +850,9 @@ public interface IWebAdapter extends IAdapter {
      * Sets the mobile device's orientation to portrait.
      */
     void mobileSetPortrait();
+
+    /**
+     * Sets the mobile device's GPS location.
+     */
+    void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 }
