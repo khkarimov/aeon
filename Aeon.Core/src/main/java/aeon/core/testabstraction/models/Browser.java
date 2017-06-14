@@ -7,8 +7,8 @@ import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.helpers.URLUtil;
-import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 

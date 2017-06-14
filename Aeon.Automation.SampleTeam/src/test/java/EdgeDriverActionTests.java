@@ -1,7 +1,7 @@
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
-import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
