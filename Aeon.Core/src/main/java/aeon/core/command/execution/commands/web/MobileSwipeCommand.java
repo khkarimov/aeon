@@ -13,9 +13,6 @@ public class MobileSwipeCommand extends Command {
     private int endy;
     private int duration;
 
-    /**
-     * Initializes a new instance of the {@link MobileSwipeCommand} class.
-     */
     public MobileSwipeCommand(int startx, int starty, int endx, int endy, int duration) {
         super(Resources.getString("MobileSwipeCommand_Info"));
         this.startx = startx;
