@@ -8,13 +8,13 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Gets the corresponding enumerable AppRuntime associated with the current browser.
  */
-public class GetBrowserTypeCommand extends CommandWithReturn {
+public class GetAppRuntimeCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the {@link GetBrowserTypeCommand} class.
+     * Initializes a new instance of the {@link GetAppRuntimeCommand} class.
      */
-    public GetBrowserTypeCommand() {
-        super(Resources.getString("GetBrowserTypeCommand_Info"));
+    public GetAppRuntimeCommand() {
+        super(Resources.getString("GetAppRuntimeCommand_Info"));
     }
 
     /**

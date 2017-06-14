@@ -167,12 +167,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
-            case IOSApp:
+            case IOSHybridApp:
                 capabilities = (DesiredCapabilities)getCapabilities();
                 driver = new IOSDriver(seleniumHubUrl, capabilities);
                 break;
 
-            case AndroidApp:
+            case AndroidHybridApp:
                 capabilities = (DesiredCapabilities)getCapabilities();
                 driver = new AndroidDriver(seleniumHubUrl, capabilities);
                 break;
@@ -211,7 +211,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = getEdgeOptions(null);
                 break;
 
-            case IOSSafari: case IOSApp:
+            case IOSSafari: case IOSHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability("user" , perfectoUser);
                 desiredCapabilities.setCapability("password" , perfectoPass);
@@ -222,7 +222,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("screenResolution", screenResolution);
                 break;
 
-            case AndroidChrome: case AndroidApp:
+            case AndroidChrome: case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability("user" , perfectoUser);
                 desiredCapabilities.setCapability("password" , perfectoPass);

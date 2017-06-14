@@ -102,7 +102,7 @@ public class IEDriverAssertionTests {
     }
 
     @Test
-    public void testGetBrowserType() {
+    public void testGetAppRuntime() {
         assert (product.browser.getAppRuntime().equals(AppRuntime.InternetExplorer));
     }
 

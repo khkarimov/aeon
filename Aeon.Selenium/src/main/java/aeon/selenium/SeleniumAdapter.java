@@ -1905,4 +1905,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     {
 
     }
+
+    @Override
+    public void mobileSetGeoLocation(double latitude, double longitude, double altitude)
+    {
+
+    }
 }
