@@ -41,6 +41,7 @@ Aeon.Core/classes/production/Aeon.Core/MessagesBundle.properties
 # Gradle:
 #.idea/gradle.xml
 .idea/libraries
+gradle/wrapper/gradle-wrapper.properties
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
