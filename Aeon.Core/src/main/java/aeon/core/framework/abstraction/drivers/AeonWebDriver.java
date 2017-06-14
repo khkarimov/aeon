@@ -476,7 +476,7 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public AppRuntime getBrowserType() {
+    public AppRuntime getAppRuntime() {
         return adapter.getAppRuntime();
     }
 
@@ -497,7 +497,7 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileLock() {
-        switch (getBrowserType()) {
+        switch (getAppRuntime()) {
             case AndroidHybrid:
                 adapter.mobileLock();
                 break;
@@ -512,7 +512,7 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     public void mobileLock(int seconds) {
-        switch (getBrowserType()) {
+        switch (getAppRuntime()) {
             case AndroidHybrid:
                 adapter.mobileLock();
                 break;
@@ -528,7 +528,7 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileSwipe(int startx, int starty, int endx, int endy, int duration) {
-        switch (getBrowserType()) {
+        switch (getAppRuntime()) {
             case AndroidHybrid:
             case IOSHybrid:
                 adapter.mobileSwipe(startx, starty, endx, endy, duration);
@@ -541,7 +541,7 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileHideKeyboard() {
-        switch(getBrowserType()){
+        switch(getAppRuntime()){
             case AndroidHybrid:
             case IOSHybrid:
                 adapter.mobileHideKeyboard();
@@ -554,7 +554,7 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileSetLandscape() {
-        switch(getBrowserType()){
+        switch(getAppRuntime()){
             case AndroidHybrid:
             case IOSHybrid:
                 adapter.mobileSetLandscape();
@@ -567,7 +567,7 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileSetPortrait() {
-        switch(getBrowserType()){
+        switch(getAppRuntime()){
             case AndroidHybrid:
             case IOSHybrid:
                 adapter.mobileSetPortrait();
@@ -580,7 +580,7 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void mobileSetGeoLocation(double latitude, double longitude, double altitude) {
-        switch (getBrowserType()) {
+        switch (getAppRuntime()) {
             case AndroidHybrid:
             case IOSHybrid:
                 adapter.mobileSetGeoLocation(latitude, longitude, altitude);

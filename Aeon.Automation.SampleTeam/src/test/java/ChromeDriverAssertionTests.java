@@ -105,7 +105,7 @@ public class ChromeDriverAssertionTests {
 
     @Test
     public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(AppRuntime.Chrome));
+        assert (product.browser.getAppRuntime().equals(AppRuntime.Chrome));
     }
 
     @Test

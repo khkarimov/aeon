@@ -5,6 +5,9 @@ import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
+/**
+ * Executes a swipe on a mobile device.
+ */
 public class MobileSwipeCommand extends Command {
 
     private int startx;

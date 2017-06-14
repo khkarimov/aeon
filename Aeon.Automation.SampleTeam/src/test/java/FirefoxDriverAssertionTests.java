@@ -103,7 +103,7 @@ public class FirefoxDriverAssertionTests {
 
     @Test
     public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(AppRuntime.Firefox));
+        assert (product.browser.getAppRuntime().equals(AppRuntime.Firefox));
     }
 
     @Test
