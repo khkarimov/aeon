@@ -1,7 +1,7 @@
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserSize;
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
@@ -34,7 +34,7 @@ public class IEDriverActionTests {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.InternetExplorer);
+        product = launch(Sample.class, AppRuntime.InternetExplorer);
         String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
                 "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
         String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");

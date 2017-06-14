@@ -4,7 +4,7 @@ import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
@@ -624,11 +624,11 @@ public interface IWebDriver extends IDriver {
     void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta);
 
     /**
-     * Returns the enumerable BrowserType representing the current browser.
+     * Returns the enumerable AppRuntime representing the current browser.
      *
-     * @return Returns the BrowserType associated with this browser.
+     * @return Returns the AppRuntime associated with this browser.
      */
-    BrowserType getBrowserType();
+    AppRuntime getBrowserType();
 
     /**
      * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
@@ -689,4 +689,40 @@ public interface IWebDriver extends IDriver {
      */
     String windowDoesNotExistByUrl(String url);
 
+    /**
+     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     */
+    void mobileLock();
+
+    /**
+     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     *
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
+     */
+    void mobileLock(int seconds);
+
+    /**
+     * Executes a swipe on the device and throws an error if youre using it not on a mobile device
+     *
+     * @param startx Starting x coord.
+     * @param starty Starting y coord.
+     * @param endx Ending x coord.
+     * @param endy Ending y coord.
+     * @param duration The duration of the execution of the swipe
+     */
+    void mobileSwipes(int startx, int starty, int endx, int endy, int duration);
+    /**
+     * Hides the keyboard on a mobile device.
+     */
+    void mobileHideKeyboard();
+
+    /**
+     * Sets the mobile device's orientation to landscape.
+     */
+    void mobileSetLandscape();
+
+    /**
+     * Sets the mobile device's orientation to portrait.
+     */
+    void mobileSetPortrait();
 }

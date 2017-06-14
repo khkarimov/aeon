@@ -3,7 +3,8 @@ package aeon.core.framework.abstraction.drivers;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
+import aeon.core.common.exceptions.WebUsingMobileCommandException;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
@@ -14,6 +15,7 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.openqa.selenium.ScreenOrientation;
 
 import java.awt.*;
 import java.net.URL;
@@ -475,8 +477,8 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public BrowserType getBrowserType() {
-        return adapter.getBrowserType();
+    public AppRuntime getBrowserType() {
+        return adapter.getAppRuntime();
     }
 
     @Override
@@ -492,5 +494,92 @@ public class AeonWebDriver implements IWebDriver {
     @Override
     public void pressKeyboardKey(WebControl element, KeyboardKey key) {
         adapter.pressKeyboardKey(element, key);
+    }
+
+    @Override
+    public void mobileLock() {
+        switch (getBrowserType()) {
+            case AndroidApp:
+                adapter.mobileLock();
+                break;
+
+            case IOSApp:
+                adapter.mobileLock(0);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileLock(int seconds) {
+        switch (getBrowserType()) {
+            case AndroidApp:
+                adapter.mobileLock();
+                break;
+
+            case IOSApp:
+                adapter.mobileLock(seconds);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSwipes(int startx, int starty, int endx, int endy, int duration){
+        switch (getBrowserType()) {
+            case AndroidApp:
+                adapter.mobileLock();
+                break;
+
+            case IOSApp:
+                adapter.mobileLock(0);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileHideKeyboard() {
+        switch(getBrowserType()){
+            case AndroidApp:
+            case IOSApp:
+                adapter.mobileHideKeyboard();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSetLandscape() {
+        switch(getBrowserType()){
+            case AndroidApp:
+            case IOSApp:
+                adapter.mobileSetLandscape();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSetPortrait() {
+        switch(getBrowserType()){
+            case AndroidApp:
+            case IOSApp:
+                adapter.mobileSetPortrait();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
     }
 }

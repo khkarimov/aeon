@@ -7,8 +7,8 @@ import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.helpers.URLUtil;
+import aeon.core.common.web.AppRuntime;
 import aeon.core.common.web.BrowserSize;
-import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 
@@ -73,12 +73,12 @@ public class Browser {
     }
 
     /**
-     * Returns the enumerable BrowserType representing the current browser.
+     * Returns the enumerable AppRuntime representing the current browser.
      *
-     * @return The BrowserType for the current browser.
+     * @return The AppRuntime for the current browser.
      */
-    public BrowserType getBrowserType() {
-        return (BrowserType) info.getCommandExecutionFacade().execute(info, new GetBrowserTypeCommand());
+    public AppRuntime getBrowserType() {
+        return (AppRuntime) info.getCommandExecutionFacade().execute(info, new GetBrowserTypeCommand());
     }
 
     /**

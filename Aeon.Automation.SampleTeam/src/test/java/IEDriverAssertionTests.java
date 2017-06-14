@@ -1,6 +1,6 @@
 import aeon.core.common.CompareType;
 import aeon.core.common.exceptions.*;
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.AppRuntime;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
@@ -30,7 +30,7 @@ public class IEDriverAssertionTests {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.InternetExplorer);
+        product = launch(Sample.class, AppRuntime.InternetExplorer);
         String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
                 "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
         String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
@@ -103,7 +103,7 @@ public class IEDriverAssertionTests {
 
     @Test
     public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(BrowserType.InternetExplorer));
+        assert (product.browser.getBrowserType().equals(AppRuntime.InternetExplorer));
     }
 
     @Test
