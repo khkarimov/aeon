@@ -15,7 +15,6 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.openqa.selenium.ScreenOrientation;
 
 import java.awt.*;
 import java.net.URL;
