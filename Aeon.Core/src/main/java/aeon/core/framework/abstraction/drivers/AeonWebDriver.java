@@ -4,6 +4,7 @@ import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.web.AppRuntime;
+import aeon.core.common.exceptions.WebUsingMobileCommandException;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IBy;
@@ -14,6 +15,7 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.openqa.selenium.ScreenOrientation;
 
 import java.awt.*;
 import java.net.URL;
@@ -523,6 +525,45 @@ public class AeonWebDriver implements IWebDriver {
 
             default:
                 throw new Exception(WebUsingMobileCommandException);
+        }
+    }
+
+    @Override
+    public void mobileHideKeyboard() {
+        switch(getAppRuntime()){
+            case(AppRuntime.AndroidApp):
+            case(AppRuntime.IOSApp):
+                adapter.hideKeyboard();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSetLandscape() {
+        switch(getAppRuntime()){
+            case(AppRuntime.AndroidApp):
+            case(AppRuntime.IOSApp):
+                adapter.rotate(ScreenOrientation.LANDSCAPE);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSetPortrait() {
+        switch(getAppRuntime()){
+            case(AppRuntime.AndroidApp):
+            case(AppRuntime.IOSApp):
+                adapter.rotate(ScreenOrientation.PORTRAIT);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
         }
     }
 }

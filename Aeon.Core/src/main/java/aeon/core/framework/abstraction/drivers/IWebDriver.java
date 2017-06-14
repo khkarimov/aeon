@@ -711,4 +711,18 @@ public interface IWebDriver extends IDriver {
      * @param duration The duration of the execution of the swipe
      */
     void mobileSwipes(int startx, int starty, int endx, int endy, int duration);
+    /**
+     * Hides the keyboard on a mobile device.
+     */
+    void mobileHideKeyboard();
+
+    /**
+     * Sets the mobile device's orientation to landscape.
+     */
+    void mobileSetLandscape();
+
+    /**
+     * Sets the mobile device's orientation to portrait.
+     */
+    void mobileSetPortrait();
 }
