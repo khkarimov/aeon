@@ -5,6 +5,9 @@ import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
+/**
+ * Sets the GPS location on a mobile device.
+ */
 public class MobileSetGeoLocationCommand extends Command {
 
     private double latitude;

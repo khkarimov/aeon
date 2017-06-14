@@ -25,6 +25,6 @@ public class GetBrowserTypeCommand extends CommandWithReturn {
      */
     @Override
     protected Object commandDelegate(IDriver driver) {
-        return ((IWebDriver) driver).getBrowserType();
+        return ((IWebDriver) driver).getAppRuntime();
     }
 }

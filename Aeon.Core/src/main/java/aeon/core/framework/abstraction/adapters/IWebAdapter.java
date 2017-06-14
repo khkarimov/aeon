@@ -815,7 +815,7 @@ public interface IWebAdapter extends IAdapter {
     void setAuthenticationCredentials(String setUsername, String setPassword);
 
     /**
-     * Locks a mobile device and throws an error if youre using it not on a mobile device
+     * Locks a mobile device.
      */
     void mobileLock();
 
@@ -827,7 +827,7 @@ public interface IWebAdapter extends IAdapter {
     void mobileLock(int seconds);
 
     /**
-     * Executes a swipe on the device and throws an error if youre using it not on a mobile device
+     * Executes a swipe on a mobile device.
      *
      * @param startx Starting x coord.
      * @param starty Starting y coord.

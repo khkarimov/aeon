@@ -5,7 +5,9 @@ import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
-
+/**
+ * Locks a mobile device.
+ */
 public class MobileLockCommand extends Command {
 
     private int seconds;
