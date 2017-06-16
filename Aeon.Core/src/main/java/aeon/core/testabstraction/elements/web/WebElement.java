@@ -12,6 +12,9 @@ import aeon.core.testabstraction.elements.Element;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
+/**
+ * The class for webpage elements modeling.
+ */
 public class WebElement extends Element {
 
     private IBy selector;
