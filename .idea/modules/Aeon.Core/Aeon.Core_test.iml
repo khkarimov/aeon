@@ -25,7 +25,6 @@
     <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy:1.6.11" level="project" />
     <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.6.11" level="project" />
     <orderEntry type="library" name="Gradle: org.objenesis:objenesis:2.5" level="project" />
-    <orderEntry type="library" name="selenium-java-3.4" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="Aeon.Core_main" />
 </module>
