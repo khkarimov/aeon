@@ -9,10 +9,20 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
+/**
+ * Emulates the keyboard pressing of the indicated key.
+ */
 public class PressKeyboardKeyCommand extends WebControlCommand {
 
-    KeyboardKey key;
+    private KeyboardKey key;
 
+    /**
+     * Initializes a new instance of the {@link PressKeyboardKeyCommand} class.
+     *
+     * @param selector           The selector.
+     * @param commandInitializer The command initializer.
+     * @param key                The key to be pressed.
+     */
     public PressKeyboardKeyCommand(IBy selector, ICommandInitializer commandInitializer, KeyboardKey key) {
         super(String.format(Locale.getDefault(), Resources.getString("PressKeyboardKeyCommand_Info"), key.toString(), selector), selector, commandInitializer);
         this.key = key;

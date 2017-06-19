@@ -8,6 +8,9 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
+/**
+ * Asserts that an element is visible.
+ */
 public class VisibleCommand extends WebControlCommand {
 
     /**

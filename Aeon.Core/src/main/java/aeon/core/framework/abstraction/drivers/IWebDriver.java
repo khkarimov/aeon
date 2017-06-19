@@ -113,7 +113,7 @@ public interface IWebDriver extends IDriver {
     void switchToFrame(IBy selector);
 
     /**
-     * Gets the HTML Tag type of the given element
+     * Gets the HTML Tag type of the given element.
      *
      * @param element The element to get the Tag of.
      * @return The type of Tag.
@@ -130,7 +130,7 @@ public interface IWebDriver extends IDriver {
     Object executeScript(String script);
 
     /**
-     * Clears the text of the given Element
+     * Clears the text of the given Element.
      *
      * @param element The element to be cleared.
      */
@@ -210,7 +210,7 @@ public interface IWebDriver extends IDriver {
     void clickElement(WebControl element);
 
     /**
-     * Sends Keys to the given element programmatically
+     * Sends Keys to the given element programmatically.
      *
      * @param element The element to receive the keys.
      * @param value   The keys to be sent to the element.
@@ -218,7 +218,7 @@ public interface IWebDriver extends IDriver {
     void sendKeysToElement(WebControl element, String value);
 
     /**
-     * Gets the value of a given attribute of a given element
+     * Gets the value of a given attribute of a given element.
      *
      * @param element The element to get the attribute values of.
      * @param value   The name of the attribute to get the value of.
@@ -227,7 +227,7 @@ public interface IWebDriver extends IDriver {
     String getElementAttribute(WebControl element, String value);
 
     /**
-     * Switches to the Main Window
+     * Switches to the Main Window.
      *
      * @param mainWindowHandle              The handle of the main window
      * @param waitForAllPopupWindowsToClose Whether to wait for all popup windows to close.
@@ -245,6 +245,15 @@ public interface IWebDriver extends IDriver {
      */
     String switchToWindowByTitle(String title);
 
+    /**
+     * Switches the focus of future commands for this driver to the window with the given title.
+     *
+     * @param url The url of the window to select.
+     * @return The current handler after the change.
+     * @throws IllegalArgumentException If url is null.
+     * @throws IllegalArgumentException If url is empty.
+     * @throws NoSuchWindowException    If the window cannot be found.
+     */
     String switchToWindowByUrl(String url);
 
     /**
@@ -277,7 +286,7 @@ public interface IWebDriver extends IDriver {
     void check(WebControl element);
 
     /**
-     * Unchecks a checkbox
+     * Unchecks a checkbox.
      *
      * @param element The checkbox to be unchecked.
      */
@@ -292,7 +301,7 @@ public interface IWebDriver extends IDriver {
     void clickAndHold(WebControl element, int duration);
 
     /**
-     * Checks that an element is enabled
+     * Checks that an element is enabled.
      *
      * @param element The web element to check.
      */
@@ -344,7 +353,7 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Types keys of file indicated by provided path
-     * REQUIRES DIALOG BOX TO ALREADY BE OPENED BY openFileDialog
+     * REQUIRES DIALOG BOX TO ALREADY BE OPENED BY openFileDialog.
      *
      * @param selector The selector for the element.
      * @param path     The path to the file to be selected.
@@ -353,7 +362,7 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Opens a windows select file dialog and selects
-     * file indicated by provided path
+     * file indicated by provided path.
      *
      * @param selector The selector for the element.
      * @param path     The path to the file to be selected.
@@ -390,21 +399,21 @@ public interface IWebDriver extends IDriver {
     void dragAndDrop(WebControl dropElement, IBy targetElement);
 
     /**
-     * Moves the mouse cursor off of an element
+     * Moves the mouse cursor off of an element.
      *
      * @param element The element to Mouse Out of
      */
     void mouseOut(WebControl element);
 
     /**
-     * Moves the mouse cursor on top of an element
+     * Moves the mouse cursor on top of an element.
      *
      * @param element The element to Mouse Over
      */
     void mouseOver(WebControl element);
 
     /**
-     * Sets the Value of a Body element by Javascript
+     * Sets the Value of a Body element by Javascript.
      *
      * @param element The element whose value is set
      * @param value   The value to set to the element
@@ -412,7 +421,7 @@ public interface IWebDriver extends IDriver {
     void setBodyValueByJavaScript(WebControl element, String value);
 
     /**
-     * Sets the Value of an Element by Javascript
+     * Sets the Value of an Element by Javascript.
      *
      * @param element The element whose value is set
      * @param value   The value to set to the element
@@ -420,7 +429,7 @@ public interface IWebDriver extends IDriver {
     void setTextByJavaScript(WebControl element, String value);
 
     /**
-     * Sets the Value of a Div element by Javascript
+     * Sets the Value of a Div element by Javascript.
      *
      * @param element The element whose value is set
      * @param value   The value to set to the element
@@ -466,7 +475,7 @@ public interface IWebDriver extends IDriver {
     void hasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup);
 
     /**
-     * Asserts that the Text of given Alert is same as given string
+     * Asserts that the Text of given Alert is same as given string.
      *
      * @param comparingText String to compare against Alert Text.
      */
@@ -482,7 +491,7 @@ public interface IWebDriver extends IDriver {
     void verifyAlertTextLike(String comparingText, boolean caseSensitive);
 
     /**
-     * Asserts the Title of a Page is equal to a given String
+     * Asserts the Title of a Page is equal to a given String.
      *
      * @param comparingText String to compare against Page Title.
      */
@@ -496,14 +505,34 @@ public interface IWebDriver extends IDriver {
      */
     void verifyURL(URL comparingURL);
 
+    /**
+     * Asserts that an element is selected.
+     *
+     * @param element The element to check
+     */
     void notSelected(WebControl element);
 
+    /**
+     * Asserts that an element is not visible.
+     *
+     * @param element The element to check
+     */
     void notVisible(WebControl element);
 
+    /**
+     * Asserts that an element is not selected.
+     *
+     * @param element The element to check
+     */
     void selected(WebControl element);
 
+    /**
+     * Asserts that an element is visible.
+     *
+     * @param element The element to check
+     */
     void visible(WebControl element);
-//
+
 
     /**
      * Gets the list of all cookies.

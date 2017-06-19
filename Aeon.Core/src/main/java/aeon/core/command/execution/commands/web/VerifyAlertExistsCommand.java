@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Asserts/Checks whether an alert exists. If your code makes an alert popup and you want to check whether it is the case this method will assert so.
  * Usage:
- *       Context.Alert.exists();
+ *       Context.browser.verifyAlertExists();
  */
 
 public class VerifyAlertExistsCommand extends Command {

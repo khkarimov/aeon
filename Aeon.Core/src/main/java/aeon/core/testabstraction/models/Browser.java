@@ -1,6 +1,5 @@
 package aeon.core.testabstraction.models;
 
-
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.CloseCommand;
 import aeon.core.command.execution.commands.QuitCommand;
@@ -15,9 +14,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Created by DionnyS on 4/21/2016.
- */
 public class Browser {
 
     private AutomationInfo info;

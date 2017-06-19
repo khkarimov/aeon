@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 /**
- * Created by SebastianR on 6/20/2016.
+ * The class for webpage elements modeling.
  */
 public class WebElement extends Element {
 
