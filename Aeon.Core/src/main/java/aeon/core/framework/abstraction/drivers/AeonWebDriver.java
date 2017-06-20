@@ -590,4 +590,33 @@ public class AeonWebDriver implements IWebDriver {
                 throw new WebUsingMobileCommandException();
         }
     }
+
+
+    @Override
+    public void mobileClose()
+    {
+        switch (getBrowserType()) {
+            case AndroidHybridApp:
+            case IOSHybridApp:
+                adapter.mobileClose();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileQuit()
+    {
+        switch (getBrowserType()) {
+            case AndroidHybridApp:
+            case IOSHybridApp:
+                adapter.mobileQuit();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
 }
