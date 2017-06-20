@@ -95,6 +95,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String intentCategory;
     private String intentFlags;
     private String optionalIntentArguments;
+    private String deviceName;
 
     public IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
@@ -135,8 +136,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         intentCategory = configuration.getString(SeleniumConfiguration.Keys.INTENT_CATEGORY, "");
         intentFlags = configuration.getString(SeleniumConfiguration.Keys.INTENT_FLAGS, "");
         optionalIntentArguments = configuration.getString(SeleniumConfiguration.Keys.OPTIONAL_INTENT_ARGUMENTS, "");
-
-
+        deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
@@ -235,7 +235,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
-        if (maximizeBrowser && !browserType.equals(BrowserType.AndroidChrome) && !browserType.equals(BrowserType.IOSSafari)){
+        if (maximizeBrowser
+                && !browserType.equals(BrowserType.AndroidChrome)
+                && !browserType.equals(BrowserType.IOSSafari)
+                && !browserType.equals(BrowserType.AndroidHybridApp)
+                && !browserType.equals(BrowserType.IOSHybridApp))
+        {
             adapter.maximize();
         }
         return adapter;
@@ -284,6 +289,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("screenResolution", screenResolution);
+                desiredCapabilities.setCapability("deviceName", deviceName);
                 break;
 
             case IOSHybridApp:
@@ -307,13 +313,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("outputVisibility", outputVisibility);
 
                 // Appium
-                desiredCapabilities.setCapability("automationName", automationName);
+                //desiredCapabilities.setCapability("automationName", automationName);
                 desiredCapabilities.setCapability("app", app);
                 desiredCapabilities.setCapability("autoLaunch", autoLaunch);
                 desiredCapabilities.setCapability("udid", udid);
                 desiredCapabilities.setCapability("orientation", orientation);
                 desiredCapabilities.setCapability("noReset", noReset);
                 desiredCapabilities.setCapability("fullReset", fullReset);
+                desiredCapabilities.setCapability("deviceName", deviceName);
 
                 // iOS Specific
                 desiredCapabilities.setCapability("bundleId", bundleId);
@@ -340,13 +347,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("outputVisibility", outputVisibility);
 
                 // Appium
-                desiredCapabilities.setCapability("automationName", automationName);
+                //desiredCapabilities.setCapability("automationName", automationName);
                 desiredCapabilities.setCapability("app", app);
                 desiredCapabilities.setCapability("autoLaunch", autoLaunch);
                 desiredCapabilities.setCapability("udid", udid);
                 desiredCapabilities.setCapability("orientation", orientation);
                 desiredCapabilities.setCapability("noReset", noReset);
                 desiredCapabilities.setCapability("fullReset", fullReset);
+                desiredCapabilities.setCapability("deviceName", deviceName);
 
                 // Android Specific
                 desiredCapabilities.setCapability("appActivity", appActivity);

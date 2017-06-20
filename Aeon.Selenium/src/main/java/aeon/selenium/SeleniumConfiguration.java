@@ -60,6 +60,7 @@ public class SeleniumConfiguration extends Configuration {
         public static final String ORIENTATION = "aeon.selenium.appium.orientation";
         public static final String NO_RESET = "aeon.selenium.appium.no_reset";
         public static final String FULL_RESET = "aeon.selenium.appium.full_reset";
+        public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
 
         // iOS
         public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
