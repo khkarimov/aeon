@@ -1972,19 +1972,4 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
-    /**
-     * Closes the current instance of the mobile web browser, but does not quit() the driver.
-     */
-    public final void mobileClose() {
-        log.trace("Mobile - WebDriver.close();");
-        getWebDriver().close();
-    }
-
-    /**
-     * close()'s and terminates 'this' instance of the browser and the WebDriver.
-     */
-    public final void mobileQuit() {
-        log.trace("Mobile - WebDriver.quit();");
-        getWebDriver().quit();
-    }
 }

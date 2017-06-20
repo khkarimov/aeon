@@ -860,7 +860,4 @@ public interface IWebAdapter extends IAdapter {
      */
     void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 
-    void mobileClose();
-
-    void mobileQuit();
 }

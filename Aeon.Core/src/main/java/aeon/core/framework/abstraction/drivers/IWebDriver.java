@@ -735,8 +735,4 @@ public interface IWebDriver extends IDriver {
      * @param altitude The GPS altitude.
      */
     void mobileSetGeoLocation(double latitude, double longitude, double altitude);
-
-    void mobileClose();
-
-    void mobileQuit();
 }
