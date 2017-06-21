@@ -24,6 +24,15 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
 
+    /**
+     * Initializes a new instance of {@link RowActions} class.
+     *
+     * @param automationInfo The AutomationInfo.
+     * @param selector IBy selector that will identify the element.
+     * @param switchMechanism The switch mechanism for the web element.
+     * @param rowActionsClass A sub class of {@link RowActions}
+     * @param rowElementsClass A sub class of {@link RowElements}
+     */
     public RowActions(AutomationInfo automationInfo, IBy selector, Iterable<IBy> switchMechanism, Class<T> rowActionsClass, Class<K> rowElementsClass) {
         this.selector = selector;
         this.automationInfo = automationInfo;
@@ -32,16 +41,38 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
         this.rowActionsClass = rowActionsClass;
     }
 
+    /**
+     * Get the index of the referenced row that contains the row elements defined in the K class.
+     *
+     * @param index The index you are looking for.
+     *
+     * @return Returns an instance of K.
+     */
     public K index(int index) {
         return findRowByIndex(index);
     }
 
+    /**
+     * Get a row by the index.
+     *
+     * @param index The index you are looking for.
+     *
+     * @return Returns an instance of K.
+     */
     protected K findRowByIndex(int index) {
         IBy updatedSelector = selector.toJQuery().find(String.format("tr:nth-of-type(%1$s)", index));
 
         return newInstanceOfK(updatedSelector);
     }
 
+    /**
+     * Get a row by the value and column header.
+     *
+     * @param value The value you are looking for.
+     * @param columnHeader THe header of the column.
+     *
+     * @return Returns an instance of T.
+     */
     protected T findRow(String value, IBy columnHeader) {
         IBy updatedSelector = selector.toJQuery().find(String.format("td:nth-of-type(%1$s)", getColumnIndex(columnHeader))).filter(String.format("td:contains(%1$s)", value)).parents("tr");
 

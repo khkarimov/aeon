@@ -12,12 +12,25 @@ public class Link extends WebElement {
     private IBy selector;
     private Iterable<IBy> switchMechanism;
 
+    /**
+     * Initializes a new instance of {@link Link} class.
+     *
+     * @param info The AutomationInfo.
+     * @param selector IBy selector that will identify the element
+     */
     public Link(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
+    /**
+     * Initializes a new instance of {@link Link} class.
+     *
+     * @param info The AutomationInfo.
+     * @param selector IBy selector that will identify the element
+     * @param switchMechanism The switch mechanism for the web element.
+     */
     public Link(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
@@ -25,6 +38,11 @@ public class Link extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
+    /**
+     * Initializes a new instance pf {@link Link} class.
+     *
+     * @param selector IBy selector that will identify the element.
+     */
     public Link(IBy selector) {
         this(null, selector);
     }

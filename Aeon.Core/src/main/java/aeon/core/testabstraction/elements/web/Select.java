@@ -17,12 +17,26 @@ public class Select extends WebElement {
     private IBy selector;
     private Iterable<IBy> switchMechanism;
 
+    /**
+     * Initializes a new instance of the {@link Select} class.
+     *
+     * @param info The AutomationInfo.
+     * @param selector IBy selector that will identify the element.
+     */
     public Select(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
+    /**
+     * Initializes a new instance of the {@link Select} class
+     * with a switch mechanism.
+     *
+     * @param info The AutomationInfo.
+     * @param selector IBY selector that will identify the element.
+     * @param switchMechanism The switch mechanism for the web element.
+     */
     public Select(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
@@ -30,6 +44,13 @@ public class Select extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
+    /**
+     * Executes the has options command with specified options, optgroup, and select.
+     *
+     * @param options The options that the select should have, either their values or texts.
+     * @param optgroup The label of the option group that will be searched instead of the entire select.
+     * @param select The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
+     */
     public void hasOptions(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
                 this.selector,
@@ -37,6 +58,12 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the has options command with specified options and select.
+     *
+     * @param options The options that the select should have, either their values or texts.
+     * @param select The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
+     */
     public void hasOptions(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
                 this.selector,
@@ -44,6 +71,13 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the has options command with specified options, optgroup, and select.
+     *
+     * @param options The options that the select should have, either their values or texts.
+     * @param optgroup The label of the option group that will be searched instead of the entire select.
+     * @param select The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
+     */
     public void hasOptionsInOrder(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
                 this.selector,
@@ -51,6 +85,12 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the has options in order command with specified options and select.
+     *
+     * @param options The options that the select should have, either their values or texts.
+     * @param select The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value
+     */
     public void hasOptionsInOrder(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
                 this.selector,
@@ -58,6 +98,12 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the does not have options command with specified options, optgroup, and select.
+     * @param options The options that the select should not have, either their values or texts.
+     * @param optgroup The label of the option group that will be searched instead of the entire select.
+     * @param select The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
+     */
     public void doesNotHaveOptions(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
                 this.selector,
@@ -65,6 +111,11 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the does not have options command with specified options and select.
+     * @param options The options that the select should not have, either their values or texts.
+     * @param select The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
+     */
     public void doesNotHaveOptions(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
                 this.selector,
@@ -72,6 +123,12 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the has number of options command with specified optnumber and optgroup.
+     *
+     * @param optnumber The number of options that the option group should have.
+     * @param optgroup The visible text of the option group.
+     */
     public void hasNumberOfOptions(int optnumber, String optgroup) {
         info.getCommandExecutionFacade().execute(info, new HasNumberOfOptionsCommand(
                 this.selector,
@@ -79,6 +136,11 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the has number of options command with specified optnumber.
+     *
+     * @param optnumber The number of options that the option group should have.
+     */
     public void hasNumberOfOptions(int optnumber) {
         info.getCommandExecutionFacade().execute(info, new HasNumberOfOptionsCommand(
                 this.selector,
@@ -86,6 +148,12 @@ public class Select extends WebElement {
         ));
     }
 
+    /**
+     * Executes the has all options in order command with specified comparison type and optgroup.
+     *
+     * @param comparisonType The way that all the options in the select element will be compared.
+     * @param optgroup The optional option group that would be searched in isolation instead of the entire select.
+     */
     public void hasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
         info.getCommandExecutionFacade().execute(info,
                 new HasAllOptionsInOrderCommand(
@@ -93,6 +161,11 @@ public class Select extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), comparisonType, optgroup));
     }
 
+    /**
+     * Executes the has all options in order command with specified comparison type.
+     *
+     * @param comparisonType The way that all the options in the select element will be compared.
+     */
     public void hasAllOptionsInOrder(CompareType comparisonType) {
         info.getCommandExecutionFacade().execute(info,
                 new HasAllOptionsInOrderCommand(
@@ -101,6 +174,12 @@ public class Select extends WebElement {
                 ));
     }
 
+    /**
+     * Executes the set command with specified select option and value.
+     *
+     * @param selectOption Which of the {@link WebSelectOption} will be used.
+     * @param value The new value to be set on the field.
+     */
     public void set(WebSelectOption selectOption, String value) {
         info.getCommandExecutionFacade().execute(info, new SetCommand(
                 selector,
