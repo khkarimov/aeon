@@ -11,13 +11,13 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class MobileSetGeoLocationCommand extends Command {
 
     private double latitude;
-    private int longitude;
-    private int altitude;
+    private double longitude;
+    private double altitude;
 
     /**
      * Initializes a new instance of the {@link MobileSetGeoLocationCommand} class.
      */
-    public MobileSetGeoLocationCommand(int latitude, int longitude, int altitude) {
+    public MobileSetGeoLocationCommand(double latitude, double longitude, double altitude) {
         super(Resources.getString("MobileSetGeoLocationCommand_Info"));
         this.latitude = latitude;
         this.longitude = longitude;
@@ -33,6 +33,6 @@ public class MobileSetGeoLocationCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).mobileSetGeoLocation(latitude, longitude, altitude);
+        ((IWebDriver) driver).mobileSetGeoLocation(latitude, longitude, altitude);
     }
 }

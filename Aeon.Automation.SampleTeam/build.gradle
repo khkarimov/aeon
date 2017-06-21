@@ -11,7 +11,6 @@ repositories {
 
 ext {
     seleniumVersion = '3.3.0'
-    appiumVersion = "5.0.0-BETA8"
 }
 
 clean {
@@ -40,8 +39,6 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
-
-    compile "io.appium:java-client:$appiumVersion"
 }
 
 test {

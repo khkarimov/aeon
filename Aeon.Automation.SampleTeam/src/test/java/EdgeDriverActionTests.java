@@ -1,7 +1,9 @@
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.exceptions.*;
-import aeon.core.common.web.BrowserType;
+import aeon.core.common.exceptions.NoAlertException;
+import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
 import aeon.core.common.web.BrowserSize;
+import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
@@ -151,7 +153,7 @@ public class EdgeDriverActionTests {
         product.startPage.openAlertButton.click();
         String text = product.browser.getAlertText();
 
-        assert(text.equals("Send some keys"));
+        assert (text.equals("Send some keys"));
         product.browser.dismissAlert();
         thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
         product.browser.getAlertText();
@@ -238,19 +240,19 @@ public class EdgeDriverActionTests {
     }
 
     @Test
-    public void testSet_WithSelect(){
+    public void testSet_WithSelect() {
         product.startPage.lexoDropDown.set(WebSelectOption.Value, "10");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "dog");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
     }
 
     @Test
-    public void testSetValueByJavaScript(){
+    public void testSetValueByJavaScript() {
         product.startPage.formTextBox.setTextByJavaScript("set text by javascript is working");
     }
 
     @Ignore
-    public void testWaiter(){
+    public void testWaiter() {
         product.startPage.start.click();
         product.startPage.smileyFace1.click();
     }
