@@ -25,6 +25,16 @@ public class Configuration {
     private Class adapter;
     private BrowserType browserType;
 
+    /**
+     * Initializes a new instance of the {@link Configuration} class.
+     *
+     * @param driver AeonWebDriver.class.
+     * @param adapter SeleniumAdapter.class.
+     * @param <D> AeonWebDriver.class.
+     * @param <A> SeleniumAdapter.class.
+     * @throws IOException If properties are not defined.
+     * @throws IllegalAccessException If issue obataining keys.
+     */
     public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
         this.driver = driver;
         this.adapter = adapter;
@@ -58,37 +68,82 @@ public class Configuration {
         }
     }
 
+    /**
+     * Get a empty list contain fields.
+     *
+     * @return List containing fields.
+     */
     protected List<Field> getConfigurationFields() {
         return new ArrayList<>();
     }
 
+    /**
+     * Get the driver class.
+     *
+     * @return The class of the driver.
+     */
     public Class getDriver() {
         return driver;
     }
 
+    /**
+     * Set the driver class.
+     *
+     * @param driver The class of the driver.
+     */
     public void setDriver(Class driver) {
         this.driver = driver;
     }
 
+    /**
+     * Get the adapter class.
+     *
+     * @return The class of the adapter.
+     */
     public Class getAdapter() {
         return adapter;
     }
 
+    /**
+     * Set the class for the adpater.
+     *
+     * @param adapter The class of the adapter.
+     */
     public void setAdapter(Class adapter) {
         this.adapter = adapter;
     }
 
+    /**
+     *
+     * @throws IOException If inputs are incorrect.
+     */
     public void loadPluginSettings() throws IOException {
     }
 
+    /**
+     * Get the type of browser.
+     *
+     * @return The {@link BrowserType} for the the configuration.
+     */
     public BrowserType getBrowserType() {
         return browserType;
     }
 
+    /**
+     * Set the type of browser.
+     *
+     * @param browserType The {@link BrowserType} for the configuration.
+     */
     public void setBrowserType(BrowserType browserType) {
         this.browserType = browserType;
     }
 
+    /**
+     * Set boolean for a key and value pair.
+     *
+     * @param key A key from {@link Keys}.
+     * @param value True or false.
+     */
     public void setBoolean(String key, boolean value) {
         set(key, Boolean.toString(value));
     }
@@ -101,18 +156,41 @@ public class Configuration {
         set(key, Double.toString(value));
     }
 
+    /**
+     * Set the properties for the {@link Properties} command.
+     * @param key A key from {@link Keys}
+     * @param value True or false.
+     */
     private void set(String key, String value) {
         properties.setProperty(key, value);
     }
 
+    /**
+     * Get the boolean value of a key and value pair.
+     * @param key A key from {@link Keys}.
+     * @param defaultValue True or false.
+     * @return True or False representation of key and value pair.
+     */
     public boolean getBoolean(String key, boolean defaultValue) {
         return Boolean.valueOf(get(key, Boolean.toString(defaultValue)));
     }
 
+    /**
+     * Get the double value of a key and value pair.
+     * @param key A key from {@link Keys}.
+     * @param defaultValue True or false.
+     * @return Double representation of key and value pair.
+     */
     public double getDouble(String key, double defaultValue) {
         return Double.parseDouble(get(key, Double.toString(defaultValue)));
     }
 
+    /**
+     * Get the string value of a key and value pair.
+     * @param key A key from {@link Keys}.
+     * @param defaultValue True or false.
+     * @return String representation of key and value pair.
+     */
     public String getString(String key, String defaultValue) {
         return (get(key, defaultValue));
     }
