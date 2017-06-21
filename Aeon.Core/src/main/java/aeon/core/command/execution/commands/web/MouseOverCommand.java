@@ -8,8 +8,17 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
+/**
+ * Moves the mouse pointer over an element.
+ */
 public class MouseOverCommand extends WebControlCommand {
 
+    /**
+     * Initializes a new {@link MouseOverCommand}.
+     *
+     * @param selector    The selector
+     * @param initializer The initializer
+     */
     public MouseOverCommand(IBy selector, ICommandInitializer initializer) {
         super(String.format(Locale.getDefault(), Resources.getString("MouseOverCommand_Info"), selector), selector, initializer);
     }

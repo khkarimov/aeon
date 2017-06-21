@@ -26,7 +26,9 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
      *
-     * @param message The message to log.
+     * @param message     The message to log.
+     * @param selector    The selector.
+     * @param initializer The command initializer.
      */
     protected WebControlCommandWithReturn(String message, IBy selector, ICommandInitializer initializer) {
         super(message, initializer);
@@ -34,7 +36,7 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     }
 
     /**
-     * The method which provides the logic for the web element command
+     * The method which provides the logic for the web element command.
      *
      * @param driver the framework abstraction facade
      */

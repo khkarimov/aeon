@@ -1,9 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-/**
- * Created by RafaelT on 6/28/2016.
- */
-
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.Resources;
@@ -12,10 +8,6 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
-
-/**
- * Created by RafaelT on 6/28/2016.
- */
 
 /**
  * Asserts that an elements children that match a selector only posses certain values.

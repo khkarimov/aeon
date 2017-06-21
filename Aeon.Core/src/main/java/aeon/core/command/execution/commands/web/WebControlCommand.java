@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Serves as the base class for all web element commands that need a finder
+ * Serves as the base class for all web element commands that need a finder.
  */
 public abstract class WebControlCommand extends Command {
 

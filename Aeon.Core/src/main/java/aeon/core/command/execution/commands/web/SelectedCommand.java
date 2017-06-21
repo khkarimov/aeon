@@ -9,7 +9,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Created by Steve Foo on 6/29/2016.
+ * Asserts that an element is selected.
  */
 public class SelectedCommand extends WebControlCommand {
 

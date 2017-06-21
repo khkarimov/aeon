@@ -15,9 +15,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Created by DionnyS on 4/21/2016.
- */
 public class Browser {
 
     private AutomationInfo info;

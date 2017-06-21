@@ -32,6 +32,9 @@ public class WebControlFinder implements IWebControlFinder {
 
     /**
      * Finds a web element utilizing a web driver.
+     *
+     * @param driver   The web driver.
+     * @param selector The selector for the element.
      */
     public final WebControl findElement(IWebDriver driver, IBy selector) {
         if (driver == null) {

@@ -5,8 +5,9 @@ import aeon.core.command.execution.commands.initialization.WebCommandInitializer
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.interfaces.IBy;
 
+
 /**
- * Created by SebastianR on 6/3/2016.
+ * Handles file dialog interactions.
  */
 public class FileDialogInput extends WebElement {
 
@@ -14,12 +15,25 @@ public class FileDialogInput extends WebElement {
     private IBy selector;
     private Iterable<IBy> switchMechanism;
 
+    /**
+     * Creates a new instance of {@link Button}.
+     *
+     * @param info     The automation info.
+     * @param selector IBy selector that will identify the element.
+     */
     public FileDialogInput(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
+    /**
+     * Creates a new instance of {@link Button}.
+     *
+     * @param info            The automation info.
+     * @param selector        IBy selector that will identify the element.
+     * @param switchMechanism The switch mechanism.
+     */
     public FileDialogInput(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
@@ -28,6 +42,9 @@ public class FileDialogInput extends WebElement {
     }
 
 
+    /**
+     * Opens a file dialog window.
+     */
     public void openFileDialog() {
         info.getCommandExecutionFacade().execute(info,
                 new OpenFileDialogCommand(
