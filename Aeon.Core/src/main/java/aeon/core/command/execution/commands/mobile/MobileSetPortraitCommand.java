@@ -1,4 +1,4 @@
-package aeon.core.command.execution.commands.web;
+package aeon.core.command.execution.commands.mobile;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
@@ -6,15 +6,15 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Hides the keyboard on a mobile device.
+ * Sets the mobile device's orientation to portrait.
  */
-public class MobileHideKeyboardCommand extends Command {
+public class MobileSetPortraitCommand extends Command {
 
     /**
-     * Initializes a new instance of the {@link MobileHideKeyboardCommand} class.
+     * Initializes a new instance of the {@link MobileSetPortraitCommand} class.
      */
-    public MobileHideKeyboardCommand() {
-        super(Resources.getString("MobileHideKeyboardCommand_Info"));
+    public MobileSetPortraitCommand() {
+        super(Resources.getString("MobileSetPortraitCommand_Info"));
     }
 
     /**
@@ -26,6 +26,6 @@ public class MobileHideKeyboardCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).mobileHideKeyboard();
+        ((IWebDriver)driver).mobileSetPortrait();
     }
 }

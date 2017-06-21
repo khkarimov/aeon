@@ -4,6 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.CloseCommand;
 import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
+import aeon.core.command.execution.commands.mobile.*;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.helpers.URLUtil;
 import aeon.core.common.web.BrowserSize;

@@ -107,15 +107,15 @@ public class FirefoxDriverActionTests {
         };
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getName().equals(cookie.getName()));
-        assert (secondCookie.getDomain().equals(cookie.getDomain()));
-        assert (secondCookie.getValue().equals(cookie.getValue()));
-        assert (secondCookie.getSecure() == cookie.getSecure());
-        assert (secondCookie.getPath().equals(cookie.getPath()));
+        assert(secondCookie.getName().equals(cookie.getName()));
+        assert(secondCookie.getDomain().equals(cookie.getDomain()));
+        assert(secondCookie.getValue().equals(cookie.getValue()));
+        assert(secondCookie.getSecure() == cookie.getSecure());
+        assert(secondCookie.getPath().equals(cookie.getPath()));
 
         product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getValue().equals("CookieNewValue"));
+        assert(secondCookie.getValue().equals("CookieNewValue"));
         product.browser.deleteCookie(cookie.getName());
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchCookieException.class));
         product.browser.getCookie(cookie.getName());
@@ -150,7 +150,7 @@ public class FirefoxDriverActionTests {
     public void testDoubleClick() {
         product.startPage.ultimateLogoImage.doubleClick();
         String src = product.startPage.ultimateLogoImageDoubleClick.getElementAttribute("src").toString();
-        assert (src.contains("ultimate-image.png"));
+        assert(src.contains("ultimate-image.png"));
         //the ultimate logo should appear in the image element "dbl-click-image"
     }
 
@@ -165,7 +165,7 @@ public class FirefoxDriverActionTests {
         product.startPage.openAlertButton.click();
         String text = product.browser.getAlertText();
 
-        assert (text.equals("Send some keys"));
+        assert(text.equals("Send some keys"));
         product.browser.dismissAlert();
         thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
         product.browser.getAlertText();

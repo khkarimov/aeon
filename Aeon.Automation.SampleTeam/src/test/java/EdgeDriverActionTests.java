@@ -98,16 +98,16 @@ public class EdgeDriverActionTests {
         };
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getName().equals(cookie.getName()));
-        assert (secondCookie.getDomain().equals(cookie.getDomain()));
-        assert (secondCookie.getValue().equals(cookie.getValue()));
-        assert (secondCookie.getSecure() == cookie.getSecure());
-        assert (secondCookie.getPath().equals(cookie.getPath()));
-        assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
+        assert(secondCookie.getName().equals(cookie.getName()));
+        assert(secondCookie.getDomain().equals(cookie.getDomain()));
+        assert(secondCookie.getValue().equals(cookie.getValue()));
+        assert(secondCookie.getSecure() == cookie.getSecure());
+        assert(secondCookie.getPath().equals(cookie.getPath()));
+        assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
 
         product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getValue().equals("CookieNewValue"));
+        assert(secondCookie.getValue().equals("CookieNewValue"));
         product.browser.deleteCookie(cookie.getName());
     }
 
@@ -153,7 +153,7 @@ public class EdgeDriverActionTests {
         product.startPage.openAlertButton.click();
         String text = product.browser.getAlertText();
 
-        assert (text.equals("Send some keys"));
+        assert(text.equals("Send some keys"));
         product.browser.dismissAlert();
         thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
         product.browser.getAlertText();

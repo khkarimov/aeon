@@ -1,4 +1,4 @@
-package aeon.core.command.execution.commands.web;
+package aeon.core.command.execution.commands.mobile;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;

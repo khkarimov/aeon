@@ -22,7 +22,10 @@ import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -40,6 +43,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ro.fortsoft.pf4j.Extension;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -159,27 +163,27 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case IOSSafari:
-                DesiredCapabilities capabilities = (DesiredCapabilities)getCapabilities();
+                DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
             case AndroidChrome:
-                capabilities = (DesiredCapabilities)getCapabilities();
+                capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
             case IOSHybridApp:
-                capabilities = (DesiredCapabilities)getCapabilities();
+                capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new IOSDriver(seleniumHubUrl, capabilities);
                 ((IOSDriver) driver).context(driverContext);
                 break;
 
             case AndroidHybridApp:
-                capabilities = (DesiredCapabilities)getCapabilities();
+                capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new AndroidDriver(seleniumHubUrl, capabilities);
                 ((AndroidDriver) driver).context(driverContext);
                 break;
@@ -194,8 +198,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 && !browserType.equals(BrowserType.AndroidChrome)
                 && !browserType.equals(BrowserType.IOSSafari)
                 && !browserType.equals(BrowserType.AndroidHybridApp)
-                && !browserType.equals(BrowserType.IOSHybridApp))
-        {
+                && !browserType.equals(BrowserType.IOSHybridApp)) {
             adapter.maximize();
         }
         return adapter;
@@ -225,8 +228,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
-                desiredCapabilities.setCapability("user" , perfectoUser);
-                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "mobileOS");
@@ -237,8 +240,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user" , perfectoUser);
-                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "mobileOS");
@@ -250,15 +253,13 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user" , perfectoUser);
-                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
                 desiredCapabilities.setCapability("platformName", "IOS");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
 
                 // Appium
-                desiredCapabilities.setCapability("app", app);
                 desiredCapabilities.setCapability("deviceName", deviceName);
 
                 break;
@@ -267,15 +268,13 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user" , perfectoUser);
-                desiredCapabilities.setCapability("password" , perfectoPass);
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
                 desiredCapabilities.setCapability("platformName", "Android");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
 
                 // Appium
-                desiredCapabilities.setCapability("app", app);
                 desiredCapabilities.setCapability("deviceName", deviceName);
 
                 // Android Specific
