@@ -16,7 +16,7 @@ public interface ICommandInitializer {
     /**
      * Sets the consumer for the command initializer.
      *
-     * @return The {@link Consumer<IDriver>}  of the command initializer.
+     * @return The {@link Consumer} of the command initializer.
      */
     Consumer<IDriver> setContext();
 

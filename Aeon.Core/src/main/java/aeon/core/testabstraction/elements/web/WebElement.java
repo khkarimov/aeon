@@ -45,11 +45,11 @@ public class WebElement extends Element {
 
     /**
      * Initializes a new instance of the {@link WebElement} class
-     * with a {@link Iterable<IBy>} switch mechanism.
+     * with a switch mechanism.
      *
      * @param info The AutomationInfo.
      * @param selector IBY selector that will indentify the element.
-     * @param switchMechanism The Iterable<IBy> switch mechanism for the web element.
+     * @param switchMechanism The switch mechanism for the web element.
      */
     public WebElement(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         this(info, selector);

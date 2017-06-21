@@ -21,7 +21,7 @@ public class WebCommandInitializer implements ICommandInitializer {
      * Initialize a new instance of the {@link WebCommandInitializer} class.
      *
      * @param finder The {@link IWebControlFinder} for the command initializer.
-     * @param switchMechanism The {@link Iterable<IBy>} for the command initializer.
+     * @param switchMechanism The switch mechanism for the command initializer.
      */
     public WebCommandInitializer(IWebControlFinder finder, Iterable<IBy> switchMechanism) {
         this.finder = finder;
