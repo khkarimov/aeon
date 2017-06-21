@@ -32,5 +32,16 @@ public enum BrowserType {
     /**
      * Android Chrome.
      */
-    AndroidChrome
+    AndroidChrome,
+
+    //Apps
+    /**
+     * iOS app
+     */
+    IOSHybridApp,
+
+    /**
+     * Android app
+     */
+    AndroidHybridApp
 }
