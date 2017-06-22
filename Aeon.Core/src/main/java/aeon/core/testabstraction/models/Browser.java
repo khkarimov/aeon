@@ -14,15 +14,26 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Browser class.
+ */
 public class Browser {
 
     private AutomationInfo info;
     private String mainWindowHandle;
 
+    /**
+     * The constructor for the Browser given an AutomationInfo object.
+     *
+     * @param info sets the info of the newly made Browser.
+     */
     public Browser(AutomationInfo info) {
         this.info = info;
     }
 
+    /**
+     * Function to accept an incoming alert.
+     */
     public void acceptAlert() {
         info.getCommandExecutionFacade().execute(info, new AcceptAlertCommand());
     }
@@ -248,6 +259,8 @@ public class Browser {
     }
 
     /**
+     * Function verifies that an alert gives the proper text.
+     *
      * @param comparingText String to compare against Alert Text.
      * @param caseSensitive Determine caseSensitive comparison
      */
@@ -255,22 +268,45 @@ public class Browser {
         info.getCommandExecutionFacade().execute(info, new VerifyAlertTextLikeCommand(comparingText, caseSensitive));
     }
 
+    /**
+     * Verifis the title given a string.
+     *
+     * @param comparingTitle the title, as a string, to verify.
+     */
     public void verifyTitle(String comparingTitle) {
         info.getCommandExecutionFacade().execute(info, new VerifyTitleCommand(comparingTitle));
     }
 
+    /**
+     * Verifis the URL given a string.
+     *
+     * @param comparingURL the url, as a string, to compare.
+     */
     public void verifyURL(String comparingURL) {
         info.getCommandExecutionFacade().execute(info, new VerifyUrlCommand(comparingURL));
     }
 
+    /**
+     * Function verifies that the window does not exist given a title as a string parameter.
+     * @param windowTitle the title, as a string, to the test.
+     */
     public void verifyWindowDoesNotExistByTitle(String windowTitle) {
         info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByTitleCommand(windowTitle));
     }
 
+    /**
+     * Function verifies that the window does not exist given a url as a string parameter.
+     * @param url the url, as a string, to test by the function.
+     */
     public void verifyWindowDoesNotExistByUrl(String url) {
         info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByUrlCommand(url));
     }
 
+    /**
+     * Function clicks all elements given an IBy selector.
+     *
+     * @param selector
+     */
     public void clickAllElementsCommand(IBy selector) {
         info.getCommandExecutionFacade().execute(
                 info,
