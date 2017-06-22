@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id=":Aeon.SampleContext:test" external.linked.project.path="$MODULE_DIR$/../../../Aeon.SampleContext" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="SampleContext" external.system.module.type="sourceSet" external.system.module.version="0.0.1" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output-test url="file://$MODULE_DIR$/../../../Aeon.SampleContext/build/classes/test" />
+    <output-test url="file://$MODULE_DIR$/../../../Aeon.SampleContext/build/classes/java/test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../Aeon.SampleContext/src/test">
       <sourceFolder url="file://$MODULE_DIR$/../../../Aeon.SampleContext/src/test/java" isTestSource="true" />
@@ -12,8 +12,8 @@
     <orderEntry type="module" module-name="Aeon.SampleContext_main" />
     <orderEntry type="module" module-name="Aeon.Core_main" />
     <orderEntry type="library" name="Gradle: ro.fortsoft.pf4j:pf4j:0.13.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.7.1-1" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.7.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-core:2.5" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.5" level="project" />
