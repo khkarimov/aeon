@@ -1,8 +1,5 @@
-/**
- * Created by josepe on 1/26/2017.
- */
-
 import aeon.core.common.web.BrowserType;
+import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -27,8 +24,10 @@ public class WindowsChromeDriverTests {
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Chrome);
-        product.browser.maximize();
-        product.browser.goToUrl("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/Test%20Sample%20Context/index.html");
+        String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
+                "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
+        String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
+        product.browser.goToUrl(protocol + "://" + environment);
     }
 
     @After
@@ -40,7 +39,7 @@ public class WindowsChromeDriverTests {
 
     @Test
     public void testSelectFileDialog_OpenFileDialog() {
-        String path = System.getProperty("user.dir") + "\\Test Sample Context\\HeatLogo.jpg";
+        String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
         product.startPage.testFileDialogInput.openFileDialog();
         product.startPage.testFileDialogInput.selectFileDialog(path);
     }

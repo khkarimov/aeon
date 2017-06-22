@@ -7,10 +7,7 @@ import aeon.core.common.exceptions.*;
 import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
-import aeon.core.common.helpers.MouseHelper;
-import aeon.core.common.helpers.SendKeysHelper;
-import aeon.core.common.helpers.Sleep;
-import aeon.core.common.helpers.StringUtils;
+import aeon.core.common.helpers.*;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.JQueryStringType;
@@ -23,14 +20,19 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
 import com.sun.glass.ui.Size;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.security.UserAndPassword;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -40,6 +42,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -657,11 +660,25 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Maximizes the browser window.
+     *
+     * Workaround implemented for chromiun browsers running in MacOS due to maximize default behaviour
+     * only expanding vertically. More information can be found at:
+     * https://bugs.chromium.org/p/chromedriver/issues/detail?id=985
      */
     public void maximize() {
         try {
             log.trace("WebDriver.Manage().Window.maximize();");
-            webDriver.manage().window().maximize();
+            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) && browserType.equals(BrowserType.Chrome)) {
+                int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+                int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+                Point position = new Point(0, 0);
+                webDriver.manage().window().setPosition(position);
+                Dimension maximizedScreenSize =
+                        new Dimension(screenWidth, screenHeight);
+                webDriver.manage().window().setSize(maximizedScreenSize);
+            } else {
+                webDriver.manage().window().maximize();
+            }
         } catch (IllegalStateException e) {
             log.trace("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
             executeScript("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
@@ -1843,4 +1860,116 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 break;
         }
     }
+
+    @Override
+    public void setAuthenticationCredentials(String setUsername, String setPassword){
+        log.trace("WebDriver.setAuthenticationCredentials();");
+        try {
+            Alert alert = webDriver.switchTo().alert();
+            UserAndPassword credentials = new UserAndPassword(setUsername, setPassword);
+            alert.setCredentials(credentials);
+            alert.accept();
+        } catch (NoAlertPresentException e) {
+            throw new NoAlertException(e);
+        }
+    }
+
+    @Override
+    public void mobileSetPortrait()
+    {
+        switch (browserType)
+        {
+            case AndroidHybridApp:
+                ((AndroidDriver) getWebDriver()).rotate(ScreenOrientation.PORTRAIT);
+                break;
+            case IOSHybridApp:
+                ((IOSDriver) getWebDriver()).rotate(ScreenOrientation.PORTRAIT);
+                break;
+        }
+    }
+
+    @Override
+    public void mobileSetLandscape()
+    {
+        switch (browserType)
+        {
+            case AndroidHybridApp:
+                ((AndroidDriver) getWebDriver()).rotate(ScreenOrientation.LANDSCAPE);
+                break;
+            case IOSHybridApp:
+                ((IOSDriver) getWebDriver()).rotate(ScreenOrientation.LANDSCAPE);
+                break;
+        }
+    }
+
+    @Override
+    public void mobileHideKeyboard()
+    {
+        switch (browserType)
+        {
+            case AndroidHybridApp:
+                ((AndroidDriver) getWebDriver()).hideKeyboard();
+                break;
+            case IOSHybridApp:
+                ((IOSDriver) getWebDriver()).hideKeyboard();
+                break;
+        }
+    }
+
+    @Override
+    public void mobileLock()
+    {
+        switch (browserType)
+        {
+            case AndroidHybridApp:
+                ((AndroidDriver) getWebDriver()).lockDevice();
+                break;
+            case IOSHybridApp:
+                ((IOSDriver) getWebDriver()).lockDevice(Duration.ZERO);
+                break;
+        }
+    }
+
+    @Override
+    public void mobileLock(int seconds)
+    {
+        switch (browserType)
+        {
+            case AndroidHybridApp:
+                ((AndroidDriver) getWebDriver()).lockDevice();
+                break;
+            case IOSHybridApp:
+                ((IOSDriver) getWebDriver()).lockDevice(Duration.ofSeconds(seconds));
+                break;
+        }
+    }
+
+    @Override
+    public void mobileSwipe(int startx, int starty, int endx, int endy, int duration)
+    {
+        switch (browserType)
+        {
+            case AndroidHybridApp:
+                ((AndroidDriver) getWebDriver()).swipe(startx, starty, endx, endy, duration);
+                break;
+            case IOSHybridApp:
+                ((IOSDriver) getWebDriver()).swipe(startx, starty, endx, endy, duration);
+                break;
+        }
+    }
+
+    @Override
+    public void mobileSetGeoLocation(double latitude, double longitude, double altitude)
+    {
+        switch (browserType)
+        {
+            case AndroidHybridApp:
+                ((AndroidDriver) getWebDriver()).setLocation(new Location(latitude, longitude, altitude));
+                break;
+            case IOSHybridApp:
+                ((IOSDriver) getWebDriver()).setLocation(new Location(latitude, longitude, altitude));
+                break;
+        }
+    }
+
 }

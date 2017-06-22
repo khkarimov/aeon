@@ -807,4 +807,60 @@ public interface IWebAdapter extends IAdapter {
      * @param setValue The new value for the Text or Value attribute of the control.
      */
     void set(WebControl element, WebSelectOption option, String setValue);
+
+
+    /**
+     * Sets the Username and Password for an authentication input or alert.
+     *
+     * @param setUsername The new value for the Username attribute of the control.
+     * @param setPassword The new value for the Password attribute of the control.
+     */
+    void setAuthenticationCredentials(String setUsername, String setPassword);
+
+    /**
+     * Locks a mobile device.
+     */
+    void mobileLock();
+
+    /**
+     * Locks a mobile device.
+     *
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
+     */
+    void mobileLock(int seconds);
+
+    /**
+     * Executes a swipe on a mobile device.
+     *
+     * @param startx Starting x coord.
+     * @param starty Starting y coord.
+     * @param endx Ending x coord.
+     * @param endy Ending y coord.
+     * @param duration The duration of the execution of the swipe
+     */
+    void mobileSwipe(int startx, int starty, int endx, int endy, int duration);
+
+    /**
+     * Hides the keyboard on a mobile device.
+     */
+    void mobileHideKeyboard();
+
+    /**
+     * Sets the mobile device's orientation to landscape.
+     */
+    void mobileSetLandscape();
+
+    /**
+     * Sets the mobile device's orientation to portrait.
+     */
+    void mobileSetPortrait();
+
+    /**
+     * Sets the mobile device's GPS location.
+     * @param latitude Latitude Coordinate
+     * @param latitude Longitude Coordinate
+     * @param latitude Altitude
+     */
+    void mobileSetGeoLocation(double latitude, double longitude, double altitude);
+
 }

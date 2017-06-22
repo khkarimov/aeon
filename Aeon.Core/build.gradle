@@ -2,8 +2,8 @@ def baseProjectName = 'Aeon.Core'
 def baseProjectDescription = 'Aeon Core'
 def base = baseProjectName
 
-group 'Aeon'
-version '0.2.4'
+group 'aeon'
+version '0.2.7'
 
 apply plugin: 'java'
 
@@ -74,6 +74,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifactId 'aeon.core'
         }
     }
 }

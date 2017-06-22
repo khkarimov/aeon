@@ -24,8 +24,8 @@ public class WebElement extends Element {
     /**
      * Initializes a new instance of the {@link WebElement} class.
      *
-     * @param info The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
+     * @param info      The automation information.
+     * @param selector  IBy selector that will identify the element.
      */
     public WebElement(AutomationInfo info, IBy selector) {
         super(selector);
@@ -135,7 +135,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the exists command.
+     * Asserts if a web element exists.
      */
     public void exists() {
         info.getCommandExecutionFacade().execute(info, new ExistsCommand(
@@ -144,7 +144,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the not exists command.
+     * Asserts if a web element does not exist.
      */
     public void notExists() {
         info.getCommandExecutionFacade().execute(info, new NotExistsCommand(selector));
@@ -152,11 +152,9 @@ public class WebElement extends Element {
 
     /**
      * Executes the get element attribute command.
-     *
-     * @param attributeName The HTML attribute (e.g., class) or innerHTML.
-     *
-     * @return The element attribute of the element.
-     */
+     * @param attributeName The name of the attribute to get from a web element.
+     * @return The specified attribute of the web element.
+      */
     public Object getElementAttribute(String attributeName) {
         return info.getCommandExecutionFacade().execute(info, new GetElementAttributeCommand(
                 selector,
@@ -166,7 +164,7 @@ public class WebElement extends Element {
 
     /**
      * Executes the right click command.
-     */
+      */
     public void rightClick() {
         info.getCommandExecutionFacade().execute(info, new RightClickCommand(
                 selector,
@@ -174,7 +172,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the mouse out command.
+     * Executes the mouse out command
      */
     public void mouseOut() {
         info.getCommandExecutionFacade().execute(info, new MouseOutCommand(
@@ -192,9 +190,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the is command with a specified value.
+     * Asserts the text of the web element's text.
      *
-     * @param value The value the attribute should have.
+     * @param value The expected value of the web element's text.
      */
     public void is(String value) {
         info.getCommandExecutionFacade().execute(info, new IsCommand(
@@ -206,10 +204,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the is command with a value and an attribute.
+     * Asserts the value of the web element's attribute.
      *
-     * @param value The value the attribute should have.
-     * @param attribute The attribute to compared.
+     * @param value The expected value of the attribute.
+     * @param attribute The attribute to be compared.
      */
     public void is(String value, String attribute) {
         info.getCommandExecutionFacade().execute(info, new IsCommand(
@@ -221,9 +219,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the is like command with a specified value.
+     * Asserts the text of the web element's text is like a given value.
      *
-     * @param value The value the attribute should have.
+     * @param value The value the text should be like.
      */
     public void isLike(String value) {
         info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
@@ -235,10 +233,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the is like command with a value and an attribute.
+     * Asserts the value of the web element's attribute is like a given value.
      *
-     * @param value The value the attribute should have.
-     * @param attribute The attribute to compared.
+     * @param value The value the attribute should be like.
+     * @param attribute The attribute to be compared.
      */
     public void isLike(String value, String attribute) {
         info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
@@ -250,9 +248,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the is not like command with a specified value.
+     * Asserts the text of the web element's text is not like a given value.
      *
-     * @param value The value the attribute should have.
+     * @param value The value the text should not be like.
      */
     public void isNotLike(String value) {
         info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
@@ -264,10 +262,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the is not like command with a value and an attribute.
+     * Asserts the value of a web element's value is not like a given value.
      *
-     * @param value The value the attribute should have.
-     * @param attribute The attribute to compared.
+     * @param value The value the attribute should not be like.
+     * @param attribute The attribute to be compared.
      */
     public void isNotLike(String value, String attribute) {
         info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
@@ -279,10 +277,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the has command with specified messages and a specified child selector.
+     * Asserts that a web element's children that match a given selector posses certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      */
     public void has(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
@@ -293,11 +291,11 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the has command with specified messages, a specified child selector, and an attribute.
+     * Asserts that a web element's children that match a given selector posses certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
-     * @param attribute The attribute of the children to compare with messages.
+     * @param childSelector The selector that the children are matched to.
+     * @param attribute The attribute of the children to compare with the messages.
      */
     public void has(String[] messages, String childSelector, String attribute) {
         info.getCommandExecutionFacade().execute(info,
@@ -308,10 +306,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the has like command with specified messages and a specified child selector.
+     * Asserts that an elements children that match a selector possess values like the given values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      */
     public void hasLike(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
@@ -322,10 +320,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the has like command with specified messages, a specified child selector, and an attribute.
+     * Asserts that an elements children that match a selector possess values like the given values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
      */
     public void hasLike(String[] messages, String childSelector, String attribute) {
@@ -337,10 +335,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the does not have command with specified messages and a specified child selector.
+     * Asserts that an elements children that match a given selector do not have certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      */
     public void doesNotHave(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
@@ -351,10 +349,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the does not have command with specified messages, a specified child selector, and an attribute.
+     * Asserts that an elements children that match a given selector do not have certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
      */
     public void doesNotHave(String[] messages, String childSelector, String attribute) {
@@ -366,10 +364,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the does not have like command with specified messages and a specified child selector.
+     * Asserts that an elements children that match a given selector do not have certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      */
     public void doesNotHaveLike(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
@@ -380,10 +378,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the does not have like command with specified messages, a specified child selector, and an attribute.
+     * Asserts that an elements children that match a given selector do not have certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
      */
     public void doesNotHaveLike(String[] messages, String childSelector, String attribute) {
@@ -395,10 +393,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the has only command with specified messages and a specified child selector.
+     * Asserts that an elements children that match a selector only posses certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      */
     public void hasOnly(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
@@ -409,10 +407,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the has only command with specified messages and a specified child selector.
+     * Asserts that an elements children that match a selector only posses certain values.
      *
      * @param messages The strings to be matched.
-     * @param childSelector The selector that the children are mapped to.
+     * @param childSelector The selector that the children are matched to.
      * @param attribute The attribute of the children to compare with messages.
      */
     public void hasOnly(String[] messages, String childSelector, String attribute) {
@@ -436,10 +434,10 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the set body value by javascript command with a specified value.
+     * Executes the setting of a body value by javascript.
      *
-     * @param value The new value to be set in the body.
-     */
+     * @param value The body value to be set to.
+      */
     public void setBodyValueByJavaScript(String value) {
         info.getCommandExecutionFacade().execute(info, new SetBodyValueByJavaScriptCommand(
                 selector,
@@ -460,7 +458,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the visible command.
+     * Executes visible command when a web element is visible.
      */
     public void visible() {
         info.getCommandExecutionFacade().execute(info, new VisibleCommand(
@@ -478,7 +476,8 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the dates approximately equal command with a specified attribute name, expected date, and acceptable delta.
+     * Checks that the date contained in an element attribute is approximately equal to an expected date within a certain margin of error.
+     * The provided Period cannot contain any weeks or years or months since these vary in length.
      *
      * @param attributeName The name of the attribute that has the date.
      * @param expectedDate The expected date.
@@ -493,9 +492,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the get client rects command.
+     * Gets the bounding rectangle for a web element.
      *
-     * @return The {@link ClientRects} for the element.
+     * @return A ClientRect with the bounding sides of the web element.
      */
     public ClientRects getClientRects() {
         return (ClientRects) info.getCommandExecutionFacade().execute(info, new GetClientRectsCommand(

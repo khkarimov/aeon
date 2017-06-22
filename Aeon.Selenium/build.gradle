@@ -2,8 +2,8 @@ def baseProjectName = 'Aeon.Selenium'
 def baseProjectDescription = 'Aeon Selenium'
 def base = baseProjectName
 
-group 'Aeon.Selenium'
-version '0.2.4'
+group 'aeon'
+version '0.2.7'
 
 apply plugin: 'java'
 
@@ -19,7 +19,8 @@ configurations {
 }
 
 ext {
-    seleniumVersion = '3.3.0'
+    seleniumVersion = '3.4.0'
+    appiumVersion = "5.0.0-BETA8"
 }
 
 dependencies {
@@ -38,6 +39,8 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+
+    compile "io.appium:java-client:$appiumVersion"
 }
 
 jar {
@@ -91,3 +94,16 @@ task copyToDistrib(type: Copy) {
 
 copyToDistrib.outputs.upToDateWhen { false }
 jar.finalizedBy(buildPlugin)
+
+apply plugin: "com.jfrog.artifactory"
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact(file("$buildDir/libs/Aeon.Selenium-" + version + ".zip"))
+            artifactId 'aeon.selenium'
+        }
+    }
+}

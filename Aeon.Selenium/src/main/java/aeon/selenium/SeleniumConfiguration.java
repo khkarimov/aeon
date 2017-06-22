@@ -35,7 +35,21 @@ public class SeleniumConfiguration extends Configuration {
         public static final String EDGE_DIRECTORY = "aeon.selenium.edge_directory";
         public static final String CHROME_BINARY = "aeon.selenium.chrome_binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox_binary";
-    };
+
+        // Perfecto
+        public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";
+        public static final String PERFECTO_PASS = "aeon.selenium.perfecto.pass";
+        public static final String PLATFORM_VERSION = "aeon.selenium.perfecto.platform_version";
+        public static final String BROWSER_VERSION = "aeon.selenium.perfecto.browser_version";
+
+        // Appium
+        public static final String APP = "aeon.selenium.appium.app";
+        public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
+        public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
+
+        // Android
+        public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
+    }
 
     @Override
     protected List<Field> getConfigurationFields() {

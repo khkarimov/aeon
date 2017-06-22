@@ -5,9 +5,6 @@ import aeon.core.common.exceptions.UnableToCreateURLException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by DionnyS on 4/21/2016.
- */
 public class URLUtil {
     /**
      * Given a string URL, it creates a URL object.

@@ -4,6 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.CloseCommand;
 import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
+import aeon.core.command.execution.commands.mobile.*;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.helpers.URLUtil;
 import aeon.core.common.web.BrowserSize;
@@ -313,5 +314,33 @@ public class Browser {
                 new ClickAllElementsCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+    }
+
+    public void mobileHideKeyboard() {
+        info.getCommandExecutionFacade().execute(info, new MobileHideKeyboardCommand());
+    }
+
+    public void mobileSetLandscape() {
+        info.getCommandExecutionFacade().execute(info, new MobileSetLandscapeCommand());
+    }
+
+    public void mobileSetPortrait() {
+        info.getCommandExecutionFacade().execute(info, new MobileSetPortraitCommand());
+    }
+
+    public void mobileSetGeoLocation(double latitude, double longitude, double altitude) {
+        info.getCommandExecutionFacade().execute(info, new MobileSetGeoLocationCommand(latitude, longitude, altitude));
+    }
+
+    public void mobileLock() {
+        info.getCommandExecutionFacade().execute(info, new MobileLockCommand());
+    }
+
+    public void mobileLock(int seconds){
+        info.getCommandExecutionFacade().execute(info, new MobileLockCommand(seconds));
+    }
+
+    public void mobileSwipe(int startx, int starty, int endx, int endy, int duration){
+        info.getCommandExecutionFacade().execute(info, new MobileSwipeCommand(startx, starty, endx, endy, duration));
     }
 }

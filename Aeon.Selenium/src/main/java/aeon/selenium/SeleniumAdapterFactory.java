@@ -17,6 +17,8 @@ import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
@@ -67,6 +69,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
     private String proxyLocation;
+    private String perfectoUser;
+    private String perfectoPass;
+    private String platformVersion;
+    private String browserVersion;
+    private String app;
+    private String appPackage;
+    private String deviceName;
+    private String driverContext;
 
     public IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
@@ -77,9 +87,17 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
+        perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
+        perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
+        platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
+        browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
+        app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
+        appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
+        deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
+        driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "NATIVE_APP");
 
-        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         URL seleniumHubUrl = null;
+        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         if (StringUtils.isNotBlank(hubUrlString)) {
             try {
                 if (!hubUrlString.endsWith("/wd/hub")) {
@@ -99,9 +117,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
+        WebDriver driver;
         switch (browserType) {
             case Firefox:
-                WebDriver driver;
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
@@ -109,8 +127,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new FirefoxDriver(getFirefoxOptions());
                 }
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             case Chrome:
                 if (seleniumHubUrl != null) {
@@ -123,8 +140,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
                             setProxySettings(capabilities, proxyLocation));
                 }
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             case InternetExplorer:
                 if (seleniumHubUrl != null) {
@@ -134,8 +150,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
                             getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation));
                 }
-
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+                break;
 
             case Edge:
                 if (seleniumHubUrl != null) {
@@ -145,13 +160,48 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                             new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
                             getEdgeOptions(proxyLocation));
                 }
+                break;
 
-                return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+            case IOSSafari:
+                DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
+                driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
+                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                break;
+
+            case AndroidChrome:
+                capabilities = (DesiredCapabilities) getCapabilities();
+                driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
+                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                break;
+
+            case IOSHybridApp:
+                capabilities = (DesiredCapabilities) getCapabilities();
+                driver = new IOSDriver(seleniumHubUrl, capabilities);
+                ((IOSDriver) driver).context(driverContext);
+                break;
+
+            case AndroidHybridApp:
+                capabilities = (DesiredCapabilities) getCapabilities();
+                driver = new AndroidDriver(seleniumHubUrl, capabilities);
+                ((AndroidDriver) driver).context(driverContext);
+                break;
 
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
         }
+
+        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+        if (maximizeBrowser
+                && !browserType.equals(BrowserType.AndroidChrome)
+                && !browserType.equals(BrowserType.IOSSafari)
+                && !browserType.equals(BrowserType.AndroidHybridApp)
+                && !browserType.equals(BrowserType.IOSHybridApp)) {
+            adapter.maximize();
+        }
+        return adapter;
     }
 
     private Capabilities getCapabilities() {
@@ -174,6 +224,62 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Edge:
                 desiredCapabilities = getEdgeOptions(null);
+                break;
+
+            case IOSSafari:
+                desiredCapabilities = new DesiredCapabilities();
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
+                desiredCapabilities.setCapability("platformName", "iOS");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+                break;
+
+            case AndroidChrome:
+                desiredCapabilities = new DesiredCapabilities();
+
+                // Perfecto
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
+                desiredCapabilities.setCapability("platformName", "Android");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("deviceName", deviceName);
+                break;
+
+            case IOSHybridApp:
+                desiredCapabilities = new DesiredCapabilities();
+
+                // Perfecto
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
+                desiredCapabilities.setCapability("platformName", "IOS");
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+
+                // Appium
+                desiredCapabilities.setCapability("deviceName", deviceName);
+
+                break;
+
+            case AndroidHybridApp:
+                desiredCapabilities = new DesiredCapabilities();
+
+                // Perfecto
+                desiredCapabilities.setCapability("user", perfectoUser);
+                desiredCapabilities.setCapability("password", perfectoPass);
+                desiredCapabilities.setCapability("platformName", "Android");
+                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserVersion", browserVersion);
+
+                // Appium
+                desiredCapabilities.setCapability("deviceName", deviceName);
+
+                // Android Specific
+                desiredCapabilities.setCapability("appPackage", appPackage);
+
                 break;
 
             default:
@@ -272,9 +378,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
-        if (maximizeBrowser) {
-            chromeOptions.addArguments("--start-maximized");
-        }
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + MobileUserAgent);

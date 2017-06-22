@@ -703,10 +703,65 @@ public interface IWebDriver extends IDriver {
     String windowDoesNotExistByTitle(String windowTitle);
 
     /**
+     * Sets the Username and Password for an authentication alert.
+     *
+     * @param setUsername The new value for the Username attribute of the control.
+     * @param setPassword The new value for the Password attribute of the control.
+     */
+    void setAuthenticationCredentials(String setUsername, String setPassword);
+
+    /**
      * Asserts a window with a given URL does not exists. A globally unique identifier associated with the call.
      *
      * @param url The URL of the window to search for.
      * @return The URL of the window
      */
     String windowDoesNotExistByUrl(String url);
+
+    /**
+     * Locks and immediately unlocks a mobile device.
+     */
+    void mobileLock();
+
+    /**
+     * Locks and immediately unlocks a mobile device.
+     *
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
+     */
+    void mobileLock(int seconds);
+
+    /**
+     * Executes a swipe on a mobile device.
+     *
+     * @param startx Starting x coord.
+     * @param starty Starting y coord.
+     * @param endx Ending x coord.
+     * @param endy Ending y coord.
+     * @param duration The duration of the execution of the swipe
+     */
+    void mobileSwipe(int startx, int starty, int endx, int endy, int duration);
+
+    /**
+     * Hides the keyboard on a mobile device.
+     */
+    void mobileHideKeyboard();
+
+    /**
+     * Sets the mobile device's orientation to landscape.
+     */
+    void mobileSetLandscape();
+
+    /**
+     * Sets the mobile device's orientation to portrait.
+     */
+    void mobileSetPortrait();
+
+    /**
+     * Sets the GPS location on a mobile device.
+     *
+     * @param latitude The GPS latitude.
+     * @param longitude The GPS longitude.
+     * @param altitude The GPS altitude.
+     */
+    void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 }
