@@ -22,10 +22,18 @@ public class UnsupportedElementException extends RuntimeException implements Ser
         this.forType = forType;
     }
 
+    /**
+     * Gets the forType of the class.
+     * @return the forType class.
+     */
     public Class getForType() {
         return forType;
     }
 
+    /**
+     * Sets the forType class.
+     * @param forType the class type to be set.
+     */
     public void setForType(Class forType) {
         this.forType = forType;
     }

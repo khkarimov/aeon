@@ -305,7 +305,7 @@ public class Browser {
     /**
      * Function clicks all elements given an IBy selector.
      *
-     * @param selector
+     * @param selector the selector for the element.
      */
     public void clickAllElementsCommand(IBy selector) {
         info.getCommandExecutionFacade().execute(

@@ -16,7 +16,7 @@ public class ThrottledDelegateRunner extends DelegateRunner {
     private Duration throttleFactor;
 
     /**
-     * The constructor for the Throttled Delegate Runner class
+     * The constructor for the Throttled Delegate Runner class.
      * @param successor the delegate runner.
      * @param throttleFactor the duration.
      */

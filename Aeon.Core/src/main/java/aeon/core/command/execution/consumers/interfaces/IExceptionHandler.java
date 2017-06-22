@@ -1,5 +1,8 @@
 package aeon.core.command.execution.consumers.interfaces;
 
+/**
+ * Interface for Exception Handler.
+ */
 public interface IExceptionHandler {
 
     /**

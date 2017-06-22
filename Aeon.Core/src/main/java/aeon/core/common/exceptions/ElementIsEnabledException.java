@@ -5,7 +5,7 @@ import aeon.core.common.Resources;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 6/27/2016.
+ * Class that handles the exception thrown when the element is enabled.
  */
 public class ElementIsEnabledException extends RuntimeException implements Serializable {
 

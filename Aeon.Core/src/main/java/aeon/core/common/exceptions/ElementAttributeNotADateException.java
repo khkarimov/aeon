@@ -9,6 +9,11 @@ import java.util.Locale;
  */
 public class ElementAttributeNotADateException extends RuntimeException {
 
+    /**
+     * Initializes a new instance of the {@link ElementAttributeNotADateException} class.
+     * @param attribute the string element.
+     * @param value the value.
+     */
     public ElementAttributeNotADateException(String attribute, String value) {
         super(String.format(Locale.getDefault(), Resources.getString("ElementAttributeNotADateException_ctor_DefaultMessage"), attribute, value));
     }

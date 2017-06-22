@@ -11,6 +11,12 @@ import java.util.Locale;
  */
 public class DatesNotApproximatelyEqualException extends RuntimeException {
 
+    /**
+     * Initializes a new instance of the {@link DatesNotApproximatelyEqualException} class.
+     * @param expected the expected datetime.
+     * @param actual the actual datetime.
+     * @param delta the period.
+     */
     public DatesNotApproximatelyEqualException(DateTime expected, DateTime actual, Period delta) {
         super(String.format(Locale.getDefault(), Resources.getString("DatesNotApproximatelyEqualException_ctor_DefaultMessage"), expected.toString(), actual.toString(), delta.toString()));
     }

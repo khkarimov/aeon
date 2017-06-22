@@ -7,6 +7,9 @@ package aeon.core.testabstraction.elements.web;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 
+/**
+ * Image class.
+ */
 public class Image extends WebElement {
 
     private AutomationInfo info;

@@ -80,6 +80,10 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
 
+    /**
+     * A function that returns the row.
+     * @return new instance of K selector.
+     */
     public K getRow() {
         return newInstanceOfK(selector);
     }

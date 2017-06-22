@@ -148,10 +148,20 @@ public class Configuration {
         set(key, Boolean.toString(value));
     }
 
+    /**
+     * Sets a key to a specific value.
+     * @param key the string of the key.
+     * @param value the string value to set it to.
+     */
     public void setString(String key, String value) {
         set(key, value);
     }
 
+    /**
+     * Sets the double given a string key and a double value.
+     * @param key the string of the key to be set.
+     * @param value the value to set.
+     */
     public void setDouble(String key, double value) {
         set(key, Double.toString(value));
     }
@@ -199,6 +209,9 @@ public class Configuration {
         return properties.getProperty(key, defaultValue);
     }
 
+    /**
+     * Static class for the Configuration keys.
+     */
     public static class Keys {
 
         public static final String WAIT_FOR_AJAX_RESPONSES = "aeon.wait_for_ajax_responses";

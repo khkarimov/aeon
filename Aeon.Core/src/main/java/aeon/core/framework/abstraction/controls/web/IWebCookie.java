@@ -45,6 +45,7 @@ public interface IWebCookie {
 
     /**
      * Gets a value indicating whether or not the cookie is a Session cookie.
+     * @return  whether the cookie has a session or not.
      */
     boolean getSession();
 }

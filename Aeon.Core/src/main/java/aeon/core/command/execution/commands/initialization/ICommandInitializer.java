@@ -7,11 +7,11 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import java.util.function.Consumer;
 
 /**
- * Command Initializer.
+ * Command Initializer interface.
  */
 public interface ICommandInitializer {
 
-    // TODO: Delete/change the name of this method.
+    // TODO(johnDoe): Delete/change the name of this method.
 
     /**
      * Sets the consumer for the command initializer.

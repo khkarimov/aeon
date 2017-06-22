@@ -6,10 +6,14 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/17/2016.
+ * Class that handles the exception thrown when the elements are not in order.
  */
 public class ElementsNotInOrderException extends RuntimeException {
 
+    /**
+     * Initializes a new instance of the {@link ElementsNotInOrderException} class.
+     * @param compareType the input CompareType.
+     */
     public ElementsNotInOrderException(CompareType compareType) {
         super(String.format(Locale.getDefault(), Resources.getString("ElementsNotInOrderExceptionException_ctor_DefaultMessage"), compareType.toString()));
     }

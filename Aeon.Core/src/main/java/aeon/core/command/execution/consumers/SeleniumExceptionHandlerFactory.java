@@ -27,8 +27,8 @@ public class SeleniumExceptionHandlerFactory implements IExceptionHandlerFactory
     }
 
     /**
-     * Function creates a handler for the type of exception
-     * @param typeOfexceptionToHandle the type of exception
+     * Function creates a handler for the type of exception.
+     * @param typeOfexceptionToHandle the type of exception.
      * @return new instance of continue at user exception handler.
      */
     public final IExceptionHandler createHandlerFor(java.lang.Class typeOfexceptionToHandle) {

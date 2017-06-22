@@ -85,12 +85,12 @@ public enum JQueryStringType {
     GetClientRects,
 
     /**
-     * JavaScript code getting the options of a select element
+     * JavaScript code getting the options of a select element.
      */
     GetOptions,
 
     /**
-     * JavaScript code for bringing up the context menu (right click menu)
+     * JavaScript code for bringing up the context menu (right click menu).
      */
     ShowContextMenu,
 
@@ -99,10 +99,19 @@ public enum JQueryStringType {
      */
     FireDoubleClick;
 
+    /**
+     * Returns a JQuery String Type based on an input value.
+     * @param value the input integer.
+     * @return the enum of the value.
+     */
     public static JQueryStringType forValue(int value) {
         return values()[value];
     }
 
+    /**
+     * Gets the ordinal value of the {@link JQueryStringType}.
+     * @return the ordinal value.
+     */
     public int getValue() {
         return this.ordinal();
     }

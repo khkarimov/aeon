@@ -13,8 +13,8 @@ public interface IExceptionHandlerFactory {
 
     /**
      * Function creates a handle for the exception.
-     * @param typeOfExceptionToHandle
-     * @return a Continue At User Exception Handler.
+     * @param typeOfExceptionToHandle the class type of exception to handle.
+     * @return an Iexception Handler.
      */
     IExceptionHandler createHandlerFor(java.lang.Class typeOfExceptionToHandle);
 }

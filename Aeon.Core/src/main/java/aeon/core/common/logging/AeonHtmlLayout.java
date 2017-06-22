@@ -383,6 +383,9 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         }
     }
 
+    /**
+     * The Builder class.
+     */
     public static class Builder implements org.apache.logging.log4j.core.util.Builder<AeonHtmlLayout> {
 
         @PluginBuilderAttribute

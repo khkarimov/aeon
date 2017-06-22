@@ -1,6 +1,3 @@
-/**
- * Package Info.
- */
 package aeon.core.command.execution.consumers.interfaces;
 
 import aeon.core.command.execution.AutomationInfo;

@@ -57,8 +57,13 @@ public class AjaxWaiter {
         } while (count != 0 && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
+
     /*ajaxJsonpElementTimeout defines a timeout for JSONP request on the HTML page.
     / This is set to be less than the timeout so that page interactions can be executed.
+     */
+
+    /**
+     * Injects JS into the webDriver.
      */
     public void injectJS() {
         try {
@@ -73,6 +78,10 @@ public class AjaxWaiter {
         }
     }
 
+    /**
+     * Gets the Ajax Waiter as as string/.
+     * @return the content of the buffered reader as a string.
+     */
     public String getAjaxWaiterJS() {
         try (InputStream scriptReader = AjaxWaiter.class.getResourceAsStream("/ajax-waiter.js")) {
             String content = new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));

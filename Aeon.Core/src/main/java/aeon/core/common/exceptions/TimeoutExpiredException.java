@@ -14,6 +14,12 @@ public class TimeoutExpiredException extends RuntimeException implements Seriali
     private final String operation;
     private final Duration timeout;
 
+    /**
+     * Initializes a new instance of the {@link TimeoutExpiredException} class.
+     * @param operation string to specify the operation.
+     * @param timeout the duration before timeout.
+     * @param lastCaughtException the last caught exception.
+     */
     public TimeoutExpiredException(String operation, Duration timeout, RuntimeException lastCaughtException) {
         super(String.format(
                 Resources.getString("TimeoutExpiredException_ctor_DefaultMessage"),
@@ -24,10 +30,18 @@ public class TimeoutExpiredException extends RuntimeException implements Seriali
         this.timeout = timeout;
     }
 
+    /**
+     * Gets the operation.
+     * @return the string operation.
+     */
     public String getOperation() {
         return operation;
     }
 
+    /**
+     * Gets the timout duration.
+     * @return the timeout duration.
+     */
     public Duration getTimeout() {
         return timeout;
     }

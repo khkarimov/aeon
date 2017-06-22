@@ -1,6 +1,3 @@
-/**
- * Package Info.
- */
 package aeon.core.command.execution.consumers;
 
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;

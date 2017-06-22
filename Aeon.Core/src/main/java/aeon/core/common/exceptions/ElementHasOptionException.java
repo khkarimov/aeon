@@ -5,10 +5,14 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created by RafaelT on 6/2/2016.
+ * Class that handles the exception thrown when the element has an option.
  */
 public class ElementHasOptionException extends RuntimeException {
 
+    /**
+     * Initializes a new instance of the {@link ElementHasOptionException} class.
+     * @param option the input string option.
+     */
     public ElementHasOptionException(String option) {
         super(String.format(Locale.getDefault(), Resources.getString("ElementHasOptionException_ctor_DefaultMessage"), option));
     }

@@ -1,6 +1,3 @@
-/**
- * Created by.
- */
 package aeon.core.command.execution.consumers;
 
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;

@@ -4,6 +4,9 @@ import com.sun.glass.ui.Size;
 
 import java.util.HashMap;
 
+/**
+ * Class to map the browser sizes.
+ */
 public final class BrowserSizeMap {
 
     private static final HashMap<BrowserSize, Size> browserSizes = new HashMap<BrowserSize, Size>();
@@ -29,18 +32,38 @@ public final class BrowserSizeMap {
         sizes.put(new Size(1024, 768), BrowserSize.TabletLandscape);
     }
 
+    /**
+     *  Boolean function that returns a truth value if the size is in the instance's sizes.
+     * @param size size input to test.
+     * @return true or false if the size if contained in the current browser size.
+     */
     public static boolean contains(Size size) {
         return sizes.containsKey(size);
     }
 
+    /**
+     *  Boolean function that returns a value based on the BrowserSize.
+     * @param browserSize browser size input to test.
+     * @return true or false if the size if contained in the current browser size.
+     */
     public static boolean contains(BrowserSize browserSize) {
         return browserSizes.containsKey(browserSize);
     }
 
+    /**
+     * Given a Size, the function returns the sizes of the browser map.
+     * @param size the input size to get.
+     * @return the BrowserSize of the map.
+     */
     public static BrowserSize map(Size size) {
         return sizes.get(size);
     }
 
+    /**
+     * Function takes a Browser Size and returns the {@link Size} of a browser.
+     * @param browserSize the input browserSize.
+     * @return the Size of the input.
+     */
     public static Size map(BrowserSize browserSize) {
         return browserSizes.get(browserSize);
     }

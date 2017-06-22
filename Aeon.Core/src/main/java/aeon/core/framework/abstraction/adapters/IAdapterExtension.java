@@ -6,6 +6,9 @@ import ro.fortsoft.pf4j.ExtensionPoint;
 
 import java.io.IOException;
 
+/**
+ * The interface for the
+ */
 public interface IAdapterExtension extends ExtensionPoint {
 
     /**
