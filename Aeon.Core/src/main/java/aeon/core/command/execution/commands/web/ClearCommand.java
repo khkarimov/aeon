@@ -18,6 +18,7 @@ public class ClearCommand extends WebControlCommand {
      * Initializes a new instance of {@link ClearCommand} class.
      *
      * @param selector the selector
+     * @param commandInitializer the commandInitializer
      */
     public ClearCommand(IBy selector, ICommandInitializer commandInitializer) {
         super(String.format(Locale.getDefault(), Resources.getString("ClearCommand_Info"), selector), selector, commandInitializer);

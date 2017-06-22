@@ -8,6 +8,9 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 import java.util.Locale;
 
+/**
+ * Class sees if the input is selected or not.
+ */
 public class NotSelectedCommand extends WebControlCommand {
 
     /**
