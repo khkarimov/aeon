@@ -114,6 +114,11 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         return newBuilder().build();
     }
 
+    /**
+     * Function creates and returns a new instance of Builder.
+     *
+     * @return new instance of Builder().
+     */
     @PluginBuilderFactory
     public static Builder newBuilder() {
         return new Builder();
@@ -224,10 +229,12 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         return sbuf.toString();
     }
 
-    @Override
     /**
+     * Gets the type of the Content and returns a string.
+     *
      * @return The content type.
      */
+    @Override
     public String getContentType() {
         return contentType;
     }
@@ -327,8 +334,10 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         return new byte[0];
     }
 
+
     /**
-     * Possible font sizes
+     * Possible font sizes.
+     *
      */
     public static enum FontSize {
         SMALLER("smaller"), XXSMALL("xx-small"), XSMALL("x-small"), SMALL("small"), MEDIUM("medium"), LARGE("large"),
@@ -340,6 +349,12 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             this.size = size;
         }
 
+        /**
+         * Static function that returns the font size given a string as input size.
+         *
+         * @param size string input of size of font to get.
+         * @return if legal size, it returns a fontSize, else it returns enum small.
+         */
         public static FontSize getFontSize(final String size) {
             for (final FontSize fontSize : values()) {
                 if (fontSize.size.equals(size)) {
@@ -349,10 +364,20 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             return SMALL;
         }
 
+        /**
+         * Gets the current font size as a string.
+         *
+         * @return the font size as a string.
+         */
         public String getFontSize() {
             return size;
         }
 
+        /**
+         * Function returns a font size larger than the ordinal size.
+         *
+         * @return If the ordinal size is not the largest, it returns the font size+1, else the largest size.
+         */
         public FontSize larger() {
             return this.ordinal() < XXLARGE.ordinal() ? FontSize.values()[this.ordinal() + 1] : this;
         }
@@ -381,31 +406,62 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         private Builder() {
         }
 
+        /**
+         * Function returns a Builder with the provided location info as a boolean.
+         *
+         * @param locationInfo a boolean of locationInfo.
+         * @return the new location info.
+         */
         public Builder withLocationInfo(final boolean locationInfo) {
             this.locationInfo = locationInfo;
             return this;
         }
 
+        /**
+         * Function returns a Builder with the provided title info as a string.
+         * @param title a string representing a title.
+         * @return the Builder with the new title.
+         */
         public Builder withTitle(final String title) {
             this.title = title;
             return this;
         }
 
+        /**
+         * Function returns a Builder with the provided contentType info as a string.
+         * @param contentType a string representing the content type.
+         * @return the Builder with the new content type.
+         */
         public Builder withContentType(final String contentType) {
             this.contentType = contentType;
             return this;
         }
 
+        /**
+         * Function returns a Builder with the provided title info as a string.
+         * @param charset a Charset representing a set of chars.
+         * @return the Builder with the new char set.
+         */
         public Builder withCharset(final Charset charset) {
             this.charset = charset;
             return this;
         }
 
+        /**
+         * Function returns a Builder with the provided title info as a string.
+         * @param fontSize a FontSize representing the font size.
+         * @return the Builder with the new font size.
+         */
         public Builder withFontSize(final FontSize fontSize) {
             this.fontSize = fontSize;
             return this;
         }
 
+        /**
+         * Function returns a Builder with the provided title info as a string.
+         * @param fontName a string representing a fontName.
+         * @return the Builder with the new fontName.
+         */
         public Builder withFontName(final String fontName) {
             this.fontName = fontName;
             return this;
