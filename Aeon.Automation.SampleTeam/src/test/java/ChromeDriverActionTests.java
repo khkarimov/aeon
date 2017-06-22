@@ -1,5 +1,7 @@
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.exceptions.*;
+import aeon.core.common.exceptions.NoAlertException;
+import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
@@ -105,16 +107,16 @@ public class ChromeDriverActionTests {
         };
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getName().equals(cookie.getName()));
-        assert (secondCookie.getDomain().equals(cookie.getDomain()));
-        assert (secondCookie.getValue().equals(cookie.getValue()));
-        assert (secondCookie.getSecure() == cookie.getSecure());
-        assert (secondCookie.getPath().equals(cookie.getPath()));
-        assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
+        assert(secondCookie.getName().equals(cookie.getName()));
+        assert(secondCookie.getDomain().equals(cookie.getDomain()));
+        assert(secondCookie.getValue().equals(cookie.getValue()));
+        assert(secondCookie.getSecure() == cookie.getSecure());
+        assert(secondCookie.getPath().equals(cookie.getPath()));
+        assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
 
         product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getValue().equals("CookieNewValue"));
+        assert(secondCookie.getValue().equals("CookieNewValue"));
         product.browser.deleteCookie(cookie.getName());
     }
 
@@ -250,19 +252,19 @@ public class ChromeDriverActionTests {
     }
 
     @Test
-    public void testSet_WithSelect(){
+    public void testSet_WithSelect() {
         product.startPage.lexoDropDown.set(WebSelectOption.Value, "10");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "dog");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
     }
 
     @Test
-    public void testSetValueByJavaScript(){
+    public void testSetValueByJavaScript() {
         product.startPage.formTextBox.setTextByJavaScript("set text by javascript is working");
     }
 
     @Ignore
-    public void testWaiter(){
+    public void testWaiter() {
         product.startPage.start.click();
         product.startPage.smileyFace1.click();
     }

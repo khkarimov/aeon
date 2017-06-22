@@ -34,7 +34,7 @@ public class NotExistsCommand extends Command {
      */
     @Override
     protected void driverDelegate(IDriver driver) {
-        WebControl control = null;
+        WebControl control;
         try {
             control = ((IWebDriver) driver).findElement(selector);
         } catch (NoSuchElementException e) {

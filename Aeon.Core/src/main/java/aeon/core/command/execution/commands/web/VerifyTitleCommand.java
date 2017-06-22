@@ -14,6 +14,11 @@ public class VerifyTitleCommand extends Command {
 
     private String comparingText;
 
+    /**
+     * Initializes a new instance of {@link VerifyTitleCommand}.
+     *
+     * @param comparingText The text to compare against the window's title.
+     */
     public VerifyTitleCommand(String comparingText) {
         super(String.format(Locale.getDefault(), Resources.getString("VerifyTitleCommand_Info"), comparingText));
         this.comparingText = comparingText;

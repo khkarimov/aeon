@@ -1,9 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-/**
- * Created by SebastianR on 6/1/2016.
- */
-
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -16,7 +12,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 public class VerifyAlertNotExistsCommand extends Command {
 
     /**
-     * Initializes a new instance of
+     * Initializes a new instance of {@link VerifyAlertNotExistsCommand}.
      *
      * @see VerifyAlertNotExistsCommand class
      */

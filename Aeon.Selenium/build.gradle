@@ -3,7 +3,7 @@ def baseProjectDescription = 'Aeon Selenium'
 def base = baseProjectName
 
 group 'aeon'
-version '0.2.5'
+version '0.2.7'
 
 apply plugin: 'java'
 
@@ -20,6 +20,7 @@ configurations {
 
 ext {
     seleniumVersion = '3.4.0'
+    appiumVersion = "5.0.0-BETA8"
 }
 
 dependencies {
@@ -38,6 +39,8 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+
+    compile "io.appium:java-client:$appiumVersion"
 }
 
 jar {
@@ -99,6 +102,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifact(file("$buildDir/libs/Aeon.Selenium-" + version + ".zip"))
             artifactId 'aeon.selenium'
         }
     }

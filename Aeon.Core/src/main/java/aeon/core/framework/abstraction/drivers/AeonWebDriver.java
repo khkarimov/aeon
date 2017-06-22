@@ -2,6 +2,7 @@ package aeon.core.framework.abstraction.drivers;
 
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
+import aeon.core.common.exceptions.WebUsingMobileCommandException;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
@@ -493,4 +494,101 @@ public class AeonWebDriver implements IWebDriver {
     public void pressKeyboardKey(WebControl element, KeyboardKey key) {
         adapter.pressKeyboardKey(element, key);
     }
+
+    @Override
+    public void mobileLock() {
+        switch (getBrowserType()) {
+            case AndroidHybridApp:
+                adapter.mobileLock();
+                break;
+
+            case IOSHybridApp:
+                adapter.mobileLock(0);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    public void mobileLock(int seconds) {
+        switch (getBrowserType()) {
+            case AndroidHybridApp:
+                adapter.mobileLock();
+                break;
+
+            case IOSHybridApp:
+                adapter.mobileLock(seconds);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSwipe(int startx, int starty, int endx, int endy, int duration) {
+        switch (getBrowserType()) {
+            case AndroidHybridApp:
+            case IOSHybridApp:
+                adapter.mobileSwipe(startx, starty, endx, endy, duration);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileHideKeyboard() {
+        switch(getBrowserType()){
+            case AndroidHybridApp:
+            case IOSHybridApp:
+                adapter.mobileHideKeyboard();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSetLandscape() {
+        switch(getBrowserType()){
+            case AndroidHybridApp:
+            case IOSHybridApp:
+                adapter.mobileSetLandscape();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSetPortrait() {
+        switch(getBrowserType()){
+            case AndroidHybridApp:
+            case IOSHybridApp:
+                adapter.mobileSetPortrait();
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
+    @Override
+    public void mobileSetGeoLocation(double latitude, double longitude, double altitude) {
+        switch (getBrowserType()) {
+            case AndroidHybridApp:
+            case IOSHybridApp:
+                adapter.mobileSetGeoLocation(latitude, longitude, altitude);
+                break;
+
+            default:
+                throw new WebUsingMobileCommandException();
+        }
+    }
+
 }

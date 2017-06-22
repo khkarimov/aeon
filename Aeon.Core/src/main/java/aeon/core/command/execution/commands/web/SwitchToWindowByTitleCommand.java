@@ -8,10 +8,9 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import java.util.Locale;
 
 /**
- * Switches focus to a specified window.
+ * Switches focus to a specified window by its title.
  * Usage:
- *       Context.browser.SwitchToWindow("windowTitle");
- *       Context.browser.SwitchToWindow("windowTitle", setMainWindowBoolean);
+ * Context.browser.switchToWindowByTitle("windowTitle");
  */
 public class SwitchToWindowByTitleCommand extends CommandWithReturn {
 
