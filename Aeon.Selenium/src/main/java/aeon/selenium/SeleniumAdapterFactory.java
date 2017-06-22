@@ -255,7 +255,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 // Perfecto
                 desiredCapabilities.setCapability("user", perfectoUser);
                 desiredCapabilities.setCapability("password", perfectoPass);
-                desiredCapabilities.setCapability("platformName", "IOS");
+                desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
 
