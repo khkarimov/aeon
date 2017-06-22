@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
+/**
+ * The interface for the Web Adapter class.
+ */
 public interface IWebAdapter extends IAdapter {
 
     /**
