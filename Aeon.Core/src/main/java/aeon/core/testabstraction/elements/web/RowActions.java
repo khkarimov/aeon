@@ -79,6 +79,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
         return newInstanceOfT(updatedSelector);
     }
 
+
     public K getRow() {
         return newInstanceOfK(selector);
     }

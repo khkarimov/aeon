@@ -18,10 +18,18 @@ public class WebProduct extends Product {
 
     public Browser browser;
 
+    /**
+     * Default WebProduct constructor.
+     */
     public WebProduct() {
 
     }
 
+    /**
+     * Create new browser using a provided AutomationInfo variable.
+     *
+     * @param automationInfo An AutomationInfo object provided to the function.
+     */
     protected WebProduct(AutomationInfo automationInfo) {
         browser = new Browser(automationInfo);
     }
