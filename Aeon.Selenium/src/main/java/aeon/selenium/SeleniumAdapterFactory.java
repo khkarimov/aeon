@@ -262,6 +262,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 // Appium
                 desiredCapabilities.setCapability("deviceName", deviceName);
 
+                //IOS Specific
+                desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
+
                 break;
 
             case AndroidHybridApp:
