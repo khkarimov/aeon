@@ -172,7 +172,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the mouse out command
+     * Executes the mouse out command.
      */
     public void mouseOut() {
         info.getCommandExecutionFacade().execute(info, new MouseOutCommand(

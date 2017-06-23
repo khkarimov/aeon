@@ -36,12 +36,12 @@ public enum BrowserType {
 
     //Apps
     /**
-     * iOS app
+     * iOS app.
      */
     IOSHybridApp,
 
     /**
-     * Android app
+     * Android app.
      */
     AndroidHybridApp
 }

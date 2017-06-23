@@ -18,6 +18,8 @@ public class SetAuthenticationCommand extends Command{
 
     /**
      * Initializes a new instance of the {@link SetAuthenticationCommand} class.
+     * @param username the string username.
+     * @param password the string password.
      */
     public SetAuthenticationCommand(String username, String password) {
         super(String.format(Resources.getString("SetAuthenticationCommand_Info"), username, password));

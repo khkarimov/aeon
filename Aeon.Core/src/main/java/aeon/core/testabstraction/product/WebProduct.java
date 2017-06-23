@@ -11,6 +11,9 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import org.joda.time.Duration;
 
+/**
+ * Class to make a web product.
+ */
 public class WebProduct extends Product {
 
     public Browser browser;

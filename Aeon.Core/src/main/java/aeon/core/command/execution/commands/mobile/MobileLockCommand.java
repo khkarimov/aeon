@@ -39,11 +39,10 @@ public class MobileLockCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        if (seconds == 0) {
-            ((IWebDriver)driver).mobileLock();
-        }
-        else {
-            ((IWebDriver)driver).mobileLock(seconds);
-        }
+        if (seconds == 0)
+            ((IWebDriver) driver).mobileLock();
+        else
+            ((IWebDriver) driver).mobileLock(seconds);
     }
 }
+

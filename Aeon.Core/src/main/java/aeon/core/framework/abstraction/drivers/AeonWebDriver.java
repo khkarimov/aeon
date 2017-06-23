@@ -511,6 +511,10 @@ public class AeonWebDriver implements IWebDriver {
         }
     }
 
+    /**
+     * Command to lock the mobile device.
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
+     */
     public void mobileLock(int seconds) {
         switch (getBrowserType()) {
             case AndroidHybridApp:

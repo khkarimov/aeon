@@ -858,8 +858,8 @@ public interface IWebAdapter extends IAdapter {
     /**
      * Sets the mobile device's GPS location.
      * @param latitude Latitude Coordinate
-     * @param latitude Longitude Coordinate
-     * @param latitude Altitude
+     * @param longitude Longitude Coordinate
+     * @param altitude Altitude
      */
     void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 

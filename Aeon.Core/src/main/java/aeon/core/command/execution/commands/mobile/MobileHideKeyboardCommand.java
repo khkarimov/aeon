@@ -26,6 +26,6 @@ public class MobileHideKeyboardCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).mobileHideKeyboard();
+        ((IWebDriver) driver).mobileHideKeyboard();
     }
 }

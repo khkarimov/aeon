@@ -6,6 +6,9 @@ import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 
+/**
+ * Abstract class for Product implementation.
+ */
 public abstract class Product {
 
     protected AutomationInfo automationInfo;
