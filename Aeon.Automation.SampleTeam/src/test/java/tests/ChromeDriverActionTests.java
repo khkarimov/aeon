@@ -1,5 +1,9 @@
+package tests;
+
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.exceptions.*;
+import aeon.core.common.exceptions.NoAlertException;
+import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
@@ -9,14 +13,19 @@ import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
+import testCategories.UbuntuTests;
+import testCategories.WindowsTests;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-public class IEDriverActionTests {
+@Category({UbuntuTests.class, WindowsTests.class})
+public class ChromeDriverActionTests {
+
     private static Sample product;
 
     @Rule
@@ -29,12 +38,12 @@ public class IEDriverActionTests {
 
     @AfterClass
     public static void tearDown() {
-        product.browser.quit();
+        //product.browser.quit();
     }
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.InternetExplorer);
+        product = launch(Sample.class, BrowserType.Chrome);
         String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
                 "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
         String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
@@ -52,7 +61,7 @@ public class IEDriverActionTests {
         product.browser.goToUrl("http://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = "ci.mia.ucloud.int";
+            String domain = ".ci.mia.ucloud.int";
             String value = "CookieValue";
             Date expiration = getNextYear();
             String path = "/";
@@ -104,16 +113,16 @@ public class IEDriverActionTests {
         };
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getName().equals(cookie.getName()));
-        assert (secondCookie.getDomain().equals(cookie.getDomain()));
-        assert (secondCookie.getValue().equals(cookie.getValue()));
-        assert (secondCookie.getSecure() == cookie.getSecure());
-        assert (secondCookie.getPath().equals(cookie.getPath()));
-        assert (secondCookie.getExpiration().equals(cookie.getExpiration()));
+        assert(secondCookie.getName().equals(cookie.getName()));
+        assert(secondCookie.getDomain().equals(cookie.getDomain()));
+        assert(secondCookie.getValue().equals(cookie.getValue()));
+        assert(secondCookie.getSecure() == cookie.getSecure());
+        assert(secondCookie.getPath().equals(cookie.getPath()));
+        assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
 
         product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert (secondCookie.getValue().equals("CookieNewValue"));
+        assert(secondCookie.getValue().equals("CookieNewValue"));
         product.browser.deleteCookie(cookie.getName());
     }
 
@@ -125,7 +134,7 @@ public class IEDriverActionTests {
     }
 
     @Test
-    public void testCheck_UnCheck() {
+    public void testCheckCheck_UnCheck() {
         product.startPage.testCheckbox.check();
         product.startPage.testCheckbox.uncheck();
     }
@@ -242,32 +251,32 @@ public class IEDriverActionTests {
     public void testSwitchToWindowByUrl() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByUrl("https://www.google.com/");
+        product.browser.switchToWindowByUrl("https://www.google.com");
         product.browser.verifyTitle("Google");
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByUrl("www.fake.com");
     }
 
     @Test
-    public void testSet_WithSelect(){
+    public void testSet_WithSelect() {
         product.startPage.lexoDropDown.set(WebSelectOption.Value, "10");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "dog");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
     }
 
     @Test
-    public void testSetValueByJavaScript(){
+    public void testSetValueByJavaScript() {
         product.startPage.formTextBox.setTextByJavaScript("set text by javascript is working");
     }
 
     @Ignore
-    public void testWaiter(){
+    public void testWaiter() {
         product.startPage.start.click();
         product.startPage.smileyFace1.click();
     }
 
     @Test
-    public void testSetByDivJavaScript() {
+    public void setByDivJavaScript() {
         product.startPage.divWindow.setDivValueByJavaScript("Hello World Haha");
         product.startPage.divWindow.is("Hello World Haha");
         product.startPage.bodyTag.setDivValueByJavaScript("Hello World Haha");
@@ -275,7 +284,7 @@ public class IEDriverActionTests {
     }
 
     @Test
-    public void testSetByBodyJavaScript() {
+    public void setByBodyJavaScript() {
         product.startPage.bodyTag.setBodyValueByJavaScript("Hello World Haha");
         product.startPage.bodyTag.is("Hello World Haha");
     }

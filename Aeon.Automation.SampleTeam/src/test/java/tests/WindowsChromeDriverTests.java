@@ -1,10 +1,16 @@
+package tests;
+
 import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
+import testCategories.WindowsTests;
+
 import static aeon.core.testabstraction.product.Aeon.launch;
 
+@Category({WindowsTests.class})
 public class WindowsChromeDriverTests {
     private static Sample product;
 

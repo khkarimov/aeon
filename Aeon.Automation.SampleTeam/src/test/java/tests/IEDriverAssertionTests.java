@@ -1,3 +1,5 @@
+package tests;
+
 import aeon.core.common.CompareType;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserType;
@@ -8,10 +10,13 @@ import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
+import testCategories.WindowsTests;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
+@Category({WindowsTests.class})
 public class IEDriverAssertionTests {
     private static Sample product;
 

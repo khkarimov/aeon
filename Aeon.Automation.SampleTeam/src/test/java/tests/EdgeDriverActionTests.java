@@ -1,3 +1,5 @@
+package tests;
+
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.NoAlertException;
 import aeon.core.common.exceptions.NoSuchWindowException;
