@@ -73,7 +73,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String perfectoPass;
     private String platformVersion;
     private String browserVersion;
-    private String bundleId;
     private String app;
     private String appPackage;
     private String deviceName;
@@ -92,7 +91,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
         platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
         browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
-        bundleId = configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, "");
         app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
@@ -265,7 +263,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("deviceName", deviceName);
 
                 //IOS Specific
-                desiredCapabilities.setCapability("bundleId", bundleId);
+                desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
 
                 break;
 
