@@ -30,7 +30,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Initializes a new instance of the {@link Select} class
+     * Initializes a new instance of the {@link Select} class.
      * with a switch mechanism.
      *
      * @param info The AutomationInfo.
@@ -45,7 +45,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that the select's optgroup has all options
+     * Asserts that the select's optgroup has all options.
      *
      * @param options   The options that the select should have, either their values or texts.
      * @param optgroup  The label of the option group that will be searched instead of the entire select.
@@ -59,7 +59,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that the select has all specified options
+     * Asserts that the select has all specified options.
      *
      * @param options   The options that the select should have, either their values or texts.
      * @param select    The way the options will be searched
@@ -72,7 +72,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that all options in optgroup are in order
+     * Asserts that all options in optgroup are in order.
      *
      * @param options     The options that the option group should have, in the same descending order as they appear in the array.
      * @param optgroup    The label of the option group that will be searched.
@@ -86,7 +86,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that all options are in order
+     * Asserts that all options are in order.
      *
      * @param options   The options that the select should have, in the same descending order as they appear in the array.
      * @param select    The way the options will be searched
@@ -99,7 +99,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that there are no options of type WebSelectOption in optgroup
+     * Asserts that there are no options of type WebSelectOption in optgroup.
      *
      * @param options   The options that the select should not have, either their values or texts.
      * @param optgroup  The label of the option group that will be searched instead of the entire select.
@@ -113,7 +113,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that there are no options of type WebSelectOption
+     * Asserts that there are no options of type WebSelectOption.
      *
      * @param options   The options that the select should not have, either their values or texts.
      * @param select    The way the options will be searched
@@ -126,7 +126,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that there are optnumber number of options in optgroup
+     * Asserts that there are optnumber number of options in optgroup.
      *
      * @param optnumber    The number of options that the option group should have.
      * @param optgroup     The visible text of the option group.
@@ -139,7 +139,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that there are optnumber number of options
+     * Asserts that there are optnumber number of options.
      *
      * @param optnumber Number of options to check for
      */
@@ -151,7 +151,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that all options are in order based on comparisonType specification
+     * Asserts that all options are in order based on comparisonType specification.
      *
      * @param comparisonType        The way that all the options in the select element will be compared.
      * @param optgroup              The optional option group that would be searched in isolation instead of the entire select.
@@ -164,7 +164,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that all options are in order based on comparisonType specification
+     * Asserts that all options are in order based on comparisonType specification.
      *
      * @param comparisonType The way that all the options in the select element will be compared.
      */
@@ -177,7 +177,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Sets select option to value
+     * Sets select option to value.
      *
      * @param selectOption  Option to be set
      * @param value         New Value
@@ -191,7 +191,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that the attribute has value
+     * Asserts that the attribute has value.
      *
      * @param value The value the attribute should have.
      */
@@ -206,7 +206,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Compares value and default attribute and asserts that they are alike
+     * Compares value and default attribute and asserts that they are alike.
      *
      * @param value              The value the attribute should have.
      * @param attribute          The attribute to be compared.
@@ -222,7 +222,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Compares value and default text and asserts that they are not alike
+     * Compares value and default text and asserts that they are not alike.
      *
      * @param value The expected value of the selected option's text.
      */
@@ -237,7 +237,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Compares value and attribute and asserts that they are not alike
+     * Compares value and attribute and asserts that they are not alike.
      *
      * @param value              The value the attribute should have
      * @param attribute          The attribute to be compared.
@@ -268,7 +268,8 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts the value of the Select element's attribute. However, if the attribute being checked is "VALUE" then Select element's selected option value will be checked.
+     * Asserts the value of the Select element's attribute. However, if the attribute being
+     * checked is "VALUE" then Select element's selected option value will be checked.
      *
      * @param value     The expected value of the attribute.
      * @param attribute The attribute to check.

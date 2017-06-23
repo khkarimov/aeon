@@ -316,6 +316,7 @@ public class Browser {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
+
     public void mobileHideKeyboard() {
         info.getCommandExecutionFacade().execute(info, new MobileHideKeyboardCommand());
     }

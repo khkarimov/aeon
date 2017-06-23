@@ -13,12 +13,6 @@ public abstract class Product {
     protected WebCommandExecutionFacade commandExecutionFacade;
 
     /**
-     * Empty Constructor.
-     */
-    public Product() {
-    }
-
-    /**
      * Constructor for Product using automationInfo.
      *
      * @param automationInfo The automationInfo to be added.
