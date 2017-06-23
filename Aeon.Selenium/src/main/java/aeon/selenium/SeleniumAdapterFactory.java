@@ -266,6 +266,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
+                Boolean crosswalkpatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
                 // Perfecto
                 desiredCapabilities.setCapability("user", perfectoUser);
@@ -279,6 +280,15 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                 // Android Specific
                 desiredCapabilities.setCapability("appPackage", appPackage);
+
+                //Enables webview support for Crosswalk/Cordova applications
+                if (crosswalkpatch) {
+                    String androidDeviceSocket = appPackage + "_devtools_remote";
+                    desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
+                    desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                }
 
                 break;
 
