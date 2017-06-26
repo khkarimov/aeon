@@ -18,11 +18,11 @@ public class Aeon {
     private static Logger log = LogManager.getLogger(Aeon.class);
 
     /**
-     *
-     * @param productClass
-     * @param browserType
-     * @param <T>
-     * @return
+     * Launches an environment of the desired class and browser type.
+     * @param productClass The new environment's class.
+     * @param browserType The new environment's browser.
+     * @param <T> The launch type.
+     * @return A type T launch.
      */
     public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
         try {
@@ -56,9 +56,9 @@ public class Aeon {
 
     /**
      * Launches an environment of the desired class.
-     * @param productClass the new environemnt's class
-     * @param <T> the launch type.
-     * @return a type T launch.
+     * @param productClass The new environment's class
+     * @param <T> The launch type.
+     * @return A type T launch.
      */
     public static <T extends Product> T launch(Class<T> productClass) {
         return launch(productClass, null);

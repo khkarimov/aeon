@@ -21,28 +21,53 @@ public class AjaxWaiter {
     private IClock clock;
     private Duration timeout;
 
+    /**
+     * Constructor for an AjaxWaiter.
+     * @param driver The specified driver that receives ajax responses.
+     * @param timeout The amount of time, in milliseconds, that the driver will wait before processing
+     *                an ajax response.
+     */
     public AjaxWaiter(IDriver driver, Duration timeout) {
         this.webDriver = (IWebDriver) driver;
         this.clock = new Clock();
         this.timeout = timeout;
     }
 
+    /**
+     * Gets the web driver.
+     * @return The web driver being used is returned.
+     */
     public IWebDriver getWebDriver() {
         return this.webDriver;
     }
 
+    /**
+     * Sets the web driver.
+     * @param webDriver The web driver that is set.
+     */
     public void setWebDriver(IWebDriver webDriver) {
         this.webDriver = webDriver;
     }
 
+    /**
+     * Gets the timeout value of the ajax waiter.
+     * @return The timeout value, in milliseconds.
+     */
     public long getTimeout() {
         return timeout.getMillis();
     }
 
+    /**
+     * Sets the timeout value of the ajax waiter.
+     * @param millis The timeout value, in milliseconds, that the ajax waiter is set to have.
+     */
     public void setTimeout(long millis) {
         this.timeout = Duration.millis(millis);
     }
 
+    /**
+     * Waits for all ajax responses until timeout.
+     */
     public void waitForAsync() {
         long count;
         DateTime end = clock.getUtcNow().withDurationAdded(timeout.getMillis(), 1);
