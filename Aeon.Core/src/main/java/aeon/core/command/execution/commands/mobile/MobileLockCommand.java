@@ -23,7 +23,7 @@ public class MobileLockCommand extends Command {
 
     /**
      * Initializes a new instance of the {@link MobileLockCommand} class.
-     *
+     * @param seconds Number of seconds the mobile device screen is locked for.
      */
     public MobileLockCommand(int seconds) {
         super(Resources.getString("MobileLockCommand_Info"));
@@ -38,11 +38,13 @@ public class MobileLockCommand extends Command {
         if (driver == null) {
             throw new IllegalArgumentException("driver");
         }
-
-        if (seconds == 0)
+        if (seconds == 0) {
             ((IWebDriver) driver).mobileLock();
-        else
+        }
+        else {
             ((IWebDriver) driver).mobileLock(seconds);
+        }
+
     }
 }
 

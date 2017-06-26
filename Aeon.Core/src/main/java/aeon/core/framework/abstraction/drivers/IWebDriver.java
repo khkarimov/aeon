@@ -737,7 +737,7 @@ public interface IWebDriver extends IDriver {
      * @param starty Starting y coord.
      * @param endx Ending x coord.
      * @param endy Ending y coord.
-     * @param duration The duration of the execution of the swipe
+     * @param duration The duration of the execution of the swipe.
      */
     void mobileSwipe(int startx, int starty, int endx, int endy, int duration);
 

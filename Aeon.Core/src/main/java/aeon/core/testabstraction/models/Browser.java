@@ -338,37 +338,38 @@ public class Browser {
     }
 
     /**
-     * Sets geolocation on a mobile device.
-     * @param latitude The latitude coordinate of the device.
-     * @param longitude The longitude coordinate of the device.
-     * @param altitude The altitude coordinate of the device.
+     * Sets the GPS location on a mobile device.
+     *
+     * @param latitude The GPS latitude.
+     * @param longitude The GPS longitude.
+     * @param altitude The GPS altitude.
      */
     public void mobileSetGeoLocation(double latitude, double longitude, double altitude) {
         info.getCommandExecutionFacade().execute(info, new MobileSetGeoLocationCommand(latitude, longitude, altitude));
     }
 
     /**
-     * Locks the mobile device.
+     * Locks and immediately unlocks a mobile device.
      */
     public void mobileLock() {
         info.getCommandExecutionFacade().execute(info, new MobileLockCommand());
     }
 
     /**
-     * Lock is clicked and held.
-     * @param seconds The number of seconds the lock button is held.
+     * Locks and immediately unlocks a mobile device.
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
     public void mobileLock(int seconds){
         info.getCommandExecutionFacade().execute(info, new MobileLockCommand(seconds));
     }
 
     /**
-     * Executes a swipe motion on a mobile device.
-     * @param startx The initial x coordinate on the device where the swipe begins.
-     * @param starty The initial y coordinate on the device where the swipe begins.
-     * @param endx The final x coordinate on the device where the swipe ends.
-     * @param endy The final y coordinate on the device where the swipe ends.
-     * @param duration The duration, in milliseconds, of the swipe action.
+     * Executes a swipe on a mobile device.
+     * @param startx Starting x coord.
+     * @param starty Starting y coord.
+     * @param endx Ending x coord.
+     * @param endy Ending y coord.
+     * @param duration The duration of the execution of the swipe.
      */
     public void mobileSwipe(int startx, int starty, int endx, int endy, int duration){
         info.getCommandExecutionFacade().execute(info, new MobileSwipeCommand(startx, starty, endx, endy, duration));
