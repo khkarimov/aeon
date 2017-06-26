@@ -14,7 +14,6 @@ public class MobileLockCommand extends Command {
 
     /**
      * Initializes a new instance of the {@link MobileLockCommand} class.
-     *
      */
     public MobileLockCommand() {
         super(Resources.getString("MobileLockCommand_Info"));
@@ -40,8 +39,7 @@ public class MobileLockCommand extends Command {
         }
         if (seconds == 0) {
             ((IWebDriver) driver).mobileLock();
-        }
-        else {
+        } else {
             ((IWebDriver) driver).mobileLock(seconds);
         }
 
