@@ -1,5 +1,8 @@
 package aeon.core.common;
 
+/**
+ * Enum of type comparisons.
+ */
 public enum CompareType {
     /**
      * Compare options by their text, in ascending numeric and alphabetical order.

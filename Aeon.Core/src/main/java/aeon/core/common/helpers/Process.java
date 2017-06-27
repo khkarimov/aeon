@@ -12,6 +12,12 @@ import java.util.List;
 public class Process {
 
     // SR - we should make this agnostic of the OS
+
+    /**
+     * Returns as a string list the windows processes by name given a string as input.
+     * @param name the input string to match to the windows process.
+     * @return a list of strings of matching windows processes.
+     */
     public static List<String> getWindowsProcessesByName(String name) {
         try {
             List<String> output = new ArrayList<>();
@@ -35,6 +41,10 @@ public class Process {
         return null;
     }
 
+    /**
+     * Function kills a specific process with a given name as input.
+     * @param name the name of the process to kill.
+     */
     public static void killProcessByName(String name) {
         OsCheck.OSType osType = OsCheck.getOperatingSystemType();
         String[] command;

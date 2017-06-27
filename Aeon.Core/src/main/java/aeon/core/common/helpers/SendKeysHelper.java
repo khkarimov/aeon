@@ -12,6 +12,11 @@ public class SendKeysHelper {
 
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();
 
+    /**
+     * Takes a string and sends it to the robot's keyboard to type.
+     * @param stringToSend the input string to use.
+     * @throws AWTException Signals that an Abstract Window Toolkit exception has occurred.
+     */
     public static void sendKeysToKeyboard(String stringToSend) throws AWTException {
         Robot robot = new Robot();
         robot.setAutoDelay(50);
@@ -71,6 +76,11 @@ public class SendKeysHelper {
         }
     }
 
+    /**
+     * Sends a single character to a robot to enter somewhere.
+     * @param c the input character to be used.
+     * @throws AWTException Signals that an Abstract Window Toolkit exception has occurred.
+     */
     public static void sendSingleKey(char c) throws AWTException {
         Robot robot = new Robot();
         robot.delay(250);
@@ -83,6 +93,10 @@ public class SendKeysHelper {
         robot.keyRelease(KeyEvent.getKeyCodeForChar(c));*/
     }
 
+    /**
+     * Sends an Enter key to a newly made robot in windows.
+     * @throws AWTException Signals that an Abstract Window Toolkit exception has occurred.
+     */
     public static void sendEnterKey() throws AWTException {
         Robot robot = new Robot();
         switch (OS_TYPE) {

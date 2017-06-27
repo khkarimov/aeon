@@ -3,6 +3,9 @@ package aeon.core.command.execution.commands;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
+/**
+ * Quits browser.
+ */
 public class QuitCommand extends Command {
 
     /**

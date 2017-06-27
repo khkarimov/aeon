@@ -8,10 +8,18 @@ import org.joda.time.Duration;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * Class for Throttle delegate runner.
+ */
 public class ThrottledDelegateRunner extends DelegateRunner {
 
     private Duration throttleFactor;
 
+    /**
+     * The constructor for the Throttled Delegate Runner class.
+     * @param successor the delegate runner.
+     * @param throttleFactor the duration.
+     */
     public ThrottledDelegateRunner(IDelegateRunner successor, Duration throttleFactor) {
         super(successor);
         this.throttleFactor = throttleFactor;

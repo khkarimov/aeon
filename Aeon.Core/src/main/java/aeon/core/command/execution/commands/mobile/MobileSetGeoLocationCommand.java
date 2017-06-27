@@ -16,6 +16,9 @@ public class MobileSetGeoLocationCommand extends Command {
 
     /**
      * Initializes a new instance of the {@link MobileSetGeoLocationCommand} class.
+     * @param latitude Latitude Coordinate
+     * @param longitude Longitude Coordinate
+     * @param altitude Altitude
      */
     public MobileSetGeoLocationCommand(double latitude, double longitude, double altitude) {
         super(Resources.getString("MobileSetGeoLocationCommand_Info"));

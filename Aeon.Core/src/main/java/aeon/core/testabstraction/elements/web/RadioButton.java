@@ -14,12 +14,24 @@ public class RadioButton extends WebElement {
     private IBy selector;
     private Iterable<IBy> switchMechanism;
 
+    /**
+     * Initializes a new instance of the {@link RadioButton} class.
+     *
+     * @param info The AutomationInfo.
+     * @param selector IBy selector that will identify the element
+     */
     public RadioButton(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
+    /**
+     *  Initializes a new instance of the {@link RadioButton} class with a switch mechanism.
+     * @param info The AutomationInfo.
+     * @param selector IBY selector that will identify the element.
+     * @param switchMechanism The switch mechanism for the web element.
+     */
     public RadioButton(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
@@ -27,6 +39,9 @@ public class RadioButton extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
+    /**
+     * Executes the selected command.
+     */
     public void selected() {
         info.getCommandExecutionFacade().execute(info,
                 new SelectedCommand(
@@ -34,6 +49,9 @@ public class RadioButton extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
+    /**
+     * Executes the not selected command.
+     */
     public void notSelected() {
         info.getCommandExecutionFacade().execute(info,
                 new NotSelectedCommand(
@@ -41,6 +59,9 @@ public class RadioButton extends WebElement {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
+    /**
+     * Executes the check command.
+     */
     public void check() {
         info.getCommandExecutionFacade().execute(info,
                 new CheckCommand(

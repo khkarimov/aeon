@@ -7,6 +7,11 @@ import aeon.core.common.exceptions.ContainsWhiteSpaceException;
  */
 public class StringUtils {
 
+    /**
+     * Function returns a string that is a quoted and escaped version of the original string.
+     * @param value the input string to escape and quote.
+     * @return the new string that has been escaped and quoted.
+     */
     public static String toQuotedAndEscapedString(String value) {
         if (value == null) {
             throw new IllegalArgumentException("value");
@@ -217,7 +222,7 @@ public class StringUtils {
 
     /**
      * Indicates whether the current instance contains the specified string at the start,
-     * at the end or as as a word surrounded by spaces
+     * at the end or as as a word surrounded by spaces.
      *
      * @param value The current instance.
      * @param word  The word for which to search.

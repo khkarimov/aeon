@@ -63,6 +63,7 @@ public class By implements IBy {
 
     /**
      * Gets the CSS selector.
+     * @return the selector for the new element.
      */
     protected final String getSelector() {
         return selector;

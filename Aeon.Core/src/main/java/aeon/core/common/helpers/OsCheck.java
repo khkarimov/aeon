@@ -2,13 +2,16 @@ package aeon.core.common.helpers;
 
 import java.util.Locale;
 
+/**
+ * Detects the type of OS being used.
+ */
 public final class OsCheck {
 
     protected static OSType detectedOS;
 
     /**
-     * detect the operating system from the os.name System property and cache
-     * the result
+     * Detect the operating system from the os.name System property and cache
+     * the result.
      *
      * @return - the operating system detected
      */
@@ -29,7 +32,7 @@ public final class OsCheck {
     }
 
     /**
-     * types of Operating Systems
+     * Types of Operating Systems.
      */
     public enum OSType {
         Windows, MacOS, Linux, Other

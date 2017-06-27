@@ -11,14 +11,25 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import org.joda.time.Duration;
 
+/**
+ * Class to make a web product.
+ */
 public class WebProduct extends Product {
 
     public Browser browser;
 
+    /**
+     * Default WebProduct constructor.
+     */
     public WebProduct() {
 
     }
 
+    /**
+     * Create new browser using a provided AutomationInfo variable.
+     *
+     * @param automationInfo An AutomationInfo object provided to the function.
+     */
     protected WebProduct(AutomationInfo automationInfo) {
         browser = new Browser(automationInfo);
     }

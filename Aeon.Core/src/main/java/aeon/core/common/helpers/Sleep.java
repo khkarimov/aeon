@@ -36,6 +36,10 @@ public final class Sleep {
         }
     }
 
+    /**
+     * Waits. May be used between Internal calls.
+     * Default for Internal time is 70.
+     */
     public static void waitInternal() {
         try {
             Thread.sleep(TimeForInternal);
@@ -44,6 +48,10 @@ public final class Sleep {
         }
     }
 
+    /**
+     * Waits. May be used between Internal Long calls.
+     * Default for InternalLong time is 500.
+     */
     public static void waitInternalLong() {
         try {
             Thread.sleep(TimeForInternalLong);
@@ -52,6 +60,10 @@ public final class Sleep {
         }
     }
 
+    /**
+     * Function waits for the time required for the driver to quit.
+     * Default for DriverQuit time is 5000.
+     */
     public static void waitDriverQuit() {
         try {
             Thread.sleep(TimeForDriverQuit);
@@ -60,6 +72,10 @@ public final class Sleep {
         }
     }
 
+    /**
+     * Function makes the thread wait for the specified duration in miliseconds.
+     * @param duration the time set to wait.
+     */
     public static void waitDuration(org.joda.time.Duration duration) {
         try {
             Thread.sleep(duration.getMillis());
@@ -68,6 +84,10 @@ public final class Sleep {
         }
     }
 
+    /**
+     * Function makes threads wait for a specified amount of time in miliseconds.
+     * @param millis the time to wait in miliseconds.
+     */
     public static void wait(int millis) {
         try {
             Thread.sleep(millis);
@@ -76,6 +96,10 @@ public final class Sleep {
         }
     }
 
+    /**
+     * Function waits for the specified duration in miliseconds.
+     * @param duration the time set to wait.
+     */
     public static void waitDuration(Duration duration) {
         try {
             Thread.sleep(duration.toMillis());

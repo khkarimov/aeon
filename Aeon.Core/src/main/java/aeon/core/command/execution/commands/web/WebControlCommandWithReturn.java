@@ -39,6 +39,7 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
      * The method which provides the logic for the web element command.
      *
      * @param driver the framework abstraction facade
+     * @return a command delegate override object.
      */
     @Override
     protected Object commandDelegate(IDriver driver) {
@@ -48,5 +49,11 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
         return commandDelegateOverride(driver, control);
     }
 
+    /**
+     * Abstract to override the command delegate.
+     * @param driver The facade for the framework abstraction layer.
+     * @param control The web control.
+     * @return the Object.
+     */
     protected abstract Object commandDelegateOverride(IDriver driver, WebControl control);
 }

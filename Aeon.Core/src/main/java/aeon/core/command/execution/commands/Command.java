@@ -46,14 +46,29 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
         log.info(message);
     }
 
+    /**
+     * Getter for ICommandInitializer.
+     *
+     * @return The initializer property {@link ICommandInitializer}.
+     */
     public final ICommandInitializer getCommandInitializer() {
         return commandInitializer;
     }
 
+    /**
+     * Setter for ICommandInitializer.
+     *
+     * @param value The initializer property {@link ICommandInitializer}.
+     */
     public final void setCommandInitializer(ICommandInitializer value) {
         commandInitializer = value;
     }
 
+    /**
+     * Getter for the command delegate.
+     *
+     * @return The command delegate for this specific instance.
+     */
     public Consumer<IDriver> getCommandDelegate() {
         Consumer<IDriver> action = driver -> {
             if (commandInitializer != null) {

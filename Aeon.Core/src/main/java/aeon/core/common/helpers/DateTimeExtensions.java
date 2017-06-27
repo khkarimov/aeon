@@ -10,7 +10,7 @@ import org.joda.time.Period;
 public class DateTimeExtensions {
 
     /**
-     * Checks that the actual value is within a certain margin of error
+     * Checks that the actual value is within a certain margin of error.
      *
      * @param value    The actual value encountered.
      * @param expected The expected value.
@@ -27,6 +27,7 @@ public class DateTimeExtensions {
      * are ignored.
      *
      * @param delta The period to be converted to milliseconds.
+     * @return a long of the period in milliseconds.
      */
     public static long periodToMilliSeconds(Period delta) {
         long dayMillis = delta.getDays() * DateTimeConstants.MILLIS_PER_DAY;

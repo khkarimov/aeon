@@ -5,7 +5,7 @@ import aeon.core.common.Resources;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 6/29/2016.
+ * Class that handles the exception thrown when the element is not selected.
  */
 public class ElementNotSelectedException extends RuntimeException implements Serializable {
 

@@ -78,6 +78,10 @@ public enum KeyboardKey {
         this.code = code;
     }
 
+    /**
+     * Gets the unicode of the character.
+     * @return the code as a char.
+     */
     public char getUnicode() {
         return code;
     }

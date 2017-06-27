@@ -13,6 +13,11 @@ public class Resources {
         bundle = ResourceBundle.getBundle("MessagesBundle");
     }
 
+    /**
+     * Gets the string if the bundle contains the input key.
+     * @param key the input string.
+     * @return the string of the bundle at the key.
+     */
     public static String getString(String key) {
         if (bundle.containsKey(key)) {
             return bundle.getString(key);

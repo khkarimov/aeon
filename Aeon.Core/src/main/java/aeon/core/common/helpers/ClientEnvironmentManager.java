@@ -7,11 +7,20 @@ import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 
+/**
+ * Class manages the environment of the client.
+ */
 public final class ClientEnvironmentManager {
 
     private static final Size[] supportedResolutions = {new Size(1024, 768)};
     private static Logger log = LogManager.getLogger(ClientEnvironmentManager.class);
 
+    /**
+     * Function that ensures each environment browser is clean.
+     * @param browserType the browser type input.
+     * @param browserAcceptedLanguageCodes the browser's accepted language codes.
+     * @param ensureCleanEnvironment boolean of the environment's cleanliness.
+     */
     public static void manageEnvironment(BrowserType browserType, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
         if (ensureCleanEnvironment) {
             log.info("Cleaning Client Environment.");
