@@ -53,20 +53,32 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     /**
-     * Get a row by the index.
+     * Helper function for findRowByIndex
      *
      * @param index The index you are looking for.
      *
      * @return Returns an instance of K.
      */
     protected K findRowByIndex(int index) {
-        IBy updatedSelector = selector.toJQuery().find(String.format("tr:nth-of-type(%1$s)", index));
+        return findRowByIndex(index, "tr:nth-of-type");
+    }
+
+    /**
+     * Get a row by the index.
+     *
+     * @param index The index you are looking for.
+     * @param cssSelector The name of the selector to use for the grid information
+     *
+     * @return Returns an instance of K.
+     */
+    protected K findRowByIndex(int index, String cssSelector) {
+        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", cssSelector, index));
 
         return newInstanceOfK(updatedSelector);
     }
 
     /**
-     * Get a row by the value and column header.
+     * Helper function for find row
      *
      * @param value The value you are looking for.
      * @param columnHeader THe header of the column.
@@ -74,7 +86,23 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * @return Returns an instance of T.
      */
     protected T findRow(String value, IBy columnHeader) {
-        IBy updatedSelector = selector.toJQuery().find(String.format("td:nth-of-type(%1$s)", getColumnIndex(columnHeader))).filter(String.format("td:contains(%1$s)", value)).parents("tr");
+        return findRow(value, columnHeader, "td:nth-of-type", "td:contains", "tr");
+    }
+
+    /**
+     * Get a row by the value and column header.
+     *
+     * @param value The value you are looking for.
+     * @param columnHeader THe header of the column.
+     * @param cssSelectornthoftype the name of the selector to use for the grid information (td:nth-of-type)
+     * @param cssSelectorContains (td:contains)
+     * @param cssSelectorParents (tr)
+     *
+     * @return Returns an instance of T.
+     */
+    protected T findRow(String value, IBy columnHeader, String cssSelectornthoftype, String cssSelectorContains, String cssSelectorParents) {
+        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", cssSelectornthoftype, getColumnIndex(columnHeader))).
+                filter(String.format("%1$s(%2$s)", cssSelectorContains, value)).parents(String.format("$s", cssSelectorParents));
 
         return newInstanceOfT(updatedSelector);
     }
@@ -82,6 +110,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
 
     /**
      * A function that returns the row.
+     *
      * @return new instance of K selector.
      */
     public K getRow() {
@@ -126,6 +155,12 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
         }
     }
 
+    /**
+     * Gets the column index based on the selector
+     *
+     * @param columnSelector
+     * @return the column index
+     */
     private long getColumnIndex(IBy columnSelector) {
         return (long) ((IWebDriver) automationInfo.getDriver()).executeScript(String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
     }
