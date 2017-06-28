@@ -5,10 +5,15 @@ import aeon.core.common.Resources;
 import java.util.Locale;
 
 /**
- * Created by DionnyS on 4/14/2016.
+ * Class that handles the exception thrown when there is an incorrect element tag.
  */
 public class IncorrectElementTagException extends RuntimeException {
 
+    /**
+     * Initializes a new instance of the {@link IncorrectElementTagException} class.
+     * @param expectedTagName the expected string tag name.
+     * @param actualTagName the actual string tag name.
+     */
     public IncorrectElementTagException(String expectedTagName, String actualTagName) {
         super(String.format(Locale.getDefault(), Resources.getString("IncorrectElementTagException_ctor_DefaultMessage"), actualTagName, expectedTagName));
     }

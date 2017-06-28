@@ -34,6 +34,7 @@ public class GoToUrlCommand extends CommandWithReturn {
      * The method which provides the logic for the command.
      *
      * @param driver The framework abstraction facade.
+     * @return return the driver going to the new url.
      */
     @Override
     protected Object commandDelegate(IDriver driver) {

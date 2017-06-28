@@ -113,6 +113,7 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @param obj      A {@link ByJQuery} object representing a function which returns an integer.
      * @param constant A constant integer.
+     * @return a new {@link ByJQueryWithArithmeticOperatorOverload} with the completed addition.
      */
     public static ByJQueryWithArithmeticOperatorOverload OpAddition(ByJQuery obj, int constant) {
         return new ByJQueryWithArithmeticOperatorOverload(String.format("%1$s + %2$s", obj, constant));
@@ -463,6 +464,7 @@ public class ByJQuery implements IBy, IByJQuery {
 
     /**
      * Reduce the set of matched elements to the first in the set.
+     * @return new instance of a {@link ByJQuery} object that is first.
      */
     @Override
     public final ByJQuery first() {
@@ -592,6 +594,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * Pass each element in the current matched set through a function, producing a new jquery object containing the return values.
      *
      * @param callback A function object that will be invoked for each element in the current set.
+     * @return a new instance of the {@link ByJQuery} exception thrown to indicate that the requested operation is not supported.
      */
     @Override
     public final ByJQuery map(Expression<BiFunction<Integer, ByJQuery, Iterable<ByJQuery>>> callback) {

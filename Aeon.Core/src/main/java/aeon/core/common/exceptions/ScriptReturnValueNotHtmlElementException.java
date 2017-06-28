@@ -38,18 +38,34 @@ public class ScriptReturnValueNotHtmlElementException extends RuntimeException i
         this.script = script;
     }
 
+    /**
+     * Gets the return value.
+     * @return the current return value.
+     */
     public Object getReturnValue() {
         return returnValue;
     }
 
+    /**
+     * Function that sets the return value.
+     * @param returnValue to set to the current returnValue
+     */
     public void setReturnValue(Object returnValue) {
         this.returnValue = returnValue;
     }
 
+    /**
+     * Gets the script.
+     * @return the script.
+     */
     public String getScript() {
         return script;
     }
 
+    /**
+     * Function that sets the script to the given input.
+     * @param script the input to be set.
+     */
     public void setScript(String script) {
         this.script = script;
     }

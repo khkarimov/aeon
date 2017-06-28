@@ -15,6 +15,12 @@ public class SetBodyValueByJavaScriptCommand extends WebControlCommand {
 
     private String value;
 
+    /**
+     * Sets the body value using a javascript command.
+     * @param selector A string containing a selector expression to match elements against.
+     * @param initializer The command initializer.
+     * @param value The string value to set.
+     */
     public SetBodyValueByJavaScriptCommand(IBy selector, ICommandInitializer initializer, String value) {
         super(String.format(Locale.getDefault(), Resources.getString("SetBodyValueByJavaScriptCommand_Info"), value, selector), selector, initializer);
         this.value = value;

@@ -51,6 +51,9 @@ public class SeleniumConfiguration extends Configuration {
 
         // Android
         public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
+
+        //IOS
+        public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
     }
 
     @Override

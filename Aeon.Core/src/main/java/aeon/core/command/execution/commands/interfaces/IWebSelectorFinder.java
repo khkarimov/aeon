@@ -4,7 +4,7 @@ import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Finds a web element.
+ * Interface for web element selector finder.
  */
 public interface IWebSelectorFinder {
 

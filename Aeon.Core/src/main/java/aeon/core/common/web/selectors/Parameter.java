@@ -18,6 +18,10 @@ public final class Parameter {
         object = parameter;
     }
 
+    /**
+     * Returns the Parameter object.
+     * @return the object.
+     */
     public Object getObject() {
         return object;
     }

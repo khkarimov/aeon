@@ -7,12 +7,17 @@ public class ByJQueryWithArithmeticOperatorOverload {
 
     private String script;
 
+    /**
+     *Initializes a new instance of the {@link ByJQueryWithArithmeticOperatorOverload} class.
+     * @param script the string input.
+     */
     public ByJQueryWithArithmeticOperatorOverload(String script) {
         this.script = script;
     }
 
     /**
      * Gets the script.
+     * @return the script.
      */
     protected final String getScript() {
         return script;

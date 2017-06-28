@@ -45,7 +45,7 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
     }
 
     /**
-     * Gets or sets the command initializer.
+     * Gets the command initializer.
      *
      * @return The initializer property {@link ICommandInitializer}.
      */
@@ -53,6 +53,11 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
         return commandInitializer;
     }
 
+    /**
+     * Sets the command initializer.
+     *
+     * @param value The initializer property {@link ICommandInitializer}.
+     */
     public final void setCommandInitializer(ICommandInitializer value) {
         commandInitializer = value;
     }
@@ -85,6 +90,8 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
      * The method which provides the logic for the command.
      *
      * @param driver The framework abstraction facade.
+     *
+     * @return The command delegate property.
      */
     protected abstract Object commandDelegate(IDriver driver);
 }

@@ -7,6 +7,9 @@ import aeon.core.common.Resources;
  */
 public class BrowserTypeNotRecognizedException extends RuntimeException {
 
+    /**
+     * Initializes a new instance of the {@link BrowserTypeNotRecognizedException} class.
+     */
     public BrowserTypeNotRecognizedException() {
         super(Resources.getString("BrowserTypeNotRecognizedException_ctor_DefaultMessage"));
     }

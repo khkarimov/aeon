@@ -18,12 +18,24 @@ public class TextBox extends WebElement {
     private IBy selector;
     private Iterable<IBy> switchMechanism;
 
+    /**
+     * Initialize a new instance of {@link TextBox} class.
+     *
+     * @param info The AutomationInfo.
+     * @param selector IBy selector that will identify the element
+     */
     public TextBox(AutomationInfo info, IBy selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
+    /**
+     *  Initializes a new instance of the {@link TextBox} class with a switch mechanism.
+     * @param info The AutomationInfo.
+     * @param selector IBY selector that will identify the element.
+     * @param switchMechanism The switch mechanism for the web element.
+     */
     public TextBox(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
@@ -31,6 +43,11 @@ public class TextBox extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
+    /**
+     * Executes the set command with a specified value.
+     *
+     * @param value The new value to be set on the field.
+     */
     public void set(String value) {
         info.getCommandExecutionFacade().execute(info,
                 new SetCommand(
@@ -40,6 +57,9 @@ public class TextBox extends WebElement {
                         value));
     }
 
+    /**
+     * Executes the clear command.
+     */
     public void clear() {
         info.getCommandExecutionFacade().execute(info, new ClearCommand(
                 this.selector,

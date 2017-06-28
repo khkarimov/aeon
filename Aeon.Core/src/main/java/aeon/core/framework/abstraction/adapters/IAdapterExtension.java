@@ -5,6 +5,9 @@ import aeon.core.testabstraction.product.Configuration;
 import ro.fortsoft.pf4j.ExtensionPoint;
 import java.io.IOException;
 
+/**
+ * The interface for the Adapter Extension class.
+ */
 public interface IAdapterExtension extends ExtensionPoint {
 
     /**

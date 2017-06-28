@@ -5,10 +5,13 @@ import aeon.core.common.Resources;
 import java.io.Serializable;
 
 /**
- * Created by RafaelT on 5/31/2016.
+ * Class that handles the exception thrown when the element exists.
  */
 public class ElementExistsException extends RuntimeException implements Serializable {
 
+    /**
+     * Initializes a new instance of the {@link ElementExistsException} class.
+     */
     public ElementExistsException() {
         super(Resources.getString("ElementExistsException_ctor_DefaultMessage"));
     }

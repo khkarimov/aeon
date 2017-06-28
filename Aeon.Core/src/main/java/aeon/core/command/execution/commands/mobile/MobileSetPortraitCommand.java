@@ -26,6 +26,6 @@ public class MobileSetPortraitCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).mobileSetPortrait();
+        ((IWebDriver) driver).mobileSetPortrait();
     }
 }

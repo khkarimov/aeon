@@ -15,15 +15,26 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Browser class.
+ */
 public class Browser {
 
     private AutomationInfo info;
     private String mainWindowHandle;
 
+    /**
+     * The constructor for the Browser given an AutomationInfo object.
+     *
+     * @param info sets the info of the newly made Browser.
+     */
     public Browser(AutomationInfo info) {
         this.info = info;
     }
 
+    /**
+     * Function to accept an incoming alert.
+     */
     public void acceptAlert() {
         info.getCommandExecutionFacade().execute(info, new AcceptAlertCommand());
     }
@@ -249,6 +260,8 @@ public class Browser {
     }
 
     /**
+     * Function verifies that an alert gives the proper text.
+     *
      * @param comparingText String to compare against Alert Text.
      * @param caseSensitive Determine caseSensitive comparison
      */
@@ -256,22 +269,45 @@ public class Browser {
         info.getCommandExecutionFacade().execute(info, new VerifyAlertTextLikeCommand(comparingText, caseSensitive));
     }
 
+    /**
+     * Verifies the title given a string.
+     *
+     * @param comparingTitle the title, as a string, to verify.
+     */
     public void verifyTitle(String comparingTitle) {
         info.getCommandExecutionFacade().execute(info, new VerifyTitleCommand(comparingTitle));
     }
 
+    /**
+     * Verifies the URL given a string.
+     *
+     * @param comparingURL the url, as a string, to compare.
+     */
     public void verifyURL(String comparingURL) {
         info.getCommandExecutionFacade().execute(info, new VerifyUrlCommand(comparingURL));
     }
 
+    /**
+     * Function verifies that the window does not exist given a title as a string parameter.
+     * @param windowTitle the title, as a string, to the test.
+     */
     public void verifyWindowDoesNotExistByTitle(String windowTitle) {
         info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByTitleCommand(windowTitle));
     }
 
+    /**
+     * Function verifies that the window does not exist given a url as a string parameter.
+     * @param url the url, as a string, to test by the function.
+     */
     public void verifyWindowDoesNotExistByUrl(String url) {
         info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByUrlCommand(url));
     }
 
+    /**
+     * Function clicks all elements given an IBy selector.
+     *
+     * @param selector the selector for the element.
+     */
     public void clickAllElementsCommand(IBy selector) {
         info.getCommandExecutionFacade().execute(
                 info,
@@ -280,30 +316,61 @@ public class Browser {
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
     }
 
+    /**
+     * Hides the keyboard on a mobile device.
+     */
     public void mobileHideKeyboard() {
         info.getCommandExecutionFacade().execute(info, new MobileHideKeyboardCommand());
     }
 
+    /**
+     * Sets the mobile device orientation to landscape mode.
+     */
     public void mobileSetLandscape() {
         info.getCommandExecutionFacade().execute(info, new MobileSetLandscapeCommand());
     }
 
+    /**
+     * Sets the mobile device orientation to portrait mode.
+     */
     public void mobileSetPortrait() {
         info.getCommandExecutionFacade().execute(info, new MobileSetPortraitCommand());
     }
 
+    /**
+     * Sets the GPS location on a mobile device.
+     *
+     * @param latitude The GPS latitude.
+     * @param longitude The GPS longitude.
+     * @param altitude The GPS altitude.
+     */
     public void mobileSetGeoLocation(double latitude, double longitude, double altitude) {
         info.getCommandExecutionFacade().execute(info, new MobileSetGeoLocationCommand(latitude, longitude, altitude));
     }
 
+    /**
+     * Locks and immediately unlocks a mobile device.
+     */
     public void mobileLock() {
         info.getCommandExecutionFacade().execute(info, new MobileLockCommand());
     }
 
+    /**
+     * Locks and immediately unlocks a mobile device.
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
+     */
     public void mobileLock(int seconds){
         info.getCommandExecutionFacade().execute(info, new MobileLockCommand(seconds));
     }
 
+    /**
+     * Executes a swipe on a mobile device.
+     * @param startx Starting x coord.
+     * @param starty Starting y coord.
+     * @param endx Ending x coord.
+     * @param endy Ending y coord.
+     * @param duration The duration of the execution of the swipe.
+     */
     public void mobileSwipe(int startx, int starty, int endx, int endy, int duration){
         info.getCommandExecutionFacade().execute(info, new MobileSwipeCommand(startx, starty, endx, endy, duration));
     }

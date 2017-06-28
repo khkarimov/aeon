@@ -143,6 +143,10 @@ public class ClientRects {
     }
 
 
+    /**
+     * Function that returns top, bottom, left and right as as string.
+     * @return the string of top, bottom, left and right.
+     */
     public String toString() {
         return "Top: " + this.getTop() + " Bottom: " + this.getBottom() + " Left: " + this.getLeft() + " Right: " + this.getRight();
     }

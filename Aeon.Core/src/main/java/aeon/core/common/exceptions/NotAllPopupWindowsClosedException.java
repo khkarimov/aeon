@@ -4,6 +4,9 @@ import aeon.core.common.Resources;
 
 import java.io.Serializable;
 
+/**
+ * The class to handle not all popup windows closed exception.
+ */
 public class NotAllPopupWindowsClosedException extends RuntimeException implements Serializable {
 
     /**

@@ -9,6 +9,14 @@ import java.awt.event.InputEvent;
 public class MouseHelper {
 
     // SR - I made this a boolean so that the Adapter can determine whether to throw an error or not
+
+    /**
+     * Function uses coordinates to click and hold for a specific amount of time.
+     * @param xCoordinate the x coordinate.
+     * @param yCoordinate the y coordinate.
+     * @param durationMillis the duration in milliseconds to hold.
+     * @return returns false if the adapter needs to throw an error.
+     */
     public static boolean clickAndHold(int xCoordinate, int yCoordinate, int durationMillis) {
         //get the current coordinates
         Point pointLocation = MouseInfo.getPointerInfo().getLocation();
@@ -32,6 +40,14 @@ public class MouseHelper {
         }
     }
 
+    /**
+     * Function uses coordinates to click and drag from one starting set of coordinates to another.
+     * @param startXCoordinate The starting x coordinate.
+     * @param startYCoordinate The starting y coordinate.
+     * @param endXCoordinate The ending x coordinate.
+     * @param endYCoordinate the ending y coordinate.
+     * @return a boolean of success or failure.
+     */
     public static boolean dragAndDrop(int startXCoordinate, int startYCoordinate, int endXCoordinate, int endYCoordinate) {
         //get the current coordinates
         Point pointLocation = MouseInfo.getPointerInfo().getLocation();

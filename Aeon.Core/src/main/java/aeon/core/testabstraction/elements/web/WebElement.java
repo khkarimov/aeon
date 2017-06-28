@@ -22,10 +22,10 @@ public class WebElement extends Element {
     private Iterable<IBy> switchMechanism;
 
     /**
-     * Initializes a new web element.
+     * Initializes a new instance of the {@link WebElement} class.
      *
-     * @param info The automation information.
-     * @param selector The selector.
+     * @param info      The automation information.
+     * @param selector  IBy selector that will identify the element.
      */
     public WebElement(AutomationInfo info, IBy selector) {
         super(selector);
@@ -34,20 +34,22 @@ public class WebElement extends Element {
     }
 
     /**
-     * Initializes a new web element with no automation information.
+     * Initializes a new instance of the {@link WebElement} class
+     * with {@link AutomationInfo} set to null.
      *
-     * @param selector The selector.
+     * @param selector IBy selector that will identify the element.
      */
     public WebElement(IBy selector) {
         this(null, selector);
     }
 
     /**
-     * Constructor for a WebElement with a mechanism to switch to other elements.
+     * Initializes a new instance of the {@link WebElement} class
+     * with a switch mechanism.
      *
-     * @param info
-     * @param selector
-     * @param switchMechanism
+     * @param info The AutomationInfo.
+     * @param selector IBY selector that will indentify the element.
+     * @param switchMechanism The switch mechanism for the web element.
      */
     public WebElement(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
         this(info, selector);
@@ -55,7 +57,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes blur command when a web element is blurred.
+     * Executes the blur command.
      */
     public void blur() {
         info.getCommandExecutionFacade().execute(info, new BlurCommand(
@@ -64,9 +66,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes click and hold command when a web element is clicked and held.
+     * Executes the click and hold command for a certain duration.
      *
-     * @param duration The amount of time, in milliseconds, that a web element is held after it has been clicked.
+     * @param duration The duration in milliseconds.
      */
     public void clickAndHold(int duration) {
         info.getCommandExecutionFacade().execute(info, new ClickAndHoldCommand(
@@ -76,7 +78,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes click command when a web element is clicked.
+     * Executes the click command.
      */
     public void click() {
         info.getCommandExecutionFacade().execute(info, new ClickCommand(
@@ -85,7 +87,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes click all elements command when all web elements are clicked.
+     * Executes the click all elements command.
      */
     public void clickAllElements() {
         info.getCommandExecutionFacade().execute(info, new ClickAllElementsCommand(
@@ -94,7 +96,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes double click command when a web element is double clicked.
+     * Executes the double click command.
      */
     public void doubleClick() {
         info.getCommandExecutionFacade().execute(info, new DoubleClickCommand(
@@ -103,7 +105,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes a web element is disabled when disabled.
+     * Executes the Disabled command.
      */
     public void isDisabled() {
         info.getCommandExecutionFacade().execute(info, new DisabledCommand(
@@ -112,9 +114,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes drag and drop command when a web element is dragged and dropped.
+     * Executes the drag and drop command.
      *
-     * @param dropTarget The target location for which a web element is dragged to and dropped in.
+     * @param dropTarget The element to be dropped.
      */
     public void dragAndDrop(String dropTarget) {
         info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
@@ -124,7 +126,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Asserts a web element is enabled when enabled.
+     * Executes the enabled command.
      */
     public void isEnabled() {
         info.getCommandExecutionFacade().execute(info, new EnabledCommand(
@@ -133,7 +135,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Asserts a web element exists when it exists.
+     * Asserts if a web element exists.
      */
     public void exists() {
         info.getCommandExecutionFacade().execute(info, new ExistsCommand(
@@ -142,18 +144,17 @@ public class WebElement extends Element {
     }
 
     /**
-     * Asserts a web element does not exist when it does not exist.
+     * Asserts if a web element does not exist.
      */
     public void notExists() {
         info.getCommandExecutionFacade().execute(info, new NotExistsCommand(selector));
     }
 
     /**
-     * Executes get element attribute command when getting the attributes of a web element.
-     *
+     * Executes the get element attribute command.
      * @param attributeName The name of the attribute to get from a web element.
      * @return The specified attribute of the web element.
-     */
+      */
     public Object getElementAttribute(String attributeName) {
         return info.getCommandExecutionFacade().execute(info, new GetElementAttributeCommand(
                 selector,
@@ -162,8 +163,8 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes right click command when a web element is right clicked.
-     */
+     * Executes the right click command.
+      */
     public void rightClick() {
         info.getCommandExecutionFacade().execute(info, new RightClickCommand(
                 selector,
@@ -171,7 +172,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes mouse out command when the mouse moves out on a web element.
+     * Executes the mouse out command.
      */
     public void mouseOut() {
         info.getCommandExecutionFacade().execute(info, new MouseOutCommand(
@@ -180,7 +181,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes mouse over command when the mouse moves over a web element.
+     * Executes the mouse over command.
      */
     public void mouseOver() {
         info.getCommandExecutionFacade().execute(info, new MouseOverCommand(
@@ -319,7 +320,6 @@ public class WebElement extends Element {
     }
 
     /**
-     *
      * Asserts that an elements children that match a selector possess values like the given values.
      *
      * @param messages The strings to be matched.
@@ -422,9 +422,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the setting of a div value by javascript.
+     * Executes the set div value by javascript command with a specified value.
      *
-     * @param value The div value to be set to.
+     * @param value The new value to be set on the div.
      */
     public void setDivValueByJavaScript(String value) {
         info.getCommandExecutionFacade().execute(info, new SetDivValueByJavaScriptCommand(
@@ -437,7 +437,7 @@ public class WebElement extends Element {
      * Executes the setting of a body value by javascript.
      *
      * @param value The body value to be set to.
-     */
+      */
     public void setBodyValueByJavaScript(String value) {
         info.getCommandExecutionFacade().execute(info, new SetBodyValueByJavaScriptCommand(
                 selector,
@@ -446,9 +446,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the setting of a text value by javascript.
+     * Executes the set textvalue by javascript command with a specified value.
      *
-     * @param value The text value to be set to.
+     * @param value The text value to be set.
      */
     public void setTextByJavaScript(String value) {
         info.getCommandExecutionFacade().execute(info, new SetTextByJavaScriptCommand(
@@ -467,7 +467,7 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes not visible command when a web element is not visible.
+     * Executes the not visible command.
      */
     public void notVisible() {
         info.getCommandExecutionFacade().execute(info, new NotVisibleCommand(
@@ -504,9 +504,9 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes a keyboard key press when a keyboard key is pressed.
+     * Executes the press keyboard key command.
      *
-     * @param key A valid keyboard key that is pressed.
+     * @param key The key to be pressed.
      */
     public void pressKeyboardKey(KeyboardKey key) {
         info.getCommandExecutionFacade().execute(info, new PressKeyboardKeyCommand(

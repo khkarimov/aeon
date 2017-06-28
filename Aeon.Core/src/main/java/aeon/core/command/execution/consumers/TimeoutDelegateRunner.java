@@ -17,6 +17,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * Class to handle the timeout delegate runner.
+ */
 public class TimeoutDelegateRunner extends DelegateRunner {
 
     private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
@@ -24,6 +27,13 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     private IClock clock;
     private Duration timeout;
 
+    /**
+     * Constructor for {@link TimeoutDelegateRunner} class.
+     * @param successor the delegate runner.
+     * @param driver the web driver.
+     * @param clock the clock.
+     * @param timeout the duration time.
+     */
     public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
         super(successor);
         this.driver = driver;

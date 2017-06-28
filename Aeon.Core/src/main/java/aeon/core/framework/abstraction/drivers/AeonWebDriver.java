@@ -2,8 +2,8 @@ package aeon.core.framework.abstraction.drivers;
 
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
-import aeon.core.common.exceptions.WebUsingMobileCommandException;
 import aeon.core.common.KeyboardKey;
+import aeon.core.common.exceptions.WebUsingMobileCommandException;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
@@ -511,6 +511,10 @@ public class AeonWebDriver implements IWebDriver {
         }
     }
 
+    /**
+     * Command to lock the mobile device.
+     * @param seconds The number of seconds that the device should remain locked (iOS only).
+     */
     public void mobileLock(int seconds) {
         switch (getBrowserType()) {
             case AndroidHybridApp:

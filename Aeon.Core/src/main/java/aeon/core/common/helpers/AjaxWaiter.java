@@ -21,28 +21,53 @@ public class AjaxWaiter {
     private IClock clock;
     private Duration timeout;
 
+    /**
+     * Constructor for an AjaxWaiter.
+     * @param driver The specified driver that receives ajax responses.
+     * @param timeout The amount of time, in milliseconds, that the driver will wait before processing
+     *                an ajax response.
+     */
     public AjaxWaiter(IDriver driver, Duration timeout) {
         this.webDriver = (IWebDriver) driver;
         this.clock = new Clock();
         this.timeout = timeout;
     }
 
+    /**
+     * Gets the web driver.
+     * @return The web driver being used is returned.
+     */
     public IWebDriver getWebDriver() {
         return this.webDriver;
     }
 
+    /**
+     * Sets the web driver.
+     * @param webDriver The web driver that is set.
+     */
     public void setWebDriver(IWebDriver webDriver) {
         this.webDriver = webDriver;
     }
 
+    /**
+     * Gets the timeout value of the ajax waiter.
+     * @return The timeout value, in milliseconds.
+     */
     public long getTimeout() {
         return timeout.getMillis();
     }
 
+    /**
+     * Sets the timeout value of the ajax waiter.
+     * @param millis The timeout value, in milliseconds, that the ajax waiter is set to have.
+     */
     public void setTimeout(long millis) {
         this.timeout = Duration.millis(millis);
     }
 
+    /**
+     * Waits for all ajax responses until timeout.
+     */
     public void waitForAsync() {
         long count;
         DateTime end = clock.getUtcNow().withDurationAdded(timeout.getMillis(), 1);
@@ -57,8 +82,13 @@ public class AjaxWaiter {
         } while (count != 0 && clock.getUtcNow().isBefore(end.toInstant()));
     }
 
+
     /*ajaxJsonpElementTimeout defines a timeout for JSONP request on the HTML page.
     / This is set to be less than the timeout so that page interactions can be executed.
+     */
+
+    /**
+     * Injects JS into the webDriver.
      */
     public void injectJS() {
         try {
@@ -73,6 +103,10 @@ public class AjaxWaiter {
         }
     }
 
+    /**
+     * Gets the Ajax Waiter as as string/.
+     * @return the content of the buffered reader as a string.
+     */
     public String getAjaxWaiterJS() {
         try (InputStream scriptReader = AjaxWaiter.class.getResourceAsStream("/ajax-waiter.js")) {
             String content = new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));

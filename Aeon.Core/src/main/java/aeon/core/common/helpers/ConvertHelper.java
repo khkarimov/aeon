@@ -90,6 +90,11 @@ public final class ConvertHelper {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Function that returns the object value to a readable string.
+     * @param value the input object.
+     * @return the readable string.
+     */
     public static String scriptReturnValueToReadableString(Object value) {
         if (value == null) {
             return "";

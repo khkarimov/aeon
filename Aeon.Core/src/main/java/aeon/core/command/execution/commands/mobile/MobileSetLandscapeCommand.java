@@ -26,6 +26,6 @@ public class MobileSetLandscapeCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver)driver).mobileSetLandscape();
+        ((IWebDriver) driver).mobileSetLandscape();
     }
 }

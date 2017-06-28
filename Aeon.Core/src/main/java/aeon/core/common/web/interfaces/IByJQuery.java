@@ -8,6 +8,9 @@ import com.sun.javafx.fxml.expression.Expression;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+/**
+ * Interface for ByJQuery commands.
+ */
 public interface IByJQuery {
 
     /**

@@ -5,6 +5,9 @@ import aeon.core.common.Resources;
 import java.io.Serializable;
 import java.util.Locale;
 
+/**
+ * The class for a no such window exception.
+ */
 public class NoSuchWindowException extends RuntimeException implements Serializable {
 
     private String window;
