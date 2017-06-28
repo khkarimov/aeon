@@ -1,3 +1,5 @@
+package tests;
+
 import aeon.core.common.CompareType;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserType;
@@ -12,7 +14,7 @@ import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-public class EdgeDriverAssertionTests {
+public class FirefoxDriverAssertionTests {
 
     private static Sample product;
 
@@ -26,12 +28,11 @@ public class EdgeDriverAssertionTests {
 
     @AfterClass
     public static void tearDown() {
-        //product.browser.quit();
     }
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.Edge);
+        product = launch(Sample.class, BrowserType.Firefox);
         String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
                 "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
         String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
@@ -57,8 +58,7 @@ public class EdgeDriverAssertionTests {
         product.browser.verifyAlertNotExists();
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
-        product.browser.sendKeysToAlert("Tester of Alerts");
-        product.browser.acceptAlert();
+        product.browser.sendKeysToAlert("Sent some keys");
     }
 
     @Test
@@ -82,11 +82,11 @@ public class EdgeDriverAssertionTests {
         product.startPage.div.has(new String[]{"start"}, "button", "id");
         product.startPage.div.hasLike(new String[]{"ASYNC Call 1", "Async Call 2", "Async Call 2"}, "h3");
         product.startPage.div.hasLike(new String[]{"START"}, "button", "id");
-//        product.startPage.dropDown.is("drop-down-list", "id");
-//        product.startPage.dropDown.isLike("DROP-DOWN-LIST", "id");
-//        product.startPage.dropDown.isNotLike("DROP-DOWN-LISTT", "id");
-//        product.startPage.div.doesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
-//        product.startPage.div.doesNotHaveLike(new String[]{"async call 3"}, "h3");
+        product.startPage.dropDown.is("option0");
+        //product.startPage.dropDown.isLike("DROP-DOWN-LIST", "id");
+        //product.startPage.dropDown.isNotLike("DROP-DOWN-LISTT", "id");
+        //product.startPage.div.doesNotHave(new String[]{"ASYNC CALL 1"}, "h3");
+        //product.startPage.div.doesNotHaveLike(new String[]{"async call 3"}, "h3");
     }
 
     @Test
@@ -105,7 +105,7 @@ public class EdgeDriverAssertionTests {
 
     @Test
     public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(BrowserType.Edge));
+        assert (product.browser.getBrowserType().equals(BrowserType.Firefox));
     }
 
     @Test
@@ -153,7 +153,6 @@ public class EdgeDriverAssertionTests {
         product.browser.verifyAlertText("Send some keys");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.verifyAlertText("Send other keys");
-        product.browser.acceptAlert();
     }
 
     @Test
@@ -163,7 +162,6 @@ public class EdgeDriverAssertionTests {
         product.browser.verifyAlertTextLike("Send some keys", true);
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
         product.browser.verifyAlertTextLike("send some keys", true);
-        product.browser.acceptAlert();
     }
 
     @Test
@@ -189,7 +187,7 @@ public class EdgeDriverAssertionTests {
     }
 
     @Test
-    public void testVerifyWindowDoesNotExistByUrlVerifyWindowDoesNotExistByTitle() {
+    public void testVerifyWindowDoesNotExistByUrl_VerifyWindowDoesNotExistByTitle() {
         product.browser.verifyWindowDoesNotExistByTitle("fakeTitle");
         product.browser.verifyWindowDoesNotExistByUrl("fakeUrl");
     }
@@ -293,8 +291,11 @@ public class EdgeDriverAssertionTests {
     public void testIs_IsLike_IsNotLike_WithSelect(){
         product.startPage.lexoDropDown.is("apple");
         product.startPage.lexoDropDown.isLike("PPL");
-        product.startPage.lexoDropDown.is("01", "value");
+        product.startPage.lexoDropDown.is("lexicographic-drop-down", "id");
+        product.startPage.lexoDropDown.isLike("lexicographic-DROP-down", "id");
+        product.startPage.lexoDropDown.is("01", "VALUE");
         product.startPage.lexoDropDown.isNotLike("appple");
+        product.startPage.lexoDropDown.isNotLike("anything", "id");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
         thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.startPage.lexoDropDown.is("ZEBRA");
@@ -305,7 +306,6 @@ public class EdgeDriverAssertionTests {
         product.startPage.myGrid.RowBy.index(2).checkBoxButton.click();
         product.startPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
         product.startPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.RowBy.material("Acrylic").getRow().exists();
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
         product.startPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }

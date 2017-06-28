@@ -1,3 +1,5 @@
+package tests;
+
 import aeon.core.common.CompareType;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserType;
@@ -12,7 +14,7 @@ import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-public class ChromeDriverAssertionTests {
+public class EdgeDriverAssertionTests {
 
     private static Sample product;
 
@@ -31,7 +33,7 @@ public class ChromeDriverAssertionTests {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.Chrome);
+        product = launch(Sample.class, BrowserType.Edge);
         String environment = product.getConfig(Configuration.Keys.ENVIRONMENT,
                 "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
         String protocol = product.getConfig(Configuration.Keys.PROTOCOL, "file");
@@ -53,7 +55,7 @@ public class ChromeDriverAssertionTests {
     }
 
     @Test
-    public void testSendKeysToAlert_VerifyAlertExists_VerifyAlertNotExists () {
+    public void testSendKeysToAlert_VerifyAlertExists_VerifyAlertNotExists() {
         product.browser.verifyAlertNotExists();
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
@@ -105,7 +107,7 @@ public class ChromeDriverAssertionTests {
 
     @Test
     public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(BrowserType.Chrome));
+        assert (product.browser.getBrowserType().equals(BrowserType.Edge));
     }
 
     @Test
@@ -189,7 +191,7 @@ public class ChromeDriverAssertionTests {
     }
 
     @Test
-    public void testVerifyWindowDoesNotExistByUrl_VerifyWindowDoesNotExistByTitle() {
+    public void testVerifyWindowDoesNotExistByUrlVerifyWindowDoesNotExistByTitle() {
         product.browser.verifyWindowDoesNotExistByTitle("fakeTitle");
         product.browser.verifyWindowDoesNotExistByUrl("fakeUrl");
     }

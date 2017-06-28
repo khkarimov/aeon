@@ -1,8 +1,11 @@
+package tests;
+
 import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.product.Configuration;
 import main.Sample;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
+
 import static aeon.core.testabstraction.product.Aeon.launch;
 
 public class WindowsFirefoxBrowserTests {

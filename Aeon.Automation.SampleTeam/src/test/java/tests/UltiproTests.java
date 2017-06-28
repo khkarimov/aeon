@@ -1,3 +1,5 @@
+package tests;
+
 import aeon.core.common.web.BrowserType;
 import main.ultipro.Ultipro;
 import org.junit.*;
