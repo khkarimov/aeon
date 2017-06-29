@@ -45,6 +45,5 @@ test {
     maxParallelForks = 4
     useJUnit {
         includeCategories 'categories.' + System.getenv('tests.included.categories')
-        excludeCategories 'categories.' + System.getenv('tests.excluded.categories')
     }
 }
