@@ -15,8 +15,8 @@ import org.joda.time.DateTime;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
-import testCategories.UbuntuTests;
-import testCategories.WindowsTests;
+import categories.UbuntuTests;
+import categories.WindowsTests;
 
 import java.util.Calendar;
 import java.util.Date;
