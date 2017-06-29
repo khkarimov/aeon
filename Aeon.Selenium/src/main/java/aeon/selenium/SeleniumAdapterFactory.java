@@ -146,21 +146,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
             case InternetExplorer:
                 log.info("Launching product on IE browser: ");
                 if (seleniumHubUrl != null) {
-//                    log.info("seleniumHubUr != null: \n");
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
-                    log.info("begin setup on IE browser: ");
-
-
-                    log.info("1) ie webdriver: " + System.getProperty("webdriver.ie.driver"));
-
-
                     InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
                     DesiredCapabilities capabilities = getInternetExplorerCapabilities(ensureCleanEnvironment, proxyLocation);
                     System.setProperty("webdriver.ie.driver", ieDirectory);
-                    log.info("2) ie webdriver: " + System.getProperty("webdriver.ie.driver"));
-
-//                    driver = new InternetExplorerDriver(internetExplorerDriverService, capabilities);
                     driver = new InternetExplorerDriver(capabilities);
                 }
                 break;
