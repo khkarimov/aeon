@@ -48,7 +48,6 @@ public class SeleniumConfiguration extends Configuration {
         public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
         public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
 
-
         // Android
         public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
 

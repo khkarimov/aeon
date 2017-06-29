@@ -253,11 +253,13 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                if (!perfectoUser.isEmpty())
+                if (!perfectoUser.isEmpty()) {
                     desiredCapabilities.setCapability("user", perfectoUser);
+                }
 
-                if (!perfectoPass.isEmpty())
+                if (!perfectoPass.isEmpty()) {
                     desiredCapabilities.setCapability("password", perfectoPass);
+                }
 
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
@@ -268,7 +270,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                 //IOS Specific
                 desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
-
                 break;
 
             case AndroidHybridApp:
@@ -276,26 +277,31 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 Boolean crosswalkpatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
                 // Perfecto
-                if (!perfectoUser.isEmpty())
+                if (!perfectoUser.isEmpty()) {
                     desiredCapabilities.setCapability("user", perfectoUser);
+                }
 
-                if (!perfectoPass.isEmpty())
+                if (!perfectoPass.isEmpty()) {
                     desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
+                // Appium
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
 
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
 
-                // Appium
-                if (!deviceName.isEmpty())
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-
                 // Android Specific
-                if (!appPackage.isEmpty())
+                if (!appPackage.isEmpty()) {
                     desiredCapabilities.setCapability("appPackage", appPackage);
+                }
 
-                if (!app.isEmpty())
+                if (!app.isEmpty()) {
                     desiredCapabilities.setCapability("app", app);
+                }
 
                 //Enables webview support for Crosswalk/Cordova applications
                 if (crosswalkpatch && !appPackage.isEmpty()) {
