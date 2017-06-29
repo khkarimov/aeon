@@ -154,13 +154,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                     log.info("1) ie webdriver: " + System.getProperty("webdriver.ie.driver"));
 
+
                     InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
                     DesiredCapabilities capabilities = getInternetExplorerCapabilities(ensureCleanEnvironment, proxyLocation);
                     System.setProperty("webdriver.ie.driver", ieDirectory);
                     log.info("2) ie webdriver: " + System.getProperty("webdriver.ie.driver"));
 
-                    driver = new InternetExplorerDriver(internetExplorerDriverService, capabilities);
-//                    driver = new InternetExplorerDriver(capabilities);
+//                    driver = new InternetExplorerDriver(internetExplorerDriverService, capabilities);
+                    driver = new InternetExplorerDriver(capabilities);
                 }
                 break;
 
