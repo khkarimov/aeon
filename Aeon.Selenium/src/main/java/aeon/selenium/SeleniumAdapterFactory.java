@@ -27,7 +27,6 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
@@ -130,25 +129,38 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case Chrome:
+                log.info("Launching product on Chrome browser: ");
+
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
+                    System.out.println("chrome");
                 } else {
-                    DesiredCapabilities capabilities =
-                            getChromeOptions();
+                    DesiredCapabilities capabilities = getChromeOptions();
+                    DesiredCapabilities desiredCapabilities = setProxySettings(capabilities, proxyLocation);
+                    System.setProperty("webdriver.chrome.driver", chromeDirectory);
 
-                    driver = new ChromeDriver(
-                            new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
-                            setProxySettings(capabilities, proxyLocation));
+                    driver = new ChromeDriver(desiredCapabilities);
                 }
                 break;
 
             case InternetExplorer:
+                log.info("Launching product on IE browser: ");
                 if (seleniumHubUrl != null) {
+//                    log.info("seleniumHubUr != null: \n");
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
-                    driver = new InternetExplorerDriver(
-                            new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
-                            getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation));
+                    log.info("begin setup on IE browser: ");
+
+
+                    log.info("1) ie webdriver: " + System.getProperty("webdriver.ie.driver"));
+
+                    InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
+                    DesiredCapabilities capabilities = getInternetExplorerCapabilities(ensureCleanEnvironment, proxyLocation);
+                    System.setProperty("webdriver.ie.driver", ieDirectory);
+                    log.info("2) ie webdriver: " + System.getProperty("webdriver.ie.driver"));
+
+                    driver = new InternetExplorerDriver(internetExplorerDriverService, capabilities);
+//                    driver = new InternetExplorerDriver(capabilities);
                 }
                 break;
 
@@ -219,7 +231,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case InternetExplorer:
-                desiredCapabilities = getInternetExplorerOptions(false, null);
+                desiredCapabilities = getInternetExplorerCapabilities(false, null);
                 break;
 
             case Edge:
@@ -333,12 +345,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         firefoxOptions.setBinary(firefoxBinary);
 
         firefoxOptions.setProfile(getFirefoxProfile());
-        firefoxOptions.addDesiredCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
         firefoxOptions.setLogLevel(Level.WARNING);
         return firefoxOptions;
     }
 
-    private DesiredCapabilities getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
+    private DesiredCapabilities getInternetExplorerCapabilities(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
             throw new UnsupportedPlatformException();
         }
