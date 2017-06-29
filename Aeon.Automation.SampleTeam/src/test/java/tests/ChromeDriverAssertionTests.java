@@ -17,7 +17,9 @@ import testCategories.WindowsTests;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({UbuntuTests.class, WindowsTests.class})
+//@Category({UbuntuTests.class, WindowsTests.class})
+
+@Category({UbuntuTests.class})
 public class ChromeDriverAssertionTests {
 
     private static Sample product;
