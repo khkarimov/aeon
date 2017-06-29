@@ -13,8 +13,7 @@ import org.joda.time.DateTime;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
-import testCategories.BrokenTests;
-import testCategories.WindowsTests;
+import categories.WindowsTests;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -53,8 +52,7 @@ public class IEDriverActionTests {
     }
     //endregion
 
-    @Category({BrokenTests.class})
-    @Test
+    @Ignore
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
         product.browser.goToUrl("http://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {

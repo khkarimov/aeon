@@ -42,8 +42,9 @@ dependencies {
 }
 
 test {
+    maxParallelForks = 4
     useJUnit {
-        includeCategories 'testCategories.' + System.getenv('tests.included.categories')
-        excludeCategories 'testCategories.' + System.getenv('tests.excluded.categories')
+        includeCategories 'categories.' + System.getenv('tests.included.categories')
+        excludeCategories 'categories.' + System.getenv('tests.excluded.categories')
     }
 }
