@@ -20,7 +20,7 @@ import java.util.Date;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-//@Category({WindowsTests.class})
+@Category({WindowsTests.class})
 public class IEDriverActionTests {
     private static Sample product;
 
