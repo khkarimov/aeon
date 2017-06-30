@@ -124,7 +124,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    driver = new FirefoxDriver(getFirefoxOptions());
+
+                    FirefoxOptions firefoxOptions = getFirefoxOptions();
+                    driver = new FirefoxDriver(firefoxOptions);
                 }
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
                 break;
@@ -329,6 +331,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private FirefoxProfile getFirefoxProfile() {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("webdriver.firefox.logfile", "firefoxdriver.log");
+
         firefoxProfile.setPreference("intl.accept_languages", browserAcceptedLanguageCodes);
         firefoxProfile.setPreference("webdriver.enable.native.events", false);
         firefoxProfile.setPreference("layers.acceleration.disabled", true);
@@ -337,7 +340,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         if (useMobileUserAgent) {
             firefoxProfile.setPreference("general.useragent.override", MobileUserAgent);
         }
-
         return firefoxProfile;
     }
 
@@ -345,14 +347,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.FIREFOX_BINARY, null);
         FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
-        //firefoxBinary.addCommandLineOptions("-safe-mode");
         firefoxOptions.setBinary(firefoxBinary);
+        log.info("firefox binary options: " + firefoxBinary.toString());
 
-        firefoxOptions.setProfile(getFirefoxProfile());
-        firefoxOptions.addDesiredCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(Level.WARNING);
+        firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.setLogLevel(Level.OFF);
         return firefoxOptions;
     }
+
 
     private DesiredCapabilities getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {

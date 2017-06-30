@@ -2,12 +2,15 @@ package tests;
 
 import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.product.Configuration;
+import categories.WindowsTests;
 import main.Sample;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
+@Category({WindowsTests.class})
 public class WindowsFirefoxBrowserTests {
     private static Sample product;
 
