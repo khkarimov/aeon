@@ -129,22 +129,17 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case Chrome:
-                log.info("Launching product on Chrome browser: ");
-
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
-                    System.out.println("chrome");
                 } else {
                     DesiredCapabilities capabilities = getChromeOptions();
                     DesiredCapabilities desiredCapabilities = setProxySettings(capabilities, proxyLocation);
                     System.setProperty("webdriver.chrome.driver", chromeDirectory);
-
                     driver = new ChromeDriver(desiredCapabilities);
                 }
                 break;
 
             case InternetExplorer:
-                log.info("Launching product on IE browser: ");
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
