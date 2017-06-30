@@ -186,6 +186,22 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new AndroidDriver(seleniumHubUrl, capabilities);
                 ((AndroidDriver) driver).context(driverContext);
+
+                //Cleans the app data for a fresh new session.
+                if (ensureCleanEnvironment && !appPackage.isEmpty()) {
+
+                    log.info("Cleaning application environment...");
+
+                    //Clean command
+                    Map<String, Object> cleanParams = new HashMap<>();
+                    cleanParams.put("identifier", appPackage);
+                    ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
+
+                    //Re-opens the application
+                    Map<String, Object> openParams = new HashMap<>();
+                    openParams.put("identifier", appPackage);
+                    ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
+                }
                 break;
 
             default:

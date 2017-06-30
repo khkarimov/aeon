@@ -1,4 +1,4 @@
-package testCategories;
+package categories;
 
 public interface UbuntuTests {
 }

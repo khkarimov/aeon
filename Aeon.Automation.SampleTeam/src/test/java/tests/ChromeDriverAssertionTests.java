@@ -12,8 +12,8 @@ import org.joda.time.Period;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
-import testCategories.UbuntuTests;
-import testCategories.WindowsTests;
+import categories.UbuntuTests;
+import categories.WindowsTests;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
