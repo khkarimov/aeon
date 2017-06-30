@@ -17,7 +17,7 @@ import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({UbuntuTests.class, WindowsTests.class})
+@Category({WindowsTests.class})
 public class FirefoxDriverAssertionTests {
 
     private static Sample product;
