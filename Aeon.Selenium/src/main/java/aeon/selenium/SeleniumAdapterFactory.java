@@ -340,7 +340,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         log.info("firefox binary options: " + firefoxBinary.toString());
 
 
-//        firefoxOptions.setProfile(getFirefoxProfile()); //BAD
+        firefoxOptions.setProfile(getFirefoxProfile()); //BAD
 
 
         firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
