@@ -16,7 +16,7 @@ import categories.WindowsTests;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({WindowsTests.class})
+//@Category({WindowsTests.class})
 public class IEDriverAssertionTests {
     private static Sample product;
 
