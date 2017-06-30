@@ -24,7 +24,7 @@ import java.util.Date;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({UbuntuTests.class, WindowsTests.class})
+@Category({WindowsTests.class})
 public class FirefoxDriverActionTests {
 
     private static Sample product;

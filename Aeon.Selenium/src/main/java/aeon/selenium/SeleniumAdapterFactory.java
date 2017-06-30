@@ -27,7 +27,6 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
@@ -135,12 +134,10 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
-                    DesiredCapabilities capabilities =
-                            getChromeOptions();
-
-                    driver = new ChromeDriver(
-                            new ChromeDriverService.Builder().usingDriverExecutable(new File(chromeDirectory)).build(),
-                            setProxySettings(capabilities, proxyLocation));
+                    DesiredCapabilities capabilities = getChromeOptions();
+                    DesiredCapabilities desiredCapabilities = setProxySettings(capabilities, proxyLocation);
+                    System.setProperty("webdriver.chrome.driver", chromeDirectory);
+                    driver = new ChromeDriver(desiredCapabilities);
                 }
                 break;
 
@@ -148,9 +145,10 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
-                    driver = new InternetExplorerDriver(
-                            new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build(),
-                            getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation));
+                    InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
+                    DesiredCapabilities capabilities = getInternetExplorerCapabilities(ensureCleanEnvironment, proxyLocation);
+                    System.setProperty("webdriver.ie.driver", ieDirectory);
+                    driver = new InternetExplorerDriver(capabilities);
                 }
                 break;
 
@@ -237,7 +235,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case InternetExplorer:
-                desiredCapabilities = getInternetExplorerOptions(false, null);
+                desiredCapabilities = getInternetExplorerCapabilities(false, null);
                 break;
 
             case Edge:
@@ -384,8 +382,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         return firefoxOptions;
     }
 
-
-    private DesiredCapabilities getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
+    private DesiredCapabilities getInternetExplorerCapabilities(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
             throw new UnsupportedPlatformException();
         }
