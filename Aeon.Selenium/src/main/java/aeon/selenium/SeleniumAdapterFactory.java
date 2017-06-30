@@ -328,15 +328,20 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private FirefoxOptions getFirefoxOptions() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.FIREFOX_BINARY, null);
+        if (binaryPath != null)
+            log.info("Firefox binary path: " + binaryPath);
+
         FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
+        log.info("Firefox binary: " + firefoxBinary.toString());
         //firefoxBinary.addCommandLineOptions("-safe-mode");
         firefoxOptions.setBinary(firefoxBinary);
 
         firefoxOptions.setProfile(getFirefoxProfile());
-        firefoxOptions.addDesiredCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
         firefoxOptions.setLogLevel(Level.WARNING);
         return firefoxOptions;
     }
+
 
     private DesiredCapabilities getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
