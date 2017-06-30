@@ -10,10 +10,13 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
+import categories.UbuntuTests;
+import categories.WindowsTests;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
 
 import java.util.Calendar;
@@ -21,6 +24,7 @@ import java.util.Date;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
+@Category({UbuntuTests.class, WindowsTests.class})
 public class FirefoxDriverActionTests {
 
     private static Sample product;

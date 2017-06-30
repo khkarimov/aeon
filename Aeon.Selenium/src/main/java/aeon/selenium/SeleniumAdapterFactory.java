@@ -123,7 +123,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    driver = new FirefoxDriver(getFirefoxOptions());
+
+                    FirefoxOptions firefoxOptions = getFirefoxOptions();
+                    driver = new FirefoxDriver(firefoxOptions);
                 }
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
                 break;
@@ -184,6 +186,22 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new AndroidDriver(seleniumHubUrl, capabilities);
                 ((AndroidDriver) driver).context(driverContext);
+
+                //Cleans the app data for a fresh new session.
+                if (ensureCleanEnvironment && !appPackage.isEmpty()) {
+
+                    log.info("Cleaning application environment...");
+
+                    //Clean command
+                    Map<String, Object> cleanParams = new HashMap<>();
+                    cleanParams.put("identifier", appPackage);
+                    ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
+
+                    //Re-opens the application
+                    Map<String, Object> openParams = new HashMap<>();
+                    openParams.put("identifier", appPackage);
+                    ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
+                }
                 break;
 
             default:
@@ -251,8 +269,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
@@ -262,24 +286,47 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                 //IOS Specific
                 desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
-
                 break;
 
             case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
+                Boolean crosswalkpatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
                 // Perfecto
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
+                // Appium
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
 
-                // Appium
-                desiredCapabilities.setCapability("deviceName", deviceName);
-
                 // Android Specific
-                desiredCapabilities.setCapability("appPackage", appPackage);
+                if (!appPackage.isEmpty()) {
+                    desiredCapabilities.setCapability("appPackage", appPackage);
+                }
+
+                if (!app.isEmpty()) {
+                    desiredCapabilities.setCapability("app", app);
+                }
+
+                //Enables webview support for Crosswalk/Cordova applications
+                if (crosswalkpatch && !appPackage.isEmpty()) {
+                    String androidDeviceSocket = appPackage + "_devtools_remote";
+                    desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
+                    desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                }
 
                 break;
 
@@ -311,6 +358,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private FirefoxProfile getFirefoxProfile() {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("webdriver.firefox.logfile", "firefoxdriver.log");
+
         firefoxProfile.setPreference("intl.accept_languages", browserAcceptedLanguageCodes);
         firefoxProfile.setPreference("webdriver.enable.native.events", false);
         firefoxProfile.setPreference("layers.acceleration.disabled", true);
@@ -319,7 +367,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         if (useMobileUserAgent) {
             firefoxProfile.setPreference("general.useragent.override", MobileUserAgent);
         }
-
         return firefoxProfile;
     }
 
@@ -327,12 +374,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.FIREFOX_BINARY, null);
         FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
-        //firefoxBinary.addCommandLineOptions("-safe-mode");
         firefoxOptions.setBinary(firefoxBinary);
+        log.info("firefox binary options: " + firefoxBinary.toString());
 
-        firefoxOptions.setProfile(getFirefoxProfile());
         firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(Level.WARNING);
+        firefoxOptions.setLogLevel(Level.OFF);
         return firefoxOptions;
     }
 
