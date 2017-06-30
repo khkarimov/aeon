@@ -6,7 +6,7 @@ import main.Sample;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
-import testCategories.WindowsTests;
+import categories.WindowsTests;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
