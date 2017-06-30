@@ -23,7 +23,7 @@ import java.util.Date;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({UbuntuTests.class, WindowsTests.class})
+//@Category({UbuntuTests.class, WindowsTests.class})
 public class ChromeDriverActionTests {
 
     private static Sample product;

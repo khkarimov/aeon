@@ -124,7 +124,10 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-                    driver = new FirefoxDriver(getFirefoxOptions());
+
+
+                    FirefoxOptions firefoxOptions = getFirefoxOptions();
+                    driver = new FirefoxDriver();
                 }
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
                 break;
@@ -313,6 +316,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private FirefoxProfile getFirefoxProfile() {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("webdriver.firefox.logfile", "firefoxdriver.log");
+
         firefoxProfile.setPreference("intl.accept_languages", browserAcceptedLanguageCodes);
         firefoxProfile.setPreference("webdriver.enable.native.events", false);
         firefoxProfile.setPreference("layers.acceleration.disabled", true);
@@ -336,9 +340,10 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         //firefoxBinary.addCommandLineOptions("-safe-mode");
         firefoxOptions.setBinary(firefoxBinary);
 
-        firefoxOptions.setProfile(getFirefoxProfile());
+        firefoxOptions.setProfile(getFirefoxProfile()); //BAD
+
         firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(Level.WARNING);
+        firefoxOptions.setLogLevel(Level.OFF);
         return firefoxOptions;
     }
 
