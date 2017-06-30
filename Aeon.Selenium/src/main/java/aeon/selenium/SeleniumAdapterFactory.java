@@ -271,8 +271,14 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
@@ -282,24 +288,47 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
                 //IOS Specific
                 desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
-
                 break;
 
             case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
+                Boolean crosswalkpatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
                 // Perfecto
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
+                // Appium
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
 
-                // Appium
-                desiredCapabilities.setCapability("deviceName", deviceName);
-
                 // Android Specific
-                desiredCapabilities.setCapability("appPackage", appPackage);
+                if (!appPackage.isEmpty()) {
+                    desiredCapabilities.setCapability("appPackage", appPackage);
+                }
+
+                if (!app.isEmpty()) {
+                    desiredCapabilities.setCapability("app", app);
+                }
+
+                //Enables webview support for Crosswalk/Cordova applications
+                if (crosswalkpatch && !appPackage.isEmpty()) {
+                    String androidDeviceSocket = appPackage + "_devtools_remote";
+                    desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
+                    desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                }
 
                 break;
 
