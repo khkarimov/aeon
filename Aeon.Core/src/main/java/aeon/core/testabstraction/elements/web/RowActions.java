@@ -23,6 +23,9 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     private Iterable<IBy> switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
+    protected String cssSelectornthoftype = "tr:nth-of-type";
+    protected String cssSelectorContains = "td:contains";
+    protected String cssSelectorParents = "tr";
 
     /**
      * Initializes a new instance of {@link RowActions} class.
@@ -53,40 +56,16 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     /**
-     * Helper function for findRowByIndex
+     * Get a row by the index.
      *
      * @param index The index you are looking for.
      *
      * @return Returns an instance of K.
      */
     protected K findRowByIndex(int index) {
-        return findRowByIndex(index, "tr:nth-of-type");
-    }
-
-    /**
-     * Get a row by the index.
-     *
-     * @param index The index you are looking for.
-     * @param cssSelector The name of the selector to use for the grid information
-     *
-     * @return Returns an instance of K.
-     */
-    protected K findRowByIndex(int index, String cssSelector) {
-        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", cssSelector, index));
+        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", cssSelectornthoftype, index));
 
         return newInstanceOfK(updatedSelector);
-    }
-
-    /**
-     * Helper function for find row
-     *
-     * @param value The value you are looking for.
-     * @param columnHeader THe header of the column.
-     *
-     * @return Returns an instance of T.
-     */
-    protected T findRow(String value, IBy columnHeader) {
-        return findRow(value, columnHeader, "td:nth-of-type", "td:contains", "tr");
     }
 
     /**
@@ -94,13 +73,10 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      *
      * @param value The value you are looking for.
      * @param columnHeader THe header of the column.
-     * @param cssSelectornthoftype the name of the selector to use for the grid information (td:nth-of-type)
-     * @param cssSelectorContains (td:contains)
-     * @param cssSelectorParents (tr)
      *
      * @return Returns an instance of T.
      */
-    protected T findRow(String value, IBy columnHeader, String cssSelectornthoftype, String cssSelectorContains, String cssSelectorParents) {
+    protected T findRow(String value, IBy columnHeader) {
         IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", cssSelectornthoftype, getColumnIndex(columnHeader))).
                 filter(String.format("%1$s(%2$s)", cssSelectorContains, value)).parents(String.format("$s", cssSelectorParents));
 
