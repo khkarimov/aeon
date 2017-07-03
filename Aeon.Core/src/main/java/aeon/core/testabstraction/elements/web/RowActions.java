@@ -23,7 +23,8 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     private Iterable<IBy> switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
-    protected String cssSelectornthoftype = "tr:nth-of-type";
+    protected String indexCssSelectornthoftype = "tr:nth-of-type";
+    protected String rowCssSelectornthoftype = "td:nth-of-type";
     protected String cssSelectorContains = "td:contains";
     protected String cssSelectorParents = "tr";
 
@@ -63,7 +64,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * @return Returns an instance of K.
      */
     protected K findRowByIndex(int index) {
-        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", cssSelectornthoftype, index));
+        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", indexCssSelectornthoftype, index));
 
         return newInstanceOfK(updatedSelector);
     }
@@ -77,8 +78,8 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * @return Returns an instance of T.
      */
     protected T findRow(String value, IBy columnHeader) {
-        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", cssSelectornthoftype, getColumnIndex(columnHeader))).
-                filter(String.format("%1$s(%2$s)", cssSelectorContains, value)).parents(String.format("$s", cssSelectorParents));
+        IBy updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", rowCssSelectornthoftype, getColumnIndex(columnHeader))).
+                filter(String.format("%1$s(%2$s)", cssSelectorContains, value)).parents(String.format("%1$s", cssSelectorParents));
 
         return newInstanceOfT(updatedSelector);
     }
