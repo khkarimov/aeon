@@ -69,11 +69,13 @@ public class Configuration {
         }
 
         Enumeration e = properties.propertyNames();
-        log.info("These are the properties values currently in use:");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("These are the properties values currently in use:\n");
         while (e.hasMoreElements()) {
             String key = (String) e.nextElement();
-            log.info(String.format("%1$s = %2$s", key, properties.getProperty(key)));
+            stringBuilder.append(String.format("%1$s = %2$s\n", key, properties.getProperty(key)));
         }
+        log.info(stringBuilder.toString());
     }
 
     /**
