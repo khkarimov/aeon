@@ -1,11 +1,14 @@
 package tests;
 
 import aeon.core.common.web.BrowserType;
+import categories.IOSTests;
 import main.Sample;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
+@Category({IOSTests.class})
 public class iOSUltihomeTest {
     private static Sample product;
 
