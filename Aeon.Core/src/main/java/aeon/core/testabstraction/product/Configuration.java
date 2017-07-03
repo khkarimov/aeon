@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -65,6 +66,13 @@ public class Configuration {
             if (environmentValue != null) {
                 properties.setProperty(keyValue, environmentValue);
             }
+        }
+
+        Enumeration e = properties.propertyNames();
+        log.info("These are the properties values currently in use:");
+        while (e.hasMoreElements()) {
+            String key = (String) e.nextElement();
+            log.info(String.format("%1$s = %2$s", key, properties.getProperty(key)));
         }
     }
 
