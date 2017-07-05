@@ -1,11 +1,14 @@
 package tests;
 
 import aeon.core.common.web.BrowserType;
+import categories.AndroidTests;
 import main.Sample;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
+@Category({AndroidTests.class})
 public class AndroidUltihomeTest {
     private static Sample product;
 
