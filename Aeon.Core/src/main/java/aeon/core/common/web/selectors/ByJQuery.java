@@ -74,7 +74,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * @return The {@link ByJQuery} object for chaining.
      * @throws IllegalArgumentException If {@code appendee} is {@code null}.
      */
-    public static ByJQuery Append(ByJQuery appendee, ByJQuery... appendices) {
+    public static ByJQuery append(ByJQuery appendee, ByJQuery... appendices) {
         if (appendee == null) {
             throw new IllegalArgumentException("appendee");
         }
@@ -83,23 +83,23 @@ public class ByJQuery implements IBy, IByJQuery {
             throw new IllegalArgumentException("appendices");
         }
 
-        appendee = appendee.Clone();
+        appendee = appendee.clone();
         if (appendices.length == 0) {
             return appendee;
         }
 
         List<ByJQuery> jqAppendices =
-                Arrays.asList(appendices).stream().map(a -> a.Clone()).collect(Collectors.toList());
+                Arrays.asList(appendices).stream().map(a -> a.clone()).collect(Collectors.toList());
 
         for (int i = 0; i < jqAppendices.size() - 1; ++i) {
-            ChangeLastPredecessor(appendices[i], appendices[i + 1]);
+            changeLastPredecessor(appendices[i], appendices[i + 1]);
         }
 
-        ChangeLastPredecessor(appendee, appendices[appendices.length - 1]);
+        changeLastPredecessor(appendee, appendices[appendices.length - 1]);
         return appendices[appendices.length - 1];
     }
 
-    private static void ChangeLastPredecessor(ByJQuery appendee, ByJQuery changee) {
+    private static void changeLastPredecessor(ByJQuery appendee, ByJQuery changee) {
         ByJQuery current = changee;
         while (current.predecessor != null) {
             current = current.predecessor;
@@ -115,7 +115,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * @param constant A constant integer.
      * @return a new {@link ByJQueryWithArithmeticOperatorOverload} with the completed addition.
      */
-    public static ByJQueryWithArithmeticOperatorOverload OpAddition(ByJQuery obj, int constant) {
+    public static ByJQueryWithArithmeticOperatorOverload opAddition(ByJQuery obj, int constant) {
         return new ByJQueryWithArithmeticOperatorOverload(String.format("%1$s + %2$s", obj, constant));
     }
 
@@ -126,7 +126,7 @@ public class ByJQuery implements IBy, IByJQuery {
      * @param constant A constant integer.
      * @return The {@link ByJQueryWithArithmeticOperatorOverload} object for chaining.
      */
-    public static ByJQueryWithArithmeticOperatorOverload OpSubtraction(ByJQuery obj, int constant) {
+    public static ByJQueryWithArithmeticOperatorOverload opSubtraction(ByJQuery obj, int constant) {
         return new ByJQueryWithArithmeticOperatorOverload(String.format("%1$s - %2$s", obj, constant));
     }
 
@@ -198,10 +198,11 @@ public class ByJQuery implements IBy, IByJQuery {
      *
      * @return The {@link ByJQuery} object for chaining.
      */
-    public final ByJQuery Clone() {
+    @Override
+    public final ByJQuery clone() {
         List<Object> objects = new ArrayList<>();
         parameters.forEach(p -> objects.add(p));
-        return new ByJQuery(predecessor == null ? null : predecessor.Clone(), function, objects);
+        return new ByJQuery(predecessor == null ? null : predecessor.clone(), function, objects);
     }
 
     /**

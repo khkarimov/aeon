@@ -139,23 +139,23 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="severity" value="error"/>
         </module>
 
-        <!--<module name="MemberNameCheck">-->
-            <!--&lt;!&ndash; Validates non-static members against the supplied expression. &ndash;&gt;-->
-            <!--<metadata name="altname" value="MemberName"/>-->
-            <!--<property name="applyToPublic" value="true"/>-->
-            <!--<property name="applyToProtected" value="true"/>-->
-            <!--<property name="applyToPackage" value="true"/>-->
-            <!--<property name="applyToPrivate" value="true"/>-->
-            <!--<property name="format" value="^[a-z][a-zA-Z0-9]*$"/>-->
-            <!--<property name="severity" value="error"/>-->
-        <!--</module>-->
+        <module name="MemberNameCheck">
+            <!-- Validates non-static members against the supplied expression. -->
+            <metadata name="altname" value="MemberName"/>
+            <property name="applyToPublic" value="true"/>
+            <property name="applyToProtected" value="true"/>
+            <property name="applyToPackage" value="true"/>
+            <property name="applyToPrivate" value="true"/>
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+            <property name="severity" value="error"/>
+        </module>
 
-        <!--<module name="MethodNameCheck">-->
-        <!--&lt;!&ndash; Validates identifiers for method names. &ndash;&gt;-->
-        <!--<metadata name="altname" value="MethodName"/>-->
-        <!--<property name="format" value="^[a-z][a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$"/>-->
-        <!--<property name="severity" value="error"/>-->
-        <!--</module>-->
+        <module name="MethodNameCheck">
+        <!-- Validates identifiers for method names. -->
+        <metadata name="altname" value="MethodName"/>
+        <property name="format" value="^[a-z][a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$"/>
+        <property name="severity" value="error"/>
+        </module>
 
         <module name="ParameterName">
             <!-- Validates identifiers for method parameters against the

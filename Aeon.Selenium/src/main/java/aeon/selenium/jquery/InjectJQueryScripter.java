@@ -68,9 +68,9 @@ public class InjectJQueryScripter extends JavaScriptFinalizer {
         }
 
         // Commented out because this causes the unit tests to hang (a pop up opens and the test hangs until you hit the "ignore" button.
-        // Debug.Assert(Successor != null, "Cannot use null reference for successor.");
+        // Debug.Assert(successor != null, "Cannot use null reference for successor.");
         return javaScript.contains("$(") ?
-                NeedJQueryScriptBefore + Successor.prepare(javaScript) + NeedJQueryScriptAfter :
-                DoNotNeedJQueryScriptBefore + Successor.prepare(javaScript) + DoNotNeedJQueryScriptAfter;
+                NeedJQueryScriptBefore + successor.prepare(javaScript) + NeedJQueryScriptAfter :
+                DoNotNeedJQueryScriptBefore + successor.prepare(javaScript) + DoNotNeedJQueryScriptAfter;
     }
 }

@@ -4,9 +4,17 @@ import aeon.core.common.helpers.QuadFunction;
 import org.joda.time.Duration;
 
 
+/**
+ * Class to check injected jquery execution flow.
+ */
 public class SeleniumCheckInjectJQueryExecutor extends JavaScriptFlowExecutor {
     private Duration timeout;
 
+    /**
+     * Constructor for the selenum check injust jquery executor with given paramters.
+     * @param finalizerFactory The javascript finalizer factory to be set.
+     * @param timeout The timeout duration to be set.
+     */
     public SeleniumCheckInjectJQueryExecutor(IJavaScriptFinalizerFactory finalizerFactory, Duration timeout) {
         super(finalizerFactory);
         this.timeout = timeout;
