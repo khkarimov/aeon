@@ -190,6 +190,13 @@ public class ChromeDriverActionTests {
     }
 
     @Test
+    public void testMouseOver() {
+        product.startPage.ultimateLogoImage.mouseOver();
+        product.startPage.HeatLogoImage.exists();
+        product.browser.refresh();
+    }
+
+    @Test
     public void testMouseOver_MouseOut_Refresh() {
         product.startPage.start.mouseOver();
         product.startPage.start.mouseOut();
