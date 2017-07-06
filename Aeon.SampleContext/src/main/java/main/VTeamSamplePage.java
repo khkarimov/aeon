@@ -22,7 +22,6 @@ public class VTeamSamplePage {
     public Checkbox testCheckbox;
     public FileDialogInput testFileDialogInput;
     public Button start;
-    public TextBox startButtonColorRed;
     public TextBox alertTitleTextBox;
     public ListItem draggableListItem;
     public Label checkboxLabel;
