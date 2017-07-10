@@ -39,6 +39,10 @@ public class SeleniumElement extends WebControl {
         }
     }
 
+    /**
+     * Gets the underlying Web Element.
+     * @return The underlying Web Element is returned.
+     */
     public final WebElement getUnderlyingWebElement() {
         return underlyingWebElement;
     }
@@ -60,7 +64,7 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      * @return Returns true if the element is enabled, false if otherwise.
      */
-    public final boolean Enabled() {
+    public final boolean enabled() {
         log.trace("WebElement.get_Enabled();");
         boolean result = getUnderlyingWebElement().isEnabled();
         log.trace(String.format("Result: %1$s", result));
@@ -72,7 +76,7 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      * @return Returns true if the element is displayed, false if otherwise.
      */
-    public final boolean Selected() {
+    public final boolean selected() {
         log.trace("WebElement.get_Selected();");
         boolean result = getUnderlyingWebElement().isSelected();
         log.trace(String.format("Result: %1$s", result));
@@ -84,7 +88,7 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      * @return Returns the tag name of the web element.
      */
-    public final String GetTagName() {
+    public final String getTagName() {
         log.trace("WebElement.get_TagName();");
         String result = getUnderlyingWebElement().getTagName();
         log.trace(String.format("Result: %1$s", result));
@@ -96,7 +100,7 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      * @return Returns the location of the web element.
      */
-    public final aeon.core.common.Point GetLocation() {
+    public final aeon.core.common.Point getLocation() {
         log.trace("WebElement.get_Location();");
         org.openqa.selenium.Point result = getUnderlyingWebElement().getLocation();
         log.trace(String.format("Result: %1$s", result));
@@ -108,7 +112,7 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      * @return Returns the text of the web element.
      */
-    public final String GetText() {
+    public final String getText() {
         log.trace("WebElement.get_Text();");
         String result = getUnderlyingWebElement().getText().trim();
         log.trace(String.format("Result: %1$s", result));
@@ -119,7 +123,7 @@ public class SeleniumElement extends WebControl {
      * Clears the content of this element.
      * Uniquely identify the web element.
      */
-    public final void Clear() {
+    public final void clear() {
         log.trace("WebElement.clear();");
         underlyingWebElement.clear();
     }
@@ -130,7 +134,7 @@ public class SeleniumElement extends WebControl {
      * @param findBy Findby used to find the web element.
      * @return Returns the web element.
      */
-    public final WebControl FindElement(IBy findBy) {
+    public final WebControl findElement(IBy findBy) {
         try {
             if (findBy == null) {
                 throw new IllegalArgumentException("findBy");
@@ -151,7 +155,7 @@ public class SeleniumElement extends WebControl {
      * @param by   The selector.
      * @return The first web control found by the selector.
      */
-    public WebControl FindElementByXPath(IBy by) {
+    public WebControl findElementByXPath(IBy by) {
         if (by == null) {
             throw new IllegalArgumentException("by");
         }
@@ -169,14 +173,14 @@ public class SeleniumElement extends WebControl {
      * @param by   The selector.
      * @return A collection of WebControls.
      */
-    public Collection<WebControl> FindElementsByXPath(IBy by) {
+    public Collection<WebControl> findElementsByXPath(IBy by) {
         if (by == null) {
             throw new IllegalArgumentException("by");
         }
 
         List<WebControl> result = new ArrayList<>();
 
-        log.trace(String.format("WebElement.FindElementsByXPath(by.cssSelector(%1$s)),", by));
+        log.trace(String.format("WebElement.findElementsByXPath(by.cssSelector(%1$s)),", by));
 
         for (WebElement seleniumElement : underlyingWebElement.findElements(By.xpath(by.toString()))) {
             result.add(new SeleniumElement(seleniumElement));
@@ -191,7 +195,7 @@ public class SeleniumElement extends WebControl {
      * @param findBy Findby used to find the web elements.
      * @return Returns a collection of web elements.
      */
-    public final Collection<WebControl> FindElements(IBy findBy) {
+    public final Collection<WebControl> findElements(IBy findBy) {
         if (findBy == null) {
             throw new IllegalArgumentException("findBy");
         }
@@ -213,7 +217,7 @@ public class SeleniumElement extends WebControl {
      * @param attributeName Attribute name of the web element.
      * @return Returns the attribute associated with the attribute name.
      */
-    public final String GetAttribute(String attributeName) {
+    public final String getAttribute(String attributeName) {
         if (attributeName == null) {
             throw new IllegalArgumentException("attributeName");
         }
@@ -222,7 +226,7 @@ public class SeleniumElement extends WebControl {
             attributeName = "innerHTML";
         }
 
-        log.trace(String.format("WebElement.GetAttribute(%1$s);", attributeName));
+        log.trace(String.format("WebElement.getAttribute(%1$s);", attributeName));
 
         return underlyingWebElement.getAttribute(attributeName) == null ? "" : underlyingWebElement.getAttribute(attributeName);
     }
@@ -233,12 +237,12 @@ public class SeleniumElement extends WebControl {
      * @param propertyName Property name of the web element.
      * @return Returns the CSS value of the property name.
      */
-    public final String GetCssValue(String propertyName) {
+    public final String getCssValue(String propertyName) {
         if (propertyName == null) {
             throw new IllegalArgumentException("propertyName");
         }
 
-        log.trace(String.format("WebElement.GetCssValue(%1$s);", propertyName));
+        log.trace(String.format("WebElement.getCssValue(%1$s);", propertyName));
 
         return underlyingWebElement.getCssValue(propertyName);
     }
@@ -248,7 +252,7 @@ public class SeleniumElement extends WebControl {
      *
      * @param text Text that will be typed into the element.
      */
-    public final void SendKeys(String text) {
+    public final void sendKeys(String text) {
         if (text == null) {
             throw new IllegalArgumentException("text");
         }
@@ -258,10 +262,10 @@ public class SeleniumElement extends WebControl {
             String[] newText = text.split("[(]", -1);
             for (String s : newText) {
                 if (newText[newText.length - 1].equals(s)) {
-                    this.SendKeys(s);
+                    this.sendKeys(s);
                 } else {
-                    this.SendKeys(s);
-                    this.SendKeys(Keys.SHIFT + "9" + Keys.SHIFT);
+                    this.sendKeys(s);
+                    this.sendKeys(Keys.SHIFT + "9" + Keys.SHIFT);
                 }
             }
 
@@ -269,7 +273,7 @@ public class SeleniumElement extends WebControl {
         }
 
         if (text.length() < LONG_STRING_LENGTH) {
-            log.trace(String.format("WebElement.SendKeys(%1$s);", text));
+            log.trace(String.format("WebElement.sendKeys(%1$s);", text));
             underlyingWebElement.sendKeys(text);
             return;
         }
@@ -286,7 +290,7 @@ public class SeleniumElement extends WebControl {
             String substring = text.substring(startIndex,
                     startIndex + ((charactersLeft > LONG_STRING_LENGTH) ? LONG_STRING_LENGTH : charactersLeft));
 
-            log.trace(String.format("WebElement.SendKeys(%1$s);", substring));
+            log.trace(String.format("WebElement.sendKeys(%1$s);", substring));
 
             underlyingWebElement.sendKeys(substring);
 
@@ -299,8 +303,8 @@ public class SeleniumElement extends WebControl {
      * Uniquely identify the web element.
      * @param key  Keyboard key that will be typed into the element.
      */
-    public final void SendKeys(Keys key) {
-        SendKeys(key);
+    public final void sendKeys(Keys key) {
+        sendKeys(key);
     }
 
     /**
@@ -308,7 +312,7 @@ public class SeleniumElement extends WebControl {
      *              Uniquely identify the web element.
      * @param moveMouseToOrigin The move Mouse To Origin.
      */
-    public final void Click(boolean moveMouseToOrigin) {
+    public final void click(boolean moveMouseToOrigin) {
         // TODO(DionnyS): Ensure this works in a grid instance
         if (moveMouseToOrigin) {
             try {
@@ -328,91 +332,138 @@ public class SeleniumElement extends WebControl {
      * Submits this element to the web server.
      * Uniquely identify the web element.
      */
-    public final void Submit() {
-        log.trace("WebElement.Submit();");
+    public final void submit() {
+        log.trace("WebElement.submit();");
         underlyingWebElement.submit();
     }
 
     //region functions specifically for select elements
 
-    public final boolean IsMultiple() {
+    /**
+     * Indicates whether the element supports selecting multiple options at the same time.
+     * @return A boolean indicating whether the element supports selecting multiple options at the same time.
+     */
+    public final boolean isMultiple() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         return selectHelper.isMultiple();
     }
 
-    public final List<WebControl> GetAllSelectedOptions() {
+    /**
+     * Gets all selected options belonging to an element.
+     * @return A list of the selected options belonging to an element.
+     */
+    public final List<WebControl> getAllSelectedOptions() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         return selectHelper.getAllSelectedOptions();
     }
 
-    public final WebControl GetSelectedOption() {
+    /**
+     * Gets the selected option for the element.
+     * @return The selected option for the element.
+     */
+    public final WebControl getSelectedOption() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         return selectHelper.getSelectedOption();
     }
 
-    public final String GetSelectedOptionText(){
-        if(selectHelper == null){
+    /**
+     * Gets the selected option text for the element.
+     * @return The selected option text for the element.
+     */
+    public final String getSelectedOptionText(){
+        if (selectHelper == null){
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         return selectHelper.getSelectedOptionText();
     }
 
-    public final List<WebControl> GetOptions() {
+    /**
+     * Gets all options belonging to the element.
+     * @return A list of all options belonging to a element.
+     */
+    public final List<WebControl> getOptions() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         return selectHelper.getOptions();
     }
 
-    public final void DeselectAll() {
+    /**
+     * Clears all selected entries on an element.
+     */
+    public final void deselectAll() {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         selectHelper.deselectAll();
     }
 
-    public final void DeselectByIndex(int index) {
+    /**
+     * Deselect the option of the element at the given index.
+     * @param index The index of the option to deselect.
+     */
+    public final void deselectByIndex(int index) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         selectHelper.deselectByIndex(index);
     }
 
-    public final void DeselectByText(String text) {
+    /**
+     * Deselect all options that display text matching the argument for the element.
+     * @param text The visible text to match against
+     */
+    public final void deselectByText(String text) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         selectHelper.deselectByText(text);
     }
 
-    public final void DeselectByValue(String value) {
+    /**
+     * Deselect all options that have a value matching the argument for the element.
+     * @param value The value to match against
+     */
+    public final void deselectByValue(String value) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         selectHelper.deselectByValue(value);
     }
 
-    public final void SelectByIndex(int index) {
+    /**
+     * Deselect the option at the given index for the element.
+     * @param index The option at this index will be deselected.
+     */
+    public final void selectByIndex(int index) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         selectHelper.selectByIndex(index);
     }
 
-    public final void SelectByText(String text) {
+    /**
+     * Select all options that display text matching the argument for the element.
+     * @param text The visible text to match against.
+     */
+    public final void selectByText(String text) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }
         selectHelper.selectByText(text);
     }
 
-    public final void SelectByValue(String value) {
+    /**
+     * Select all options that have a value matching the argument for the element.
+     * @param value The value to match against
+     */
+    public final void selectByValue(String value) {
         if (selectHelper == null) {
             throw new IncorrectElementTagException("select", getUnderlyingWebElement().getTagName());
         }

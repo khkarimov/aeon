@@ -25,6 +25,7 @@ public class SeleniumCookie implements IWebCookie {
 
     /**
      * Gets the name of the cookie.
+     * @return The name of the cookie is returned.
      */
     public final String getName() {
         return underlyingCookie.getName();
@@ -32,6 +33,7 @@ public class SeleniumCookie implements IWebCookie {
 
     /**
      * Gets the Value of the cookie.
+     * @return The value of the cookie is returned.
      */
     public final String getValue() {
         return underlyingCookie.getValue();
@@ -39,6 +41,7 @@ public class SeleniumCookie implements IWebCookie {
 
     /**
      * Gets the Path of the cookie.
+     * @return The path the cookie is visible to is returned.
      */
     public final String getPath() {
         return underlyingCookie.getPath();
@@ -46,6 +49,7 @@ public class SeleniumCookie implements IWebCookie {
 
     /**
      * Gets the Domain of the cookie.
+     * @return The domain the cookie is visible to is returned.
      */
     public final String getDomain() {
         return underlyingCookie.getDomain();
@@ -53,6 +57,7 @@ public class SeleniumCookie implements IWebCookie {
 
     /**
      * Gets the expiration date of the cookie.
+     * @return The cookie's expiration date is returned.
      */
     public final Date getExpiration() {
         return underlyingCookie.getExpiry();
@@ -60,6 +65,7 @@ public class SeleniumCookie implements IWebCookie {
 
     /**
      * Gets a value indicating whether or not the cookie is Secure.
+     * @return A boolean indicating whether or not the cookie is Secure.
      */
     public final boolean getSecure() {
         return underlyingCookie.isSecure();
@@ -67,6 +73,7 @@ public class SeleniumCookie implements IWebCookie {
 
     /**
      * Gets a value indicating whether or not the cookie is a Session cookie.
+     * @return A boolean indicating whether or not the cookie is a Session cookie.
      */
     public final boolean getSession() {
         return underlyingCookie.getExpiry() == null;

@@ -133,7 +133,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     }
 
     /**
-     * Gets the column index based on the selector
+     * Gets the column index based on the selector.
      *
      * @param columnSelector
      * @return the column index

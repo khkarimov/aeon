@@ -59,7 +59,7 @@ import java.util.logging.Level;
 @Extension
 public final class SeleniumAdapterFactory implements IAdapterExtension {
 
-    private final String MobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+    private final String mobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
     private Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
     private BrowserType browserType;
@@ -77,6 +77,11 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String deviceName;
     private String driverContext;
 
+    /**
+     * Factory method that creates a Selenium adapter for Aeon.core.
+     * @param configuration The configuration of the adapter.
+     * @return The created Selenium adapter is returned.
+     */
     public IAdapter create(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
@@ -365,7 +370,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         firefoxProfile.setPreference("toolkit.startup.max_resumed_crashes", "-1");
         firefoxProfile.setPreference("browser.shell.checkDefaultBrowser", false);
         if (useMobileUserAgent) {
-            firefoxProfile.setPreference("general.useragent.override", MobileUserAgent);
+            firefoxProfile.setPreference("general.useragent.override", mobileUserAgent);
         }
         return firefoxProfile;
     }
@@ -427,7 +432,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
 
         if (useMobileUserAgent) {
-            chromeOptions.addArguments("--user-agent=" + MobileUserAgent);
+            chromeOptions.addArguments("--user-agent=" + mobileUserAgent);
         }
 
         String chromeBinary = configuration.getString(SeleniumConfiguration.Keys.CHROME_BINARY, null);

@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Configures selenium for different browsers and devices.
+ */
 public class SeleniumConfiguration extends Configuration {
 
     private Logger log = LogManager.getLogger(SeleniumConfiguration.class);
@@ -62,6 +65,11 @@ public class SeleniumConfiguration extends Configuration {
         return keys;
     }
 
+    /**
+     * Constructor for the Selenium Configuration.  Configures that Aeon web driver and selenium adapter.
+     * @throws IOException Exception thrown if there is an IO violation when accessing test or propertion.
+     * @throws IllegalAccessException Exception thrown when illegal access is requested.
+     */
     public SeleniumConfiguration() throws IOException, IllegalAccessException {
         super(AeonWebDriver.class, SeleniumAdapter.class);
     }

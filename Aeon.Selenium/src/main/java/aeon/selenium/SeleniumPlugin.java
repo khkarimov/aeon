@@ -12,7 +12,7 @@ public class SeleniumPlugin extends Plugin {
      * Your plugins have to provide constructor with this exact signature to
      * be successfully loaded by manager.
      *
-     * @param wrapper
+     * @param wrapper The plugin wrapper to be set.
      */
     public SeleniumPlugin(PluginWrapper wrapper) {
         super(wrapper);

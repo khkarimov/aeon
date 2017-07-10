@@ -4,7 +4,7 @@ package aeon.selenium.jquery;
  * Base class for finalizing JavaScript.
  */
 public abstract class JavaScriptFinalizer implements IJavaScriptFinalizer {
-    protected IJavaScriptFinalizer Successor;
+    protected IJavaScriptFinalizer successor;
 
     /**
      * Initializes a new instance of the {@link JavaScriptFinalizer} class.
@@ -12,7 +12,7 @@ public abstract class JavaScriptFinalizer implements IJavaScriptFinalizer {
      * @param successor The next finalizer for formatting.
      */
     protected JavaScriptFinalizer(IJavaScriptFinalizer successor) {
-        this.Successor = successor;
+        this.successor = successor;
     }
 
     /**
