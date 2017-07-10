@@ -128,6 +128,13 @@ public class FirefoxDriverActionTests {
     }
 
     @Test
+    public void testMouseOver() {
+        product.startPage.ultimateLogoImage.mouseOver();
+        product.startPage.HeatLogoImage.exists();
+        product.browser.refresh();
+    }
+
+    @Test
     public void testBlur() {
         //used to be set command
         product.startPage.alertTitleTextBox.click();
