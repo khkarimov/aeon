@@ -66,7 +66,7 @@ public class UltiproTests {
         ultipro.homePage.myTeam.click();
         ultipro.homePage.myEmployees.click();
         ultipro.myEmployeesPage.searchButton.click();
-        ultipro.myEmployeesPage.myGrid.RowBy.employeeNumber("823567416").getRow().employeeLink.click();
+        ultipro.myEmployeesPage.myGrid.rowBy.employeeNumber("823567416").getRow().employeeLink.click();
         ultipro.browser.switchToWindowByTitle("Wayan Bing");
         ultipro.browser.verifyTitle("Wayan Bing - 823567416 - USA Smoke Company 1");
     }

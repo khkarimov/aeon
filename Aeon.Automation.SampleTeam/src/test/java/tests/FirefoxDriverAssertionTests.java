@@ -5,7 +5,6 @@ import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.testabstraction.product.Configuration;
-import categories.UbuntuTests;
 import categories.WindowsTests;
 import main.Sample;
 import org.hamcrest.core.IsInstanceOf;
@@ -307,10 +306,10 @@ public class FirefoxDriverAssertionTests {
 
     @Test
     public void testGrids(){
-        product.startPage.myGrid.RowBy.index(2).checkBoxButton.click();
-        product.startPage.myGrid.RowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.RowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
+        product.startPage.myGrid.rowBy.index(2).checkBoxButton.click();
+        product.startPage.myGrid.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
+        product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
         thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
-        product.startPage.myGrid.RowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
+        product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }
 }
