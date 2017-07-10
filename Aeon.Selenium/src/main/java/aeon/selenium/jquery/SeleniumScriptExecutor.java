@@ -85,7 +85,3 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         return returnValue;
     }
 }
-
-/**
- * Class to Execute Selenium Scripts.
- */

@@ -11,7 +11,7 @@ public class SeleniumCheckInjectJQueryExecutor extends JavaScriptFlowExecutor {
     private Duration timeout;
 
     /**
-     * Constructor for the selenum check injust jquery executor with given paramters.
+     * Constructor for the selenum check inject jquery executor with given parameters.
      * @param finalizerFactory The javascript finalizer factory to be set.
      * @param timeout The timeout duration to be set.
      */
