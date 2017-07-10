@@ -39,7 +39,7 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
 
     @Override
     public void execute(Consumer<IDriver> commandDelegate) {
-        ExecuteDelegate(() -> successor.execute(commandDelegate));
+        executeDelegate(() -> successor.execute(commandDelegate));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
         return executeDelegateWithReturn(() -> successor.execute(commandDelegate));
     }
 
-    private void ExecuteDelegate(Runnable commandDelegateWrapper) {
+    private void executeDelegate(Runnable commandDelegateWrapper) {
         try {
             commandDelegateWrapper.run();
         } catch (OutOfMemoryError e) {

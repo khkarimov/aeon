@@ -7,7 +7,7 @@ package aeon.core.testabstraction.elements.web;
  */
 public abstract class Grid<T extends RowActions> {
 
-    public T RowBy;
+    public T rowBy;
 
     /**
      * Creates a new instance of {@link Button}.
@@ -15,6 +15,6 @@ public abstract class Grid<T extends RowActions> {
      * @param rowBy The rowBy
      */
     public Grid(T rowBy) {
-        this.RowBy = rowBy;
+        this.rowBy = rowBy;
     }
 }
