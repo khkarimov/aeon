@@ -31,9 +31,20 @@ jar {
         attributes 'Implementation-Title': baseProjectDescription,
                 'Implementation-Version': version
     }
-
-    from configurations.aeon.collect {
-        it.isDirectory() ? it : zipTree(it)
-    }
 }
 
+task fatJar(type: Jar) {
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}

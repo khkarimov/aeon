@@ -48,10 +48,25 @@ jar {
                 'Plugin-Version': version,
                 'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
     }
+}
+
+task fatJar(type: Jar) {
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'SeleniumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
+    }
 
     from configurations.compile.collect {
         it.isDirectory() ? it : zipTree(it)
     }
+    with jar
 }
 
 task buildPlugin(type: Jar) {
