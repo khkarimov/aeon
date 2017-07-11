@@ -32,8 +32,8 @@ jar {
                 'Implementation-Version': version
     }
 
-//    from configurations.aeon.collect {
-//        it.isDirectory() ? it : zipTree(it)
-//    }
+    from configurations.aeon.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
 }
 

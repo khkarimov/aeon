@@ -38,9 +38,9 @@ jar {
                 'Implementation-Version': version
     }
 
-//    from configurations.compile.collect {
-//        it.isDirectory() ? it : zipTree(it)
-//    }
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
 }
 
 apply plugin: "com.jfrog.artifactory"

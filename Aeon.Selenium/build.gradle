@@ -49,9 +49,9 @@ jar {
                 'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
     }
 
-//    from configurations.compile.collect {
-//        it.isDirectory() ? it : zipTree(it)
-//    }
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
 }
 
 task buildPlugin(type: Jar) {
