@@ -43,30 +43,6 @@ jar {
 //    }
 }
 
-task copyToDistrib(type: Copy) {
-    group 'copy'
-    println('Copying Aeon.Core to distrib folder')
-
-    def source = 'build/libs/' + base + '-' + version + '.jar'
-    def destination = '../distrib'
-    def distribFolder = new File('../distrib', '')
-
-    if (!distribFolder.exists()) {
-        println('Creating distrib folder')
-
-        distribFolder.mkdir()
-    } else {
-        println('Distrib exists')
-    }
-
-    from source
-    into destination
-}
-
-copyToDistrib.outputs.upToDateWhen { false }
-
-assemble.finalizedBy(copyToDistrib)
-
 apply plugin: "com.jfrog.artifactory"
 apply plugin: 'maven-publish'
 

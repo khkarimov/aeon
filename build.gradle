@@ -12,23 +12,6 @@ dependencies {
     compile project('Aeon.SampleContext')
 }
 
-//Copies dependencies into Distrib folder along with build artifacts.
-task CopyDependencies(type: Copy) {
-    group 'copy'
-    into 'distrib'
-    from configurations.getByName("compile") {
-        exclude "Aeon.Selenium-*.jar"
-    }.files
-}
-
-//Copy plugin .zip into Plugins folder
-task CopyPluginToDistrib(type: Copy) {
-    group 'copy'
-    into 'distrib'
-    from 'Aeon.Selenium/build/libs'
-    include '*.zip'
-}
-
 //Copy selenium plugin into SampleTeam plugins folder
 task CopySeleniumPlugin(type: Copy) {
     group 'copy'
@@ -37,16 +20,9 @@ task CopySeleniumPlugin(type: Copy) {
     include '*.zip'
 }
 
-CopySeleniumPlugin.dependsOn(CopyDependencies)
-CopyDependencies.dependsOn(CopyPluginToDistrib)
-
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
-
-clean {
-    delete 'distrib'
-}
 
 allprojects {
     apply plugin: 'checkstyle'
