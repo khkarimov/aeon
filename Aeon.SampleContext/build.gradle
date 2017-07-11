@@ -32,19 +32,3 @@ jar {
                 'Implementation-Version': version
     }
 }
-
-task fatJar(type: Jar) {
-    version = version
-    baseName = base
-    archiveName = base + '-all-' + version + '.jar'
-
-    manifest {
-        attributes 'Implementation-Title': baseProjectDescription,
-                'Implementation-Version': version
-    }
-
-    from configurations.compile.collect {
-        it.isDirectory() ? it : zipTree(it)
-    }
-    with jar
-}

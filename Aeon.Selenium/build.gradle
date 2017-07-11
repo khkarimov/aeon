@@ -51,6 +51,7 @@ jar {
 }
 
 task fatJar(type: Jar) {
+    group 'build'
     version = version
     baseName = base
     archiveName = base + '-all-' + version + '.jar'
