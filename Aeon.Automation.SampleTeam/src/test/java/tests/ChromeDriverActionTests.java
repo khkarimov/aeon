@@ -58,7 +58,7 @@ public class ChromeDriverActionTests {
 
     @Test
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
-        product.browser.goToUrl("http://ci.mia.ucloud.int");
+        product.browser.goToUrl("https://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
             String domain = ".ci.mia.ucloud.int";
