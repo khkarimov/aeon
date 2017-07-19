@@ -32,12 +32,13 @@ public class SeleniumConfiguration extends Configuration {
         public static final String PROXY_LOCATION = "aeon.selenium.proxy_location";
         public static final String SELENIUM_GRID_URL = "aeon.selenium.grid.url";
         public static final String ENSURE_CLEAN_ENVIRONMENT = "aeon.selenium.ensure_clean_environment";
-        public static final String CHROME_DIRECTORY = "aeon.selenium.chrome_directory";
-        public static final String IE_DIRECTORY = "aeon.selenium.ie_directory";
-        public static final String MARIONETTE_DIRECTORY = "aeon.selenium.marionette_directory";
-        public static final String EDGE_DIRECTORY = "aeon.selenium.edge_directory";
-        public static final String CHROME_BINARY = "aeon.selenium.chrome_binary";
-        public static final String FIREFOX_BINARY = "aeon.selenium.firefox_binary";
+        public static final String CHROME_DIRECTORY = "aeon.selenium.chrome.driver";
+        public static final String IE_DIRECTORY = "aeon.selenium.ie.driver";
+        public static final String MARIONETTE_DIRECTORY = "aeon.selenium.firefox.driver";
+        public static final String EDGE_DIRECTORY = "aeon.selenium.edge.driver";
+        public static final String CHROME_BINARY = "aeon.selenium.chrome.binary";
+        public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
+        public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
 
         // Perfecto
         public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";

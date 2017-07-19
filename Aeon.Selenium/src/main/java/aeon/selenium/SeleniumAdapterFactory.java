@@ -67,6 +67,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private boolean maximizeBrowser;
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
+    private boolean chromeHeadless;
     private String proxyLocation;
     private String perfectoUser;
     private String perfectoPass;
@@ -90,6 +91,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.maximizeBrowser = configuration.getBoolean(SeleniumConfiguration.Keys.MAXIMIZE_BROWSER, true);
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
+        chromeHeadless = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_HEADLESS, false);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
         perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
         perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
@@ -430,6 +432,12 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
+
+        if (chromeHeadless) {
+            chromeOptions.addArguments("--chromeHeadless");
+//            This is temporarily needed for Chrome 59 but should be removed later:
+            chromeOptions.addArguments("--disable-gpu");
+        }
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + mobileUserAgent);
