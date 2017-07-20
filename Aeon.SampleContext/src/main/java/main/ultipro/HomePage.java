@@ -20,10 +20,9 @@ public class HomePage {
     public HomePage(AutomationInfo automationInfo) {
         viewPayStatement = new Link(automationInfo, By.cssSelector("a[id*='viewPayStatementLink']"));
         menuButton = new Button(automationInfo, By.cssSelector("#menuButtonContainer > div.menuButton"), new ArrayList<>()); //passing in an empty ArrayList sets the frame to the default frame
-        myTeam = new Button(automationInfo, By.cssSelector("div.menuTopHeader:nth-child(2)"));
-        myEmployees = new Button(automationInfo, By.cssSelector("div.menuContentContainer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > h3:nth-child(1)"));
+        myTeam = new Button(automationInfo, By.cssSelector("[data-uitoggle=\"menu_my_team\"]"));
+        myEmployees = new Button(automationInfo, By.cssSelector("[data-id=\"167\"]"));
+//        myEmployees = new Button(automationInfo, By.cssSelector("div.menuContentContainer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > h3:nth-child(1)"));
         homeButton = new Button(automationInfo, By.cssSelector("#link_home > div:nth-child(1)"));
     }
-
-
 }
