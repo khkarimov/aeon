@@ -18,7 +18,7 @@ public class LoginPage {
     public Select languageSelect;
 
     public LoginPage(AutomationInfo automationInfo) {
-        userNameTextBox = new TextBox(automationInfo, By.cssSelector( "input[id*='UserName']"));
+        userNameTextBox = new TextBox(automationInfo, By.cssSelector("input[id*='UserName']"));
         passwordTextBox = new TextBox(automationInfo, By.cssSelector("input[id*='Password']"));
         loginButton = new Button(automationInfo, By.cssSelector("input[id*='loginButton']"));
         languageSelect = new Select(automationInfo, By.cssSelector("select[name*='languagesSelection']"));
