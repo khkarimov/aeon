@@ -36,11 +36,6 @@ public class ChromeDriverActionTests {
     public static void setUp() {
     }
 
-    @AfterClass
-    public static void tearDown() {
-        product.browser.quit();
-    }
-
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Chrome);

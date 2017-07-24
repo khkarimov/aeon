@@ -434,7 +434,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         boolean isHeadless = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_HEADLESS, false);
         if (isHeadless) {
             chromeOptions.addArguments("--headless");
-        // TODO: This is temporarily needed for Chrome 59 but should be removed once later versions are available
+        // TODO(matthewro): This is temporarily needed for Chrome 59 but should be removed once later versions are available
             chromeOptions.addArguments("--disable-gpu");
         }
 
