@@ -7,7 +7,7 @@ import aeon.core.common.web.selectors.ByJQuery;
 import java.io.Serializable;
 
 /**
- * The exception that is thrown when a ByJQuery element does not exist.
+ * The exception that is thrown when ByJQuery or IBy elements do not exist.
  */
 public class NoSuchElementsException extends RuntimeException implements Serializable {
 
