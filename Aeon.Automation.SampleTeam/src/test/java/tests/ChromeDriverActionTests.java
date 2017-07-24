@@ -38,7 +38,7 @@ public class ChromeDriverActionTests {
 
     @AfterClass
     public static void tearDown() {
-        //product.browser.quit();
+        product.browser.quit();
     }
 
     @Before
