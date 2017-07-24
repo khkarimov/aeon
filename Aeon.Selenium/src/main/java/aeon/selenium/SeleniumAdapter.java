@@ -334,7 +334,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
-                throw new NoSuchElementException(e);
+                throw new NoSuchElementException(e, by);
             }
         }
 
