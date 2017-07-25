@@ -88,7 +88,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
         // If we have a last caught exception use that one
         // as the main exception for logging
-        if(lastCaughtException != null){
+        if (lastCaughtException != null){
             lastCaughtException.addSuppressed(ex);
             ex = lastCaughtException;
         }

@@ -7,7 +7,7 @@ import org.joda.time.Duration;
 import java.io.Serializable;
 
 /**
- * This exception is thrown after an operation times out
+ * This exception is thrown after an operation times out.
  */
 public class TimeoutExpiredException extends RuntimeException implements Serializable {
 
