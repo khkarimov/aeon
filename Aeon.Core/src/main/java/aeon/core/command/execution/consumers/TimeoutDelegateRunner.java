@@ -34,7 +34,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
      * @param clock the clock.
      * @param timeout the duration time.
      */
-    public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
+    TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
         super(successor);
         this.driver = driver;
         this.clock = clock;
@@ -71,7 +71,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
                 return returnValue;
             } catch (OutOfMemoryError e) {
                 log.error(Resources.getString("TimWtr_OutOfMemoryException_Error"));
-                log.error(Resources.getString("StackTraceMessage") + e.getMessage() + e.getStackTrace());
+                log.error(Resources.getString("StackTraceMessage") + e.getMessage(), e);
                 throw e;
             } catch (RuntimeException e) {
                 lastCaughtException = e;
@@ -83,8 +83,15 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             Sleep.waitInternal();
         }
 
-        TimeoutExpiredException ex = new TimeoutExpiredException(
-                Resources.getString("TimWtr_TimeoutExpired_DefaultMessage"), timeout, lastCaughtException);
+        RuntimeException ex = new TimeoutExpiredException(
+                Resources.getString("TimWtr_TimeoutExpired_DefaultMessage"), timeout);
+
+        // If we have a last caught exception use that one
+        // as the main exception for logging
+        if(lastCaughtException != null){
+            lastCaughtException.addSuppressed(ex);
+            ex = lastCaughtException;
+        }
 
         // TODO(DionnyS): JAVA_CONVERSION Get running processes.
         //var processList = ProcessCollector.GetProcesses();
@@ -92,25 +99,21 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         Image screenshot = null;
         try {
             screenshot = driver.getScreenshot();
-        } catch (OutOfMemoryError e) {
-            throw e;
-        } catch (RuntimeException e2) {
+        } catch (RuntimeException e) {
+            e.printStackTrace();
         }
 
         if (screenshot == null) {
-            log.error(ex.getMessage(), /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
-            log.error(Resources.getString("StackTraceMessage"), lastCaughtException);
+            log.error(ex.getMessage(), /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>(), lastCaughtException);
         } else {
-            log.error(ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>());
-            log.error(Resources.getString("StackTraceMessage"), lastCaughtException);
+            log.error(ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>(), lastCaughtException);
         }
 
         String pageSource = null;
         try {
             pageSource = driver.getSource();
-        } catch (OutOfMemoryError e3) {
-            throw e3;
-        } catch (RuntimeException e4) {
+        } catch (RuntimeException e) {
+            e.printStackTrace();
         }
 
         if (pageSource != null) {

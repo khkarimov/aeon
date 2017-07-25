@@ -7,7 +7,7 @@ import org.joda.time.Duration;
 import java.io.Serializable;
 
 /**
- * Created by DionnyS on 4/14/2016.
+ * This exception is thrown after an operation times out
  */
 public class TimeoutExpiredException extends RuntimeException implements Serializable {
 
@@ -16,15 +16,14 @@ public class TimeoutExpiredException extends RuntimeException implements Seriali
 
     /**
      * Initializes a new instance of the {@link TimeoutExpiredException} class.
+     *
      * @param operation string to specify the operation.
      * @param timeout the duration before timeout.
-     * @param lastCaughtException the last caught exception.
      */
-    public TimeoutExpiredException(String operation, Duration timeout, RuntimeException lastCaughtException) {
+    public TimeoutExpiredException(String operation, Duration timeout) {
         super(String.format(
                 Resources.getString("TimeoutExpiredException_ctor_DefaultMessage"),
-                TimeUtils.toReadableString(timeout), operation),
-                lastCaughtException);
+                TimeUtils.toReadableString(timeout), operation), null);
 
         this.operation = operation;
         this.timeout = timeout;
@@ -32,6 +31,7 @@ public class TimeoutExpiredException extends RuntimeException implements Seriali
 
     /**
      * Gets the operation.
+     *
      * @return the string operation.
      */
     public String getOperation() {
@@ -39,7 +39,8 @@ public class TimeoutExpiredException extends RuntimeException implements Seriali
     }
 
     /**
-     * Gets the timout duration.
+     * Gets the timeout duration.
+     *
      * @return the timeout duration.
      */
     public Duration getTimeout() {
