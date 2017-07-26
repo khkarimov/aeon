@@ -50,12 +50,14 @@ public class SeleniumConfiguration extends Configuration {
         public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
         public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
         public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
+        public static final String UDID = "aeon.selenium.appium.udid";
 
         // Android
         public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
 
         //IOS
         public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
+        public static final String AUTOMATION_NAME = "aeon.selenium.ios.automation_name";
     }
 
     @Override

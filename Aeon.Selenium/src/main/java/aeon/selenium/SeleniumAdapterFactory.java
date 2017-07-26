@@ -76,6 +76,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String appPackage;
     private String deviceName;
     private String driverContext;
+    private String automationName;
+    private String udid;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -99,6 +101,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "NATIVE_APP");
+        automationName = configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, "");
+        udid = configuration.getString(SeleniumConfiguration.Keys.UDID, "");
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
@@ -249,23 +253,40 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+
+                // Perfecto
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserName", "Safari");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("automationName", automationName);
+                desiredCapabilities.setCapability("deviceName", deviceName);
+                desiredCapabilities.setCapability("udid", udid);
                 break;
 
             case AndroidChrome:
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserName", "Chrome");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("deviceName", deviceName);
                 break;
