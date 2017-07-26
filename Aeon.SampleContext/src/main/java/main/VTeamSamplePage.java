@@ -17,7 +17,7 @@ public class VTeamSamplePage {
     public Button disabledButton;
     public Button openAlertButton;
     public Image ultimateLogoImage;
-    public Image HeatLogoImage;
+    public Image heatLogoImage;
     public Image ultimateLogoImageDoubleClick;
     public Checkbox testCheckbox;
     public FileDialogInput testFileDialogInput;
@@ -45,7 +45,7 @@ public class VTeamSamplePage {
 
     public VTeamSamplePage(AutomationInfo info) {
         disabledButton = new Button(info, By.cssSelector("button[id='disabled-button']"));
-        HeatLogoImage = new Image(info, By.cssSelector("img[src='HeatLogo.jpg']"));
+        heatLogoImage = new Image(info, By.cssSelector("img[src='HeatLogo.jpg']"));
         ultimateLogoImage = new Image(info, By.cssSelector("img[id='dragtarget']"));
         ultimateLogoImageDoubleClick = new Image(info, By.cssSelector("img[id='dbl-click-image']"));
         testCheckbox = new Checkbox(info, By.cssSelector("input[id='checkbox']"));
