@@ -139,6 +139,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * @return the column index
      */
     private long getColumnIndex(IBy columnSelector) {
-        return (long) ((IWebDriver) automationInfo.getDriver()).executeScript(String.format("var a=$(\"%1$s\").index();return a;", columnSelector)) + 1;
+        return (long) ((IWebDriver) automationInfo.getDriver()).executeScript(String.format("var a=%1$s.index();return a;", columnSelector.toJQuery())) + 1;
     }
 }

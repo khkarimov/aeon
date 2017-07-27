@@ -334,7 +334,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
-                throw new NoSuchElementException(e);
+                throw new NoSuchElementException(e, by);
             }
         }
 
@@ -364,11 +364,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                         .map(e -> new SeleniumElement(e))
                         .collect(Collectors.toList());
             } catch (org.openqa.selenium.NoSuchElementException e) {
-                throw new NoSuchElementsException(e);
+                throw new NoSuchElementsException(e, findBy);
             }
 
             if (collection.size() == 0) {
-                throw new NoSuchElementsException();
+                throw new NoSuchElementsException(findBy);
             }
 
             return collection;
@@ -378,8 +378,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (byJQuery != null) {
             try {
                 return findElements(byJQuery);
-            } catch (NoSuchElementException e2) {
-                throw new NoSuchElementsException();
+            } catch (NoSuchElementException e) {
+                throw new NoSuchElementsException(e, findBy);
             }
         }
 
@@ -397,7 +397,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         Object result = executeScript(script);
 
         if (result instanceof Collection<?> && ((Collection<?>) result).size() == 0) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementsException(findBy);
         }
 
         try {
