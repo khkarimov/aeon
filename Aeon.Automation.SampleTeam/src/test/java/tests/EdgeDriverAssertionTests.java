@@ -67,14 +67,14 @@ public class EdgeDriverAssertionTests {
     public void testDatesApproximatelyEquals() {
         product.startPage.dateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-31"), Period.days(0));
         product.startPage.dateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-26"), Period.days(5));
-        thrown.expectCause(IsInstanceOf.instanceOf(DatesNotApproximatelyEqualException.class));
+        thrown.expect(IsInstanceOf.instanceOf(DatesNotApproximatelyEqualException.class));
         product.startPage.dateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-08"), Period.days(5));
     }
 
     @Test
     public void testDisabled() {
         product.startPage.disabledButton.isDisabled();
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementIsEnabledException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementIsEnabledException.class));
         product.startPage.start.isDisabled();
     }
 
@@ -94,14 +94,14 @@ public class EdgeDriverAssertionTests {
     @Test
     public void testEnabled() {
         product.startPage.start.isEnabled();
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementNotEnabledException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementNotEnabledException.class));
         product.startPage.disabledButton.isEnabled();
     }
 
     @Test
     public void testExists(){
         product.startPage.start.exists();
-        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchElementException.class));
         product.startPage.nonExistentLabel.exists();
     }
 
@@ -119,7 +119,7 @@ public class EdgeDriverAssertionTests {
     @Test
     public void testNotExists(){
         product.startPage.nonExistentLabel.notExists();
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementExistsException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementExistsException.class));
         product.startPage.start.notExists();
     }
 
@@ -136,7 +136,7 @@ public class EdgeDriverAssertionTests {
     @Test
     public void testNotVisible() {
         product.startPage.invisibleButton.notVisible();
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementIsVisibleException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementIsVisibleException.class));
         product.startPage.openAlertButton.notVisible();
     }
 
@@ -153,7 +153,7 @@ public class EdgeDriverAssertionTests {
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
         product.browser.verifyAlertText("Send some keys");
-        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.verifyAlertText("Send other keys");
         product.browser.acceptAlert();
     }
@@ -163,7 +163,7 @@ public class EdgeDriverAssertionTests {
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
         product.browser.verifyAlertTextLike("Send some keys", true);
-        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
         product.browser.verifyAlertTextLike("send some keys", true);
         product.browser.acceptAlert();
     }
@@ -171,7 +171,7 @@ public class EdgeDriverAssertionTests {
     @Test
     public void testVerifyTitle() {
         product.browser.verifyTitle("Material Design Lite");
-        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.verifyTitle("Fake Title");
     }
 
@@ -179,14 +179,14 @@ public class EdgeDriverAssertionTests {
     public void testVerifyURL() {
         product.browser.goToUrl("http://www.espn.com/");
         product.browser.verifyURL("http://www.espn.com/");
-        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.verifyURL("http://www.espne.com/");
     }
 
     @Test
     public void testVisible_Correct() {
         product.startPage.dateLabel.visible();
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementNotVisibleException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementNotVisibleException.class));
         product.startPage.invisibleButton.visible();
     }
 
@@ -202,7 +202,7 @@ public class EdgeDriverAssertionTests {
         product.startPage.dropDown.click();
         product.startPage.dropDown.hasOptions(validOptionValues, null, WebSelectOption.Value);
         String[] invalidOptionValues = {"0", "1", "fail"};
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.startPage.dropDown.hasOptions(invalidOptionValues, null, WebSelectOption.Value);
     }
 
@@ -212,7 +212,7 @@ public class EdgeDriverAssertionTests {
         product.startPage.dropDown.click();
         product.startPage.dropDown.hasOptions(validOptionTexts, null, WebSelectOption.Text);
         String[] invalidOptions = {"option0", "fail"};
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.startPage.dropDown.hasOptions(invalidOptions, null, WebSelectOption.Text);
     }
 
@@ -222,7 +222,7 @@ public class EdgeDriverAssertionTests {
         product.startPage.dropDown.click();
         product.startPage.dropDown.doesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
         String[] validOptionValues = {"1", "2", "49"};
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementHasOptionException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementHasOptionException.class));
         product.startPage.dropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.Value);
     }
 
@@ -232,35 +232,35 @@ public class EdgeDriverAssertionTests {
         product.startPage.dropDown.click();
         product.startPage.dropDown.doesNotHaveOptions(invalidOptionTexts, null, WebSelectOption.Text);
         String[] validOptionTexts = {"Option-1", "Klingon", "nothing", "option1"};
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementHasOptionException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementHasOptionException.class));
         product.startPage.dropDown.doesNotHaveOptions(validOptionTexts, null, WebSelectOption.Text);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Ascending(){
         product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Descending(){
         product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByText_Ascending(){
         product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByText_Descending(){
         product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
         product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
     }
 
@@ -269,7 +269,7 @@ public class EdgeDriverAssertionTests {
         int totalOptions = 5000;
         product.startPage.dropDown.hasNumberOfOptions(totalOptions);
         totalOptions = 50;
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveNumberOfOptionsException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveNumberOfOptionsException.class));
         product.startPage.dropDown.hasNumberOfOptions(totalOptions);
     }
 
@@ -278,7 +278,7 @@ public class EdgeDriverAssertionTests {
         String[] validOptions = {"option1", "option2", "option3"};
         product.startPage.dropDown.hasOptionsInOrder(validOptions, WebSelectOption.Text);
         String[] invalidoptions = {"option1", "option4", "option2"};
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Text);
     }
 
@@ -287,7 +287,7 @@ public class EdgeDriverAssertionTests {
         String[] validoptions = {"1", "2", "3"};
         product.startPage.dropDown.hasOptionsInOrder(validoptions, WebSelectOption.Value);
         String[] invalidoptions = {"1", "2", "3", "40", "5"};
-        thrown.expectCause(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
         product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Value);
     }
 
@@ -298,7 +298,7 @@ public class EdgeDriverAssertionTests {
         product.startPage.lexoDropDown.is("01", "value");
         product.startPage.lexoDropDown.isNotLike("appple");
         product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
-        thrown.expectCause(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.startPage.lexoDropDown.is("ZEBRA");
     }
 
@@ -308,7 +308,7 @@ public class EdgeDriverAssertionTests {
         product.startPage.myGrid.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
         product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
         product.startPage.myGrid.rowBy.material("Acrylic").getRow().exists();
-        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementsException.class));
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchElementsException.class));
         product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }
 }

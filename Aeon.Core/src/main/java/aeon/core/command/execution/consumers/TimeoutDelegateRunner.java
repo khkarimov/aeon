@@ -34,7 +34,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
      * @param clock the clock.
      * @param timeout the duration time.
      */
-    TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
+    public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
         super(successor);
         this.driver = driver;
         this.clock = clock;
