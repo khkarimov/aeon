@@ -5,8 +5,10 @@ import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
 import aeon.core.common.helpers.AjaxWaiter;
+import aeon.core.common.helpers.StringUtils;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import org.joda.time.Duration;
@@ -64,6 +66,15 @@ public class WebProduct extends Product {
     @Override
     protected void afterLaunch() {
         browser = new Browser(getAutomationInfo());
+        ((IWebAdapter) getAutomationInfo().getAdapter()).maximize();
+        String environment = getConfig(Configuration.Keys.ENVIRONMENT, "");
+        if (StringUtils.isNotBlank(environment)) {
+            String protocol = getConfig(Configuration.Keys.PROTOCOL, "https");
+            if (StringUtils.isBlank(protocol)) {
+                protocol = "https";
+            }
+            browser.goToUrl(protocol + "://" + environment);
+        }
     }
 
     /**
