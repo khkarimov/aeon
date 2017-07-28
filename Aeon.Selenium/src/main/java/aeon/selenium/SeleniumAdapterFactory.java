@@ -76,8 +76,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String appPackage;
     private String deviceName;
     private String driverContext;
-    private String automationName;
-    private String udid;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -101,8 +99,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "NATIVE_APP");
-        automationName = configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, "");
-        udid = configuration.getString(SeleniumConfiguration.Keys.UDID, "");
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
@@ -267,9 +263,9 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "Safari");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
-                desiredCapabilities.setCapability("automationName", automationName);
+                desiredCapabilities.setCapability("automationName", configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, ""));
                 desiredCapabilities.setCapability("deviceName", deviceName);
-                desiredCapabilities.setCapability("udid", udid);
+                desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
                 break;
 
             case AndroidChrome:
