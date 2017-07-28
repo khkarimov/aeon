@@ -65,6 +65,7 @@ public class ChromeDriverAssertionTests {
         product.browser.verifyAlertExists();
         product.browser.sendKeysToAlert("Tester of Alerts");
         product.browser.acceptAlert();
+        product.startPage.reactionLabel.is("Tester of Alerts");
     }
 
     @Test
