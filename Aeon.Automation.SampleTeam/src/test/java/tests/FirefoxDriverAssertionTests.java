@@ -310,7 +310,7 @@ public class FirefoxDriverAssertionTests {
         product.startPage.myGrid.rowBy.index(2).checkBoxButton.click();
         product.startPage.myGrid.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
         product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
-        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementException.class));
+        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchElementsException.class));
         product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }
 }

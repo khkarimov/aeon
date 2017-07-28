@@ -145,7 +145,7 @@ public class SeleniumElement extends WebControl {
 
             return new SeleniumElement(seleniumElement);
         } catch (org.openqa.selenium.NoSuchElementException e) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(e, findBy);
         }
     }
 
@@ -163,7 +163,7 @@ public class SeleniumElement extends WebControl {
         try {
             return new SeleniumElement(underlyingWebElement.findElement(org.openqa.selenium.By.xpath(by.toString())));
         } catch (org.openqa.selenium.NoSuchElementException e) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(e, by);
         }
     }
 

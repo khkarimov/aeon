@@ -116,7 +116,7 @@ public class EdgeDriverActionTests {
     @Test
     public void testMouseOver() {
         product.startPage.ultimateLogoImage.mouseOver();
-        product.startPage.HeatLogoImage.exists();
+        product.startPage.heatLogoImage.exists();
         product.browser.refresh();
     }
 

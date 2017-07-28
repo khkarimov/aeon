@@ -36,11 +36,6 @@ public class ChromeDriverActionTests {
     public static void setUp() {
     }
 
-    @AfterClass
-    public static void tearDown() {
-        //product.browser.quit();
-    }
-
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Chrome);
@@ -192,7 +187,7 @@ public class ChromeDriverActionTests {
     @Test
     public void testMouseOver() {
         product.startPage.ultimateLogoImage.mouseOver();
-        product.startPage.HeatLogoImage.exists();
+        product.startPage.heatLogoImage.exists();
         product.browser.refresh();
     }
 

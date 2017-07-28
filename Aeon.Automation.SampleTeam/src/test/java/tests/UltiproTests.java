@@ -9,7 +9,7 @@ import static aeon.core.testabstraction.product.Aeon.launch;
 
 /**
  * Created by SebastianR on 11/23/2016.
- * This test file was created to show Next working on a Ultipro environment and to test the switch mechansim.
+ * This test file was created to show Next working on a Ultipro environment and to test the switch mechanism.
  * These tests are currently being ignored because the environment used is not persistent.
  */
 
@@ -23,7 +23,7 @@ public class UltiproTests {
     public void beforeTests() {
         ultipro = launch(Ultipro.class, BrowserType.Chrome);
         ultipro.browser.maximize();
-        ultipro.browser.goToUrl("http://apertureweb/Login.aspx");
+        ultipro.browser.goToUrl("http://legendsmkweb.mia.ucloud.int");
     }
 
     @After
