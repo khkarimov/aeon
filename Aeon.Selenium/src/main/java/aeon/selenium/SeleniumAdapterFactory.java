@@ -249,23 +249,40 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+
+                // Perfecto
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserName", "Safari");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("automationName", configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, ""));
+                desiredCapabilities.setCapability("deviceName", deviceName);
+                desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
                 break;
 
             case AndroidChrome:
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserName", "Chrome");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("deviceName", deviceName);
                 break;
