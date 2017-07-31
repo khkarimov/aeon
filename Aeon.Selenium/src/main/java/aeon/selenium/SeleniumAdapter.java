@@ -672,9 +672,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
+            String gridUrl = new SeleniumConfiguration().getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
             log.trace("WebDriver.Manage().Window.maximize();");
+
             if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) ||
-                    OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux))
+                    (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && !gridUrl.equals("")))
                     && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -683,10 +685,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 Dimension maximizedScreenSize =
                         new Dimension(screenWidth, screenHeight);
                 webDriver.manage().window().setSize(maximizedScreenSize);
-            } else {
+            }
+            else {
                 webDriver.manage().window().maximize();
             }
-        } catch (IllegalStateException e) {
+        }
+        catch (IllegalAccessException | IOException e){
+           throw new RuntimeException(e);
+        }
+        catch (IllegalStateException e) {
             log.trace("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
             executeScript("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
         }
