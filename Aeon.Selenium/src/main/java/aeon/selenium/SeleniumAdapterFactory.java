@@ -448,6 +448,13 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
 
+        boolean isHeadless = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_HEADLESS, false);
+        if (isHeadless) {
+            chromeOptions.addArguments("--headless");
+            // TODO(matthewro): This is temporarily needed for Chrome 59 but should be removed once later versions are available
+            chromeOptions.addArguments("--disable-gpu");
+        }
+
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + mobileUserAgent);
         }
