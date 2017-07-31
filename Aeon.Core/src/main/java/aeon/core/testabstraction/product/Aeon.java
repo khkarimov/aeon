@@ -25,10 +25,9 @@ public class Aeon {
      * @return A type T launch.
      */
     public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
+        T product = null;
         try {
-            String environment;
-            String protocol;
-            T product = productClass.newInstance();
+            product = productClass.newInstance();
             IAdapterExtension plugin = loadPlugins(product);
             product.setConfiguration(plugin.getConfiguration());
             if (browserType == null) {
@@ -40,16 +39,15 @@ public class Aeon {
 
             product.launch(plugin);
 
-            environment = product.getConfig(Configuration.Keys.ENVIRONMENT, "");
-            if (StringUtils.isNotBlank(environment)) {
-                protocol = product.getConfig(Configuration.Keys.PROTOCOL, "https");
-                if (StringUtils.isBlank(protocol)) {
-                    protocol = "https";
-                }
-                ((WebProduct) product).browser.goToUrl(protocol + "://" + environment);
-            }
             return product;
         } catch (Exception e) {
+            if (product instanceof WebProduct && ((WebProduct) product).browser != null) {
+                try {
+                    ((WebProduct) product).browser.quit();
+                } catch (Exception exceptionToSuppress) {
+                    e.addSuppressed(exceptionToSuppress);
+                }
+            }
             throw new RuntimeException(e);
         }
     }

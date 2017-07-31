@@ -64,7 +64,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
     private BrowserType browserType;
     private String browserAcceptedLanguageCodes;
-    private boolean maximizeBrowser;
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
     private String proxyLocation;
@@ -88,7 +87,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.configuration = configuration;
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
-        this.maximizeBrowser = configuration.getBoolean(SeleniumConfiguration.Keys.MAXIMIZE_BROWSER, true);
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
@@ -216,15 +214,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                         String.format("%1$s is not a supported browser", browserType));
         }
 
-        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
-        if (maximizeBrowser
-                && !browserType.equals(BrowserType.AndroidChrome)
-                && !browserType.equals(BrowserType.IOSSafari)
-                && !browserType.equals(BrowserType.AndroidHybridApp)
-                && !browserType.equals(BrowserType.IOSHybridApp)) {
-            adapter.maximize();
-        }
-        return adapter;
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
     }
 
     private Capabilities getCapabilities() {
@@ -251,23 +241,40 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
             case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+
+                // Perfecto
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserName", "Safari");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
+                desiredCapabilities.setCapability("automationName", configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, ""));
+                desiredCapabilities.setCapability("deviceName", deviceName);
+                desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
                 break;
 
             case AndroidChrome:
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                desiredCapabilities.setCapability("user", perfectoUser);
-                desiredCapabilities.setCapability("password", perfectoPass);
+                if (!perfectoUser.isEmpty()) {
+                    desiredCapabilities.setCapability("user", perfectoUser);
+                }
+
+                if (!perfectoPass.isEmpty()) {
+                    desiredCapabilities.setCapability("password", perfectoPass);
+                }
+
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileOS");
+                desiredCapabilities.setCapability("browserName", "Chrome");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("deviceName", deviceName);
                 break;
@@ -432,6 +439,13 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
+
+        boolean isHeadless = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_HEADLESS, false);
+        if (isHeadless) {
+            chromeOptions.addArguments("--headless");
+            // TODO(matthewro): This is temporarily needed for Chrome 59 but should be removed once later versions are available
+            chromeOptions.addArguments("--disable-gpu");
+        }
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + mobileUserAgent);

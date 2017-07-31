@@ -32,12 +32,13 @@ public class SeleniumConfiguration extends Configuration {
         public static final String PROXY_LOCATION = "aeon.selenium.proxy_location";
         public static final String SELENIUM_GRID_URL = "aeon.selenium.grid.url";
         public static final String ENSURE_CLEAN_ENVIRONMENT = "aeon.selenium.ensure_clean_environment";
-        public static final String CHROME_DIRECTORY = "aeon.selenium.chrome_directory";
-        public static final String IE_DIRECTORY = "aeon.selenium.ie_directory";
-        public static final String MARIONETTE_DIRECTORY = "aeon.selenium.marionette_directory";
-        public static final String EDGE_DIRECTORY = "aeon.selenium.edge_directory";
-        public static final String CHROME_BINARY = "aeon.selenium.chrome_binary";
-        public static final String FIREFOX_BINARY = "aeon.selenium.firefox_binary";
+        public static final String CHROME_DIRECTORY = "aeon.selenium.chrome.driver";
+        public static final String IE_DIRECTORY = "aeon.selenium.ie.driver";
+        public static final String MARIONETTE_DIRECTORY = "aeon.selenium.firefox.driver";
+        public static final String EDGE_DIRECTORY = "aeon.selenium.edge.driver";
+        public static final String CHROME_BINARY = "aeon.selenium.chrome.binary";
+        public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
+        public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
         public static final String IS_REMOTE = "aeon.is_remote";
 
         // Perfecto
@@ -51,12 +52,14 @@ public class SeleniumConfiguration extends Configuration {
         public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
         public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
         public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
+        public static final String UDID = "aeon.selenium.appium.udid";
 
         // Android
         public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
 
         //IOS
         public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
+        public static final String AUTOMATION_NAME = "aeon.selenium.ios.automation_name";
     }
 
     @Override

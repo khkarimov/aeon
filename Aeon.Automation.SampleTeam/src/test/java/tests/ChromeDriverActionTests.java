@@ -37,11 +37,6 @@ public class ChromeDriverActionTests {
     public static void setUp() {
     }
 
-    @AfterClass
-    public static void tearDown() {
-        //product.browser.quit();
-    }
-
     @Before
     public void beforeTests() {
         product = launch(Sample.class, BrowserType.Chrome);
@@ -173,7 +168,7 @@ public class ChromeDriverActionTests {
 
         assert(text.equals("Send some keys"));
         product.browser.dismissAlert();
-        thrown.expectCause(IsInstanceOf.instanceOf(NoAlertException.class));
+        thrown.expect(IsInstanceOf.instanceOf(NoAlertException.class));
         product.browser.getAlertText();
     }
 
@@ -241,7 +236,7 @@ public class ChromeDriverActionTests {
         product.browser.switchToMainWindow(true);
         product.startPage.popupButton.click();
         product.browser.switchToWindowByTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
+        thrown.expect(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.switchToMainWindow(true);
     }
 
@@ -251,7 +246,7 @@ public class ChromeDriverActionTests {
         product.startPage.popupButton.click();
         product.browser.switchToWindowByTitle("Google");
         product.browser.verifyTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByTitle("Some Fake Title");
     }
 
@@ -261,7 +256,7 @@ public class ChromeDriverActionTests {
         product.startPage.popupButton.click();
         product.browser.switchToWindowByUrl("https://www.google.com");
         product.browser.verifyTitle("Google");
-        thrown.expectCause(IsInstanceOf.instanceOf(NoSuchWindowException.class));
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByUrl("www.fake.com");
     }
 
