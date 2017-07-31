@@ -38,6 +38,7 @@ public class SeleniumConfiguration extends Configuration {
         public static final String EDGE_DIRECTORY = "aeon.selenium.edge_directory";
         public static final String CHROME_BINARY = "aeon.selenium.chrome_binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox_binary";
+        public static final String IS_REMOTE = "aeon.is_remote";
 
         // Perfecto
         public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";
