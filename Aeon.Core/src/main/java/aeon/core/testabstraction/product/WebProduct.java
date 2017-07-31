@@ -5,8 +5,11 @@ import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
 import aeon.core.common.helpers.AjaxWaiter;
+import aeon.core.common.helpers.StringUtils;
+import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import org.joda.time.Duration;
@@ -64,6 +67,23 @@ public class WebProduct extends Product {
     @Override
     protected void afterLaunch() {
         browser = new Browser(getAutomationInfo());
+        boolean maximizeBrowser = configuration.getBoolean(Configuration.Keys.MAXIMIZE_BROWSER, true);
+        BrowserType browserType = browser.getBrowserType();
+        if (maximizeBrowser
+                && !browserType.equals(BrowserType.AndroidChrome)
+                && !browserType.equals(BrowserType.IOSSafari)
+                && !browserType.equals(BrowserType.AndroidHybridApp)
+                && !browserType.equals(BrowserType.IOSHybridApp)) {
+            browser.maximize();
+        }
+        String environment = getConfig(Configuration.Keys.ENVIRONMENT, "");
+        if (StringUtils.isNotBlank(environment)) {
+            String protocol = getConfig(Configuration.Keys.PROTOCOL, "https");
+            if (StringUtils.isBlank(protocol)) {
+                protocol = "https";
+            }
+            browser.goToUrl(protocol + "://" + environment);
+        }
     }
 
     /**

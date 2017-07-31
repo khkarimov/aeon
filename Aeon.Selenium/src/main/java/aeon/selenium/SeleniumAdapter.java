@@ -136,7 +136,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         List<IWebCookie> result = getWebDriver().manage().getCookies()
                 .stream()
-                .map(x -> new SeleniumCookie(x))
+                .map(SeleniumCookie::new)
                 .collect(Collectors.toList());
 
         log.trace(String.format("Result: %1$s", result));
@@ -361,7 +361,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             try {
                 collection = webDriver.findElements(org.openqa.selenium.By.cssSelector(findBy.toString()))
                         .stream()
-                        .map(e -> new SeleniumElement(e))
+                        .map(SeleniumElement::new)
                         .collect(Collectors.toList());
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new NoSuchElementsException(e, findBy);
@@ -404,7 +404,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             Collection<org.openqa.selenium.WebElement> elements =
                     (Collection<org.openqa.selenium.WebElement>) result;
 
-            return elements.stream().map(e -> new SeleniumElement(e))
+            return elements.stream().map(SeleniumElement::new)
                     .collect(Collectors.toList());
         } catch (Exception e) {
             throw new ScriptReturnValueNotHtmlElementException(result, script, e);
@@ -459,7 +459,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A string representation of the windowTitle we are searching for.
      */
     public final String switchToWindowByTitle(String windowTitle) {
-        if (StringUtils.isBlank(windowTitle) || windowTitle == null) {
+        if (StringUtils.isBlank(windowTitle)) {
             throw new IllegalArgumentException("windowTitle is null or an empty string");
         }
         for (String window : getWindowHandles()) {
@@ -579,7 +579,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             Alert alert = webDriver.switchTo().alert();
             // work around for marionette driver v.11.1
             // work around for chrome driver v2.24
-            if (this.browserType == BrowserType.Firefox || this.browserType == browserType.Chrome) {
+            if (this.browserType == BrowserType.Firefox || this.browserType == BrowserType.Chrome) {
                 try {
                     aeon.core.common.helpers.SendKeysHelper.sendKeysToKeyboard(keysToSend);
                 } catch (AWTException e) {
@@ -1312,7 +1312,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), "select");
         }
         if (optgroup != null) {
-            element = (SeleniumElement) ((SeleniumElement) element).findElement(aeon.core.common.web.selectors.By.cssSelector("optgroup[label='" + optgroup + "']"));
+            element = ((SeleniumElement) element).findElement(aeon.core.common.web.selectors.By.cssSelector("optgroup[label='" + optgroup + "']"));
         }
         Collection<WebControl> options = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector("option"));
         if (options.size() != optnumber) {
@@ -1420,7 +1420,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
-        Collection<String> values = Arrays.asList(messages).stream().map(x -> normalizeSpacing(x)).collect(Collectors.toList());
+        Collection<String> values = Arrays.stream(messages).map(StringUtils::normalizeSpacing).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
@@ -1435,9 +1435,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute))).collect(Collectors.toList());
         }
-        for (String value : values) {
-            if (!elements.contains(value)) {
-                throw new ElementDoesNotHaveException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (!elements.contains(value)) {
+                    throw new ElementDoesNotHaveException(value);
+                }
             }
         }
     }
@@ -1454,7 +1456,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void hasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
-        Collection<String> values = Arrays.asList(messages).stream().map(x -> normalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
+        Collection<String> values = Arrays.stream(messages).map(x -> normalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
@@ -1472,9 +1474,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     .stream().map(x -> aeon.core.common.helpers.StringUtils.
                             normalizeSpacing(((SeleniumElement) x).getAttribute(attribute).toLowerCase())).collect(Collectors.toList());
         }
-        for (String value : values) {
-            if (!elements.contains(value)) {
-                throw new ElementDoesNotHaveException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (!elements.contains(value)) {
+                    throw new ElementDoesNotHaveException(value);
+                }
             }
         }
     }
@@ -1490,7 +1494,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void doesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
-        Collection<String> values = Arrays.asList(messages).stream().map(x -> normalizeSpacing(x)).collect(Collectors.toList());
+        Collection<String> values = Arrays.stream(messages).map(StringUtils::normalizeSpacing).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
@@ -1505,9 +1509,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute))).collect(Collectors.toList());
         }
-        for (String value : values) {
-            if (elements.contains(value)) {
-                throw new ElementHasException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (elements.contains(value)) {
+                    throw new ElementHasException(value);
+                }
             }
         }
     }
@@ -1523,7 +1529,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void doesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
-        Collection<String> values = Arrays.asList(messages).stream().map(x -> normalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
+        Collection<String> values = Arrays.stream(messages).map(x -> normalizeSpacing(x).toLowerCase()).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
@@ -1538,9 +1544,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute)).toLowerCase()).collect(Collectors.toList());
         }
-        for (String value : values) {
-            if (elements.contains(value)) {
-                throw new ElementHasException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (elements.contains(value)) {
+                    throw new ElementHasException(value);
+                }
             }
         }
     }
@@ -1557,7 +1565,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void hasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
-        Collection<String> values = Arrays.asList(messages).stream().map(x -> normalizeSpacing(x)).collect(Collectors.toList());
+        Collection<String> values = Arrays.stream(messages).map(StringUtils::normalizeSpacing).collect(Collectors.toList());
         if (option == ComparisonOption.Text) {
             if (attribute.toUpperCase().equals("INNERHTML")) {
                 elements = ((SeleniumElement) element).
@@ -1572,14 +1580,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute))).collect(Collectors.toList());
         }
-        for (String value : values) {
-            if (!elements.contains(value)) {
-                throw new ElementDoesNotHaveException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (!elements.contains(value)) {
+                    throw new ElementDoesNotHaveException(value);
+                }
+                elements.remove(value);
             }
-            elements.remove(value);
-        }
-        if (!elements.isEmpty()) {
-            throw new ElementDoesNotOnlyHaveException(elements);
+            if (!elements.isEmpty()) {
+                throw new ElementDoesNotOnlyHaveException(elements);
+            }
         }
     }
 
@@ -1834,7 +1844,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public String windowDoesNotExistByTitle(String windowTitle) {
-        if (windowTitle.isEmpty() || windowTitle == null) {
+        if (windowTitle.isEmpty()) {
             throw new IllegalArgumentException("window title is invalid");
         }
         try {
@@ -1853,7 +1863,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public String windowDoesNotExistByUrl(String url) {
-        if (url.isEmpty() || url == null) {
+        if (url == null || url.isEmpty()) {
             throw new IllegalArgumentException("window title is invalid");
         }
         try {
@@ -1890,11 +1900,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             default:
                 String currentValue = getElementAttribute(control, "value");
                 if (currentValue != null) {
-                    String backspaces = "";
+                    StringBuilder backspaces = new StringBuilder();
                     for (int i = 0; i < currentValue.length(); i++) {
-                        backspaces += Keys.BACK_SPACE;
+                        backspaces.append(Keys.BACK_SPACE);
                     }
-                    sendKeysToElement(control, Keys.END + backspaces);
+                    sendKeysToElement(control, Keys.END + backspaces.toString());
                 }
 
                 sendKeysToElement(control, setValue);

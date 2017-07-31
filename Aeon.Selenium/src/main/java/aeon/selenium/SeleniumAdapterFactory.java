@@ -64,7 +64,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
     private BrowserType browserType;
     private String browserAcceptedLanguageCodes;
-    private boolean maximizeBrowser;
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
     private String proxyLocation;
@@ -87,7 +86,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         this.configuration = configuration;
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
-        this.maximizeBrowser = configuration.getBoolean(SeleniumConfiguration.Keys.MAXIMIZE_BROWSER, true);
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
@@ -214,15 +212,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                         String.format("%1$s is not a supported browser", browserType));
         }
 
-        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
-        if (maximizeBrowser
-                && !browserType.equals(BrowserType.AndroidChrome)
-                && !browserType.equals(BrowserType.IOSSafari)
-                && !browserType.equals(BrowserType.AndroidHybridApp)
-                && !browserType.equals(BrowserType.IOSHybridApp)) {
-            adapter.maximize();
-        }
-        return adapter;
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
     }
 
     private Capabilities getCapabilities() {
