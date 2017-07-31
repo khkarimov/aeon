@@ -67,16 +67,6 @@ public class WebProduct extends Product {
     @Override
     protected void afterLaunch() {
         browser = new Browser(getAutomationInfo());
-        ((IWebAdapter) getAutomationInfo().getAdapter()).maximize();
-        String environment = getConfig(Configuration.Keys.ENVIRONMENT, "");
-        if (StringUtils.isNotBlank(environment)) {
-            String protocol = getConfig(Configuration.Keys.PROTOCOL, "https");
-            if (StringUtils.isBlank(protocol)) {
-                protocol = "https";
-            }
-            browser.goToUrl(protocol + "://" + environment);
-        }
-
         boolean maximizeBrowser = configuration.getBoolean(Configuration.Keys.MAXIMIZE_BROWSER, true);
         BrowserType browserType = browser.getBrowserType();
         if (maximizeBrowser
@@ -85,6 +75,14 @@ public class WebProduct extends Product {
                 && browserType.equals(BrowserType.AndroidHybridApp)
                 && browserType.equals(BrowserType.IOSHybridApp)) {
             browser.maximize();
+        }
+        String environment = getConfig(Configuration.Keys.ENVIRONMENT, "");
+        if (StringUtils.isNotBlank(environment)) {
+            String protocol = getConfig(Configuration.Keys.PROTOCOL, "https");
+            if (StringUtils.isBlank(protocol)) {
+                protocol = "https";
+            }
+            browser.goToUrl(protocol + "://" + environment);
         }
     }
 
