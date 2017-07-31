@@ -70,4 +70,9 @@ subprojects {
     }
 }
 
+task wrapper(type: Wrapper) {
+    group 'build setup'
+    gradleVersion = '4.0'
+}
+
 artifactoryPublish.skip = true
