@@ -70,10 +70,10 @@ public class WebProduct extends Product {
         boolean maximizeBrowser = configuration.getBoolean(Configuration.Keys.MAXIMIZE_BROWSER, true);
         BrowserType browserType = browser.getBrowserType();
         if (maximizeBrowser
-                && browserType.equals(BrowserType.AndroidChrome)
-                && browserType.equals(BrowserType.IOSSafari)
-                && browserType.equals(BrowserType.AndroidHybridApp)
-                && browserType.equals(BrowserType.IOSHybridApp)) {
+                && !browserType.equals(BrowserType.AndroidChrome)
+                && !browserType.equals(BrowserType.IOSSafari)
+                && !browserType.equals(BrowserType.AndroidHybridApp)
+                && !browserType.equals(BrowserType.IOSHybridApp)) {
             browser.maximize();
         }
         String environment = getConfig(Configuration.Keys.ENVIRONMENT, "");
