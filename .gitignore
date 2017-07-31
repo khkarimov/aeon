@@ -53,6 +53,7 @@ Aeon.Core/classes/production/Aeon.Core/MessagesBundle.properties
 
 # IntelliJ
 out/
+Aeon.*/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

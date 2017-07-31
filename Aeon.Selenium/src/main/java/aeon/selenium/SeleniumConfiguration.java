@@ -39,6 +39,7 @@ public class SeleniumConfiguration extends Configuration {
         public static final String CHROME_BINARY = "aeon.selenium.chrome.binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
         public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
+        public static final String IS_REMOTE = "aeon.is_remote";
 
         // Perfecto
         public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";

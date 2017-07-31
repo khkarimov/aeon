@@ -61,6 +61,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private boolean moveMouseToOrigin;
     private BrowserType browserType;
     private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
+    private boolean isRemote;
 
     /**
      * Constructor for Selenium Adapter.
@@ -69,12 +70,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
+     * @param isRemote Whether we are testing remotely or locally.
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
+        this.isRemote = isRemote;
     }
 
     /**
@@ -683,11 +686,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
-            String gridUrl = new SeleniumConfiguration().getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
             log.trace("WebDriver.Manage().Window.maximize();");
 
             if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) ||
-                    (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && !gridUrl.equals("")))
+                    (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote))
                     && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -699,8 +701,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             } else {
                 webDriver.manage().window().maximize();
             }
-        } catch (IllegalAccessException | IOException e) {
-            throw new RuntimeException(e);
         } catch (IllegalStateException e) {
             log.trace("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
             executeScript("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
