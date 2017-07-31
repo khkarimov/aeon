@@ -696,15 +696,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 Dimension maximizedScreenSize =
                         new Dimension(screenWidth, screenHeight);
                 webDriver.manage().window().setSize(maximizedScreenSize);
-            }
-            else {
+            } else {
                 webDriver.manage().window().maximize();
             }
-        }
-        catch (IllegalAccessException | IOException e){
-           throw new RuntimeException(e);
-        }
-        catch (IllegalStateException e) {
+        } catch (IllegalAccessException | IOException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e) {
             log.trace("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
             executeScript("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
         }
