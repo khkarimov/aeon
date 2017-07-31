@@ -6,6 +6,7 @@ import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
 import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.common.helpers.StringUtils;
+import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
@@ -74,6 +75,16 @@ public class WebProduct extends Product {
                 protocol = "https";
             }
             browser.goToUrl(protocol + "://" + environment);
+        }
+
+        boolean maximizeBrowser = configuration.getBoolean(Configuration.Keys.MAXIMIZE_BROWSER, true);
+        BrowserType browserType = browser.getBrowserType();
+        if (maximizeBrowser
+                && browserType.equals(BrowserType.AndroidChrome)
+                && browserType.equals(BrowserType.IOSSafari)
+                && browserType.equals(BrowserType.AndroidHybridApp)
+                && browserType.equals(BrowserType.IOSHybridApp)) {
+            browser.maximize();
         }
     }
 

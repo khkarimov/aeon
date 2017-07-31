@@ -1435,10 +1435,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute))).collect(Collectors.toList());
         }
-        for (String value : values) {
-            assert elements != null;
-            if (!elements.contains(value)) {
-                throw new ElementDoesNotHaveException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (!elements.contains(value)) {
+                    throw new ElementDoesNotHaveException(value);
+                }
             }
         }
     }
@@ -1473,10 +1474,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     .stream().map(x -> aeon.core.common.helpers.StringUtils.
                             normalizeSpacing(((SeleniumElement) x).getAttribute(attribute).toLowerCase())).collect(Collectors.toList());
         }
-        for (String value : values) {
-            assert elements != null;
-            if (!elements.contains(value)) {
-                throw new ElementDoesNotHaveException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (!elements.contains(value)) {
+                    throw new ElementDoesNotHaveException(value);
+                }
             }
         }
     }
@@ -1507,10 +1509,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute))).collect(Collectors.toList());
         }
-        for (String value : values) {
-            assert elements != null;
-            if (elements.contains(value)) {
-                throw new ElementHasException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (elements.contains(value)) {
+                    throw new ElementHasException(value);
+                }
             }
         }
     }
@@ -1541,10 +1544,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute)).toLowerCase()).collect(Collectors.toList());
         }
-        for (String value : values) {
-            assert elements != null;
-            if (elements.contains(value)) {
-                throw new ElementHasException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (elements.contains(value)) {
+                    throw new ElementHasException(value);
+                }
             }
         }
     }
@@ -1576,16 +1580,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             elements = ((SeleniumElement) element).findElements(aeon.core.common.web.selectors.By.cssSelector(selector))
                     .stream().map(x -> normalizeSpacing(((SeleniumElement) x).getAttribute(attribute))).collect(Collectors.toList());
         }
-        for (String value : values) {
-            assert elements != null;
-            if (!elements.contains(value)) {
-                throw new ElementDoesNotHaveException(value);
+        if (elements != null) {
+            for (String value : values) {
+                if (!elements.contains(value)) {
+                    throw new ElementDoesNotHaveException(value);
+                }
+                elements.remove(value);
             }
-            elements.remove(value);
-        }
-        assert elements != null;
-        if (!elements.isEmpty()) {
-            throw new ElementDoesNotOnlyHaveException(elements);
+            if (!elements.isEmpty()) {
+                throw new ElementDoesNotOnlyHaveException(elements);
+            }
         }
     }
 
@@ -1859,7 +1863,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public String windowDoesNotExistByUrl(String url) {
-        if (url.isEmpty()) {
+        if (url == null || url.isEmpty()) {
             throw new IllegalArgumentException("window title is invalid");
         }
         try {

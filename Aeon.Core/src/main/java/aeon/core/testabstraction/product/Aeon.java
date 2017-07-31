@@ -41,8 +41,12 @@ public class Aeon {
 
             return product;
         } catch (Exception e) {
-            if (product instanceof WebProduct){
-                ((WebProduct) product).browser.quit();
+            if (product instanceof WebProduct && ((WebProduct) product).browser != null) {
+                try {
+                    ((WebProduct) product).browser.quit();
+                } catch (Exception exceptionToSuppress) {
+                    e.addSuppressed(exceptionToSuppress);
+                }
             }
             throw new RuntimeException(e);
         }

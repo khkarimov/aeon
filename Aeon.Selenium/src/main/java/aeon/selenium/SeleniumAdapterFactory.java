@@ -214,15 +214,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                         String.format("%1$s is not a supported browser", browserType));
         }
 
-        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
-        if (maximizeBrowser
-                && !browserType.equals(BrowserType.AndroidChrome)
-                && !browserType.equals(BrowserType.IOSSafari)
-                && !browserType.equals(BrowserType.AndroidHybridApp)
-                && !browserType.equals(BrowserType.IOSHybridApp)) {
-            adapter.maximize();
-        }
-        return adapter;
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
     }
 
     private Capabilities getCapabilities() {
