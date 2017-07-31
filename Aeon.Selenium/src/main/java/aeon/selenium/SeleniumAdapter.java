@@ -580,18 +580,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             log.trace(String.format("WebDriver.SwitchTo().Alert().sendKeys(%1$s);", keysToSend));
             Alert alert = webDriver.switchTo().alert();
-            // work around for marionette driver v.11.1
-            // work around for chrome driver v2.24
-            if (this.browserType == BrowserType.Firefox || this.browserType == BrowserType.Chrome) {
-                try {
-                    aeon.core.common.helpers.SendKeysHelper.sendKeysToKeyboard(keysToSend);
-                } catch (AWTException e) {
-                    log.error(e.getMessage());
-                    throw new RuntimeException(e);
-                }
-            } else {
-                alert.sendKeys(keysToSend);
-            }
+            alert.sendKeys(keysToSend);
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
         }
