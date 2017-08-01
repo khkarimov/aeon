@@ -677,8 +677,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             log.trace("WebDriver.Manage().Window.maximize();");
 
-            if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) ||
-                    (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote))
+            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote
+                    && browserType.equals(BrowserType.Chrome)) {
+                return;
+
+            } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
                     && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
