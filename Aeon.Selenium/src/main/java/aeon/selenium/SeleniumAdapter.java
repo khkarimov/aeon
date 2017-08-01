@@ -675,13 +675,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
+            //TODO(TOOL-6894): this work around needs to be investigated. It does not work for remote linux grids"
             log.trace("WebDriver.Manage().Window.maximize();");
 
             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote
                     && browserType.equals(BrowserType.Chrome)) {
+                log.trace("Skipping maximize for remote test on linux and chrome.");
                 return;
+            }
 
-            } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
                     && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
