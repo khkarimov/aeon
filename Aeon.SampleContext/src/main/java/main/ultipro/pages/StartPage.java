@@ -1,13 +1,15 @@
-package main.ultipro;
+package main.ultipro.pages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.TextBox;
+import aeon.core.testabstraction.models.Page;
 
 /**
  * Created by SebastianR on 11/30/2016.
  */
-public class StartPage {
+public class StartPage extends Page {
+
     public TextBox ssnTextBox;
     public TextBox confirmSSNTextBox;
     public TextBox firstName;
@@ -15,7 +17,7 @@ public class StartPage {
     public TextBox employeeNumber;
 
 
-    public StartPage(AutomationInfo automationInfo){
+    StartPage(AutomationInfo automationInfo){
         //Controls
         ssnTextBox = new TextBox(automationInfo, By.cssSelector("#ctl00_Content_StartFV_txbSSN"));
         confirmSSNTextBox = new TextBox(automationInfo, By.cssSelector("#ctl00_Content_StartFV_txbSSNConfirmed"));

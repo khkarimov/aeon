@@ -9,7 +9,7 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
-import main.Sample;
+import main.sample.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.junit.*;

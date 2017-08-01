@@ -1,14 +1,16 @@
-package main.ultipro;
+package main.ultipro.pages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.TextBox;
+import aeon.core.testabstraction.models.Page;
 
 
 /**
  * Created by SebastianR on 11/30/2016.
  */
-public class PersonalPage {
+public class PersonalPage extends Page {
+
     public TextBox addressLine;
 
     public PersonalPage(AutomationInfo automationInfo){

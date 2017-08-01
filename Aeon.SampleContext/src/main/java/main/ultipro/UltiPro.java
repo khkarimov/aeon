@@ -1,17 +1,21 @@
 package main.ultipro;
 
 import aeon.core.testabstraction.product.WebProduct;
+import main.ultipro.pages.HomePage;
+import main.ultipro.pages.LoginPage;
+import main.ultipro.pages.MyEmployeesPage;
+import main.ultipro.pages.NewHireWizard;
 
 /**
  * Created by SebastianR on 11/23/2016.
  */
-public class Ultipro extends WebProduct{
+public class UltiPro extends WebProduct{
     public LoginPage loginPage;
     public HomePage homePage;
     public MyEmployeesPage myEmployeesPage;
     public NewHireWizard newHireWizard;
 
-    public Ultipro(){
+    public UltiPro(){
     }
 
     @Override

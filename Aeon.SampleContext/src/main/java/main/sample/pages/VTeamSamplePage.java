@@ -1,16 +1,17 @@
-package main;
+package main.sample.pages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.*;
-import main.samplegrid.MyGrid;
-import main.samplegrid.MyGridHeaders;
+import aeon.core.testabstraction.models.Page;
+import main.sample.samplegrid.MyGrid;
+import main.sample.samplegrid.MyGridHeaders;
 
 /**
  * Created by Administrator on 6/3/2016.
  */
-public class VTeamSamplePage {
-    private AutomationInfo info;
+public class VTeamSamplePage extends Page {
+
     // Grid selector
     private final By gridSelector = By.cssSelector("#grid-table-id");
 

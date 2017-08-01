@@ -1,13 +1,17 @@
-package main.ultipro;
+package main.ultipro.pages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
+import aeon.core.testabstraction.models.Page;
+import main.ultipro.pages.PersonalPage;
+import main.ultipro.pages.StartPage;
 
 /**
  * Created by SebastianR on 11/23/2016.
  */
-public class NewHireWizard {
+public class NewHireWizard extends Page {
+
     public PersonalPage personalPage;
     public StartPage startPage;
     public Button cancelButton;

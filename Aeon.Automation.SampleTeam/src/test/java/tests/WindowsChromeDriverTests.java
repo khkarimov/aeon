@@ -2,7 +2,7 @@ package tests;
 
 import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.product.Configuration;
-import main.Sample;
+import main.sample.Sample;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;

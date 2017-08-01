@@ -2,7 +2,7 @@ package tests;
 
 import aeon.core.common.web.BrowserType;
 import categories.IOSTests;
-import main.Sample;
+import main.sample.Sample;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 

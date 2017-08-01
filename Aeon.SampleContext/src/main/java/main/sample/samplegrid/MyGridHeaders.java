@@ -1,4 +1,4 @@
-package main.samplegrid;
+package main.sample.samplegrid;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
