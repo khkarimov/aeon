@@ -75,7 +75,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     private String appPackage;
     private String deviceName;
     private String driverContext;
-    private boolean isRemote;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -98,7 +97,6 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "NATIVE_APP");
-        isRemote = configuration.getBoolean(SeleniumConfiguration.Keys.IS_REMOTE, false);
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
@@ -214,6 +212,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                         String.format("%1$s is not a supported browser", browserType));
         }
 
+        boolean isRemote = seleniumHubUrl != null;
         return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
     }
 
