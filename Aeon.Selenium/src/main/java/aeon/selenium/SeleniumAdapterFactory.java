@@ -212,7 +212,8 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
                         String.format("%1$s is not a supported browser", browserType));
         }
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType);
+        boolean isRemote = seleniumHubUrl != null;
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
     }
 
     private Capabilities getCapabilities() {

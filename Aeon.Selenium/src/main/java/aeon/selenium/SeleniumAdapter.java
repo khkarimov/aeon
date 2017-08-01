@@ -61,6 +61,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private boolean moveMouseToOrigin;
     private BrowserType browserType;
     private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
+    private boolean isRemote;
 
     /**
      * Constructor for Selenium Adapter.
@@ -69,12 +70,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
+     * @param isRemote Whether we are testing remotely or locally.
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
+        this.isRemote = isRemote;
     }
 
     /**
@@ -577,18 +580,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             log.trace(String.format("WebDriver.SwitchTo().Alert().sendKeys(%1$s);", keysToSend));
             Alert alert = webDriver.switchTo().alert();
-            // work around for marionette driver v.11.1
-            // work around for chrome driver v2.24
-            if (this.browserType == BrowserType.Firefox || this.browserType == BrowserType.Chrome) {
-                try {
-                    aeon.core.common.helpers.SendKeysHelper.sendKeysToKeyboard(keysToSend);
-                } catch (AWTException e) {
-                    log.error(e.getMessage());
-                    throw new RuntimeException(e);
-                }
-            } else {
-                alert.sendKeys(keysToSend);
-            }
+            alert.sendKeys(keysToSend);
         } catch (NoAlertPresentException e) {
             throw new NoAlertException(e);
         }
@@ -683,8 +675,17 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
+            //TODO(TOOL-6894): this work around needs to be investigated. It does not work for remote linux grids"
             log.trace("WebDriver.Manage().Window.maximize();");
-            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS) && browserType.equals(BrowserType.Chrome)) {
+
+            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote
+                    && browserType.equals(BrowserType.Chrome)) {
+                log.trace("Skipping maximize for remote test on linux and chrome.");
+                return;
+            }
+
+            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+                    && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
                 Point position = new Point(0, 0);
