@@ -7,7 +7,7 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.testabstraction.product.Configuration;
 import categories.UbuntuTests;
 import categories.WindowsTests;
-import main.Sample;
+import main.sample.Sample;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.joda.time.Period;

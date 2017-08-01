@@ -1,16 +1,18 @@
-package main.ultipro;
+package main.ultipro.pages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.Link;
+import aeon.core.testabstraction.models.Page;
 
 import java.util.ArrayList;
 
 /**
  * Created by Salvador Gandara on 5/27/2016.
  */
-public class HomePage {
+public class HomePage extends Page {
+
     public Link viewPayStatement;
     public Button menuButton;
     public Button myTeam;

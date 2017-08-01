@@ -1,4 +1,4 @@
-package main.samplegrid;
+package main.sample.samplegrid;
 
 import aeon.core.testabstraction.elements.web.Grid;
 

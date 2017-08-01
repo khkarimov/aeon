@@ -1,12 +1,13 @@
-package main.ultipro;
+package main.ultipro.pages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.TextBox;
-import main.ultipro.my_employees_grid.MyEmployeesGrid;
-import main.ultipro.my_employees_grid.MyEmployeesHeaders;
+import aeon.core.testabstraction.models.Page;
+import main.ultipro.myemployeesgrid.MyEmployeesGrid;
+import main.ultipro.myemployeesgrid.MyEmployeesHeaders;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 /**
  * Created by SebastianR on 11/23/2016.
  */
-public class MyEmployeesPage {
+public class MyEmployeesPage extends Page {
+
     public Button addEmployeeButton;
     public TextBox employeeSearchBox;
     public MyEmployeesGrid myGrid;

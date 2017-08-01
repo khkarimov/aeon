@@ -1,4 +1,4 @@
-package main.ultipro.my_employees_grid;
+package main.ultipro.myemployeesgrid;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;

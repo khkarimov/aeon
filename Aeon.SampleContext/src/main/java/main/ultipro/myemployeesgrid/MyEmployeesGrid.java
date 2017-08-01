@@ -1,4 +1,4 @@
-package main.ultipro.my_employees_grid;
+package main.ultipro.myemployeesgrid;
 
 import aeon.core.testabstraction.elements.web.Grid;
 
