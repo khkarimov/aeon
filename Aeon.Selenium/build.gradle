@@ -3,7 +3,7 @@ def baseProjectDescription = 'Aeon Selenium'
 def base = baseProjectName
 
 group 'aeon'
-version '0.2.9'
+version '0.2.10'
 
 apply plugin: 'java'
 
