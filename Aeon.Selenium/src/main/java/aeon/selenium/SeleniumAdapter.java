@@ -672,10 +672,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Workaround implemented for chromiun browsers running in MacOS due to maximize default behaviour
      * only expanding vertically. More information can be found at:
      * https://bugs.chromium.org/p/chromedriver/issues/detail?id=985
+     * Also problems with maximize in chrome 60:
+     * https://bugs.chromium.org/p/chromedriver/issues/detail?id=1901
      */
     public void maximize() {
         try {
             //TODO(TOOL-6894): this work around needs to be investigated. It does not work for remote linux grids"
+            //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
             log.trace("WebDriver.Manage().Window.maximize();");
 
             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote
