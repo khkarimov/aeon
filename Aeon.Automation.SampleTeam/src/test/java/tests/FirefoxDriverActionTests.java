@@ -297,4 +297,11 @@ public class FirefoxDriverActionTests {
         product.startPage.bodyTag.setBodyValueByJavaScript("Hello World Haha");
         product.startPage.bodyTag.is("Hello World Haha");
     }
+
+    @Test
+    public void testSelectFileDialog_OpenFileDialog() {
+        String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
+        product.startPage.testFileDialogInput.openFileDialog();
+        product.startPage.testFileDialogInput.selectFileDialog(path);
+    }
 }

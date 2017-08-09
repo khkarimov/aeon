@@ -57,6 +57,10 @@ public class SendKeysHelper {
                             robot.keyPress(KeyEvent.VK_SPACE);
                             robot.keyRelease(KeyEvent.VK_SPACE);
                             break;
+                        case '/':
+                            robot.keyPress(KeyEvent.VK_SLASH);
+                            robot.keyRelease(KeyEvent.VK_SLASH);
+                            break;
                         default:
                             throw new UnsupportedSpecialCharacterException(character);
                     }
