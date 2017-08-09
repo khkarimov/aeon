@@ -684,7 +684,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 return;
             }
 
-            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+            if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+                    || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux))
                     && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
