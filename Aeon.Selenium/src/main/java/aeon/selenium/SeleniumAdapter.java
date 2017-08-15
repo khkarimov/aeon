@@ -678,7 +678,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void maximize() {
         try {
             //TODO(TOOL-6894): this work around needs to be investigated. It does not work for remote linux grids"
-            //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
             log.trace("WebDriver.Manage().Window.maximize();");
 
             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote
@@ -686,7 +685,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 log.trace("Skipping maximize for remote test on linux and chrome.");
                 return;
             }
-
+            //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
             if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
                     || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux))
                     && browserType.equals(BrowserType.Chrome)) {
