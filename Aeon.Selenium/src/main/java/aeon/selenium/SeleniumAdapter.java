@@ -672,6 +672,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Workaround implemented for chromiun browsers running in MacOS due to maximize default behaviour
      * only expanding vertically. More information can be found at:
      * https://bugs.chromium.org/p/chromedriver/issues/detail?id=985
+     * Also problems with maximize in chrome 60:
+     * https://bugs.chromium.org/p/chromedriver/issues/detail?id=1901
      */
     public void maximize() {
         try {
@@ -683,8 +685,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 log.trace("Skipping maximize for remote test on linux and chrome.");
                 return;
             }
-
-            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+            //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
+            if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+                    || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux))
                     && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
