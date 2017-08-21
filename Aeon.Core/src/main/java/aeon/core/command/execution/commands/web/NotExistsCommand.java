@@ -3,6 +3,7 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.NoSuchElementException;
+import aeon.core.common.exceptions.NoSuchElementsException;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -37,7 +38,7 @@ public class NotExistsCommand extends Command {
         WebControl control;
         try {
             control = ((IWebDriver) driver).findElement(selector);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | NoSuchElementsException e) {
             //If element does not exist it should catch the exception and return successfully
             return;
         }

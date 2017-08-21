@@ -41,7 +41,7 @@ public interface IWebDriver extends IDriver {
      * @return A ReadOnly Collection of found elements.
      * matching the current criteria, or an empty list if nothing matches.
      * @throws IllegalArgumentException If FindBy is null.
-     * @throws NoSuchElementException   If there is no such element.
+     * @throws NoSuchElementsException If there is no such element.
      */
     Collection<WebControl> findElements(IBy selector);
 
