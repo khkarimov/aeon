@@ -33,6 +33,7 @@ dependencies {
 
 test {
     maxParallelForks = 4
+    forkEvery = 1
     useJUnit {
         def categoryList = System.getenv('tests.included.categories')
         if (categoryList != null)
