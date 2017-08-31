@@ -21,7 +21,7 @@ import java.util.Properties;
 public class Configuration {
 
     static Logger log = LogManager.getLogger(Configuration.class);
-    Properties properties;
+    protected Properties properties;
     private Class driver;
     private Class adapter;
     private BrowserType browserType;
