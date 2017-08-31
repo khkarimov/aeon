@@ -53,6 +53,8 @@ Aeon.Core/classes/production/Aeon.Core/MessagesBundle.properties
 
 # IntelliJ
 out/
+.idea/compiler.xml
+.idea/modules.xml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -67,7 +69,7 @@ crashlytics-build.properties
 fabric.properties
 
 ### Intellij Patch ###
-#*.iml
+*.iml
 
 #.idea/
 distrib/

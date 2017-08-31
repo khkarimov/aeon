@@ -21,7 +21,7 @@ import java.util.Properties;
 public class Configuration {
 
     static Logger log = LogManager.getLogger(Configuration.class);
-    protected Properties properties;
+    Properties properties;
     private Class driver;
     private Class adapter;
     private BrowserType browserType;
@@ -74,7 +74,7 @@ public class Configuration {
      *
      * @throws IllegalAccessException If issue obtaining keys.
      */
-    public void setProperties() throws IllegalAccessException {
+    private void setProperties() throws IllegalAccessException {
         List<Field> keys = getConfigurationFields();
         keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
         for (Field key : keys) {
@@ -86,7 +86,7 @@ public class Configuration {
             }
         }
 
-        Enumeration<?> e = properties.propertyNames();
+        Enumeration e = properties.propertyNames();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("These are the properties values currently in use:\n");
         while (e.hasMoreElements()) {
@@ -117,7 +117,7 @@ public class Configuration {
     /**
      * Gets String returned by System.getenv call.
      *
-      * @param keyValue String value of key
+     * @param keyValue String value of key
      * @return the environment value associated with the key
      */
     String getEnvironmentValue(String keyValue) {
@@ -193,7 +193,7 @@ public class Configuration {
      *
      * @param browserType The {@link BrowserType} for the configuration.
      */
-     void setBrowserType(BrowserType browserType) {
+    public void setBrowserType(BrowserType browserType) {
         this.browserType = browserType;
     }
 
@@ -203,7 +203,7 @@ public class Configuration {
      * @param key A key from {@link Keys}.
      * @param value True or false.
      */
-     void setBoolean(String key, boolean value) {
+    public void setBoolean(String key, boolean value) {
         set(key, Boolean.toString(value));
     }
 
@@ -212,7 +212,7 @@ public class Configuration {
      * @param key the string of the key.
      * @param value the string value to set it to.
      */
-     void setString(String key, String value) {
+    public void setString(String key, String value) {
         set(key, value);
     }
 
@@ -221,7 +221,7 @@ public class Configuration {
      * @param key the string of the key to be set.
      * @param value the value to set.
      */
-     void setDouble(String key, double value) {
+    public void setDouble(String key, double value) {
         set(key, Double.toString(value));
     }
 

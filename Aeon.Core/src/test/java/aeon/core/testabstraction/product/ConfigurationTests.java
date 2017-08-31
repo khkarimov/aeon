@@ -20,9 +20,6 @@ import org.mockito.junit.MockitoRule;
 
 import static org.mockito.Mockito.*;
 
-/**
- * Created by shurtado on 08/28/2017
- */
 public class ConfigurationTests {
 
     @Rule
@@ -41,10 +38,7 @@ public class ConfigurationTests {
     private InputStream inputStream;
 
     @Mock
-    private Enumeration propertyNames;
-
-    @Mock
-    private Enumeration<?> enumerationList;
+    private Enumeration enumerationList;
 
     @Mock
     private Logger log;
@@ -57,8 +51,8 @@ public class ConfigurationTests {
 
 
     @Before
-    public void setUp() throws Exception{
-        when(properties.propertyNames()).thenReturn(propertyNames);
+    public void setUp() {
+        when(properties.propertyNames()).thenReturn(enumerationList);
         config = new Configuration(driver.getClass(), adapter.getClass());
         spyconfig = org.mockito.Mockito.spy(config);
         Configuration.log = log;
@@ -109,7 +103,7 @@ public class ConfigurationTests {
         when(spyconfig.getConfigurationFields()).thenReturn(fieldList);
 
         //Act
-        spyconfig.setProperties();
+        spyconfig.loadConfiguration();
 
         //Assert
         Assert.assertTrue(fieldList.get(0).isAccessible());
@@ -131,7 +125,7 @@ public class ConfigurationTests {
         spyconfig.properties = properties;
 
         //Act
-        spyconfig.setProperties();
+        spyconfig.loadConfiguration();
 
         //Assert
         verify(properties, times(1)).setProperty("aeon.wait_for_ajax_responses", "testEnv");
@@ -142,8 +136,7 @@ public class ConfigurationTests {
     @Test
     public void testEnumeration() throws IOException, IllegalAccessException {
         //Arrange
-        doReturn(enumerationList).when(properties).propertyNames();
-        doReturn(true, false).when(enumerationList).hasMoreElements();
+        when(enumerationList.hasMoreElements()).thenReturn(true, false);
 
         //Act
         config.loadConfiguration();
