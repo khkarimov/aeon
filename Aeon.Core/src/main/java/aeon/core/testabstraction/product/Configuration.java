@@ -20,8 +20,8 @@ import java.util.Properties;
  */
 public class Configuration {
 
-    private static Logger log = LogManager.getLogger(Configuration.class);
-    public Properties properties;
+    static Logger log = LogManager.getLogger(Configuration.class);
+    protected Properties properties;
     private Class driver;
     private Class adapter;
     private BrowserType browserType;
@@ -33,18 +33,27 @@ public class Configuration {
      * @param adapter SeleniumAdapter.class.
      * @param <D> AeonWebDriver.class.
      * @param <A> SeleniumAdapter.class.
-     * @throws IOException If properties are not defined.
-     * @throws IllegalAccessException If issue obataining keys.
      */
-    public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) throws IOException, IllegalAccessException {
+    public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) {
         this.driver = driver;
         this.adapter = adapter;
         properties = new Properties();
+    }
 
+    /**
+     *  Loads configuration from properties files.
+     *
+     * @throws IOException If properties are not defined.
+     * @throws IllegalAccessException If issue obtaining keys.
+     */
+    public void loadConfiguration() throws IOException, IllegalAccessException {
         try (
-                InputStream inAeon = Configuration.class.getResourceAsStream("/aeon.properties");
-                InputStream inConfig = Configuration.class.getResourceAsStream("/test.properties")
+                InputStream inAeon = getAeonInputStream();
+                InputStream inConfig = getConfigInputStream()
         ) {
+            if (inAeon == null) {
+                throw new IOException("No aeon.properties file was found.");
+            }
             properties.load(inAeon);
             loadPluginSettings();
             if (inConfig != null) {
@@ -53,16 +62,25 @@ public class Configuration {
                 log.info("No config file in use, using default values.");
             }
         } catch (IOException e) {
-            log.error("No aeon.properties found");
+            log.error("There was a problem reading aeon.properties or test.properties.");
             throw e;
         }
 
+        setProperties();
+    }
+
+    /**
+     *  Loads properties from environment variables, overriding settings from properties files.
+     *
+     * @throws IllegalAccessException If issue obtaining keys.
+     */
+    private void setProperties() throws IllegalAccessException {
         List<Field> keys = getConfigurationFields();
         keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
         for (Field key : keys) {
             key.setAccessible(true);
             String keyValue = key.get(null).toString();
-            String environmentValue = System.getenv(keyValue);
+            String environmentValue = getEnvironmentValue(keyValue);
             if (environmentValue != null) {
                 properties.setProperty(keyValue, environmentValue);
             }
@@ -79,9 +97,38 @@ public class Configuration {
     }
 
     /**
+     * Gets InputStream of test.properties.
+     *
+     * @return getResourceAsStream of "/test.properties" file
+     */
+     InputStream getConfigInputStream() {
+        return Configuration.class.getResourceAsStream("/test.properties");
+    }
+
+    /**
+     * Gets InputStream of aeon.properties.
+     *
+     * @return getResourceAsStream of "/aeon.properties" file
+     */
+     InputStream getAeonInputStream() {
+        return Configuration.class.getResourceAsStream("/aeon.properties");
+    }
+
+    /**
+     * Gets String returned by System.getenv call.
+     *
+     * @param keyValue String value of key
+     * @return the environment value associated with the key
+     */
+    String getEnvironmentValue(String keyValue) {
+        return System.getenv(keyValue);
+    }
+
+
+    /**
      * Get a empty list contain fields.
      *
-     * @return List containing fields.
+     * @return List containing fields
      */
     protected List<Field> getConfigurationFields() {
         return new ArrayList<>();
@@ -124,6 +171,8 @@ public class Configuration {
     }
 
     /**
+     * Loads plugin specific settings.
+     * Is implemented in child classes.
      *
      * @throws IOException If inputs are incorrect.
      */
@@ -215,6 +264,12 @@ public class Configuration {
         return (get(key, defaultValue));
     }
 
+    /**
+     * Gets property associated with key and its default value.
+     * @param key a property key
+     * @param defaultValue a default property value
+     * @return String value of property
+     */
     private String get(String key, String defaultValue) {
         return properties.getProperty(key, defaultValue);
     }
