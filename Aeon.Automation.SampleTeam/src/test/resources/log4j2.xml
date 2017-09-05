@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="WARN" packages="aeon.core.common.logging">
 
     <!-- Author:  Crunchify.com  -->
     <Appenders>
@@ -16,7 +16,7 @@
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
         <File name="File" filename="log/AeonLog.html">
-            <AeonHtmlLayout></AeonHtmlLayout>
+            <AeonHtmlLayout/>
         </File>
 
     </Appenders>
