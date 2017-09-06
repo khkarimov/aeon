@@ -718,11 +718,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Finds the 'selector' on the page, and performs a click() on the object.
      *
-     * @param selector The element on the page to click.
+     * @param control The element on the page to click.
      */
-    public void openFileDialog(IBy selector) {
-        WebControl element = findElement(selector);
-        click(element, moveMouseToOrigin);
+    public void openFileDialog(WebControl control) {
+        click(control);
     }
 
     /**

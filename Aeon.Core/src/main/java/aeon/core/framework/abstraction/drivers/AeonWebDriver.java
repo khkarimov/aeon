@@ -275,8 +275,8 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public void openFileDialog(IBy selector) {
-        adapter.openFileDialog(selector);
+    public void openFileDialog(WebControl control) {
+        adapter.openFileDialog(control);
     }
 
     @Override
