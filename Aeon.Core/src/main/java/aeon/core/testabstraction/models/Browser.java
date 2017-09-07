@@ -362,16 +362,4 @@ public class Browser {
     public void mobileLock(int seconds){
         info.getCommandExecutionFacade().execute(info, new MobileLockCommand(seconds));
     }
-
-    /**
-     * Executes a swipe on a mobile device.
-     * @param startx Starting x coord.
-     * @param starty Starting y coord.
-     * @param endx Ending x coord.
-     * @param endy Ending y coord.
-     * @param duration The duration of the execution of the swipe.
-     */
-    public void mobileSwipe(int startx, int starty, int endx, int endy, int duration){
-        info.getCommandExecutionFacade().execute(info, new MobileSwipeCommand(startx, starty, endx, endy, duration));
-    }
 }

@@ -1005,7 +1005,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element  The web element to click.
      * @param duration click for at least this long (in milliseconds).
      *                 <p>
-     *                 <p>
      *                 Due to the way Windows handles event messages, thread context switches, thread sleep/awake, and Windows time ticks,
      *                 this command can only guarantee the click will be held for AT LEAST the time specified, not that the
      *                 click will be held for exactly the duration specified. It should have an accuracy approaching 15ms, but
@@ -1984,18 +1983,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 break;
             case IOSHybridApp:
                 ((IOSDriver) getWebDriver()).lockDevice(Duration.ofSeconds(seconds));
-                break;
-        }
-    }
-
-    @Override
-    public void mobileSwipe(int startx, int starty, int endx, int endy, int duration) {
-        switch (browserType) {
-            case AndroidHybridApp:
-                ((AndroidDriver) getWebDriver()).swipe(startx, starty, endx, endy, duration);
-                break;
-            case IOSHybridApp:
-                ((IOSDriver) getWebDriver()).swipe(startx, starty, endx, endy, duration);
                 break;
         }
     }
