@@ -531,19 +531,6 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public void mobileSwipe(int startx, int starty, int endx, int endy, int duration) {
-        switch (getBrowserType()) {
-            case AndroidHybridApp:
-            case IOSHybridApp:
-                adapter.mobileSwipe(startx, starty, endx, endy, duration);
-                break;
-
-            default:
-                throw new WebUsingMobileCommandException();
-        }
-    }
-
-    @Override
     public void mobileHideKeyboard() {
         switch(getBrowserType()){
             case AndroidHybridApp:

@@ -19,8 +19,8 @@ configurations {
 }
 
 ext {
-    seleniumVersion = '3.4.0'
-    appiumVersion = "5.0.0-BETA8"
+    seleniumVersion = '3.5.3'
+    appiumVersion = "5.0.2"
 }
 
 dependencies {
