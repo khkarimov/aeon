@@ -22,7 +22,6 @@ public class OpenFileDialogCommandTests {
 
     private OpenFileDialogCommand openFileDialogCommandObject;
 
-
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -60,9 +59,8 @@ public class OpenFileDialogCommandTests {
         Consumer<IDriver> action = openFileDialogCommandObject.getCommandDelegate();
         action.accept( driver);
 
-
         //Assert
-        verify( driver, times(1) ).openFileDialog(selector);
+        verify( driver, times(1) ).openFileDialog(control);
 
     }
 

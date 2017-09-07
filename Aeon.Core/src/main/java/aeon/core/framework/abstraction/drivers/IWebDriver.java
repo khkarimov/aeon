@@ -347,9 +347,9 @@ public interface IWebDriver extends IDriver {
     /**
      * Opens on a type input type=file.
      *
-     * @param selector The selector for the element.
+     * @param control The control to click.
      */
-    void openFileDialog(IBy selector);
+    void openFileDialog(WebControl control);
 
     /**
      * Types keys of file indicated by provided path

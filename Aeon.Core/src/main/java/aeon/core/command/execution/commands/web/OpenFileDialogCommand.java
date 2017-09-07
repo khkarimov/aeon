@@ -4,17 +4,14 @@ import aeon.core.command.execution.commands.Command;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.Resources;
 import aeon.core.common.web.interfaces.IBy;
+import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * Clicks a type input type=file.
- * Should consider extending from the WebControlCommand class since ultimately all its doing
- * is clicking on an HTML input tag.
  */
-public class OpenFileDialogCommand extends Command {
-
-    private IBy selector;
+public class OpenFileDialogCommand extends WebControlCommand {
 
     /**
      * Initializes a new instance of the {@link Command} class.
@@ -23,16 +20,11 @@ public class OpenFileDialogCommand extends Command {
      * @param initializer The command initializer.
      */
     public OpenFileDialogCommand(IBy selector, ICommandInitializer initializer) {
-        super(Resources.getString("OpenFileDialogCommand_Info"), initializer);
-        this.selector = selector;
+        super(Resources.getString("OpenFileDialogCommand_Info"), selector, initializer);
     }
 
-
     @Override
-    protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-        ((IWebDriver) driver).openFileDialog(selector);
+    protected void commandDelegate(IWebDriver driver, WebControl control) {
+        driver.openFileDialog(control);
     }
 }
