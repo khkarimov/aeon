@@ -5,6 +5,7 @@ import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import aeon.core.framework.abstraction.drivers.IDriver;
 
 /**
  * Abstract class for Product implementation.
@@ -64,7 +65,19 @@ public abstract class Product {
      * @throws IllegalAccessException If issue obataining keys.
      *
      */
-    protected abstract void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException;
+    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException{
+        IDriver driver;
+        IAdapter adapter;
+
+        adapter = createAdapter(plugin);
+
+        driver = (IDriver) configuration.getDriver().newInstance();
+        driver.configure(adapter);
+
+        this.automationInfo = new AutomationInfo(configuration, driver, adapter);
+
+        afterLaunch();
+    }
 
     /**
      * Create and returns and IAdapter given a plugin.

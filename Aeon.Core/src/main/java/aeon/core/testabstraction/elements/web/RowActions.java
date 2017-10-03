@@ -5,10 +5,6 @@ import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * Created by AdamC on 4/13/2016.
- */
-
-/**
  * This class serves as a base for all grid row actions.
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
@@ -18,8 +14,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  */
 public abstract class RowActions<T extends RowActions, K extends RowElements> {
 
-    private IBy selector;
-    private AutomationInfo automationInfo;
+    IBy selector;
+    AutomationInfo automationInfo;
     private Iterable<IBy> switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
@@ -27,6 +23,19 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     protected String rowCssSelectornthoftype = "td:nth-of-type";
     protected String cssSelectorContains = "td:contains";
     protected String cssSelectorParents = "tr";
+
+    protected String rowSelector = "tr";
+
+    /**
+     * Initializes a new instance of {@link RowActions} class.
+     *
+     * @param rowActionsClass A sub class of {@link RowActions}
+     * @param rowElementsClass A sub class of {@link RowElements}
+     */
+    RowActions(Class<T> rowActionsClass, Class<K> rowElementsClass) {
+        this.rowElementsClass = rowElementsClass;
+        this.rowActionsClass = rowActionsClass;
+    }
 
     /**
      * Initializes a new instance of {@link RowActions} class.
@@ -43,6 +52,19 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
         this.switchMechanism = switchMechanism;
         this.rowElementsClass = rowElementsClass;
         this.rowActionsClass = rowActionsClass;
+    }
+
+    /**
+     * Sets the context. This method has to be called from the wrapping class after initialization.
+     *
+     * @param automationInfo The AutomationInfo.
+     * @param selector IBy selector that will identify the element.
+     * @param switchMechanism The switch mechanism for the web element.
+     */
+    public void setContext(AutomationInfo automationInfo, IBy selector, Iterable<IBy> switchMechanism){
+        this.automationInfo = automationInfo;
+        this.selector = selector;
+        this.switchMechanism = switchMechanism;
     }
 
     /**
@@ -100,7 +122,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * @param updatedSelector The updated selector that references only 1 row.
      * @return Returns an instance of K.
      */
-    private K newInstanceOfK(IBy updatedSelector) {
+    K newInstanceOfK(IBy updatedSelector) {
         Class classToLoad = rowElementsClass;
         Class[] cArgs = new Class[3];
         cArgs[0] = AutomationInfo.class;
@@ -119,14 +141,13 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      *
      * @return Returns a new instance of T.
      */
-    private T newInstanceOfT(IBy updatedSelector) {
+    T newInstanceOfT(IBy updatedSelector) {
         Class classToLoad = rowActionsClass;
-        Class[] cArgs = new Class[3];
-        cArgs[0] = AutomationInfo.class;
-        cArgs[1] = IBy.class;
-        cArgs[2] = Iterable.class;
         try {
-            return (T) classToLoad.getConstructor(cArgs).newInstance(automationInfo, updatedSelector, switchMechanism);
+            T instance = (T) classToLoad.getConstructor().newInstance();
+            instance.setContext(automationInfo, updatedSelector, switchMechanism);
+
+            return instance;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -137,6 +158,8 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      *
      * @param columnSelector
      * @return the column index
+     *
+     * @deprecated
      */
     private long getColumnIndex(IBy columnSelector) {
         return (long) ((IWebDriver) automationInfo.getDriver()).executeScript(String.format("var a=%1$s.index();return a;", columnSelector.toJQuery())) + 1;

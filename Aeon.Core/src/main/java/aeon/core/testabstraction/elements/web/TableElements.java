@@ -3,7 +3,7 @@ package aeon.core.testabstraction.elements.web;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 
-public abstract class RowElements extends WebElement {
+public abstract class TableElements extends RowElements {
 
     /**
      * Constructor for abstract class RowElements.
@@ -13,7 +13,7 @@ public abstract class RowElements extends WebElement {
      * @param switchMechanism The Iterable of IBy.
      *
      */
-    public RowElements(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
-        super(info, selector);
+    public TableElements(AutomationInfo info, IBy selector, Iterable<IBy> switchMechanism) {
+        super(info, selector, switchMechanism);
     }
 }
