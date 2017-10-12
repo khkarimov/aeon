@@ -8,7 +8,7 @@ import aeon.core.common.web.interfaces.IBy;
  *
  * @param <T> the {@link ListGroupActions} class for this list group model.
  */
-public abstract class ListGroup<T extends ListGroupActions> {
+public class ListGroup<T extends ListGroupActions> {
 
     public T rowBy;
 
