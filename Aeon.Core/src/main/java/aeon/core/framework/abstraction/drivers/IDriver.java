@@ -14,7 +14,7 @@ public interface IDriver {
      * Sets the adapter for the current driver.
      *
      * @param adapter The new adapter for the driver.
-     * @param configuration The new adapter for the driver.
+     * @param configuration The configuration used for the driver.
      * @return The driver after setting the adapter.
      */
     IDriver configure(IAdapter adapter, Configuration configuration);
