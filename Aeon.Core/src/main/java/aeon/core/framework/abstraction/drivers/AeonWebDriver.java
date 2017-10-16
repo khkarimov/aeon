@@ -64,7 +64,7 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void scrollElementIntoView(WebControl control) {
-        boolean scrollElementIntoView = configuration.getBoolean("SCROLL_ELEMENT_INTO_VIEW", false);
+        boolean scrollElementIntoView = configuration.getBoolean(Configuration.Keys.SCROLL_ELEMENT_INTO_VIEW, false);
         if (scrollElementIntoView) {
             adapter.scrollElementIntoView(control);
         }

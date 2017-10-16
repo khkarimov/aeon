@@ -27,7 +27,6 @@ public class SeleniumConfiguration extends Configuration {
 
         public static final String LANGUAGE = "aeon.selenium.language";
         public static final String MOVE_MOUSE_TO_ORIGIN = "aeon.selenium.move_mouse_to_origin";
-        public static final String SCROLL_ELEMENT_INTO_VIEW = "aeon.selenium.scroll_element_into_view";
         public static final String MAXIMIZE_BROWSER = "aeon.selenium.maximize_browser";
         public static final String USE_MOBILE_USER_AGENT = "aeon.selenium.use_mobile_user_agent";
         public static final String PROXY_LOCATION = "aeon.selenium.proxy_location";
