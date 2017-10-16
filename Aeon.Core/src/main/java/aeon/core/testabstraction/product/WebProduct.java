@@ -50,7 +50,7 @@ public class WebProduct extends Product {
         adapter = createAdapter(plugin);
 
         driver = (IWebDriver) configuration.getDriver().newInstance();
-        driver.configure(adapter);
+        driver.configure(adapter, configuration);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
         long ajaxTimeout = (long) configuration.getDouble(Configuration.Keys.AJAX_TIMEOUT, 20);
 

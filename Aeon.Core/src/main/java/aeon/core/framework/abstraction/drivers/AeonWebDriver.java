@@ -12,6 +12,7 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.testabstraction.product.Configuration;
 import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -26,6 +27,7 @@ import java.util.Collection;
 public class AeonWebDriver implements IWebDriver {
 
     private IWebAdapter adapter;
+    private Configuration configuration;
 
     /**
      * Initializes a new instance of the AeonWebDriver class.
@@ -34,8 +36,9 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public IDriver configure(IAdapter adapter) {
+    public IDriver configure(IAdapter adapter, Configuration configuration) {
         this.adapter = (IWebAdapter) adapter;
+        this.configuration = configuration;
         return this;
     }
 
@@ -61,7 +64,10 @@ public class AeonWebDriver implements IWebDriver {
 
     @Override
     public void scrollElementIntoView(WebControl control) {
-        adapter.scrollElementIntoView(control);
+        boolean scrollElementIntoView = configuration.getBoolean("SCROLL_ELEMENT_INTO_VIEW", false);
+        if (scrollElementIntoView) {
+            adapter.scrollElementIntoView(control);
+        }
     }
 
     @Override

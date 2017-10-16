@@ -1,6 +1,7 @@
 package aeon.core.framework.abstraction.drivers;
 
 import aeon.core.framework.abstraction.adapters.IAdapter;
+import aeon.core.testabstraction.product.Configuration;
 
 import java.awt.*;
 
@@ -13,9 +14,10 @@ public interface IDriver {
      * Sets the adapter for the current driver.
      *
      * @param adapter The new adapter for the driver.
+     * @param configuration The new adapter for the driver.
      * @return The driver after setting the adapter.
      */
-    IDriver configure(IAdapter adapter);
+    IDriver configure(IAdapter adapter, Configuration configuration);
 
     /**
      * Close the current window, quitting the browser if it's the last window currently open.
