@@ -6,9 +6,13 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -16,7 +20,9 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Created by josepe on 4/12/2017.
+ * Base configuration class for aeon.
+ * Loads the Properties table with the values from: Environment variables,
+ * project test.properties files, and otherwise uses the default properties from aeon.
  */
 public class Configuration {
 
@@ -61,6 +67,9 @@ public class Configuration {
             } else {
                 log.info("No config file in use, using default values.");
             }
+        } catch (FileNotFoundException fe){
+            log.error("The specified config file was not found");
+            throw fe;
         } catch (IOException e) {
             log.error("There was a problem reading aeon.properties or test.properties.");
             throw e;
@@ -97,13 +106,29 @@ public class Configuration {
     }
 
     /**
-     * Gets InputStream of test.properties.
+     * Gets InputStream from the file specified in the env variable AEON_CONFIG or test.properties
+     * when the variable is not specified.
      *
-     * @return getResourceAsStream of "/test.properties" file
+     * @return getResourceAsStream of the target file.
+     * @throws FileNotFoundException if the AEON_CONFIG value is set to an invalid file.
      */
-     InputStream getConfigInputStream() {
-        return Configuration.class.getResourceAsStream("/test.properties");
+    InputStream getConfigInputStream() throws FileNotFoundException {
+        String envValue = getEnvironmentValue("AEON_CONFIG");
+        if (envValue == null) {
+            return Configuration.class.getResourceAsStream("/test.properties");
+        }
+
+        Path configPath = Paths.get(envValue);
+        if (configPath.isAbsolute()){
+            return new FileInputStream(configPath.toFile());
+        } else {
+            Path absolute = Paths.get(".").toAbsolutePath().getParent();
+            configPath = Paths.get(absolute.toString(), configPath.toString());
+            return new FileInputStream(configPath.toFile());
+        }
     }
+
+    /**
 
     /**
      * Gets InputStream of aeon.properties.
