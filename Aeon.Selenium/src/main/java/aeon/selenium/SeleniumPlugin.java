@@ -1,8 +1,7 @@
 package aeon.selenium;
 
-import ro.fortsoft.pf4j.Plugin;
-import ro.fortsoft.pf4j.PluginWrapper;
-
+import org.pf4j.Plugin;
+import org.pf4j.PluginWrapper;
 /**
  * Created by PatrickA on 5/16/2016.
  */
