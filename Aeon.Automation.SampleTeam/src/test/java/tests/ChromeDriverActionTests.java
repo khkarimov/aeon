@@ -217,11 +217,6 @@ public class ChromeDriverActionTests {
         product.startPage.formTextBox.clear();
     }
 
-    @Ignore
-    public void testUploadFile() {
-        product.startPage.testFileDialogInput.uploadFileDialog("asdasd#@$@#$");
-    }
-
     @Test
     public void testSwitchToMainWindow() {
         product.browser.verifyTitle("Material Design Lite");

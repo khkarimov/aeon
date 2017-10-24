@@ -45,7 +45,6 @@ public class GridNotSupportedFirefoxBrowserTests {
     @Test
     public void testSelectFileDialog_OpenFileDialog() {
         String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
-        product.startPage.testFileDialogInput.openFileDialog();
-        product.startPage.testFileDialogInput.selectFileDialog(path);
+        product.startPage.testFileDialogInput.uploadFileDialog(path);
     }
 }
