@@ -41,7 +41,7 @@ import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import ro.fortsoft.pf4j.Extension;
+import org.pf4j.Extension;
 
 import java.io.File;
 import java.io.IOException;
