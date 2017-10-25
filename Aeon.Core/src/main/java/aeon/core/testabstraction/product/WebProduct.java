@@ -10,6 +10,7 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
+import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Browser;
 import org.joda.time.Duration;
@@ -43,29 +44,18 @@ public class WebProduct extends Product {
     }
 
     @Override
-    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException {
-        IWebDriver driver;
-        IAdapter adapter;
-
-        adapter = createAdapter(plugin);
-
-        driver = (IWebDriver) configuration.getDriver().newInstance();
-        driver.configure(adapter, configuration);
+    protected void afterLaunch() {
+        // Set WebCommandExecutionFacade
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
         long ajaxTimeout = (long) configuration.getDouble(Configuration.Keys.AJAX_TIMEOUT, 20);
 
-
         commandExecutionFacade = new WebCommandExecutionFacade(
-                new DelegateRunnerFactory(Duration.millis(250), Duration.standardSeconds(timeout)), new AjaxWaiter(driver, Duration.standardSeconds(ajaxTimeout)));
+                new DelegateRunnerFactory(Duration.millis(250), Duration.standardSeconds(timeout)),
+                new AjaxWaiter(this.automationInfo.getDriver(), Duration.standardSeconds(ajaxTimeout)));
 
-        this.automationInfo = new AutomationInfo(configuration, driver, adapter);
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
 
-        afterLaunch();
-    }
-
-    @Override
-    protected void afterLaunch() {
+        // Instantiate browser and optionally maximize the window
         browser = new Browser(getAutomationInfo());
         boolean maximizeBrowser = configuration.getBoolean(Configuration.Keys.MAXIMIZE_BROWSER, true);
         BrowserType browserType = browser.getBrowserType();
@@ -76,6 +66,8 @@ public class WebProduct extends Product {
                 && !browserType.equals(BrowserType.IOSHybridApp)) {
             browser.maximize();
         }
+
+        // Optionally navigate to the environment
         String environment = getConfig(Configuration.Keys.ENVIRONMENT, "");
         if (StringUtils.isNotBlank(environment)) {
             String protocol = getConfig(Configuration.Keys.PROTOCOL, "https");

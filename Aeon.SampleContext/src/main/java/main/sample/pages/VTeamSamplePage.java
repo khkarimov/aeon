@@ -6,6 +6,8 @@ import aeon.core.testabstraction.elements.web.*;
 import aeon.core.testabstraction.models.Page;
 import main.sample.samplegrid.MyGrid;
 import main.sample.samplegrid.MyGridHeaders;
+import main.sample.samplelistgroup.MyListGroup;
+import main.sample.samplelistgroup.MyListGroupActions;
 
 /**
  * Created by Administrator on 6/3/2016.
@@ -43,6 +45,7 @@ public class VTeamSamplePage extends Page {
     public RadioButton nextRadioButton;
     public Button smileyFace1;
     public MyGrid myGrid;
+    public MyListGroup myListGroup;
 
     public VTeamSamplePage(AutomationInfo info) {
         disabledButton = new Button(info, By.cssSelector("button[id='disabled-button']"));
@@ -73,11 +76,9 @@ public class VTeamSamplePage extends Page {
         nextRadioButton = new RadioButton(info, By.cssSelector("#next-radio-button"));
         smileyFace1 = new Button(info, By.cssSelector(".call-1 > button:nth-child(1)"));
 
-        // The reason the grid selector is passed to the MyGridHeaders class instead of the grid is because the MyGridHeaders class
-        // uses the grid selector as a base to navigate through the html table. We can change this and instantiate and instance of
-        // MyGridHeaders inside the MyGrid class to avoid confusion.
-        myGrid = new MyGrid(new MyGridHeaders(info, gridSelector));
+        myGrid = new MyGrid(info, gridSelector, new MyGridHeaders());
         divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));
         bodyTag = new Label(info, By.cssSelector("label[for='sample5']"));
+        myListGroup = new MyListGroup(info, By.cssSelector(".demo-list-three"), new MyListGroupActions());
     }
 }
