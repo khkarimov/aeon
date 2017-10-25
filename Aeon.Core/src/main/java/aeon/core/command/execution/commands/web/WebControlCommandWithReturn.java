@@ -45,7 +45,6 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     protected Object commandDelegate(IDriver driver) {
         IWebDriver webDriver = (IWebDriver) driver;
         WebControl control = (WebControl) getCommandInitializer().findElement(driver, selector);
-        webDriver.scrollElementIntoView(control);
         return commandDelegateOverride(driver, control);
     }
 

@@ -72,7 +72,7 @@ public abstract class Product {
         adapter = createAdapter(plugin);
 
         driver = (IDriver) configuration.getDriver().newInstance();
-        driver.configure(adapter);
+        driver.configure(adapter, configuration);
 
         this.automationInfo = new AutomationInfo(configuration, driver, adapter);
 

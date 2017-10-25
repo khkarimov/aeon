@@ -5,9 +5,8 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ro.fortsoft.pf4j.DefaultPluginManager;
-import ro.fortsoft.pf4j.PluginManager;
-
+import org.pf4j.DefaultPluginManager;
+import org.pf4j.PluginManager;
 import java.util.List;
 
 /**

@@ -5,6 +5,8 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import aeon.core.common.web.BrowserType;
@@ -61,7 +63,7 @@ public class ConfigurationTests {
     @Test
     public void testInvalidTestPropertiesFile() throws IOException, IllegalAccessException {
         //Arrange
-        when(spyconfig.getConfigInputStream()).thenReturn(null);
+        when(spyconfig.getDefaultConfigInputStream()).thenReturn(null);
         spyconfig.properties = properties;
 
         //Act
@@ -76,7 +78,7 @@ public class ConfigurationTests {
     @Test
     public void testValidTestPropertiesFile() throws IOException, IllegalAccessException {
         //Arrange
-        when(spyconfig.getConfigInputStream()).thenReturn(inputStream);
+        when(spyconfig.getDefaultConfigInputStream()).thenReturn(inputStream);
         spyconfig.properties = properties;
 
         //Act
@@ -94,6 +96,42 @@ public class ConfigurationTests {
 
         //Act
         spyconfig.loadConfiguration();
+    }
+
+    @Test
+    public void testAeonConfigNotDefined() throws IOException, IllegalAccessException {
+        //Arrange
+        when(spyconfig.getEnvironmentValue("AEON_CONFIG")).thenReturn(null);
+
+        //Act
+        spyconfig.loadConfiguration();
+
+        //Assert
+        verify(spyconfig, times(1)).getDefaultConfigInputStream();
+    }
+
+    @Test (expected = java.io.FileNotFoundException.class)
+    public void testInvalidAeonConfigDefinition() throws IOException, IllegalAccessException {
+        //Arrange
+        when(spyconfig.getEnvironmentValue("AEON_CONFIG")).thenReturn("impossiblePath");
+
+        //Act
+        spyconfig.loadConfiguration();
+    }
+
+    @Test
+    public void testValidAbsoluteAeonConfigDefinition() throws IOException, IllegalAccessException {
+        //Arrange
+        Path relativePath = Paths.get(".").toAbsolutePath().getParent();
+        Path absolutePath = Paths.get(relativePath + "/src/main/resources/aeon.properties").toAbsolutePath();
+        when(spyconfig.getEnvironmentValue("AEON_CONFIG")).thenReturn(absolutePath.toString());
+
+        //Act
+        spyconfig.loadConfiguration();
+
+        //Assert
+        verify(spyconfig, times(0)).getDefaultConfigInputStream();
+        verify(spyconfig, times(0)).getRelativeAeonConfigProperties(any(Path.class));
     }
 
     @Test
@@ -142,7 +180,7 @@ public class ConfigurationTests {
         config.loadConfiguration();
 
         //Assert
-        verify(log, times(1)).info("These are the properties values currently in use:\naeon.timeout = 10\naeon.wait_for_ajax_response = true\naeon.timeout.ajax = 20\n");
+        verify(log, times(1)).info("These are the properties values currently in use:\naeon.timeout = 10\naeon.wait_for_ajax_response = true\naeon.timeout.ajax = 20\naeon.scroll_element_into_view = false\n");
     }
 
 

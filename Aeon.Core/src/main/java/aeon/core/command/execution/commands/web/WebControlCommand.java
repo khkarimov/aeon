@@ -39,7 +39,6 @@ public abstract class WebControlCommand extends Command {
 
         IWebDriver webDriver = (IWebDriver) driver;
         WebControl control = (WebControl) getCommandInitializer().findElement(driver, selector);
-        webDriver.scrollElementIntoView(control);
         commandDelegate(webDriver, control);
     }
 
