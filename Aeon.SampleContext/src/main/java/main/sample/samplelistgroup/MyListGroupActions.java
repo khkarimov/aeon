@@ -10,7 +10,7 @@ public class MyListGroupActions extends ListGroupActions<MyListGroupActions, MyL
     }
 
     public MyListGroupActions name(String value) {
-        return findRow(value, "span.list-group-name:contains(%1$s)");
+        return findRow(value, "span.list-group-name");
     }
 
     public MyListGroupActions description(String value){
