@@ -56,7 +56,7 @@ public abstract class ListGroupActions<T extends ListGroupActions, K extends Lis
      */
     protected T findRow(String value, String elementSelector) {
         IBy updatedSelector = selector.toJQuery()
-                .find(String.format(elementSelector, value))
+                .find(String.format(elementSelector + ":contains(%1$s)", value))
                 .parents(rowSelector);
 
         return newInstanceOfT(updatedSelector);

@@ -14,6 +14,6 @@ public class MyListGroupActions extends ListGroupActions<MyListGroupActions, MyL
     }
 
     public MyListGroupActions description(String value){
-        return findRow(value, "span.mdl-list__item-text-body:contains(%1$s)");
+        return findRow(value, "span.mdl-list__item-text-body");
     }
 }
