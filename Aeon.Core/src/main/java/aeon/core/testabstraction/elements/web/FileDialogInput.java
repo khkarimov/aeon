@@ -4,6 +4,8 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.interfaces.IBy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -14,6 +16,8 @@ public class FileDialogInput extends WebElement {
     private AutomationInfo info;
     private IBy selector;
     private Iterable<IBy> switchMechanism;
+
+    static Logger log = LogManager.getLogger(FileDialogInput.class);
 
     /**
      * Creates a new instance of {@link Button}.
@@ -46,6 +50,10 @@ public class FileDialogInput extends WebElement {
      * Opens a file dialog window.
      */
     public void openFileDialog() {
+        log.warn("DEPRECATED: The use of the \"openFileDialog\" command" +
+                "has been deprecated and will be removed in future" +
+                "versions of Aeon. Please use \"uploadFileDialog\"" +
+                "instead");
         info.getCommandExecutionFacade().execute(info,
                 new OpenFileDialogCommand(
                         selector,
@@ -60,6 +68,10 @@ public class FileDialogInput extends WebElement {
      * @param path The path to the file to be selected.
      */
     public void selectFileDialog(String path) {
+        log.warn("DEPRECATED: The use of the \"selectFileDialog\" command" +
+                "has been deprecated and will be removed in future" +
+                "versions of Aeon. Please use \"uploadFileDialog\"" +
+                "instead");
         info.getCommandExecutionFacade().execute(info,
                 new SelectFileDialogCommand(
                         selector,

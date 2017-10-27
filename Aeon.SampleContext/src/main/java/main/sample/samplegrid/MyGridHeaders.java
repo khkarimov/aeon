@@ -4,17 +4,11 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.RowActions;
+import aeon.core.testabstraction.elements.web.TableActions;
 
-/**
- * Created by justinp on 12/20/16.
- */
-public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> {
-    public MyGridHeaders(AutomationInfo automationInfo, IBy selector, Iterable<IBy> switchMechanism) {
-        super(automationInfo, selector, switchMechanism, MyGridHeaders.class, MyGridRowElements.class);
-    }
-
-    public MyGridHeaders(AutomationInfo automationInfo, IBy selector){
-        this(automationInfo, selector, null);
+public class MyGridHeaders extends TableActions<MyGridHeaders, MyGridRowElements> {
+    public MyGridHeaders() {
+        super(MyGridHeaders.class, MyGridRowElements.class);
     }
 
     public MyGridHeaders material(String value) {
@@ -28,5 +22,4 @@ public class MyGridHeaders extends RowActions<MyGridHeaders, MyGridRowElements> 
     public MyGridHeaders unitPrice(String value){
         return findRow(value, By.cssSelector("#grid-table-id th:contains(Unit price)"));
     }
-
 }
