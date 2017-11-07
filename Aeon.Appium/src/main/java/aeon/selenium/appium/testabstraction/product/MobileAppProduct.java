@@ -1,8 +1,9 @@
-package aeon.core.testabstraction.product;
+package aeon.selenium.appium.testabstraction.product;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.Capability;
-import aeon.core.testabstraction.models.Phone;
+import aeon.selenium.appium.testabstraction.models.Phone;
+import aeon.core.testabstraction.product.WebProduct;
 
 /**
  * Class to make a mobile app product.
@@ -34,6 +35,8 @@ public class MobileAppProduct extends WebProduct {
 
     @Override
     protected void afterLaunch() {
+        super.afterLaunch();
+
         phone = new Phone(getAutomationInfo());
     }
 }

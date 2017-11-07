@@ -717,40 +717,4 @@ public interface IWebDriver extends IDriver {
      * @return The URL of the window
      */
     String windowDoesNotExistByUrl(String url);
-
-    /**
-     * Locks and immediately unlocks a mobile device.
-     */
-    void mobileLock();
-
-    /**
-     * Locks and immediately unlocks a mobile device.
-     *
-     * @param seconds The number of seconds that the device should remain locked (iOS only).
-     */
-    void mobileLock(int seconds);
-
-    /**
-     * Hides the keyboard on a mobile device.
-     */
-    void mobileHideKeyboard();
-
-    /**
-     * Sets the mobile device's orientation to landscape.
-     */
-    void mobileSetLandscape();
-
-    /**
-     * Sets the mobile device's orientation to portrait.
-     */
-    void mobileSetPortrait();
-
-    /**
-     * Sets the GPS location on a mobile device.
-     *
-     * @param latitude The GPS latitude.
-     * @param longitude The GPS longitude.
-     * @param altitude The GPS altitude.
-     */
-    void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 }

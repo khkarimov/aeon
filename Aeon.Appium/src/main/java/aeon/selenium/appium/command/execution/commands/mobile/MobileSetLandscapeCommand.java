@@ -1,9 +1,10 @@
-package aeon.core.command.execution.commands.mobile;
+package aeon.selenium.appium.command.execution.commands.mobile;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.selenium.appium.framework.abstraction.drivers.IMobileAppDriver;
 
 /**
  * Sets the mobile device's orientation to landscape.
@@ -26,6 +27,6 @@ public class MobileSetLandscapeCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).mobileSetLandscape();
+        ((IMobileAppDriver) driver).mobileSetLandscape();
     }
 }

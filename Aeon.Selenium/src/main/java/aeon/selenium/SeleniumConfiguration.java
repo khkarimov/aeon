@@ -4,7 +4,9 @@ package aeon.selenium;
  * Created by josepe on 4/11/2017.
  */
 import aeon.core.common.helpers.OsCheck;
+import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
+import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.product.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -75,6 +77,18 @@ public class SeleniumConfiguration extends Configuration {
      */
     public SeleniumConfiguration() throws IOException, IllegalAccessException {
         super(AeonWebDriver.class, SeleniumAdapter.class);
+    }
+
+    /**
+     * Initializes a new instance of the {@link Configuration} class.
+     *
+     * @param driver AeonWebDriver.class.
+     * @param adapter SeleniumAdapter.class.
+     * @param <D> AeonWebDriver.class.
+     * @param <A> SeleniumAdapter.class.
+     */
+    public <D extends IWebDriver, A extends IAdapter> SeleniumConfiguration(Class<D> driver, Class<A> adapter) {
+        super(driver, adapter);
     }
 
     @Override

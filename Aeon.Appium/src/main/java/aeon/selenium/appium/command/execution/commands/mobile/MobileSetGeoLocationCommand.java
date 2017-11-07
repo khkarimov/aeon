@@ -1,9 +1,10 @@
-package aeon.core.command.execution.commands.mobile;
+package aeon.selenium.appium.command.execution.commands.mobile;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.selenium.appium.framework.abstraction.drivers.IMobileAppDriver;
 
 /**
  * Sets the GPS location on a mobile device.
@@ -36,6 +37,6 @@ public class MobileSetGeoLocationCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        ((IWebDriver) driver).mobileSetGeoLocation(latitude, longitude, altitude);
+        ((IMobileAppDriver) driver).mobileSetGeoLocation(latitude, longitude, altitude);
     }
 }

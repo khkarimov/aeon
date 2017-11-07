@@ -4,7 +4,6 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.CloseCommand;
 import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
-import aeon.core.command.execution.commands.mobile.*;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.helpers.URLUtil;
 import aeon.core.common.web.BrowserSize;
@@ -314,52 +313,5 @@ public class Browser {
                 new ClickAllElementsCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
-    }
-
-    /**
-     * Hides the keyboard on a mobile device.
-     */
-    public void mobileHideKeyboard() {
-        info.getCommandExecutionFacade().execute(info, new MobileHideKeyboardCommand());
-    }
-
-    /**
-     * Sets the mobile device orientation to landscape mode.
-     */
-    public void mobileSetLandscape() {
-        info.getCommandExecutionFacade().execute(info, new MobileSetLandscapeCommand());
-    }
-
-    /**
-     * Sets the mobile device orientation to portrait mode.
-     */
-    public void mobileSetPortrait() {
-        info.getCommandExecutionFacade().execute(info, new MobileSetPortraitCommand());
-    }
-
-    /**
-     * Sets the GPS location on a mobile device.
-     *
-     * @param latitude The GPS latitude.
-     * @param longitude The GPS longitude.
-     * @param altitude The GPS altitude.
-     */
-    public void mobileSetGeoLocation(double latitude, double longitude, double altitude) {
-        info.getCommandExecutionFacade().execute(info, new MobileSetGeoLocationCommand(latitude, longitude, altitude));
-    }
-
-    /**
-     * Locks and immediately unlocks a mobile device.
-     */
-    public void mobileLock() {
-        info.getCommandExecutionFacade().execute(info, new MobileLockCommand());
-    }
-
-    /**
-     * Locks and immediately unlocks a mobile device.
-     * @param seconds The number of seconds that the device should remain locked (iOS only).
-     */
-    public void mobileLock(int seconds){
-        info.getCommandExecutionFacade().execute(info, new MobileLockCommand(seconds));
     }
 }

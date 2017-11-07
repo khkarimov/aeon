@@ -1,9 +1,10 @@
-package aeon.core.command.execution.commands.mobile;
+package aeon.selenium.appium.command.execution.commands.mobile;
 
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.selenium.appium.framework.abstraction.drivers.IMobileAppDriver;
 
 /**
  * Locks a mobile device.
@@ -38,9 +39,9 @@ public class MobileLockCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
         if (seconds == 0) {
-            ((IWebDriver) driver).mobileLock();
+            ((IMobileAppDriver) driver).mobileLock();
         } else {
-            ((IWebDriver) driver).mobileLock(seconds);
+            ((IMobileAppDriver) driver).mobileLock(seconds);
         }
 
     }
