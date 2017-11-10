@@ -12,7 +12,7 @@ dependencies {
     compile project('Aeon.SystemTests')
 }
 
-//Copy selenium plugin into SampleTeam plugins folder
+//Copy selenium plugin into SystemTests plugins folder
 task CopySeleniumPlugin(type: Copy) {
     group 'copy'
     from 'Aeon.Selenium/build/libs'

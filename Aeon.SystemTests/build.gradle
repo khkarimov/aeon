@@ -1,4 +1,4 @@
-group 'SampleTeam'
+group 'SystemTests'
 version '0.0.1'
 apply plugin: 'java'
 compileTestJava.options.encoding = 'utf-8'

@@ -19,15 +19,6 @@ public class SampleBaseTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    //region Setup and Teardown
-    @BeforeClass
-    public static void setUp() {
-    }
-
-    @AfterClass
-    public static void tearDown() {
-    }
-
     @Before
     public void beforeTests() {
         product = launch(Sample.class);
