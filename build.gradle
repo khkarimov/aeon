@@ -17,7 +17,7 @@ task CopySeleniumPlugin(type: Copy) {
     group 'copy'
     from 'Aeon.Selenium/build/libs'
     into 'Aeon.SystemTests/plugins'
-    include '*.zip'
+    include '*.jar'
 }
 
 assemble.dependsOn(clean)
