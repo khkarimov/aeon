@@ -1,9 +1,6 @@
 package main.sample.samplegrid;
 
-import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.interfaces.IBy;
 import aeon.core.common.web.selectors.By;
-import aeon.core.testabstraction.elements.web.RowActions;
 import aeon.core.testabstraction.elements.web.TableActions;
 
 public class MyGridHeaders extends TableActions<MyGridHeaders, MyGridRowElements> {

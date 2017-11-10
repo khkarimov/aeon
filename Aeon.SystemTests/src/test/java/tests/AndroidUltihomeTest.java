@@ -5,7 +5,6 @@ import categories.AndroidTests;
 import main.sample.Sample;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
-
 import static aeon.core.testabstraction.product.Aeon.launch;
 
 @Category({AndroidTests.class})

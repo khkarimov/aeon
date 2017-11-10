@@ -19,8 +19,7 @@ clean {
 }
 
 dependencies {
-    compile project(':Aeon.SampleContext')
-
+    compile project(':Aeon.Core')
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
 
     // Drivers
@@ -34,12 +33,20 @@ dependencies {
 test {
     maxParallelForks = 4
     useJUnit {
-        def categoryList = System.getenv('tests.included.categories')
-        if (categoryList != null)
+        def includeList = System.getenv('tests.included.categories')
+        if (includeList != null)
         {
-            def categories = categoryList.split("\\s*(,|\\s)\\s*")
+            def categories = includeList.split("\\s*(,|\\s)\\s*")
             categories.each {category ->
                 includeCategories 'categories.' + category
+            }
+        }
+        def excludeList = System.getenv('tests.excluded.categories')
+        if (excludeList != null)
+        {
+            def categories = excludeList.split("\\s*(,|\\s)\\s*")
+            categories.each {category ->
+                excludeCategories 'categories.' + category
             }
         }
     }

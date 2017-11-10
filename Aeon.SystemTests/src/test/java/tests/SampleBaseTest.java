@@ -2,12 +2,16 @@ package tests;
 
 import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.product.Configuration;
+import categories.UbuntuTests;
+import categories.WindowsTests;
 import main.sample.Sample;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
+@Category({WindowsTests.class, UbuntuTests.class})
 public class SampleBaseTest {
 
     public static Sample product;

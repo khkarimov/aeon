@@ -9,14 +9,14 @@ repositories {
 dependencies {
     compile project('Aeon.Selenium')
     compile project('Aeon.Core')
-    compile project('Aeon.SampleContext')
+    compile project('Aeon.SystemTests')
 }
 
 //Copy selenium plugin into SampleTeam plugins folder
 task CopySeleniumPlugin(type: Copy) {
     group 'copy'
     from 'Aeon.Selenium/build/libs'
-    into 'Aeon.Automation.SampleTeam/plugins'
+    into 'Aeon.SystemTests/plugins'
     include '*.zip'
 }
 

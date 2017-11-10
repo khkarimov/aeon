@@ -5,9 +5,11 @@ import aeon.core.common.exceptions.NoSuchCookieException;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
+import categories.GridNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -115,5 +117,12 @@ public class GeneralActionTests extends SampleBaseTest{
     @Test
     public void testGetBrowserType() {
         assert (product.browser.getBrowserType().equals(BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER, ""))));
+    }
+
+    @Test
+    @Category(GridNotSupported.class)
+    public void testSelectFileDialog_OpenFileDialog() {
+        String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
+        product.startPage.testFileDialogInput.uploadFileDialog(path);
     }
 }
