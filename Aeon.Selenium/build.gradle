@@ -70,18 +70,6 @@ task fatJar(type: Jar) {
     with jar
 }
 
-task buildPlugin(type: Jar) {
-    group 'build'
-    baseName = base
-    version = version
-    into('classes') {
-        with jar
-    }
-    extension('zip')
-}
-
-jar.finalizedBy(buildPlugin)
-
 apply plugin: "com.jfrog.artifactory"
 apply plugin: 'maven-publish'
 
@@ -89,7 +77,6 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact(file("$buildDir/libs/Aeon.Selenium-" + version + ".zip"))
             artifactId 'aeon.selenium'
         }
     }
