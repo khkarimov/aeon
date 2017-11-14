@@ -62,7 +62,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private final String mobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
     private Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
-    private BrowserType browserType;
+    protected BrowserType browserType;
     private String browserAcceptedLanguageCodes;
     private boolean useMobileUserAgent;
     private boolean ensureCleanEnvironment;
@@ -75,6 +75,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String appPackage;
     private String deviceName;
     private String driverContext;
+    protected WebDriver driver;
+    protected JavaScriptFlowExecutor javaScriptFlowExecutor;
+    protected boolean moveMouseToOrigin;
+    protected boolean isRemote;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -82,6 +86,16 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      * @return The created Selenium adapter is returned.
      */
     public IAdapter create(SeleniumConfiguration configuration) {
+        prepare(configuration);
+
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
+    }
+
+    /**
+     * Prepares everything for a Selenium adapter for Aeon.core.
+     * @param configuration The configuration of the adapter.
+     */
+    protected void prepare(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
         this.browserType = configuration.getBrowserType();
@@ -111,15 +125,15 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 throw new RuntimeException(e);
             }
         }
-        JavaScriptFlowExecutor javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.standardSeconds(5));
-        boolean moveMouseToOrigin = configuration.getBoolean(SeleniumConfiguration.Keys.MOVE_MOUSE_TO_ORIGIN, true);
+
+        javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.standardSeconds(5));
+        moveMouseToOrigin = configuration.getBoolean(SeleniumConfiguration.Keys.MOVE_MOUSE_TO_ORIGIN, true);
         String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.CHROME_DIRECTORY, null);
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
-        WebDriver driver;
         switch (browserType) {
             case Firefox:
                 if (seleniumHubUrl != null) {
@@ -212,8 +226,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         String.format("%1$s is not a supported browser", browserType));
         }
 
-        boolean isRemote = seleniumHubUrl != null;
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
+        isRemote = seleniumHubUrl != null;
     }
 
     private Capabilities getCapabilities() {

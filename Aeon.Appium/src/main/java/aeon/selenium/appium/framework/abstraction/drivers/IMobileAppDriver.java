@@ -60,4 +60,12 @@ public interface IMobileAppDriver extends IWebDriver {
      * @param altitude The GPS altitude.
      */
     void mobileSetGeoLocation(double latitude, double longitude, double altitude);
+
+    /**
+     * Sets the date on a native date picker.
+     *
+     * @param control The date control.
+     * @param date The date to set.
+     */
+    void setDate(WebControl control, DateTime date);
 }

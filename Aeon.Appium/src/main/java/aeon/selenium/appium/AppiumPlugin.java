@@ -1,7 +1,7 @@
 package aeon.selenium.appium;
 
-import ro.fortsoft.pf4j.Plugin;
-import ro.fortsoft.pf4j.PluginWrapper;
+import org.pf4j.Plugin;
+import org.pf4j.PluginWrapper;
 
 /**
  * Class necessary for PF4J.

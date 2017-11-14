@@ -758,7 +758,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
 
-    private void click(WebControl element, boolean moveMouseToOrigin) {
+    protected void click(WebControl element, boolean moveMouseToOrigin) {
         ((SeleniumElement) element).click(moveMouseToOrigin);
     }
 

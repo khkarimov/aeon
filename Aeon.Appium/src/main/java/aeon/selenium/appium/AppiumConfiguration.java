@@ -2,6 +2,7 @@ package aeon.selenium.appium;
 
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.selenium.SeleniumConfiguration;
+import aeon.selenium.appium.framework.abstraction.drivers.AeonMobileAppDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,7 +36,7 @@ public class AppiumConfiguration extends SeleniumConfiguration {
      * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
     public AppiumConfiguration() throws IOException, IllegalAccessException {
-        super(AeonWebDriver.class, AppiumAdapter.class);
+        super(AeonMobileAppDriver.class, AppiumAdapter.class);
     }
 
     @Override

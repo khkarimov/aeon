@@ -1,4 +1,4 @@
-package framework.abstraction.adapters;
+package aeon.selenium.appium.framework.abstraction.adapters;
 
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
@@ -61,4 +61,11 @@ public interface IMobileAppAdapter extends IWebAdapter {
      */
     void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 
+    /**
+     * Sets the date on a native date picker.
+     *
+     * @param control The date control.
+     * @param date The date to set.
+     */
+    void setDate(WebControl control, DateTime date);
 }

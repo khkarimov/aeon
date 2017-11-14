@@ -1,16 +1,24 @@
 package aeon.selenium.appium;
 
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBy;
+import aeon.core.common.web.selectors.ByJQuery;
+import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.testabstraction.elements.web.Label;
 import aeon.selenium.SeleniumAdapter;
+import aeon.selenium.SeleniumElement;
+import aeon.selenium.appium.common.mobile.selectors.NativeBy;
+import aeon.selenium.appium.common.mobile.selectors.NativeById;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
-import framework.abstraction.adapters.IMobileAppAdapter;
+import aeon.selenium.appium.framework.abstraction.adapters.IMobileAppAdapter;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebDriver;
+import org.joda.time.DateTime;
+import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 
 import java.time.Duration;
@@ -86,5 +94,74 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
     @Override
     public void mobileSetGeoLocation(double latitude, double longitude, double altitude) {
         getMobileWebDriver().setLocation(new Location(latitude, longitude, altitude));
+    }
+
+    @Override
+    public void setDate(WebControl control, DateTime date) {
+        tapOnControl(control);
+
+        getMobileWebDriver().context("NATIVE_APP");
+        WebControl label = findElement(NativeBy.accessibilityId("23 November 2017"));
+        click(label, false);
+        WebControl label1 = findElement(NativeBy.id("android:id/button1"));
+        click(label1, false);
+        getMobileWebDriver().context("WEBVIEW_1");
+    }
+
+    /**
+     * Finds the first element that matches the corresponding IBy.
+     *
+     * @param findBy Selector used to search with.
+     * @return An IWebElementAdapter matching the findBy.
+     */
+    public WebControl findElement(IBy findBy) {
+        if(findBy instanceof NativeById){
+            log.trace(String.format("WebDriver.findElement(by.id(%1$s));", findBy));
+            try {
+                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.id(findBy.toString())));
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
+            }
+        }
+
+        if(findBy instanceof NativeBy){
+            log.trace(String.format("WebDriver.findElement(by.accessbilityId(%1$s));", findBy));
+            try {
+                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.name(findBy.toString())));
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
+            }
+        }
+
+        return super.findElement(findBy);
+    }
+
+
+    private void tapOnControl(WebControl control){
+
+        log.trace("tap on control via coordinates");
+
+        WebElement underlyingWebElement = ((SeleniumElement) control).getUnderlyingWebElement();
+        Point webElementLocation = underlyingWebElement.getLocation();
+        log.trace("elementLocation: " + webElementLocation.getX() + "," + webElementLocation.getY());
+        Dimension elementSize = underlyingWebElement.getSize();
+        log.trace("elementSize: " + elementSize.getWidth() + "," + elementSize.getHeight());
+        Dimension windowSize = getWebDriver().manage().window().getSize();
+        log.trace("windowSize: " + windowSize.getWidth() + "," + windowSize.getHeight());
+
+        long webRootWidth = (long) executeScript("return screen.availWidth");
+        long webRootHeight = (long) executeScript("return screen.availHeight");
+        log.trace("screenSize: " + webRootWidth + "," + webRootHeight);
+
+        double xRatio = (double) (windowSize.getWidth() * 1.0 / webRootWidth);
+        double yRatio = (double) (windowSize.getHeight() * 1.0 / webRootHeight);
+        int pointX = (int) ((webElementLocation.getX() + elementSize.getWidth() / 2.0));
+        int pointY = (int) ((webElementLocation.getY() + elementSize.getHeight() / 2.0));
+        Point tapPoint = new Point((int) (pointX * xRatio), (int) (pointY * yRatio));
+
+        log.trace("tapPoint: " + tapPoint.getX() + "," + tapPoint.getY());
+        TouchAction a = new TouchAction((AppiumDriver)getWebDriver());
+        //a2.tap(((SeleniumElement) element).getUnderlyingWebElement()).perform();
+        a.tap(tapPoint.getX(), tapPoint.getY()).perform();
     }
 }

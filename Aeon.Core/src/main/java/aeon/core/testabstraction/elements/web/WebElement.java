@@ -17,9 +17,9 @@ import org.joda.time.Period;
  */
 public class WebElement extends Element {
 
-    private IBy selector;
-    private AutomationInfo info;
-    private Iterable<IBy> switchMechanism;
+    protected IBy selector;
+    protected AutomationInfo info;
+    protected Iterable<IBy> switchMechanism;
 
     /**
      * Initializes a new instance of the {@link WebElement} class.
