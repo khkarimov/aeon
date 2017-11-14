@@ -47,8 +47,8 @@ public class WebCommandInitializer implements ICommandInitializer {
     public Consumer<IDriver> setContext() {
         Consumer<IDriver> action = driver -> {
             IWebDriver webDriver = (IWebDriver) driver;
+            webDriver.switchToDefaultContent();
             if (switchMechanism != null) {
-                webDriver.switchToDefaultContent();
                 webDriver.focusWindow();
 
                 for (IBy selector : switchMechanism) {
