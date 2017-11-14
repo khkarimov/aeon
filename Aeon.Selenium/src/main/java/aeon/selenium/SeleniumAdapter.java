@@ -682,11 +682,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote
                     && browserType.equals(BrowserType.Chrome)) {
-                log.trace("Skipping maximize for remote test on linux and chrome.");
-                return;
+                log.trace("Setting manual size  for remote test on linux and chrome.");
+                webDriver.manage().window().setPosition(new Point(0, 0));
+                webDriver.manage().window().setSize(new Dimension(1920, 1080));git 
             }
             //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
-            if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+            else if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
                     || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux))
                     && browserType.equals(BrowserType.Chrome)) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
