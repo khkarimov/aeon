@@ -677,10 +677,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
-            //TODO(TOOL-6894): this work around needs to be investigated. It does not work for remote linux grids"
             log.trace("WebDriver.Manage().Window.maximize();");
 
             if (osIsMacOrLinux() && browserType.equals(BrowserType.Chrome)) {
+                //In the case of remote, current workaround doesnt work cause cannot get screensize
+                //so manually using the grid resolution for now.
                 if (isRemote) {
                     log.trace("Setting manual size  for remote test on linux and chrome.");
                     webDriver.manage().window().setPosition(new Point(0, 0));
