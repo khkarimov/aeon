@@ -2,15 +2,13 @@ package aeon.selenium.appium;
 
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.interfaces.IBy;
-import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import aeon.core.testabstraction.elements.web.Label;
-import aeon.selenium.SeleniumAdapter;
-import aeon.selenium.SeleniumElement;
-import aeon.selenium.appium.common.mobile.selectors.NativeBy;
-import aeon.selenium.appium.common.mobile.selectors.NativeById;
-import aeon.selenium.jquery.IJavaScriptFlowExecutor;
-import aeon.selenium.appium.framework.abstraction.adapters.IMobileAppAdapter;
+import aeon.core.common.mobile.interfaces.INativeBy;
+import aeon.core.common.mobile.interfaces.INativeByXPath;
+import aeon.core.common.mobile.selectors.NativeBy;
+import aeon.core.common.mobile.selectors.NativeById;
+import aeon.selenium.appium.jquery.IJavaScriptFlowExecutor;
+import aeon.core.framework.abstraction.adapters.IMobileAppAdapter;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
@@ -100,12 +98,21 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
     public void setDate(WebControl control, DateTime date) {
         tapOnControl(control);
 
-        getMobileWebDriver().context("NATIVE_APP");
-        WebControl label = findElement(NativeBy.accessibilityId("23 November 2017"));
-        click(label, false);
-        WebControl label1 = findElement(NativeBy.id("android:id/button1"));
-        click(label1, false);
-        getMobileWebDriver().context("WEBVIEW_1");
+        if(browserType == BrowserType.AndroidHybridApp){
+            WebControl label = findElement(NativeBy.accessibilityId(date.toString("dd MMMM yyyy")));
+            click(label, false);
+            WebControl label1 = findElement(NativeBy.id("android:id/button1"));
+
+            click(label1, false);
+        }
+        else {
+            WebControl day = findElement(NativeBy.xpath("//XCUIElementTypePickerWheel[1]"));
+            String context = getMobileWebDriver().getContext();
+            getMobileWebDriver().context("NATIVE_APP");
+            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys("December");
+            getMobileWebDriver().context(context);
+            //day.se
+        }
     }
 
     /**
@@ -115,10 +122,28 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
      * @return An IWebElementAdapter matching the findBy.
      */
     public WebControl findElement(IBy findBy) {
+        if(findBy instanceof INativeByXPath){
+            String context = getMobileWebDriver().getContext();
+            log.trace(String.format("WebDriver.findElement(by.xpath(%1$s));", findBy));
+            try {
+                getMobileWebDriver().context("NATIVE_APP");
+                SeleniumElement element =  new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.xpath(findBy.toString())));
+                getMobileWebDriver().context(context);
+
+                return element;
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
+            }
+        }
+
         if(findBy instanceof NativeById){
             log.trace(String.format("WebDriver.findElement(by.id(%1$s));", findBy));
             try {
-                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.id(findBy.toString())));
+                getMobileWebDriver().context("NATIVE_APP");
+                SeleniumElement element =  new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.id(findBy.toString())));
+                getMobileWebDriver().context("WEBVIEW_1");
+
+                return element;
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
             }
@@ -127,7 +152,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
         if(findBy instanceof NativeBy){
             log.trace(String.format("WebDriver.findElement(by.accessbilityId(%1$s));", findBy));
             try {
-                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.name(findBy.toString())));
+                getMobileWebDriver().context("NATIVE_APP");
+                SeleniumElement element = new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.name(findBy.toString())));
+                getMobileWebDriver().context("WEBVIEW_1");
+
+                return element;
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
             }
@@ -136,6 +165,20 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
         return super.findElement(findBy);
     }
 
+    /**
+     * Performs a LeftClick on the element passed as an argument.
+     *
+     * @param element The element to perform the click on.
+     */
+    public final void click(WebControl element) {
+        if (element.getSelector() instanceof INativeBy) {
+            click(element, false);
+
+            return;
+        }
+
+        super.click(element);
+    }
 
     private void tapOnControl(WebControl control){
 

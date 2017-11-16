@@ -1,8 +1,6 @@
 package aeon.selenium.appium;
 
-import aeon.core.framework.abstraction.drivers.AeonWebDriver;
-import aeon.selenium.SeleniumConfiguration;
-import aeon.selenium.appium.framework.abstraction.drivers.AeonMobileAppDriver;
+import aeon.core.framework.abstraction.drivers.AeonMobileAppDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,6 +39,7 @@ public class AppiumConfiguration extends SeleniumConfiguration {
 
     @Override
     public void loadPluginSettings() throws IOException {
+        super.loadPluginSettings();
         try (InputStream in = AppiumConfiguration.class.getResourceAsStream("/appium.properties")) {
             properties.load(in);
         } catch (IOException e) {

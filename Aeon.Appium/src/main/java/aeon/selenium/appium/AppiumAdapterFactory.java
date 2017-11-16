@@ -3,9 +3,6 @@ package aeon.selenium.appium;
 import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Configuration;
-import aeon.selenium.SeleniumAdapter;
-import aeon.selenium.SeleniumAdapterFactory;
-import aeon.selenium.SeleniumConfiguration;
 import org.pf4j.Extension;
 
 import java.io.IOException;
