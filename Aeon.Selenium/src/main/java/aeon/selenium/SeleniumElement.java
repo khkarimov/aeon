@@ -1,4 +1,4 @@
-package aeon.selenium.appium;
+package aeon.selenium;
 
 import aeon.core.common.exceptions.IncorrectElementTagException;
 import aeon.core.common.exceptions.NoSuchElementException;

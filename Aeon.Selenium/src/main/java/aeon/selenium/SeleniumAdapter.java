@@ -1,4 +1,4 @@
-package aeon.selenium.appium;
+package aeon.selenium;
 
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
@@ -17,8 +17,8 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import aeon.selenium.appium.jquery.SeleniumScriptExecutor;
-import aeon.selenium.appium.jquery.IJavaScriptFlowExecutor;
+import aeon.selenium.jquery.SeleniumScriptExecutor;
+import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import com.sun.glass.ui.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

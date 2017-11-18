@@ -1,4 +1,4 @@
-package aeon.selenium.appium;
+package aeon.selenium;
 
 import aeon.core.common.Capability;
 import aeon.core.common.Resources;
@@ -12,9 +12,9 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.testabstraction.product.Configuration;
-import aeon.selenium.appium.jquery.SeleniumCheckInjectJQueryExecutor;
-import aeon.selenium.appium.jquery.JavaScriptFlowExecutor;
-import aeon.selenium.appium.jquery.SeleniumJavaScriptFinalizerFactory;
+import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
+import aeon.selenium.jquery.JavaScriptFlowExecutor;
+import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.appium.java_client.AppiumDriver;
@@ -313,7 +313,11 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 // Appium
                 desiredCapabilities.setCapability("deviceName", deviceName);
 
-                //IOS Specific
+                if (!app.isEmpty()) {
+                    desiredCapabilities.setCapability("app", app);
+                }
+
+                // IOS Specific
                 desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
                 desiredCapabilities.setCapability("automationName", configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, "Appium"));
 
@@ -528,9 +532,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 log.trace("Switching to context " + context);
                 ((AppiumDriver) driver).context(context);
 
-                break;
+                return;
             }
         }
+
+        String message = "Could not find any web view contexts, available contexts: " + String.join(", ", availableContexts);
+        throw new RuntimeException(message);
     }
 
     @Override

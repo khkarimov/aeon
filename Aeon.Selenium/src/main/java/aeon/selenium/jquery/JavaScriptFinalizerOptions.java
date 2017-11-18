@@ -1,4 +1,4 @@
-package aeon.selenium.appium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Created by DionnyS on 3/31/2016.

@@ -1,5 +1,6 @@
 package aeon.core.framework.abstraction.drivers;
 
+import aeon.core.common.web.WebSelectOption;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.Configuration;
@@ -78,6 +79,11 @@ public class AeonMobileAppDriver extends AeonWebDriver implements IMobileAppDriv
     @Override
     public void setDate(WebControl control, DateTime date) {
         adapter.setDate(control, date);
+    }
+
+    @Override
+    public void mobileSet(WebControl control, WebSelectOption selectOption, String value) {
+        adapter.mobileSet(control, value);
     }
 
 }

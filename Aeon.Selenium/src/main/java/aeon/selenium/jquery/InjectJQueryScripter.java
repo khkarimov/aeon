@@ -1,4 +1,4 @@
-package aeon.selenium.appium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Wraps JavaScript within a code to inject jquery.

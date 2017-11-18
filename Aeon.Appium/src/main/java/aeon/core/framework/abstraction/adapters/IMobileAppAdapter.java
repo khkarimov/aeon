@@ -68,4 +68,6 @@ public interface IMobileAppAdapter extends IWebAdapter {
      * @param date The date to set.
      */
     void setDate(WebControl control, DateTime date);
+
+    void mobileSet(WebControl control, String value);
 }

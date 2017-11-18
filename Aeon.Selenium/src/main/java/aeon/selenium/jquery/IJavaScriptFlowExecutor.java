@@ -1,4 +1,4 @@
-package aeon.selenium.appium.jquery;
+package aeon.selenium.jquery;
 
 import aeon.core.common.helpers.QuadFunction;
 

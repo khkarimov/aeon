@@ -1,4 +1,4 @@
-package aeon.selenium.appium;
+package aeon.selenium;
 
 import aeon.core.common.helpers.OsCheck;
 import aeon.core.framework.abstraction.adapters.IAdapter;

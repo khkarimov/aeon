@@ -1,6 +1,7 @@
 package aeon.selenium.appium;
 
 import aeon.core.framework.abstraction.drivers.AeonMobileAppDriver;
+import aeon.selenium.SeleniumConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

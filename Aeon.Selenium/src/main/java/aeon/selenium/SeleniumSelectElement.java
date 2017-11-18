@@ -1,4 +1,4 @@
-package aeon.selenium.appium;
+package aeon.selenium;
 
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import org.apache.logging.log4j.LogManager;

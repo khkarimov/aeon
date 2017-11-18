@@ -1,4 +1,4 @@
-package aeon.selenium.appium.jquery;
+package aeon.selenium.jquery;
 
 /**
  * Adds the :regex jquery expression, if needed.

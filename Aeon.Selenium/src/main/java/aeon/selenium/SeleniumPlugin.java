@@ -1,4 +1,4 @@
-package aeon.selenium.appium;
+package aeon.selenium;
 
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;

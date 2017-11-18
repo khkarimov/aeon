@@ -68,4 +68,6 @@ public interface IMobileAppDriver extends IWebDriver {
      * @param date The date to set.
      */
     void setDate(WebControl control, DateTime date);
+
+    void mobileSet(WebControl control, WebSelectOption selectOption, String value);
 }

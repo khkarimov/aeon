@@ -1,4 +1,4 @@
-package aeon.selenium.appium;
+package aeon.selenium;
 
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import org.openqa.selenium.Cookie;

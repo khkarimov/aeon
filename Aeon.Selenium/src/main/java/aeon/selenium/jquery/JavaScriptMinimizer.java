@@ -1,4 +1,4 @@
-package aeon.selenium.appium.jquery;
+package aeon.selenium.jquery;
 
 import static aeon.core.common.helpers.StringUtils.minimizeWhiteSpace;
 
