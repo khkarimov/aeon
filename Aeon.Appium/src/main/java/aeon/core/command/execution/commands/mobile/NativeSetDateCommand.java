@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
 /**
  * Sets the mobile device's orientation to portrait.
  */
-public class NativeSetDateCommand extends WebControlCommand {
+public class NativeSetDateCommand extends MobileCommand {
 
     private static Logger log = LogManager.getLogger(Command.class);
     private final DateTime date;
@@ -24,7 +24,7 @@ public class NativeSetDateCommand extends WebControlCommand {
      * Initializes a new instance of the {@link NativeSetDateCommand} class.
      */
     public NativeSetDateCommand(IBy selector, ICommandInitializer initializer, DateTime dateTime) {
-        super(Resources.getString("NativeSetDateCommand_Info"), selector, initializer);
+        super(Resources.getString("NativeSetDateCommand_Info"));
         this.date = dateTime;
     }
 
@@ -32,13 +32,7 @@ public class NativeSetDateCommand extends WebControlCommand {
      * The method which provides the logic for the command.
      */
     @Override
-    protected void commandDelegate(IWebDriver driver, WebControl control) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
-        log.trace("test1");
-        ((IMobileAppDriver) driver).setDate(control, date);
-        log.trace("test2");
+    protected void driverDelegate(IMobileAppDriver driver) {
+        driver.setDate(date);
     }
 }

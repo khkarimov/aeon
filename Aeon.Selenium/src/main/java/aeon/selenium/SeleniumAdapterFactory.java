@@ -7,6 +7,7 @@ import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.exceptions.UnsupportedPlatformException;
 import aeon.core.common.helpers.OsCheck;
 import aeon.core.common.helpers.Process;
+import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
@@ -77,6 +78,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String appPackage;
     private String deviceName;
     private String driverContext;
+    private boolean crossWalkPatch;
     protected WebDriver driver;
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
@@ -113,6 +115,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
+        crossWalkPatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
@@ -198,13 +201,29 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case IOSHybridApp:
                 capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new IOSDriver(seleniumHubUrl, capabilities);
-                setContext();
+
+                try {
+                    setContext();
+                }
+                catch(RuntimeException e) {
+                    Sleep.wait(1000);
+                    // Sometimes the cross walk web view context is not immediately available
+                    setContext();
+                }
                 break;
 
             case AndroidHybridApp:
                 capabilities = (DesiredCapabilities) getCapabilities();
                 driver = new AndroidDriver(seleniumHubUrl, capabilities);
-                setContext();
+
+                try {
+                    setContext();
+                }
+                catch(RuntimeException e) {
+                    Sleep.wait(1000);
+                    // Sometimes the cross walk web view context is not immediately available
+                    setContext();
+                }
 
                 //Cleans the app data for a fresh new session.
                 if (ensureCleanEnvironment && !appPackage.isEmpty()) {
@@ -221,6 +240,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     openParams.put("identifier", appPackage);
                     ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
                 }
+
                 break;
 
             default:
@@ -325,7 +345,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
-                Boolean crosswalkpatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
                 // Perfecto
                 if (!perfectoUser.isEmpty()) {
@@ -367,7 +386,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 }
 
                 //Enables webview support for Crosswalk/Cordova applications
-                if (crosswalkpatch && !appPackage.isEmpty()) {
+                if (crossWalkPatch && !appPackage.isEmpty()) {
                     String androidDeviceSocket = appPackage + "_devtools_remote";
                     desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
                     ChromeOptions chromeOptions = new ChromeOptions();
@@ -525,7 +544,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     protected void switchToWebView() {
         Set<String> availableContexts = ((AppiumDriver) driver).getContextHandles();
-        log.trace("Available contexts: = " + String.join(", ", availableContexts));
+        log.trace("Available contexts: " + String.join(", ", availableContexts));
 
         for (String context : availableContexts) {
             if (context.contains("WEBVIEW")) {

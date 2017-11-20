@@ -772,7 +772,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param selector Element to scroll into view.
      */
-    private final void scrollElementIntoView(IBy selector) {
+    protected void scrollElementIntoView(IBy selector) {
         executeScript(selector.toJQuery().toString(JQueryStringType.ScrollElementIntoView));
         executeScript("$(\"body\").scrollLeft(0);");
     }

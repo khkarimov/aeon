@@ -1,14 +1,12 @@
 package aeon.core.command.execution.commands.mobile;
 
-import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
-import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IMobileAppDriver;
 
 /**
  * Sets the mobile device's orientation to portrait.
  */
-public class MobileSetPortraitCommand extends Command {
+public class MobileSetPortraitCommand extends MobileCommand {
 
     /**
      * Initializes a new instance of the {@link MobileSetPortraitCommand} class.
@@ -21,11 +19,7 @@ public class MobileSetPortraitCommand extends Command {
      * The method which provides the logic for the command.
      */
     @Override
-    protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
-        ((IMobileAppDriver) driver).mobileSetPortrait();
+    protected void driverDelegate(IMobileAppDriver driver) {
+        driver.mobileSetPortrait();
     }
 }

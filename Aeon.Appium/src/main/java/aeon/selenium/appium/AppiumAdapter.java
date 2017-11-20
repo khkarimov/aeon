@@ -1,6 +1,8 @@
 package aeon.selenium.appium;
 
+import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.common.mobile.interfaces.INativeBy;
@@ -12,6 +14,7 @@ import aeon.selenium.SeleniumElement;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.core.framework.abstraction.adapters.IMobileAppAdapter;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -22,6 +25,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 
 import java.time.Duration;
+import java.util.HashMap;
 
 /**
  * Web adapter for Appium.
@@ -31,6 +35,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
     private static Logger log = LogManager.getLogger(AppiumAdapter.class);
 
     private String context;
+
+    private HashMap<Integer, Integer> phoneResolutions = new HashMap<>();
 
     /**
      * Constructor for Selenium Adapter.
@@ -44,7 +50,20 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
     public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote) {
         super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote);
 
-        context = getMobileWebDriver().getContext();
+        if(browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
+            context = getMobileWebDriver().getContext();
+        }
+
+        phoneResolutions.put(1125, 2436);
+        phoneResolutions.put(1080, 1920);
+        phoneResolutions.put(750, 1334);
+        phoneResolutions.put(640, 1136);
+        phoneResolutions.put(2048, 2732);
+        phoneResolutions.put(1536, 2048);
+        phoneResolutions.put(768, 1024);
+        phoneResolutions.put(1440, 2560);
+        phoneResolutions.put(1200, 1920);
+        phoneResolutions.put(800, 1280);
     }
 
     /**
@@ -101,14 +120,15 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
     }
 
     @Override
-    public void setDate(WebControl control, DateTime date) {
-        tapOnControl(control);
+    public void setDate(DateTime date) {
 
         if(browserType == BrowserType.AndroidHybridApp){
-            WebControl label = findElement(NativeBy.accessibilityId(date.toString("dd MMMM yyyy")));
+            switchToNativeAppContext();
+            WebControl label = findElement(NativeBy.accessibilityId(date.toString("dd MMMM yyyy")), false);
             click(label, false);
-            WebControl label1 = findElement(NativeBy.id("android:id/button1"));
+            WebControl label1 = findElement(NativeBy.id("android:id/button1"), false);
             click(label1, false);
+            switchToWebViewContext();
         }
         else {
             switchToNativeAppContext();
@@ -123,15 +143,71 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
     }
 
     @Override
-    public void mobileSet(WebControl control, String value) {
+    public void mobileSelect(MobileSelectOption selectOption, String value) {
         if(browserType == BrowserType.AndroidHybridApp){
-            click(findElement(NativeBy.xpath("//android.widget.CheckedTextView[1]")), false);
+            switchToNativeAppContext();
+            INativeBy selector = NativeBy.xpath(String.format("//android.widget.CheckedTextView[@text='%s']", value));
+            click(findElement(selector, false), false);
+            switchToWebViewContext();
         }
         else {
             switchToNativeAppContext();
             click(findElement(NativeBy.accessibilityId("Done"), false), false);
             switchToWebViewContext();
         }
+    }
+
+    /**
+     * Scrolls the element specified by the provided 'selector' into view.
+     *
+     * @param selector Element to scroll into view.
+     */
+    protected void scrollElementIntoView(IBy selector) {
+        if(selector instanceof INativeBy){
+            return;
+        }
+
+        super.scrollElementIntoView(selector);
+    }
+
+    /**
+     * Accepts an alert on the page.
+     */
+    public void acceptAlert() {
+        switch (browserType){
+            case AndroidHybridApp:
+                // Break intentionally omitted
+            case IOSHybridApp:
+                switchToNativeAppContext();
+                super.acceptAlert();
+                switchToWebViewContext();
+                break;
+            default:
+                super.acceptAlert();
+        }
+    }
+
+    @Override
+    public void acceptOrDismissPermissionDialog(boolean accept, boolean ignoreMissingDialog) {
+        if(accept){
+            if(browserType == BrowserType.AndroidHybridApp) {
+                SeleniumElement element = (SeleniumElement) findElement(NativeBy.id("com.android.packageinstaller:id/permission_allow_button"));
+                element.click(false);
+            }
+            else {
+                acceptAlert();
+                //switchToNativeAppContext();
+                //SeleniumElement element = (SeleniumElement) findElement(NativeBy.accessibilityId("Allow"));
+                //switchToNativeAppContext();
+                //element.click(false);
+                //switchToWebViewContext();
+            }
+        }
+    }
+
+    @Override
+    public void mobileClick(WebControl control) {
+        tapOnControl(control);
     }
 
     /**
@@ -193,7 +269,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
 
         log.trace(String.format("WebDriver.findElement(by.accessbilityId(%1$s));", findBy));
         try {
-            SeleniumElement element = new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.name(findBy.toString())));
+            SeleniumElement element = new SeleniumElement(((MobileDriver )webDriver).findElementByAccessibilityId(findBy.toString()));
 
             return element;
         } catch (org.openqa.selenium.NoSuchElementException e) {
@@ -240,22 +316,43 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
         log.trace("elementLocation: " + webElementLocation.getX() + "," + webElementLocation.getY());
         Dimension elementSize = underlyingWebElement.getSize();
         log.trace("elementSize: " + elementSize.getWidth() + "," + elementSize.getHeight());
-        Dimension windowSize = getWebDriver().manage().window().getSize();
-        log.trace("windowSize: " + windowSize.getWidth() + "," + windowSize.getHeight());
 
         long webRootWidth = (long) executeScript("return screen.availWidth");
         long webRootHeight = (long) executeScript("return screen.availHeight");
         log.trace("screenSize: " + webRootWidth + "," + webRootHeight);
 
-        double xRatio = (double) (windowSize.getWidth() * 1.0 / webRootWidth);
-        double yRatio = (double) (windowSize.getHeight() * 1.0 / webRootHeight);
+        int windowWidth;
+        int windowHeight;
+        try {
+            switchToNativeAppContext();
+            Dimension windowSize = getMobileWebDriver().manage().window().getSize();
+            switchToWebViewContext();
+            windowWidth = windowSize.getWidth();
+            windowHeight = windowSize.getHeight();
+
+            if(browserType == BrowserType.AndroidHybridApp && phoneResolutions.containsKey(windowWidth)) {
+                windowHeight = phoneResolutions.get(windowWidth);
+            }
+        }
+        catch(WebDriverException e){
+            log.trace(e.getMessage());
+            windowWidth = (int) webRootWidth;
+            windowHeight = 1920;//(int) webRootHeight;
+        }
+
+        log.trace("windowSize: " + windowWidth + "," + windowHeight);
+
+        double xRatio = (double) (windowWidth * 1.0 / webRootWidth);
+        double yRatio = (double) (windowHeight * 1.0 / webRootHeight);
         int pointX = (int) ((webElementLocation.getX() + elementSize.getWidth() / 2.0));
         int pointY = (int) ((webElementLocation.getY() + elementSize.getHeight() / 2.0));
         Point tapPoint = new Point((int) (pointX * xRatio), (int) (pointY * yRatio));
 
         log.trace("tapPoint: " + tapPoint.getX() + "," + tapPoint.getY());
+        switchToNativeAppContext();
         TouchAction a = new TouchAction((AppiumDriver)getWebDriver());
         //a2.tap(((SeleniumElement) element).getUnderlyingWebElement()).perform();
         a.tap(tapPoint.getX(), tapPoint.getY()).perform();
+        switchToWebViewContext();
     }
 }

@@ -14,8 +14,6 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  */
 public abstract class MobileWebControlCommand extends WebControlCommand {
 
-    private IBy selector;
-
     /**
      * Initializes a new instance of the {@link MobileWebControlCommand} class.
      *
@@ -25,23 +23,6 @@ public abstract class MobileWebControlCommand extends WebControlCommand {
      */
     protected MobileWebControlCommand(String message, IBy selector, ICommandInitializer initializer) {
         super(message, selector, initializer);
-        this.selector = selector;
-    }
-
-    /**
-     * The method which provides the logic for the web element command.
-     *
-     * @param driver the framework abstraction facade
-     */
-    @Override
-    protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
-        IWebDriver webDriver = (IWebDriver) driver;
-        WebControl control = (WebControl) getCommandInitializer().findElement(driver, selector);
-        commandDelegate(webDriver, control);
     }
 
     /**

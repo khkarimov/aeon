@@ -2,6 +2,7 @@ package aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.mobile.*;
+import aeon.core.common.exceptions.NoAlertException;
 
 /**
  * Phone class.
@@ -66,5 +67,46 @@ public class Phone extends Browser {
      */
     public void lock(int seconds){
         info.getCommandExecutionFacade().execute(info, new MobileLockCommand(seconds));
+    }
+
+    /**
+     * Accepts modal for granting a permission if present.
+     */
+    public void acceptPermissionDialogIfPresent() {
+        handlePermissionDialogIfPresent(true);
+    }
+
+    /**
+     * Dismisses modal for granting a permission if present.
+     */
+    public void dismissPermissionDialogIfPresent() {
+        handlePermissionDialogIfPresent(false);
+    }
+
+    /**
+     * Accepts modal for granting a permission if present.
+     */
+    public void acceptPermissionDialog() {
+        handlePermissionDialog(true);
+    }
+
+    /**
+     * Dismisses modal for granting a permission if present.
+     */
+    public void dismissPermissionDialog() {
+        handlePermissionDialog(false);
+    }
+
+    private void handlePermissionDialogIfPresent(boolean accept){
+        try {
+            handlePermissionDialog(accept);
+        }
+        catch(NoAlertException e) {
+            // Intentionally ignore missing dialog
+        }
+    }
+
+    private void handlePermissionDialog(boolean accept){
+        info.getCommandExecutionFacade().execute(info, new AcceptOrDenyPermissionDialogIfPresentCommand(accept));
     }
 }

@@ -4,6 +4,7 @@ import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
+import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
@@ -64,10 +65,13 @@ public interface IMobileAppDriver extends IWebDriver {
     /**
      * Sets the date on a native date picker.
      *
-     * @param control The date control.
      * @param date The date to set.
      */
-    void setDate(WebControl control, DateTime date);
+    void setDate(DateTime date);
 
-    void mobileSet(WebControl control, WebSelectOption selectOption, String value);
+    void mobileSelect(MobileSelectOption selectOption, String value);
+
+    void acceptOrDismissPermissionDialog(boolean accept, boolean ignoreMissingDialog);
+
+    void mobileClick(WebControl control);
 }
