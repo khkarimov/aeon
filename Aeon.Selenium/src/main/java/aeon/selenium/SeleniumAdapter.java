@@ -834,30 +834,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         WebElement drop = ((SeleniumElement) dropElement).getUnderlyingWebElement();
         WebElement target = ((SeleniumElement) findElement(targetElement)).getUnderlyingWebElement();
 
-        // work around for marionette drive v.11.1
-        if (browserType == BrowserType.Firefox) {
-            Sleep.wait(1000);
-            Locatable dropLoc = (Locatable) drop;
-            Locatable targetLoc = (Locatable) target;
-            // Get the offset
-            int offset = Math.toIntExact((long) executeScript("var a = window.outerHeight - window.innerHeight; return a;"));
-
-            // Get element coordinates
-            org.openqa.selenium.Point dropPoint = dropLoc.getCoordinates().inViewPort();
-            org.openqa.selenium.Point targetPoint = targetLoc.getCoordinates().inViewPort();
-            MouseHelper.dragAndDrop(dropPoint.getX(), dropPoint.getY() + offset, targetPoint.getX(), targetPoint.getY() + offset);
-            return;
-        }
-
         Actions builder = new Actions(webDriver);
+
         builder.clickAndHold(drop).perform();
         Sleep.wait(250);
-        builder.release(target);
-        builder.perform();
-        /*(new Actions(webDriver)).dragAndDrop(
-                ((SeleniumElement) findElement(dropElement)).getUnderlyingWebElement(),
-                ((SeleniumElement) findElement(targetElement)).getUnderlyingWebElement())
-                .perform();*/
+        if (browserType == BrowserType.Firefox) {
+            scrollElementIntoView(targetElement);
+        }
+        builder.moveToElement(target).perform();
+        builder.release(target).perform();
     }
 
     /**
@@ -869,13 +854,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        if (this.browserType == BrowserType.Firefox) {
-            rightClickByJavaScript(element);
-            return;
-        }
-
         log.trace("new Actions(IWebDriver).ContextClick(IWebElement);");
 
+        if (browserType == BrowserType.Firefox) {
+            scrollElementIntoView(element);
+        }
         (new Actions(webDriver)).contextClick(
                 ((SeleniumElement) element).getUnderlyingWebElement())
                 .perform();
@@ -1028,17 +1011,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 
-        if (browserType == BrowserType.Firefox) {
-            // Get offset
-            int offset = Math.toIntExact((long) executeScript("var a = window.outerHeight - window.innerHeight; return a;"));
-            WebElement webElement = seleniumElement.getUnderlyingWebElement();
-            org.openqa.selenium.Point elementPoint = ((Locatable) webElement).getCoordinates().inViewPort();
-
-            MouseHelper.clickAndHold(elementPoint.getX(), elementPoint.getY() + offset, duration);
-            return;
-        }
-
         // click.
+        if (browserType == BrowserType.Firefox) {
+            scrollElementIntoView(seleniumElement);
+        }
         action.clickAndHold(seleniumElement.getUnderlyingWebElement()).perform();
 
         // Hold the click.
