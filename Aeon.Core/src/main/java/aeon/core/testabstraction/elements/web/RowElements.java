@@ -3,6 +3,9 @@ package aeon.core.testabstraction.elements.web;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IBy;
 
+/**
+ * The class for Row elements modeling.
+ */
 public abstract class RowElements extends WebElement {
 
     /**
