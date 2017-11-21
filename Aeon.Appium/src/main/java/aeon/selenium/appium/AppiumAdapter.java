@@ -179,8 +179,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAppAdapter 
                 // Break intentionally omitted
             case IOSHybridApp:
                 switchToNativeAppContext();
-                super.acceptAlert();
-                switchToWebViewContext();
+                try {
+                    super.acceptAlert();
+                }
+                finally {
+                    switchToWebViewContext();
+                }
                 break;
             default:
                 super.acceptAlert();

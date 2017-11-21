@@ -3,6 +3,7 @@ package aeon.core.testabstraction.models;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.mobile.*;
 import aeon.core.common.exceptions.NoAlertException;
+import org.openqa.selenium.WebDriverException;
 
 /**
  * Phone class.
@@ -101,7 +102,7 @@ public class Phone extends Browser {
         try {
             handlePermissionDialog(accept);
         }
-        catch(NoAlertException e) {
+        catch(NoAlertException | WebDriverException e) {
             // Intentionally ignore missing dialog
         }
     }
