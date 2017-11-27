@@ -457,26 +457,17 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
             chromeOptions.setBinary(chromeBinary);
         }
 
-        // DS - This is some ugly stuff. Couldn't find a better way...
-        Map<String, Object> chromeOptionsMap = null;
-        try {
-            Type type = new TypeToken<HashMap<String, Object>>() {
-            }.getType();
+//        // DS - This is some ugly stuff. Couldn't find a better way...
+//        chromeOptions.setExperimentalOption("pref", new HashMap<String, Object>() {{
+//            put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
+//        }} );
 
-            chromeOptionsMap = new Gson().fromJson(chromeOptions.toJson(), type);
-            chromeOptionsMap.put("prefs", new HashMap<String, Object>() {{
-                put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
-            }});
-
-            /*chromeOptionsMap.put("excludedSwitches", new ArrayList<String>() {{
-                add("test-type");
-            }});*/
-        } catch (IOException e) {
-            throw new UnableToCreateDriverException(e);
-        }
+        /*chromeOptionsMap.put("excludedSwitches", new ArrayList<String>() {{
+            add("test-type");
+        }});*/
 
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
+        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
         return capabilities;
     }
