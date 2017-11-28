@@ -384,7 +384,7 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
 
     private FirefoxOptions getFirefoxOptions() {
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.FIREFOX_BINARY, null);
-        if(binaryPath != null) {
+        if (binaryPath != null) {
             System.setProperty("webdriver.firefox.bin", binaryPath);
         }
 
