@@ -31,10 +31,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.internal.ElementScrollBehavior;
@@ -386,14 +383,16 @@ public final class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private FirefoxOptions getFirefoxOptions() {
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.FIREFOX_BINARY, null);
-        FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
-        firefoxOptions.setBinary(firefoxBinary);
-        log.info("firefox binary options: " + firefoxBinary.toString());
+        if(binaryPath != null) {
+            System.setProperty("webdriver.firefox.bin", binaryPath);
+        }
 
-        firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(Level.OFF);
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        log.info("firefox binary options: " + binaryPath);
+
+        firefoxOptions.merge(setProxySettings(getMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.WARN);
         return firefoxOptions;
     }
 
