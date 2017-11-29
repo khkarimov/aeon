@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.function.Function;
 
 /**
- * Created by DionnyS on 4/20/2016.
+ * Parent class for all commands that return a value.
  */
 public abstract class CommandWithReturn implements ICommand<Function<IDriver, Object>> {
 

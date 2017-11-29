@@ -1,6 +1,5 @@
 package aeon.core.testabstraction.product;
 
-import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +21,7 @@ public class Aeon {
      * @param browserType The new environment's browser.
      * @param <T> The launch type.
      * @return A type T launch.
+     * @deprecated Please use Aeon.launch(Class productClass) instead and provide the browser type via the configuration}
      */
     public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
         T product = null;
@@ -40,13 +40,10 @@ public class Aeon {
 
             return product;
         } catch (Exception e) {
-            if (product instanceof WebProduct && ((WebProduct) product).browser != null) {
-                try {
-                    ((WebProduct) product).browser.quit();
-                } catch (Exception exceptionToSuppress) {
-                    e.addSuppressed(exceptionToSuppress);
-                }
+            if (product != null) {
+                product.onLaunchFailure(e);
             }
+
             throw new RuntimeException(e);
         }
     }

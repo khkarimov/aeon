@@ -4,7 +4,7 @@ import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
 /**
- * Quits browser.
+ * Quits the browser (all windows).
  */
 public class QuitCommand extends Command {
 

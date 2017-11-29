@@ -1,6 +1,6 @@
 package aeon.core.testabstraction.models;
 
-import aeon.core.common.web.interfaces.IBy;
+import aeon.core.common.interfaces.IBy;
 import aeon.core.testabstraction.elements.Element;
 
 /**

@@ -1,4 +1,4 @@
 /**
- *  Contains the base model for page and browser objects.
+ *  Contains the base models for pages.
  * */
 package aeon.core.testabstraction.models;

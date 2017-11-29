@@ -1,0 +1,53 @@
+group 'SystemTests'
+version '0.0.1'
+apply plugin: 'java'
+compileTestJava.options.encoding = 'utf-8'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    seleniumVersion = '3.5.3'
+}
+
+clean {
+    delete 'log'
+    delete 'plugins'
+}
+
+dependencies {
+    compile project(':Aeon.Core.Web')
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
+
+    // Drivers
+    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+}
+
+test {
+    maxParallelForks = 4
+    useJUnit {
+        def includeList = System.getenv('tests.included.categories')
+        if (includeList != null)
+        {
+            def categories = includeList.split("\\s*(,|\\s)\\s*")
+            categories.each {category ->
+                includeCategories 'categories.' + category
+            }
+        }
+        def excludeList = System.getenv('tests.excluded.categories')
+        if (excludeList != null)
+        {
+            def categories = excludeList.split("\\s*(,|\\s)\\s*")
+            categories.each {category ->
+                excludeCategories 'categories.' + category
+            }
+        }
+    }
+}

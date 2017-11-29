@@ -1,7 +1,7 @@
 package aeon.core.framework.abstraction.controls;
 
 /**
- * Created by DionnyS on 4/20/2016.
+ * Base class for all controls.
  */
 public class Control {
 

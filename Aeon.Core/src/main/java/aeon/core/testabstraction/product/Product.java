@@ -1,7 +1,6 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.command.execution.AutomationInfo;
-import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
@@ -14,7 +13,6 @@ public abstract class Product {
 
     protected AutomationInfo automationInfo;
     protected Configuration configuration;
-    protected WebCommandExecutionFacade commandExecutionFacade;
 
     /**
      * Empty Constructor.
@@ -80,6 +78,15 @@ public abstract class Product {
     }
 
     /**
+     * Is called in case launching fails.
+     * Can be used for clean up logic.
+     *
+     * @param e Exception that caused the failure.
+     */
+    protected void onLaunchFailure(Exception e) {
+    }
+
+    /**
      * Create and returns and IAdapter given a plugin.
      *
      * @param   plugin  The Product's plugin to be returned.
@@ -90,9 +97,9 @@ public abstract class Product {
     }
 
     /**
-     * Returms the configuration of the Product.
+     * Returns the configuration of the Product.
      *
-     * @return The configration of the product.
+     * @return The configuration of the product.
      */
     protected Configuration getConfiguration() {
         return this.configuration;
