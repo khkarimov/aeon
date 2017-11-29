@@ -673,25 +673,27 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
-            //TODO(TOOL-6894): this work around needs to be investigated. It does not work for remote linux grids"
             log.trace("WebDriver.Manage().Window.maximize();");
 
-            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux) && isRemote
-                    && browserType.equals(BrowserType.Chrome)) {
-                log.trace("Skipping maximize for remote test on linux and chrome.");
-                return;
-            }
-            //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
-            if ((OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
-                    || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux))
-                    && browserType.equals(BrowserType.Chrome)) {
-                int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-                int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-                Point position = new Point(0, 0);
-                webDriver.manage().window().setPosition(position);
-                Dimension maximizedScreenSize =
-                        new Dimension(screenWidth, screenHeight);
-                webDriver.manage().window().setSize(maximizedScreenSize);
+            if (osIsMacOrLinux() && browserType.equals(BrowserType.Chrome)) {
+                //In the case of remote, current workaround doesnt work cause cannot get screensize
+                //so manually using the grid resolution for now.
+                if (isRemote) {
+                    log.trace("Setting manual size  for remote test on linux and chrome.");
+                    webDriver.manage().window().setPosition(new Point(0, 0));
+                    webDriver.manage().window().setSize(new Dimension(1024, 768));
+                } else {
+                    //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
+                    int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+                    int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+                    Point position = new Point(0, 0);
+                    webDriver.manage().window().setPosition(position);
+
+                    Dimension maximizedScreenSize =
+                            new Dimension(screenWidth, screenHeight);
+                    log.trace(String.format("Using maximize workaround on chrome with resolution %s", maximizedScreenSize));
+                    webDriver.manage().window().setSize(maximizedScreenSize);
+                }
             } else {
                 webDriver.manage().window().maximize();
             }
@@ -1927,4 +1929,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             throw new NoAlertException(e);
         }
     }
+
+    private boolean osIsMacOrLinux(){
+        return OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+                || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux);
+    }
 }
+
