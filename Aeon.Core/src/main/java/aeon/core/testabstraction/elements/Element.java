@@ -1,6 +1,6 @@
 package aeon.core.testabstraction.elements;
 
-import aeon.core.common.web.interfaces.IBy;
+import aeon.core.common.interfaces.IBy;
 
 /**
  * The class for elements modeling.

@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.function.Consumer;
 
 /**
- * A command.
+ * Parent class for all commands (that don't return anything).
  */
 public abstract class Command implements ICommand<Consumer<IDriver>> {
 
