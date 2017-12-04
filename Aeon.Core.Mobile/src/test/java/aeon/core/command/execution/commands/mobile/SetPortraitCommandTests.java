@@ -1,6 +1,5 @@
 package aeon.core.command.execution.commands.mobile;
 
-
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -19,8 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MobileHideKeyboardCommandTests {
-
+public class SetPortraitCommandTests {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
@@ -35,11 +33,11 @@ public class MobileHideKeyboardCommandTests {
     @Mock
     private IByWeb selector;
 
-    private MobileHideKeyboardCommand command;
+    private SetPortraitCommand command;
 
     @Before
     public void setUp() {
-        command = new MobileHideKeyboardCommand();
+        command = new SetPortraitCommand();
     }
 
     @Test
@@ -53,9 +51,6 @@ public class MobileHideKeyboardCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).mobileHideKeyboard();
+        verify(driver, times(1)).mobileSetPortrait();
     }
 }
-
-
-

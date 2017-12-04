@@ -65,6 +65,7 @@ public class SeleniumConfiguration extends WebConfiguration {
     @Override
     protected List<Field> getConfigurationFields() {
         List<Field> keys = new ArrayList<>();
+        keys.addAll(super.getConfigurationFields());
         keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getDeclaredFields()));
         return keys;
     }

@@ -2,10 +2,10 @@ package aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.mobile.*;
-import aeon.core.common.exceptions.NoAlertException;
+import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Phone class.
+ * Provides methods for interacting with the mobile device.
  */
 public class MobileDevice extends Browser {
 
@@ -26,21 +26,21 @@ public class MobileDevice extends Browser {
      * Hides the keyboard on a mobile device.
      */
     public void hideKeyboard() {
-        info.getCommandExecutionFacade().execute(info, new MobileHideKeyboardCommand());
+        info.getCommandExecutionFacade().execute(info, new HideKeyboardCommand());
     }
 
     /**
      * Sets the mobile device orientation to landscape mode.
      */
     public void setLandscape() {
-        info.getCommandExecutionFacade().execute(info, new MobileSetLandscapeCommand());
+        info.getCommandExecutionFacade().execute(info, new SetLandscapeCommand());
     }
 
     /**
      * Sets the mobile device orientation to portrait mode.
      */
     public void setPortrait() {
-        info.getCommandExecutionFacade().execute(info, new MobileSetPortraitCommand());
+        info.getCommandExecutionFacade().execute(info, new SetPortraitCommand());
     }
 
     /**
@@ -51,14 +51,14 @@ public class MobileDevice extends Browser {
      * @param altitude The GPS altitude.
      */
     public void setGeoLocation(double latitude, double longitude, double altitude) {
-        info.getCommandExecutionFacade().execute(info, new MobileSetGeoLocationCommand(latitude, longitude, altitude));
+        info.getCommandExecutionFacade().execute(info, new SetGeoLocationCommand(latitude, longitude, altitude));
     }
 
     /**
      * Locks and immediately unlocks a mobile device.
      */
     public void lock() {
-        info.getCommandExecutionFacade().execute(info, new MobileLockCommand());
+        info.getCommandExecutionFacade().execute(info, new LockCommand());
     }
 
     /**
@@ -66,7 +66,7 @@ public class MobileDevice extends Browser {
      * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
     public void lock(int seconds){
-        info.getCommandExecutionFacade().execute(info, new MobileLockCommand(seconds));
+        info.getCommandExecutionFacade().execute(info, new LockCommand(seconds));
     }
 
     /**
@@ -108,5 +108,52 @@ public class MobileDevice extends Browser {
 
     private void handlePermissionDialog(boolean accept){
         info.getCommandExecutionFacade().execute(info, new AcceptOrDenyPermissionDialogIfPresentCommand(accept));
+    }
+
+    /**
+     * Switches to the web view that contains a specific element.
+     *
+     * @param selector The element to look for.
+     * @deprecated This might be replaced with an implicit switching logic. Please use with caution.
+     */
+    public void switchToWebView(IByWeb selector) {
+        info.getCommandExecutionFacade().execute(info, new SwitchToWebViewCommand(selector));
+    }
+
+    /**
+     * Switches to the main web view.
+     *
+     * @deprecated This might be replaced with an implicit switching logic. Please use with caution.
+     */
+    public void switchToMainWebView() {
+        info.getCommandExecutionFacade().execute(info, new SwitchToWebViewCommand(null));
+    }
+
+    /**
+     * Swipe screen to the left.
+     */
+    public void swipeLeft() {
+        info.getCommandExecutionFacade().execute(info, new SwipeCommand(true, true));
+    }
+
+    /**
+     * Swipe screen to the right.
+     */
+    public void swipeRight() {
+        info.getCommandExecutionFacade().execute(info, new SwipeCommand(true, false));
+    }
+
+    /**
+     * Swipe screen to the right.
+     */
+    public void swipeDown() {
+        info.getCommandExecutionFacade().execute(info, new SwipeCommand(false, true));
+    }
+
+    /**
+     * Swipe screen up.
+     */
+    public void swipeUp() {
+        info.getCommandExecutionFacade().execute(info, new SwipeCommand(false, false));
     }
 }

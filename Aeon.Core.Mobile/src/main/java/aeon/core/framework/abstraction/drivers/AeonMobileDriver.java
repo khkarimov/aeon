@@ -1,6 +1,7 @@
 package aeon.core.framework.abstraction.drivers;
 
 import aeon.core.common.mobile.selectors.MobileSelectOption;
+import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IMobileAdapter;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -94,5 +95,15 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
     @Override
     public void mobileClick(WebControl control) {
         adapter.mobileClick(control);
+    }
+
+    @Override
+    public void switchToWebView(IByWeb selector) {
+        adapter.switchToWebView(selector);
+    }
+
+    @Override
+    public void swipe(boolean horizontally, boolean leftOrDown) {
+        adapter.swipe(horizontally, leftOrDown);
     }
 }

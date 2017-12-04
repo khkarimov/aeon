@@ -19,7 +19,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MobileLockCommandTests {
+public class LockCommandTests {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
@@ -34,11 +34,11 @@ public class MobileLockCommandTests {
     @Mock
     private IByWeb selector;
 
-    private MobileLockCommand command;
+    private LockCommand command;
 
     @Before
     public void setUp() {
-        command = new MobileLockCommand();
+        command = new LockCommand();
     }
 
     @Test

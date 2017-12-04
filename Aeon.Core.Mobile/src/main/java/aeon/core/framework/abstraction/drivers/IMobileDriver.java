@@ -1,6 +1,7 @@
 package aeon.core.framework.abstraction.drivers;
 
 import aeon.core.common.mobile.selectors.MobileSelectOption;
+import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import org.joda.time.DateTime;
 
@@ -73,4 +74,19 @@ public interface IMobileDriver extends IWebDriver {
      * @param control The element to click on.
      */
     void mobileClick(WebControl control);
+
+    /**
+     * Switch to a web view that contains the specified element.
+     *
+     * @param selector Selector of the element to look for.
+     */
+    void switchToWebView(IByWeb selector);
+
+    /**
+     * Swipe screen horizontally or vertically.
+     *
+     * @param horizontally Whether to swipe horizontally or vertically.
+     * @param leftOrDown Whether to swipe left (when horizontally is true) or down (when horizontally is false).
+     */
+    void swipe(boolean horizontally, boolean leftOrDown);
 }
