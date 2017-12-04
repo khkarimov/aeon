@@ -1,5 +1,7 @@
 package aeon.selenium.appium;
 
+import aeon.core.common.exceptions.NoSuchElementException;
+import aeon.core.common.exceptions.NoSuchElementsException;
 import aeon.core.common.mobile.interfaces.IByMobile;
 import aeon.core.common.mobile.interfaces.IByMobileXPath;
 import aeon.core.common.mobile.selectors.ByMobile;
@@ -25,6 +27,7 @@ import org.openqa.selenium.html5.Location;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Mobile adapter for Appium.
@@ -120,6 +123,42 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     }
 
     @Override
+    public void swipe(boolean horizontally, boolean leftOrDown) {
+        switchToNativeAppContext();
+        Dimension screenSize = getMobileWebDriver().manage().window().getSize();
+
+        int width = screenSize.getWidth();
+        int height = screenSize.getHeight();
+
+        log.trace("Screen size: " + width + ", " + height);
+
+        int startX = (int) (width * 0.78);
+        int startY = height / 2;
+        if (!leftOrDown) {
+            startX = (int) (width * 0.22);
+        }
+
+        if (!horizontally) {
+            startX = width / 2;
+            startY = (int) (height * 0.25);
+
+            if (!leftOrDown) {
+                startY = (int) (height * 0.75);
+            }
+        }
+
+        log.trace("Swipe start point: " + startX + ", " + startY);
+
+        TouchAction action = new TouchAction(getMobileWebDriver());
+        action.press(startX, startY)
+                .moveTo(width - startX * 2, height - startY * 2)
+                .release()
+                .perform();
+
+        switchToWebViewContext();
+    }
+
+    @Override
     public void setDate(DateTime date) {
 
         if (browserType == BrowserType.AndroidHybridApp){
@@ -150,6 +189,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             switchToWebViewContext();
         } else {
             switchToNativeAppContext();
+            WebControl element = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
+            ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(value);
             click(findElement(ByMobile.accessibilityId("Done"), false), false);
             switchToWebViewContext();
         }
@@ -226,6 +267,41 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void mobileClick(WebControl control) {
         tapOnControl(control);
+    }
+
+    @Override
+    public void switchToWebView(IByWeb selector) {
+
+        if (selector == null) {
+            switchToWebViewContext();
+
+            return;
+        }
+
+        log.trace("switchToWebView(" + selector + ")");
+        Set<String> availableContexts = getMobileWebDriver().getContextHandles();
+        log.trace("Available contexts: " + String.join(", ", availableContexts));
+        if (availableContexts.size() > 2) {
+            for (String context : availableContexts) {
+                if (!context.contains("NATIVE_APP") && !context.equals(this.context) && context.startsWith("WEBVIEW")) {
+                    log.trace("Switching to context " + context);
+                    getMobileWebDriver().context(context);
+                    log.trace("Switched to context");
+
+                    try {
+                        findElement(selector);
+                    } catch (NoSuchElementException | NoSuchElementsException e) {
+                        log.trace(e.getMessage());
+
+                        continue;
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        throw new RuntimeException("Unable to find matching web view");
     }
 
     /**

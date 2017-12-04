@@ -19,43 +19,43 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MobileSetGeoLocationCommandTests {
-    private MobileSetGeoLocationCommand command;
+public class HideKeyboardCommandTests {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Mock
-    private IByWeb selector;
-    @Mock
-    private ICommandInitializer initializer;
-    @Mock
-    private IMobileDriver driver;
     @Mock
     private WebControl control;
     @Mock
-    private Consumer<IDriver> action;
+    private Consumer<IDriver> driverConsumer;
+    @Mock
+    private IMobileDriver driver;
+    @Mock
+    private ICommandInitializer commandInitializer;
 
-    private int latitude = 1;
-    private int longitude = 2;
-    private int altitude = 3;
+    @Mock
+    private IByWeb selector;
+
+    private HideKeyboardCommand command;
 
     @Before
-    public void setup() {
-        command = new MobileSetGeoLocationCommand(latitude, longitude, altitude);
+    public void setUp() {
+        command = new HideKeyboardCommand();
     }
 
     @Test
-    public void commandDelegate() {
-        // Arrange
-        when(initializer.setContext()).thenReturn(action);
-        when(initializer.findElement(driver, selector)).thenReturn(control);
+    public void notVisibleCommand_CallsExecute() {
+        //Arrange
+        when(commandInitializer.setContext()).thenReturn(driverConsumer);
+        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
-        // Act
+        //Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
 
-        // Assert
-        verify(driver, times(1)).mobileSetGeoLocation(latitude, longitude, altitude);
+        //Assert
+        verify(driver, times(1)).mobileHideKeyboard();
     }
 }
+
+
+

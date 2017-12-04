@@ -913,8 +913,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The element to perform the click on.
      */
     public void click(WebControl element) {
+        // TODO(patricka) Check whether the wrapped click is still necessary.
         // check if wrapped (Might affect three browsers)
-        String script = String.format(
+        /*String script = String.format(
                 "var rects = %1$s[0].getClientRects(); return rects.length;", element.getSelector().toJQuery());
 
         long rectsLength = (long) executeScript(script);
@@ -928,9 +929,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
-        } else {
+        } else {*/
             click(element, moveMouseToOrigin);
-        }
+        //}
     }
 
     // Linked to selenium issue https://code.google.com/p/selenium/issues/detail?id=6702 and https://code.google.com/p/selenium/issues/detail?id=4618
@@ -1644,12 +1645,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             return;
         }
         if (option == ComparisonOption.Text) {
-            if (!like(value, ((SeleniumElement) element).getText(), false)) {
-                throw new ValuesAreNotAlikeException(value, ((SeleniumElement) element).getText());
+            String actualValue = ((SeleniumElement) element).getText();
+            if (!like(actualValue, value, false)) {
+                throw new ValuesAreNotAlikeException(actualValue, value);
             }
         } else {
-            if (!like(value, ((SeleniumElement) element).getAttribute(attribute), false)) {
-                throw new ValuesAreNotAlikeException(value, ((SeleniumElement) element).getAttribute(attribute));
+            String actualValue = ((SeleniumElement) element).getAttribute(attribute);
+            if (!like(actualValue, value, false)) {
+                throw new ValuesAreNotAlikeException(actualValue, value);
             }
         }
     }

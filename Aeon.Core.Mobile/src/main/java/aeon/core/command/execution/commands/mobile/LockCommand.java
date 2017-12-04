@@ -6,23 +6,23 @@ import aeon.core.framework.abstraction.drivers.IMobileDriver;
 /**
  * Locks a mobile device.
  */
-public class MobileLockCommand extends MobileCommand {
+public class LockCommand extends MobileCommand {
 
     private int seconds;
 
     /**
-     * Initializes a new instance of the {@link MobileLockCommand} class.
+     * Initializes a new instance of the {@link LockCommand} class.
      */
-    public MobileLockCommand() {
+    public LockCommand() {
         super(Resources.getString("MobileLockCommand_Info"));
         seconds = 0;
     }
 
     /**
-     * Initializes a new instance of the {@link MobileLockCommand} class.
+     * Initializes a new instance of the {@link LockCommand} class.
      * @param seconds Number of seconds the mobile device screen is locked for.
      */
-    public MobileLockCommand(int seconds) {
+    public LockCommand(int seconds) {
         super(Resources.getString("MobileLockCommand_Info"));
         this.seconds = seconds;
     }

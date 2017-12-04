@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-public class MobileSetLandscapeCommandTests {
+public class SetLandscapeCommandTests {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
@@ -34,11 +34,11 @@ public class MobileSetLandscapeCommandTests {
     @Mock
     private IByWeb selector;
 
-    private MobileSetLandscapeCommand command;
+    private SetLandscapeCommand command;
 
     @Before
     public void setUp() {
-        command = new MobileSetLandscapeCommand();
+        command = new SetLandscapeCommand();
     }
 
     @Test

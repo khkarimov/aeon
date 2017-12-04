@@ -1,5 +1,6 @@
 package aeon.core.command.execution.commands.mobile;
 
+
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -18,39 +19,43 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MobileSetPortraitCommandTests {
+public class SetGeoLocationCommandTests {
+    private SetGeoLocationCommand command;
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-    @Mock
-    private WebControl control;
-    @Mock
-    private Consumer<IDriver> driverConsumer;
-    @Mock
-    private IMobileDriver driver;
-    @Mock
-    private ICommandInitializer commandInitializer;
 
     @Mock
     private IByWeb selector;
+    @Mock
+    private ICommandInitializer initializer;
+    @Mock
+    private IMobileDriver driver;
+    @Mock
+    private WebControl control;
+    @Mock
+    private Consumer<IDriver> action;
 
-    private MobileSetPortraitCommand command;
+    private int latitude = 1;
+    private int longitude = 2;
+    private int altitude = 3;
 
     @Before
-    public void setUp() {
-        command = new MobileSetPortraitCommand();
+    public void setup() {
+        command = new SetGeoLocationCommand(latitude, longitude, altitude);
     }
 
     @Test
-    public void notVisibleCommand_CallsExecute() {
-        //Arrange
-        when(commandInitializer.setContext()).thenReturn(driverConsumer);
-        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
+    public void commandDelegate() {
+        // Arrange
+        when(initializer.setContext()).thenReturn(action);
+        when(initializer.findElement(driver, selector)).thenReturn(control);
 
-        //Act
+        // Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
 
-        //Assert
-        verify(driver, times(1)).mobileSetPortrait();
+        // Assert
+        verify(driver, times(1)).mobileSetGeoLocation(latitude, longitude, altitude);
     }
 }
