@@ -6,19 +6,19 @@ import aeon.core.framework.abstraction.drivers.IMobileDriver;
 /**
  * Sets the GPS location on a mobile device.
  */
-public class MobileSetGeoLocationCommand extends MobileCommand {
+public class SetGeoLocationCommand extends MobileCommand {
 
     private double latitude;
     private double longitude;
     private double altitude;
 
     /**
-     * Initializes a new instance of the {@link MobileSetGeoLocationCommand} class.
+     * Initializes a new instance of the {@link SetGeoLocationCommand} class.
      * @param latitude Latitude Coordinate
      * @param longitude Longitude Coordinate
      * @param altitude Altitude
      */
-    public MobileSetGeoLocationCommand(double latitude, double longitude, double altitude) {
+    public SetGeoLocationCommand(double latitude, double longitude, double altitude) {
         super(Resources.getString("MobileSetGeoLocationCommand_Info"));
         this.latitude = latitude;
         this.longitude = longitude;

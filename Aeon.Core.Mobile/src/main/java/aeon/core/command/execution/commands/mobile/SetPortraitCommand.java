@@ -4,15 +4,15 @@ import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IMobileDriver;
 
 /**
- * Hides the keyboard on a mobile device.
+ * Sets the mobile device's orientation to portrait.
  */
-public class MobileHideKeyboardCommand extends MobileCommand {
+public class SetPortraitCommand extends MobileCommand {
 
     /**
-     * Initializes a new instance of the {@link MobileHideKeyboardCommand} class.
+     * Initializes a new instance of the {@link SetPortraitCommand} class.
      */
-    public MobileHideKeyboardCommand() {
-        super(Resources.getString("MobileHideKeyboardCommand_Info"));
+    public SetPortraitCommand() {
+        super(Resources.getString("MobileSetPortraitCommand_Info"));
     }
 
     /**
@@ -20,6 +20,6 @@ public class MobileHideKeyboardCommand extends MobileCommand {
      */
     @Override
     protected void driverDelegate(IMobileDriver driver) {
-        driver.mobileHideKeyboard();
+        driver.mobileSetPortrait();
     }
 }

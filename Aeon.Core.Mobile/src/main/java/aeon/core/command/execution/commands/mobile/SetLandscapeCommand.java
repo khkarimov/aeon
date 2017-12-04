@@ -6,12 +6,12 @@ import aeon.core.framework.abstraction.drivers.IMobileDriver;
 /**
  * Sets the mobile device's orientation to landscape.
  */
-public class MobileSetLandscapeCommand extends MobileCommand {
+public class SetLandscapeCommand extends MobileCommand {
 
     /**
-     * Initializes a new instance of the {@link MobileSetLandscapeCommand} class.
+     * Initializes a new instance of the {@link SetLandscapeCommand} class.
      */
-    public MobileSetLandscapeCommand() {
+    public SetLandscapeCommand() {
         super(Resources.getString("MobileSetLandscapeCommand_Info"));
     }
 
