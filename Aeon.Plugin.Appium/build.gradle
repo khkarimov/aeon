@@ -1,0 +1,83 @@
+def baseProjectName = 'Aeon.Plugin.Appium'
+def baseProjectDescription = 'Aeon Appium Plugin'
+def base = baseProjectName
+
+group 'aeon'
+version '0.4.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    aeon
+    compile.extendsFrom(aeon)
+}
+
+dependencies {
+    compile project(':Aeon.Core.Mobile')
+    compile project(':Aeon.Plugin.Selenium')
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'AppiumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'aeon.selenium.aapium.AppiumPlugin'
+    }
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'AppiumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'aeon.selenium.appium.AppiumPlugin'
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}
+
+task buildPlugin(type: Jar) {
+    group 'build'
+    baseName = base
+    version = version
+    into('classes') {
+        with jar
+    }
+    extension('zip')
+}
+
+jar.finalizedBy(buildPlugin)
+
+apply plugin: "com.jfrog.artifactory"
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.appium'
+        }
+    }
+}
+

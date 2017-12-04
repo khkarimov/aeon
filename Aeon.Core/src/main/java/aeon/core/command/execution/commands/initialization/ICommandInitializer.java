@@ -1,6 +1,6 @@
 package aeon.core.command.execution.commands.initialization;
 
-import aeon.core.common.web.interfaces.IBy;
+import aeon.core.common.interfaces.IBy;
 import aeon.core.framework.abstraction.controls.Control;
 import aeon.core.framework.abstraction.drivers.IDriver;
 

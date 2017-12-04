@@ -2,7 +2,7 @@ package aeon.core.testabstraction.product;
 
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
-import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.core.framework.abstraction.drivers.IDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +40,7 @@ public class Configuration {
      * @param <D> AeonWebDriver.class.
      * @param <A> SeleniumAdapter.class.
      */
-    public <D extends IWebDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) {
+    public <D extends IDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) {
         this.driver = driver;
         this.adapter = adapter;
         properties = new Properties();
@@ -61,6 +61,7 @@ public class Configuration {
                 throw new IOException("No aeon.properties file was found.");
             }
             properties.load(inAeon);
+            loadModuleSettings();
             loadPluginSettings();
             if (inConfig != null) {
                 properties.load(inConfig);
@@ -76,6 +77,14 @@ public class Configuration {
         }
 
         setProperties();
+    }
+
+    /**
+     * Loads settings specific to a module.
+     *
+     * @throws IOException Is thrown if a settings file could not be found or read.
+     */
+    protected void loadModuleSettings() throws IOException {
     }
 
     /**
@@ -218,13 +227,14 @@ public class Configuration {
      *
      * @throws IOException If inputs are incorrect.
      */
-    public void loadPluginSettings() throws IOException {
+    protected void loadPluginSettings() throws IOException {
     }
 
     /**
      * Get the type of browser.
      *
      * @return The {@link BrowserType} for the the configuration.
+     * @deprecated Use WebConfiguration.getBrowserType() instead.
      */
     public BrowserType getBrowserType() {
         return browserType;
@@ -234,6 +244,7 @@ public class Configuration {
      * Set the type of browser.
      *
      * @param browserType The {@link BrowserType} for the configuration.
+     * @deprecated Use WebConfiguration.setBrowserType instead.
      */
     public void setBrowserType(BrowserType browserType) {
         this.browserType = browserType;
@@ -321,13 +332,10 @@ public class Configuration {
      */
     public static class Keys {
 
-        public static final String WAIT_FOR_AJAX_RESPONSES = "aeon.wait_for_ajax_responses";
+        /**
+         * @deprecated Use WebConfiguration.Keys.BROWSER instead
+         */
         public static final String BROWSER = "aeon.browser";
-        public static final String ENVIRONMENT = "aeon.environment";
-        public static final String PROTOCOL = "aeon.protocol";
         public static final String TIMEOUT = "aeon.timeout";
-        public static final String AJAX_TIMEOUT = "aeon.timeout.ajax";
-        public static final String MAXIMIZE_BROWSER = "aeon.browser.maximize";
-        public static final String SCROLL_ELEMENT_INTO_VIEW = "aeon.scroll_element_into_view";
     }
 }
