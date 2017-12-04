@@ -9,10 +9,6 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    seleniumVersion = '3.7.1'
-}
-
 clean {
     delete 'log'
     delete 'plugins'
@@ -22,12 +18,7 @@ dependencies {
     compile project(':Aeon.Core.Web')
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
 
-    // Drivers
-    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    testCompile 'junit:junit:4.12'
 }
 
 test {
