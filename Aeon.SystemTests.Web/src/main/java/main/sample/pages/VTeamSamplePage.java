@@ -27,6 +27,7 @@ public class VTeamSamplePage extends Page {
     public Button start;
     public TextBox alertTitleTextBox;
     public ListItem draggableListItem;
+    public ListItem draggedListItem;
     public Label checkboxLabel;
     public Link tryLink;
     public Select dropDown;
@@ -68,6 +69,8 @@ public class VTeamSamplePage extends Page {
 
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
         draggableListItem = new ListItem(info, By.cssSelector("li[id='node1']"));
+        draggedListItem = new ListItem(info, By.cssSelector("ul[id='box2'] li[id='node1']"));
+
         checkbox100 = new Checkbox(info, By.cssSelector("input[id='checkbox100']"));
         div = new WebElement(info, By.cssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
         popupButton = new Button(info, By.cssSelector("a[id='popup-button']"));

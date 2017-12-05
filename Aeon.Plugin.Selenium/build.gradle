@@ -3,7 +3,6 @@ def baseProjectDescription = 'Aeon Selenium Plugin'
 def base = baseProjectName
 
 group 'aeon'
-version '0.4.0'
 
 apply plugin: 'java'
 
@@ -19,7 +18,7 @@ configurations {
 }
 
 ext {
-    seleniumVersion = '3.5.3'
+    seleniumVersion = '3.8.1'
     appiumVersion = "5.0.2"
 }
 

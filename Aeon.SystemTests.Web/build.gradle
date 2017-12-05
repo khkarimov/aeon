@@ -1,5 +1,5 @@
-group 'SystemTests'
-version '0.0.1'
+group 'aeon'
+
 apply plugin: 'java'
 compileTestJava.options.encoding = 'utf-8'
 
@@ -10,7 +10,7 @@ repositories {
 }
 
 ext {
-    seleniumVersion = '3.5.3'
+    seleniumVersion = '3.8.1'
 }
 
 clean {
@@ -28,6 +28,8 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+
+    testCompile 'junit:junit:4.12'
 }
 
 test {

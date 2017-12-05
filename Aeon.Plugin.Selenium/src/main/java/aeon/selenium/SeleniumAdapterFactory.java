@@ -33,10 +33,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.internal.ElementScrollBehavior;
@@ -391,7 +388,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 if (crossWalkPatch && !appPackage.isEmpty()) {
                     String androidDeviceSocket = appPackage + "_devtools_remote";
                     desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
-                    ChromeOptions chromeOptions = new ChromeOptions();
+                    LegacyChromeOptions chromeOptions = new LegacyChromeOptions();
                     chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
                     desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 }
@@ -439,14 +436,16 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private FirefoxOptions getFirefoxOptions() {
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
         String binaryPath = configuration.getString(SeleniumConfiguration.Keys.FIREFOX_BINARY, null);
-        FirefoxBinary firefoxBinary = (binaryPath != null) ? new FirefoxBinary(new File(binaryPath)) : new FirefoxBinary();
-        firefoxOptions.setBinary(firefoxBinary);
-        log.info("firefox binary options: " + firefoxBinary.toString());
+        if (binaryPath != null) {
+            System.setProperty("webdriver.firefox.bin", binaryPath);
+        }
 
-        firefoxOptions.addCapabilities(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(Level.OFF);
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        log.info("firefox binary options: " + binaryPath);
+
+        firefoxOptions.merge(setProxySettings(getMarionetteCapabilities(), proxyLocation));
+        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.TRACE);
         return firefoxOptions;
     }
 
@@ -510,26 +509,17 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             chromeOptions.setBinary(chromeBinary);
         }
 
-        // DS - This is some ugly stuff. Couldn't find a better way...
-        Map<String, Object> chromeOptionsMap = null;
-        try {
-            Type type = new TypeToken<HashMap<String, Object>>() {
-            }.getType();
+//        // DS - This is some ugly stuff. Couldn't find a better way...
+//        chromeOptions.setExperimentalOption("pref", new HashMap<String, Object>() {{
+//            put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
+//        }} );
 
-            chromeOptionsMap = new Gson().fromJson(chromeOptions.toJson(), type);
-            chromeOptionsMap.put("prefs", new HashMap<String, Object>() {{
-                put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
-            }});
-
-            /*chromeOptionsMap.put("excludedSwitches", new ArrayList<String>() {{
-                add("test-type");
-            }});*/
-        } catch (IOException e) {
-            throw new UnableToCreateDriverException(e);
-        }
+        /*chromeOptionsMap.put("excludedSwitches", new ArrayList<String>() {{
+            add("test-type");
+        }});*/
 
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
+        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
         return capabilities;
     }

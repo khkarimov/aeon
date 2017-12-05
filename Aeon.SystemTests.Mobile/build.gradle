@@ -1,5 +1,4 @@
 group 'aeon'
-version '0.4.0'
 
 apply plugin: 'java'
 

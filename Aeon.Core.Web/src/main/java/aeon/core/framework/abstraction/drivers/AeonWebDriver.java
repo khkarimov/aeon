@@ -336,11 +336,6 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public void setAuthenticationCredentials(String setUsername, String setPassowrd) {
-        adapter.setAuthenticationCredentials(setUsername, setPassowrd);
-    }
-
-    @Override
     public void setBodyValueByJavaScript(WebControl element, String value) {
         adapter.setBodyValueByJavaScript(element, value);
     }

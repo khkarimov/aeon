@@ -1,5 +1,6 @@
 package tests;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -7,6 +8,7 @@ public class MouseTests extends SampleBaseTest {
     @Test
     public void testClickAndHold() {
         product.startPage.dateLabel.clickAndHold(5000);
+        product.startPage.reactionLabel.is("mouse held for 5000");
     }
 
     @Test
@@ -20,14 +22,15 @@ public class MouseTests extends SampleBaseTest {
     @Test
     public void testDragAndDrop() {
         product.browser.goToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
+        product.startPage.draggedListItem.notExists();
         product.startPage.draggableListItem.dragAndDrop("ul[id='box2']");
+        product.startPage.draggedListItem.exists();
     }
 
     @Test
     public void testRightClick() {
         product.startPage.dateLabel.rightClick();
-        String validationText = product.startPage.reactionLabel.getElementAttribute("textContent").toString();
-        assert(validationText.equals("right click"));
+        product.startPage.reactionLabel.is("right click");
     }
 
     @Test

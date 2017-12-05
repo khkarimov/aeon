@@ -3,7 +3,6 @@ def baseProjectDescription = 'Aeon Appium Plugin'
 def base = baseProjectName
 
 group 'aeon'
-version '0.4.0'
 
 apply plugin: 'java'
 
@@ -57,18 +56,6 @@ task fatJar(type: Jar) {
     with jar
 }
 
-task buildPlugin(type: Jar) {
-    group 'build'
-    baseName = base
-    version = version
-    into('classes') {
-        with jar
-    }
-    extension('zip')
-}
-
-jar.finalizedBy(buildPlugin)
-
 apply plugin: "com.jfrog.artifactory"
 apply plugin: 'maven-publish'
 
@@ -80,4 +67,3 @@ publishing {
         }
     }
 }
-
