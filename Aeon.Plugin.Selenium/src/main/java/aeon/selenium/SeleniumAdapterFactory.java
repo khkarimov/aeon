@@ -388,7 +388,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 if (crossWalkPatch && !appPackage.isEmpty()) {
                     String androidDeviceSocket = appPackage + "_devtools_remote";
                     desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
-                    ChromeOptions chromeOptions = new ChromeOptions();
+                    LegacyChromeOptions chromeOptions = new LegacyChromeOptions();
                     chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
                     desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 }
