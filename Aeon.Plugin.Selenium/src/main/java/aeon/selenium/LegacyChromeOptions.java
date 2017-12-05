@@ -27,3 +27,4 @@ public class LegacyChromeOptions extends ChromeOptions {
         return Collections.unmodifiableMap(toReturn);
     }
 }
+
