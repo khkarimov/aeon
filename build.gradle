@@ -31,6 +31,8 @@ assemble.finalizedBy(CopySeleniumPlugin)
 allprojects {
     version '0.4.0'
 
+    apply plugin: 'maven-publish'
+
     apply plugin: 'checkstyle'
     checkstyle {
         configFile = new File(rootDir, "checkstyle.xml")
