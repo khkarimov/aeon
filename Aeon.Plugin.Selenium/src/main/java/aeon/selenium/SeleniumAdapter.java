@@ -28,7 +28,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -1119,10 +1118,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 }
             } catch (NoSuchElementException e) {
                 elementFound = false;
-            } finally {
-                if (elementFound) {
-                    throw new ElementHasOptionException(desiredOption);
-                }
+            }
+            if (elementFound) {
+                throw new ElementHasOptionException(desiredOption);
             }
         }
     }

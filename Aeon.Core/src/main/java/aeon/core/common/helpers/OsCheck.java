@@ -18,11 +18,11 @@ public final class OsCheck {
     public static OSType getOperatingSystemType() {
         if (detectedOS == null) {
             String os = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
-            if ((os.indexOf("mac") >= 0) || (os.indexOf("darwin") >= 0)) {
+            if ((os.contains("mac") || os.contains("darwin"))) {
                 detectedOS = OSType.MacOS;
-            } else if (os.indexOf("win") >= 0) {
+            } else if (os.contains("win")) {
                 detectedOS = OSType.Windows;
-            } else if (os.indexOf("nux") >= 0) {
+            } else if (os.contains("nux")) {
                 detectedOS = OSType.Linux;
             } else {
                 detectedOS = OSType.Other;

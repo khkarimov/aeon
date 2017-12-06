@@ -3,7 +3,6 @@ package aeon.selenium;
 import aeon.core.common.Capability;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.ConfigurationException;
-import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.exceptions.UnsupportedPlatformException;
 import aeon.core.common.helpers.OsCheck;
 import aeon.core.common.helpers.Process;
@@ -16,18 +15,13 @@ import aeon.core.testabstraction.product.Configuration;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -36,6 +30,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -44,14 +39,12 @@ import org.pf4j.Extension;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 /**
  * The driver factory for Web.
@@ -153,10 +146,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 if (seleniumHubUrl != null) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
-                    DesiredCapabilities capabilities = getChromeOptions();
-                    DesiredCapabilities desiredCapabilities = setProxySettings(capabilities, proxyLocation);
+                    ChromeOptions chromeOptions = getChromeOptions();
+                    chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
                     System.setProperty("webdriver.chrome.driver", chromeDirectory);
-                    driver = new ChromeDriver(desiredCapabilities);
+                    driver = new ChromeDriver(chromeOptions);
                 }
                 break;
 
@@ -165,9 +158,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
-                    DesiredCapabilities capabilities = getInternetExplorerCapabilities(ensureCleanEnvironment, proxyLocation);
+                    InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
                     System.setProperty("webdriver.ie.driver", ieDirectory);
-                    driver = new InternetExplorerDriver(capabilities);
+                    driver = new InternetExplorerDriver(ieOptions);
                 }
                 break;
 
@@ -247,7 +240,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private Capabilities getCapabilities() {
-        DesiredCapabilities desiredCapabilities;
+        MutableCapabilities desiredCapabilities;
 
         switch (browserType) {
             case Firefox:
@@ -261,7 +254,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case InternetExplorer:
-                desiredCapabilities = getInternetExplorerCapabilities(false, null);
+                desiredCapabilities = DesiredCapabilities.internetExplorer();
                 break;
 
             case Edge:
@@ -408,16 +401,16 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private DesiredCapabilities setProxySettings(DesiredCapabilities desiredCapabilities, String proxyLocation) {
+    private MutableCapabilities setProxySettings(MutableCapabilities options, String proxyLocation) {
         if (!StringUtils.isBlank(proxyLocation)) {
             Proxy proxy = new Proxy();
             proxy.setHttpProxy(proxyLocation);
             proxy.setSslProxy(proxyLocation);
             proxy.setFtpProxy(proxyLocation);
-            desiredCapabilities.setCapability(CapabilityType.PROXY, proxy);
+            options.setCapability(CapabilityType.PROXY, proxy);
         }
 
-        return desiredCapabilities;
+        return options;
     }
 
     private FirefoxProfile getFirefoxProfile() {
@@ -449,7 +442,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         return firefoxOptions;
     }
 
-    private DesiredCapabilities getInternetExplorerCapabilities(boolean ensureCleanSession, String proxyLocation) {
+    private InternetExplorerOptions getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
             throw new UnsupportedPlatformException();
         }
@@ -458,20 +451,20 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             log.info(Resources.getString("InternetExplorerIsAlreadyRunning_Info"));
         }
 
-        DesiredCapabilities desiredCapabilities = DesiredCapabilities.internetExplorer();
-        desiredCapabilities.setCapability(CapabilityType.HAS_NATIVE_EVENTS, true);
-        desiredCapabilities.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
-        desiredCapabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, false);
-        desiredCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, false);
-        desiredCapabilities.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, false);
-        desiredCapabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, ensureCleanSession);
-        desiredCapabilities.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, ElementScrollBehavior.TOP);
-        desiredCapabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
-        setProxySettings(desiredCapabilities, proxyLocation);
-        return desiredCapabilities;
+        InternetExplorerOptions ieOptions = new InternetExplorerOptions();
+        ieOptions.setCapability(CapabilityType.HAS_NATIVE_EVENTS, true);
+        ieOptions.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+        ieOptions.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, false);
+        ieOptions.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, false);
+        ieOptions.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, false);
+        ieOptions.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, ensureCleanSession);
+        ieOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, ElementScrollBehavior.TOP);
+        ieOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
+        setProxySettings(ieOptions, proxyLocation);
+        return ieOptions;
     }
 
-    private DesiredCapabilities getEdgeOptions(String proxyLocation) {
+    private EdgeOptions getEdgeOptions(String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
             throw new UnsupportedPlatformException();
         }
@@ -482,13 +475,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         EdgeOptions edgeOptions = new EdgeOptions();
 
-        DesiredCapabilities desiredCapabilities = DesiredCapabilities.edge();
-        desiredCapabilities.setCapability(EdgeOptions.CAPABILITY, edgeOptions);
-        setProxySettings(desiredCapabilities, proxyLocation);
-        return desiredCapabilities;
+        edgeOptions.setCapability(EdgeOptions.CAPABILITY, edgeOptions);
+        edgeOptions = (EdgeOptions) setProxySettings(edgeOptions, proxyLocation);
+        return edgeOptions;
     }
 
-    private DesiredCapabilities getChromeOptions() {
+    private ChromeOptions getChromeOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
@@ -518,10 +510,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             add("test-type");
         }});*/
 
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-
-        return capabilities;
+        return chromeOptions;
     }
 
     private void setContext() {

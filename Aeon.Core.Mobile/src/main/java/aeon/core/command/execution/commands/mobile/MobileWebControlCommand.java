@@ -39,5 +39,5 @@ public abstract class MobileWebControlCommand extends WebControlCommand {
      */
     protected void commandDelegate(IWebDriver driver, WebControl control){
         commandDelegate((IMobileDriver) driver, control);
-    };
+    }
 }

@@ -270,8 +270,8 @@ public class StringUtils {
             return value;
         }
         for (Object val : values) {
-            if (value.indexOf((String) val) != -1) {
-                value.replace((String) val, "");
+            if (value.contains((String) val)) {
+                value = value.replace((String) val, "");
             }
         }
         return value;
@@ -289,7 +289,7 @@ public class StringUtils {
             return true;
         }
         for (int i = 0; i < strLen; i++) {
-            if (Character.isWhitespace(cs.charAt(i)) == false) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
                 return false;
             }
         }

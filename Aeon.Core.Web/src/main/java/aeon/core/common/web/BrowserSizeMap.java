@@ -9,8 +9,8 @@ import java.util.HashMap;
  */
 public final class BrowserSizeMap {
 
-    private static final HashMap<BrowserSize, Size> browserSizes = new HashMap<BrowserSize, Size>();
-    private static final HashMap<Size, BrowserSize> sizes = new HashMap<Size, BrowserSize>();
+    private static final HashMap<BrowserSize, Size> browserSizes = new HashMap<>();
+    private static final HashMap<Size, BrowserSize> sizes = new HashMap<>();
 
     static {
         browserSizes.put(BrowserSize.Maximized, new Size(0, 0));

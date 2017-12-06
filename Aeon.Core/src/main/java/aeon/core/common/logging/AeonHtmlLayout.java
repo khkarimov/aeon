@@ -25,7 +25,6 @@ import org.apache.logging.log4j.core.config.plugins.*;
 import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 import org.apache.logging.log4j.core.util.Transform;
 import org.apache.logging.log4j.util.Strings;
-import org.joda.time.DateTime;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
@@ -38,7 +37,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Outputs events as rows in an HTML table on an HTML page.
@@ -218,11 +216,11 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
         }
 
-        if (event.getContextMap() != null && !event.getContextMap().isEmpty()) {
+        if (event.getContextData() != null && !event.getContextData().isEmpty()) {
             sbuf.append("<tr><td bgcolor=\"#EEEEEE\" style=\"font-size : ").append(fontSize);
             sbuf.append(";\" colspan=\"6\" ");
             sbuf.append("title=\"Mapped Diagnostic Context\">");
-            sbuf.append("MDC: ").append(Transform.escapeHtmlTags(event.getContextMap().toString()));
+            sbuf.append("MDC: ").append(Transform.escapeHtmlTags(event.getContextData().toString()));
             sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
         }
 
@@ -347,13 +345,13 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
      * Possible font sizes.
      *
      */
-    public static enum FontSize {
+    public enum FontSize {
         SMALLER("smaller"), XXSMALL("xx-small"), XSMALL("x-small"), SMALL("small"), MEDIUM("medium"), LARGE("large"),
         XLARGE("x-large"), XXLARGE("xx-large"), LARGER("larger");
 
         private final String size;
 
-        private FontSize(final String size) {
+        FontSize(final String size) {
             this.size = size;
         }
 
