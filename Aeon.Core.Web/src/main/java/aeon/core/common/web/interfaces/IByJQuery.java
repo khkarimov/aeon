@@ -3,7 +3,6 @@ package aeon.core.common.web.interfaces;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.common.web.selectors.ByJQueryWithArithmeticOperatorOverload;
-import com.sun.javafx.fxml.expression.Expression;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -91,14 +90,6 @@ public interface IByJQuery {
     ByJQuery contents();
 
     /**
-     * Iterate over a jquery object, executing a function for each matched element.
-     *
-     * @param function A function to execute for each matched element.
-     * @return The {@link ByJQuery}
-     */
-    ByJQuery each(Expression<BiFunction<Integer, ByJQuery, Boolean>> function);
-
-    /**
      * End the most recent filtering operation in the current chain and return the set of matched elements to its previous state.
      *
      * @return The {@link ByJQuery}
@@ -136,14 +127,6 @@ public interface IByJQuery {
      * @return The {@link ByJQuery}
      */
     ByJQuery filter(ByJQuery obj);
-
-    /**
-     * Reduce the set of matched elements to those that match the selector or pass the function's test.
-     *
-     * @param function A function used as a test for each element in the set. <code>this</code> is the current DOM element.
-     * @return The {@link ByJQuery}
-     */
-    ByJQuery filter(Expression<Function<Integer, Boolean>> function);
 
     /**
      * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
@@ -240,27 +223,11 @@ public interface IByJQuery {
     ByJQuery is(ByJQuery obj);
 
     /**
-     * check the current matched set of elements against a selector, element, or jquery object and return true if at least one of these elements matches the given arguments.
-     *
-     * @param function A function used as a test for the set of elements. It accepts one argument which is the element's index in the jquery collection. Within the function, <code>this</code> refers to the current DOM element.
-     * @return The {@link ByJQuery}
-     */
-    ByJQuery is(Expression<Function<Integer, Boolean>> function);
-
-    /**
      * Reduce the set of matched elements to the final one in the set.
      *
      * @return The {@link ByJQuery}
      */
     ByJQuery last();
-
-    /**
-     * Pass each element in the current matched set through a function, producing a new jquery object containing the return values.
-     *
-     * @param callback A function object that will be invoked for each element in the current set.
-     * @return The {@link ByJQuery}
-     */
-    ByJQuery map(Expression<BiFunction<Integer, ByJQuery, Iterable<ByJQuery>>> callback);
 
     /**
      * Get the immediately following sibling of each element in the set of matched elements. If a selector is provided, it retrieves the next sibling only if it matches that selector.
@@ -341,14 +308,6 @@ public interface IByJQuery {
      * @return The {@link ByJQuery}
      */
     ByJQuery not(ByJQuery obj);
-
-    /**
-     * remove elements from the set of matched elements.
-     *
-     * @param function A function used as a test for each element in the set. <code>this</code> is the current DOM element.
-     * @return The {@link ByJQuery}
-     */
-    ByJQuery not(Expression<Function<Integer, Boolean>> function);
 
     /**
      * Get the closest ancestor element that is positioned.

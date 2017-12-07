@@ -19,7 +19,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
-import com.sun.glass.ui.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -706,7 +705,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param size Desired dimensions to resize the window to.
      */
-    public void resize(Size size) {
+    public void resize(java.awt.Dimension size) {
         log.trace(String.format("WebDriver.Manage().Window.set_Size(%1$s);", size));
         webDriver.manage().window().setSize(new Dimension(size.width, size.height));
     }

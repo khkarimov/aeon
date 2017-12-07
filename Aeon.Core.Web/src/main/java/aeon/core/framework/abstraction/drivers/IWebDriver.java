@@ -10,10 +10,10 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
+import java.awt.Dimension;
 import java.net.URL;
 import java.util.Collection;
 import java.util.NoSuchElementException;
@@ -261,7 +261,7 @@ public interface IWebDriver extends IDriver {
      *
      * @param size The new browser size.
      */
-    void resize(Size size);
+    void resize(Dimension size);
 
     /**
      * Blurs the current element, takes off focus.

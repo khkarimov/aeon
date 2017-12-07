@@ -13,7 +13,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
-import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
@@ -191,7 +190,7 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public void resize(Size size) {
+    public void resize(Dimension size) {
         adapter.resize(size);
     }
 
