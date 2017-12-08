@@ -71,10 +71,10 @@ public class GeneralAssertionsTests extends SampleBaseTest{
 
     @Test
     public void testDatesApproximatelyEquals() {
-        product.startPage.dateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-31"), Period.days(0));
-        product.startPage.dateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-26"), Period.days(5));
+        product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-31"), Period.days(0));
+        product.startPage.dateSelector.datesApproximatelyEqual("min", DateTime.parse("2016-01-06"), Period.days(5));
         thrown.expect(IsInstanceOf.instanceOf(DatesNotApproximatelyEqualException.class));
-        product.startPage.dateLabel.datesApproximatelyEqual("name", DateTime.parse("2016-08-08"), Period.days(5));
+        product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-08"), Period.days(5));
     }
 
     @Test
