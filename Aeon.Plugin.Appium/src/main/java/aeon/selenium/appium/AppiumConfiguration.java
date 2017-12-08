@@ -25,6 +25,7 @@ public class AppiumConfiguration extends SeleniumConfiguration {
     @Override
     protected List<Field> getConfigurationFields() {
         List<Field> keys = new ArrayList<>();
+        keys.addAll(super.getConfigurationFields());
         keys.addAll(Arrays.asList(AppiumConfiguration.Keys.class.getDeclaredFields()));
         return keys;
     }
