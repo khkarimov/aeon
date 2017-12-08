@@ -213,7 +213,7 @@ public class Configuration {
     }
 
     /**
-     * Set the class for the adpater.
+     * Set the class for the adapter.
      *
      * @param adapter The class of the adapter.
      */

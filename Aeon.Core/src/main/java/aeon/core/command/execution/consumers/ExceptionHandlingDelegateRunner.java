@@ -50,8 +50,6 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
     private void executeDelegate(Runnable commandDelegateWrapper) {
         try {
             commandDelegateWrapper.run();
-        } catch (OutOfMemoryError e) {
-            throw e;
         } catch (TimeoutExpiredException e) {
             // Expects that TimeoutDelegateRunner is the first waiter decorating DelegateRunner and ExceptionHandlingDelegateRunner is after
             log.debug(e.getMessage());
@@ -65,8 +63,6 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
     private Object executeDelegateWithReturn(Supplier<Object> commandDelegateWrapper) {
         try {
             return commandDelegateWrapper.get();
-        } catch (OutOfMemoryError e) {
-            throw e;
         } catch (TimeoutExpiredException e) {
             // Expects that TimeoutDelegateRunner is the first waiter decorating DelegateRunner and ExceptionHandlingDelegateRunner is after
             log.debug(e.getMessage());

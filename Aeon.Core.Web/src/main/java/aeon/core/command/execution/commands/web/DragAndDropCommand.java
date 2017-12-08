@@ -20,7 +20,7 @@ public class DragAndDropCommand extends WebControlCommand {
      *
      * @param dropElement        The element to be dragged
      * @param targetElement      The target element.
-     * @param commandInitializer The command initalizer
+     * @param commandInitializer The command initializer
      */
     public DragAndDropCommand(IByWeb dropElement, IByWeb targetElement, ICommandInitializer commandInitializer) {
         super(String.format(Locale.getDefault(), Resources.getString("DragAndDropCommand_Info"), dropElement, targetElement), dropElement, commandInitializer);

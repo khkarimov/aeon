@@ -7,8 +7,6 @@ import aeon.core.common.web.interfaces.IByWeb;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +34,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     public ByJQuery(String selector) {
         setFunction("$");
-        setParameters(new ArrayList<>(Arrays.asList(new Parameter[]{new Parameter(selector)})));
+        setParameters(new Parameter(selector));
         setPredecessor(null);
     }
 
@@ -48,7 +46,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
 
     public ByJQuery(ByJQuery obj) {
         setFunction("$");
-        setParameters(new ArrayList<>(Arrays.asList(new Parameter[]{new Parameter(obj)})));
+        setParameters(new Parameter(obj));
         setPredecessor(null);
     }
 
@@ -61,7 +59,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     protected ByJQuery(ByJQuery predecessor, String function, Object... parameters) {
         setFunction(function);
-        setParameters(Arrays.asList(parameters).stream().map(x -> new Parameter(x)).collect(Collectors.toList()));
+        setParameters(Arrays.stream(parameters).map(Parameter::new).collect(Collectors.toList()));
         setPredecessor(predecessor);
     }
 
@@ -88,7 +86,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
         }
 
         List<ByJQuery> jqAppendices =
-                Arrays.asList(appendices).stream().map(a -> a.clone()).collect(Collectors.toList());
+                Arrays.stream(appendices).map(ByJQuery::clone).collect(Collectors.toList());
 
         for (int i = 0; i < jqAppendices.size() - 1; ++i) {
             changeLastPredecessor(appendices[i], appendices[i + 1]);
@@ -161,6 +159,15 @@ public class ByJQuery implements IByWeb, IByJQuery {
      *
      * @param value the new parameters.
      */
+    private void setParameters(Parameter... value) {
+        parameters = Arrays.asList(value);
+    }
+
+    /**
+     * Sets the parameters.
+     *
+     * @param value the new parameters.
+     */
     private void setParameters(Iterable<Parameter> value) {
         parameters = value;
     }
@@ -200,7 +207,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
     @Override
     public final ByJQuery clone() {
         List<Object> objects = new ArrayList<>();
-        parameters.forEach(p -> objects.add(p));
+        parameters.forEach(objects::add);
         return new ByJQuery(predecessor == null ? null : predecessor.clone(), function, objects);
     }
 

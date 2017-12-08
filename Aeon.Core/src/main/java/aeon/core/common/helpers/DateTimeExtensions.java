@@ -23,7 +23,7 @@ public class DateTimeExtensions {
 
     /**
      * Adds up the days, hours, minutes, seconds, and milliseconds of a period object
-     * to return the total amount of time the period encompases. The weeks, years and months
+     * to return the total amount of time the period encompasses. The weeks, years and months
      * are ignored.
      *
      * @param delta The period to be converted to milliseconds.
@@ -38,7 +38,7 @@ public class DateTimeExtensions {
     }
 
 //    /**
-//     * Converts a string into a Date by using a specic format.
+//     * Converts a string into a Date by using a specific format.
 //     * @param format The format that the date is in.
 //     * @param date The string to be formatted.
 //     * @return A Date Object.

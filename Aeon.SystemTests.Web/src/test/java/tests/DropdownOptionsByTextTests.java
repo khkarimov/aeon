@@ -41,9 +41,9 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
     public void testHasOptionsInOrder_ByText() {
         String[] validOptions = {"option1", "option2", "option3"};
         product.startPage.dropDown.hasOptionsInOrder(validOptions, WebSelectOption.Text);
-        String[] invalidoptions = {"option1", "option4", "option2"};
+        String[] invalidOptions = {"option1", "option4", "option2"};
         thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Text);
+        product.startPage.dropDown.hasOptionsInOrder(invalidOptions, WebSelectOption.Text);
     }
 
     @Test

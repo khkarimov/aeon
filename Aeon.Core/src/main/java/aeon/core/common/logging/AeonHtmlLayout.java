@@ -199,9 +199,9 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             try {
                 ImageIO.write(image, "png", baos);
                 String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
-                sbuf.append("<img src=\"data:image/png;base64," + data + "\" />");
+                sbuf.append("<img src=\"data:image/png;base64,").append(data).append("\" />");
             } catch (IOException e) {
-                sbuf.append("Could not decode screebshot.");
+                sbuf.append("Could not decode screenshot.");
             }
         }
 
@@ -305,7 +305,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         sbuf.append("</head>").append(Strings.LINE_SEPARATOR);
         sbuf.append("<body bgcolor=\"#FFFFFF\" topmargin=\"6\" leftmargin=\"6\">").append(Strings.LINE_SEPARATOR);
         sbuf.append("<hr size=\"1\" noshade=\"noshade\">").append(Strings.LINE_SEPARATOR);
-        sbuf.append("Log session start time " + new java.util.Date() + "<br>").append(Strings.LINE_SEPARATOR);
+        sbuf.append("Log session start time ").append(new java.util.Date()).append("<br>").append(Strings.LINE_SEPARATOR);
         sbuf.append("<br>").append(Strings.LINE_SEPARATOR);
         sbuf.append(
                 "<table cellspacing=\"0\" cellpadding=\"4\" border=\"1\" bordercolor=\"#224466\" width=\"100%\">");
@@ -330,13 +330,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
      */
     @Override
     public byte[] getFooter() {
-        final StringBuilder sbuf = new StringBuilder();
-        sbuf.append("</table>").append(Strings.LINE_SEPARATOR);
-        sbuf.append("<br>").append(Strings.LINE_SEPARATOR);
-        sbuf.append("</body></html>");
-        // Return empty byte array so we can log continuously
-        // rather than have closing tags ruin formatting
-        // return getBytes(sbuf.toString());
+        // Return empty byte array so we can log continuously rather than have closing tags ruin formatting
         return new byte[0];
     }
 

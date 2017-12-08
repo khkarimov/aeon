@@ -4,9 +4,6 @@ import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.common.web.selectors.ByJQueryWithArithmeticOperatorOverload;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
-
 /**
  * Interface for ByJQuery commands.
  */

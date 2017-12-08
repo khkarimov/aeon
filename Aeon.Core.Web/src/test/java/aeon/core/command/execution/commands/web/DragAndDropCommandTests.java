@@ -57,10 +57,9 @@ public class DragAndDropCommandTests
     @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentThrownWhenDriverIsNull(){
         // Arrange
-        driver = null;
 
         // Act
-        dragAndDropCommandObject.commandDelegate(driver, control);
+        dragAndDropCommandObject.commandDelegate(null, control);
 
         // Assert
         thrown.expectMessage("driver");
@@ -69,10 +68,9 @@ public class DragAndDropCommandTests
     @Test(expected = IllegalArgumentException.class)
     public void illegalArgumentThrownWhenControlIsNull(){
         // Arrange
-        control = null;
 
         // Act
-        dragAndDropCommandObject.commandDelegate(driver, control);
+        dragAndDropCommandObject.commandDelegate(driver, null);
 
         // Assert
         thrown.expectMessage("control");

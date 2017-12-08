@@ -124,7 +124,7 @@
 </head>
 
 <body>
-<label for='checkbox' name="2016-07-01">CheckBoxLabel</label>
+<label for='checkbox'>CheckBoxLabel</label>
 <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
     <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
         <div class="mdl-layout__header-row">
@@ -260,7 +260,7 @@
                     </div>
                     <div>
                         <div class="mdl-textfield mdl-js-textfield">
-                            <textarea class="mdl-textfield__input" type="text" rows="3" id="sample5"></textarea>
+                            <textarea class="mdl-textfield__input" rows="3" id="sample5"></textarea>
                             <label class="mdl-textfield__label" for="sample5">Text lines...</label>
                         </div>
                     </div>
@@ -320,8 +320,8 @@
 				<option value="02">banana</option>
 				<option value="01">apple</option>
 			</select>
-            <p id="date-text" name="2016-08-31" onmousedown="mouseDown(event);" onmouseup="mouseUp(event);">8/31/2016</p>
-            <p id="reaction-text" name="Reaction label">This will change</p>
+            <p id="date-text" onmousedown="mouseDown(event);" onmouseup="mouseUp(event);">8/31/2016</p>
+            <p id="reaction-text">This will change</p>
             <button id ="invisible-button" hidden="false">Invisible text</button>
 			<input type="radio" name="Next" value="Next" id="next-radio-button"> Next<br>
         </div>
@@ -333,7 +333,7 @@
                          ondragstart="dragStart(event)" draggable="true"/>
                 </div>
                 <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <img id="dbl-click-image"/>
+                    <img id="dbl-click-image" src=""/>
                 </div>
             </div>
             <br/><br/>

@@ -47,7 +47,7 @@ public class SeleniumSelectElement extends WebControl {
     public final List<WebControl> getAllSelectedOptions() {
         log.trace("SelectElement.get_AllSelectedOptions();");
         return underlyingSelectElement.getAllSelectedOptions().stream()
-                .map(e -> new SeleniumElement(e))
+                .map(SeleniumElement::new)
                 .collect(Collectors.toList());
     }
 
@@ -76,7 +76,7 @@ public class SeleniumSelectElement extends WebControl {
     public final List<WebControl> getOptions() {
         log.trace("SelectElement.get_Options();");
         return underlyingSelectElement.getOptions().stream()
-                .map(e -> new SeleniumElement(e))
+                .map(SeleniumElement::new)
                 .collect(Collectors.toList());
     }
 
