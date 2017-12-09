@@ -129,9 +129,11 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
+        isRemote = seleniumHubUrl != null;
+
         switch (browserType) {
             case Firefox:
-                if (seleniumHubUrl != null) {
+                if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
@@ -143,7 +145,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case Chrome:
-                if (seleniumHubUrl != null) {
+                if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     ChromeOptions chromeOptions = getChromeOptions();
@@ -154,7 +156,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case InternetExplorer:
-                if (seleniumHubUrl != null) {
+                if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
@@ -165,7 +167,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case Edge:
-                if (seleniumHubUrl != null) {
+                if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
                 } else {
                     driver = new EdgeDriver(
@@ -235,8 +237,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
         }
-
-        isRemote = seleniumHubUrl != null;
     }
 
     private Capabilities getCapabilities() {
@@ -436,6 +436,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         log.info("firefox binary options: " + binaryPath);
+
+        if (!isRemote && OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows) {
+            // Workaround for Windows Firefox problem:
+            // https://github.com/mozilla/geckodriver/issues/1068
+            firefoxOptions.addPreference("browser.tabs.remote.autostart", false);
+        }
 
         firefoxOptions.merge(setProxySettings(getMarionetteCapabilities(), proxyLocation));
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.TRACE);
