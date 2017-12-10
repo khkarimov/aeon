@@ -120,9 +120,8 @@ public class GeneralActionTests extends SampleBaseTest{
     }
 
     @Test
-    @Category(GridNotSupported.class)
     public void testSelectFileDialog_OpenFileDialog() {
-        String path = System.getProperty("user.dir") + "\\Test-Sample-Context\\HeatLogo.jpg";
-        product.startPage.testFileDialogInput.uploadFileDialog(path);
+        String path = "Test-Sample-Context/HeatLogo.jpg";
+        product.startPage.testFileDialogInput.selectFile(path);
     }
 }

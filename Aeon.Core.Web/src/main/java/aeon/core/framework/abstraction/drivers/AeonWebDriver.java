@@ -381,6 +381,11 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
+    public void selectFile(WebControl control, String path) {
+        adapter.selectFile(control, path);
+    }
+
+    @Override
     public void modifyCookie(String name, String value) {
         adapter.modifyCookie(name, value);
     }

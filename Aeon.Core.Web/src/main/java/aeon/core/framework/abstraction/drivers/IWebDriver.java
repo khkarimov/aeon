@@ -348,6 +348,7 @@ public interface IWebDriver extends IDriver {
      * Opens on a type input type=file.
      *
      * @param control The control to click.
+     * @deprecated Please use the selectFile method instead.
      */
     void openFileDialog(WebControl control);
 
@@ -357,6 +358,7 @@ public interface IWebDriver extends IDriver {
      *
      * @param selector The selector for the element.
      * @param path     The path to the file to be selected.
+     * @deprecated Please use the selectFile method instead.
      */
     void selectFileDialog(IByWeb selector, String path);
 
@@ -366,6 +368,7 @@ public interface IWebDriver extends IDriver {
      *
      * @param selector The selector for the element.
      * @param path     The path to the file to be selected.
+     * @deprecated Please use the selectFile method instead.
      */
     void uploadFileDialog(IByWeb selector, String path);
 
@@ -709,4 +712,12 @@ public interface IWebDriver extends IDriver {
      * @return The URL of the window
      */
     String windowDoesNotExistByUrl(String url);
+
+    /**
+     * Selects a file for inputs of type file.
+     *
+     * @param control The control which gets the file path.
+     * @param path The path of the file to select.
+     */
+    void selectFile(WebControl control, String path);
 }

@@ -716,6 +716,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Finds the 'selector' on the page, and performs a click() on the object.
      *
      * @param control The element on the page to click.
+     * @deprecated Please use the selectFile method instead.
      */
     public void openFileDialog(WebControl control) {
         click(control);
@@ -727,6 +728,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param selector The element on the page to click.
      * @param path The path to the file.
+     * @deprecated Please use the selectFile method instead.
      */
     public void selectFileDialog(IByWeb selector, String path) {
         try {
@@ -745,6 +747,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param selector The element on the page to click.
      * @param path The path to the file.
+     * @deprecated Please use the selectFile method instead.
      */
     public void uploadFileDialog(IByWeb selector, String path) {
         WebControl element = findElement(selector);
@@ -1893,6 +1896,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 sendKeysToElement(control, setValue);
                 break;
         }
+    }
+
+    @Override
+    public void selectFile(WebControl control, String path) {
+        sendKeysToElement(control, path);
     }
 
     private boolean osIsMacOrLinux(){
