@@ -7,6 +7,9 @@ import aeon.core.common.web.interfaces.IByWeb;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 /**
  * Handles file dialog interactions.
@@ -104,25 +107,11 @@ public class FileDialogInput extends WebElement {
     }
 
     /**
-     * Selects a file based on a relative path.
-     *
-     * @param path The path to the file to be selected relative to the user directory.
-     */
-    public void selectFile(String path) {
-        selectFile(path, false);
-    }
-
-    /**
      * Selects a file.
      *
      * @param path The path to the file to be selected.
-     * @param absolutePath Whether the provided path is an absolute path.
      */
-    public void selectFile(String path, boolean absolutePath) {
-        if (!absolutePath) {
-            path = System.getProperty("user.dir") + "/" + path;
-        }
-
+    public void selectFile(String path) {
         info.getCommandExecutionFacade().execute(info,
                 new SelectFileCommand(
                         selector,
