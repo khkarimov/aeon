@@ -1,4 +1,4 @@
-artifactoryPublish.skip
+artifactoryPublish.skip = true
 
 dependencies {
     compile project(":Aeon.Core.Mobile")

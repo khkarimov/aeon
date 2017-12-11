@@ -4,7 +4,7 @@ ext {
     seleniumVersion = '3.8.1'
 }
 
-artifactoryPublish.skip
+artifactoryPublish.skip = true
 
 clean {
     delete 'log'
