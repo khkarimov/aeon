@@ -275,7 +275,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "Safari");
+                desiredCapabilities.setCapability("browserName", "mobileSafari");
                 desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("automationName", configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, ""));
                 desiredCapabilities.setCapability("deviceName", deviceName);
