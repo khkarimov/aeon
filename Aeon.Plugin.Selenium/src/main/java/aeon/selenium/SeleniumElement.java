@@ -299,15 +299,6 @@ public class SeleniumElement extends WebControl {
     }
 
     /**
-     * Simulates typing text into the element.
-     * Uniquely identify the web element.
-     * @param key  Keyboard key that will be typed into the element.
-     */
-    public final void sendKeys(Keys key) {
-        sendKeys(key);
-    }
-
-    /**
      * Clicks this element.
      *              Uniquely identify the web element.
      * @param moveMouseToOrigin The move Mouse To Origin.

@@ -9,8 +9,8 @@ import org.pf4j.PluginManager;
 import java.util.List;
 
 /**
- * Created by DionnyS on 4/13/2016.
- */
+ * Main launch class.
+ **/
 public class Aeon {
 
     private static Logger log = LogManager.getLogger(Aeon.class);

@@ -6,7 +6,8 @@ import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserSizeMap;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import com.sun.glass.ui.Size;
+
+import java.awt.Dimension;
 
 /**
  * Resize the currently focused browser window.
@@ -16,7 +17,7 @@ import com.sun.glass.ui.Size;
  */
 public class ResizeCommand extends Command {
 
-    private Size size;
+    private Dimension size;
 
     /**
      * Initializes a new instance of the {@link ResizeCommand} class.

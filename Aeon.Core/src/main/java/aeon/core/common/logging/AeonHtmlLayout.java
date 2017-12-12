@@ -25,7 +25,6 @@ import org.apache.logging.log4j.core.config.plugins.*;
 import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 import org.apache.logging.log4j.core.util.Transform;
 import org.apache.logging.log4j.util.Strings;
-import org.joda.time.DateTime;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
@@ -38,7 +37,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Outputs events as rows in an HTML table on an HTML page.
@@ -201,9 +199,9 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             try {
                 ImageIO.write(image, "png", baos);
                 String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
-                sbuf.append("<img src=\"data:image/png;base64," + data + "\" />");
+                sbuf.append("<img src=\"data:image/png;base64,").append(data).append("\" />");
             } catch (IOException e) {
-                sbuf.append("Could not decode screebshot.");
+                sbuf.append("Could not decode screenshot.");
             }
         }
 
@@ -218,11 +216,11 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
         }
 
-        if (event.getContextMap() != null && !event.getContextMap().isEmpty()) {
+        if (event.getContextData() != null && !event.getContextData().isEmpty()) {
             sbuf.append("<tr><td bgcolor=\"#EEEEEE\" style=\"font-size : ").append(fontSize);
             sbuf.append(";\" colspan=\"6\" ");
             sbuf.append("title=\"Mapped Diagnostic Context\">");
-            sbuf.append("MDC: ").append(Transform.escapeHtmlTags(event.getContextMap().toString()));
+            sbuf.append("MDC: ").append(Transform.escapeHtmlTags(event.getContextData().toString()));
             sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
         }
 
@@ -307,7 +305,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         sbuf.append("</head>").append(Strings.LINE_SEPARATOR);
         sbuf.append("<body bgcolor=\"#FFFFFF\" topmargin=\"6\" leftmargin=\"6\">").append(Strings.LINE_SEPARATOR);
         sbuf.append("<hr size=\"1\" noshade=\"noshade\">").append(Strings.LINE_SEPARATOR);
-        sbuf.append("Log session start time " + new java.util.Date() + "<br>").append(Strings.LINE_SEPARATOR);
+        sbuf.append("Log session start time ").append(new java.util.Date()).append("<br>").append(Strings.LINE_SEPARATOR);
         sbuf.append("<br>").append(Strings.LINE_SEPARATOR);
         sbuf.append(
                 "<table cellspacing=\"0\" cellpadding=\"4\" border=\"1\" bordercolor=\"#224466\" width=\"100%\">");
@@ -332,13 +330,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
      */
     @Override
     public byte[] getFooter() {
-        final StringBuilder sbuf = new StringBuilder();
-        sbuf.append("</table>").append(Strings.LINE_SEPARATOR);
-        sbuf.append("<br>").append(Strings.LINE_SEPARATOR);
-        sbuf.append("</body></html>");
-        // Return empty byte array so we can log continuously
-        // rather than have closing tags ruin formatting
-        // return getBytes(sbuf.toString());
+        // Return empty byte array so we can log continuously rather than have closing tags ruin formatting
         return new byte[0];
     }
 
@@ -347,13 +339,13 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
      * Possible font sizes.
      *
      */
-    public static enum FontSize {
+    public enum FontSize {
         SMALLER("smaller"), XXSMALL("xx-small"), XSMALL("x-small"), SMALL("small"), MEDIUM("medium"), LARGE("large"),
         XLARGE("x-large"), XXLARGE("xx-large"), LARGER("larger");
 
         private final String size;
 
-        private FontSize(final String size) {
+        FontSize(final String size) {
             this.size = size;
         }
 

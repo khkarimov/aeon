@@ -74,7 +74,7 @@ public enum KeyboardKey {
 
     private char code;
 
-    private KeyboardKey(char code) {
+    KeyboardKey(char code) {
         this.code = code;
     }
 

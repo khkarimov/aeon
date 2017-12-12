@@ -28,7 +28,6 @@ public class VTeamSamplePage extends Page {
     public TextBox alertTitleTextBox;
     public ListItem draggableListItem;
     public ListItem draggedListItem;
-    public Label checkboxLabel;
     public Link tryLink;
     public Select dropDown;
     public Checkbox checkbox100;
@@ -38,6 +37,7 @@ public class VTeamSamplePage extends Page {
     public Button popupButton;
     public Select lexoDropDown;
     public Select revLexoDropDown;
+    public Label dateSelector;
     public Label dateLabel;
     public Label reactionLabel;
     public Button invisibleButton;
@@ -63,7 +63,6 @@ public class VTeamSamplePage extends Page {
         openAlertButton = new Button(info, By.cssSelector("button[id='alertDialog']"));
         alertTitleTextBox = new TextBox(info, By.cssSelector("input[id ='sample1']"));
         start = new Button(info, By.cssSelector("button[id='start']"));
-        checkboxLabel = new Label(info, By.cssSelector("label[for='checkbox']"));
         tryLink = new Link(info, By.cssSelector("a[id='tryLink']"));
         dropDown = new Select(info, By.cssSelector("select[id='drop-down-list']"));
 
@@ -76,6 +75,7 @@ public class VTeamSamplePage extends Page {
         popupButton = new Button(info, By.cssSelector("a[id='popup-button']"));
         lexoDropDown = new Select(info, By.cssSelector("select[id='lexicographic-drop-down']"));
         revLexoDropDown = new Select(info, By.cssSelector("select[id='lexicographic-drop-down-rev']"));
+        dateSelector = new Label(info, By.cssSelector("#date-selector"));
         dateLabel = new Label(info, By.cssSelector("#date-text"));
         reactionLabel = new Label(info, By.cssSelector("#reaction-text"));
         invisibleButton = new Button(info, By.cssSelector("#invisible-button"));

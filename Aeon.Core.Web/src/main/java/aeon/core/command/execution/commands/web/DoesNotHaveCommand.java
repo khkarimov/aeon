@@ -7,6 +7,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -30,7 +31,7 @@ public class DoesNotHaveCommand extends WebControlCommand {
      * @param attribute          The attribute of the children to compare with messages.
      */
     public DoesNotHaveCommand(IByWeb selector, ICommandInitializer commandInitializer, String[] messages, String childSelector, ComparisonOption option, String attribute) {
-        super(String.format(Locale.getDefault(), Resources.getString("DoesNotHaveCommand_Info"), messages, selector), selector, commandInitializer);
+        super(String.format(Locale.getDefault(), Resources.getString("DoesNotHaveCommand_Info"), Arrays.toString(messages), selector), selector, commandInitializer);
         this.messages = messages;
         this.childSelector = childSelector;
         this.attribute = attribute;

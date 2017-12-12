@@ -1,7 +1,7 @@
 package aeon.core.common;
 
 /**
- * Created by DionnyS on 4/20/2016.
+ * Enum with the supported capabilities.
  */
 public enum Capability {
     WEB,

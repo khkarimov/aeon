@@ -70,15 +70,13 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
      * @return The command delegate for this specific instance.
      */
     public Consumer<IDriver> getCommandDelegate() {
-        Consumer<IDriver> action = driver -> {
+        return driver -> {
             if (commandInitializer != null) {
                 commandInitializer.setContext().accept(driver);
             }
 
             driverDelegate(driver);
         };
-
-        return action;
     }
 
     /**

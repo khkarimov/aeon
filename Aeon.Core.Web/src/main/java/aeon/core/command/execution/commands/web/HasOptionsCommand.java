@@ -7,6 +7,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -28,7 +29,7 @@ public class HasOptionsCommand extends WebControlCommand {
      * @param select             The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public HasOptionsCommand(IByWeb selector, ICommandInitializer commandInitializer, String[] options, WebSelectOption select) {
-        super(String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), options, selector), selector, commandInitializer);
+        super(String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), Arrays.toString(options), selector), selector, commandInitializer);
         this.options = options;
         this.optGroup = null;
         this.select = select;
@@ -44,7 +45,7 @@ public class HasOptionsCommand extends WebControlCommand {
      * @param select             The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public HasOptionsCommand(IByWeb selector, ICommandInitializer commandInitializer, String[] options, String optgroup, WebSelectOption select) {
-        super(String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), options, selector), selector, commandInitializer);
+        super(String.format(Locale.getDefault(), Resources.getString("HasOptionsCommand_Info"), Arrays.toString(options), selector), selector, commandInitializer);
         this.options = options;
         this.optGroup = optgroup;
         this.select = select;

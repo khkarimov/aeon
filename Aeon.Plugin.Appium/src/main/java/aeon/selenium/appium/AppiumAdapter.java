@@ -426,10 +426,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
         log.trace("windowSize: " + windowWidth + "," + windowHeight);
 
-        double xRatio = (double) (windowWidth * 1.0 / webRootWidth);
-        double yRatio = (double) (windowHeight * 1.0 / webRootHeight);
-        int pointX = (int) ((webElementLocation.getX() + elementSize.getWidth() / 2.0));
-        int pointY = (int) ((webElementLocation.getY() + elementSize.getHeight() / 2.0));
+        double xRatio = windowWidth * 1.0 / webRootWidth;
+        double yRatio = windowHeight * 1.0 / webRootHeight;
+        int pointX = webElementLocation.getX() + elementSize.getWidth() / 2;
+        int pointY = webElementLocation.getY() + elementSize.getHeight() / 2;
         Point tapPoint = new Point((int) (pointX * xRatio), (int) (pointY * yRatio));
 
         log.trace("tapPoint: " + tapPoint.getX() + "," + tapPoint.getY());

@@ -2,16 +2,6 @@ def baseProjectName = 'Aeon.Plugin.Selenium'
 def baseProjectDescription = 'Aeon Selenium Plugin'
 def base = baseProjectName
 
-group 'aeon'
-
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 configurations {
     aeon
     compile.extendsFrom(aeon)
@@ -68,9 +58,6 @@ task fatJar(type: Jar) {
     }
     with jar
 }
-
-apply plugin: "com.jfrog.artifactory"
-apply plugin: 'maven-publish'
 
 publishing {
     publications {

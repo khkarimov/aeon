@@ -32,10 +32,8 @@ public class AppiumConfiguration extends SeleniumConfiguration {
 
     /**
      * Constructor for the Appium Configuration.  Configures that Aeon web driver and selenium adapter.
-     * @throws IOException Exception thrown if there is an IO violation when accessing test or propertion.
-     * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
-    public AppiumConfiguration() throws IOException, IllegalAccessException {
+    public AppiumConfiguration() {
         super(AeonMobileDriver.class, AppiumAdapter.class);
     }
 

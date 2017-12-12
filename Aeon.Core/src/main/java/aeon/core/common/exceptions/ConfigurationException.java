@@ -57,7 +57,7 @@ public class ConfigurationException extends RuntimeException implements Serializ
     }
 
     /**
-     * Function gets the souce and returns it as a string.
+     * Function gets the source and returns it as a string.
      * @return the source as a string.
      */
     public String getSource() {

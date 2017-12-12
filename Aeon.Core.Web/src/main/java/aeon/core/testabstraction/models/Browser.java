@@ -193,7 +193,7 @@ public class Browser {
     }
 
     /**
-     * Replicates sending keyboard strokes to the alert in the cirrent browser window.
+     * Replicates sending keyboard strokes to the alert in the current browser window.
      *
      * @param keys The values to send to the alert.
      */

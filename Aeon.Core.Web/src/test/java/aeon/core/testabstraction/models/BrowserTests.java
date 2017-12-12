@@ -21,12 +21,8 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by josephb on 1/24/2017.
- */
 public class BrowserTests {
 
     // Mocks

@@ -14,6 +14,6 @@ public class ElementDoesNotHaveException extends RuntimeException {
      * @param value the string input.
      */
     public ElementDoesNotHaveException(String value) {
-        super(String.format(Locale.getDefault(), Resources.getString("ElementDoesNotHaveException_ctor_DefaultMessage")));
+        super(String.format(Locale.getDefault(), Resources.getString("ElementDoesNotHaveException_ctor_DefaultMessage"), value));
     }
 }

@@ -1,7 +1,6 @@
 package aeon.selenium;
 
 import aeon.core.common.helpers.OsCheck;
-import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;

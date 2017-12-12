@@ -1,7 +1,6 @@
 package aeon.core.common.helpers;
 
 import aeon.core.common.web.BrowserType;
-import com.sun.glass.ui.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +11,7 @@ import java.awt.*;
  */
 public final class ClientEnvironmentManager {
 
-    private static final Size[] supportedResolutions = {new Size(1024, 768)};
+    private static final Dimension[] supportedResolutions = {new Dimension(1024, 768)};
     private static Logger log = LogManager.getLogger(ClientEnvironmentManager.class);
 
     /**
@@ -78,7 +77,7 @@ public final class ClientEnvironmentManager {
         double height = screenSize.getHeight();
 
         boolean resolutionSupported = false;
-        for (Size res : supportedResolutions) {
+        for (Dimension res : supportedResolutions) {
             if (res.width == width && res.height == height) {
                 resolutionSupported = true;
             }
@@ -87,7 +86,7 @@ public final class ClientEnvironmentManager {
         if (!resolutionSupported) {
             String supportedResolutionsListString = "";
 
-            for (Size res : supportedResolutions) {
+            for (Dimension res : supportedResolutions) {
                 supportedResolutionsListString = String.format("%1$s%2$s%3$s", supportedResolutionsListString, res.width + "x" + res.height, System.lineSeparator());
             }
 
