@@ -385,7 +385,7 @@ public class AeonWebDriver implements IWebDriver {
     @Override
     public void selectFile(WebControl control, String path) {
         Path actualPath = Paths.get(path);
-        if(!actualPath.isAbsolute()) {
+        if (!actualPath.isAbsolute()) {
             actualPath = Paths.get(System.getProperty("user.dir"), path);
         }
         adapter.selectFile(control, actualPath.toString());
