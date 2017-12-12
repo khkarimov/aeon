@@ -1897,7 +1897,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void selectFile(WebControl control, String path) {
-        sendKeysToElement(control, path);
+        if (browserType.equals(BrowserType.InternetExplorer)){
+            click(control, moveMouseToOrigin);
+            try {
+                SendKeysHelper.sendKeysToKeyboard(path);
+                SendKeysHelper.sendEnterKey();
+            } catch (AWTException e) {
+                log.error(e.getMessage());
+                throw new RuntimeException(e);
+            }
+        } else {
+            sendKeysToElement(control, path);
+        }
     }
 
     private boolean osIsMacOrLinux(){
