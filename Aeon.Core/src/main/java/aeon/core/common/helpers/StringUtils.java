@@ -147,7 +147,7 @@ public class StringUtils {
      *
      * @param value         The current instance.
      * @param expectedValue The value your comparing against the current instance.
-     * @return Whether or not the current instance matches the expected value.
+     * @return Whether or not the current instance differs the expected value.
      */
     public static boolean is(String value, String expectedValue) {
         if (value == null) {
@@ -156,7 +156,7 @@ public class StringUtils {
         if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");
         }
-        return normalizeSpacing(value).equals(normalizeSpacing(expectedValue));
+        return !normalizeSpacing(value).equals(normalizeSpacing(expectedValue));
     }
 
 
@@ -270,8 +270,8 @@ public class StringUtils {
             return value;
         }
         for (Object val : values) {
-            if (value.indexOf((String) val) != -1) {
-                value.replace((String) val, "");
+            if (value.contains((String) val)) {
+                value = value.replace((String) val, "");
             }
         }
         return value;
@@ -289,7 +289,7 @@ public class StringUtils {
             return true;
         }
         for (int i = 0; i < strLen; i++) {
-            if (Character.isWhitespace(cs.charAt(i)) == false) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
                 return false;
             }
         }

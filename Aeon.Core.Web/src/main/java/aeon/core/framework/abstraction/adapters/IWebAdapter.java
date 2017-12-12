@@ -10,7 +10,6 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import com.sun.glass.ui.Size;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
@@ -241,7 +240,7 @@ public interface IWebAdapter extends IAdapter {
      *
      * @param size The new browser size.
      */
-    void resize(Size size);
+    void resize(Dimension size);
 
     /**
      * Opens on a type input type=file.

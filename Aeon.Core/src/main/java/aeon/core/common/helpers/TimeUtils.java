@@ -22,7 +22,6 @@ public class TimeUtils {
                 .appendSeparator(":")
                 .appendSeconds()
                 .toFormatter();
-        String readableString = minutesAndSeconds.print(period);
-        return readableString;
+        return minutesAndSeconds.print(period);
     }
 }

@@ -10,8 +10,6 @@ import java.util.Locale;
  */
 public class NoSuchCookieException extends RuntimeException implements Serializable {
 
-    private String cookie;
-
     /**
      * Initializes a new instance of the {@link NoSuchCookieException} class.
      *
@@ -19,6 +17,5 @@ public class NoSuchCookieException extends RuntimeException implements Serializa
      */
     public NoSuchCookieException(String cookie) {
         super(String.format(Locale.getDefault(), Resources.getString("NoSuchCookieException_ctor_DefaultMessage"), cookie));
-        this.cookie = cookie;
     }
 }

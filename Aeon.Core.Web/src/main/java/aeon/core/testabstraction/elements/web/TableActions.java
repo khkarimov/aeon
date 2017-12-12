@@ -69,7 +69,7 @@ public abstract class TableActions<T extends TableActions, K extends TableElemen
     /**
      * Gets the column index based on the selector.
      *
-     * @param columnSelector
+     * @param columnSelector Selector for the column.
      * @return the column index
      */
     private long getColumnIndex(IByWeb columnSelector) {

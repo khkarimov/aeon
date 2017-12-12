@@ -109,8 +109,7 @@ public class AjaxWaiter {
      */
     public String getAjaxWaiterJS() {
         try (InputStream scriptReader = AjaxWaiter.class.getResourceAsStream("/ajax-waiter.js")) {
-            String content = new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
-            return content;
+            return new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
         } catch (FileNotFoundException e) {
             log.error("File not found on path");
             throw new RuntimeException(e);

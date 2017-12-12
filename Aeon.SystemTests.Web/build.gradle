@@ -1,17 +1,10 @@
-group 'aeon'
-
-apply plugin: 'java'
 compileTestJava.options.encoding = 'utf-8'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
 
 ext {
     seleniumVersion = '3.8.1'
 }
+
+artifactoryPublish.skip = true
 
 clean {
     delete 'log'
@@ -28,8 +21,6 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
-
-    testCompile 'junit:junit:4.12'
 }
 
 test {

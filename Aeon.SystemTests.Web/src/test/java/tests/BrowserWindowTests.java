@@ -2,7 +2,6 @@ package tests;
 
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserSize;
-import aeon.core.common.web.BrowserType;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.*;
 

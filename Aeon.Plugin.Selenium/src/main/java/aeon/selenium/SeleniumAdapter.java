@@ -19,7 +19,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
-import com.sun.glass.ui.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -28,7 +27,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -707,7 +705,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param size Desired dimensions to resize the window to.
      */
-    public void resize(Size size) {
+    public void resize(java.awt.Dimension size) {
         log.trace(String.format("WebDriver.Manage().Window.set_Size(%1$s);", size));
         webDriver.manage().window().setSize(new Dimension(size.width, size.height));
     }
@@ -1119,10 +1117,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 }
             } catch (NoSuchElementException e) {
                 elementFound = false;
-            } finally {
-                if (elementFound) {
-                    throw new ElementHasOptionException(desiredOption);
-                }
+            }
+            if (elementFound) {
+                throw new ElementHasOptionException(desiredOption);
             }
         }
     }
@@ -1593,11 +1590,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         // If Text option was selected then use getText, otherwise use getAttribute
         if (option == ComparisonOption.Text) {
-            if (!aeon.core.common.helpers.StringUtils.is(expectedValue, ((SeleniumElement) element).getText())) {
+            if (StringUtils.is(expectedValue, ((SeleniumElement) element).getText())) {
                 throw new ValuesAreNotEqualException(((SeleniumElement) element).getText(), expectedValue);
             }
         } else {
-            if (!aeon.core.common.helpers.StringUtils.is(expectedValue, ((SeleniumElement) element).getAttribute(attribute))) {
+            if (StringUtils.is(expectedValue, ((SeleniumElement) element).getAttribute(attribute))) {
                 throw new ValuesAreNotEqualException(((SeleniumElement) element).getAttribute(attribute), expectedValue);
             }
         }
@@ -1616,12 +1613,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         if (attribute.equalsIgnoreCase("INNERHTML")) {
             String value = ((SeleniumElement) element).getSelectedOptionText();
-            if (!aeon.core.common.helpers.StringUtils.is(value, expectedValue)) {
+            if (StringUtils.is(value, expectedValue)) {
                 throw new ValuesAreNotEqualException(value, expectedValue);
             }
         } else {
             String value = getElementAttribute(((SeleniumElement) element).getSelectedOption(), attribute);
-            if (!aeon.core.common.helpers.StringUtils.is(value, expectedValue)) {
+            if (StringUtils.is(value, expectedValue)) {
                 throw new ValuesAreNotEqualException(value, expectedValue);
             }
         }
@@ -1732,7 +1729,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void verifyAlertText(String comparingText) {
-        if (!aeon.core.common.helpers.StringUtils.is(getAlertText(), comparingText)) {
+        if (StringUtils.is(getAlertText(), comparingText)) {
             throw new ValuesAreNotEqualException(getAlertText(), comparingText);
         }
     }
@@ -1746,7 +1743,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void verifyTitle(String comparingTitle) {
-        if (!aeon.core.common.helpers.StringUtils.is(getTitle(), comparingTitle)) {
+        if (StringUtils.is(getTitle(), comparingTitle)) {
             throw new ValuesAreNotEqualException(getTitle(), comparingTitle);
         }
     }

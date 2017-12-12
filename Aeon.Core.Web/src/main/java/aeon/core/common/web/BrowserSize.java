@@ -37,5 +37,5 @@ public enum BrowserSize {
     /**
      * Mobile [Portrait]: 1024x768.
      */
-    TabletLandscape;
+    TabletLandscape
 }

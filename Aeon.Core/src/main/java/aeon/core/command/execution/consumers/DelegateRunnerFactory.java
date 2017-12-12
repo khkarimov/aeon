@@ -34,7 +34,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     }
 
     /**
-     * Initializes a new instance of the {@link DelegateRunnerFactory} class for bacho.
+     * Initializes a new instance of the {@link DelegateRunnerFactory} class.
      *
      * @param throttleFactor The throttle factor.
      * @param defaultTimeout The default timeout.

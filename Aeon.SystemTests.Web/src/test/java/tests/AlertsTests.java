@@ -1,15 +1,10 @@
 package tests;
 
-
 import aeon.core.common.exceptions.NoAlertException;
 import aeon.core.common.exceptions.ValuesAreNotAlikeException;
 import aeon.core.common.exceptions.ValuesAreNotEqualException;
-import categories.UbuntuTests;
-import categories.WindowsTests;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
 
 public class AlertsTests extends SampleBaseTest{
 
