@@ -471,6 +471,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         ieOptions.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, ensureCleanSession);
         ieOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, ElementScrollBehavior.TOP);
         ieOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
+        ieOptions.setCapability("ie.fileUploadDialogTimeout", 10000);
         setProxySettings(ieOptions, proxyLocation);
         return ieOptions;
     }
