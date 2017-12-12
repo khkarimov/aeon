@@ -34,6 +34,7 @@ import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.pf4j.Extension;
 
@@ -135,6 +136,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case Firefox:
                 if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
+                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                 } else {
                     System.setProperty("webdriver.gecko.driver", marionetteDirectory);
 
@@ -147,6 +149,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case Chrome:
                 if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
+                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                 } else {
                     ChromeOptions chromeOptions = getChromeOptions();
                     chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
@@ -158,6 +161,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case InternetExplorer:
                 if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
+                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                 } else {
                     InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
                     InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
@@ -169,6 +173,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case Edge:
                 if (isRemote) {
                     driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
+                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                 } else {
                     driver = new EdgeDriver(
                             new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
@@ -466,6 +471,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         ieOptions.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, ensureCleanSession);
         ieOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, ElementScrollBehavior.TOP);
         ieOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
+        ieOptions.setCapability("ie.fileUploadDialogTimeout", 10000);
         setProxySettings(ieOptions, proxyLocation);
         return ieOptions;
     }

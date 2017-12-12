@@ -7,6 +7,9 @@ import aeon.core.common.web.interfaces.IByWeb;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 /**
  * Handles file dialog interactions.
@@ -48,6 +51,8 @@ public class FileDialogInput extends WebElement {
 
     /**
      * Opens a file dialog window.
+     *
+     * @deprecated Please use 'selectFile' instead.
      */
     public void openFileDialog() {
         log.warn("DEPRECATED: The use of the \"openFileDialog\" command " +
@@ -66,6 +71,7 @@ public class FileDialogInput extends WebElement {
      * REQUIRES openFileDialog to be called first.
      *
      * @param path The path to the file to be selected.
+     * @deprecated Please use 'selectFile' instead.
      */
     public void selectFileDialog(String path) {
         log.warn("DEPRECATED: The use of the \"selectFileDialog\" command " +
@@ -86,10 +92,28 @@ public class FileDialogInput extends WebElement {
      * DOES NOT REQUIRE openFileDialog to be called first.
      *
      * @param path The path to the file to be selected.
+     * @deprecated Please use 'selectFile' instead.
      */
     public void uploadFileDialog(String path) {
+        log.warn("DEPRECATED: The use of the \"uploadFileDialog\" command " +
+                "has been deprecated and will be removed in future " +
+                "versions of Aeon. Please use \"selectFile\" " +
+                "instead");
         info.getCommandExecutionFacade().execute(info,
                 new UploadFileDialogCommand(
+                        selector,
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
+                        path));
+    }
+
+    /**
+     * Selects a file.
+     *
+     * @param path The path to the file to be selected.
+     */
+    public void selectFile(String path) {
+        info.getCommandExecutionFacade().execute(info,
+                new SelectFileCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                         path));

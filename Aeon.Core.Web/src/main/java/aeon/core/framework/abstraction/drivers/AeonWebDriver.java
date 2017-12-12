@@ -18,6 +18,8 @@ import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 
 /**
@@ -377,6 +379,15 @@ public class AeonWebDriver implements IWebDriver {
     @Override
     public String windowDoesNotExistByUrl(String url) {
         return adapter.windowDoesNotExistByUrl(url);
+    }
+
+    @Override
+    public void selectFile(WebControl control, String path) {
+        Path actualPath = Paths.get(path);
+        if (!actualPath.isAbsolute()) {
+            actualPath = Paths.get(System.getProperty("user.dir"), path);
+        }
+        adapter.selectFile(control, actualPath.toString());
     }
 
     @Override
