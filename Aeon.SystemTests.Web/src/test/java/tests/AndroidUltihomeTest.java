@@ -13,7 +13,7 @@ public class AndroidUltihomeTest {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.AndroidChrome);
+        product = launch(Sample.class);
         product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
     }
 
