@@ -27,7 +27,10 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.ie.InternetExplorerOptions;
@@ -407,7 +410,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private MutableCapabilities setProxySettings(MutableCapabilities options, String proxyLocation) {
-        if (!StringUtils.isBlank(proxyLocation)) {
+        if (StringUtils.isNotBlank(proxyLocation)) {
             Proxy proxy = new Proxy();
             proxy.setHttpProxy(proxyLocation);
             proxy.setSslProxy(proxyLocation);
@@ -497,7 +500,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
 
-        boolean chromeMobileEmulation = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION, false);
+        String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
         boolean isHeadless = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_HEADLESS, false);
         if (isHeadless) {
             chromeOptions.addArguments("--headless");
@@ -509,7 +512,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             chromeOptions.addArguments("--user-agent=" + mobileUserAgent);
         }
 
-        if (chromeMobileEmulation){
+        if (StringUtils.isNotBlank(mobileEmulationDevice)) {
             Map<String, String> mobileEmulation = new HashMap<>();
             mobileEmulation.put("deviceName",
                     configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, ""));

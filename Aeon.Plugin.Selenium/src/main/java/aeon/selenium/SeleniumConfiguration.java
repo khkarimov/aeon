@@ -38,7 +38,6 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String CHROME_BINARY = "aeon.selenium.chrome.binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
         public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
-        public static final String CHROME_MOBILE_EMULATION = "aeon.selenium.chrome.mobile.emulation";
         public static final String CHROME_MOBILE_EMULATION_DEVICE = "aeon.selenium.chrome.mobile.emulation.device";
 
         // Perfecto
