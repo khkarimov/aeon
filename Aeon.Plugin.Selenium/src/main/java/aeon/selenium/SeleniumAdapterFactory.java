@@ -497,6 +497,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         chromeOptions.addArguments("--disable-popup-blocking", "chrome.switches", "--disable-extensions", "--no-sandbox");
         chromeOptions.addArguments(String.format("--lang=%1$s", browserAcceptedLanguageCodes));
 
+        boolean chromeMobileEmulation = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION, false);
         boolean isHeadless = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_HEADLESS, false);
         if (isHeadless) {
             chromeOptions.addArguments("--headless");
@@ -506,6 +507,13 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + mobileUserAgent);
+        }
+
+        if (chromeMobileEmulation){
+            Map<String, String> mobileEmulation = new HashMap<>();
+            mobileEmulation.put("deviceName",
+                    configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, ""));
+            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         }
 
         String chromeBinary = configuration.getString(SeleniumConfiguration.Keys.CHROME_BINARY, null);
