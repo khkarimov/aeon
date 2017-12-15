@@ -22,8 +22,8 @@ public class BrowserWindowTests extends SampleBaseTest{
 
     @Test
     public void testVerifyURL() {
-        product.browser.goToUrl("http://www.espn.com/");
-        product.browser.verifyURL("http://www.espn.com/");
+        product.browser.goToUrl("https://ci.mia.ucloud.int/login.html");
+        product.browser.verifyURL("https://ci.mia.ucloud.int/login.html");
         thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.verifyURL("http://www.espne.com/");
     }
@@ -87,7 +87,7 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.resize(BrowserSize.SmallTabletLandscape);
         product.browser.resize(BrowserSize.MobileLandscape);
         product.browser.maximize();
-        product.browser.goToUrl("http://www.tutorialspoint.com");
+        product.browser.goToUrl("https://ci.mia.ucloud.int");
         product.browser.scrollToEnd();
         product.browser.scrollToTop();
         product.browser.goBack();
