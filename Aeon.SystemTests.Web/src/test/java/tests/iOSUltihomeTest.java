@@ -14,7 +14,7 @@ public class iOSUltihomeTest {
 
     @Before
     public void beforeTests() {
-        product = launch(Sample.class, BrowserType.IOSSafari);
+        product = launch(Sample.class);
         product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
     }
 
