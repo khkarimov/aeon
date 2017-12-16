@@ -62,9 +62,6 @@ public class Aeon {
         PluginManager pluginManager = new DefaultPluginManager();
         pluginManager.loadPlugins();
         pluginManager.startPlugins();
-        System.out.println(pluginManager.getExtensions(IAdapterExtension.class));
-
-        System.out.println("plugins dir: " + System.getProperty("pf4j.pluginsDir", "plugins"));
 
         List<IAdapterExtension> extensions = pluginManager.getExtensions(IAdapterExtension.class);
         for (IAdapterExtension extension : extensions) {

@@ -283,7 +283,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         log.trace("Available contexts: " + String.join(", ", availableContexts));
         if (availableContexts.size() > 2) {
             for (String context : availableContexts) {
-                if (!context.contains("NATIVE_APP") && !context.equals(this.context) && context.startsWith("WEBVIEW")) {
+                if (!context.contains("NATIVE_APP") && context.startsWith("WEBVIEW")) {
                     log.trace("Switching to context " + context);
                     getMobileWebDriver().context(context);
                     log.trace("Switched to context");
