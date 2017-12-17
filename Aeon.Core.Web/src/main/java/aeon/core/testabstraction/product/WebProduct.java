@@ -8,12 +8,16 @@ import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.models.Browser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
 
 /**
  * Class to make a web product.
  */
 public class WebProduct extends Product {
+
+    private static Logger log = LogManager.getLogger(WebProduct.class);
 
     public Browser browser;
 
@@ -40,6 +44,9 @@ public class WebProduct extends Product {
 
     @Override
     protected void afterLaunch() {
+        BrowserType browserType = ((WebConfiguration) configuration).getBrowserType();
+        log.info("Product successfully launched with " + browserType);
+
         // Set WebCommandExecutionFacade
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
         long ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
@@ -53,7 +60,6 @@ public class WebProduct extends Product {
         // Instantiate browser and optionally maximize the window
         browser = new Browser(getAutomationInfo());
         boolean maximizeBrowser = configuration.getBoolean(WebConfiguration.Keys.MAXIMIZE_BROWSER, true);
-        BrowserType browserType = browser.getBrowserType();
         if (maximizeBrowser
                 && !browserType.equals(BrowserType.AndroidChrome)
                 && !browserType.equals(BrowserType.IOSSafari)

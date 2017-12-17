@@ -7,6 +7,8 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * Gets the corresponding enumerable BrowserType associated with the current browser.
+ *
+ * @deprecated Please get the browser type from the configuration or the browser object instead.
  */
 public class GetBrowserTypeCommand extends CommandWithReturn {
 

@@ -101,7 +101,7 @@ public abstract class Product {
      *
      * @return The configuration of the product.
      */
-    protected Configuration getConfiguration() {
+    Configuration getConfiguration() {
         return this.configuration;
     }
 

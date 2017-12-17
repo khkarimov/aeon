@@ -8,6 +8,7 @@ import aeon.core.common.mobile.selectors.ByMobile;
 import aeon.core.common.mobile.selectors.ByMobileId;
 import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IMobileAdapter;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -374,12 +375,27 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      */
     public final void click(WebControl element) {
         if (element.getSelector() instanceof IByMobile) {
+            switchToNativeAppContext();
             click(element, false);
+            switchToWebViewContext();
 
             return;
         }
 
         super.click(element);
+    }
+
+    @Override
+    public void set(WebControl control, WebSelectOption option, String setValue) {
+        if (control.getSelector() instanceof IByMobile) {
+            switchToNativeAppContext();
+            sendKeysToElement(control, setValue);
+            switchToWebViewContext();
+
+            return;
+        }
+
+        super.set(control, option, setValue);
     }
 
     private void switchToNativeAppContext() {

@@ -22,7 +22,6 @@ public class MouseHelper {
         Point pointLocation = MouseInfo.getPointerInfo().getLocation();
         int xOriginal = (int) pointLocation.getX();
         int yOriginal = (int) pointLocation.getY();
-        System.out.println("Mousehelper:" + xCoordinate + ", " + yCoordinate);
 
         try {
             Robot mouseRobot = new Robot();
