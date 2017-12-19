@@ -109,17 +109,6 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             log.error(ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>(), lastCaughtException);
         }
 
-        String pageSource = null;
-        try {
-            pageSource = driver.getSource();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        }
-
-        if (pageSource != null) {
-            log.trace(ex.getMessage(), pageSource);
-        }
-
         throw ex;
     }
 }

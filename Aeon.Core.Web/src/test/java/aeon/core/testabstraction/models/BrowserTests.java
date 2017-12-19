@@ -7,11 +7,12 @@ import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.BrowserSize;
+import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import aeon.core.testabstraction.product.Configuration;
+import aeon.core.testabstraction.product.WebConfiguration;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -32,7 +34,7 @@ public class BrowserTests {
     private Browser browserObject;
     private AutomationInfo automationInfo;
     @Mock
-    private Configuration configuration;
+    private WebConfiguration configuration;
     @Mock
     private IAdapter adapter;
     @Mock
@@ -79,8 +81,15 @@ public class BrowserTests {
 
     @Test
     public void getBrowserType_CallsExecute() {
-        browserObject.getBrowserType();
-        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetBrowserTypeCommand.class));
+
+        // Arrange
+        when(configuration.getBrowserType()).thenReturn(BrowserType.Chrome);
+
+        // Act
+        BrowserType result = browserObject.getBrowserType();
+
+        // Assert
+        assertEquals(result, BrowserType.Chrome);
     }
 
     @Test

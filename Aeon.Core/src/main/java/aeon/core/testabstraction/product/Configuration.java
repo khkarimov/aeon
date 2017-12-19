@@ -148,6 +148,15 @@ public class Configuration {
     }
 
     /**
+     * Add given properties to the configuration, overriding properties with the same name.
+     *
+     * @param properties The properties to set.
+     */
+    void setProperties(Properties properties) {
+        this.properties.putAll(properties);
+    }
+
+    /**
      * Gets InputStream of test.properties.
      *
      * @return getResourceAsStream of "/test.properties" file
