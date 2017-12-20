@@ -13,7 +13,6 @@ var aeon = {
         };
         this.addEventListener('readystatechange', readyStateChange, false);
 
-        // If async parameter is not set use true as the default
         if (arguments.length < 3) {
             async = true;
         }
