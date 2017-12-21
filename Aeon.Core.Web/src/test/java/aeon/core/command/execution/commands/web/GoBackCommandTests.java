@@ -35,12 +35,9 @@ public class GoBackCommandTests {
     @Mock
     private Consumer<IDriver> action;
 
-    /*Setup*/
-
     @Before
     public void setup(){goBackCommandObject = new GoBackCommand();}
 
-    /* Test Cases*/
 
     /**
      * Move back a single page in a browser's history

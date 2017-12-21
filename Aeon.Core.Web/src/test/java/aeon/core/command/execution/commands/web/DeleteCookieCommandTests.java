@@ -30,16 +30,21 @@ public class DeleteCookieCommandTests {
         //Arrange
 
         //Act
-        //deleteCookie.getCommandDelegate();
         deleteCookie.driverDelegate(driver);
-        //Verify
+
+        //Assert
         verify(driver, times(1)).deleteCookie(cookie);
 
     }
     @Test(expected = IllegalArgumentException.class)
     public void driverNullThrowsException(){
+        //Arrange
+
         //Act
         deleteCookie.driverDelegate(null);
+
+        //Assert
+
     }
 
 

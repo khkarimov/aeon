@@ -29,19 +29,25 @@ public class AcceptAlertCommandTests {
 
         @Test
         public void testDriverDelegate() {
+            //Arrange
+
             //Act
             acceptAlertCommand.driverDelegate(driver);
 
-            //Verify
+            //Assert
             verify(driver, times(1)).acceptAlert();
         }
 
 
         @Test (expected = IllegalArgumentException.class)
         public void testDriverDelegateNullDriver(){
+            //Arrange
+
             //Act
             acceptAlertCommand.driverDelegate(null);
             expectedException.expect(IllegalArgumentException.class);
-            expectedException.expectMessage("driver");
+
+            //Assert
+
         }
 }
