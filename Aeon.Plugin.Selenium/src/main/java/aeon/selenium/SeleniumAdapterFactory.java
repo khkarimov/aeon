@@ -134,7 +134,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-        long throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 250);
 
         isRemote = seleniumHubUrl != null;
 
