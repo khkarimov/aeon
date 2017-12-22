@@ -49,10 +49,11 @@ public class WebProduct extends Product {
 
         // Set WebCommandExecutionFacade
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+        long throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 100);
         long ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
 
         WebCommandExecutionFacade commandExecutionFacade = new WebCommandExecutionFacade(
-                new DelegateRunnerFactory(Duration.millis(250), Duration.standardSeconds(timeout)),
+                new DelegateRunnerFactory(Duration.millis(throttle), Duration.standardSeconds(timeout)),
                 new AjaxWaiter(this.automationInfo.getDriver(), Duration.standardSeconds(ajaxTimeout)));
 
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
@@ -78,6 +79,7 @@ public class WebProduct extends Product {
             browser.goToUrl(protocol + "://" + environment);
         }
     }
+
 
     @Override
     protected void onLaunchFailure(Exception e) {
