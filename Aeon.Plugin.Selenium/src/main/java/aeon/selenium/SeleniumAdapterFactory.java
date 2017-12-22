@@ -150,7 +150,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     driver = new FirefoxDriver(firefoxOptions);
                 }
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
-                driver.manage().timeouts().implicitlyWait(throttle, TimeUnit.MILLISECONDS);
                 break;
 
             case Chrome:
