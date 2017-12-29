@@ -19,7 +19,7 @@ public class WindowDoesNotExistByTitleCommandTests {
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule public ExpectedException thrown = ExpectedException.none();
 
-    private String windowTitle;
+    private String windowTitle = "WindowTitle";
 
     @Mock
     private IWebDriver driver;
@@ -34,9 +34,9 @@ public class WindowDoesNotExistByTitleCommandTests {
 
         // Act
         windowDoesNotExistByTitleCommand.commandDelegate(null);
-        thrown.expectMessage("driver");
 
         // Assert
+        thrown.expectMessage("driver");
 
     }
 
@@ -48,6 +48,6 @@ public class WindowDoesNotExistByTitleCommandTests {
         windowDoesNotExistByTitleCommand.commandDelegate(driver);
 
         // Assert
-       verify(driver, times(1)).windowDoesNotExistByTitle(windowTitle);
+        verify(driver, times(1)).windowDoesNotExistByTitle(windowTitle);
     }
 }

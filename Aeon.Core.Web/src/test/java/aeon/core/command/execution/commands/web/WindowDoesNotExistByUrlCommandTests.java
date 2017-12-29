@@ -19,7 +19,7 @@ public class WindowDoesNotExistByUrlCommandTests {
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule public ExpectedException thrown = ExpectedException.none();
 
-    private String url;
+    private String url = "Url";
 
     @Mock
     private IWebDriver driver;
@@ -34,8 +34,9 @@ public class WindowDoesNotExistByUrlCommandTests {
 
         // Act
         windowDoesNotExistByUrlCommand.commandDelegate(null);
-        thrown.expectMessage("driver");
+
         // Assert
+        thrown.expectMessage("driver");
     }
 
     @Test
@@ -46,6 +47,6 @@ public class WindowDoesNotExistByUrlCommandTests {
         windowDoesNotExistByUrlCommand.commandDelegate(driver);
 
         // Assert
-       verify(driver, times(1)).windowDoesNotExistByUrl(url);
+        verify(driver, times(1)).windowDoesNotExistByUrl(url);
     }
 }
