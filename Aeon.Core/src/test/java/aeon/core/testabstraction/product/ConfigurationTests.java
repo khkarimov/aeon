@@ -168,7 +168,7 @@ public class ConfigurationTests {
         config.loadConfiguration();
 
         //Assert
-        verify(log, times(1)).info("These are the properties values currently in use:\naeon.timeout = 10\naeon.wait_for_ajax_responses = true\naeon.timeout.ajax = 20\naeon.scroll_element_into_view = false\n");
+        verify(log, times(1)).info("These are the properties values currently in use:\naeon.timeout = 10\naeon.throttle = 100\n");
     }
 
     @Test
