@@ -79,8 +79,7 @@ public class WebProduct extends Product {
             browser.goToUrl(protocol + "://" + environment);
         }
     }
-
-
+    
     @Override
     protected void onLaunchFailure(Exception e) {
 
