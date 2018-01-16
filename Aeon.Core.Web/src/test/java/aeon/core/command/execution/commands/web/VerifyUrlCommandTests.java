@@ -50,8 +50,8 @@ public class VerifyUrlCommandTests {
 
         // Act
         verifyUrlCommand.driverDelegate(null);
-        expectedException.expect(IllegalArgumentException.class);
 
         //Assert
+        expectedException.expect(IllegalArgumentException.class);
     }
 }
