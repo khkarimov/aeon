@@ -44,6 +44,4 @@ public class DeleteAllCookiesCommandTests {
         //Assert
         verify(driver,times(1)).deleteAllCookies();
     }
-
-
 }

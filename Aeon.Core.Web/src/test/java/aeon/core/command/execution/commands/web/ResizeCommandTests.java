@@ -22,6 +22,7 @@ public class ResizeCommandTests {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
+
     @Mock
     private IWebDriver driver;
 
@@ -51,7 +52,4 @@ public class ResizeCommandTests {
         //Assert
 
     }
-
-
-
 }

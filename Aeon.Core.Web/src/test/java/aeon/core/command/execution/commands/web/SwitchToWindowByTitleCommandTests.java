@@ -53,10 +53,4 @@ public class SwitchToWindowByTitleCommandTests {
         //Assert
 
     }
-
-
-
-
-
-
 }

@@ -20,9 +20,7 @@ public class ScrollToEndCommandTests {
     private IWebDriver driver;
 
     @Before
-    public void setUp() {
-        scrollToEndCommand = new ScrollToEndCommand();
-    }
+    public void setUp() { scrollToEndCommand = new ScrollToEndCommand(); }
 
     @Test
     public void commandDelegateScrollToEndCommand() {
