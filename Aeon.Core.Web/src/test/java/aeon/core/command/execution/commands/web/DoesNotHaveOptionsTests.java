@@ -17,28 +17,27 @@ import static org.mockito.Mockito.verify;
 
 public class DoesNotHaveOptionsTests {
     private DoesNotHaveOptionsCommand doesNotHaveOptionsCommandObject;
+    private DoesNotHaveOptionsCommand doesNotHaveOptionsCommandObjectSecond;
+
     private WebSelectOption select;
     private String[] options;
     private String optgroup;
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     @Mock
     private IByWeb selector;
-
     @Mock
     private ICommandInitializer commandInitializer;
-
     @Mock
     private IWebDriver driver;
-
     @Mock
     private WebControl control;
 
     @Before
     public void setup(){
         doesNotHaveOptionsCommandObject = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, optgroup, select);
+        doesNotHaveOptionsCommandObjectSecond = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, select);
     }
 
     @Test
@@ -47,8 +46,9 @@ public class DoesNotHaveOptionsTests {
         
         // Act
         doesNotHaveOptionsCommandObject.commandDelegate(driver, control);
+        doesNotHaveOptionsCommandObjectSecond.commandDelegate(driver, control);
 
         // Assert
-        verify(driver, times(1)).doesNotHaveOptions(control, options, optgroup, select);
+        verify(driver, times(2)).doesNotHaveOptions(control, options, optgroup, select);
     }
 }

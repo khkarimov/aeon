@@ -15,12 +15,12 @@ import static org.mockito.Mockito.verify;
 public class HasNumberOfOptionsCommandTests {
 
     private HasNumberOfOptionsCommand hasNumberOfOptionsCommand;
+    private HasNumberOfOptionsCommand hasNumberOfOptionsCommandSecond;
 
     private int number = 3;
     private String optGroup = "Test";
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     @Mock
     private IByWeb selector;
     @Mock
@@ -31,18 +31,20 @@ public class HasNumberOfOptionsCommandTests {
     private WebControl control;
 
     @Before
-    public void setup(){ hasNumberOfOptionsCommand = new HasNumberOfOptionsCommand(selector, initializer, number, optGroup); }
+    public void setup(){
+        hasNumberOfOptionsCommand = new HasNumberOfOptionsCommand(selector, initializer, number, optGroup);
+        hasNumberOfOptionsCommandSecond = new HasNumberOfOptionsCommand(selector, initializer, number);
+    }
 
     @Test
     public void HasAllOptionsInOrderCommandTestsInOrder(){
-
         // Arrange
 
         // Act
         hasNumberOfOptionsCommand.commandDelegate(driver, control);
+        hasNumberOfOptionsCommandSecond.commandDelegate(driver, control);
 
         // Verify
         verify(driver, times(1)).hasNumberOfOptions(control, number, optGroup);
-
     }
 }
