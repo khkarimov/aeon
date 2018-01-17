@@ -11,9 +11,8 @@ import org.mockito.junit.MockitoRule;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SendKeysToAlertCommandTest {
-    private SendKeysToAlertCommand sendKeysToAlertCommand;
-    private String keysToSend = "testKey";
+public class VerifyAlertExistsCommandTests {
+    private VerifyAlertExistsCommand verifyAlertExistsCommand;
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -25,17 +24,17 @@ public class SendKeysToAlertCommandTest {
     private IWebDriver driver;
 
     @Before
-    public void setup(){ sendKeysToAlertCommand = new SendKeysToAlertCommand(keysToSend);}
+    public void setup(){verifyAlertExistsCommand = new VerifyAlertExistsCommand();}
 
     @Test
-    public void commandDelegateSendKeysToAlertCommand(){
+    public void commandDelegateAlertTextLikeCommandTrue(){
         //Arrange
 
         //Act
-        sendKeysToAlertCommand.driverDelegate(driver);
+        verifyAlertExistsCommand.driverDelegate(driver);
 
         //Assert
-        verify(driver, times(1)).sendKeysToAlert(keysToSend);
+        verify(driver, times(1)).verifyAlertExists();
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -43,7 +42,7 @@ public class SendKeysToAlertCommandTest {
         //Arrange
 
         //Act
-        sendKeysToAlertCommand.driverDelegate(null);
+        verifyAlertExistsCommand.driverDelegate(null);
 
         //Assert
         expectedException.expect(IllegalArgumentException.class);

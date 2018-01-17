@@ -43,9 +43,8 @@ public class VerifyAlertNotExistsCommandTests {
 
         //Act
         verifyAlertNotExistsCommand.driverDelegate(null);
-        expectedException.expect(IllegalArgumentException.class);
 
         //Assert
-
+        expectedException.expect(IllegalArgumentException.class);
     }
 }

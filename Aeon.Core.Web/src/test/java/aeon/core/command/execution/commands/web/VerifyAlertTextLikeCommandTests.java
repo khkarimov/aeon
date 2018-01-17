@@ -45,9 +45,8 @@ public class VerifyAlertTextLikeCommandTests {
 
         //Act
         verifyAlertTextLikeCommand.driverDelegate(null);
-        expectedException.expect(IllegalArgumentException.class);
 
         //Assert
-
+        expectedException.expect(IllegalArgumentException.class);
     }
 }
