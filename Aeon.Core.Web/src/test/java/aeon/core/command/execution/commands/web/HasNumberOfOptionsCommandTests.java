@@ -14,13 +14,9 @@ import static org.mockito.Mockito.verify;
 
 public class HasNumberOfOptionsCommandTests {
 
-    private HasNumberOfOptionsCommand hasNumberOfOptionsCommand;
-
     private int number = 3;
-    private String optGroup = "Test";
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     @Mock
     private IByWeb selector;
     @Mock
@@ -30,19 +26,28 @@ public class HasNumberOfOptionsCommandTests {
     @Mock
     private WebControl control;
 
-    @Before
-    public void setup(){ hasNumberOfOptionsCommand = new HasNumberOfOptionsCommand(selector, initializer, number, optGroup); }
-
     @Test
     public void HasAllOptionsInOrderCommandTestsInOrder(){
-
         // Arrange
+        String optGroup = "Test";
+        HasNumberOfOptionsCommand hasNumberOfOptionsCommand = new HasNumberOfOptionsCommand(selector, initializer, number, optGroup);
 
         // Act
         hasNumberOfOptionsCommand.commandDelegate(driver, control);
 
         // Verify
         verify(driver, times(1)).hasNumberOfOptions(control, number, optGroup);
+    }
 
+    @Test
+    public void HasAllOptionsInOrderCommandTestsInOrderSecondConstructor(){
+        // Arrange
+        HasNumberOfOptionsCommand hasNumberOfOptionsCommandSecond = new HasNumberOfOptionsCommand(selector, initializer, number);
+
+        // Act
+        hasNumberOfOptionsCommandSecond.commandDelegate(driver, control);
+
+        // Verify
+        verify(driver, times(1)).hasNumberOfOptions(control, number, null);
     }
 }
