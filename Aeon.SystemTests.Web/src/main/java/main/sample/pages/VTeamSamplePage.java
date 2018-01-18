@@ -84,6 +84,7 @@ public class VTeamSamplePage extends Page {
         nonExistentLabel = new Label(info, By.cssSelector("fakeSelector"));
         formTextBox = new TextBox(info, By.cssSelector("#sample1"));
         nextRadioButton = new RadioButton(info, By.cssSelector("#next-radio-button"));
+        smileyFace1 = new Button(info, By.cssSelector(".call-1 > button:nth-child(1)"));
         smileyFace3 = new Button(info, By.cssSelector(".call-3 > button:nth-child(1)"));
 
         myGrid = new MyGrid(info, gridSelector, new MyGridHeaders());
