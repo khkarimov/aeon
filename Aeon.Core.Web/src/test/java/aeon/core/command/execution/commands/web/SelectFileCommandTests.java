@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.junit.rules.ExpectedException;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -21,6 +22,9 @@ public class SelectFileCommandTests {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Mock
     private IWebDriver driver;
@@ -58,6 +62,6 @@ public class SelectFileCommandTests {
         selectFileCommand.commandDelegate(null, null);
 
         //Assert
-
+        expectedException.expect(IllegalArgumentException.class);
     }
 }
