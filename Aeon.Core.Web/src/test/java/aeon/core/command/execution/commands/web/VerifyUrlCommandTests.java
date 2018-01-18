@@ -16,14 +16,11 @@ import java.net.URL;
 
 public class VerifyUrlCommandTests {
     private VerifyUrlCommand verifyUrlCommand;
-    private String comparingURL = "http://google.com";
     private URL url = new URL("http://google.com");
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
     @Mock
     private IWebDriver driver;
 
@@ -31,7 +28,9 @@ public class VerifyUrlCommandTests {
     }
 
     @Before
-    public void setUp() { verifyUrlCommand = new VerifyUrlCommand(comparingURL); }
+    public void setUp() {
+        String comparingURL = "http://google.com";
+        verifyUrlCommand = new VerifyUrlCommand(comparingURL); }
 
     @Test
     public void driverDelegateVerifyUrlCommand() {

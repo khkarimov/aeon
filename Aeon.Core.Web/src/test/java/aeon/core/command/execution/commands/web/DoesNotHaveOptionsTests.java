@@ -5,7 +5,6 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -16,15 +15,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class DoesNotHaveOptionsTests {
-    private DoesNotHaveOptionsCommand doesNotHaveOptionsCommandObject;
-    private DoesNotHaveOptionsCommand doesNotHaveOptionsCommandObjectSecond;
 
-    private WebSelectOption select;
-    private String[] options;
-    private String optgroup;
+    private WebSelectOption select = null;
+    private String[] options = {};
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
     private IByWeb selector;
     @Mock
@@ -34,21 +29,28 @@ public class DoesNotHaveOptionsTests {
     @Mock
     private WebControl control;
 
-    @Before
-    public void setup(){
-        doesNotHaveOptionsCommandObject = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, optgroup, select);
-        doesNotHaveOptionsCommandObjectSecond = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, select);
-    }
-
     @Test
     public void commandDelegateExecutesDoesNotHaveOptions(){
         // Arrange
-        
+        DoesNotHaveOptionsCommand doesNotHaveOptionsCommand = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, select);
+
         // Act
-        doesNotHaveOptionsCommandObject.commandDelegate(driver, control);
-        doesNotHaveOptionsCommandObjectSecond.commandDelegate(driver, control);
+        doesNotHaveOptionsCommand.commandDelegate(driver, control);
 
         // Assert
-        verify(driver, times(2)).doesNotHaveOptions(control, options, optgroup, select);
+        verify(driver, times(1)).doesNotHaveOptions(control, options, null, select);
+    }
+
+    @Test
+    public void commandDelegateExecutesDoesNotHaveOptionsSecondConstructor(){
+        // Arrange
+        String optGroup = "Test";
+        DoesNotHaveOptionsCommand doesNotHaveOptionsCommandSecond = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, optGroup, select);
+
+        // Act
+        doesNotHaveOptionsCommandSecond.commandDelegate(driver, control);
+
+        // Assert
+        verify(driver, times(1)).doesNotHaveOptions(control, options, optGroup, select);
     }
 }
