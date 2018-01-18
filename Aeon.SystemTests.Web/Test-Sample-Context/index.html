@@ -493,14 +493,9 @@
             })
             .done(function () {
                 $('.call-2').show();
-            });
-            $.ajax({
-                crossDomain: true,
-                url:"http://mockbin.org/delay/18000",
-                dataType: "json"
+                load("http://mockbin.org/delay/3000", function () {
+                    $('.call-3').show();
                 })
-            .done(function () {
-                $('.call-3').show();
             });
         });
 
