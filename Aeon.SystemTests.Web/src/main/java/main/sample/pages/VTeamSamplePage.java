@@ -45,6 +45,8 @@ public class VTeamSamplePage extends Page {
     public TextBox formTextBox;
     public RadioButton nextRadioButton;
     public Button smileyFace1;
+    public Button smileyFace2;
+    public Button smileyFace3;
     public MyGrid myGrid;
     public MyListGroup myListGroup;
 
@@ -82,7 +84,7 @@ public class VTeamSamplePage extends Page {
         nonExistentLabel = new Label(info, By.cssSelector("fakeSelector"));
         formTextBox = new TextBox(info, By.cssSelector("#sample1"));
         nextRadioButton = new RadioButton(info, By.cssSelector("#next-radio-button"));
-        smileyFace1 = new Button(info, By.cssSelector(".call-1 > button:nth-child(1)"));
+        smileyFace3 = new Button(info, By.cssSelector(".call-3 > button:nth-child(1)"));
 
         myGrid = new MyGrid(info, gridSelector, new MyGridHeaders());
         divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));

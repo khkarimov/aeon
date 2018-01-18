@@ -480,24 +480,27 @@
         $('#start').on('click', function () {
             $.ajax({
                 crossDomain: true,
-                url: "http://mockbin.org/delay/15000?__callback=?",
-                jsonp: "__callback",
-                dataType: "jsonp"
+                url:"http://mockbin.org/delay/13000",
+                dataType: "json"
             })
-            .done(function () {
-                $('.call-1').show();
-            });
+            .done(function () {
+                $('.call-1').show();
+            });
             $.ajax({
                 crossDomain: true,
-                url: "http://mockbin.org/delay/13000?__callback=?",
-                jsonp: "__callback",
-                dataType: "jsonp"
+                url:"http://mockbin.org/delay/15000",
+                dataType: "json"
             })
             .done(function () {
                 $('.call-2').show();
-                load("http://mockbin.org/delay/3000", function () {
-                    $('.call-3').show();
+            });
+            $.ajax({
+                crossDomain: true,
+                url:"http://mockbin.org/delay/18000",
+                dataType: "json"
                 })
+            .done(function () {
+                $('.call-3').show();
             });
         });
 
