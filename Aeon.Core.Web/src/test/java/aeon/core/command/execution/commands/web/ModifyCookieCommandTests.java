@@ -22,7 +22,9 @@ public class ModifyCookieCommandTests {
     private IWebDriver driver;
 
     @Before
-    public void setup(){ modifyCookieCommand = new ModifyCookieCommand(name, value);}
+    public void setup() {
+        modifyCookieCommand = new ModifyCookieCommand(name, value);
+    }
 
     @Test
     public void commandDelegateModifyCookieCommand(){

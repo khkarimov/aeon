@@ -26,7 +26,9 @@ public class VerifyAlertTextLikeCommandTests {
     private IWebDriver driver;
 
     @Before
-    public void setup(){verifyAlertTextLikeCommand = new VerifyAlertTextLikeCommand(comparingText, caseSensitive);}
+    public void setup() {
+        verifyAlertTextLikeCommand = new VerifyAlertTextLikeCommand(comparingText, caseSensitive);
+    }
 
     @Test
     public void commandDelegateAlertTextLikeCommandTrue(){

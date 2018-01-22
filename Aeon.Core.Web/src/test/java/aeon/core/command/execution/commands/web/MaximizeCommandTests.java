@@ -24,7 +24,9 @@ public class MaximizeCommandTests {
     private IWebDriver driver;
 
     @Before
-    public void setup(){ maximizeCommand = new MaximizeCommand();}
+    public void setup() {
+        maximizeCommand = new MaximizeCommand();
+    }
 
     @Test
     public void commandDelegateMaximizeCommand(){
@@ -43,9 +45,8 @@ public class MaximizeCommandTests {
 
         //Act
         maximizeCommand.driverDelegate(null);
-        expectedException.expect(IllegalArgumentException.class);
 
         //Assert
-
+        expectedException.expect(IllegalArgumentException.class);
     }
 }

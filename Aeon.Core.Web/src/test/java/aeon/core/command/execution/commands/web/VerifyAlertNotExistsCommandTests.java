@@ -24,10 +24,12 @@ public class VerifyAlertNotExistsCommandTests {
     private IWebDriver driver;
 
     @Before
-    public void setup(){ verifyAlertNotExistsCommand = new VerifyAlertNotExistsCommand();}
+    public void setup() {
+        verifyAlertNotExistsCommand = new VerifyAlertNotExistsCommand();
+    }
 
     @Test
-    public void commandDelegateScrollToTopCommand(){
+    public void commandDelegateVerifyAlertNotExistsCommand(){
         //Arrange
 
         //Act

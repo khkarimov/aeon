@@ -32,7 +32,9 @@ public class GoToUrlCommandTests {
     }
 
     @Before
-    public void setup(){ goToUrlCommand = new GoToUrlCommand(url);}
+    public void setup() {
+        goToUrlCommand = new GoToUrlCommand(url);
+    }
 
     @Test
     public void commandDelegateGoToUrlCommand(){
@@ -51,8 +53,8 @@ public class GoToUrlCommandTests {
 
         //Act
         goToUrlCommand.commandDelegate(null);
-        expectedException.expect(IllegalArgumentException.class);
 
         //Assert
+        expectedException.expect(IllegalArgumentException.class);
     }
 }

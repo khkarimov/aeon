@@ -24,7 +24,9 @@ public class ScrollToTopCommandTests {
     private IWebDriver driver;
 
     @Before
-    public void setup(){ scrollToTopCommand = new ScrollToTopCommand();}
+    public void setup() {
+        scrollToTopCommand = new ScrollToTopCommand();
+    }
 
     @Test
     public void commandDelegateScrollToTopCommand(){
@@ -43,9 +45,8 @@ public class ScrollToTopCommandTests {
 
         //Act
         scrollToTopCommand.driverDelegate(null);
-        expectedException.expect(IllegalArgumentException.class);
 
         //Assert
-
+        expectedException.expect(IllegalArgumentException.class);
     }
 }

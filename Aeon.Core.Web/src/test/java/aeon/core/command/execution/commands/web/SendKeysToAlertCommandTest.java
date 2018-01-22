@@ -25,7 +25,9 @@ public class SendKeysToAlertCommandTest {
     private IWebDriver driver;
 
     @Before
-    public void setup(){ sendKeysToAlertCommand = new SendKeysToAlertCommand(keysToSend);}
+    public void setup() {
+        sendKeysToAlertCommand = new SendKeysToAlertCommand(keysToSend);
+    }
 
     @Test
     public void commandDelegateSendKeysToAlertCommand(){
