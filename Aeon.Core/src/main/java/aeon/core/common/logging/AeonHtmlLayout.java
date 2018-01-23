@@ -28,6 +28,7 @@ import org.apache.logging.log4j.util.Strings;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.management.ManagementFactory;

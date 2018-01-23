@@ -39,6 +39,7 @@ allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'checkstyle'
     checkstyle {
+        toolVersion = "8.7"
         configFile = new File(rootDir, "checkstyle.xml")
     }
 
