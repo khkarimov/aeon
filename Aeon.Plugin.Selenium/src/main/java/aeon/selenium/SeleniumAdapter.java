@@ -31,6 +31,7 @@ import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
