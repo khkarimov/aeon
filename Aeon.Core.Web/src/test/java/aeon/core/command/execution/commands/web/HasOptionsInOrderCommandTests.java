@@ -35,17 +35,11 @@ public class HasOptionsInOrderCommandTests {
 
     @Mock
     private ICommandInitializer commandInitializer;
-    private HasOptionsInOrderCommand command;
-
-
-    @Before
-    public void setUp() {
-        command = new HasOptionsInOrderCommand(selector, commandInitializer, options, optGroup, WebSelectOption.Text);
-    }
 
     @Test
     public void commandDelegateHasOptionsCommand() {
         // Arrange
+        HasOptionsInOrderCommand command = new HasOptionsInOrderCommand(selector, commandInitializer, options, optGroup, WebSelectOption.Text);
         when(commandInitializer.setContext()).thenReturn(action);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
@@ -57,4 +51,15 @@ public class HasOptionsInOrderCommandTests {
         verify(driver, times(1)).hasOptionsInOrder(control, options, optGroup, WebSelectOption.Text);
     }
 
+    @Test
+    public void hasOptionsCommandFirstConstructor(){
+        // Arrange
+        HasOptionsInOrderCommand commandFirst = new HasOptionsInOrderCommand(selector, commandInitializer, options, WebSelectOption.Text);
+
+        // Act
+        commandFirst.commandDelegate(driver, control);
+
+        // Assert
+        verify(driver, times(1)).hasOptionsInOrder(control, options, null, WebSelectOption.Text);
+    }
 }
