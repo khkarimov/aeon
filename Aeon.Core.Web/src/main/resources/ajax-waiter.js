@@ -12,6 +12,11 @@ var aeon = {
             }
         };
         this.addEventListener('readystatechange', readyStateChange, false);
+
+        if (arguments.length < 3) {
+            async = true;
+        }
+
         open.call(this, method, url, async, user, pass);
     };
 })(XMLHttpRequest.prototype.open);

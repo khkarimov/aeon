@@ -67,6 +67,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String proxyLocation;
     private String perfectoUser;
     private String perfectoPass;
+    private String perfectoToken;
     private String platformVersion;
     private String browserVersion;
     private String app;
@@ -105,6 +106,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
         perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
         perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
+        perfectoToken = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_TOKEN, "");
         platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
         browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
         app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
@@ -275,13 +277,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                if (!perfectoUser.isEmpty()) {
-                    desiredCapabilities.setCapability("user", perfectoUser);
-                }
-
-                if (!perfectoPass.isEmpty()) {
-                    desiredCapabilities.setCapability("password", perfectoPass);
-                }
+                setPerfectoCredentials(desiredCapabilities);
 
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
@@ -296,13 +292,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                if (!perfectoUser.isEmpty()) {
-                    desiredCapabilities.setCapability("user", perfectoUser);
-                }
-
-                if (!perfectoPass.isEmpty()) {
-                    desiredCapabilities.setCapability("password", perfectoPass);
-                }
+                setPerfectoCredentials(desiredCapabilities);
 
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
@@ -315,13 +305,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                if (!perfectoUser.isEmpty()) {
-                    desiredCapabilities.setCapability("user", perfectoUser);
-                }
-
-                if (!perfectoPass.isEmpty()) {
-                    desiredCapabilities.setCapability("password", perfectoPass);
-                }
+                setPerfectoCredentials(desiredCapabilities);
 
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
@@ -349,13 +333,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Perfecto
-                if (!perfectoUser.isEmpty()) {
-                    desiredCapabilities.setCapability("user", perfectoUser);
-                }
-
-                if (!perfectoPass.isEmpty()) {
-                    desiredCapabilities.setCapability("password", perfectoPass);
-                }
+                setPerfectoCredentials(desiredCapabilities);
 
                 // Appium
                 if (!deviceName.isEmpty()) {
@@ -403,6 +381,18 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         return desiredCapabilities;
+    }
+
+    private MutableCapabilities setPerfectoCredentials(MutableCapabilities perfectoCapabilities){
+        if (!perfectoToken.isEmpty()) {
+            perfectoCapabilities.setCapability("securityToken", perfectoToken);
+        } else if (!perfectoUser.isEmpty()) {
+            perfectoCapabilities.setCapability("user", perfectoUser);
+            if (!perfectoPass.isEmpty()) {
+                perfectoCapabilities.setCapability("password", perfectoPass);
+            }
+        }
+        return perfectoCapabilities;
     }
 
     private DesiredCapabilities getMarionetteCapabilities() {

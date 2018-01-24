@@ -89,10 +89,10 @@ public class GeneralActionTests extends SampleBaseTest{
         product.browser.getCookie(cookie.getName());
     }
 
-    @Ignore
+    @Test
     public void testWaiter() {
         product.startPage.start.click();
-        product.startPage.smileyFace1.click();
+        product.startPage.smileyFace3.click();
     }
 
     @Test

@@ -3,6 +3,7 @@ package aeon.core.framework.abstraction.adapters;
 import aeon.core.common.Capability;
 import aeon.core.testabstraction.product.Configuration;
 import org.pf4j.ExtensionPoint;
+
 import java.io.IOException;
 
 /**

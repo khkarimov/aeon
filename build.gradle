@@ -24,7 +24,7 @@ assemble.finalizedBy(CopySeleniumPlugin)
 
 allprojects {
     group 'aeon'
-    version '0.5.2'
+    version '0.5.3'
 
     apply plugin: 'java'
     sourceCompatibility = 1.8
@@ -39,6 +39,7 @@ allprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'checkstyle'
     checkstyle {
+        toolVersion = "8.7"
         configFile = new File(rootDir, "checkstyle.xml")
     }
 
