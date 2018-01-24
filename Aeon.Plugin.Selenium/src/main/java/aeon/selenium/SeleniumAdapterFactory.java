@@ -384,11 +384,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private MutableCapabilities setPerfectoCredentials(MutableCapabilities perfectoCapabilities){
-
-        if(!perfectoToken.isEmpty()){
-            perfectoCapabilities.setCapability("securityToken",perfectoToken);
-        }
-        else if (!perfectoUser.isEmpty()) {
+        if (!perfectoToken.isEmpty()) {
+            perfectoCapabilities.setCapability("securityToken", perfectoToken);
+        } else if (!perfectoUser.isEmpty()) {
             perfectoCapabilities.setCapability("user", perfectoUser);
             if (!perfectoPass.isEmpty()) {
                 perfectoCapabilities.setCapability("password", perfectoPass);
