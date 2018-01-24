@@ -41,6 +41,8 @@ public class NotExistsCommandTests {
     @Test
     public void notExists_FindElementSuccessfulTry()
     {
+        // Arrange
+
         // Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
@@ -61,7 +63,6 @@ public class NotExistsCommandTests {
         action.accept(driver);
 
         // Assert
-        //doThrow(new NoSuchElementException()).when(driver).findElement(selector);
         verify(driver, times( 1)).findElement(selector);
         verify(driver, times( 0)).notExists(control);
     }
