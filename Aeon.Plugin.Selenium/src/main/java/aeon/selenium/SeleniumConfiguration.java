@@ -44,6 +44,7 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";
         public static final String PERFECTO_PASS = "aeon.selenium.perfecto.pass";
         public static final String BROWSER_VERSION = "aeon.selenium.perfecto.browser_version";
+        public static final String PERFECTO_TOKEN = "aeon.selenium.perfecto.token";
 
         // Appium
         public static final String APP = "aeon.selenium.appium.app";
