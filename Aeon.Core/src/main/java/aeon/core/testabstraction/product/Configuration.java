@@ -346,5 +346,6 @@ public class Configuration {
          */
         public static final String BROWSER = "aeon.browser";
         public static final String TIMEOUT = "aeon.timeout";
+        public static final String THROTTLE = "aeon.throttle";
     }
 }

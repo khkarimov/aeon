@@ -30,6 +30,7 @@ Please have a look at [Contributing](CONTRIBUTING.md) page.
 * Open `Internet Explorer` and click the settings button in the top right -> click `Internet options` -> click the `Security` tab
 * Click `Reset all zones to default level` and turn off protected mode in all 4 zones
 
+
 ### IE Registry Hacks
 * For tests to run locally, you need to change the Windows registry
 * Not sure whether it has to be local machine or current user, but it has to be one or the other (definitely not both)
@@ -50,3 +51,4 @@ Please have a look at [Contributing](CONTRIBUTING.md) page.
 [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_LOCALMACHINE_LOCKDOWN\Settings]
   "LOCALMACHINE_CD_UNLOCK"=dword:00000000
 ```
+
