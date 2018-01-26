@@ -1,5 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
+import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -11,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 import static org.mockito.Mockito.*;
@@ -41,36 +41,43 @@ public class NotExistsCommandTests {
     @Test
     public void notExists_FindElementSuccessfulTry()
     {
-        //Act
+        // Arrange
+
+        // Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
 
-        //Assert
+        // Assert
         verify(driver, times(1)).findElement(selector);
     }
 
     @Test
     public void notExists_FindElementCatch()
     {
-        //Act
+        // Arrange
+        NoSuchElementException e = new NoSuchElementException(new Exception(), selector);
+        when(driver.findElement(selector)).thenThrow(e);
+
+        // Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
 
-        //Assert
-        doThrow(new NoSuchElementException()).when(driver).findElement(selector);
+        // Assert
+        verify(driver, times( 1)).findElement(selector);
+        verify(driver, times( 0)).notExists(control);
     }
 
     @Test
     public void notExists_CallsExecute()
     {
-        //Arrange
+        // Arrange
         when(driver.findElement(selector)).thenReturn(control);
 
-        //Act
+        // Act
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
 
-        //Assert
+        // Assert
         verify(driver, times(1)).notExists(control);
     }
 }

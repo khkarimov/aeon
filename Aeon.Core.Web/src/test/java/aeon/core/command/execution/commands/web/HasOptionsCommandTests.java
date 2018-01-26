@@ -36,18 +36,12 @@ public class HasOptionsCommandTests {
 
     @Mock
     private ICommandInitializer commandInitializer;
-    private HasOptionsCommand command;
 
-
-    @Before
-    public void setUp()
-    {
-        command = new HasOptionsCommand(selector, commandInitializer, options, optGroup, WebSelectOption.Text);
-    }
 
     @Test
     public void commandDelegateHasOptionsCommand() {
         // Arrange
+        HasOptionsCommand command = new HasOptionsCommand(selector, commandInitializer, options, optGroup, WebSelectOption.Text);
         when(commandInitializer.setContext()).thenReturn(action);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
@@ -55,8 +49,19 @@ public class HasOptionsCommandTests {
         Consumer<IDriver> action = command.getCommandDelegate();
         action.accept(driver);
 
-        //Assert
+        // Assert
         verify(driver, times(1)).hasOptions(control, options, optGroup, WebSelectOption.Text);
     }
 
+    @Test
+    public void hasOptionsCommandFirstConstructor(){
+        // Arrange
+        HasOptionsCommand commandFirst = new HasOptionsCommand(selector, commandInitializer, options, WebSelectOption.Text);
+
+        // Act
+        commandFirst.commandDelegate(driver, control);
+
+        // Assert
+        verify(driver, times(1)).hasOptions(control, options, null, WebSelectOption.Text);
+    }
 }
