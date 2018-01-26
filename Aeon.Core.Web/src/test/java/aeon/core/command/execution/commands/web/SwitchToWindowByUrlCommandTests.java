@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 
 public class SwitchToWindowByUrlCommandTests {
 
-    private SwitchToWindowByUrlCommand switchByUrlObject;
+    private SwitchToWindowByUrlCommand switchToWindowByUrlObject;
     private String testUrl = "url";
 
     @Rule
@@ -27,29 +27,28 @@ public class SwitchToWindowByUrlCommandTests {
     @Mock
     private IWebDriver driver;
 
-
     @Before
     public void setUp() {
-        switchByUrlObject = new SwitchToWindowByUrlCommand(testUrl);
+        switchToWindowByUrlObject = new SwitchToWindowByUrlCommand(testUrl);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void DriverNullThrowsException(){
+        //Arrange
+
         // Act
-        switchByUrlObject.commandDelegate(null);
+        switchToWindowByUrlObject.commandDelegate(null);
 
         // Assert
         thrown.expectMessage("driver");
     }
 
-
     @Test
     public void commandDelegateSwitchToWindowByUrlCommand() {
         //Arrange
 
-
         //Act
-        driver.switchToWindowByUrl("url");
+        switchToWindowByUrlObject.commandDelegate(driver);
 
         //Assert
         verify(driver, times(1)).switchToWindowByUrl(testUrl);

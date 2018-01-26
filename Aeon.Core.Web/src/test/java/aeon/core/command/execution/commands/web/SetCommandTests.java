@@ -9,6 +9,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -21,10 +22,13 @@ import static org.mockito.Mockito.when;
 
 public class SetCommandTests {
 
+    private SetCommand setCommandObject;
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    private SetCommand command;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     IByWeb selector;
@@ -45,7 +49,20 @@ public class SetCommandTests {
 
     @Before
     public void setUp() {
-        command = new SetCommand(selector, initializer, WebSelectOption.Text, value);
+        setCommandObject = new SetCommand(selector, initializer, WebSelectOption.Text, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void commandDelegateDriverNullThrowsException()
+    {
+        //Arrange
+
+        //Act
+        setCommandObject.commandDelegate(null, control);
+
+        //Assert
+        thrown.expectMessage("driver");
+
     }
 
     @Test
@@ -56,7 +73,7 @@ public class SetCommandTests {
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
         //Act
-        Consumer<IDriver> action = command.getCommandDelegate();
+        Consumer<IDriver> action = setCommandObject.getCommandDelegate();
         action.accept(driver);
 
         //Assert
