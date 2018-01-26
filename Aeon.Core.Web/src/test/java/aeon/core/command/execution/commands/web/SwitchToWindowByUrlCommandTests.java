@@ -27,7 +27,6 @@ public class SwitchToWindowByUrlCommandTests {
     @Mock
     private IWebDriver driver;
 
-
     @Before
     public void setUp() {
         switchToWindowByUrlObject = new SwitchToWindowByUrlCommand(testUrl);
@@ -44,11 +43,9 @@ public class SwitchToWindowByUrlCommandTests {
         thrown.expectMessage("driver");
     }
 
-
     @Test
     public void commandDelegateSwitchToWindowByUrlCommand() {
         //Arrange
-
 
         //Act
         switchToWindowByUrlObject.commandDelegate(driver);

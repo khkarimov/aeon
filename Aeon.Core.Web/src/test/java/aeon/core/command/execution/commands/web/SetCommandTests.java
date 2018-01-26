@@ -52,7 +52,6 @@ public class SetCommandTests {
         setCommandObject = new SetCommand(selector, initializer, WebSelectOption.Text, value);
     }
 
-
     @Test(expected = IllegalArgumentException.class)
     public void commandDelegateDriverNullThrowsException()
     {
