@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
@@ -158,6 +159,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 } else {
                     ChromeOptions chromeOptions = getChromeOptions();
                     chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
+                    System.setProperty(ChromeDriverService.CHROME_DRIVER_VERBOSE_LOG_PROPERTY, "true");
                     System.setProperty("webdriver.chrome.driver", chromeDirectory);
                     driver = new ChromeDriver(chromeOptions);
                 }
@@ -454,7 +456,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         firefoxOptions.merge(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.TRACE);
+        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.ERROR);
         return firefoxOptions;
     }
 
@@ -525,6 +527,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         if (chromeBinary != null) {
             chromeOptions.setBinary(chromeBinary);
         }
+
+
 
 //        // DS - This is some ugly stuff. Couldn't find a better way...
 //        chromeOptions.setExperimentalOption("pref", new HashMap<String, Object>() {{

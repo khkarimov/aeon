@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class GeneralActionTests extends SampleBaseTest{
 
-    @Ignore
+    //@Ignore
     @Test
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
         product.browser.goToUrl("http://ci.mia.ucloud.int");
@@ -72,18 +72,20 @@ public class GeneralActionTests extends SampleBaseTest{
                 return cal.getTime();
             }
         };
+
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
         assert(secondCookie.getName().equals(cookie.getName()));
         assert(secondCookie.getDomain().equals(cookie.getDomain()));
         assert(secondCookie.getValue().equals(cookie.getValue()));
-        assert(secondCookie.getSecure() == cookie.getSecure());
+        assert(secondCookie.getSecure()==cookie.getSecure());
         assert(secondCookie.getPath().equals(cookie.getPath()));
         assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
 
-        product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
+        String cookieNewValue = "NewCookieValue";
+        product.browser.modifyCookie(cookie.getName(),cookieNewValue);
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert(secondCookie.getValue().equals("CookieNewValue"));
+        assert(secondCookie.getValue().equals(cookieNewValue));
         product.browser.deleteCookie(cookie.getName());
         thrown.expect(IsInstanceOf.instanceOf(NoSuchCookieException.class));
         product.browser.getCookie(cookie.getName());
