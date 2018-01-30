@@ -51,6 +51,7 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
         public static final String PLATFORM_VERSION = "aeon.selenium.appium.platform_version";
         public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
+        public static final String WEBVIEW_TIMEOUT = "aeon.selenium.appium.webview.timeout";
         public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
         public static final String UDID = "aeon.selenium.appium.udid";
         public static final String AUTOMATION_NAME = "aeon.selenium.appium.automation_name";

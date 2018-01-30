@@ -136,6 +136,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+        int webViewTimeout = (int) configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000);
 
         isRemote = seleniumHubUrl != null;
 
@@ -209,7 +210,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 try {
                     setContext();
                 } catch (RuntimeException e) {
-                    Sleep.wait(1000);
+                    Sleep.wait(webViewTimeout);
                     // Sometimes the web view context is not immediately available
                     setContext();
                 }
@@ -222,7 +223,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 try {
                     setContext();
                 } catch (RuntimeException e) {
-                    Sleep.wait(1000);
+                    Sleep.wait(webViewTimeout);
                     // Sometimes the cross walk web view context is not immediately available
                     setContext();
                 }
