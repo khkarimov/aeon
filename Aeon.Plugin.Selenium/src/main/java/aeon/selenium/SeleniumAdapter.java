@@ -101,7 +101,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public final void addCookie(IWebCookie cookie) {
         log.trace("WebDriver.add_Cookie();");
 
-        // TODO (FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
+        // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
         String domain = cookie.getDomain();
         if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.'){
             domain = domain.substring(1);
@@ -182,7 +182,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         // Delete old cookie, then add a new one with the new value.
         getWebDriver().manage().deleteCookieNamed(name);
 
-        // TODO (FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
+        // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
         String domain = cookie.getDomain();
         if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.'){
             domain = domain.substring(1);

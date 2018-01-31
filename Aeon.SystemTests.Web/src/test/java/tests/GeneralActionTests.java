@@ -82,12 +82,12 @@ public class GeneralActionTests extends SampleBaseTest{
         assert(secondCookie.getName().equals(cookie.getName()));
         assert(secondCookie.getDomain().equals(cookie.getDomain()));
         assert(secondCookie.getValue().equals(cookie.getValue()));
-        assert(secondCookie.getSecure()==cookie.getSecure());
+        assert(secondCookie.getSecure() == cookie.getSecure());
         assert(secondCookie.getPath().equals(cookie.getPath()));
         assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
 
         String cookieNewValue = "NewCookieValue";
-        product.browser.modifyCookie(cookie.getName(),cookieNewValue);
+        product.browser.modifyCookie(cookie.getName(), cookieNewValue);
         secondCookie = product.browser.getCookie(cookie.getName());
         assert(secondCookie.getValue().equals(cookieNewValue));
         product.browser.deleteCookie(cookie.getName());
