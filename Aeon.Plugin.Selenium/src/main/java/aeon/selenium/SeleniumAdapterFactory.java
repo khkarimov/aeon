@@ -159,7 +159,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 } else {
                     ChromeOptions chromeOptions = getChromeOptions();
                     chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
-                    System.setProperty(ChromeDriverService.CHROME_DRIVER_VERBOSE_LOG_PROPERTY, "true");
                     System.setProperty("webdriver.chrome.driver", chromeDirectory);
                     driver = new ChromeDriver(chromeOptions);
                 }
@@ -456,7 +455,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         firefoxOptions.merge(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.ERROR);
+        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.FATAL);
         return firefoxOptions;
     }
 

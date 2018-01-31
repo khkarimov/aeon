@@ -5,6 +5,7 @@ import aeon.core.common.exceptions.NoSuchCookieException;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
+import aeon.core.testabstraction.product.WebConfiguration;
 import categories.GridNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -16,17 +17,20 @@ import java.util.Date;
 
 public class GeneralActionTests extends SampleBaseTest{
 
-    //@Ignore
     @Test
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
+        if (product.getConfig(WebConfiguration.Keys.BROWSER, "").equals("InternetExplorer")) {
+            return;
+        }
+
         product.browser.goToUrl("http://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = "ci.mia.ucloud.int";
+            String domain = ".ci.mia.ucloud.int";
             String value = "CookieValue";
             Date expiration = getNextYear();
             String path = "/";
-            boolean secure = false;
+            boolean secure = true;
             boolean session = true;
 
             @Override
