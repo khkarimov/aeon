@@ -112,7 +112,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Deletes all cookies.s
+     * Deletes all cookies.
      */
     public final void deleteAllCookies() {
         log.trace("WebDriver.delete_AllCookies();");
