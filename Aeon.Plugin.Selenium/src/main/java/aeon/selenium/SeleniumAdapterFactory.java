@@ -527,8 +527,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             chromeOptions.setBinary(chromeBinary);
         }
 
-
-
 //        // DS - This is some ugly stuff. Couldn't find a better way...
 //        chromeOptions.setExperimentalOption("pref", new HashMap<String, Object>() {{
 //            put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
