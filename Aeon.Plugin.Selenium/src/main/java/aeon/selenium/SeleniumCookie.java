@@ -52,7 +52,11 @@ public class SeleniumCookie implements IWebCookie {
      * @return The domain the cookie is visible to is returned.
      */
     public final String getDomain() {
-        return underlyingCookie.getDomain();
+        if (underlyingCookie.getDomain().charAt(0) == '.') {
+            return underlyingCookie.getDomain();
+        } else {
+            return '.' + underlyingCookie.getDomain();
+        }
     }
 
     /**

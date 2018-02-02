@@ -101,7 +101,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void addCookie(IWebCookie cookie) {
         log.trace("WebDriver.add_Cookie();");
-        Cookie c = new Cookie(cookie.getName(), cookie.getValue(), cookie.getDomain(), cookie.getPath(), cookie.getExpiration());
+
+        // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
+        String domain = cookie.getDomain();
+        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.'){
+            domain = domain.substring(1);
+        }
+
+        Cookie c = new Cookie(cookie.getName(), cookie.getValue(), domain, cookie.getPath(), cookie.getExpiration(), cookie.getSecure());
         getWebDriver().manage().addCookie(c);
     }
 
@@ -152,6 +159,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (cookie == null) {
             throw new aeon.core.common.exceptions.NoSuchCookieException(name);
         }
+
         IWebCookie result = new SeleniumCookie(cookie);
         log.trace(String.format("Result: %1$s", result));
         return result;
@@ -174,7 +182,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // Delete old cookie, then add a new one with the new value.
         getWebDriver().manage().deleteCookieNamed(name);
-        Cookie newCookie = new Cookie(cookie.getName(), value, cookie.getDomain(), cookie.getPath(), cookie.getExpiry());
+
+        // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
+        String domain = cookie.getDomain();
+        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.'){
+            domain = domain.substring(1);
+        }
+
+        Cookie newCookie = new Cookie(cookie.getName(), value, domain, cookie.getPath(), cookie.getExpiry());
         getWebDriver().manage().addCookie(newCookie);
     }
 

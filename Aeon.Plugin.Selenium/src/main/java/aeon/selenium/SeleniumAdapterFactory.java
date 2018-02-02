@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
@@ -445,7 +446,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         firefoxOptions.merge(setProxySettings(getMarionetteCapabilities(), proxyLocation));
-        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.TRACE);
+        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.FATAL);
         return firefoxOptions;
     }
 

@@ -5,6 +5,7 @@ import aeon.core.common.exceptions.NoSuchCookieException;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
+import aeon.core.testabstraction.product.WebConfiguration;
 import categories.GridNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
@@ -16,17 +17,20 @@ import java.util.Date;
 
 public class GeneralActionTests extends SampleBaseTest{
 
-    @Ignore
     @Test
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
+        if (product.getConfig(WebConfiguration.Keys.BROWSER, "").equals("InternetExplorer")) {
+            return;
+        }
+
         product.browser.goToUrl("http://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = "ci.mia.ucloud.int";
+            String domain = ".ci.mia.ucloud.int";
             String value = "CookieValue";
             Date expiration = getNextYear();
             String path = "/";
-            boolean secure = false;
+            boolean secure = true;
             boolean session = true;
 
             @Override
@@ -72,6 +76,7 @@ public class GeneralActionTests extends SampleBaseTest{
                 return cal.getTime();
             }
         };
+
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
         assert(secondCookie.getName().equals(cookie.getName()));
@@ -81,9 +86,10 @@ public class GeneralActionTests extends SampleBaseTest{
         assert(secondCookie.getPath().equals(cookie.getPath()));
         assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
 
-        product.browser.modifyCookie(cookie.getName(), "CookieNewValue");
+        String cookieNewValue = "NewCookieValue";
+        product.browser.modifyCookie(cookie.getName(), cookieNewValue);
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert(secondCookie.getValue().equals("CookieNewValue"));
+        assert(secondCookie.getValue().equals(cookieNewValue));
         product.browser.deleteCookie(cookie.getName());
         thrown.expect(IsInstanceOf.instanceOf(NoSuchCookieException.class));
         product.browser.getCookie(cookie.getName());
