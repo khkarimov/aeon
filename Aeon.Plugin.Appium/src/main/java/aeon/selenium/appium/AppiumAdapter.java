@@ -27,7 +27,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -159,11 +161,100 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         switchToWebViewContext();
     }
 
+    private int getWidgetNumber(int currentYear, int desiredYear) {
+        int widgetNumber = 3 - (currentYear - desiredYear);
+        if (currentYear < desiredYear) {
+            widgetNumber = 3 + (desiredYear - currentYear);
+        }
+        return widgetNumber;
+    }
+
+    private boolean checkAndClickYearElement(int desiredYear) {
+        String desiredYearString = String.valueOf(desiredYear);
+        for (int i = 1; i < 8; i++) {
+            try {
+                WebControl yearLabel = findElement(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget." +
+                        "FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.DatePicker/android.widget." +
+                        "LinearLayout/android.widget.ScrollView/android.widget.ViewAnimator/android.widget." +
+                        "ListView/android.widget.TextView[" + i + "]"), false);
+                String currentYearChecking = ((SeleniumElement) yearLabel).getUnderlyingWebElement().getText();
+                if (currentYearChecking.equals(desiredYearString)) {
+                    click(yearLabel);
+                    return true;
+                }
+            } catch (Exception err) {
+                WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+                click(yearLabel, false);
+            }
+        }
+        return false;
+    }
+
+    private void swipeAndCheckForYear(int currentYear, int desiredYear) {
+        Dimension screenSize = getMobileWebDriver().manage().window().getSize();
+        int width = screenSize.getWidth();
+        int height = screenSize.getHeight();
+        int xStart = width / 2;
+        int yStart = (height / 2);
+        while (!checkAndClickYearElement(desiredYear)) {
+            int yEnd = (int) (height * 0.0085);
+            if (getWidgetNumber(currentYear, desiredYear) > 7) {
+                yEnd = -1 * yEnd;
+            }
+            TouchAction action = new TouchAction(getMobileWebDriver());
+            action.press(xStart, yStart)
+                    .moveTo(0, yEnd)
+                    .release()
+                    .perform();
+        }
+    }
+
+    private void setYearOnAndroidDatePicker(int desiredYear) {
+        WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+        click(yearLabel, false);
+        int currentYear = Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText());
+        swipeAndCheckForYear(currentYear, desiredYear);
+    }
+
+    private int getMonthNumberOnAndroidDatePicker() {
+        List<String> monthList = Arrays.asList("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        WebControl monthLabel = findElement(ByMobile.id("android:id/date_picker_header_date"), false);
+        String monthCurrentlyShown = ((SeleniumElement) monthLabel).getUnderlyingWebElement().getText().substring(5, 8);
+        if (monthList.contains(monthCurrentlyShown)) {
+            return monthList.indexOf(monthCurrentlyShown);
+        }
+        return -1;
+    }
+
+    private void setMonthOnAndroidDatePicker(DateTime date) {
+        int currentMonth = getMonthNumberOnAndroidDatePicker();
+        int desiredMonth = date.getMonthOfYear();
+        WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+        if (date.getYear() != Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText())) {
+            setYearOnAndroidDatePicker(date.getYear());
+        }
+        if (currentMonth == desiredMonth) {
+            return;
+        }
+        if (currentMonth > desiredMonth) {
+            for (int i = 0; i < currentMonth - desiredMonth; i++) {
+                WebControl previousMonth = findElement(ByMobile.accessibilityId("Previous month"), false);
+                click(previousMonth, false);
+            }
+        } else if (currentMonth < desiredMonth) {
+            for (int i = 0; i < desiredMonth - currentMonth; i++) {
+                WebControl nextMonth = findElement(ByMobile.accessibilityId("Next month"), false);
+                click(nextMonth, false);
+            }
+        }
+    }
+
     @Override
     public void setDate(DateTime date) {
 
-        if (browserType == BrowserType.AndroidHybridApp){
+        if (browserType == BrowserType.AndroidHybridApp) {
             switchToNativeAppContext();
+            setMonthOnAndroidDatePicker(date);
             WebControl label = findElement(ByMobile.accessibilityId(date.toString("dd MMMM yyyy")), false);
             click(label, false);
             WebControl label1 = findElement(ByMobile.id("android:id/button1"), false);
