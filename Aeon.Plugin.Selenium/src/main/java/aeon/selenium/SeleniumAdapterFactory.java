@@ -484,7 +484,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         EdgeOptions edgeOptions = new EdgeOptions();
 
-        edgeOptions.setCapability(EdgeOptions.CAPABILITY, edgeOptions);
         edgeOptions = (EdgeOptions) setProxySettings(edgeOptions, proxyLocation);
         return edgeOptions;
     }
