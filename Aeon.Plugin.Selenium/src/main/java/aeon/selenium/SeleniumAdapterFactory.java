@@ -34,7 +34,6 @@ import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
@@ -48,9 +47,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
  * The driver factory for Web.
@@ -64,7 +65,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected BrowserType browserType;
     private String browserAcceptedLanguageCodes;
     private boolean useMobileUserAgent;
-    private boolean ensureCleanEnvironment;
     private String proxyLocation;
     private String perfectoUser;
     private String perfectoPass;
@@ -86,7 +86,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      * @param configuration The configuration of the adapter.
      * @return The created Selenium adapter is returned.
      */
-    public IAdapter create(SeleniumConfiguration configuration) {
+    private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
         return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
@@ -103,7 +103,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
-        this.ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
+        boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
         perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
         perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
@@ -137,112 +137,129 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-        int webViewTimeout = (int) configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000);
 
         isRemote = seleniumHubUrl != null;
+        URL finalSeleniumHubUrl = seleniumHubUrl;
 
         switch (browserType) {
             case Firefox:
-                if (isRemote) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
-                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                } else {
-                    System.setProperty("webdriver.gecko.driver", marionetteDirectory);
+                driver = getDriver(() -> {
+                    if (isRemote) {
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                    } else {
+                        System.setProperty("webdriver.gecko.driver", marionetteDirectory);
 
-                    FirefoxOptions firefoxOptions = getFirefoxOptions();
-                    driver = new FirefoxDriver(firefoxOptions);
-                }
+                        FirefoxOptions firefoxOptions = getFirefoxOptions();
+                        driver = new FirefoxDriver(firefoxOptions);
+                    }
+
+                    return driver;
+                });
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
                 break;
 
             case Chrome:
-                if (isRemote) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
-                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                } else {
-                    ChromeOptions chromeOptions = getChromeOptions();
-                    chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
-                    System.setProperty("webdriver.chrome.driver", chromeDirectory);
-                    driver = new ChromeDriver(chromeOptions);
-                }
+                driver = getDriver(() -> {
+                    if (isRemote) {
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                    } else {
+                        ChromeOptions chromeOptions = getChromeOptions();
+                        chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
+                        System.setProperty("webdriver.chrome.driver", chromeDirectory);
+                        driver = new ChromeDriver(chromeOptions);
+                    }
+
+                    return driver;
+                });
                 break;
 
             case InternetExplorer:
-                if (isRemote) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
-                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                } else {
-                    InternetExplorerDriverService internetExplorerDriverService = new InternetExplorerDriverService.Builder().usingDriverExecutable(new File(ieDirectory)).build();
-                    InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
-                    System.setProperty("webdriver.ie.driver", ieDirectory);
-                    driver = new InternetExplorerDriver(ieOptions);
-                }
+                driver = getDriver(() -> {
+                    if (isRemote) {
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                    } else {
+                        InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
+                        System.setProperty("webdriver.ie.driver", ieDirectory);
+                        driver = new InternetExplorerDriver(ieOptions);
+                    }
+
+                    return driver;
+                });
                 break;
 
             case Edge:
-                if (isRemote) {
-                    driver = new RemoteWebDriver(seleniumHubUrl, getCapabilities());
-                    ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                } else {
-                    driver = new EdgeDriver(
-                            new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
-                            getEdgeOptions(proxyLocation));
-                }
+                driver = getDriver(() -> {
+                    if (isRemote) {
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                    } else {
+                        driver = new EdgeDriver(
+                                new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
+                                getEdgeOptions(proxyLocation));
+                    }
+
+                    return driver;
+                });
                 break;
 
             case IOSSafari:
                 DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
-                driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
+                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
             case AndroidChrome:
                 capabilities = (DesiredCapabilities) getCapabilities();
-                driver = new RemoteWebDriver(seleniumHubUrl, capabilities);
+                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
             case IOSHybridApp:
-                capabilities = (DesiredCapabilities) getCapabilities();
-                driver = new IOSDriver(seleniumHubUrl, capabilities);
-
-                try {
-                    setContext();
-                } catch (RuntimeException e) {
-                    Sleep.wait(webViewTimeout);
-                    // Sometimes the web view context is not immediately available
-                    setContext();
+                if (seleniumHubUrl == null) {
+                    throw new RuntimeException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
+
+                capabilities = (DesiredCapabilities) getCapabilities();
+                driver = getDriver(() -> new IOSDriver(finalSeleniumHubUrl, capabilities));
+
+                trySetContext();
                 break;
 
             case AndroidHybridApp:
-                capabilities = (DesiredCapabilities) getCapabilities();
-                driver = new AndroidDriver(seleniumHubUrl, capabilities);
-
-                try {
-                    setContext();
-                } catch (RuntimeException e) {
-                    Sleep.wait(webViewTimeout);
-                    // Sometimes the cross walk web view context is not immediately available
-                    setContext();
+                if (seleniumHubUrl == null) {
+                    throw new RuntimeException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
+
+                capabilities = (DesiredCapabilities) getCapabilities();
+                driver = getDriver(() -> new AndroidDriver(finalSeleniumHubUrl, capabilities));
+
+                trySetContext();
 
                 //Cleans the app data for a fresh new session.
                 if (ensureCleanEnvironment && !appPackage.isEmpty()) {
 
-                    log.info("Cleaning application environment...");
+                    try {
+                        log.info("Cleaning application environment...");
 
-                    //Clean command
-                    Map<String, Object> cleanParams = new HashMap<>();
-                    cleanParams.put("identifier", appPackage);
-                    ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
+                        //Clean command
+                        Map<String, Object> cleanParams = new HashMap<>();
+                        cleanParams.put("identifier", appPackage);
+                        ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
 
-                    //Re-opens the application
-                    Map<String, Object> openParams = new HashMap<>();
-                    openParams.put("identifier", appPackage);
-                    ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
+                        //Re-opens the application
+                        Map<String, Object> openParams = new HashMap<>();
+                        openParams.put("identifier", appPackage);
+                        ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
+                    } catch (Exception e) {
+                        driver.quit();
+
+                        throw e;
+                    }
                 }
 
                 break;
@@ -250,6 +267,42 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
+        }
+    }
+
+    private WebDriver getDriver(Supplier<WebDriver> createDriver) {
+
+        int i = 0;
+        int numberOfRetries = 3;
+        while (true) {
+            try {
+                return createDriver.get();
+            } catch (Exception e) {
+                log.trace("Web driver instantiation failed: " + e.getMessage(), e);
+
+                if (i < numberOfRetries - 1) {
+                    log.trace("Retrying");
+                    i++;
+                } else {
+                    throw e;
+                }
+            }
+        }
+    }
+
+    private void trySetContext() {
+        try {
+            setContext();
+        } catch (RuntimeException e) {
+            // Sometimes web view context is not immediately available
+            Sleep.wait((int) configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000));
+            try {
+                setContext();
+            } catch (RuntimeException runtimeException) {
+                driver.quit();
+
+                throw runtimeException;
+            }
         }
     }
 
@@ -385,7 +438,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private MutableCapabilities setPerfectoCredentials(MutableCapabilities perfectoCapabilities){
+    private void setPerfectoCredentials(MutableCapabilities perfectoCapabilities){
         if (!perfectoToken.isEmpty()) {
             perfectoCapabilities.setCapability("securityToken", perfectoToken);
         } else if (!perfectoUser.isEmpty()) {
@@ -394,7 +447,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 perfectoCapabilities.setCapability("password", perfectoPass);
             }
         }
-        return perfectoCapabilities;
     }
 
     private DesiredCapabilities getMarionetteCapabilities() {
@@ -455,7 +507,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             throw new UnsupportedPlatformException();
         }
 
-        if (Process.getWindowsProcessesByName("iexplore").size() > 0) {
+        List<String> processes = Process.getWindowsProcessesByName("iexplore");
+        if (processes != null && processes.size() > 0) {
             log.info(Resources.getString("InternetExplorerIsAlreadyRunning_Info"));
         }
 
@@ -478,7 +531,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             throw new UnsupportedPlatformException();
         }
 
-        if (Process.getWindowsProcessesByName("MicrosoftEdge").size() > 0) {
+        List<String> processes = Process.getWindowsProcessesByName("MicrosoftEdge");
+        if (processes != null && processes.size() > 0) {
             log.info(Resources.getString("MicrosoftEdgeIsAlreadyRunning_Info"));
         }
 
@@ -495,11 +549,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
         boolean isHeadless = configuration.getBoolean(SeleniumConfiguration.Keys.CHROME_HEADLESS, false);
-        if (isHeadless) {
-            chromeOptions.addArguments("--headless");
-            // TODO(matthewro): This is temporarily needed for Chrome 59 but should be removed once later versions are available
-            chromeOptions.addArguments("--disable-gpu");
-        }
+        chromeOptions.setHeadless(isHeadless);
 
         if (useMobileUserAgent) {
             chromeOptions.addArguments("--user-agent=" + mobileUserAgent);
@@ -539,7 +589,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private void switchToWebView() {
-        Set<String> availableContexts = ((AppiumDriver) driver).getContextHandles();
+        Set<String> availableContexts = ((AppiumDriver<WebElement>) driver).getContextHandles();
         log.trace("Available contexts: " + String.join(", ", availableContexts));
 
         for (String context : availableContexts) {
