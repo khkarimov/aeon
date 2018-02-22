@@ -14,10 +14,9 @@ Please have a look at [Contributing](CONTRIBUTING.md) page.
 * Install Java 8 SDK
 * Install IntelliJ
 * Clone Aeon repository
-* Open IntelliJ IDEA, select `Open Project`
-* Navigate to and highlight the "aeon" directory, press `OK`
-* Press `File` -> `Project Structure`
-* Next to the dropdown with the red text press `New`
+* Open IntelliJ IDEA, select `Open`
+* Navigate to and highlight the "aeon" directory, press `Open`
+* Press `File` -> `Project Structure` -> `Project` and then navigate to `Project SDK` and press `New`
 * Select `JDK` and put the value of the JDK path into the dialog
 * Click `View` -> `Tool Windows` -> `Project` to see a Solution Explorer like view of the project
 * Click `View` -> `Tool Windows` -> `Gradle` to see a Gradle Project Window
