@@ -59,6 +59,7 @@ public class SeleniumConfiguration extends WebConfiguration {
         // Android
         public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
         public static final String APP_ACTIVITY = "aeon.selenium.android.app_activity";
+        public static final String AVD_NAME = "aeon.selenium.android.avd_name";
 
         //IOS
         public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";

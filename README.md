@@ -104,5 +104,6 @@ Please have a look at [Contributing](CONTRIBUTING.md) page.
 | **Android Settings** 	|||  
 | aeon.selenium.android.app_package | String | "" | Java package of the Android app you want to run |  
 | aeon.selenium.android.app_activity | String | "" |  Activity name for the Android activity you want to launch from your package. This often needs to be preceded by a . (e.g.,.MainActivity instead ofMainActivity) | 
+| aeon.selenium.android.avd_name | String | "" |  Name of avd (Android Virtual Device or Emulator) to launch (e.g., Nexus5_API7) | 
 | **IOS Settings** 	|||   
 | aeon.selenium.ios.bundle_id | String | "" | Bundle ID of the app under test. Useful for starting an app on a real device or for using other caps which require the bundle ID during test startup |

@@ -74,6 +74,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String app;
     private String appPackage;
     private String deviceName;
+    private String avdName;
     private String driverContext;
     private boolean crossWalkPatch;
     protected WebDriver driver;
@@ -113,6 +114,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
+        avdName = configuration.getString(SeleniumConfiguration.Keys.AVD_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
         crossWalkPatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
@@ -393,6 +395,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 // Appium
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+                if (!avdName.isEmpty()) {
+                    desiredCapabilities.setCapability("avd", avdName);
                 }
 
                 desiredCapabilities.setCapability("platformName", "Android");
