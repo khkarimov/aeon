@@ -38,24 +38,26 @@ public class WebControlFinderTests {
     @Test(expected = IllegalArgumentException.class)
     public void throwIllegalArgumentExceptionIfSetDriverIsNull() {
         // Arrange
-        //      Nothing to do
 
         // Act
         webControlFinderSet.findElement(null, selector);
+
+        // Arrange
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void throwIllegalArgumentExceptionIfDefaultDriverIsNull() {
         // Arrange
-        //      Nothing to do
 
         // Act
         webControlFinderDefault.findElement(null, selector);
+
+        // Arrange
     }
 
     @Test
     public void verify_webControl_Default_After_Calling_findElement(){
-        //Arrange
+        // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(driver.findElement(selector)).thenReturn(control);
 
@@ -68,7 +70,7 @@ public class WebControlFinderTests {
 
     @Test
     public void verify_webControl_Set_After_Calling_findElement(){
-        //Arrange
+        // Arrange
         when(initializer.setContext()).thenReturn(action);
         IByWeb selection = selectorFinder.findSelector(driver, selector);
         when(driver.findElement(selection)).thenReturn(control);

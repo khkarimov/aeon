@@ -45,7 +45,7 @@ public class DisabledCommandTests {
     @Test(expected = IllegalArgumentException.class)
     public void ControlNullThrowsException(){
         // Act
-        disabledCommandObject.commandDelegate(null, control);
+        disabledCommandObject.commandDelegate(driver, null);
 
         // Assert
         thrown.expectMessage("control");

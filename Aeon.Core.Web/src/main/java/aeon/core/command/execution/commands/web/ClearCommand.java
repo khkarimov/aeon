@@ -26,9 +26,6 @@ public class ClearCommand extends WebControlCommand {
 
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl webControl) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
 
         String tag = driver.getElementTagName(webControl).toUpperCase();
         if (tag.equals("SELECT")) {

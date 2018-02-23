@@ -61,7 +61,7 @@ public class ClearCommandTests {
 
     @Test
     public void commandDelegateClearElementExecutedWithoutExecutingScript() {
-        //Arrange
+        // Arrange
         when(driver.getElementTagName(control)).thenReturn("FOO");
 
         // Act
@@ -74,7 +74,7 @@ public class ClearCommandTests {
 
     @Test  (expected = Select2Exception.class)
     public void commandDelegateClearElementExecutedAndExecutingScript() {
-        //Arrange
+        // Arrange
         when(driver.getElementTagName(control)).thenReturn("SELECT");
         when(driver.executeScript(any(String.class))).thenReturn(true);
         when(control.getSelector()).thenReturn(selector);
@@ -90,7 +90,7 @@ public class ClearCommandTests {
 
     @Test
     public void commandDelegateSelect2Exception() {
-        //Arrange
+        // Arrange
         when(driver.getElementTagName(control)).thenReturn("SELECT");
         when(driver.executeScript(any(String.class))).thenReturn(false);
         when(control.getSelector()).thenReturn(selector);
@@ -99,7 +99,7 @@ public class ClearCommandTests {
         // Act
         clearCommand.getCommandDelegate().accept(driver);
 
-        //Assert
+        // Assert
         verify(driver, times(1)).clearElement(Mockito.eq(control));
     }
 }
