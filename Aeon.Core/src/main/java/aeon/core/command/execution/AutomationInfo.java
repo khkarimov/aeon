@@ -2,6 +2,7 @@ package aeon.core.command.execution;
 
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
+import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.core.testabstraction.product.Configuration;
 
 /**
@@ -25,6 +26,8 @@ public class AutomationInfo {
         this.driver = driver;
         this.adapter = adapter;
         this.configuration = configuration;
+
+        AeonTestExecution.startUp(configuration);
     }
 
     /**
@@ -97,5 +100,28 @@ public class AutomationInfo {
      */
     public void setDriver(IDriver driver) {
         this.driver = driver;
+    }
+
+    /**
+     * Method to indicate a successful launch of a product.
+     */
+    public void launched() {
+        AeonTestExecution.launched(configuration, adapter);
+    }
+
+    /**
+     * Method to indicate the successful completion of a test.
+     */
+    public void testSucceeded() {
+        AeonTestExecution.testSucceeded();
+    }
+
+    /**
+     * Method to indicate the end of a test due to a failure.
+     *
+     * @param message The failure message.
+     */
+    public void testFailed(String message) {
+        AeonTestExecution.testFailed(message);
     }
 }

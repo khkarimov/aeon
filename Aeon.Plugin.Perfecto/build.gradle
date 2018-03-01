@@ -1,5 +1,5 @@
-def baseProjectName = 'Aeon.Plugin.Appium'
-def baseProjectDescription = 'Aeon Appium Plugin'
+def baseProjectName = 'Aeon.Plugin.Perfecto'
+def baseProjectDescription = 'Aeon Perfecto Plugin'
 def base = baseProjectName
 
 configurations {
@@ -7,9 +7,20 @@ configurations {
     compile.extendsFrom(aeon)
 }
 
+repositories {
+    maven {
+        url 'http://repository-perfectomobile.forge.cloudbees.com/public/'
+    }
+}
+
+ext {
+    reportiumSdkVersion = '1.2.0'
+}
+
 dependencies {
-    compile project(':Aeon.Core.Mobile')
-    compile project(':Aeon.Plugin.Selenium')
+    compile project(':Aeon.Plugin.Appium')
+
+    compile "com.perfecto.reporting-sdk:reportium-java:$reportiumSdkVersion"
 }
 
 jar {
@@ -20,9 +31,9 @@ jar {
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
                 'Implementation-Version': version,
-                'Plugin-Id': 'AppiumAeon',
+                'Plugin-Id': 'PerfectoAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.selenium.appium.AppiumPlugin'
+                'Plugin-Class': 'aeon.extensions.perfecto.PerfectoPlugin'
     }
 }
 
@@ -35,9 +46,9 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
                 'Implementation-Version': version,
-                'Plugin-Id': 'AppiumAeon',
+                'Plugin-Id': 'PerfectoAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.selenium.appium.AppiumPlugin'
+                'Plugin-Class': 'aeon.extensions.perfecto.PerfectoPlugin'
     }
 
     from configurations.compile.collect {
@@ -50,7 +61,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId 'aeon.appium'
+            artifactId 'aeon.extensions.perfecto'
         }
     }
 }

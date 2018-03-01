@@ -44,6 +44,8 @@ public class WebProduct extends Product {
 
     @Override
     protected void afterLaunch() {
+        super.afterLaunch();
+
         BrowserType browserType = ((WebConfiguration) configuration).getBrowserType();
         log.info("Product successfully launched with " + browserType);
 

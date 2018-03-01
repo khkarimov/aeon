@@ -16,6 +16,7 @@ import java.util.Properties;
 public class Aeon {
 
     private static Logger log = LogManager.getLogger(Aeon.class);
+    private static PluginManager pluginManager;
 
     /**
      * Launches an environment of the desired class and browser type.
@@ -77,11 +78,8 @@ public class Aeon {
     }
 
     private static <T extends Product> IAdapterExtension loadPlugins(T product) throws RuntimeException {
-        PluginManager pluginManager = new DefaultPluginManager();
-        pluginManager.loadPlugins();
-        pluginManager.startPlugins();
 
-        List<IAdapterExtension> extensions = pluginManager.getExtensions(IAdapterExtension.class);
+        List<IAdapterExtension> extensions = getExtensions(IAdapterExtension.class);
         for (IAdapterExtension extension : extensions) {
             if (extension.getProvidedCapability() == product.getRequestedCapability()) {
                 return extension;
@@ -89,5 +87,47 @@ public class Aeon {
         }
 
         throw new RuntimeException("No valid adapter found");
+    }
+
+    /**
+     * Returns the current version number of Aeon.
+     *
+     * @return The current version number of Aeon.
+     */
+    public static String getVersion() {
+        return Aeon.class.getPackage().getImplementationVersion();
+    }
+
+    private static PluginManager getPluginManager() {
+        if (pluginManager == null) {
+            pluginManager = new DefaultPluginManager();
+
+            pluginManager.loadPlugins();
+            pluginManager.startPlugins();
+        }
+
+        return pluginManager;
+    }
+
+    /**
+     * Retrieves a list of available extensions of an extension class.
+     *
+     * @param type The type of the extension class.
+     * @param <T> The class object of the extension class.
+     * @return A list of available extensions of the extension class.
+     */
+    public static <T> List<T> getExtensions(Class<T> type) {
+        return getPluginManager().getExtensions(type);
+    }
+
+    /**
+     * May be called at the end of all test executions.
+     *
+     * This method allows plugins do tear down and clean up.
+     */
+    public static void done() {
+        AeonTestExecution.done();
+
+        getPluginManager().stopPlugins();
     }
 }

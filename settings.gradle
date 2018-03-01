@@ -3,7 +3,7 @@ include 'Aeon.Core'
 include 'Aeon.Core.Mobile'
 include 'Aeon.Core.Web'
 include 'Aeon.Plugin.Appium'
+include 'Aeon.Plugin.Perfecto'
 include 'Aeon.Plugin.Selenium'
 include 'Aeon.SystemTests.Mobile'
 include 'Aeon.SystemTests.Web'
-

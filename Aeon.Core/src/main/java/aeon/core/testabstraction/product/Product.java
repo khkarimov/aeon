@@ -2,9 +2,12 @@ package aeon.core.testabstraction.product;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.Capability;
+import aeon.core.extensions.ITestExecutionExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
+
+import java.util.List;
 
 /**
  * Abstract class for Product implementation.
@@ -17,7 +20,7 @@ public abstract class Product {
     /**
      * Empty Constructor.
      */
-    public Product() {
+    Product() {
     }
 
     /**
@@ -92,7 +95,7 @@ public abstract class Product {
      * @param   plugin  The Product's plugin to be returned.
      * @return          The plugin with a newly created adapter.
      */
-    protected IAdapter createAdapter(IAdapterExtension plugin) {
+    private IAdapter createAdapter(IAdapterExtension plugin) {
         return plugin.createAdapter(configuration);
     }
 
@@ -127,6 +130,7 @@ public abstract class Product {
      * Default afterLaunch function.
      */
     protected void afterLaunch() {
+        automationInfo.launched();
     }
 
     /**

@@ -7,9 +7,10 @@ def base = baseProjectName
 dependencies {
     testCompile "org.mockito:mockito-core:2.7.22"
 
-    compile 'org.pf4j:pf4j:2.0.0'
+    compile 'org.pf4j:pf4j:2.2.0'
 
     compile 'org.apache.logging.log4j:log4j-core:2.8'
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
 
     compile 'joda-time:joda-time:2.9.3'
 }

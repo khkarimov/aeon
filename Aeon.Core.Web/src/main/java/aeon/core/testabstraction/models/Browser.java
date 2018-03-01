@@ -152,6 +152,7 @@ public class Browser {
      * Closes and terminates the active instances of the browser and WebDriver.
      */
     public void quit() {
+        info.testSucceeded();
         info.getCommandExecutionFacade().execute(info, new QuitCommand());
     }
 

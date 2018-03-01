@@ -76,7 +76,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * Gets the web driver.
      * @return The web driver is returned.
      */
-    protected AppiumDriver getMobileWebDriver() {
+    public AppiumDriver getMobileWebDriver() {
         if (!(webDriver instanceof AppiumDriver)){
             throw new RuntimeException("This command is only supported by an AppiumDriver");
         }

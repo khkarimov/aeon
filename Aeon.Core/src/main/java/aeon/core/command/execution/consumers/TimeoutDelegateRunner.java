@@ -1,5 +1,6 @@
 package aeon.core.command.execution.consumers;
 
+import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.TimeoutExpiredException;
@@ -26,6 +27,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     private IDriver driver;
     private IClock clock;
     private Duration timeout;
+    private AutomationInfo automationInfo;
 
     /**
      * Constructor for {@link TimeoutDelegateRunner} class.
@@ -33,12 +35,14 @@ public class TimeoutDelegateRunner extends DelegateRunner {
      * @param driver the web driver.
      * @param clock the clock.
      * @param timeout the duration time.
+     * @param automationInfo The automation info.
      */
-    public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout) {
+    public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout, AutomationInfo automationInfo) {
         super(successor);
         this.driver = driver;
         this.clock = clock;
         this.timeout = timeout;
+        this.automationInfo = automationInfo;
     }
 
     @Override
@@ -108,6 +112,8 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         } else {
             log.error(ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>(), lastCaughtException);
         }
+
+        automationInfo.testFailed(ex.getMessage());
 
         throw ex;
     }

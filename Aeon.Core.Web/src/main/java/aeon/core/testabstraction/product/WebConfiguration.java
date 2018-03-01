@@ -70,7 +70,7 @@ public class WebConfiguration extends Configuration {
 
     @Override
     protected List<Field> getConfigurationFields() {
-        List<Field> keys = new ArrayList<>();
+        List<Field> keys = super.getConfigurationFields();
         keys.addAll(Arrays.asList(WebConfiguration.Keys.class.getDeclaredFields()));
         return keys;
     }

@@ -55,7 +55,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
         IDriver driver = automationInfo.getDriver();
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver);
-        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(commandDelegateRunner, driver, clock, defaultTimeout);
+        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(commandDelegateRunner, driver, clock, defaultTimeout, automationInfo);
         ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(timeoutDelegateRunner, new SeleniumExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
         return new ThrottledDelegateRunner(exceptionHandlingDelegateRunner, throttleFactor);
     }
