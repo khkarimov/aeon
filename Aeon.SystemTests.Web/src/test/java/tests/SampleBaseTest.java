@@ -1,5 +1,6 @@
 package tests;
 
+import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.WebConfiguration;
 import categories.UbuntuTests;
 import categories.WindowsTests;
@@ -30,5 +31,10 @@ public class SampleBaseTest {
     @After
     public void afterTests() {
         product.browser.quit();
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        Aeon.done();
     }
 }

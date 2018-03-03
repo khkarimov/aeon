@@ -13,6 +13,7 @@ clean {
 
 dependencies {
     compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Plugin.Reporting')
 
     // Drivers
     compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"

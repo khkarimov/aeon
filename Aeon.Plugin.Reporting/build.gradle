@@ -1,0 +1,60 @@
+def baseProjectName = 'Aeon.Plugin.Reporting'
+def baseProjectDescription = 'Aeon Reporting Plugin'
+def base = baseProjectName
+
+configurations {
+    aeon
+    compile.extendsFrom(aeon)
+}
+
+dependencies {
+    compile project(':Aeon.Core')
+
+    compile group: 'com.github.xuwei-k', name: 'html2image', version: '0.1.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
+    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.4'
+    compile group: 'org.testng', name: 'testng', version: '6.14.2'
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'ReportingAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'aeon.extensions.reporting.ReportingPlugin'
+    }
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'ReportingAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'aeon.extensions.reporting.ReportingPlugin'
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.reporting'
+        }
+    }
+}
