@@ -34,6 +34,9 @@ allprojects {
         maven {
             url 'https://artifactory.mia.ulti.io/artifactory/maven/'
         }
+        maven {
+            url 'http://repository-perfectomobile.forge.cloudbees.com/public/'
+        }
     }
 
     apply plugin: "com.jfrog.artifactory"
