@@ -74,6 +74,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String app;
     private String appPackage;
     private String deviceName;
+    private String description;
     private String avdName;
     private String driverContext;
     private boolean crossWalkPatch;
@@ -109,6 +110,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
         perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
         perfectoToken = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_TOKEN, "");
+        description = configuration.getString(SeleniumConfiguration.Keys.DEVICE_DESCRIPTION, "");
         platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
         browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
         app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
@@ -332,6 +334,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+                if (!description.isEmpty()) {
+                    desiredCapabilities.setCapability("description", description);
+                }
 
                 // Perfecto
                 setPerfectoCredentials(desiredCapabilities);
@@ -347,6 +355,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case AndroidChrome:
                 desiredCapabilities = new DesiredCapabilities();
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+                if (!description.isEmpty()) {
+                    desiredCapabilities.setCapability("description", description);
+                }
 
                 // Perfecto
                 setPerfectoCredentials(desiredCapabilities);
@@ -370,8 +384,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
 
                 // Appium
-                desiredCapabilities.setCapability("deviceName", deviceName);
-
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+                if (!description.isEmpty()) {
+                    desiredCapabilities.setCapability("description", description);
+                }
                 if (!app.isEmpty()) {
                     desiredCapabilities.setCapability("app", app);
                 }
@@ -395,6 +413,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 // Appium
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+                if (!description.isEmpty()) {
+                    desiredCapabilities.setCapability("description", description);
                 }
                 if (!avdName.isEmpty()) {
                     desiredCapabilities.setCapability("avd", avdName);
