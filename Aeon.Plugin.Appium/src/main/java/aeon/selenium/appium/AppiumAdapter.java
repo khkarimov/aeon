@@ -173,10 +173,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         String desiredYearString = String.valueOf(desiredYear);
         for (int i = 1; i < 8; i++) {
             try {
-                WebControl yearLabel = findElement(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget." +
-                        "FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.DatePicker/android.widget." +
-                        "LinearLayout/android.widget.ScrollView/android.widget.ViewAnimator/android.widget." +
-                        "ListView/android.widget.TextView[" + i + "]"), false);
+                WebControl yearLabel = findElement(ByMobile.xpath("/hierarchy/android.widget.FrameLayout[1]/" +
+                        "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                        "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/" +
+                        "android.widget.LinearLayout[1]/android.widget.ViewAnimator[1]/android.widget.ListView[1]/" +
+                        "android.widget.TextView[" + i + "]"));
                 String currentYearChecking = ((SeleniumElement) yearLabel).getUnderlyingWebElement().getText();
                 if (currentYearChecking.equals(desiredYearString)) {
                     click(yearLabel);
