@@ -506,18 +506,14 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         try {
             try {
                 getMobileWebDriver().closeApp();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.trace(e);
-            }
-            finally {
+            } finally {
                 getMobileWebDriver().close();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.trace(e);
-        }
-        finally {
+        } finally {
             getMobileWebDriver().quit();
         }
     }
