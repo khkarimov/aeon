@@ -490,6 +490,38 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         super.set(control, option, setValue);
     }
 
+    @Override
+    public final void quit() {
+        log.trace("WebDriver.quit();");
+
+        if (browserType != BrowserType.AndroidChrome
+                && browserType != BrowserType.IOSSafari
+                && browserType != BrowserType.AndroidHybridApp
+                && browserType != BrowserType.IOSHybridApp) {
+            webDriver.quit();
+
+            return;
+        }
+
+        try {
+            try {
+                getMobileWebDriver().closeApp();
+            }
+            catch (Exception e) {
+                log.trace(e);
+            }
+            finally {
+                getMobileWebDriver().close();
+            }
+        }
+        catch (Exception e) {
+            log.trace(e);
+        }
+        finally {
+            getMobileWebDriver().quit();
+        }
+    }
+
     private void switchToNativeAppContext() {
         log.trace("Switching to native app context " + "NATIVE_APP");
         getMobileWebDriver().context("NATIVE_APP");

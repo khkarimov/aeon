@@ -277,7 +277,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private WebDriver getDriver(Supplier<WebDriver> createDriver) {
 
         int i = 0;
-        int numberOfRetries = 3;
+        int numberOfRetries = 30;
         while (true) {
             try {
                 return createDriver.get();
@@ -285,6 +285,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 log.trace("Web driver instantiation failed: " + e.getMessage(), e);
 
                 if (i < numberOfRetries - 1) {
+                    Sleep.wait(1000);
                     log.trace("Retrying");
                     i++;
                 } else {

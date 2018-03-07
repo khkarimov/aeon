@@ -533,7 +533,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * close()'s and terminates 'this' instance of the browser and the WebDriver.
      */
-    public final void quit() {
+    public void quit() {
         log.trace("WebDriver.quit();");
         webDriver.quit();
     }

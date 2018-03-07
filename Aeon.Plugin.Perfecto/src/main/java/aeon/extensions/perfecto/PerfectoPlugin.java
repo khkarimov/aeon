@@ -95,7 +95,6 @@ public class PerfectoPlugin extends Plugin {
 
         @Override
         public void onBeforeStep(String message) {
-            reportiumClient.stepEnd("STEP END");
             reportiumClient.stepStart(message);
         }
 
