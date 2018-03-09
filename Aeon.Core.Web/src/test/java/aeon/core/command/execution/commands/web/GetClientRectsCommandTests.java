@@ -35,7 +35,9 @@ public class GetClientRectsCommandTests {
     private WebControl control;
 
     @Before
-    public void setup() {getClientRectsCommand = new GetClientRectsCommand(selector, initializer);}
+    public void setup() {
+        getClientRectsCommand = new GetClientRectsCommand(selector, initializer);
+    }
 
     @Test
     public void setGetClientRectsCommand_CallsExecute() {
