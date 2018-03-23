@@ -1,5 +1,6 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
@@ -98,11 +99,29 @@ public class Aeon {
         return Aeon.class.getPackage().getImplementationVersion();
     }
 
+    /**
+     * Returns a PluginManager, control which plugins to be used, can be disabled with environment variable.
+     *
+     * @return A plugin manager with plugins to be used.
+     */
     private static PluginManager getPluginManager() {
         if (pluginManager == null) {
             pluginManager = new DefaultPluginManager();
 
             pluginManager.loadPlugins();
+
+            String disabledPlugins = System.getenv("AEON_DISABLED_PLUGINS");
+            if (StringUtils.isNotBlank(disabledPlugins)) {
+                String[] disabledPluginsArray = disabledPlugins.split(",");
+                for (String disabledPlugin : disabledPluginsArray) {
+                    try {
+                        pluginManager.disablePlugin(disabledPlugin.trim());
+                    } catch (IllegalArgumentException e) {
+                        log.warn(e.getMessage());
+                    }
+                }
+            }
+
             pluginManager.startPlugins();
         }
 
