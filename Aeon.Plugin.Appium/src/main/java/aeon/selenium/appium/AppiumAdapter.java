@@ -264,7 +264,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         } else {
             switchToNativeAppContext();
             WebControl day = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[2]"), false);
-            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.toString("dd").replace("0", ""));
+            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.toString("dd")
+                    .substring(date.toString("dd").startsWith("0") ? 1 : 0));
             WebControl month = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
             ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.toString("MMMM"));
             WebControl year = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[3]"), false);
