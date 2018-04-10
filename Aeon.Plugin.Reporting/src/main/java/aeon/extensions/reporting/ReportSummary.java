@@ -84,7 +84,9 @@ public class ReportSummary {
                     + createTable(new String[]{"Class Name", "Test Name", "Status"},
                     getTableBodyForPassList(reportBean.getScenarios()), "t04") + "<br>";
 
-        htmlBody = htmlBody + this.createReportHeader();
+        htmlBody = htmlBody + this.createReportHeader(" ");
+        htmlBody = htmlBody + this.createReportHeader(" ");
+
         return Utils.htmlToPngFile(htmlBody, Utils.getResourcesPath() + title + ".png");
     }
 
@@ -171,9 +173,10 @@ public class ReportSummary {
         return "<h4>" + header + "</h4>";
     }
 
-    private String createReportHeader() {
-        return "<h2 style=\"color:#279723\"></h4>";
+    private String createReportHeader(String header) {
+        return "<h2 style=\"color:#279723\">" + header + "</h4>";
     }
+
 
     private String createColumnAndAssignColor(String columnValue) {
         String finalString = "<td><font color=\"{Color}\">{ColumnValue}</font></td>";
