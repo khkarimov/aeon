@@ -173,10 +173,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         String desiredYearString = String.valueOf(desiredYear);
         for (int i = 1; i < 8; i++) {
             try {
-                WebControl yearLabel = findElement(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget." +
-                        "FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.DatePicker/android.widget." +
-                        "LinearLayout/android.widget.ScrollView/android.widget.ViewAnimator/android.widget." +
-                        "ListView/android.widget.TextView[" + i + "]"), false);
+                WebControl yearLabel = findElement(ByMobile.xpath("/hierarchy/android.widget.FrameLayout[1]/" +
+                        "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                        "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/" +
+                        "android.widget.LinearLayout[1]/android.widget.ViewAnimator[1]/android.widget.ListView[1]/" +
+                        "android.widget.TextView[" + i + "]"));
                 String currentYearChecking = ((SeleniumElement) yearLabel).getUnderlyingWebElement().getText();
                 if (currentYearChecking.equals(desiredYearString)) {
                     click(yearLabel);
@@ -265,7 +266,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             WebControl month = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
             ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.toString("MMMM"));
             WebControl day = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[2]"), false);
-            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.toString("dd"));
+            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.toString("d"));
             WebControl year = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[3]"), false);
             ((SeleniumElement) year).getUnderlyingWebElement().sendKeys(date.toString("yyyy"));
             switchToWebViewContext();
@@ -487,6 +488,34 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         }
 
         super.set(control, option, setValue);
+    }
+
+    @Override
+    public final void quit() {
+        log.trace("WebDriver.quit();");
+
+        if (browserType != BrowserType.AndroidChrome
+                && browserType != BrowserType.IOSSafari
+                && browserType != BrowserType.AndroidHybridApp
+                && browserType != BrowserType.IOSHybridApp) {
+            webDriver.quit();
+
+            return;
+        }
+
+        try {
+            try {
+                getMobileWebDriver().closeApp();
+            } catch (Exception e) {
+                log.trace(e);
+            } finally {
+                getMobileWebDriver().close();
+            }
+        } catch (Exception e) {
+            log.trace(e);
+        } finally {
+            getMobileWebDriver().quit();
+        }
     }
 
     private void switchToNativeAppContext() {

@@ -1,7 +1,7 @@
 compileTestJava.options.encoding = 'utf-8'
 
 ext {
-    seleniumVersion = '3.8.1'
+    seleniumVersion = '3.11.0'
 }
 
 artifactoryPublish.skip = true

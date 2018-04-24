@@ -17,15 +17,6 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     /**
      * Initializes a new instance of the {@link CommandWithReturn} class.
      *
-     * @param message The message to log.
-     */
-    protected WebControlCommandWithReturn(String message) {
-        super(message);
-    }
-
-    /**
-     * Initializes a new instance of the {@link CommandWithReturn} class.
-     *
      * @param message     The message to log.
      * @param selector    The selector.
      * @param initializer The command initializer.
@@ -44,7 +35,7 @@ public abstract class WebControlCommandWithReturn extends CommandWithReturn {
     @Override
     protected Object commandDelegate(IDriver driver) {
         IWebDriver webDriver = (IWebDriver) driver;
-        WebControl control = (WebControl) getCommandInitializer().findElement(driver, selector);
+        WebControl control = (WebControl) getCommandInitializer().findElement(webDriver, selector);
         return commandDelegateOverride(driver, control);
     }
 

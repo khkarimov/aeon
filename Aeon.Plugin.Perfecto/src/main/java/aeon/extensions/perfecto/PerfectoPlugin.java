@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class PerfectoPlugin extends Plugin {
 
-    private ReportiumClient reportiumClient;
+    private static ReportiumClient reportiumClient;
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
@@ -44,7 +44,7 @@ public class PerfectoPlugin extends Plugin {
      * Test execution extension for sending test details to Perfecto.
      */
     @Extension
-    public class PerfectoTestExecutionExtension implements ITestExecutionExtension {
+    public static class PerfectoTestExecutionExtension implements ITestExecutionExtension {
 
         @Override
         public void onStartUp(Configuration configuration) {
@@ -95,7 +95,6 @@ public class PerfectoPlugin extends Plugin {
 
         @Override
         public void onBeforeStep(String message) {
-            reportiumClient.stepEnd("STEP END");
             reportiumClient.stepStart(message);
         }
 

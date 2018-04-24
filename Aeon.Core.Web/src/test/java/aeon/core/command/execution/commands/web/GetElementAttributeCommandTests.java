@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoRule;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class GetElementAttributeCommandTests {
 
@@ -37,7 +38,6 @@ public class GetElementAttributeCommandTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void DriverNullThrowsException(){
-
         // Arrange
         
         // Act
@@ -49,7 +49,6 @@ public class GetElementAttributeCommandTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void ControlNullThrowsException(){
-
         // Arrange
 
         // Act
@@ -61,13 +60,23 @@ public class GetElementAttributeCommandTests {
 
     @Test
     public void GetElementAttributeGetAttribute(){
-
         // Arrange
 
         // Act
         getElementAttributeCommand.commandDelegateOverride(driver, control);
 
         // Verify
+        verify(driver, times(1)).getElementAttribute(control, attributeName);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void CommandDelegate() {
+        //Arrange
+
+        //Act
+        getElementAttributeCommand.commandDelegate(driver);
+
+        //Verify
         verify(driver, times(1)).getElementAttribute(control, attributeName);
     }
 }

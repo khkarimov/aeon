@@ -49,6 +49,7 @@ public class SeleniumConfiguration extends WebConfiguration {
         // Appium
         public static final String APP = "aeon.selenium.appium.app";
         public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
+        public static final String DEVICE_DESCRIPTION = "aeon.selenium.appium.device_description";
         public static final String PLATFORM_VERSION = "aeon.selenium.appium.platform_version";
         public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
         public static final String WEBVIEW_TIMEOUT = "aeon.selenium.appium.webview.timeout";

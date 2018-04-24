@@ -57,6 +57,8 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
     private static final long serialVersionUID = 1L;
     private static final String TRACE_PREFIX = "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
     private static final String REGEXP = Strings.LINE_SEPARATOR.equals("\n") ? "\n" : Strings.LINE_SEPARATOR + "|\n";
+    private static final String REGEXHTML = "(&quot;)?((?:(?:http(?:s)?[:\\/]*)|(?:www\\.))+[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b(?:[-a-zA-Z0-9@:%_\\+\\[\\].;~#?\\\\\\/&=]*?))(\\s|(?:&quot;)+)";
+    private static final String HTMLAPPENDAGE = "$1<a href=\"$2\">$2</a>$3";
     private static final String DEFAULT_TITLE = "Log4j Log Messages";
     private static final String DEFAULT_CONTENT_TYPE = "text/html";
 
@@ -191,7 +193,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         }
 
         sbuf.append("<td title=\"Message\">");
-        sbuf.append(Transform.escapeHtmlTags(event.getMessage().getFormattedMessage()).replaceAll(REGEXP, "<br />"));
+        sbuf.append(Transform.escapeHtmlTags(event.getMessage().getFormattedMessage()).replaceAll(REGEXHTML, HTMLAPPENDAGE).replaceAll(REGEXP, "<br />"));
 
         Object[] parameters = event.getMessage().getParameters();
         if (parameters != null && parameters.length > 0 && parameters[0] instanceof BufferedImage) {

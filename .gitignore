@@ -78,3 +78,5 @@ log/
 plugins/
 .DS_Store
 *~
+
+\.idea/emacs\.xml

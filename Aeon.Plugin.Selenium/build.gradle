@@ -8,7 +8,7 @@ configurations {
 }
 
 ext {
-    seleniumVersion = '3.8.1'
+    seleniumVersion = '3.11.0'
     appiumVersion = '5.0.4'
 }
 

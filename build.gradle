@@ -26,7 +26,7 @@ assemble.finalizedBy(CopySeleniumPlugin)
 
 allprojects {
     group 'aeon'
-    version '0.7.0'
+    version '0.10.1'
 
     apply plugin: 'java'
     sourceCompatibility = 1.8
@@ -34,6 +34,9 @@ allprojects {
     repositories {
         maven {
             url 'https://artifactory.mia.ulti.io/artifactory/maven/'
+        }
+        maven {
+            url 'http://repository-perfectomobile.forge.cloudbees.com/public/'
         }
     }
 
