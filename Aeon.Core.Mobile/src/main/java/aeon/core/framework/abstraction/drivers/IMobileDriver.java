@@ -89,4 +89,24 @@ public interface IMobileDriver extends IWebDriver {
      * @param leftOrDown Whether to swipe left (when horizontally is true) or down (when horizontally is false).
      */
     void swipe(boolean horizontally, boolean leftOrDown);
+
+    /**
+     * Read and check the most recent notification's description.
+     *
+     * @param expectedDescription The expected description from the most recent notification.
+     */
+    void recentNotificationDescriptionIs(String expectedDescription);
+
+    /**
+     * Read the most recent notification's banner (what app triggered it).
+     *
+     * @param expectedBanner The expected app that triggered the notification.
+     */
+    void recentNotificationIs(String expectedBanner);
+
+    /**
+     * Closes current running application by pressing home key. App will stay running in the background
+     * in the state that it was exited (app state will not be reset).
+     */
+    void closeApp();
 }
