@@ -54,7 +54,6 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
         public static final String WEBVIEW_TIMEOUT = "aeon.selenium.appium.webview.timeout";
         public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
-        public static final String UDID = "aeon.selenium.appium.udid";
         public static final String AUTOMATION_NAME = "aeon.selenium.appium.automation_name";
 
         // Android
@@ -64,6 +63,8 @@ public class SeleniumConfiguration extends WebConfiguration {
 
         //IOS
         public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
+        public static final String WDA_PORT = "aeon.selenium.ios.wda_port";
+        public static final String UDID = "aeon.selenium.ios.udid";
     }
 
     @Override
