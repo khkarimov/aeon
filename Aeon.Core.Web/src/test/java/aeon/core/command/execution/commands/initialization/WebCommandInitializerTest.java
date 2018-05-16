@@ -5,13 +5,17 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -19,6 +23,8 @@ import java.util.function.Consumer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class WebCommandInitializerTest {
 
     private WebCommandInitializer webCommandInitializer;
@@ -36,7 +42,7 @@ public class WebCommandInitializerTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Before
+    @BeforeEach
     public void setup() {
         iterator = Arrays.asList(selector);
         webCommandInitializer = new WebCommandInitializer(finder, iterator);
@@ -51,7 +57,7 @@ public class WebCommandInitializerTest {
         WebControl expected = finder.findElement(driver, selector);
 
         // Assert
-        Assert.assertEquals(actual, expected);
+        Assertions.assertEquals(actual, expected);
     }
 
     @Test

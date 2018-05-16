@@ -2,30 +2,50 @@ package tests;
 
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserSize;
-import org.hamcrest.core.IsInstanceOf;
-import org.junit.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BrowserWindowTests extends SampleBaseTest{
 
     @Test
     public void testGetElementAttributes() {
         String classAttribute = product.startPage.formTextBox.getElementAttribute("class").toString();
-        assert (classAttribute.equals("mdl-textfield__input"));
+        Assertions.assertEquals("mdl-textfield__input", classAttribute);
     }
 
     @Test
     public void testVerifyTitle() {
-        product.browser.verifyTitle("Material Design Lite");
-        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.browser.verifyTitle("Fake Title");
+        //Arrange
+        Throwable exception;
+
+        //Act
+        exception = assertThrows(ValuesAreNotEqualException.class,
+                () -> {
+                    product.browser.verifyTitle("Material Design Lite");
+                    product.browser.verifyTitle("Fake Title");
+                });
+
+        //Assert
+        Assertions.assertTrue(exception instanceof ValuesAreNotEqualException);
     }
 
     @Test
     public void testVerifyURL() {
-        product.browser.goToUrl("https://ci.mia.ucloud.int/login.html");
-        product.browser.verifyURL("https://ci.mia.ucloud.int/login.html");
-        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.browser.verifyURL("http://www.espne.com/");
+        //Arrange
+        Throwable exception;
+
+        //Act
+        exception = assertThrows(ValuesAreNotEqualException.class,
+                () -> {
+                    product.browser.goToUrl("https://ci.mia.ucloud.int/login.html");
+                    product.browser.verifyURL("https://ci.mia.ucloud.int/login.html");
+                    product.browser.verifyURL("http://www.espne.com/");
+                });
+
+        //Assert
+        Assertions.assertTrue(exception instanceof ValuesAreNotEqualException);
     }
     @Test
     public void testVerifyWindowDoesNotExistByUrlVerifyWindowDoesNotExistByTitle() {
@@ -35,50 +55,86 @@ public class BrowserWindowTests extends SampleBaseTest{
 
     @Test
     public void testGrids(){
-        product.startPage.myGrid.rowBy.index(2).checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().unitPrice.is("$2.35");
-        product.startPage.myGrid.rowBy.material("Acrylic").getRow().exists();
-        thrown.expect(IsInstanceOf.instanceOf(NoSuchElementsException.class));
-        product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
+        //Arrange
+        Throwable exception;
+
+        //Act
+        exception = assertThrows(NoSuchElementsException.class,
+                () -> {
+                    product.startPage.myGrid.rowBy.index(2).checkBoxButton.click();
+                    product.startPage.myGrid.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
+                    product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
+                    product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().unitPrice.is("$2.35");
+                    product.startPage.myGrid.rowBy.material("Acrylic").getRow().exists();
+                    product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
+                });
+
+        //Assert
+        Assertions.assertTrue(exception instanceof NoSuchElementsException);
     }
 
     @Test
     public void testSwitchToMainWindow() {
-        product.browser.verifyTitle("Material Design Lite");
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.verifyTitle("Google");
-        product.browser.switchToMainWindow();
-        product.browser.verifyTitle("Material Design Lite");
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.close();
-        product.browser.switchToMainWindow(true);
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        thrown.expect(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
-        product.browser.switchToMainWindow(true);
+        //Arrange
+        Throwable exception;
+
+        //Act
+        exception = assertThrows(NotAllPopupWindowsClosedException.class,
+                () -> {
+                    product.browser.verifyTitle("Material Design Lite");
+                    product.startPage.popupButton.click();
+                    product.browser.switchToWindowByTitle("Google");
+                    product.browser.verifyTitle("Google");
+                    product.browser.switchToMainWindow();
+                    product.browser.verifyTitle("Material Design Lite");
+                    product.browser.switchToWindowByTitle("Google");
+                    product.browser.close();
+                    product.browser.switchToMainWindow(true);
+                    product.startPage.popupButton.click();
+                    product.browser.switchToWindowByTitle("Google");
+                    product.browser.switchToMainWindow(true);
+                });
+
+        //Assert
+        Assertions.assertTrue(exception instanceof NotAllPopupWindowsClosedException);
     }
 
     @Test
     public void testSwitchToWindowByTitle() {
-        product.browser.verifyTitle("Material Design Lite");
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.verifyTitle("Google");
-        thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
-        product.browser.switchToWindowByTitle("Some Fake Title");
+        //Arrange
+        Throwable exception;
+
+        //Act
+        exception = assertThrows(NoSuchWindowException.class,
+                () -> {
+                    product.browser.verifyTitle("Material Design Lite");
+                    product.startPage.popupButton.click();
+                    product.browser.switchToWindowByTitle("Google");
+                    product.browser.verifyTitle("Google");
+                    product.browser.switchToWindowByTitle("Some Fake Title");
+                });
+
+        //Assert
+        Assertions.assertTrue(exception instanceof NoSuchWindowException);
     }
 
     @Test
     public void testSwitchToWindowByUrl() {
-        product.browser.verifyTitle("Material Design Lite");
-        product.startPage.popupButton.click();
-        product.browser.switchToWindowByUrl("https://www.google.com");
-        product.browser.verifyTitle("Google");
-        thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
-        product.browser.switchToWindowByUrl("www.fake.com");
+        //Arrange
+        Throwable exception;
+
+        //Act
+        exception = assertThrows(NoSuchWindowException.class,
+                () -> {
+                    product.browser.verifyTitle("Material Design Lite");
+                    product.startPage.popupButton.click();
+                    product.browser.switchToWindowByUrl("https://www.google.com");
+                    product.browser.verifyTitle("Google");
+                    product.browser.switchToWindowByUrl("www.fake.com");
+                });
+
+        //Assert
+        Assertions.assertTrue(exception instanceof NoSuchWindowException);
     }
 
     @Test

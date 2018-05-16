@@ -2,7 +2,10 @@ package tests;
 
 import aeon.core.common.web.BrowserType;
 import main.ultipro.UltiPro;
-import org.junit.*;
+import org.junit.Rule;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
@@ -17,14 +20,14 @@ public class UltiProTests {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Before
+    @BeforeEach
     public void beforeTests() {
         ultiPro = launch(UltiPro.class, BrowserType.Chrome);
         ultiPro.browser.maximize();
         ultiPro.browser.goToUrl("http://legendsmkweb.mia.ucloud.int");
     }
 
-    @After
+    @AfterEach
     public void afterTests() {
         ultiPro.browser.quit();
     }

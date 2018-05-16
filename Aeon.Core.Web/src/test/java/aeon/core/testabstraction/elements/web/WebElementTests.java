@@ -9,18 +9,24 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class WebElementTests {
 
     // WebElement with one argument constructor
@@ -63,7 +69,7 @@ public class WebElementTests {
     private String[] messages = new String[]{"test", "message"};
 
 
-    @Before
+    @BeforeEach
     public void setup(){
         info1 = new AutomationInfo(configuration, driver, adapter);
         info1.setCommandExecutionFacade(commandExecutionFacade);

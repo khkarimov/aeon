@@ -12,19 +12,24 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.elements.web.Checkbox;
 import aeon.core.testabstraction.product.Configuration;
 
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.any;
 
-
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class CheckboxTests {
 
     private Checkbox checkbox1;
@@ -49,7 +54,7 @@ public class CheckboxTests {
     private ICommandExecutionFacade commandExecutionFacade;
 
 
-    @Before
+    @BeforeEach
     public void setup() {
 
         info = new AutomationInfo(configuration, driver, adapter);
@@ -67,7 +72,6 @@ public class CheckboxTests {
 
         //Should be called twice: once for checkbox1 and once for checkbox2
         verify(commandExecutionFacade, times(2)).execute(Mockito.eq(info), any(CheckCommand.class));
-
     }
 
     @Test

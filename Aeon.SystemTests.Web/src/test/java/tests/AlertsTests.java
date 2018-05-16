@@ -3,8 +3,8 @@ package tests;
 import aeon.core.common.exceptions.NoAlertException;
 import aeon.core.common.exceptions.ValuesAreNotAlikeException;
 import aeon.core.common.exceptions.ValuesAreNotEqualException;
-import org.hamcrest.core.IsInstanceOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AlertsTests extends SampleBaseTest{
 
@@ -35,32 +35,43 @@ public class AlertsTests extends SampleBaseTest{
 
     @Test
     public void testGetAlertText() {
-        product.startPage.openAlertButton.click();
-        String text = product.browser.getAlertText();
+        //Arrange
+        String text;
 
-        assert(text.equals("Send some keys"));
-        product.browser.dismissAlert();
-        thrown.expect(IsInstanceOf.instanceOf(NoAlertException.class));
-        product.browser.getAlertText();
+        //Act
+        product.startPage.openAlertButton.click();
+        text = product.browser.getAlertText();
+
+        //Assert
+        Assertions.assertThrows(NoAlertException.class,
+                () -> {
+                    product.browser.dismissAlert();
+                    product.browser.getAlertText();
+                });
+        Assertions.assertEquals("Send some keys", text);
     }
 
     @Test
     public void testVerifyAlertText() {
-        product.startPage.openAlertButton.click();
-        product.browser.verifyAlertExists();
-        product.browser.verifyAlertText("Send some keys");
-        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
-        product.browser.verifyAlertText("Send other keys");
-        product.browser.acceptAlert();
+        Assertions.assertThrows(ValuesAreNotEqualException.class,
+                () -> {
+                    product.startPage.openAlertButton.click();
+                    product.browser.verifyAlertExists();
+                    product.browser.verifyAlertText("Send some keys");
+                    product.browser.verifyAlertText("Send other keys");
+                    product.browser.acceptAlert();
+                });
     }
 
     @Test
     public void testVerifyAlertTextLike() {
-        product.startPage.openAlertButton.click();
-        product.browser.verifyAlertExists();
-        product.browser.verifyAlertTextLike("Send some keys", true);
-        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
-        product.browser.verifyAlertTextLike("send some keys", true);
-        product.browser.acceptAlert();
+        Assertions.assertThrows(ValuesAreNotAlikeException.class,
+                () -> {
+                    product.startPage.openAlertButton.click();
+                    product.browser.verifyAlertExists();
+                    product.browser.verifyAlertTextLike("Send some keys", true);
+                    product.browser.verifyAlertTextLike("send some keys", true);
+                    product.browser.acceptAlert();
+                });
     }
 }
