@@ -96,7 +96,7 @@ public class Aeon {
      * @return The current version number of Aeon.
      */
     public static String getVersion() {
-        return Aeon.class.getPackage().getImplementationVersion();
+        return StringUtils.class.getPackage().getImplementationVersion();
     }
 
     /**
