@@ -8,7 +8,8 @@ configurations {
 }
 
 ext {
-    seleniumVersion = '3.11.0'
+    // seleniumVersion = '3.11.0'
+    seleniumVersion = '3.12.0'  //Updated on 5-16-2018
     appiumVersion = '5.0.4'
 }
 
