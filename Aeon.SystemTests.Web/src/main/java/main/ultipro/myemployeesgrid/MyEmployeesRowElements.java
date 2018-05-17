@@ -4,11 +4,12 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.testabstraction.elements.web.Link;
 import aeon.core.testabstraction.elements.web.RowElements;
+import aeon.core.testabstraction.elements.web.TableElements;
 
 /**
  * Class for modeling the elements of a row in the employees grid.
  */
-public class MyEmployeesRowElements extends RowElements {
+public class MyEmployeesRowElements extends TableElements {
     public Link employeeLink;
 
     /**

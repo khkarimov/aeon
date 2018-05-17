@@ -48,64 +48,6 @@ public class FileDialogInput extends WebElement {
         this.switchMechanism = switchMechanism;
     }
 
-
-    /**
-     * Opens a file dialog window.
-     *
-     * @deprecated Please use 'selectFile' instead.
-     */
-    public void openFileDialog() {
-        log.warn("DEPRECATED: The use of the \"openFileDialog\" command " +
-                "has been deprecated and will be removed in future " +
-                "versions of Aeon. Please use \"uploadFileDialog\" " +
-                "instead");
-        info.getCommandExecutionFacade().execute(info,
-                new OpenFileDialogCommand(
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
-    }
-
-    /**
-     * Takes in the path of a file
-     * And then types in the path of the file.
-     * REQUIRES openFileDialog to be called first.
-     *
-     * @param path The path to the file to be selected.
-     * @deprecated Please use 'selectFile' instead.
-     */
-    public void selectFileDialog(String path) {
-        log.warn("DEPRECATED: The use of the \"selectFileDialog\" command " +
-                "has been deprecated and will be removed in future " +
-                "versions of Aeon. Please use \"uploadFileDialog\" " +
-                "instead");
-        info.getCommandExecutionFacade().execute(info,
-                new SelectFileDialogCommand(
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
-                        path));
-    }
-
-    /**
-     * Takes in the path of a file,
-     * Clicks upload file button to open dialog box,
-     * And then types in the path of the file using the keyboard.
-     * DOES NOT REQUIRE openFileDialog to be called first.
-     *
-     * @param path The path to the file to be selected.
-     * @deprecated Please use 'selectFile' instead.
-     */
-    public void uploadFileDialog(String path) {
-        log.warn("DEPRECATED: The use of the \"uploadFileDialog\" command " +
-                "has been deprecated and will be removed in future " +
-                "versions of Aeon. Please use \"selectFile\" " +
-                "instead");
-        info.getCommandExecutionFacade().execute(info,
-                new UploadFileDialogCommand(
-                        selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
-                        path));
-    }
-
     /**
      * Selects a file.
      *

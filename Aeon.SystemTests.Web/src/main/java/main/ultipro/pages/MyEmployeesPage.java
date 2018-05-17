@@ -8,6 +8,7 @@ import aeon.core.testabstraction.elements.web.TextBox;
 import aeon.core.testabstraction.models.Page;
 import main.ultipro.myemployeesgrid.MyEmployeesGrid;
 import main.ultipro.myemployeesgrid.MyEmployeesHeaders;
+import main.ultipro.myemployeesgrid.MyEmployeesRowElements;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class MyEmployeesPage extends Page {
     public MyEmployeesPage(AutomationInfo automationInfo) {
         addEmployeeButton = new Button(automationInfo, By.cssSelector("#ctl00_btnAdd"), getSwitchForContentFrame());
         employeeSearchBox = new TextBox(automationInfo, By.cssSelector("#GridView1_TextEntryFilterControlInputBox_0"), getSwitchForContentFrame());
-        myGrid = new MyEmployeesGrid(new MyEmployeesHeaders(automationInfo, By.cssSelector("#ctl00_Content_GridView1"), getSwitchForContentFrame()));
+        myGrid = new MyEmployeesGrid(automationInfo, By.cssSelector("#ctl00_Content_GridView1"), getSwitchForContentFrame(), new MyEmployeesHeaders());
         searchButton = new Button(automationInfo, By.cssSelector("#GridView1_filterButton"), getSwitchForContentFrame());
     }
 

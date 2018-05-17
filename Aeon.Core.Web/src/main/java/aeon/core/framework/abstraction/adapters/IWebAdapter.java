@@ -243,34 +243,6 @@ public interface IWebAdapter extends IAdapter {
     void resize(Dimension size);
 
     /**
-     * Opens on a type input type=file.
-     *
-     * @param control The control to click.
-     * @deprecated Please use the selectFile method instead.
-     */
-    void openFileDialog(WebControl control);
-
-    /**
-     * Types keys of file indicated by provided path
-     * REQUIRES DIALOG BOX TO ALREADY BE OPENED BY openFileDialog.
-     *
-     * @param selector The selector for the element.
-     * @param path     The path to the file to be selected.
-     * @deprecated Please use the selectFile method instead.
-     */
-    void selectFileDialog(IByWeb selector, String path);
-
-    /**
-     * Opens a windows select file dialog and selects
-     * file indicated by provided path.
-     *
-     * @param selector The selector for the element.
-     * @param path     The path to the file to be selected.
-     * @deprecated Please use the selectFile method instead.
-     */
-    void uploadFileDialog(IByWeb selector, String path);
-
-    /**
      * Scrolls to the element on the page if in Chrome.
      *
      * @param element The selector.

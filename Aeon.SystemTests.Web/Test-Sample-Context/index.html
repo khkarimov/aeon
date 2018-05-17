@@ -333,7 +333,7 @@
                          ondragstart="dragStart(event)" draggable="true"/>
                 </div>
                 <div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <img id="dbl-click-image" src=""/>
+                    <img id="dbl-click-image" src="ultimate-image.png" style="visibility: hidden"/>
                 </div>
             </div>
             <br/><br/>
@@ -366,7 +366,7 @@
     }
 
     function imageDoubleClick(event) {
-        document.getElementById("dbl-click-image").src = "ultimate-image.png";
+        document.getElementById("dbl-click-image").style.visibility = "visible";
     }
 
     /* Event fired on the drag target */

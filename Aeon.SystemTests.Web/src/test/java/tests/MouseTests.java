@@ -2,7 +2,6 @@ package tests;
 
 import org.junit.Test;
 
-
 public class MouseTests extends SampleBaseTest {
     @Test
     public void testClickAndHold() {
@@ -13,8 +12,7 @@ public class MouseTests extends SampleBaseTest {
     @Test
     public void testDoubleClick() {
         product.startPage.ultimateLogoImage.doubleClick();
-        String src = product.startPage.ultimateLogoImageDoubleClick.getElementAttribute("src").toString();
-        assert(src.contains("ultimate-image.png"));
+        product.startPage.ultimateLogoImageDoubleClick.visible();
         //the ultimate logo should appear in the image element "dbl-click-image"
     }
 

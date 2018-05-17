@@ -727,55 +727,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Finds the 'selector' on the page, and performs a click() on the object.
-     *
-     * @param control The element on the page to click.
-     * @deprecated Please use the selectFile method instead.
-     */
-    public void openFileDialog(WebControl control) {
-        click(control);
-    }
-
-    /**
-     * Uses keyboard native events to input file name and select it
-     * from fileDialogBox.
-     *
-     * @param selector The element on the page to click.
-     * @param path The path to the file.
-     * @deprecated Please use the selectFile method instead.
-     */
-    public void selectFileDialog(IByWeb selector, String path) {
-        try {
-            Sleep.wait(2000);
-            SendKeysHelper.sendKeysToKeyboard(path);
-            SendKeysHelper.sendEnterKey();
-        } catch (AWTException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Finds the 'selector' on the page, and performs a click() on the object.
-     * Then uses keyboard native events to input file name and select it.
-     *
-     * @param selector The element on the page to click.
-     * @param path The path to the file.
-     * @deprecated Please use the selectFile method instead.
-     */
-    public void uploadFileDialog(IByWeb selector, String path) {
-        WebControl element = findElement(selector);
-        click(element, moveMouseToOrigin);
-        try {
-            SendKeysHelper.sendKeysToKeyboard(path);
-            SendKeysHelper.sendEnterKey();
-        } catch (AWTException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * Clicks on a web control.
      *
      * @param element The element to click on.
