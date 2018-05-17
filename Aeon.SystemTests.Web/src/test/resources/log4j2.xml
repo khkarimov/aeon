@@ -18,13 +18,16 @@
         <File name="File" filename="log/AeonLog.html">
             <AeonHtmlLayout/>
         </File>
-
+        <PIdFileAppender name="PIdFileAppender" fileName="log/AeonLog.html">
+            <AeonHtmlLayout/>
+        </PIdFileAppender>
     </Appenders>
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="PIdFileAppender"/>
+            <AppenderRef ref="File" level="ERROR"/>
         </Root>
     </Loggers>
 </Configuration>
