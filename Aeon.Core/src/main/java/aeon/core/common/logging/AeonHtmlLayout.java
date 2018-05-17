@@ -57,8 +57,8 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
     private static final long serialVersionUID = 1L;
     private static final String TRACE_PREFIX = "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
     private static final String REGEXP = Strings.LINE_SEPARATOR.equals("\n") ? "\n" : Strings.LINE_SEPARATOR + "|\n";
-    private static final String REGEXHTML = "(&quot;)?((?:(?:http(?:s)?[:\\/]*)|(?:www\\.))+[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b(?:(?!&quot;)(?:[-a-zA-Z0-9@:%_\\+\\[\\].;~#?\\\\\\/&=]))*)((?:\\s)|(?:&quot;)|(?:\")*)";
-    private static final String HTMLAPPENDAGE = "$1<a href=\"$2\">$2</a>$3";
+    private static final String REGEXHTML = "((?:&quot;)|(?:\"))?(?:(?:(http)(s)?(:\\/\\/))|(www\\.))+([-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b(?:(?!&quot;)(?:[-a-zA-Z0-9@:%_\\+\\[\\].;~#?\\\\\\/&=]))*)((?:\\s)|(?:&quot;)|(?:\")*)";
+    private static final String HTMLAPPENDAGE = "$1<a href=\"http$3://$5$6\">http$3://$5$6</a>$7";
     private static final String DEFAULT_TITLE = "Log4j Log Messages";
     private static final String DEFAULT_CONTENT_TYPE = "text/html";
 
