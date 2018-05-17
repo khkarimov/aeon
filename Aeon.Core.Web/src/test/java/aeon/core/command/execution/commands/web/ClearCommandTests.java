@@ -7,11 +7,19 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.*;
+
+import org.junit.Rule;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -20,6 +28,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.function.Consumer;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ClearCommandTests {
     private ClearCommand clearCommand;
 
@@ -44,7 +54,7 @@ public class ClearCommandTests {
     @Mock
     private Consumer<IDriver> action;
 
-    @Before
+    @BeforeEach
     public void setup() {
         clearCommand = new ClearCommand(selector, commandInitializer);
 
@@ -53,10 +63,14 @@ public class ClearCommandTests {
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
     }
 
-    @Test  (expected = IllegalArgumentException.class)
+    @Test
     public void commandDelegateIllegalArgumentException() {
         // Act
-        clearCommand.getCommandDelegate().accept(null);
+        // Assert
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> {
+                    clearCommand.getCommandDelegate().accept(null);
+                });
     }
 
     @Test
@@ -72,7 +86,7 @@ public class ClearCommandTests {
         verify(driver, times(0)).executeScript(any(String.class));
     }
 
-    @Test  (expected = Select2Exception.class)
+    @Test
     public void commandDelegateClearElementExecutedAndExecutingScript() {
         // Arrange
         when(driver.getElementTagName(control)).thenReturn("SELECT");
@@ -81,9 +95,9 @@ public class ClearCommandTests {
         when(selector.toJQuery()).thenReturn(byJQuery);
 
         // Act
-        clearCommand.getCommandDelegate().accept(driver);
-
-        //Assert
+        // Assert
+        Assertions.assertThrows(Select2Exception.class,
+                () -> clearCommand.getCommandDelegate().accept(driver));
         verify(driver, times(1)).clearElement(Mockito.eq(control));
         verify(driver, times(1)).executeScript(any(String.class));
     }

@@ -5,21 +5,30 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.*;
+import org.junit.Rule;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GetElementAttributeCommandTests {
 
     private GetElementAttributeCommand getElementAttributeCommand;
 
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule public ExpectedException thrown = ExpectedException.none();
 
     @Mock
@@ -33,28 +42,33 @@ public class GetElementAttributeCommandTests {
 
     private String attributeName = "Name";
 
-    @Before
+    @BeforeEach
     public void setup() { getElementAttributeCommand = new GetElementAttributeCommand(selector, initializer, attributeName); }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void DriverNullThrowsException(){
         // Arrange
-        
+        Throwable illegalArgumentException;
+
         // Act
-        getElementAttributeCommand.commandDelegateOverride(null, control);
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> getElementAttributeCommand.commandDelegateOverride(null, control));
 
         // Assert
-        thrown.expectMessage("driver");
+        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ControlNullThrowsException(){
         // Arrange
+        Throwable illegalArgumentException;
 
         // Act
-        getElementAttributeCommand.commandDelegateOverride(driver, null);
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> getElementAttributeCommand.commandDelegateOverride(driver, null));
 
         // Assert
+        Assertions.assertEquals("control", illegalArgumentException.getMessage());
         thrown.expectMessage("control");
     }
 
@@ -69,14 +83,14 @@ public class GetElementAttributeCommandTests {
         verify(driver, times(1)).getElementAttribute(control, attributeName);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void CommandDelegate() {
         //Arrange
 
         //Act
-        getElementAttributeCommand.commandDelegate(driver);
-
-        //Verify
+        //Assert
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> getElementAttributeCommand.commandDelegate(driver));
         verify(driver, times(1)).getElementAttribute(control, attributeName);
     }
 }

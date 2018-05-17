@@ -6,12 +6,16 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
@@ -19,6 +23,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class IsNotLikeCommandTests {
 
     private IsNotLikeCommand isNotLikeCommandObjectRaw;
@@ -41,7 +47,8 @@ public class IsNotLikeCommandTests {
     private WebControl control;
     @Mock
     private Consumer<IDriver> action;
-    @Before
+
+    @BeforeEach
     public void setup() {
         // two isNotLikeCommandObjects are created to test both ComparisonOption enums
         isNotLikeCommandObjectRaw = new IsNotLikeCommand(selector, initializer, value, rawOption, attribute);

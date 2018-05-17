@@ -13,15 +13,12 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.WebConfiguration;
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -32,12 +29,11 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class BrowserTests {
 
-    // Mocks
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
     // Variables
     private Browser browserObject;
     private AutomationInfo automationInfo;
+
+    // Mocks
     @Mock
     private WebConfiguration configuration;
     @Mock
@@ -220,7 +216,7 @@ public class BrowserTests {
         when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(alertText);
         String returnedText = browserObject.getAlertText();
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAlertTextCommand.class));
-        Assertions.assertTrue(alertText.equals(returnedText));
+        Assertions.assertEquals(alertText,returnedText);
     }
 
     @Test

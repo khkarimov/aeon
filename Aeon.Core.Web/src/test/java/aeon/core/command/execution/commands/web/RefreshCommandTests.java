@@ -1,23 +1,23 @@
 package aeon.core.command.execution.commands.web;
 
-import aeon.core.command.execution.commands.initialization.ICommandInitializer;
-import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.framework.abstraction.controls.web.WebControl;
-import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import java.util.function.Consumer;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RefreshCommandTests {
     private RefreshCommand refreshCommand;
 
@@ -26,7 +26,7 @@ public class RefreshCommandTests {
     @Mock
     private IWebDriver driver;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         refreshCommand = new RefreshCommand();
     }
@@ -42,14 +42,9 @@ public class RefreshCommandTests {
         verify(driver,times(1)).refresh();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void driverNullThrowsException(){
-        //Arrange
-
-        //Act
-        refreshCommand.driverDelegate(null);
-
-        //Assert
-
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> refreshCommand.driverDelegate(null));
     }
 }

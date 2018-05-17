@@ -613,7 +613,4 @@ public class WebElementTests {
         verify(commandExecutionFacade, times(1))
                 .execute(Mockito.eq(info2), any(DatesApproximatelyEqualCommand.class));
     }
-
-
-
 }
