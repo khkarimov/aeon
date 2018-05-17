@@ -8,12 +8,6 @@ import org.junit.*;
 public class BrowserWindowTests extends SampleBaseTest{
 
     @Test
-    public void testGetElementAttributes() {
-        String classAttribute = product.startPage.formTextBox.getElementAttribute("class").toString();
-        assert (classAttribute.equals("mdl-textfield__input"));
-    }
-
-    @Test
     public void testVerifyTitle() {
         product.browser.verifyTitle("Material Design Lite");
         thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));

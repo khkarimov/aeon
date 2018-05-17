@@ -1,6 +1,5 @@
 package tests;
 
-import aeon.core.common.web.BrowserType;
 import main.ultipro.UltiPro;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -19,8 +18,7 @@ public class UltiProTests {
 
     @Before
     public void beforeTests() {
-        ultiPro = launch(UltiPro.class, BrowserType.Chrome);
-        ultiPro.browser.maximize();
+        ultiPro = launch(UltiPro.class);
         ultiPro.browser.goToUrl("http://legendsmkweb.mia.ucloud.int");
     }
 

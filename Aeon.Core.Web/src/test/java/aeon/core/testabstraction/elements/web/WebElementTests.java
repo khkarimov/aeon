@@ -218,32 +218,6 @@ public class WebElementTests {
     }
 
     @Test
-    public void getElementAttributeExecute_NullArgument() {
-        //Act
-        webElement1.getElementAttribute(null);
-        webElement2.getElementAttribute(null);
-
-        //Assert
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(GetElementAttributeCommand.class));
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(GetElementAttributeCommand.class));
-    }
-
-    @Test
-    public void getElementAttributeExecute_NonNullArgument() {
-        //Act
-        webElement1.getElementAttribute(dummy);
-        webElement2.getElementAttribute(dummy);
-
-        //Assert
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(GetElementAttributeCommand.class));
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(GetElementAttributeCommand.class));
-    }
-
-    @Test
     public void rightClickExecute() {
         //Act
         webElement1.rightClick();
@@ -580,19 +554,6 @@ public class WebElementTests {
                 .execute(Mockito.eq(info1), any(DatesApproximatelyEqualCommand.class));
         verify(commandExecutionFacade, times(1))
                 .execute(Mockito.eq(info2), any(DatesApproximatelyEqualCommand.class));
-    }
-
-    @Test
-    public void getClientRectsExecute() {
-        //Act
-        webElement1.getClientRects();
-        webElement2.getClientRects();
-
-        //Assert
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(GetClientRectsCommand.class));
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(GetClientRectsCommand.class));
     }
 
     @Test

@@ -1,6 +1,5 @@
 package aeon.core.testabstraction.product;
 
-import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.junit.Assert;
@@ -57,19 +56,4 @@ public class ConfigurationTests {
         Assert.assertEquals(IAdapter.class, config.getAdapter());
     }
 
-    @Test
-    public void testGetBrowserType()  {
-        //Act
-        config.setBrowserType(BrowserType.Chrome);
-        //Assert
-        assert(BrowserType.Chrome).equals(config.getBrowserType());
-    }
-
-    @Test
-    public void testSetBrowserType()  {
-        //Act
-        config.setBrowserType(BrowserType.Firefox);
-        //Assert
-        assert(BrowserType.Firefox).equals(config.getBrowserType());
-    }
 }

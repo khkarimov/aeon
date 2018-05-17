@@ -282,21 +282,6 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public void openFileDialog(WebControl control) {
-        adapter.openFileDialog(control);
-    }
-
-    @Override
-    public void selectFileDialog(IByWeb selector, String path) {
-        adapter.selectFileDialog(selector, path);
-    }
-
-    @Override
-    public void uploadFileDialog(IByWeb selector, String path) {
-        adapter.uploadFileDialog(selector, path);
-    }
-
-    @Override
     public void verifyAlertExists() {
         adapter.verifyAlertExists();
     }
