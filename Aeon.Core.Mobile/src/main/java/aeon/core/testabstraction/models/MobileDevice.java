@@ -156,4 +156,30 @@ public class MobileDevice extends Browser {
     public void swipeUp() {
         info.getCommandExecutionFacade().execute(info, new SwipeCommand(false, false));
     }
+
+    /**
+     * Read the most recent notification's banner (what app triggered it).
+     *
+     * @param expectedBanner The expected app that triggered the notification.
+     */
+    public void recentNotificationIs(String expectedBanner) {
+        info.getCommandExecutionFacade().execute(info, new CheckRecentNotificationCommand(expectedBanner));
+    }
+
+    /**
+     * Read and check the most recent notification's description.
+     *
+     * @param expectedDescription The expected description from the most recent notification.
+     */
+    public void recentNotificationDescriptionIs(String expectedDescription) {
+        info.getCommandExecutionFacade().execute(info, new CheckNotificationDescriptionCommand(expectedDescription));
+    }
+
+    /**
+     * Closes current running application by pressing home key. App will stay running in the background
+     * in the state that it was exited (app state will not be reset).
+     */
+    public void closeApp() {
+        info.getCommandExecutionFacade().execute(info, new CloseAppCommand());
+    }
 }

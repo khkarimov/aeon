@@ -75,9 +75,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String appPackage;
     private String deviceName;
     private String description;
-    private String avdName;
     private String driverContext;
-    private boolean crossWalkPatch;
     protected WebDriver driver;
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
@@ -116,9 +114,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
-        avdName = configuration.getString(SeleniumConfiguration.Keys.AVD_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
-        crossWalkPatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
 
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
@@ -402,6 +398,14 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 // IOS Specific
                 desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
+                String udid = configuration.getString(SeleniumConfiguration.Keys.UDID, "");
+                if (!udid.isEmpty()) {
+                    desiredCapabilities.setCapability("udid", udid);
+                }
+                String webDriverAgentPort = configuration.getString(SeleniumConfiguration.Keys.WDA_PORT, "");
+                if (!webDriverAgentPort.isEmpty()) {
+                    desiredCapabilities.setCapability("wdaLocalPort", webDriverAgentPort);
+                }
 
                 break;
 
@@ -418,9 +422,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 if (!description.isEmpty()) {
                     desiredCapabilities.setCapability("description", description);
                 }
-                if (!avdName.isEmpty()) {
-                    desiredCapabilities.setCapability("avd", avdName);
-                }
 
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
@@ -428,26 +429,28 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 if (!browserVersion.isEmpty()) {
                     desiredCapabilities.setCapability("browserVersion", browserVersion);
                 }
-
                 if (!platformVersion.isEmpty()) {
                     desiredCapabilities.setCapability("platformVersion", platformVersion);
                 }
 
                 // Android Specific
+                String avdName = configuration.getString(SeleniumConfiguration.Keys.AVD_NAME, "");
+                if (!avdName.isEmpty()) {
+                    desiredCapabilities.setCapability("avd", avdName);
+                }
                 if (!appPackage.isEmpty()) {
                     desiredCapabilities.setCapability("appPackage", appPackage);
-
                     String appActivity = configuration.getString(SeleniumConfiguration.Keys.APP_ACTIVITY, "");
                     if (!appActivity.isEmpty()) {
                         desiredCapabilities.setCapability("appActivity", appActivity);
                     }
                 }
-
                 if (!app.isEmpty()) {
                     desiredCapabilities.setCapability("app", app);
                 }
 
                 //Enables webview support for Crosswalk/Cordova applications
+                boolean crossWalkPatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
                 if (crossWalkPatch && !appPackage.isEmpty()) {
                     String androidDeviceSocket = appPackage + "_devtools_remote";
                     desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);

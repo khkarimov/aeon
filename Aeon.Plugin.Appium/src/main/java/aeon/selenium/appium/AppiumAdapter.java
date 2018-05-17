@@ -19,6 +19,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,10 +28,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Mobile adapter for Appium.
@@ -159,6 +157,151 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 .perform();
 
         switchToWebViewContext();
+
+    }
+
+    @Override
+    public void closeApp() {
+        if (browserType == BrowserType.AndroidHybridApp) {
+            log.trace("ANDROID: Pressing home button");
+            ((AndroidDriver) getMobileWebDriver()).pressKeyCode(AndroidKeyCode.HOME);
+        } else {
+            throw new RuntimeException("Automated pressing of home button currently not supported on IOS");
+        }
+    }
+
+    @Override
+    public void recentNotificationDescriptionIs(String expectedDescription) {
+        log.trace("Notification description check entered");
+        List<String> descriptionPaths = addDescriptionXPaths();
+        checkForNotificationElement(descriptionPaths, expectedDescription);
+        log.trace("Notification description check exited");
+    }
+
+    @Override
+    public void recentNotificationIs(String expectedBanner) {
+        log.trace("Notification banner check entered");
+        List<String> bannerPaths = addBannerXPaths();
+        checkForNotificationElement(bannerPaths, expectedBanner);
+        log.trace("Notification banner check exited");
+    }
+
+    private void checkForNotificationElement(List<String> xpaths, String expectedString) {
+        int i;
+        String foundString;
+        swipeForNotificationStack();
+        for (i = 0; i < xpaths.size(); i++) {
+            try {
+                WebControl firstNotification = findElement(ByMobile.xpath(xpaths.get(i)));
+                foundString = ((SeleniumElement) firstNotification).getUnderlyingWebElement().getText();
+                log.trace("Element text found: " + foundString);
+                if (expectedString.equals(foundString)) {
+                    log.trace("Correct notification found");
+                    return;
+                } else {
+                    throw new RuntimeException("Correct element not found, exiting");
+                }
+            } catch (NoSuchElementException noElement) {
+                log.trace("Element wasn't found, moving on to next path");
+            }
+        }
+        if (i == xpaths.size()) {
+            throw new RuntimeException("Correct element was not found after all checks");
+        }
+    }
+
+    private List<String> addBannerXPaths() {
+        List<String> bannerPaths = new ArrayList();
+        //Google Pixel (7.1)
+        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
+                "android.widget.TextView[1]");
+
+        //Galaxy S7 Edge (6.0.1)
+        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                "android.widget.LinearLayout[1]/android.widget.TextView[1]");
+
+        //Galaxy S7 (7.0)
+        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+                "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+
+        //Galaxy Note5 (7.0)
+        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+
+        //Galaxy S8 (7.0)
+        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+
+        //Sony Xperia XA (6.0)
+        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.TextView[1]");
+        return bannerPaths;
+    }
+
+    private List<String> addDescriptionXPaths() {
+        List<String> descriptionPaths = new ArrayList();
+        //Google Pixel (7.1)
+        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                "android.widget.LinearLayout[1]/android.widget.TextView[1]");
+
+        //Galaxy S7 (7.0)
+        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+                "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
+                "android.widget.TextView[1]");
+
+        //Galaxy Note5 (7.0) && Galaxy S8
+        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
+                "android.widget.TextView[1]");
+
+        //Galaxy S8 (7.0)
+        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
+                "android.widget.TextView[1]");
+
+        //Sony Xperia XA (6.0)
+        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
+                "android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+                "android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.TextView[1]");
+        return descriptionPaths;
+    }
+
+    private void swipeForNotificationStack() {
+        log.trace("Swipe for notification entered");
+        Dimension screenSize = getMobileWebDriver().manage().window().getSize();
+        int width = screenSize.getWidth();
+        int height = screenSize.getHeight();
+        int xStart = width / 2;
+        int yStart = 0;
+        int yEnd = (int) (height * .06);
+        TouchAction action = new TouchAction(getMobileWebDriver());
+        action.longPress(xStart, yStart)
+                .moveTo(0, yEnd)
+                .release()
+                .perform();
+        log.trace("Swipe for notification exited");
     }
 
     private int getWidgetNumber(int currentYear, int desiredYear) {
@@ -383,7 +526,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
                     try {
                         findElement(selector);
-                    } catch (NoSuchElementException | NoSuchElementsException e) {
+                    } catch (java.util.NoSuchElementException | NoSuchElementsException e) {
                         log.trace(e.getMessage());
 
                         continue;
@@ -493,7 +636,6 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public final void quit() {
         log.trace("WebDriver.quit();");
-
         if (browserType != BrowserType.AndroidChrome
                 && browserType != BrowserType.IOSSafari
                 && browserType != BrowserType.AndroidHybridApp
@@ -550,8 +692,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             switchToWebViewContext();
             windowWidth = windowSize.getWidth();
             windowHeight = windowSize.getHeight();
-
-            if (browserType == BrowserType.AndroidHybridApp && mobileDeviceResolutions.containsKey(windowWidth)) {
+            if (browserType == BrowserType.AndroidHybridApp && mobileDeviceResolutions.containsKey(windowWidth)
+                    && (windowHeight - mobileDeviceResolutions.get(windowWidth)) < 300) {
                 windowHeight = mobileDeviceResolutions.get(windowWidth);
             }
         } catch (WebDriverException e) {

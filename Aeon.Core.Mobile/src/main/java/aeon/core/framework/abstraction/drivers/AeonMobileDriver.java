@@ -106,4 +106,19 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
     public void swipe(boolean horizontally, boolean leftOrDown) {
         adapter.swipe(horizontally, leftOrDown);
     }
+
+    @Override
+    public void recentNotificationDescriptionIs(String expectedDescription) {
+        adapter.recentNotificationDescriptionIs(expectedDescription);
+    }
+
+    @Override
+    public void recentNotificationIs(String expectedBanner) {
+        adapter.recentNotificationIs(expectedBanner);
+    }
+
+    @Override
+    public void closeApp() {
+        adapter.closeApp();
+    }
 }
