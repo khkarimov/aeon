@@ -18,13 +18,12 @@ public class DropdownOptionsTests extends SampleBaseTest{
         String[] invalidOptionValues = {"0", "1", "fail"};
 
         //Act
+        product.startPage.dropDown.click();
+        product.startPage.dropDown.hasOptions(validOptionValues, null, WebSelectOption.Value);
+
         //Assert
         Assertions.assertThrows(ElementDoesNotHaveOptionException.class,
-                () -> {
-                    product.startPage.dropDown.click();
-                    product.startPage.dropDown.hasOptions(validOptionValues, null, WebSelectOption.Value);
-                    product.startPage.dropDown.hasOptions(invalidOptionValues, null, WebSelectOption.Value);
-                });
+                () -> product.startPage.dropDown.hasOptions(invalidOptionValues, null, WebSelectOption.Value));
     }
 
     @Test
@@ -34,31 +33,28 @@ public class DropdownOptionsTests extends SampleBaseTest{
         String[] validOptionValues = {"1", "2", "49"};
 
         //Act
+        product.startPage.dropDown.click();
+        product.startPage.dropDown.doesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
+
         //Assert
         Assertions.assertThrows(ElementHasOptionException.class,
-                () -> {
-                    product.startPage.dropDown.click();
-                    product.startPage.dropDown.doesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
-                    product.startPage.dropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.Value);
-                });
+                () -> product.startPage.dropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.Value));
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Ascending(){
+        product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
+
         Assertions.assertThrows(ElementsNotInOrderException.class,
-                () -> {
-                    product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
-                    product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
-                });
+                () -> product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByValue));
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Descending(){
+        product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
+
         Assertions.assertThrows(ElementsNotInOrderException.class,
-                () -> {
-                    product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
-                    product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
-                });
+                () -> product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByValue));
     }
 
     @Test
@@ -68,22 +64,24 @@ public class DropdownOptionsTests extends SampleBaseTest{
         String[] invalidoptions = {"1", "2", "3", "40", "5"};
 
         //Act
+        product.startPage.dropDown.hasOptionsInOrder(validoptions, WebSelectOption.Value);
+
         //Assert
         Assertions.assertThrows(ElementDoesNotHaveOptionException.class,
-                () -> {
-                    product.startPage.dropDown.hasOptionsInOrder(validoptions, WebSelectOption.Value);
-                    product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Value);
-                });
+                () -> product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Value));
     }
 
     @Test
     public void testHasNumberOfOptions(){
+        //Arrange
+        int totalOptions = 5000;
+        final int totalOptionsToFail = 50;
+
+        //Act
+        product.startPage.dropDown.hasNumberOfOptions(totalOptions);
+
+        //Assert
         Assertions.assertThrows(ElementDoesNotHaveNumberOfOptionsException.class,
-                () -> {
-                    int totalOptions = 5000;
-                    product.startPage.dropDown.hasNumberOfOptions(totalOptions);
-                    totalOptions = 50;
-                    product.startPage.dropDown.hasNumberOfOptions(totalOptions);
-                });
+                () -> product.startPage.dropDown.hasNumberOfOptions(totalOptionsToFail));
     }
 }

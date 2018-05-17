@@ -2,7 +2,6 @@ package tests;
 
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.WebSelectOption;
-import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.jupiter.api.Assertions;
@@ -12,38 +11,30 @@ public class GeneralAssertionsTests extends SampleBaseTest{
 
     @Test
     public void testDisabled() {
+        product.startPage.disabledButton.isDisabled();
         Assertions.assertThrows(ElementIsEnabledException.class,
-                () -> {
-                    product.startPage.disabledButton.isDisabled();
-                    product.startPage.start.isDisabled();
-                });
+                () -> product.startPage.start.isDisabled());
     }
 
     @Test
     public void testEnabled() {
+        product.startPage.start.isEnabled();
         Assertions.assertThrows(ElementNotEnabledException.class,
-                () -> {
-                    product.startPage.start.isEnabled();
-                    product.startPage.disabledButton.isEnabled();
-                });
+                () -> product.startPage.disabledButton.isEnabled());
     }
 
     @Test
     public void testNotExists(){
+        product.startPage.nonExistentLabel.notExists();
         Assertions.assertThrows(ElementExistsException.class,
-                () -> {
-                    product.startPage.nonExistentLabel.notExists();
-                    product.startPage.start.notExists();
-                });
+                () -> product.startPage.start.notExists());
     }
 
     @Test
     public void testExists(){
+        product.startPage.start.exists();
         Assertions.assertThrows(NoSuchElementException.class,
-                () -> {
-                    product.startPage.start.exists();
-                    product.startPage.nonExistentLabel.exists();
-                });
+                () -> product.startPage.nonExistentLabel.exists());
     }
 
     @Test
@@ -66,43 +57,37 @@ public class GeneralAssertionsTests extends SampleBaseTest{
 
     @Test
     public void testNotVisible() {
+        product.startPage.invisibleButton.notVisible();
         Assertions.assertThrows(ElementIsVisibleException.class,
-                () -> {
-                    product.startPage.invisibleButton.notVisible();
-                    product.startPage.openAlertButton.notVisible();
-                });
+                () -> product.startPage.openAlertButton.notVisible());
     }
 
     @Test
     public void testVisible() {
+        product.startPage.dateLabel.visible();
         Assertions.assertThrows(ElementNotVisibleException.class,
-                () -> {
-                    product.startPage.dateLabel.visible();
-                    product.startPage.invisibleButton.visible();
-                });
+                () -> product.startPage.invisibleButton.visible());
     }
 
     @Test
     public void testDatesApproximatelyEquals() {
+        product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-31"), Period.days(0));
+        product.startPage.dateSelector.datesApproximatelyEqual("min", DateTime.parse("2016-01-06"), Period.days(5));
+
         Assertions.assertThrows(DatesNotApproximatelyEqualException.class,
-                () -> {
-                    product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-31"), Period.days(0));
-                    product.startPage.dateSelector.datesApproximatelyEqual("min", DateTime.parse("2016-01-06"), Period.days(5));
-                    product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-08"), Period.days(5));
-                });
+                () -> product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-08"), Period.days(5)));
     }
 
     @Test
     public void testIs_IsLike_IsNotLike_WithSelect(){
+        product.startPage.lexoDropDown.is("apple");
+        product.startPage.lexoDropDown.isLike("PPL");
+        product.startPage.lexoDropDown.is("01", "value");
+        product.startPage.lexoDropDown.isNotLike("appple");
+        product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
+
         Assertions.assertThrows(ValuesAreNotEqualException.class,
-                () -> {
-                    product.startPage.lexoDropDown.is("apple");
-                    product.startPage.lexoDropDown.isLike("PPL");
-                    product.startPage.lexoDropDown.is("01", "value");
-                    product.startPage.lexoDropDown.isNotLike("appple");
-                    product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
-                    product.startPage.lexoDropDown.is("ZEBRA");
-                });
+                () -> product.startPage.lexoDropDown.is("ZEBRA"));
     }
 
     @Test
