@@ -170,7 +170,6 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         } else {
             advertisement = null;
         }
-        this.fileName = appendIdToFileName(filename);
         this.advertiser = advertiser;
     }
 
