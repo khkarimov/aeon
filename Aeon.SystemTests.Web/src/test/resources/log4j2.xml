@@ -20,16 +20,19 @@
         </PIdFileAppender>
     </Appenders>
     <Loggers>
-        <Logger name="aeon" level="info" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
-            <AppenderRef ref="PIdFileAppender"/>
-        </Logger>
         <Root level="error">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="PIdFileAppender"/>
             <AppenderRef ref="File"/>
         </Root>
+        <Logger name="aeon" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="PIdFileAppender"/>
+        </Logger>
+        <Logger name="aeon" level="error" additivity="false">
+            <AppenderRef ref="File"/>
+        </Logger>
     </Loggers>
 </Configuration>
