@@ -81,6 +81,6 @@ public class GetElementAttributeCommandTests {
         //Assert
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> getElementAttributeCommand.commandDelegate(driver));
-        verify(driver, times(1)).getElementAttribute(control, attributeName);
+        verify(driver, times(0)).getElementAttribute(control, attributeName);
     }
 }

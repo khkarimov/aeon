@@ -90,7 +90,7 @@ public class ClearCommandTests {
         // Assert
         Assertions.assertThrows(Select2Exception.class,
                 () -> clearCommand.getCommandDelegate().accept(driver));
-        verify(driver, times(1)).clearElement(Mockito.eq(control));
+        verify(driver, times(0)).clearElement(Mockito.eq(control));
         verify(driver, times(1)).executeScript(any(String.class));
     }
 

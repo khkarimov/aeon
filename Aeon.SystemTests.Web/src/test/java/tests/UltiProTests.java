@@ -2,11 +2,9 @@ package tests;
 
 import aeon.core.common.web.BrowserType;
 import main.ultipro.UltiPro;
-import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
@@ -16,9 +14,6 @@ import static aeon.core.testabstraction.product.Aeon.launch;
  */
 public class UltiProTests {
     private static UltiPro ultiPro;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeEach
     public void beforeTests() {
