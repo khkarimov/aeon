@@ -4,20 +4,15 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -26,9 +21,6 @@ import static org.mockito.Mockito.verify;
 public class DragAndDropCommandTests
 {
     private DragAndDropCommand dragAndDropCommandObject;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private IByWeb dropElement;
@@ -53,8 +45,8 @@ public class DragAndDropCommandTests
     @Test
     public void targetElementSetWhenObjectIsCreated(){
         // Assert
-        assertNotNull(dragAndDropCommandObject.targetElement);
-        assertEquals(dragAndDropCommandObject.targetElement, targetElement);
+        Assertions.assertNotNull(dragAndDropCommandObject.targetElement);
+        Assertions.assertEquals(dragAndDropCommandObject.targetElement, targetElement);
     }
 
     @Test
