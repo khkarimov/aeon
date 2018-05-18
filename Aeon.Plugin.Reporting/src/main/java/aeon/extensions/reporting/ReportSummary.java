@@ -24,7 +24,7 @@ public class ReportSummary {
 
     public void sendSummaryReport(Report reportBean) {
 
-        String title = "Automation Report---ULTIProLaunch--" + reportBean.getScenarioBeans().get(0).getStartTime();
+        String title = "Automation Report---ULTIProLaunch--" + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
 
         String slackChannel1 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.1", "");
         String slackChannel2 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.2", "");
