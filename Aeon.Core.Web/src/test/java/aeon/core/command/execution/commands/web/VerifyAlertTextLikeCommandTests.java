@@ -1,16 +1,23 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class VerifyAlertTextLikeCommandTests {
     private VerifyAlertTextLikeCommand verifyAlertTextLikeCommand;
     private String comparingText = "test";
@@ -19,13 +26,10 @@ public class VerifyAlertTextLikeCommandTests {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Mock
     private IWebDriver driver;
 
-    @Before
+    @BeforeEach
     public void setup() {
         verifyAlertTextLikeCommand = new VerifyAlertTextLikeCommand(comparingText, caseSensitive);
     }
@@ -41,14 +45,9 @@ public class VerifyAlertTextLikeCommandTests {
         verify(driver, times(1)).verifyAlertTextLike(comparingText, caseSensitive);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void testDriverDelegateNullDriver(){
-        //Arrange
-
-        //Act
-        verifyAlertTextLikeCommand.driverDelegate(null);
-
-        //Assert
-        expectedException.expect(IllegalArgumentException.class);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> verifyAlertTextLikeCommand.driverDelegate(null));
     }
 }

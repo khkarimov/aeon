@@ -1,12 +1,18 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.*;
 
-import org.junit.rules.ExpectedException;
+import org.junit.Rule;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoRule;
 import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -14,20 +20,22 @@ import static org.mockito.Mockito.verify;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class VerifyUrlCommandTests {
     private VerifyUrlCommand verifyUrlCommand;
     private URL url = new URL("http://google.com");
 
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
     @Mock
     private IWebDriver driver;
 
     public VerifyUrlCommandTests() throws MalformedURLException {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         String comparingURL = "http://google.com";
         verifyUrlCommand = new VerifyUrlCommand(comparingURL); }
@@ -43,14 +51,9 @@ public class VerifyUrlCommandTests {
         verify(driver, times(1)).verifyURL(url);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void driverDelegateVerifyUrlCommandTestWithNullDriver(){
-        // Arrange
-
-        // Act
-        verifyUrlCommand.driverDelegate(null);
-
-        //Assert
-        expectedException.expect(IllegalArgumentException.class);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> verifyUrlCommand.driverDelegate(null));
     }
 }

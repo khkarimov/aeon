@@ -1,16 +1,24 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class SendKeysToAlertCommandTest {
     private SendKeysToAlertCommand sendKeysToAlertCommand;
     private String keysToSend = "testKey";
@@ -24,7 +32,7 @@ public class SendKeysToAlertCommandTest {
     @Mock
     private IWebDriver driver;
 
-    @Before
+    @BeforeEach
     public void setup() {
         sendKeysToAlertCommand = new SendKeysToAlertCommand(keysToSend);
     }
@@ -40,14 +48,9 @@ public class SendKeysToAlertCommandTest {
         verify(driver, times(1)).sendKeysToAlert(keysToSend);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void testDriverDelegateNullDriver(){
-        //Arrange
-
-        //Act
-        sendKeysToAlertCommand.driverDelegate(null);
-
-        //Assert
-        expectedException.expect(IllegalArgumentException.class);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> sendKeysToAlertCommand.driverDelegate(null));
     }
 }
