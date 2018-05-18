@@ -35,7 +35,7 @@ public class WindowDoesNotExistByUrlCommandTests {
     @Test
     public void IllegalArgumentExceptionDriverNull(){
         //Arrange
-        Throwable illegalArgumentException;
+        Exception illegalArgumentException;
 
         // Act
         illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,

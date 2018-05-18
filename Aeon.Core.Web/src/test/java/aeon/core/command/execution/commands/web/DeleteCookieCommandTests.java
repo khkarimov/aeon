@@ -46,7 +46,4 @@ public class DeleteCookieCommandTests {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> deleteCookie.driverDelegate(null));
     }
-
-
-
 }

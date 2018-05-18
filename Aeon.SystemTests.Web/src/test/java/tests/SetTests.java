@@ -1,6 +1,5 @@
 package tests;
 
-
 import aeon.core.common.web.WebSelectOption;
 import org.junit.jupiter.api.Test;
 

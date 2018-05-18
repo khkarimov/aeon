@@ -2,11 +2,9 @@ package tests;
 
 import aeon.core.testabstraction.product.WebConfiguration;
 import main.sample.Sample;
-import org.junit.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
-import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
@@ -15,9 +13,6 @@ import static aeon.core.testabstraction.product.Aeon.launch;
 public class SampleBaseTest {
 
     public static Sample product;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeEach
     public void beforeTests() {

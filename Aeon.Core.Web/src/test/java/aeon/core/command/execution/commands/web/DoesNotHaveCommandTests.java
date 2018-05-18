@@ -47,7 +47,6 @@ public class DoesNotHaveCommandTests {
     @Mock
     private IWebDriver driver;
 
-
     @Mock
     private Consumer<IDriver> action;
 

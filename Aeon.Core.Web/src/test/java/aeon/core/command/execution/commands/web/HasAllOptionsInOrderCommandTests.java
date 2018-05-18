@@ -45,7 +45,6 @@ public class HasAllOptionsInOrderCommandTests {
 
     @Test
     public void HasAllOptionsInOrderCommandTestsInOrder(){
-
         // Arrange
 
         // Act

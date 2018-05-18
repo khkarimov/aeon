@@ -45,27 +45,27 @@ public class DisabledCommandTests {
     @Test
     public void DriverNullThrowsException(){
         // Arrange
-        Throwable exception;
+        Exception illegalArgumentException;
 
         // Act
-        exception = Assertions.assertThrows(IllegalArgumentException.class,
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> disabledCommandObject.commandDelegate(null, control));
 
         // Assert
-        Assertions.assertEquals("driver", exception.getMessage());
+        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
     @Test
     public void ControlNullThrowsException(){
         // Arrange
-        Throwable exception;
+        Exception illegalArgumentException;
 
         // Act
-        exception = Assertions.assertThrows(IllegalArgumentException.class,
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> disabledCommandObject.commandDelegate(driver, null));
 
         // Assert
-        Assertions.assertEquals("control", exception.getMessage());
+        Assertions.assertEquals("control", illegalArgumentException.getMessage());
     }
 
     @Test

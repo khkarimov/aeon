@@ -90,9 +90,10 @@ public class BaseConfigurationTests {
         //Arrange
         String errorMessage = "No aeon.properties file was found.";
         when(spyConfig.getAeonInputStream()).thenReturn(null);
+        Exception exception;
 
         //Act
-        Throwable exception = Assertions.assertThrows(IOException.class, () -> {
+        exception = Assertions.assertThrows(IOException.class, () -> {
             spyConfig.loadConfiguration();
         });
 
@@ -117,9 +118,10 @@ public class BaseConfigurationTests {
         //Arrange
         String errorMessage = "/Users/ericda/Desktop/Projects/aeon/Aeon.Core/impossiblePath (No such file or directory)";
         when(spyConfig.getEnvironmentValue("AEON_CONFIG")).thenReturn("impossiblePath");
+        Exception exception;
 
         //Act
-        Throwable exception = Assertions.assertThrows(java.io.FileNotFoundException.class, () -> {
+        exception = Assertions.assertThrows(java.io.FileNotFoundException.class, () -> {
             spyConfig.loadConfiguration();
         });
 

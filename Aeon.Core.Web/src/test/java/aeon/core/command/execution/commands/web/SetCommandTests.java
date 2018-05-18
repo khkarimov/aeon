@@ -59,7 +59,7 @@ public class SetCommandTests {
     public void commandDelegateDriverNullThrowsException()
     {
         //Arrange
-        Throwable illegalArgumentException;
+        Exception illegalArgumentException;
 
         //Act
         illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,

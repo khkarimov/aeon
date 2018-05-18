@@ -36,7 +36,7 @@ public class WebSelectorFinderTests {
     @Test
     public void DriverNullThrowsException(){
         // Arrange
-        Throwable illegalArgumentException;
+        Exception illegalArgumentException;
 
         // Act
         illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,

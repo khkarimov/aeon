@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -36,9 +35,6 @@ public class SetTextValueByJavaScriptCommandTests {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Mock
     private IByWeb selector;
 
@@ -62,7 +58,7 @@ public class SetTextValueByJavaScriptCommandTests {
     @Test
     public void illegalArguementThrownWhenDriverIsNull(){
         // Arrange
-        Throwable illegalArgumentException;
+        Exception illegalArgumentException;
 
         // Act
         illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,

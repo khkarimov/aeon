@@ -68,9 +68,7 @@ public class ClearCommandTests {
         // Act
         // Assert
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> {
-                    clearCommand.getCommandDelegate().accept(null);
-                });
+                () -> clearCommand.getCommandDelegate().accept(null));
     }
 
     @Test

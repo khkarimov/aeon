@@ -98,7 +98,7 @@ public class BrowserTests {
         when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(testCookie);
         IWebCookie returnedCookie = browserObject.getCookie("Placeholder");
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetCookieCommand.class));
-        Assertions.assertTrue(testCookie == returnedCookie);
+        Assertions.assertSame(testCookie, returnedCookie);
     }
 
     @Test

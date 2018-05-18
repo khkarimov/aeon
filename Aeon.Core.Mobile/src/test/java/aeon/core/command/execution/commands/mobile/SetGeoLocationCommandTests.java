@@ -1,6 +1,5 @@
 package aeon.core.command.execution.commands.mobile;
 
-
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;

@@ -42,14 +42,12 @@ public class GoForwardCommandTests {
     @Mock
     private Consumer<IDriver> action;
 
-
     /* SETUP */
 
     @BeforeEach
     public void setup() {
         goForwardCommandObject = new GoForwardCommand();
     }
-
 
     /* TEST CASES */
 
@@ -65,7 +63,6 @@ public class GoForwardCommandTests {
         //Arrange
         when(initializer.setContext()).thenReturn(action); //when context set, perform action
 
-
         //Act
         Consumer<IDriver> action = goForwardCommandObject.getCommandDelegate();
         action.accept(driver);
@@ -73,6 +70,4 @@ public class GoForwardCommandTests {
         //Assert
         verify(driver, times(1)).goForward();
     }
-
-
 }

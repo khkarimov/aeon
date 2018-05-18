@@ -1,6 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -48,7 +47,7 @@ public class GetElementAttributeCommandTests {
     @Test
     public void DriverNullThrowsException(){
         // Arrange
-        Throwable illegalArgumentException;
+        Exception illegalArgumentException;
 
         // Act
         illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
@@ -61,7 +60,7 @@ public class GetElementAttributeCommandTests {
     @Test
     public void ControlNullThrowsException(){
         // Arrange
-        Throwable illegalArgumentException;
+        Exception illegalArgumentException;
 
         // Act
         illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,

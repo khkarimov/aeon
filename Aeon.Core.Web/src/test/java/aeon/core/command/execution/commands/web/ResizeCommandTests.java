@@ -2,7 +2,6 @@ package aeon.core.command.execution.commands.web;
 
 import aeon.core.common.web.BrowserSize;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import aeon.core.testabstraction.models.Browser;
 import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

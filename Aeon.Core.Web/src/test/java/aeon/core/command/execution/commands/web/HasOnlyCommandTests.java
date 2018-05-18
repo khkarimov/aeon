@@ -46,7 +46,6 @@ public class HasOnlyCommandTests {
 
     @Test
     public void HasAllOptionsInOrderCommandTestsInOrder(){
-
         // Arrange
 
         // Act
@@ -54,6 +53,5 @@ public class HasOnlyCommandTests {
 
         // Verify
         verify(driver, times(1)).hasOnly(control, messages, childSelector, ComparisonOption.Text, attribute);
-
     }
 }

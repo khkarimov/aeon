@@ -47,7 +47,6 @@ public class HasLikeCommandTests {
 
     @Test
     public void HasAllOptionsInOrderCommandTestsInOrder(){
-
         // Arrange
 
         // Act

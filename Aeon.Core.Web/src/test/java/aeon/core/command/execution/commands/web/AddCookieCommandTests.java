@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -28,9 +27,6 @@ public class AddCookieCommandTests {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Mock
     private IWebCookie cookie;
@@ -57,14 +53,14 @@ public class AddCookieCommandTests {
     @Test
     public void testDriverDelegateNullDriver() {
         // Arrange
-        Throwable exception;
+        Exception illegalArgumentException;
         Consumer<IDriver> action = cookieCommand.getCommandDelegate();
 
         // Act
         //Assert
-        exception = Assertions.assertThrows(IllegalArgumentException.class,
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> action.accept(null));
-        Assertions.assertEquals("driver", exception.getMessage());
+        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
         verify(driver, times(0)).addCookie(cookie);
     }
 }

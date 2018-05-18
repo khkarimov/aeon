@@ -60,27 +60,27 @@ public class DragAndDropCommandTests
     @Test
     public void illegalArgumentThrownWhenDriverIsNull(){
         // Arrange
-        Throwable exception;
+        Exception illegalArgumentException;
 
         // Act
-        exception = Assertions.assertThrows(IllegalArgumentException.class,
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> dragAndDropCommandObject.commandDelegate(null, control));
 
         // Assert
-        Assertions.assertEquals("driver", exception.getMessage());
+        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
     @Test
     public void illegalArgumentThrownWhenControlIsNull(){
         // Arrange
-        Throwable exception;
+        Exception illegalArgumentException;
 
         // Act
-        exception = Assertions.assertThrows(IllegalArgumentException.class,
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> dragAndDropCommandObject.commandDelegate(driver, null));
 
         // Assert
-        Assertions.assertEquals("control", exception.getMessage());
+        Assertions.assertEquals("control", illegalArgumentException.getMessage());
     }
 
     @Test

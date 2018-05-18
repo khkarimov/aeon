@@ -1,6 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;

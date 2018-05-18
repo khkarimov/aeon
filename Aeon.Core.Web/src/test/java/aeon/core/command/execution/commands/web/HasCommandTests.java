@@ -44,7 +44,6 @@ public class HasCommandTests {
     private ICommandInitializer commandInitializer;
     private HasCommand command;
 
-
     @BeforeEach
     public void setUp() {
         command = new HasCommand(selector, commandInitializer, messages, str, ComparisonOption.Raw, atr);
