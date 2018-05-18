@@ -32,7 +32,8 @@ public class SlackBot {
         try {
             HttpClient client = HttpClients.createDefault();
             HttpPost httpPost = new HttpPost(configuration.getString(ReportingConfiguration.Keys.SLACK_CHAT_URL, ""));
-
+            //HttpPost httpPost = new HttpPost("https://hooks.slack.com/services/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");
+            //have to change to JSONObject
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("channel", channel));
             params.add(new BasicNameValuePair("token", configuration.getString(ReportingConfiguration.Keys.SLACK_TOKEN, "")));
