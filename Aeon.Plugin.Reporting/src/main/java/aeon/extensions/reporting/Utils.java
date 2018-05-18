@@ -16,6 +16,7 @@ public class Utils {
         log.info("Converting HTML file to Png");
         HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
         File file = new File(filePath);
+        file.getParentFile().mkdirs();
         imageGenerator.loadHtml(html);
         imageGenerator.saveAsImage(file);
 

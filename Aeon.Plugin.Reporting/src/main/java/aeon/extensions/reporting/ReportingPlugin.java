@@ -94,6 +94,7 @@ public class ReportingPlugin extends Plugin {
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
             scenarioBean.setModuleName("");
             scenarioBean.setErrorMessage(reason);
+            scenarioBean.setStatus("FAILED");
             REPORT_BEAN.addFailed();
         }
 
