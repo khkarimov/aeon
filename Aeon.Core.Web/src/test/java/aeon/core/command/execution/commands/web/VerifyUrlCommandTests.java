@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class VerifyUrlCommandTests {
     private VerifyUrlCommand verifyUrlCommand;
     private URL url = new URL("http://google.com");

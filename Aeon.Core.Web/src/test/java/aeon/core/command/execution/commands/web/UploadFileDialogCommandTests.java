@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class UploadFileDialogCommandTests {
 
     private UploadFileDialogCommand uploadFileDialogCommandObject;
@@ -43,7 +43,6 @@ public class UploadFileDialogCommandTests {
     @Test
     public void driverDelegateUploadFileDialogCommand() {
         // Arrange
-        when(initializer.setContext()).thenReturn(action);
 
         // Act
         uploadFileDialogCommandObject.driverDelegate(driver);

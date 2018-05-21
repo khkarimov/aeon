@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
  */
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class TextBoxTest {
     private TextBox textBox;  //class under test
     private AutomationInfo automationInfo;  //needed to make a TextBox

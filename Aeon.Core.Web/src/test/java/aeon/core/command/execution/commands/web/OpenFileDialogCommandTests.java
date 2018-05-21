@@ -21,7 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class OpenFileDialogCommandTests {
 
     private OpenFileDialogCommand openFileDialogCommandObject;

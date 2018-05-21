@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class WebControlFinderTests {
     private WebControlFinder webControlFinderDefault;
     private WebControlFinder webControlFinderSet;
@@ -52,7 +52,6 @@ public class WebControlFinderTests {
     @Test
     public void verify_webControl_Default_After_Calling_findElement(){
         // Arrange
-        when(initializer.setContext()).thenReturn(action);
         when(driver.findElement(selector)).thenReturn(control);
 
         // Act
@@ -65,7 +64,6 @@ public class WebControlFinderTests {
     @Test
     public void verify_webControl_Set_After_Calling_findElement(){
         // Arrange
-        when(initializer.setContext()).thenReturn(action);
         IByWeb selection = selectorFinder.findSelector(driver, selector);
         when(driver.findElement(selection)).thenReturn(control);
 

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
  * Created by bryant on 5/15/17.
  */
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SetTextValueByJavaScriptCommandTests {
     private SetTextByJavaScriptCommand setTextByJavaScriptCommandObject;
     private String value;

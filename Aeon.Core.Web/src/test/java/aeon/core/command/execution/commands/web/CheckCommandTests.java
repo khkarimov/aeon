@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 import java.util.function.Consumer;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class CheckCommandTests {
 
     private CheckCommand checkCommandObject;

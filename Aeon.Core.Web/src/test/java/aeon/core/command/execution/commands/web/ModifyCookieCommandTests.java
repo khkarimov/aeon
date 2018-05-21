@@ -13,7 +13,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class ModifyCookieCommandTests {
     private ModifyCookieCommand modifyCookieCommand;
     private String name = "cookieName";

@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class GoToUrlCommandTests {
     private GoToUrlCommand goToUrlCommand;
     private URL url = new URL("https://www.google.com");

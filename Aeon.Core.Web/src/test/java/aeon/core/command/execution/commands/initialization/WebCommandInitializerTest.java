@@ -21,7 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class WebCommandInitializerTest {
 
     private WebCommandInitializer webCommandInitializer;

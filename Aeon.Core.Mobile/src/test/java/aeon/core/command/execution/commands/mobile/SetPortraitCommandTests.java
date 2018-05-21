@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SetPortraitCommandTests {
     @Mock
     private WebControl control;
@@ -44,8 +44,6 @@ public class SetPortraitCommandTests {
     @Test
     public void notVisibleCommand_CallsExecute() {
         //Arrange
-        when(commandInitializer.setContext()).thenReturn(driverConsumer);
-        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
         //Act
         Consumer<IDriver> action = command.getCommandDelegate();

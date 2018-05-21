@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 import java.util.function.Consumer;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class ClearCommandTests {
     private ClearCommand clearCommand;
 
@@ -54,7 +54,6 @@ public class ClearCommandTests {
 
         // Arrange
         when(commandInitializer.setContext()).thenReturn(action);
-        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
     }
 
     @Test
@@ -69,6 +68,7 @@ public class ClearCommandTests {
     public void commandDelegateClearElementExecutedWithoutExecutingScript() {
         // Arrange
         when(driver.getElementTagName(control)).thenReturn("FOO");
+        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
         clearCommand.getCommandDelegate().accept(driver);
@@ -85,6 +85,7 @@ public class ClearCommandTests {
         when(driver.executeScript(any(String.class))).thenReturn(true);
         when(control.getSelector()).thenReturn(selector);
         when(selector.toJQuery()).thenReturn(byJQuery);
+        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
         // Assert
@@ -101,6 +102,7 @@ public class ClearCommandTests {
         when(driver.executeScript(any(String.class))).thenReturn(false);
         when(control.getSelector()).thenReturn(selector);
         when(selector.toJQuery()).thenReturn(byJQuery);
+        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
         clearCommand.getCommandDelegate().accept(driver);

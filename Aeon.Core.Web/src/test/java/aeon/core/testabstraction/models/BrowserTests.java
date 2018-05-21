@@ -26,7 +26,7 @@ import org.mockito.quality.Strictness;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class BrowserTests {
 
     // Variables

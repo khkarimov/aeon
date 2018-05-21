@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class NotExistsCommandTests {
 
     @Mock

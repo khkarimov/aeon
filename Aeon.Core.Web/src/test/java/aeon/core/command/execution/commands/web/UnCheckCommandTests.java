@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
  * Test for unchecking on an element
  */
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class UnCheckCommandTests {
 
     private UnCheckCommand unCheckCommandObject;

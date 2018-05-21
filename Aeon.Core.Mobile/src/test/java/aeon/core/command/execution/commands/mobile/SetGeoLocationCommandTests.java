@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SetGeoLocationCommandTests {
     private SetGeoLocationCommand command;
 
@@ -47,8 +47,6 @@ public class SetGeoLocationCommandTests {
     @Test
     public void commandDelegate() {
         // Arrange
-        when(initializer.setContext()).thenReturn(action);
-        when(initializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
         Consumer<IDriver> action = command.getCommandDelegate();

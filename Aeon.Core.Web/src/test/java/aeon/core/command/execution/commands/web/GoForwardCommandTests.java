@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class GoForwardCommandTests {
 
     private GoForwardCommand goForwardCommandObject;
@@ -51,7 +51,6 @@ public class GoForwardCommandTests {
     @Test
     public void commandDelegateGoForwardCommand() {
         //Arrange
-        when(initializer.setContext()).thenReturn(action); //when context set, perform action
 
         //Act
         Consumer<IDriver> action = goForwardCommandObject.getCommandDelegate();

@@ -25,7 +25,7 @@ import org.mockito.quality.Strictness;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class BaseConfigurationTests {
 
     @Mock
@@ -46,7 +46,6 @@ public class BaseConfigurationTests {
 
     @BeforeEach
     public void setUp() {
-        when(properties.propertyNames()).thenReturn(enumerationList);
         config = new BaseConfiguration();
         spyConfig = org.mockito.Mockito.spy(config);
         BaseConfiguration.log = log;
@@ -56,6 +55,7 @@ public class BaseConfigurationTests {
     public void testInvalidTestPropertiesFile() throws IOException, IllegalAccessException {
         //Arrange
         when(spyConfig.getDefaultConfigInputStream()).thenReturn(null);
+        when(properties.propertyNames()).thenReturn(enumerationList);
         spyConfig.properties = properties;
 
         //Act
@@ -70,6 +70,7 @@ public class BaseConfigurationTests {
     public void testValidTestPropertiesFile() throws IOException, IllegalAccessException {
         //Arrange
         when(spyConfig.getDefaultConfigInputStream()).thenReturn(inputStream);
+        when(properties.propertyNames()).thenReturn(enumerationList);
         spyConfig.properties = properties;
 
         //Act
@@ -87,9 +88,8 @@ public class BaseConfigurationTests {
         Exception exception;
 
         //Act
-        exception = Assertions.assertThrows(IOException.class, () -> {
-            spyConfig.loadConfiguration();
-        });
+        exception = Assertions.assertThrows(IOException.class,
+                () -> spyConfig.loadConfiguration());
 
         //Assert
         Assertions.assertEquals(errorMessage, exception.getMessage());
@@ -154,11 +154,13 @@ public class BaseConfigurationTests {
     }
 
     @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
     public void testSetProperties() throws Exception {
         //Arrange
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
         when(spyConfig.getEnvironmentValue("aeon.browser")).thenReturn("testEnv2");
         when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
+        when(properties.propertyNames()).thenReturn(enumerationList);
 
         spyConfig.properties = properties;
 
@@ -173,7 +175,6 @@ public class BaseConfigurationTests {
     @Test
     public void testEnumeration() throws IOException, IllegalAccessException {
         //Arrange
-        when(enumerationList.hasMoreElements()).thenReturn(true, false);
 
         //Act
         config.loadConfiguration();

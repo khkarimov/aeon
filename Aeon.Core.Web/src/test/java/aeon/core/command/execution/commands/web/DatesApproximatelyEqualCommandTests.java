@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class DatesApproximatelyEqualCommandTests {
     private DatesApproximatelyEqualCommand datesApproximatelyEqualCommand;
     private String attributeName = "attrName";
