@@ -1,6 +1,5 @@
 dependencies {
     compile project(':Aeon.Core')
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.7.22'
 }
 
 publishing {
