@@ -158,7 +158,7 @@ public class BaseConfigurationTests {
     public void testSetProperties() throws Exception {
         //Arrange
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
-        when(spyConfig.getEnvironmentValue("aeon.browser")).thenReturn("testEnv2");
+        when(spyConfig.getEnvironmentValue("aeon.throttle")).thenReturn("testEnv2");
         when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
         when(properties.propertyNames()).thenReturn(enumerationList);
 
@@ -169,7 +169,7 @@ public class BaseConfigurationTests {
 
         //Assert
         verify(properties, times(1)).setProperty("aeon.timeout", "testEnv");
-        verify(properties, times(1)).setProperty("aeon.browser", "testEnv2");
+        verify(properties, times(1)).setProperty("aeon.throttle", "testEnv2");
     }
 
     @Test

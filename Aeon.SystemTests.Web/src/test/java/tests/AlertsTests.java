@@ -56,9 +56,10 @@ public class AlertsTests extends SampleBaseTest{
         product.browser.verifyAlertText("Send some keys");
 
         Assertions.assertThrows(ValuesAreNotEqualException.class,
-                () -> product.browser.verifyAlertText("Send other keys"));
-
-        product.browser.acceptAlert();
+                () -> {
+                    product.browser.verifyAlertText("Send other keys");
+                    product.browser.acceptAlert();
+                });
     }
 
     @Test
@@ -68,8 +69,9 @@ public class AlertsTests extends SampleBaseTest{
         product.browser.verifyAlertTextLike("Send some keys", true);
 
         Assertions.assertThrows(ValuesAreNotAlikeException.class,
-                () -> product.browser.verifyAlertTextLike("send some keys", true));
-
-        product.browser.acceptAlert();
+                () -> {
+                    product.browser.verifyAlertTextLike("send some keys", true);
+                    product.browser.acceptAlert();
+                });
     }
 }

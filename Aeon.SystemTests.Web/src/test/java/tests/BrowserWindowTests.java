@@ -8,12 +8,6 @@ import org.junit.jupiter.api.Test;
 public class BrowserWindowTests extends SampleBaseTest{
 
     @Test
-    public void testGetElementAttributes() {
-        String classAttribute = product.startPage.formTextBox.getElementAttribute("class").toString();
-        Assertions.assertEquals("mdl-textfield__input", classAttribute);
-    }
-
-    @Test
     public void testVerifyTitle() {
         product.browser.verifyTitle("Material Design Lite");
 

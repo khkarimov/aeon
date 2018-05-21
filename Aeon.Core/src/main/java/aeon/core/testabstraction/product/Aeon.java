@@ -1,7 +1,6 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.helpers.StringUtils;
-import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,22 +17,6 @@ public class Aeon {
 
     private static Logger log = LogManager.getLogger(Aeon.class);
     private static PluginManager pluginManager;
-
-    /**
-     * Launches an environment of the desired class and browser type.
-     *
-     * @param productClass The new environment's class.
-     * @param browserType The new environment's browser.
-     * @param <T> The launch type.
-     * @return A type T launch.
-     * @deprecated Please use Aeon.launch(Class productClass) instead and provide the browser type via the configuration}
-     */
-    public static <T extends Product> T launch(Class<T> productClass, BrowserType browserType) {
-        Properties properties = new Properties();
-        properties.setProperty(Configuration.Keys.BROWSER, browserType.toString());
-
-        return launch(productClass, properties);
-    }
 
     /**
      * Launches an environment of the desired class and with the provided properties.
@@ -96,7 +79,7 @@ public class Aeon {
      * @return The current version number of Aeon.
      */
     public static String getVersion() {
-        return Aeon.class.getPackage().getImplementationVersion();
+        return StringUtils.class.getPackage().getImplementationVersion();
     }
 
     /**

@@ -119,11 +119,6 @@ public class GeneralActionTests extends SampleBaseTest{
     }
 
     @Test
-    public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER, ""))));
-    }
-
-    @Test
     public void testSelectFileDialog_OpenFileDialog() {
         String path = "Test-Sample-Context/HeatLogo.jpg";
         product.startPage.testFileDialogInput.selectFile(path);

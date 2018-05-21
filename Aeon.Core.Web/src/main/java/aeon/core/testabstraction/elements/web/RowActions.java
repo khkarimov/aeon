@@ -19,11 +19,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     private Iterable<IByWeb> switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
-    protected String indexCssSelectornthoftype = "tr:nth-of-type";
-    protected String rowCssSelectornthoftype = "td:nth-of-type";
-    protected String cssSelectorContains = "td:contains";
-    protected String cssSelectorParents = "tr";
-
     protected String rowSelector = "tr";
 
     /**
@@ -86,26 +81,11 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * @return Returns an instance of K.
      */
     protected K findRowByIndex(int index) {
-        IByWeb updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", indexCssSelectornthoftype, index));
+        String indexCssSelectorNthoftype = rowSelector + ":nth-of-type";
+        IByWeb updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", indexCssSelectorNthoftype, index));
 
         return newInstanceOfK(updatedSelector);
     }
-
-    /**
-     * Get a row by the value and column header.
-     *
-     * @param value The value you are looking for.
-     * @param columnHeader THe header of the column.
-     *
-     * @return Returns an instance of T.
-     */
-    protected T findRow(String value, IByWeb columnHeader) {
-        IByWeb updatedSelector = selector.toJQuery().find(String.format("%1$s(%2$s)", rowCssSelectornthoftype, getColumnIndex(columnHeader))).
-                filter(String.format("%1$s(%2$s)", cssSelectorContains, value)).parents(String.format("%1$s", cssSelectorParents));
-
-        return newInstanceOfT(updatedSelector);
-    }
-
 
     /**
      * A function that returns the row.
@@ -151,17 +131,5 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Gets the column index based on the selector.
-     *
-     * @param columnSelector Selector for the column.
-     * @return the column index
-     *
-     * @deprecated
-     */
-    private long getColumnIndex(IByWeb columnSelector) {
-        return (long) ((IWebDriver) automationInfo.getDriver()).executeScript(String.format("var a=%1$s.index();return a;", columnSelector.toJQuery())) + 1;
     }
 }

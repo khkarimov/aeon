@@ -3,22 +3,20 @@ package main.ultipro.myemployeesgrid;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
+import aeon.core.testabstraction.elements.web.ListGroupActions;
 import aeon.core.testabstraction.elements.web.RowActions;
+import aeon.core.testabstraction.elements.web.TableActions;
 
 /**
  * Class for finding rows based on certain column values.
  */
-public class MyEmployeesHeaders extends RowActions<MyEmployeesHeaders, MyEmployeesRowElements> {
+public class MyEmployeesHeaders extends TableActions<MyEmployeesHeaders, MyEmployeesRowElements> {
 
     /**
      * Constructor.
-     *
-     * @param automationInfo The automation info object to use.
-     * @param selector The selector that identifies the grid.
-     * @param switchMechanism The switchMechanism to use.
      */
-    public MyEmployeesHeaders(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism) {
-        super(automationInfo, selector, switchMechanism, MyEmployeesHeaders.class, MyEmployeesRowElements.class);
+    public MyEmployeesHeaders() {
+        super(MyEmployeesHeaders.class, MyEmployeesRowElements.class);
     }
 
     /**
