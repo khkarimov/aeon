@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Tag;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Tag("categories.WindowsTests")
-@Tag("categories.UbuntuTests")
+@Tag("WindowsTests")
+@Tag("UbuntuTests")
 public class SampleBaseTest {
 
     public static Sample product;

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Tag("categories.AndroidTests")
+@Tag("AndroidTests")
 public class AndroidUltihomeTest {
     private static Sample product;
 
