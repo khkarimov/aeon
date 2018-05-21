@@ -24,13 +24,13 @@ dependencies {
 
 test {
     maxParallelForks = 4
-    useJUnit {
+    useJUnitPlatform {
         def includeList = System.getenv('tests.included.categories')
         if (includeList != null)
         {
             def categories = includeList.split("\\s*(,|\\s)\\s*")
             categories.each {category ->
-                includeCategories 'categories.' + category
+                includeTags category
             }
         }
         def excludeList = System.getenv('tests.excluded.categories')
@@ -38,7 +38,7 @@ test {
         {
             def categories = excludeList.split("\\s*(,|\\s)\\s*")
             categories.each {category ->
-                excludeCategories 'categories.' + category
+                excludeTags category
             }
         }
     }
