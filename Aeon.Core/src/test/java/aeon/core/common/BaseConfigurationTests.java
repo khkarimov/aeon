@@ -108,19 +108,13 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testInvalidAeonConfigDefinition() throws IOException, IllegalAccessException {
+    public void testInvalidAeonConfigDefinition() {
         //Arrange
-        String errorMessage = "/Users/ericda/Desktop/Projects/aeon/Aeon.Core/impossiblePath (No such file or directory)";
         when(spyConfig.getEnvironmentValue("AEON_CONFIG")).thenReturn("impossiblePath");
-        Exception exception;
 
         //Act
-        exception = Assertions.assertThrows(java.io.FileNotFoundException.class, () -> {
-            spyConfig.loadConfiguration();
-        });
-
-        // Assert
-        Assertions.assertEquals(errorMessage, exception.getMessage());
+        Assertions.assertThrows(java.io.FileNotFoundException.class,
+                () -> spyConfig.loadConfiguration());
     }
 
     @Test
