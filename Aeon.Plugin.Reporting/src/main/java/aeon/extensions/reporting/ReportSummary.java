@@ -26,9 +26,8 @@ public class ReportSummary {
 
         String title = "Automation Report---ULTIProLaunch--" + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
 
-        String slackChannel1 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.1", "");
-        String slackChannel2 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.2", "");
-
+        String slackChannel1 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.1", "#test-channel");
+        String slackChannel2 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.2", "#test-notifications");
         if (StringUtils.isBlank(slackChannel1) && StringUtils.isBlank(slackChannel2)) {
             log.info("No Slack channel is set up.");
 

@@ -32,13 +32,14 @@ public class SlackBot {
         try {
             HttpClient client = HttpClients.createDefault();
             HttpPost httpPost = new HttpPost(configuration.getString(ReportingConfiguration.Keys.SLACK_CHAT_URL, ""));
-            //HttpPost httpPost = new HttpPost("https://hooks.slack.com/services/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");
-            //have to change to JSONObject
+
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("channel", channel));
             params.add(new BasicNameValuePair("token", configuration.getString(ReportingConfiguration.Keys.SLACK_TOKEN, "")));
             params.add(new BasicNameValuePair("text", message));
-            params.add(new BasicNameValuePair("as_user", "Launch Dev Logging"));
+            params.add(new BasicNameValuePair("as_user", "false"));
+            params.add(new BasicNameValuePair("username", "Test Updates"));
+            params.add(new BasicNameValuePair("icon_emoji", ":monkey_face:"));
             httpPost.setEntity(new UrlEncodedFormEntity(params));
             executePost(httpPost, client);
         } catch (Exception e) {
@@ -51,9 +52,9 @@ public class SlackBot {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.addBinaryBody("file", fileName);
             builder.addTextBody("channels", channel);
-            builder.addTextBody("token", configuration.getString(ReportingConfiguration.Keys.SLACK_TOKEN, ""));
+            builder.addTextBody("token", configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "xoxb-3312095463-367598369297-0nUMjNLdFF7fmogOOUGHqfzj"));
             HttpEntity entity = builder.build();
-            HttpPost httpPost = new HttpPost(configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, "https://slack.com/api/files.upload"));
+            HttpPost httpPost = new HttpPost(configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, ""));
             httpPost.setEntity(entity);
             HttpClient client = HttpClientBuilder.create().build();
             executePost(httpPost, client);

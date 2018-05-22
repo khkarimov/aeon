@@ -12,7 +12,7 @@ clean {
 }
 
 dependencies {
-    compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Plugin.Selenium')
     compile project(':Aeon.Plugin.Reporting')
 
     // Drivers
