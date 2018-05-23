@@ -1,9 +1,10 @@
 package tests;
 
-import aeon.core.common.web.BrowserType;
 import categories.IOSTests;
 import main.sample.Sample;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;

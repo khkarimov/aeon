@@ -9,6 +9,7 @@ import org.junit.Test;
 
 public class GeneralAssertionsTests extends SampleBaseTest{
 
+
     @Test
     public void testDisabled() {
         product.startPage.disabledButton.isDisabled();

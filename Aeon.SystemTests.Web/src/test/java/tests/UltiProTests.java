@@ -2,7 +2,10 @@ package tests;
 
 import aeon.core.common.web.BrowserType;
 import main.ultipro.UltiPro;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;

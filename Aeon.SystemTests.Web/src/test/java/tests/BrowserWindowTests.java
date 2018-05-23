@@ -1,9 +1,12 @@
 package tests;
 
-import aeon.core.common.exceptions.*;
+import aeon.core.common.exceptions.NoSuchElementsException;
+import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
+import aeon.core.common.exceptions.ValuesAreNotEqualException;
 import aeon.core.common.web.BrowserSize;
 import org.hamcrest.core.IsInstanceOf;
-import org.junit.*;
+import org.junit.Test;
 
 public class BrowserWindowTests extends SampleBaseTest{
 
@@ -72,7 +75,7 @@ public class BrowserWindowTests extends SampleBaseTest{
     }
 
     @Test
-    public void testSwitchToWindowByUrl() {
+    public void testSwitchToWindowByUrl() { ;
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
         product.browser.switchToWindowByUrl("https://www.google.com");

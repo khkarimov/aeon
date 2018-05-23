@@ -35,11 +35,9 @@ public class SlackBot {
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("channel", channel));
-            params.add(new BasicNameValuePair("token", configuration.getString(ReportingConfiguration.Keys.SLACK_TOKEN, "")));
+            params.add(new BasicNameValuePair("token", configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "")));
             params.add(new BasicNameValuePair("text", message));
-            params.add(new BasicNameValuePair("as_user", "false"));
-            params.add(new BasicNameValuePair("username", "Test Updates"));
-            params.add(new BasicNameValuePair("icon_emoji", ":monkey_face:"));
+            params.add(new BasicNameValuePair("as_user", "true"));
             httpPost.setEntity(new UrlEncodedFormEntity(params));
             executePost(httpPost, client);
         } catch (Exception e) {
