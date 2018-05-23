@@ -22,25 +22,3 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
 }
-
-test {
-    maxParallelForks = 4
-    useJUnit {
-        def includeList = System.getenv('tests.included.categories')
-        if (includeList != null)
-        {
-            def categories = includeList.split("\\s*(,|\\s)\\s*")
-            categories.each {category ->
-                includeCategories 'categories.' + category
-            }
-        }
-        def excludeList = System.getenv('tests.excluded.categories')
-        if (excludeList != null)
-        {
-            def categories = excludeList.split("\\s*(,|\\s)\\s*")
-            categories.each {category ->
-                excludeCategories 'categories.' + category
-            }
-        }
-    }
-}

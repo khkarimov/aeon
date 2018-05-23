@@ -4,27 +4,24 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.junit.rules.ExpectedException;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SelectFileCommandTests {
 
     private SelectFileCommand selectFileCommand;
     private String path = "";
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Mock
     private IWebDriver driver;
@@ -38,7 +35,7 @@ public class SelectFileCommandTests {
     @Mock
     private WebControl control;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         selectFileCommand = new SelectFileCommand(selector, initializer, path);
     }
@@ -54,14 +51,9 @@ public class SelectFileCommandTests {
         verify(driver,times(1)).selectFile(control, path);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void driverNullThrowsException(){
-        //Arrange
-
-        //Act
-        selectFileCommand.commandDelegate(null, null);
-
-        //Assert
-        expectedException.expect(IllegalArgumentException.class);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> selectFileCommand.commandDelegate(null, null));
     }
 }

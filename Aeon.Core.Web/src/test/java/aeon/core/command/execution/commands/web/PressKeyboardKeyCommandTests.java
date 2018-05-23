@@ -6,28 +6,26 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.*;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.function.Consumer;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(Parameterized.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class PressKeyboardKeyCommandTests {
 
     private PressKeyboardKeyCommand pressKeyboardKeyCommandObject;
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
     private IByWeb selector;
     @Mock
@@ -41,26 +39,12 @@ public class PressKeyboardKeyCommandTests {
 
     private KeyboardKey key;
 
-    @Before
-    public void setup(){
-        pressKeyboardKeyCommandObject = new PressKeyboardKeyCommand(selector, initializer, key);
-    }
-
-    public PressKeyboardKeyCommandTests(KeyboardKey key){
-        this.key = key;
-    }
-
-    @Parameterized.Parameters
-    public static Collection<KeyboardKey []> data(){
-        return Arrays.asList(new KeyboardKey[][] {
-                {KeyboardKey.UP}, {KeyboardKey.TAB}, {KeyboardKey.SHIFT}, {KeyboardKey.END},
-                {KeyboardKey.DOWN}, {KeyboardKey.INSERT}, {KeyboardKey.DELETE}, {KeyboardKey.ESCAPE}
-        });
-    }
-
-    @Test
-    public void commandDelegatePressKeyboardKeyCommand(){
+    @ParameterizedTest
+    @EnumSource(value = KeyboardKey.class, names = {"UP","TAB","SHIFT","END","DOWN","INSERT","DELETE","ESCAPE"})
+    public void commandDelegatePressKeyboardKeyCommand(KeyboardKey key){
         //Arrange
+        this.key = key;
+        pressKeyboardKeyCommandObject = new PressKeyboardKeyCommand(selector, initializer, this.key);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 

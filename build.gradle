@@ -12,6 +12,13 @@ dependencies {
     compile project(':Aeon.SystemTests.Mobile')
 }
 
+task wrapper(type: Wrapper) {
+    group 'build setup'
+    gradleVersion = '4.7'
+}
+
+tasks.wrapper.execute()
+
 //Copy selenium plugin into SystemTests plugins folder
 task CopySeleniumPlugin(type: Copy) {
     group 'copy'
@@ -49,8 +56,35 @@ allprojects {
     }
 
     dependencies {
-        testCompile 'junit:junit:4.12'
+        testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
+        testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
+        testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+        testCompile('org.mockito:mockito-junit-jupiter:2.18.0')
+        testCompile('org.junit.platform:junit-platform-launcher:1.2.0')
     }
+
+    test {
+        maxParallelForks = 4
+        useJUnitPlatform {
+            def includeList = System.getenv('tests.included.tags')
+            if (includeList != null)
+            {
+                def tags = includeList.split("\\s*(,|\\s)\\s*")
+                tags.each {tag ->
+                    includeTags tag
+                }
+            }
+            def excludeList = System.getenv('tests.excluded.tags')
+            if (excludeList != null)
+            {
+                def tags = excludeList.split("\\s*(,|\\s)\\s*")
+                tags.each {tag ->
+                    excludeTags tag
+                }
+            }
+        }
+    }
+
 }
 
 buildscript {
@@ -87,11 +121,6 @@ subprojects {
             repoKey = 'jcenter'
         }
     }
-}
-
-task wrapper(type: Wrapper) {
-    group 'build setup'
-    gradleVersion = '4.0'
 }
 
 artifactoryPublish.skip = true

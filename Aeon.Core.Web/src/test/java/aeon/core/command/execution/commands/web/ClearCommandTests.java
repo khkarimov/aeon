@@ -7,11 +7,16 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.*;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -20,11 +25,10 @@ import static org.mockito.Mockito.when;
 
 import java.util.function.Consumer;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class ClearCommandTests {
     private ClearCommand clearCommand;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private IByWeb selector;
@@ -44,25 +48,27 @@ public class ClearCommandTests {
     @Mock
     private Consumer<IDriver> action;
 
-    @Before
+    @BeforeEach
     public void setup() {
         clearCommand = new ClearCommand(selector, commandInitializer);
 
         // Arrange
         when(commandInitializer.setContext()).thenReturn(action);
-        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
     }
 
-    @Test  (expected = IllegalArgumentException.class)
+    @Test
     public void commandDelegateIllegalArgumentException() {
         // Act
-        clearCommand.getCommandDelegate().accept(null);
+        // Assert
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> clearCommand.getCommandDelegate().accept(null));
     }
 
     @Test
     public void commandDelegateClearElementExecutedWithoutExecutingScript() {
         // Arrange
         when(driver.getElementTagName(control)).thenReturn("FOO");
+        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
         clearCommand.getCommandDelegate().accept(driver);
@@ -72,19 +78,20 @@ public class ClearCommandTests {
         verify(driver, times(0)).executeScript(any(String.class));
     }
 
-    @Test  (expected = Select2Exception.class)
+    @Test
     public void commandDelegateClearElementExecutedAndExecutingScript() {
         // Arrange
         when(driver.getElementTagName(control)).thenReturn("SELECT");
         when(driver.executeScript(any(String.class))).thenReturn(true);
         when(control.getSelector()).thenReturn(selector);
         when(selector.toJQuery()).thenReturn(byJQuery);
+        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
-        clearCommand.getCommandDelegate().accept(driver);
-
-        //Assert
-        verify(driver, times(1)).clearElement(Mockito.eq(control));
+        // Assert
+        Assertions.assertThrows(Select2Exception.class,
+                () -> clearCommand.getCommandDelegate().accept(driver));
+        verify(driver, times(0)).clearElement(Mockito.eq(control));
         verify(driver, times(1)).executeScript(any(String.class));
     }
 
@@ -95,6 +102,7 @@ public class ClearCommandTests {
         when(driver.executeScript(any(String.class))).thenReturn(false);
         when(control.getSelector()).thenReturn(selector);
         when(selector.toJQuery()).thenReturn(byJQuery);
+        when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
         // Act
         clearCommand.getCommandDelegate().accept(driver);

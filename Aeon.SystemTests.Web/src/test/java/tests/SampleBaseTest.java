@@ -2,34 +2,27 @@ package tests;
 
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.WebConfiguration;
-import categories.UbuntuTests;
-import categories.WindowsTests;
 import main.sample.Sample;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.experimental.categories.Category;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({WindowsTests.class, UbuntuTests.class})
+@Tag("WindowsTests")
+@Tag("UbuntuTests")
 public class SampleBaseTest {
 
     public static Sample product;
     private static List<Map<String, Map<String, List<String>>>> watchLog = new ArrayList<>();
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
+    /*
     @Rule
     public TestWatcher watchMan = new TestWatcher() {
         @Override
@@ -64,9 +57,8 @@ public class SampleBaseTest {
             }
         }
     };
-
-
-    @Before
+    */
+    @BeforeEach
     public void beforeTests() {
         product = launch(Sample.class);
         String environment = product.getConfig(WebConfiguration.Keys.ENVIRONMENT,
@@ -75,7 +67,7 @@ public class SampleBaseTest {
         product.browser.goToUrl(protocol + "://" + environment);
     }
 
-    @After
+    @AfterEach
     public void afterTests() {
         product.browser.quit();
     }

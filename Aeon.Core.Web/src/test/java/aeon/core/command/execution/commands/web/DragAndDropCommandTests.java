@@ -4,28 +4,23 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class DragAndDropCommandTests
 {
     private DragAndDropCommand dragAndDropCommandObject;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     private IByWeb dropElement;
@@ -42,7 +37,7 @@ public class DragAndDropCommandTests
     @Mock
     private WebControl control;
 
-    @Before
+    @BeforeEach
     public void setup(){
         dragAndDropCommandObject = new DragAndDropCommand(dropElement, targetElement, commandInitializer);
     }
@@ -50,30 +45,34 @@ public class DragAndDropCommandTests
     @Test
     public void targetElementSetWhenObjectIsCreated(){
         // Assert
-        assertNotNull(dragAndDropCommandObject.targetElement);
-        assertEquals(dragAndDropCommandObject.targetElement, targetElement);
+        Assertions.assertNotNull(dragAndDropCommandObject.targetElement);
+        Assertions.assertEquals(dragAndDropCommandObject.targetElement, targetElement);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void illegalArgumentThrownWhenDriverIsNull(){
         // Arrange
+        Exception illegalArgumentException;
 
         // Act
-        dragAndDropCommandObject.commandDelegate(null, control);
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> dragAndDropCommandObject.commandDelegate(null, control));
 
         // Assert
-        thrown.expectMessage("driver");
+        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void illegalArgumentThrownWhenControlIsNull(){
         // Arrange
+        Exception illegalArgumentException;
 
         // Act
-        dragAndDropCommandObject.commandDelegate(driver, null);
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> dragAndDropCommandObject.commandDelegate(driver, null));
 
         // Assert
-        thrown.expectMessage("control");
+        Assertions.assertEquals("control", illegalArgumentException.getMessage());
     }
 
     @Test
