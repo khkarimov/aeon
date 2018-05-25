@@ -828,7 +828,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         log.trace("new Actions(IWebDriver).ContextClick(IWebElement);");
 
-        //TODO (CCharters - added check for IE, since new IEDriverServer 3.12 caused the scroll into view to be needed, to prevent MoveTargetOutOfBoundsException
         if (browserType == BrowserType.Firefox || browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(element);
         }
@@ -854,7 +853,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The element to perform the leftClick on.
      */
     public final void doubleClickByJavaScript(WebControl element) {
-        //TODO CCharters - to process IE error clickInterceptedException:Element not clickable
         log.trace("executeScript(element.getSelector().toJQuery().toString(JQueryStringType.ClickInvisibleElement));");
         executeScript(element.getSelector().toJQuery().toString(JQueryStringType.ClickInvisibleElement));
     }
@@ -872,7 +870,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             doubleClickByJavaScript(element);
             return;
         }
-        //TODO (CCharters - new IEDriverServer 3.12 caused the scroll into view to be needed, to prevent MoveTargetOutOfBoundsException
+
         if (this.browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(element);
         }
@@ -1000,8 +998,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 
-        // click.
-        //TODO (CCharters - new IEDriverServer 3.12 caused the scroll into view to be needed, to prevent MoveTargetOutOfBoundsException
+        // click
         if (browserType == BrowserType.Firefox || browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(seleniumElement);
         }
