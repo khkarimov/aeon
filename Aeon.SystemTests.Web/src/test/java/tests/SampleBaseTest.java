@@ -3,62 +3,47 @@ package tests;
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.WebConfiguration;
 import main.sample.Sample;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.jupiter.api.Tag;
-
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
+import static aeon.core.testabstraction.product.AeonTestExecution.startTest;
 
 @Tag("WindowsTests")
 @Tag("UbuntuTests")
 public class SampleBaseTest {
 
     public static Sample product;
-    private static List<Map<String, Map<String, List<String>>>> watchLog = new ArrayList<>();
 
-    /*
+    private static String watchLog = "";
+
     @Rule
-    public TestWatcher watchMan = new TestWatcher() {
+    public TestRule watchMan = new TestWatcher() {
+
+        @Override
+        protected void starting(Description description) {
+            startTest(description.getMethodName(), description.getClassName());
+        }
+
         @Override
         protected void failed(Throwable e, Description description) {
-            for (Map<String, Map<String, List<String>>> map : watchLog) {
-                if (map.getOrDefault(description.getClassName(), null) == null) {
-                    Map<String, List<String>> hash = new HashMap<>();
-                    hash.put("failed", new ArrayList<>());
-                    hash.get("failed").add(description.getMethodName());
-                    Map<String, Map<String, List<String>>> outerHash = new HashMap<>();
-                    outerHash.put(description.getClassName(), hash);
-                    watchLog.add(outerHash);
-                } else {
-                    map.get(description.getClassName()).get("failed").add(description.getMethodName());
-                }
-            }
+            watchLog += "Failed Test " + description.getMethodName() + " in class " + description.getClassName() + "\n";
         }
 
         @Override
         protected void succeeded(Description description) {
-            for (Map<String, Map<String, List<String>>> map : watchLog) {
-                if (map.getOrDefault(description.getClassName(), null) == null) {
-                    Map<String, List<String>> hash = new HashMap<>();
-                    hash.put("succeeded", new ArrayList<>());
-                    hash.get("succeeded").add(description.getMethodName());
-                    Map<String, Map<String, List<String>>> outerHash = new HashMap<>();
-                    outerHash.put(description.getClassName(), hash);
-                    watchLog.add(outerHash);
-                } else {
-                    map.get(description.getClassName()).get("succeeded").add(description.getMethodName());
-                }
-            }
+            watchLog += "Succeeded Test " + description.getMethodName() + " in class " + description.getClassName() + "\n";
         }
     };
-    */
-    @BeforeEach
+
+
+    @Before
     public void beforeTests() {
         product = launch(Sample.class);
         String environment = product.getConfig(WebConfiguration.Keys.ENVIRONMENT,
@@ -67,7 +52,7 @@ public class SampleBaseTest {
         product.browser.goToUrl(protocol + "://" + environment);
     }
 
-    @AfterEach
+    @After
     public void afterTests() {
         product.browser.quit();
     }

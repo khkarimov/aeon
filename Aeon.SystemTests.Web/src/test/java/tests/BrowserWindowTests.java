@@ -6,8 +6,8 @@ import aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
 import aeon.core.common.exceptions.ValuesAreNotEqualException;
 import aeon.core.common.web.BrowserSize;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 
 public class BrowserWindowTests extends SampleBaseTest{

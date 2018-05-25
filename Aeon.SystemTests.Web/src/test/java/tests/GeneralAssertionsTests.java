@@ -5,7 +5,7 @@ import aeon.core.common.web.WebSelectOption;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class GeneralAssertionsTests extends SampleBaseTest{
 

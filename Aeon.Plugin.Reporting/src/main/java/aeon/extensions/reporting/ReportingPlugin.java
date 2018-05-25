@@ -49,6 +49,7 @@ public class ReportingPlugin extends Plugin {
 
         static long startTime = 0;
         static String currentTest = "";
+        static String currentClass = ""; //added
         static long currentStartTime = System.currentTimeMillis();
 
         @Override
@@ -77,6 +78,7 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTest(String name, String... tags) {
+            currentClass = tags[0];
             currentTest = name;
             currentStartTime = System.currentTimeMillis();
         }
@@ -85,14 +87,16 @@ public class ReportingPlugin extends Plugin {
         public void onSucceededTest() {
             REPORT_BEAN.addPass();
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
-            scenarioBean.setModuleName("");
+            scenarioBean.setModuleName(currentClass);//changed
+            System.out.println("Just set module name onSucceededTest with " + currentTest);
             scenarioBean.setStatus("PASSED");
         }
 
         @Override
         public void onFailedTest(String reason) {
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
-            scenarioBean.setModuleName("");
+            scenarioBean.setModuleName(currentClass);//changed
+            System.out.println("Just set module name onFailedTest with " + currentTest);
             scenarioBean.setErrorMessage(reason);
             scenarioBean.setStatus("FAILED");
             REPORT_BEAN.addFailed();
