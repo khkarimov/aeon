@@ -903,7 +903,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
-        click(element, moveMouseToOrigin);
+            click(element, moveMouseToOrigin);
         //}
     }
 
@@ -1871,18 +1871,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void selectFile(WebControl control, String path) {
-      /** (CCharters) The following code was commented out, no longer needed in IEDriverServer 3.12
-       *  if (browserType.equals(BrowserType.InternetExplorer)){
-            click(control, moveMouseToOrigin);
-            try {
-                SendKeysHelper.sendKeysToKeyboard(path);
-                SendKeysHelper.sendEnterKey();
-            } catch (AWTException e) {
-                log.error(e.getMessage());
-                throw new RuntimeException(e);
-            }
-        } else { */
-      sendKeysToElement(control, path);
+         sendKeysToElement(control, path);
     }
 
     private boolean osIsMacOrLinux(){
