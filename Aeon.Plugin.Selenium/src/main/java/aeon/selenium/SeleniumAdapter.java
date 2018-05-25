@@ -878,7 +878,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final void doubleClickByJavaScript(WebControl element) {
         log.trace("executeScript(element.getSelector().toJQuery().toString(JQueryStringType.FireDoubleClick));");
-        executeScript(element.getSelector().toJQuery().toString(JQueryStringType.ClickInvisibleElement));
+        executeScript(element.getSelector().toJQuery().toString(JQueryStringType.FireDoubleClick));
     }
 
     /**
@@ -904,7 +904,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
-        click(element, moveMouseToOrigin);
+            click(element, moveMouseToOrigin);
         //}
     }
 
@@ -1882,9 +1882,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 log.error(e.getMessage());
                 throw new RuntimeException(e);
             }
-        } else {
-       */
-            sendKeysToElement(control, path);
+        } else { */
+      sendKeysToElement(control, path);
     }
 
     private boolean osIsMacOrLinux(){
