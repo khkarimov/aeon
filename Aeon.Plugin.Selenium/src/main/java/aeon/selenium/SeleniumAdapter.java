@@ -809,8 +809,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         Sleep.wait(250);
 
         if (browserType == BrowserType.Firefox) {
-
-           scrollElementIntoView(targetElement);
+            scrollElementIntoView(targetElement);
         }
 
         builder.moveToElement(target).perform();
@@ -848,16 +847,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Performs a leftClick on the element passed as an argument by executing javascript.
-     *
-     * @param element The element to perform the leftClick on.
-     */
-    public final void doubleClickByJavaScript(WebControl element) {
-        log.trace("executeScript(element.getSelector().toJQuery().toString(JQueryStringType.ClickInvisibleElement));");
-        executeScript(element.getSelector().toJQuery().toString(JQueryStringType.ClickInvisibleElement));
-    }
-
-    /**
      * Performs a doubleClick on the element passed as an argument.
      *
      * @param element The element to perform the doubleClick on.
@@ -887,7 +876,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param element The element to perform the doubleClick on.
      */
-    public final void clickAndHoldByJavaScript(WebControl element) {
+    public final void doubleClickByJavaScript(WebControl element) {
         log.trace("executeScript(element.getSelector().toJQuery().toString(JQueryStringType.FireDoubleClick));");
         executeScript(element.getSelector().toJQuery().toString(JQueryStringType.ClickInvisibleElement));
     }
@@ -915,8 +904,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
-
         click(element, moveMouseToOrigin);
+        //}
     }
 
     // Linked to selenium issue https://code.google.com/p/selenium/issues/detail?id=6702 and https://code.google.com/p/selenium/issues/detail?id=4618
@@ -998,7 +987,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement seleniumElement = (SeleniumElement) element;
         Actions action = new Actions(webDriver);
 
-        // click
+        // click.
         if (browserType == BrowserType.Firefox || browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(seleniumElement);
         }
@@ -1896,7 +1885,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         } else {
        */
             sendKeysToElement(control, path);
-
     }
 
     private boolean osIsMacOrLinux(){
