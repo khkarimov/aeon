@@ -12,18 +12,21 @@ import java.util.*;
 import aeon.core.testabstraction.product.Configuration;
 import org.apache.logging.log4j.Logger;
 
-import org.junit.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class BaseConfigurationTests {
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private Properties properties;
@@ -41,9 +44,8 @@ public class BaseConfigurationTests {
 
     private BaseConfiguration spyConfig;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        when(properties.propertyNames()).thenReturn(enumerationList);
         config = new BaseConfiguration();
         spyConfig = org.mockito.Mockito.spy(config);
         BaseConfiguration.log = log;
@@ -53,6 +55,7 @@ public class BaseConfigurationTests {
     public void testInvalidTestPropertiesFile() throws IOException, IllegalAccessException {
         //Arrange
         when(spyConfig.getDefaultConfigInputStream()).thenReturn(null);
+        when(properties.propertyNames()).thenReturn(enumerationList);
         spyConfig.properties = properties;
 
         //Act
@@ -67,6 +70,7 @@ public class BaseConfigurationTests {
     public void testValidTestPropertiesFile() throws IOException, IllegalAccessException {
         //Arrange
         when(spyConfig.getDefaultConfigInputStream()).thenReturn(inputStream);
+        when(properties.propertyNames()).thenReturn(enumerationList);
         spyConfig.properties = properties;
 
         //Act
@@ -76,13 +80,19 @@ public class BaseConfigurationTests {
         verify(properties, times(2)).load(any(InputStream.class));
     }
 
-    @Test (expected = IOException.class)
+    @Test
     public void testThrowsException() throws IllegalAccessException, IOException {
         //Arrange
+        String errorMessage = "No aeon.properties file was found.";
         when(spyConfig.getAeonInputStream()).thenReturn(null);
+        Exception exception;
 
         //Act
-        spyConfig.loadConfiguration();
+        exception = Assertions.assertThrows(IOException.class,
+                () -> spyConfig.loadConfiguration());
+
+        //Assert
+        Assertions.assertEquals(errorMessage, exception.getMessage());
     }
 
     @Test
@@ -97,13 +107,14 @@ public class BaseConfigurationTests {
         verify(spyConfig, times(1)).getDefaultConfigInputStream();
     }
 
-    @Test (expected = java.io.FileNotFoundException.class)
-    public void testInvalidAeonConfigDefinition() throws IOException, IllegalAccessException {
+    @Test
+    public void testInvalidAeonConfigDefinition() {
         //Arrange
         when(spyConfig.getEnvironmentValue("AEON_CONFIG")).thenReturn("impossiblePath");
 
         //Act
-        spyConfig.loadConfiguration();
+        Assertions.assertThrows(java.io.FileNotFoundException.class,
+                () -> spyConfig.loadConfiguration());
     }
 
     @Test
@@ -132,16 +143,18 @@ public class BaseConfigurationTests {
         spyConfig.loadConfiguration();
 
         //Assert
-        Assert.assertTrue(fieldList.get(0).isAccessible());
-        Assert.assertTrue(fieldList.get(1).isAccessible());
+        Assertions.assertTrue(fieldList.get(0).isAccessible());
+        Assertions.assertTrue(fieldList.get(1).isAccessible());
     }
 
     @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
     public void testSetProperties() throws Exception {
         //Arrange
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
-        when(spyConfig.getEnvironmentValue("aeon.browser")).thenReturn("testEnv2");
+        when(spyConfig.getEnvironmentValue("aeon.throttle")).thenReturn("testEnv2");
         when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
+        when(properties.propertyNames()).thenReturn(enumerationList);
 
         spyConfig.properties = properties;
 
@@ -150,13 +163,12 @@ public class BaseConfigurationTests {
 
         //Assert
         verify(properties, times(1)).setProperty("aeon.timeout", "testEnv");
-        verify(properties, times(1)).setProperty("aeon.browser", "testEnv2");
+        verify(properties, times(1)).setProperty("aeon.throttle", "testEnv2");
     }
 
     @Test
     public void testEnumeration() throws IOException, IllegalAccessException {
         //Arrange
-        when(enumerationList.hasMoreElements()).thenReturn(true, false);
 
         //Act
         config.loadConfiguration();
@@ -172,7 +184,7 @@ public class BaseConfigurationTests {
         //Act
         String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES","false");
         //Assert
-        Assert.assertEquals("true", testVar);
+        Assertions.assertEquals("true", testVar);
     }
 
     @Test
@@ -182,7 +194,7 @@ public class BaseConfigurationTests {
         //Act
         Boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES",false);
         //Assert
-        Assert.assertEquals(true, testVar);
+        Assertions.assertEquals(true, testVar);
     }
 
     @Test
@@ -192,7 +204,7 @@ public class BaseConfigurationTests {
         //Act
         String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES","4.58");
         //Assert
-        Assert.assertEquals("6.7", testVar);
+        Assertions.assertEquals("6.7", testVar);
     }
 
     @Test
@@ -202,7 +214,7 @@ public class BaseConfigurationTests {
         //Act
         boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES",false);
         //Assert
-        Assert.assertEquals("Not returning a boolean value", true,testVar);
+        Assertions.assertEquals(true, testVar, "Not returning a boolean value");
     }
 
     @Test
@@ -212,7 +224,7 @@ public class BaseConfigurationTests {
         //Act
         double testVar = config.getDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 1.58);
         //Assert
-        Assert.assertEquals(4.5,testVar,0);
+        Assertions.assertEquals(4.5,testVar);
     }
 
     @Test
@@ -222,6 +234,6 @@ public class BaseConfigurationTests {
         //Act
         String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "5.67");
         //Assert
-        Assert.assertEquals("Not returning correct string value","6.7",testVar);
+        Assertions.assertEquals("6.7",testVar, "Not returning correct string value");
     }
 }

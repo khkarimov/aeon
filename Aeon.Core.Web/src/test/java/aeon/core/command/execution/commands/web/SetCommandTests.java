@@ -6,13 +6,14 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
@@ -20,15 +21,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SetCommandTests {
 
     private SetCommand setCommandObject;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     IByWeb selector;
@@ -47,22 +44,23 @@ public class SetCommandTests {
 
     String value;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         setCommandObject = new SetCommand(selector, initializer, WebSelectOption.Text, value);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void commandDelegateDriverNullThrowsException()
     {
         //Arrange
+        Exception illegalArgumentException;
 
         //Act
-        setCommandObject.commandDelegate(null, control);
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> setCommandObject.commandDelegate(null, control));
 
         //Assert
-        thrown.expectMessage("driver");
-
+        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
     @Test

@@ -2,34 +2,33 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
-import aeon.core.command.execution.commands.web.OpenFileDialogCommand;
-import aeon.core.command.execution.commands.web.SelectFileDialogCommand;
-import aeon.core.command.execution.commands.web.UploadFileDialogCommand;
+import aeon.core.command.execution.commands.web.SelectFileCommand;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class FileDialogInputTests {
 
     // FileDialogInput with two argument constructor
     private FileDialogInput fileDialogInput1;
     // FileDialogInput three argument constructor
     private FileDialogInput fileDialogInput2;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    private String filePath;
 
     @Mock
     private AutomationInfo info1;
@@ -54,11 +53,12 @@ public class FileDialogInputTests {
     @Mock
     private ICommandExecutionFacade commandExecutionFacade;
 
-    @Before
+    @BeforeEach
     public void setup(){
         info1 = new AutomationInfo(configuration, driver, adapter);
         info1.setCommandExecutionFacade(commandExecutionFacade);
         fileDialogInput1 = new FileDialogInput(info1, selector);
+        filePath = "newFile.txt";
 
         info2 = new AutomationInfo(configuration, driver, adapter);
         info2.setCommandExecutionFacade(commandExecutionFacade);
@@ -66,41 +66,15 @@ public class FileDialogInputTests {
     }
 
     @Test
-    public void openFileDialogueExecute() {
+    public void selectFileExecute() {
         //Act
-        fileDialogInput1.openFileDialog();
-        fileDialogInput2.openFileDialog();
+        fileDialogInput1.selectFile(filePath);
+        fileDialogInput2.selectFile(filePath);
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(OpenFileDialogCommand.class));
+                .execute(Mockito.eq(info1), any(SelectFileCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(OpenFileDialogCommand.class));
-    }
-
-    @Test
-    public void selectFileDialogueExecute() {
-        //Act
-        fileDialogInput1.selectFileDialog(Mockito.eq(any(String.class)));
-        fileDialogInput2.selectFileDialog(Mockito.eq(any(String.class)));
-
-        //Assert
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(SelectFileDialogCommand.class));
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(SelectFileDialogCommand.class));
-    }
-
-    @Test
-    public void uploadFileExecute() {
-        //Act
-        fileDialogInput1.uploadFileDialog(Mockito.eq(any(String.class)));
-        fileDialogInput2.uploadFileDialog(Mockito.eq(any(String.class)));
-
-        //Assert
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(UploadFileDialogCommand.class));
-        verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(UploadFileDialogCommand.class));
+                .execute(Mockito.eq(info2), any(SelectFileCommand.class));
     }
 }

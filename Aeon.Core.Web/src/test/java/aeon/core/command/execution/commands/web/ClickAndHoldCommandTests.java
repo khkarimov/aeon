@@ -1,34 +1,29 @@
 package aeon.core.command.execution.commands.web;
 
-
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.function.Consumer;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(Parameterized.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class ClickAndHoldCommandTests {
 
     private ClickAndHoldCommand clickAndHoldCommandObject;
-
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private IByWeb selector;
@@ -43,27 +38,12 @@ public class ClickAndHoldCommandTests {
 
     private int duration;
 
-
-    @Before
-    public void setup(){
-        clickAndHoldCommandObject = new ClickAndHoldCommand(selector, initializer, duration);
-    }
-
-    public ClickAndHoldCommandTests(int duration){
-        this.duration = duration;
-    }
-
-
-    @Parameterized.Parameters
-    public static Collection<Object []> data(){
-        return Arrays.asList(new Object[][]{
-                {0}, {1}, {3}, {5}
-        });
-    }
-
-    @Test
-    public void commandDelegateClickAndHoldCommand(){
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,3,5})
+    public void commandDelegateClickAndHoldCommand(int parameterDuration){
         //Arrange
+        this.duration = parameterDuration;
+        clickAndHoldCommandObject = new ClickAndHoldCommand(selector, initializer, duration);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 

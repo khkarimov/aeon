@@ -1,9 +1,10 @@
 package aeon.core.common.web;
 
-import aeon.core.command.execution.commands.web.GetClientRectsCommand;
+import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 
 /**
- * Class to easily manage the return value from {@link GetClientRectsCommand}. It also provides the script for that command.
+ * Class to easily manage the return value from {@link AeonWebDriver#getClientRects(WebControl)}. It also provides the script for that command.
  */
 public class ClientRects {
 

@@ -1,29 +1,27 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class MaximizeCommandTests {
     private MaximizeCommand maximizeCommand;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Mock
     private IWebDriver driver;
 
-    @Before
+    @BeforeEach
     public void setup() {
         maximizeCommand = new MaximizeCommand();
     }
@@ -39,14 +37,9 @@ public class MaximizeCommandTests {
         verify(driver, times(1)).maximize();
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void testDriverDelegateNullDriver(){
-        //Arrange
-
-        //Act
-        maximizeCommand.driverDelegate(null);
-
-        //Assert
-        expectedException.expect(IllegalArgumentException.class);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> maximizeCommand.driverDelegate(null));
     }
 }

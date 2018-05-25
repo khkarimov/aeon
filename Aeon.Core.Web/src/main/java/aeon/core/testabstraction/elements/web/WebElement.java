@@ -151,18 +151,6 @@ public class WebElement extends Element {
     }
 
     /**
-     * Executes the get element attribute command.
-     * @param attributeName The name of the attribute to get from a web element.
-     * @return The specified attribute of the web element.
-      */
-    public Object getElementAttribute(String attributeName) {
-        return info.getCommandExecutionFacade().execute(info, new GetElementAttributeCommand(
-                selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
-                attributeName));
-    }
-
-    /**
      * Executes the right click command.
       */
     public void rightClick() {
@@ -488,18 +476,6 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 attributeName, expectedDate, acceptableDelta
-        ));
-    }
-
-    /**
-     * Gets the bounding rectangle for a web element.
-     *
-     * @return A ClientRect with the bounding sides of the web element.
-     */
-    public ClientRects getClientRects() {
-        return (ClientRects) info.getCommandExecutionFacade().execute(info, new GetClientRectsCommand(
-                selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)
         ));
     }
 

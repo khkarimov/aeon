@@ -1,7 +1,6 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.BaseConfiguration;
-import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +19,6 @@ public class Configuration extends BaseConfiguration {
     static Logger log = LogManager.getLogger(Configuration.class);
     private Class driver;
     private Class adapter;
-    private BrowserType browserType;
 
     /**
      * Initializes a new instance of the {@link Configuration} class.
@@ -72,26 +70,6 @@ public class Configuration extends BaseConfiguration {
     }
 
     /**
-     * Get the type of browser.
-     *
-     * @return The {@link BrowserType} for the the configuration.
-     * @deprecated Use WebConfiguration.getBrowserType() instead.
-     */
-    public BrowserType getBrowserType() {
-        return browserType;
-    }
-
-    /**
-     * Set the type of browser.
-     *
-     * @param browserType The {@link BrowserType} for the configuration.
-     * @deprecated Use WebConfiguration.setBrowserType instead.
-     */
-    public void setBrowserType(BrowserType browserType) {
-        this.browserType = browserType;
-    }
-
-    /**
      * Add given properties to the configuration, overriding properties with the same name.
      *
      * @param properties The properties to set.
@@ -112,10 +90,6 @@ public class Configuration extends BaseConfiguration {
      */
     public static class Keys {
 
-        /**
-         * @deprecated Use WebConfiguration.Keys.BROWSER instead
-         */
-        public static final String BROWSER = "aeon.browser";
         public static final String TIMEOUT = "aeon.timeout";
         public static final String THROTTLE = "aeon.throttle";
     }

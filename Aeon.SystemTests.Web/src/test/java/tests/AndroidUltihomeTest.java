@@ -1,23 +1,24 @@
 package tests;
 
-import aeon.core.common.web.BrowserType;
-import categories.AndroidTests;
 import main.sample.Sample;
-import org.junit.*;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({AndroidTests.class})
+@Tag("AndroidTests")
 public class AndroidUltihomeTest {
     private static Sample product;
 
-    @Before
+    @BeforeEach
     public void beforeTests() {
         product = launch(Sample.class);
         product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
     }
 
-    @After
+    @AfterEach
     public void afterTests() {
         product.browser.quit();
     }

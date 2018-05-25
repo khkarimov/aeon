@@ -9,19 +9,21 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SelectTests {
 
     private Select select1;
@@ -34,9 +36,6 @@ public class SelectTests {
     private String dummy = "dummy";
     private int dummyInt = 3;
     private CompareType compareType = CompareType.DescendingByText;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private IByWeb selector;
@@ -53,7 +52,7 @@ public class SelectTests {
     @Mock
     private ICommandExecutionFacade commandExecutionFacade2;
 
-    @Before
+    @BeforeEach
     public void setup() {
 
         info1 = new AutomationInfo(configuration, driver, adapter);

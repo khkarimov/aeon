@@ -13,26 +13,27 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.WebConfiguration;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class BrowserTests {
 
-    // Mocks
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
     // Variables
     private Browser browserObject;
     private AutomationInfo automationInfo;
+
+    // Mocks
     @Mock
     private WebConfiguration configuration;
     @Mock
@@ -47,7 +48,7 @@ public class BrowserTests {
     private IByWeb selector;
 
     // Setup Methods
-    @Before
+    @BeforeEach
     public void setUp() {
         automationInfo = new AutomationInfo(configuration, driver, adapter);
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
@@ -89,7 +90,7 @@ public class BrowserTests {
         BrowserType result = browserObject.getBrowserType();
 
         // Assert
-        assertEquals(result, BrowserType.Chrome);
+        Assertions.assertEquals(result, BrowserType.Chrome);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class BrowserTests {
         when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(testCookie);
         IWebCookie returnedCookie = browserObject.getCookie("Placeholder");
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetCookieCommand.class));
-        assertTrue(testCookie == returnedCookie);
+        Assertions.assertSame(testCookie, returnedCookie);
     }
 
     @Test
@@ -215,7 +216,7 @@ public class BrowserTests {
         when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(alertText);
         String returnedText = browserObject.getAlertText();
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAlertTextCommand.class));
-        assertTrue(alertText.equals(returnedText));
+        Assertions.assertEquals(alertText,returnedText);
     }
 
     @Test

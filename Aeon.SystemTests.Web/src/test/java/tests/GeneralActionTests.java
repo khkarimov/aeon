@@ -6,11 +6,9 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
-import categories.GridNotSupported;
-import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
-import org.junit.*;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -91,8 +89,8 @@ public class GeneralActionTests extends SampleBaseTest{
         secondCookie = product.browser.getCookie(cookie.getName());
         assert(secondCookie.getValue().equals(cookieNewValue));
         product.browser.deleteCookie(cookie.getName());
-        thrown.expect(IsInstanceOf.instanceOf(NoSuchCookieException.class));
-        product.browser.getCookie(cookie.getName());
+        Assertions.assertThrows(NoSuchCookieException.class,
+                () -> product.browser.getCookie(cookie.getName()));
     }
 
     @Test
@@ -104,7 +102,7 @@ public class GeneralActionTests extends SampleBaseTest{
     @Test
     public void testBlur() {
         //used to be set command
-        product.startPage.alertTitleTextBox.click();
+        product.startPage.alertTitleTextBox.set("");
         product.startPage.alertTitleTextBox.blur();
     }
 
@@ -118,11 +116,6 @@ public class GeneralActionTests extends SampleBaseTest{
     public void testPressKeyboardKey() {
         product.startPage.formTextBox.pressKeyboardKey(KeyboardKey.SPACE);
         product.startPage.formTextBox.pressKeyboardKey(KeyboardKey.SPACE);
-    }
-
-    @Test
-    public void testGetBrowserType() {
-        assert (product.browser.getBrowserType().equals(BrowserType.valueOf(product.getConfig(Configuration.Keys.BROWSER, ""))));
     }
 
     @Test

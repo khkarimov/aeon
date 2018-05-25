@@ -5,13 +5,14 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
@@ -22,15 +23,11 @@ import static org.mockito.Mockito.when;
 /**
  * Created by bryant on 5/15/17.
  */
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SetTextValueByJavaScriptCommandTests {
     private SetTextByJavaScriptCommand setTextByJavaScriptCommandObject;
     private String value;
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     private IByWeb selector;
@@ -47,20 +44,22 @@ public class SetTextValueByJavaScriptCommandTests {
     @Mock
     private Consumer<IDriver> consumer;
 
-    @Before
+    @BeforeEach
     public void setup(){
         setTextByJavaScriptCommandObject = new SetTextByJavaScriptCommand(selector, initializer, value);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void illegalArguementThrownWhenDriverIsNull(){
         // Arrange
+        Exception illegalArgumentException;
 
         // Act
-        setTextByJavaScriptCommandObject.commandDelegate(null, control);
+        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> setTextByJavaScriptCommandObject.commandDelegate(null, control));
 
         // Assert
-        thrown.expectMessage("driver");
+        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
     @Test
