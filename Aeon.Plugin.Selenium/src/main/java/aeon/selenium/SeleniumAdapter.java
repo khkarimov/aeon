@@ -27,7 +27,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -904,7 +903,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
-            click(element, moveMouseToOrigin);
+        click(element, moveMouseToOrigin);
         //}
     }
 
