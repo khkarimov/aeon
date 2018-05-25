@@ -24,10 +24,10 @@ public class ReportSummary {
 
     public void sendSummaryReport(Report reportBean) {
 
-        String title = "Automation Report---ULTIProLaunch--" + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
+        String title = "Automation Report---" + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
 
-        String slackChannel1 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.1", "#test-channel");
-        String slackChannel2 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.2", "#test-notifications");
+        String slackChannel1 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.1", "");
+        String slackChannel2 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.2", "");
         if (StringUtils.isBlank(slackChannel1) && StringUtils.isBlank(slackChannel2)) {
             log.info("No Slack channel is set up.");
 
@@ -51,7 +51,7 @@ public class ReportSummary {
                 slackBot.publishMessageToSlack(this.summaryReport(reportBean, title), slackChannel2);
                 Utils.deleteFiles(Utils.getResourcesPath() + title + ".png");
             } else {
-                String message = "Tests Passed for URL: " + aeonConfiguration.getString("aeon.environment", "") + " at " + ReportingPlugin.ReportingTestExecutionExtension.startTime;
+                String message = "Tests Passed for URL: " + aeonConfiguration.getString("aeon.environment", "") + " starting at " + ReportingPlugin.getTime();
                 slackBot.publishNotificationToSlack(slackChannel2, message);
             }
         }

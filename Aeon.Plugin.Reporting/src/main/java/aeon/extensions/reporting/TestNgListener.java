@@ -7,6 +7,7 @@ import org.testng.*;
 public class TestNgListener implements ITestListener, ISuiteListener {
 
     public void onTestStart(ITestResult iTestResult) {
+        ReportingPlugin.ReportingTestExecutionExtension.currentClass = iTestResult.getInstanceName();
         AeonTestExecution.startTest(iTestResult.getName(), (String[]) null);
     }
 
@@ -35,6 +36,7 @@ public class TestNgListener implements ITestListener, ISuiteListener {
 
     public void onStart(ISuite iSuite) {
         // TODO: Store suite information
+        ReportingPlugin.suite_name = iSuite.getName();
     }
 
     public void onFinish(ISuite iSuite) {

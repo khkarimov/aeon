@@ -18,13 +18,14 @@ import java.util.Date;
  * Plugin class for Reporting Plugin.
  */
 public class ReportingPlugin extends Plugin {
-    private static Report REPORT_BEAN;
-    static final SimpleDateFormat REPORT_DATE_FORMAT = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+    private static Report report_bean;
+    static final SimpleDateFormat report_date_format = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
 
     private static IConfiguration aeonConfiguration;
     private static IConfiguration configuration;
 
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
+    public static String suite_name = "";
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
@@ -49,7 +50,7 @@ public class ReportingPlugin extends Plugin {
 
         static long startTime = 0;
         static String currentTest = "";
-        static String currentClass = ""; //added
+        static String currentClass = "";
         static long currentStartTime = System.currentTimeMillis();
 
         @Override
@@ -65,10 +66,10 @@ public class ReportingPlugin extends Plugin {
             }
 
             ReportingPlugin.aeonConfiguration = aeonConfiguration;
-            REPORT_BEAN = new Report();
+            report_bean = new Report();
             startTime = System.currentTimeMillis();
-            log.info("Start Time " + REPORT_DATE_FORMAT.format(new Date(startTime)));
-            REPORT_BEAN.setSuiteName(" Suite");
+            log.info("Start Time " + report_date_format.format(new Date(startTime)));
+            report_bean.setSuiteName(suite_name);
         }
 
         @Override
@@ -78,28 +79,28 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTest(String name, String... tags) {
-            currentClass = tags[0];
+            if (tags != null) {
+                currentClass = tags[0];
+            }
             currentTest = name;
             currentStartTime = System.currentTimeMillis();
         }
 
         @Override
         public void onSucceededTest() {
-            REPORT_BEAN.addPass();
+            report_bean.addPass();
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
-            scenarioBean.setModuleName(currentClass);//changed
-            System.out.println("Just set module name onSucceededTest with " + currentTest);
+            scenarioBean.setModuleName(currentClass);
             scenarioBean.setStatus("PASSED");
         }
 
         @Override
         public void onFailedTest(String reason) {
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
-            scenarioBean.setModuleName(currentClass);//changed
-            System.out.println("Just set module name onFailedTest with " + currentTest);
+            scenarioBean.setModuleName(currentClass);
             scenarioBean.setErrorMessage(reason);
             scenarioBean.setStatus("FAILED");
-            REPORT_BEAN.addFailed();
+            report_bean.addFailed();
         }
 
         @Override
@@ -110,17 +111,20 @@ public class ReportingPlugin extends Plugin {
         @Override
         public void onDone() {
             long time = System.currentTimeMillis();
-            log.info("End Time " + REPORT_DATE_FORMAT.format(new Date(time)));
-            REPORT_BEAN.setTotalTime(getTime(time - startTime));
-            new ReportSummary(configuration, aeonConfiguration).sendSummaryReport(REPORT_BEAN);
+            log.info("End Time " + report_date_format.format(new Date(time)));
+            report_bean.setTotalTime(getTime(time - startTime));
+            new ReportSummary(configuration, aeonConfiguration).sendSummaryReport(report_bean);
         }
     }
-
+    public static String getTime() {
+        Date resultDate = new Date(ReportingTestExecutionExtension.startTime);
+        return resultDate.toString();
+    }
     private static Scenario setScenarioDetails(String testName, long startTime) {
         Scenario scenarioBean = new Scenario();
         scenarioBean.setScenarioName(testName);
-        scenarioBean.setStartTime(REPORT_DATE_FORMAT.format(startTime));
-        REPORT_BEAN.getScenarioBeans().add(scenarioBean);
+        scenarioBean.setStartTime(report_date_format.format(startTime));
+        report_bean.getScenarioBeans().add(scenarioBean);
         return scenarioBean;
     }
 

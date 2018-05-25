@@ -50,7 +50,7 @@ public class SlackBot {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.addBinaryBody("file", fileName);
             builder.addTextBody("channels", channel);
-            builder.addTextBody("token", configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "xoxb-3312095463-367598369297-0nUMjNLdFF7fmogOOUGHqfzj"));
+            builder.addTextBody("token", configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, ""));
             HttpEntity entity = builder.build();
             HttpPost httpPost = new HttpPost(configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, ""));
             httpPost.setEntity(entity);
