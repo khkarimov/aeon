@@ -213,10 +213,9 @@ public class ReportSummary {
 
     private String getJobInformation() {
         String browser = aeonConfiguration.getString("aeon.browser", "");
-        String url = aeonConfiguration.getString("aeon.environment", "");
-        String teamName = pluginConfiguration.getString("aeon.extension.reporting.name", "");
+        String environmentURL = aeonConfiguration.getString("aeon.environment", "");
 
-        return "<td><p>Browser : " + browser + "</p>" +
-                "<p>HomePageURL : " + url + "</p>";
+        return "<td><p>Browser: " + browser + "</p>" +
+                "<p>HomePageURL: " + environmentURL + "</p>";
     }
 }
