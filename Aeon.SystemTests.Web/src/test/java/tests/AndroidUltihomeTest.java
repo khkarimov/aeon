@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-
 import static aeon.core.testabstraction.product.Aeon.launch;
 
 @Tag("AndroidTests")

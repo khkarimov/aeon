@@ -14,8 +14,6 @@ import static aeon.core.testabstraction.product.AeonTestExecution.startTest;
 public class MouseTests {
     public static Sample product;
 
-    private static String watchLog = "";
-
     @Rule
     public TestRule watchMan = new TestWatcher() {
 
@@ -26,12 +24,10 @@ public class MouseTests {
 
         @Override
         protected void failed(Throwable e, Description description) {
-            watchLog += "Failed Test " + description.getMethodName() + " in class " + description.getClassName() + "\n";
         }
 
         @Override
         protected void succeeded(Description description) {
-            watchLog += "Succeeded Test " + description.getMethodName() + " in class " + description.getClassName() + "\n";
         }
     };
 

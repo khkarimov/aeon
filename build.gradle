@@ -27,9 +27,17 @@ task CopySeleniumPlugin(type: Copy) {
     include '*.jar'
 }
 
+task CopyReportingPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Reporting/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
+assemble.finalizedBy(CopyReportingPlugin)
 
 allprojects {
     group 'aeon'

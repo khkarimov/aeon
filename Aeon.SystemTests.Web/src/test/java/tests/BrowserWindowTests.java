@@ -76,7 +76,7 @@ public class BrowserWindowTests extends SampleBaseTest{
     }
 
     @Test
-    public void testSwitchToWindowByUrl() { ;
+    public void testSwitchToWindowByUrl() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
         product.browser.switchToWindowByUrl("https://www.google.com");
