@@ -25,7 +25,7 @@ public class ReportingPlugin extends Plugin {
     private static IConfiguration configuration;
 
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
-    public static String suite_name = "";
+    public static String suiteName = "Suite";
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
@@ -69,7 +69,7 @@ public class ReportingPlugin extends Plugin {
             report_bean = new Report();
             startTime = System.currentTimeMillis();
             log.info("Start Time " + report_date_format.format(new Date(startTime)));
-            report_bean.setSuiteName(suite_name);
+            report_bean.setSuiteName(suiteName);
         }
 
         @Override
@@ -79,10 +79,9 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTest(String name, String... tags) {
-            if (tags != null) {
-                currentClass = tags[0];
-            }
-            currentTest = name;
+            String[] nameParts = name.split("\\.", 2);
+            currentClass = nameParts[1];
+            currentTest = nameParts[0];
             currentStartTime = System.currentTimeMillis();
         }
 

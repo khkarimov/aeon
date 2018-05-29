@@ -28,7 +28,7 @@ public class SampleBaseTest {
 
         @Override
         protected void starting(Description description) {
-            startTest(description.getMethodName(), description.getClassName());
+            startTest(description.getMethodName() + "." + description.getClassName());
         }
 
         @Override
