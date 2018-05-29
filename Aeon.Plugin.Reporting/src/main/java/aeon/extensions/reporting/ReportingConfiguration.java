@@ -23,6 +23,8 @@ public class ReportingConfiguration extends PluginConfiguration {
         public static final String SLACK_UPLOAD_URL = "aeon.extensions.reporting.slack.upload.url";
         public static final String SLACK_TOKEN = "aeon.extensions.reporting.slack.token";
         public static final String SLACK_BOT_TOKEN = "aeon.extensions.reporting.slack.bot.token";
+        public static final String CHANNEL_1 = "aeon.extensions.reporting.slack.channel.1";
+        public static final String CHANNEL_2 = "aeon.extensions.reporting.slack.channel.2";
     }
 
     @Override

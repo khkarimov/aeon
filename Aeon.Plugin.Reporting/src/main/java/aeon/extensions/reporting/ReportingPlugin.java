@@ -25,7 +25,7 @@ public class ReportingPlugin extends Plugin {
     private static IConfiguration configuration;
 
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
-    public static String suiteName = "Suite";
+    public static String suiteName;
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.

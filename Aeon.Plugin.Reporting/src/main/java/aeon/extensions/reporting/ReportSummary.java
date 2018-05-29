@@ -24,10 +24,10 @@ public class ReportSummary {
 
     public void sendSummaryReport(Report reportBean) {
 
-        String title = "Automation Report---" + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
+        String title = "Automation Report - " + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
 
-        String slackChannel1 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.1", "");
-        String slackChannel2 = pluginConfiguration.getString("aeon.extensions.reporting.slack.channel.2", "");
+        String slackChannel1 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
+        String slackChannel2 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
         if (StringUtils.isBlank(slackChannel1) && StringUtils.isBlank(slackChannel2)) {
             log.info("No Slack channel is set up.");
 
@@ -63,7 +63,7 @@ public class ReportSummary {
 
         //Job Info
         htmlBody = htmlBody + this.createTable(new String[]{"Test Configuration"}, this.getJobInformation(), "t02");
-        if (ReportingPlugin.suiteName.equals("Suite")) {
+        if (ReportingPlugin.suiteName == null) {
             //Suite Summary for JUnit so no Suite column
             htmlBody = htmlBody + createHeader("Overall Summary") +
                     createTable(new String[]{"Total Tests", "Passed", "Failed",
@@ -216,8 +216,7 @@ public class ReportSummary {
         String url = aeonConfiguration.getString("aeon.environment", "");
         String teamName = pluginConfiguration.getString("aeon.extension.reporting.name", "");
 
-        return "<td><p>Project : " + teamName + "</p>" +
-                "<p>Browser : " + browser + "</p>" +
+        return "<td><p>Browser : " + browser + "</p>" +
                 "<p>HomePageURL : " + url + "</p>";
     }
 }
