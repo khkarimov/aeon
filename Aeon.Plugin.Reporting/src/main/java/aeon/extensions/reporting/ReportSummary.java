@@ -63,12 +63,17 @@ public class ReportSummary {
 
         //Job Info
         htmlBody = htmlBody + this.createTable(new String[]{"Test Configuration"}, this.getJobInformation(), "t02");
-
-        //Suite Summary
-        htmlBody = htmlBody + createHeader("Overall Summary") +
-                createTable(new String[]{"Suite Name", "Total Tests", "Passed", "Failed",
-                        "Broken", "Skipped", "Total Time"}, getTableBodyForSuiteSummary(reportBean), "t01");
-
+        if (ReportingPlugin.suiteName.equals("Suite")) {
+            //Suite Summary for JUnit so no Suite column
+            htmlBody = htmlBody + createHeader("Overall Summary") +
+                    createTable(new String[]{"Total Tests", "Passed", "Failed",
+                            "Broken", "Skipped", "Total Time"}, getTableBodyForSuiteSummaryJUnit(reportBean), "t01");
+        } else {
+            //Suite Summary for TestNG
+            htmlBody = htmlBody + createHeader("Overall Summary") +
+                    createTable(new String[]{"Suite Name", "Total Tests", "Passed", "Failed",
+                            "Broken", "Skipped", "Total Time"}, getTableBodyForSuiteSummary(reportBean), "t01");
+        }
         //Broken Table
         if (reportBean.isSuiteFailed() || reportBean.isSuiteBroken() || reportBean.isSuiteSkipped())
             htmlBody = htmlBody + createHeader("Failed List")
@@ -130,6 +135,15 @@ public class ReportSummary {
         return createRow(
                 createColumn(report.getSuiteName())
                         + createColumn("" + report.getTotal())
+                        + createColumn("" + report.getPassed())
+                        + createColumn("" + report.getFailed())
+                        + createColumn("" + report.getBroken())
+                        + createColumn("" + report.getSkipped())
+                        + createColumn("" + report.getTotalTime()));
+    }
+    private String getTableBodyForSuiteSummaryJUnit(Report report) {
+        return createRow(
+                 createColumn("" + report.getTotal())
                         + createColumn("" + report.getPassed())
                         + createColumn("" + report.getFailed())
                         + createColumn("" + report.getBroken())
