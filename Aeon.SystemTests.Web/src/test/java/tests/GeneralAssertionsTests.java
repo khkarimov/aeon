@@ -2,13 +2,63 @@ package tests;
 
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.WebSelectOption;
+import aeon.core.testabstraction.product.Aeon;
+import aeon.core.testabstraction.product.WebConfiguration;
+import main.sample.Sample;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.junit.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
-public class GeneralAssertionsTests extends SampleBaseTest{
+import static aeon.core.testabstraction.product.Aeon.launch;
+import static aeon.core.testabstraction.product.AeonTestExecution.startTest;
 
+public class GeneralAssertionsTests {
+    public static Sample product;
+
+    private static String watchLog = "";
+
+    @Rule
+    public TestRule watchMan = new TestWatcher() {
+
+        @Override
+        protected void starting(Description description) {
+            startTest(description.getMethodName() + "." + description.getClassName());
+        }
+
+        @Override
+        protected void failed(Throwable e, Description description) {
+            watchLog += "Failed Test " + description.getMethodName() + " in class " + description.getClassName() + "\n";
+        }
+
+        @Override
+        protected void succeeded(Description description) {
+            watchLog += "Succeeded Test " + description.getMethodName() + " in class " + description.getClassName() + "\n";
+        }
+    };
+
+
+    @Before
+    public void beforeTests() {
+        product = launch(Sample.class);
+        String environment = product.getConfig(WebConfiguration.Keys.ENVIRONMENT,
+                "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/index.html");
+        String protocol = product.getConfig(WebConfiguration.Keys.PROTOCOL, "file");
+        product.browser.goToUrl(protocol + "://" + environment);
+    }
+
+    @After
+    public void afterTests() {
+        product.browser.quit();
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        Aeon.done();
+    }
 
     @Test
     public void testDisabled() {

@@ -4,7 +4,7 @@ import aeon.core.common.exceptions.NoAlertException;
 import aeon.core.common.exceptions.ValuesAreNotAlikeException;
 import aeon.core.common.exceptions.ValuesAreNotEqualException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AlertsTests extends SampleBaseTest{
 

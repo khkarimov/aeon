@@ -13,7 +13,7 @@ public class Utils {
     private static org.apache.logging.log4j.Logger log = LogManager.getLogger(Utils.class);
 
     public static File htmlToPngFile(String html, String filePath) {
-        log.info("Converting HTML file to Png");
+        log.trace("Converting HTML file to Png");
         HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
         File file = new File(filePath);
         file.getParentFile().mkdirs();
