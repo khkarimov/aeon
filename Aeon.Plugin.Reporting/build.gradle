@@ -3,17 +3,18 @@ def baseProjectDescription = 'Aeon Reporting Plugin'
 def base = baseProjectName
 
 configurations {
-    aeon
-    compile.extendsFrom(aeon)
+    pluginImplementation
 }
 
 dependencies {
     compile project(':Aeon.Core')
 
-    compile group: 'com.github.xuwei-k', name: 'html2image', version: '0.1.0'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
-    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.4'
-    compile group: 'org.testng', name: 'testng', version: '6.14.2'
+    pluginImplementation group: 'com.github.xuwei-k', name: 'html2image', version: '0.1.0'
+    pluginImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
+    pluginImplementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.4'
+    pluginImplementation group: 'org.testng', name: 'testng', version: '6.14.2'
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
 }
 
 jar {
@@ -28,6 +29,8 @@ jar {
                 'Plugin-Version': version,
                 'Plugin-Class': 'aeon.extensions.reporting.ReportingPlugin'
     }
+
+    from configurations.pluginImplementation.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 task fatJar(type: Jar) {
