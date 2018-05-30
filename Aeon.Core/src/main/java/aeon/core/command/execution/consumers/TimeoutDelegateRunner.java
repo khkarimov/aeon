@@ -24,6 +24,7 @@ import java.util.function.Supplier;
 public class TimeoutDelegateRunner extends DelegateRunner {
 
     private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
+    public static Boolean failed = false;
     private IDriver driver;
     private IClock clock;
     private Duration timeout;
@@ -52,6 +53,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
     @Override
     public Object execute(Function<IDriver, Object> commandDelegate) {
+        failed = false;
         return executeDelegateWithReturn(() -> successor.execute(commandDelegate));
     }
 
@@ -114,7 +116,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         }
 
         automationInfo.testFailed(ex.getMessage());
-
+        failed = true;
         throw ex;
     }
 }

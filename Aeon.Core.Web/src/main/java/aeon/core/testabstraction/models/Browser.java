@@ -5,6 +5,7 @@ import aeon.core.command.execution.commands.CloseCommand;
 import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
 import aeon.core.command.execution.commands.web.*;
+import aeon.core.command.execution.consumers.TimeoutDelegateRunner;
 import aeon.core.common.helpers.URLUtil;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
@@ -152,7 +153,9 @@ public class Browser {
      * Closes and terminates the active instances of the browser and WebDriver.
      */
     public void quit() {
-        info.testSucceeded();
+        if (!TimeoutDelegateRunner.failed) {
+            info.testSucceeded();
+        }
         info.getCommandExecutionFacade().execute(info, new QuitCommand());
     }
 
