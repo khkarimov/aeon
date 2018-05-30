@@ -10,6 +10,8 @@ import org.junit.runner.Description;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 import static aeon.core.testabstraction.product.AeonTestExecution.startTest;
+import static aeon.core.testabstraction.product.AeonTestExecution.testFailed;
+import static aeon.core.testabstraction.product.AeonTestExecution.testSucceeded;
 
 public class MouseTests {
     public static Sample product;
@@ -24,11 +26,14 @@ public class MouseTests {
 
         @Override
         protected void failed(Throwable e, Description description) {
+            testFailed(e.getMessage());
         }
 
         @Override
         protected void succeeded(Description description) {
+            testSucceeded();
         }
+
     };
 
 
@@ -50,6 +55,7 @@ public class MouseTests {
     public static void afterClass() {
         Aeon.done();
     }
+
     @Test
     public void testClickAndHold() {
         product.startPage.dateLabel.clickAndHold(5000);

@@ -15,6 +15,8 @@ import org.junit.runner.Description;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 import static aeon.core.testabstraction.product.AeonTestExecution.startTest;
+import static aeon.core.testabstraction.product.AeonTestExecution.testFailed;
+import static aeon.core.testabstraction.product.AeonTestExecution.testSucceeded;
 
 public class GeneralAssertionsTests {
     public static Sample product;
@@ -29,10 +31,12 @@ public class GeneralAssertionsTests {
 
         @Override
         protected void failed(Throwable e, Description description) {
+            testFailed(e.getMessage());
         }
 
         @Override
         protected void succeeded(Description description) {
+            testSucceeded();
         }
     };
 

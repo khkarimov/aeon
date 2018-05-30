@@ -7,6 +7,7 @@ import aeon.core.common.exceptions.TimeoutExpiredException;
 import aeon.core.common.helpers.IClock;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.framework.abstraction.drivers.IDriver;
+import aeon.core.testabstraction.product.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -24,7 +25,6 @@ import java.util.function.Supplier;
 public class TimeoutDelegateRunner extends DelegateRunner {
 
     private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
-    public static Boolean failed = false;
     private IDriver driver;
     private IClock clock;
     private Duration timeout;
@@ -53,7 +53,6 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
     @Override
     public Object execute(Function<IDriver, Object> commandDelegate) {
-        failed = false;
         return executeDelegateWithReturn(() -> successor.execute(commandDelegate));
     }
 
@@ -114,9 +113,9 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         } else {
             log.error(ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>(), lastCaughtException);
         }
-
-        automationInfo.testFailed(ex.getMessage());
-        failed = true;
+        if (automationInfo.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)) {
+            automationInfo.testFailed(ex.getMessage());
+        }
         throw ex;
     }
 }

@@ -21,7 +21,6 @@ public class ReportingConfiguration extends PluginConfiguration {
     static class Keys {
         public static final String SLACK_CHAT_URL = "aeon.extensions.reporting.slack.chat.url";
         public static final String SLACK_UPLOAD_URL = "aeon.extensions.reporting.slack.upload.url";
-        public static final String SLACK_TOKEN = "aeon.extensions.reporting.slack.token";
         public static final String SLACK_BOT_TOKEN = "aeon.extensions.reporting.slack.bot.token";
         public static final String CHANNEL_1 = "aeon.extensions.reporting.slack.channel.1";
         public static final String CHANNEL_2 = "aeon.extensions.reporting.slack.channel.2";
