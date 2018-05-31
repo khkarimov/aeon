@@ -186,15 +186,49 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         log.trace("Notification banner check exited");
     }
 
+    // TODO(erin): Perfecto workaround method, remove once Perfecto supports Appium v1.8.0
+    // startPercentages set like so: "50%,50%"
+    private void swipeForPerfecto(String startPercentages, String endPercentages) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("start", startPercentages);
+        params.put("end", endPercentages);
+        params.put("duration", "2");
+        getMobileWebDriver().executeScript("mobile:touch:swipe", params);
+    }
+
+    // TODO(erin): Perfecto workaround method, remove once Perfecto supports Appium v1.8.0
+    private boolean checkIfPerfectoInUse() {
+        try {
+            Map params = new HashMap<>();
+            params.put("property", "model");
+            String model = (String) getMobileWebDriver().executeScript("mobile:handset:info", params);
+            if (!model.equals("")) {
+                log.trace("Perfecto property not found, emulator settings should be used");
+                return false;
+            }
+            log.trace("Perfecto property found, using perfecto settings");
+            return true;
+        } catch (Exception err) {
+            log.trace("Perfecto property not found, emulator settings should be used");
+            return false;
+        }
+    }
+
+    // TODO(erin): Remove element when Perfecto supports Appium v1.8.0
+    private int swipeCounter = 0;
+
+    // TODO(erin): Remove workaround once Perfecto supports Appium v1.8.0
+    //Workaround lines: 221 - 223
     private void checkForNotificationElement(List<String> xpaths, String expectedString) {
         int i;
         String foundString;
-        swipeForNotificationStack();
+        if (swipeCounter == 0) {
+            swipeForNotificationStack();
+        }
         for (i = 0; i < xpaths.size(); i++) {
             try {
                 WebControl firstNotification = findElement(ByMobile.xpath(xpaths.get(i)));
                 foundString = ((SeleniumElement) firstNotification).getUnderlyingWebElement().getText();
-                log.trace("Element text found: " + foundString);
                 if (expectedString.equals(foundString)) {
                     log.trace("Correct notification found");
                     return;
@@ -205,6 +239,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 log.trace("Element wasn't found, moving on to next path");
             }
         }
+        swipeCounter = 0;
         if (i == xpaths.size()) {
             throw new RuntimeException("Correct element was not found after all checks");
         }
@@ -288,8 +323,15 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         return descriptionPaths;
     }
 
+    // TODO(erin): Remove workaround once Perfecto supports Appium v1.8.0
+    //Workaround lines: 325 - 329
     private void swipeForNotificationStack() {
         log.trace("Swipe for notification entered");
+        swipeCounter++;
+        if (checkIfPerfectoInUse()) {
+            swipeForPerfecto("50%,1%", "50%,49%");
+            return;
+        }
         Dimension screenSize = getMobileWebDriver().manage().window().getSize();
         int width = screenSize.getWidth();
         int height = screenSize.getHeight();
@@ -298,7 +340,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         int yEnd = (int) (height * .06);
         TouchAction action = new TouchAction(getMobileWebDriver());
         action.longPress(xStart, yStart)
-                .moveTo(0, yEnd)
+                .moveTo(xStart, yEnd)
                 .release()
                 .perform();
         log.trace("Swipe for notification exited");
@@ -312,21 +354,37 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         return widgetNumber;
     }
 
+    private String checkXPathOfYears() {
+        //XPath set to emulator default
+        String yearXPath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[";
+        if (checkIfPerfectoInUse()) {
+            log.info("Using perfecto path");
+            yearXPath = "/hierarchy/android.widget.FrameLayout[1]/" +
+                    "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                    "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/" +
+                    "android.widget.LinearLayout[1]/android.widget.ViewAnimator[1]/android.widget.ListView[1]/" +
+                    "android.widget.TextView[";
+        }
+        return yearXPath;
+    }
+
     private boolean checkAndClickYearElement(int desiredYear) {
+        String xPath = checkXPathOfYears();
+        log.info("Found path, continuing with check");
         String desiredYearString = String.valueOf(desiredYear);
         for (int i = 1; i < 8; i++) {
             try {
-                WebControl yearLabel = findElement(ByMobile.xpath("/hierarchy/android.widget.FrameLayout[1]/" +
-                        "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
-                        "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/" +
-                        "android.widget.LinearLayout[1]/android.widget.ViewAnimator[1]/android.widget.ListView[1]/" +
-                        "android.widget.TextView[" + i + "]"));
+                WebControl yearLabel = findElement(ByMobile.xpath(xPath + i + "]"));
                 String currentYearChecking = ((SeleniumElement) yearLabel).getUnderlyingWebElement().getText();
                 if (currentYearChecking.equals(desiredYearString)) {
                     click(yearLabel);
                     return true;
                 }
-            } catch (Exception err) {
+            } catch (NoSuchElementException err) {
                 WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
                 click(yearLabel, false);
             }
@@ -334,22 +392,32 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         return false;
     }
 
+    // TODO(erin): Remove workaround once Perfecto supports Appium v1.8.0
+    // Workaround lines: 401 - 407
     private void swipeAndCheckForYear(int currentYear, int desiredYear) {
         Dimension screenSize = getMobileWebDriver().manage().window().getSize();
         int width = screenSize.getWidth();
         int height = screenSize.getHeight();
         int xStart = width / 2;
-        int yStart = (height / 2);
+        int yStart = height / 2;
         while (!checkAndClickYearElement(desiredYear)) {
-            int yEnd = (int) (height * 0.0085);
-            if (getWidgetNumber(currentYear, desiredYear) > 7) {
-                yEnd = -1 * yEnd;
+            int yEnd = (int) (height * 0.2);
+            if (getWidgetNumber(currentYear, desiredYear) > 7){
+                yEnd = yEnd + yStart;
             }
-            TouchAction action = new TouchAction(getMobileWebDriver());
-            action.press(xStart, yStart)
-                    .moveTo(0, yEnd)
-                    .release()
-                    .perform();
+            if (checkIfPerfectoInUse()) {
+                if (getWidgetNumber(currentYear, desiredYear) < 7) {
+                    swipeForPerfecto("50%,50%", "50%,70%");
+                } else {
+                    swipeForPerfecto("50%,50%", "50%,30%");
+                }
+            } else {
+                TouchAction action = new TouchAction(getMobileWebDriver());
+                action.longPress(xStart, yStart)
+                        .moveTo(xStart, yEnd)
+                        .release()
+                        .perform();
+            }
         }
     }
 
