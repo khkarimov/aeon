@@ -159,6 +159,9 @@ public class AeonTestExecution {
         }
     }
 
+    /**
+     * Method to indicate the skipping of a test.
+     */
     public static void testSkipped() {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
