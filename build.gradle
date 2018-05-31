@@ -19,6 +19,7 @@ task wrapper(type: Wrapper) {
 
 tasks.wrapper.execute()
 
+
 //Copy selenium plugin into SystemTests plugins folder
 task CopySeleniumPlugin(type: Copy) {
     group 'copy'
@@ -27,9 +28,18 @@ task CopySeleniumPlugin(type: Copy) {
     include '*.jar'
 }
 
+//Copy reporting plugin into SystemTests plugins folder
 task CopyReportingPlugin(type: Copy) {
     group 'copy'
     from 'Aeon.Plugin.Reporting/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+//Copy perfecto plugin into SystemTests plugins folder
+task CopyPerfectoPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Perfecto/build/libs'
     into 'Aeon.SystemTests.Web/plugins'
     include '*.jar'
 }
@@ -38,6 +48,7 @@ assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
 assemble.finalizedBy(CopyReportingPlugin)
+assemble.finalizedBy(CopyPerfectoPlugin)
 
 allprojects {
     group 'aeon'

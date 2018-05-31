@@ -3,8 +3,7 @@ def baseProjectDescription = 'Aeon Selenium Plugin'
 def base = baseProjectName
 
 configurations {
-    aeon
-    compile.extendsFrom(aeon)
+    pluginImplementation
 }
 
 ext {
@@ -16,13 +15,15 @@ dependencies {
     compile project(':Aeon.Core.Web')
 
     // Drivers
-    compile "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
-    compile "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
 
-    compile "io.appium:java-client:$appiumVersion"
+    pluginImplementation "io.appium:java-client:$appiumVersion"
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
 }
 
 jar {
@@ -36,6 +37,10 @@ jar {
                 'Plugin-Id': 'SeleniumAeon',
                 'Plugin-Version': version,
                 'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
+    }
+
+    from configurations.pluginImplementation.collect {
+        it.isDirectory() ? it : zipTree(it)
     }
 }
 
