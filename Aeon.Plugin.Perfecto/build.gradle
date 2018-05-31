@@ -3,8 +3,7 @@ def baseProjectDescription = 'Aeon Perfecto Plugin'
 def base = baseProjectName
 
 configurations {
-    aeon
-    compile.extendsFrom(aeon)
+    pluginImplementation
 }
 
 repositories {
@@ -18,9 +17,13 @@ ext {
 }
 
 dependencies {
+    testCompile "org.mockito:mockito-core:2.7.22"
+
     compile project(':Aeon.Plugin.Appium')
 
-    compile "com.perfecto.reporting-sdk:reportium-java:$reportiumSdkVersion"
+    pluginImplementation "com.perfecto.reporting-sdk:reportium-java:$reportiumSdkVersion"
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
 }
 
 jar {
@@ -33,7 +36,12 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'aeon.extensions.perfecto',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.extensions.perfecto.PerfectoPlugin'
+                'Plugin-Class': 'aeon.extensions.perfecto.PerfectoPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
+    }
+
+    from configurations.pluginImplementation.collect {
+        it.isDirectory() ? it : zipTree(it)
     }
 }
 

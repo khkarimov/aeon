@@ -23,7 +23,10 @@ public class SeleniumConfiguration extends WebConfiguration {
 
     private Logger log = LogManager.getLogger(SeleniumConfiguration.class);
 
-    static class Keys {
+    /**
+     * Keys relevant to the Selenium Configuration.
+     */
+    public static class Keys {
 
         public static final String LANGUAGE = "aeon.selenium.language";
         public static final String MOVE_MOUSE_TO_ORIGIN = "aeon.selenium.move_mouse_to_origin";
@@ -39,12 +42,6 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
         public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
         public static final String CHROME_MOBILE_EMULATION_DEVICE = "aeon.selenium.chrome.mobile.emulation.device";
-
-        // Perfecto
-        public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";
-        public static final String PERFECTO_PASS = "aeon.selenium.perfecto.pass";
-        public static final String BROWSER_VERSION = "aeon.selenium.perfecto.browser_version";
-        public static final String PERFECTO_TOKEN = "aeon.selenium.perfecto.token";
 
         // Appium
         public static final String APP = "aeon.selenium.appium.app";

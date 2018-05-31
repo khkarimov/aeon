@@ -22,7 +22,8 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'AppiumAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.selenium.appium.AppiumPlugin'
+                'Plugin-Class': 'aeon.selenium.appium.AppiumPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
     }
 }
 
