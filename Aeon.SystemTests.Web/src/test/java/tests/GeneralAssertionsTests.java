@@ -14,9 +14,7 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
-import static aeon.core.testabstraction.product.AeonTestExecution.startTest;
-import static aeon.core.testabstraction.product.AeonTestExecution.testFailed;
-import static aeon.core.testabstraction.product.AeonTestExecution.testSucceeded;
+import static aeon.core.testabstraction.product.AeonTestExecution.*;
 
 public class GeneralAssertionsTests {
     public static Sample product;
@@ -26,7 +24,8 @@ public class GeneralAssertionsTests {
 
         @Override
         protected void starting(Description description) {
-            startTest(description.getMethodName() + "." + description.getClassName());
+            String className = description.getClassName().substring(description.getClassName().lastIndexOf(".") + 1, description.getClassName().length() - 1);
+            startTest(description.getMethodName() + "." + className);
         }
 
         @Override
@@ -38,8 +37,12 @@ public class GeneralAssertionsTests {
         protected void succeeded(Description description) {
             testSucceeded();
         }
-    };
 
+        @Override
+        protected void skipped(AssumptionViolatedException e, Description description) {
+            testSkipped();
+        }
+    };
 
     @Before
     public void beforeTests() {

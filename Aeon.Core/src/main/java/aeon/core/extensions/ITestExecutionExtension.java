@@ -38,6 +38,11 @@ public interface ITestExecutionExtension extends ExtensionPoint {
     void onSucceededTest();
 
     /**
+     * Is called when the driver is skipped
+     */
+    void onSkippedTest();
+
+    /**
      * Is called when a test failed.
      *
      * @param reason Error message.

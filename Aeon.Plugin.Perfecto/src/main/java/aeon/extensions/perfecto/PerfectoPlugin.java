@@ -10,6 +10,7 @@ import com.perfecto.reportium.client.ReportiumClientFactory;
 import com.perfecto.reportium.model.CustomField;
 import com.perfecto.reportium.model.PerfectoExecutionContext;
 import com.perfecto.reportium.test.TestContext;
+import com.perfecto.reportium.test.result.TestResult;
 import com.perfecto.reportium.test.result.TestResultFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -82,6 +83,13 @@ public class PerfectoPlugin extends Plugin {
         @Override
         public void onSucceededTest() {
             reportiumClient.testStop(TestResultFactory.createSuccess());
+
+            log.info("Test Report URL: " + reportiumClient.getReportUrl());
+        }
+
+        @Override
+        public void onSkippedTest() {
+            reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
 
             log.info("Test Report URL: " + reportiumClient.getReportUrl());
         }

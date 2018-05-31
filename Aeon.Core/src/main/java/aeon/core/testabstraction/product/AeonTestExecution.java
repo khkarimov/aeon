@@ -158,4 +158,11 @@ public class AeonTestExecution {
             testExecutionPlugin.onFailedTest(message);
         }
     }
+
+    public static void testSkipped() {
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onSkippedTest();
+        }
+    }
 }

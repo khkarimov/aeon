@@ -94,6 +94,15 @@ public class ReportingPlugin extends Plugin {
         }
 
         @Override
+        public void onSkippedTest() {
+            report_bean.addSkipped();
+            Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
+            scenarioBean.setModuleName(currentClass);
+            scenarioBean.setErrorMessage("");
+            scenarioBean.setStatus("SKIPPED");
+        }
+
+        @Override
         public void onFailedTest(String reason) {
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
             scenarioBean.setModuleName(currentClass);
