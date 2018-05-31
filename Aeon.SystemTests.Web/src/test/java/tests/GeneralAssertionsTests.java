@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -16,6 +17,8 @@ import org.junit.runner.Description;
 import static aeon.core.testabstraction.product.Aeon.launch;
 import static aeon.core.testabstraction.product.AeonTestExecution.*;
 
+@Tag("WindowsTests")
+@Tag("UbuntuTests")
 public class GeneralAssertionsTests {
     public static Sample product;
 

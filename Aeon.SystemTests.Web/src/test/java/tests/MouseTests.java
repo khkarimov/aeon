@@ -4,6 +4,7 @@ import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.WebConfiguration;
 import main.sample.Sample;
 import org.junit.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -11,6 +12,8 @@ import org.junit.runner.Description;
 import static aeon.core.testabstraction.product.Aeon.launch;
 import static aeon.core.testabstraction.product.AeonTestExecution.*;
 
+@Tag("WindowsTests")
+@Tag("UbuntuTests")
 public class MouseTests {
     public static Sample product;
 

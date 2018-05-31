@@ -5,8 +5,6 @@ import aeon.core.common.web.BrowserSize;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
-
 public class BrowserWindowTests extends SampleBaseTest{
 
     @Test

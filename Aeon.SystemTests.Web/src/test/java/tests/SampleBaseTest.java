@@ -27,5 +27,4 @@ public class SampleBaseTest {
     public void afterTests() {
         product.browser.quit();
     }
-
 }
