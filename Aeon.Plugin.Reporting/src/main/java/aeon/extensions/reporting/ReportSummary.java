@@ -216,6 +216,6 @@ public class ReportSummary {
         String environmentURL = aeonConfiguration.getString("aeon.environment", "");
 
         return "<td><p>Browser: " + browser + "</p>" +
-                "<p>HomePageURL: " + environmentURL + "</p>";
+                "<p>Environment URL: " + environmentURL + "</p>";
     }
 }

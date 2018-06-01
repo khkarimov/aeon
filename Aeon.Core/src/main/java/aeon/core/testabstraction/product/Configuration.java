@@ -92,6 +92,6 @@ public class Configuration extends BaseConfiguration {
 
         public static final String TIMEOUT = "aeon.timeout";
         public static final String THROTTLE = "aeon.throttle";
-        public static final String REPORTING = "aeon.reporting";
+        public static final String REPORTING = "aeon.implicit_reporting";
     }
 }
