@@ -1,7 +1,7 @@
 package aeon.core.common;
 
 /**
- * Created by RafaelT on 7/5/2016.
+ * Enum for keys.
  */
 public enum KeyboardKey {
     NULL('\uE000'),

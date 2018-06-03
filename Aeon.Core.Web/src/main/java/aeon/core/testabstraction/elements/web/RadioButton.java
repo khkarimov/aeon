@@ -6,7 +6,7 @@ import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Created by SebastianR on 8/3/2016.
+ * Model class for radio buttons.
  */
 public class RadioButton extends WebElement {
 

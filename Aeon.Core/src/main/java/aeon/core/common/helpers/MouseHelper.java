@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 
 /**
- * Created by SebastianR on 10/19/2016.
+ * Helper class for mouse actions.
  */
 public class MouseHelper {
 

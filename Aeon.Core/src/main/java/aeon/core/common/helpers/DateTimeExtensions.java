@@ -5,7 +5,7 @@ import org.joda.time.DateTimeConstants;
 import org.joda.time.Period;
 
 /**
- * Created by RafaelT on 7/1/2016.
+ * Helper class for DateTime fields.
  */
 public class DateTimeExtensions {
 

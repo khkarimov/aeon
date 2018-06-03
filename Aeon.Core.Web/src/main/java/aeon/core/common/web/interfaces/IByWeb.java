@@ -14,4 +14,13 @@ public interface IByWeb extends IBy {
      * @return A {@link ByJQuery} object.
      */
     ByJQuery toJQuery();
+
+    /**
+     * Appends a selector to the current instance in order
+     * to be able to select child elements.
+     *
+     * @param selector The selector of the child elements
+     * @return The new IBy with the appended selector
+     */
+    IByWeb find(IByWeb selector);
 }

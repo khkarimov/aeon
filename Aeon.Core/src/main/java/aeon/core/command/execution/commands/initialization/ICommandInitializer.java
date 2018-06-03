@@ -10,9 +10,6 @@ import java.util.function.Consumer;
  * Command Initializer interface.
  */
 public interface ICommandInitializer {
-
-    // TODO(johnDoe): Delete/change the name of this method.
-
     /**
      * Sets the consumer for the command initializer.
      *

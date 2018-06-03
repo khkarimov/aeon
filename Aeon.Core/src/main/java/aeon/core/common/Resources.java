@@ -3,7 +3,7 @@ package aeon.core.common;
 import java.util.ResourceBundle;
 
 /**
- * Created by DionnyS on 3/31/2016.
+ * Resources class for reading message strings.
  */
 public class Resources {
 

@@ -24,11 +24,7 @@ import java.util.function.Consumer;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class IsCommandTests {
 
-    private IsCommand isCommandObjectRaw;
-    private IsCommand isCommandObjectText;
     private String value = "Value";
-    private ComparisonOption rawOption = ComparisonOption.Raw;
-    private ComparisonOption textOption = ComparisonOption.Text;
     private String attribute = "Attribute";
 
     @Mock
@@ -42,16 +38,10 @@ public class IsCommandTests {
     @Mock
     private Consumer<IDriver> action;
 
-    @BeforeEach
-    public void setup() {
-        // two isCommandObjects are created to test both ComparisonOption enums
-        isCommandObjectRaw = new IsCommand(selector, initializer, value, rawOption, attribute);
-        isCommandObjectText = new IsCommand(selector, initializer, value, textOption, attribute);
-    }
-
     @Test
     public void commandDelegateIsCommandWithRaw(){
         // Arrange
+        IsCommand isCommandObjectRaw = new IsCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -60,12 +50,13 @@ public class IsCommandTests {
         actionRaw.accept(driver);
 
         // Assert
-        verify(driver, times(1)).is(control, value, rawOption, attribute);
+        verify(driver, times(1)).is(control, value, ComparisonOption.Raw, attribute);
     }
 
     @Test
     public void commandDelegateIsCommandWithText(){
         // Arrange
+        IsCommand isCommandObjectText = new IsCommand(selector, initializer, value, ComparisonOption.Text, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -74,6 +65,6 @@ public class IsCommandTests {
         actionText.accept(driver);
 
         // Assert
-        verify(driver, times(1)).is(control, value, textOption, attribute);
+        verify(driver, times(1)).is(control, value, ComparisonOption.Text, attribute);
     }
 }

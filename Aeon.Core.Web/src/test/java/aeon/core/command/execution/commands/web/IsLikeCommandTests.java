@@ -24,11 +24,7 @@ import static org.mockito.Mockito.when;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class IsLikeCommandTests {
 
-    private IsLikeCommand isLikeCommandObjectRaw;
-    private IsLikeCommand isLikeCommandObjectText;
     private String value = "Value";
-    private ComparisonOption rawOption = ComparisonOption.Raw;
-    private ComparisonOption textOption = ComparisonOption.Text;
     private String attribute = "Attribute";
 
     @Mock
@@ -42,16 +38,10 @@ public class IsLikeCommandTests {
     @Mock
     private Consumer<IDriver> action;
 
-    @BeforeEach
-    public void setup() {
-        // two isLikeCommandObjects are created to test both ComparisonOption enums
-        isLikeCommandObjectRaw = new IsLikeCommand(selector, initializer, value, rawOption, attribute);
-        isLikeCommandObjectText = new IsLikeCommand(selector, initializer, value, textOption, attribute);
-    }
-
     @Test
     public void commandDelegateIsLikeCommandWithRaw(){
         // Arrange
+        IsLikeCommand isLikeCommandObjectRaw = new IsLikeCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -60,12 +50,13 @@ public class IsLikeCommandTests {
         actionRaw.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isLike(control, value, rawOption, attribute);
+        verify(driver, times(1)).isLike(control, value, ComparisonOption.Raw, attribute);
     }
 
     @Test
     public void commandDelegateIsLikeCommandWithText(){
         // Arrange
+        IsLikeCommand isLikeCommandObjectText = new IsLikeCommand(selector, initializer, value, ComparisonOption.Text, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -74,6 +65,6 @@ public class IsLikeCommandTests {
         actionText.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isLike(control, value, textOption, attribute);
+        verify(driver, times(1)).isLike(control, value, ComparisonOption.Text, attribute);
     }
 }

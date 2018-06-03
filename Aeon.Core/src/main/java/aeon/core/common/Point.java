@@ -1,7 +1,7 @@
 package aeon.core.common;
 
 /**
- * Created by DionnyS on 3/31/2016.
+ * Represents a point on the screen.
  */
 public class Point {
 
