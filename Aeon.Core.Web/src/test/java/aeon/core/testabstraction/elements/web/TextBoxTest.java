@@ -21,29 +21,25 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.any;
 
-/**
- * Created by chasef on 5/26/17.
- */
-
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class TextBoxTest {
-    private TextBox textBox;  //class under test
-    private AutomationInfo automationInfo;  //needed to make a TextBox
+    private TextBox textBox;
+    private AutomationInfo automationInfo;
 
-    @Mock  //for AutomationInfo constructor
+    @Mock
     private Configuration configuration;
 
-    @Mock  //for AutomationInfo constructor
+    @Mock
     private IAdapter adapter;
 
-    @Mock  //for AutomationInfo constructor
+    @Mock
     private IDriver driver;
 
     @Mock
     private ICommandExecutionFacade commandExecutionFacade;
 
-    @Mock  //Needed for TextBox constructor
+    @Mock
     private IByWeb selector;
 
     @BeforeEach
@@ -77,5 +73,4 @@ public class TextBoxTest {
         verify(commandExecutionFacade, times(1))
                 .execute(Mockito.eq(automationInfo), any(ClearCommand.class));
     }
-
 }

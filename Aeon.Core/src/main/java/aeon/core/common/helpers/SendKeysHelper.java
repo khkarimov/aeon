@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by Salvador Gandara on 6/28/2016.
+ * Helper class for sending keys to the local machine.
  */
 public class SendKeysHelper {
 

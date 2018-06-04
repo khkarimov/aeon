@@ -4,7 +4,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.Control;
 
 /**
- * Created by DionnyS on 4/20/2016.
+ * Model class for web controls.
  */
 public class WebControl extends Control {
 

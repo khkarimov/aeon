@@ -1,6 +1,7 @@
 package aeon.core.common.mobile.selectors;
 
 import aeon.core.common.mobile.interfaces.IByMobile;
+import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.ByJQuery;
 
 /**
@@ -47,6 +48,11 @@ public class ByMobile implements IByMobile {
      */
     public static ByMobileXPath xpath(String selector) {
         return new ByMobileXPath(selector);
+    }
+
+    @Override
+    public IByWeb find(IByWeb selector) {
+        throw new RuntimeException("Native selector cannot use 'find'.");
     }
 
     /**

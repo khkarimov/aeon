@@ -446,6 +446,11 @@ public class ByJQuery implements IByWeb, IByJQuery {
         return new ByJQuery(this, "find", obj);
     }
 
+    @Override
+    public final IByWeb find(IByWeb selector) {
+        return find(selector.toJQuery());
+    }
+
     /**
      * Reduce the set of matched elements to the first in the set.
      * @return new instance of a {@link ByJQuery} object that is first.

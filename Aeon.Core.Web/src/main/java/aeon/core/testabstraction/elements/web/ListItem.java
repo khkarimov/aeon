@@ -4,7 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Created by Administrator on 6/17/2016.
+ * Model class for list items.
  */
 public class ListItem extends WebElement {
 

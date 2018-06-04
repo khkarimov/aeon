@@ -1,7 +1,7 @@
 package aeon.selenium.jquery;
 
 /**
- * Created by DionnyS on 3/31/2016.
+ * Enum for JavaScript options.
  */
 public enum JavaScriptFinalizerOptions {
     None,
