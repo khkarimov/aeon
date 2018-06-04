@@ -86,7 +86,7 @@ public class ReportSummary {
         if (reportBean.isSuitePassed())
             htmlBody = htmlBody + createHeader("Pass List")
                     + createTable(new String[]{"Class Name", "Test Name", "Status"},
-                    getTableBodyForPassList(reportBean.getScenarios()), "t04") + "<br>";
+                    getTableBodyForPassList(reportBean.getScenarioBeans()), "t04") + "<br>";
 
         htmlBody = htmlBody + this.createEmptySpaceInReport();
         htmlBody = htmlBody + this.createEmptySpaceInReport();

@@ -5,7 +5,7 @@ import aeon.core.common.exceptions.NoSuchCookieException;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.WebConfiguration;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Calendar;

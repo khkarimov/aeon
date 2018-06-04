@@ -41,13 +41,6 @@ public class Report {
         return this.broken;
     }
 
-    public List<Scenario> getScenarios() {
-        if (this.scenarioBeans == null) {
-            this.scenarioBeans = new ArrayList<>();
-        }
-        return this.scenarioBeans;
-    }
-
     public void addPass() {
         this.total = this.getTotal() + 1;
         this.passed = this.getPassed() + 1;
