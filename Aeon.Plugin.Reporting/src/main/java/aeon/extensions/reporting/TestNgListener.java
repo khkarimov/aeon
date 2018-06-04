@@ -19,6 +19,7 @@ public class TestNgListener implements ITestListener, ISuiteListener {
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
+        AeonTestExecution.testSkipped();
     }
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
