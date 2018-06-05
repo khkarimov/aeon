@@ -34,6 +34,8 @@ import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
+import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
@@ -80,6 +82,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
+    protected String loggingPath;
+    protected String loggingLevel;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -115,8 +119,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
-
-        URL seleniumHubUrl = null;
+        loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "");
+        loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG");
+;        URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         if (StringUtils.isNotBlank(hubUrlString)) {
             try {
@@ -183,7 +188,15 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     } else {
                         InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
                         System.setProperty("webdriver.ie.driver", ieDirectory);
-                        driver = new InternetExplorerDriver(ieOptions);
+                        if (loggingPath.isEmpty()) {
+                            driver = new InternetExplorerDriver(ieOptions);
+                        } else {
+                            InternetExplorerDriverService.Builder service = new InternetExplorerDriverService.Builder();
+                           // System.setProperty("InternetExplorerDriverLogLevel",loggingLevel);
+                            service = service.withLogLevel(InternetExplorerDriverLogLevel.valueOf(loggingLevel));
+                            service = service.withLogFile(new File(loggingPath));
+                            driver = new InternetExplorerDriver(service.build(), ieOptions);
+                        }
                     }
 
                     return driver;
@@ -543,6 +556,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         InternetExplorerOptions ieOptions = new InternetExplorerOptions();
+
         ieOptions.setCapability(CapabilityType.HAS_NATIVE_EVENTS, true);
         ieOptions.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
         ieOptions.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, false);
@@ -553,6 +567,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         ieOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
         ieOptions.setCapability("ie.fileUploadDialogTimeout", 100000);
         setProxySettings(ieOptions, proxyLocation);
+
         return ieOptions;
     }
 

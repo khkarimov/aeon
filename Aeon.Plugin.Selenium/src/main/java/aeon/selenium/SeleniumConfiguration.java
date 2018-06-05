@@ -39,6 +39,8 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
         public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
         public static final String CHROME_MOBILE_EMULATION_DEVICE = "aeon.selenium.chrome.mobile.emulation.device";
+        public static final String IE_LOGGING_LEVEL = "aeon.selenium.ie.logging.level";
+        public static final String IE_LOGGING_PATH = "aeon.selenium.ie.logging.path";
 
         // Perfecto
         public static final String PERFECTO_USER = "aeon.selenium.perfecto.user";
