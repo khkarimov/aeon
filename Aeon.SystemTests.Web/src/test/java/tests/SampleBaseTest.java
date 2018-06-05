@@ -1,17 +1,18 @@
 package tests;
 
 import aeon.core.testabstraction.product.WebConfiguration;
+import categories.UbuntuTests;
+import categories.WindowsTests;
 import main.sample.Sample;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.jupiter.api.Tag;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Tag("WindowsTests")
-@Tag("UbuntuTests")
+@Category({WindowsTests.class, UbuntuTests.class})
 public class SampleBaseTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

@@ -1,14 +1,15 @@
 package tests;
 
+import categories.AndroidTests;
 import main.sample.Sample;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Tag;
+import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Tag("AndroidTests")
+@Category({AndroidTests.class})
 public class AndroidUltihomeTest {
     private static Sample product;
 

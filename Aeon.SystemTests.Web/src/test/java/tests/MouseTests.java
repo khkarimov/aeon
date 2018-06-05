@@ -2,9 +2,11 @@ package tests;
 
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.WebConfiguration;
+import categories.UbuntuTests;
+import categories.WindowsTests;
 import main.sample.Sample;
 import org.junit.*;
-import org.junit.jupiter.api.Tag;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -12,8 +14,7 @@ import org.junit.runner.Description;
 import static aeon.core.testabstraction.product.Aeon.launch;
 import static aeon.core.testabstraction.product.AeonTestExecution.*;
 
-@Tag("WindowsTests")
-@Tag("UbuntuTests")
+@Category({WindowsTests.class, UbuntuTests.class})
 public class MouseTests {
     public static Sample product;
 
