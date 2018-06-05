@@ -6,7 +6,7 @@ import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
- * Created by DionnyS on 4/14/2016.
+ * Helper class for time strings.
  */
 public class TimeUtils {
     /**

@@ -1,6 +1,7 @@
 package aeon.core.common.mobile.selectors;
 
 import aeon.core.common.mobile.interfaces.IByMobileId;
+import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.ByJQuery;
 
 /**
@@ -27,6 +28,11 @@ public class ByMobileId implements IByMobileId {
      */
     public static ByMobileId id(String selector) {
         return new ByMobileId(selector);
+    }
+
+    @Override
+    public IByWeb find(IByWeb selector) {
+        throw new RuntimeException("Native selector cannot use 'find'.");
     }
 
     /**

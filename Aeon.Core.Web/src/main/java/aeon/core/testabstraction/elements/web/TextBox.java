@@ -10,7 +10,7 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Created by AdamC on 4/13/2016.
+ * Model class for text boxes.
  */
 public class TextBox extends WebElement {
 

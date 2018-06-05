@@ -1,24 +1,33 @@
 package aeon.extensions.perfecto;
 
+import aeon.core.common.interfaces.IConfiguration;
 import aeon.core.extensions.ITestExecutionExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
-import aeon.selenium.appium.AppiumAdapter;
+import aeon.selenium.SeleniumAdapter;
+import aeon.selenium.SeleniumConfiguration;
+import aeon.selenium.extensions.ISeleniumExtension;
 import com.perfecto.reportium.client.ReportiumClient;
 import com.perfecto.reportium.client.ReportiumClientFactory;
 import com.perfecto.reportium.model.CustomField;
 import com.perfecto.reportium.model.PerfectoExecutionContext;
 import com.perfecto.reportium.test.TestContext;
 import com.perfecto.reportium.test.result.TestResultFactory;
+import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.WebDriver;
 import org.pf4j.Extension;
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Plugin class for Perfecto Plugin.
@@ -26,6 +35,8 @@ import java.util.List;
 public class PerfectoPlugin extends Plugin {
 
     private static ReportiumClient reportiumClient;
+
+    static IConfiguration configuration;
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
@@ -38,10 +49,10 @@ public class PerfectoPlugin extends Plugin {
         super(wrapper);
     }
 
-    private static Logger log = LogManager.getLogger(PerfectoPlugin.class);
+    static Logger log = LogManager.getLogger(PerfectoPlugin.class);
 
     /**
-     * Test execution extension for sending test details to Perfecto.
+     * Test execution extensions for sending test details to Perfecto.
      */
     @Extension
     public static class PerfectoTestExecutionExtension implements ITestExecutionExtension {
@@ -64,7 +75,7 @@ public class PerfectoPlugin extends Plugin {
 
             PerfectoExecutionContext perfectoExecutionContext = new PerfectoExecutionContext.PerfectoExecutionContextBuilder()
                     .withCustomFields(customFields.toArray(new CustomField[0]))
-                    .withWebDriver(((AppiumAdapter) adapter).getMobileWebDriver())
+                    .withWebDriver(((SeleniumAdapter) adapter).getWebDriver())
                     .build();
             reportiumClient = new ReportiumClientFactory().createPerfectoReportiumClient(perfectoExecutionContext);
         }
@@ -102,5 +113,91 @@ public class PerfectoPlugin extends Plugin {
         public void onDone() {
 
         }
+    }
+
+    /**
+     * ISeleniumExtension to add Perfecto capabilities to Selenium plugin.
+     */
+    @Extension
+    public static class PerfectoSeleniumExtension implements ISeleniumExtension {
+
+        @Override
+        public void onGenerateCapabilities(Configuration configuration, MutableCapabilities capabilities) {
+            //check if PerfectoConfiguration has been instantiated
+            if (PerfectoPlugin.configuration == null) {
+                PerfectoPlugin.configuration = new PerfectoConfiguration();
+                try {
+                    PerfectoPlugin.configuration.loadConfiguration();
+                } catch (IllegalAccessException | IOException e) {
+                    log.info("Could not load plugin configuration, using Aeon configuration instead");
+                    PerfectoPlugin.configuration = configuration;
+                }
+            }
+
+            //set variables
+            String perfectoUser = PerfectoPlugin.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+            String perfectoPass = PerfectoPlugin.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+            String perfectoToken = PerfectoPlugin.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+            boolean perfectoAutoInstrument = PerfectoPlugin.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT, false);
+            boolean perfectoSensorInstrument = PerfectoPlugin.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
+
+            //credentials
+            setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
+
+            //instrumentation
+            capabilities.setCapability("autoInstrument", perfectoAutoInstrument);
+            capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
+
+        }
+
+        @Override
+        public void onAfterLaunch(Configuration configuration, WebDriver driver) {
+            boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
+            String appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
+
+            //Only if AndroidHybridApp
+            if (driver instanceof AndroidDriver) {
+                //Cleans the app data for a fresh new session.
+                if (ensureCleanEnvironment && !appPackage.isEmpty()) {
+                    try {
+                        log.info("Cleaning application environment...");
+                        //Clean command
+                        Map<String, Object> cleanParams = new HashMap<>();
+                        cleanParams.put("identifier", appPackage);
+                        ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
+
+                        //Re-opens the application
+                        Map<String, Object> openParams = new HashMap<>();
+                        openParams.put("identifier", appPackage);
+                        ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
+                    } catch (Exception e) {
+                        driver.quit();
+
+                        throw e;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Adds perfecto credentials to the list of capabilities. perfectoToken is enough for valid credentials
+         * only takes username and password when token is not available.
+         * @param perfectoUser the user's login
+         * @param perfectoPass the user's password
+         * @param perfectoToken the user's token
+         * @param perfectoCapabilities the capabilities so far
+         */
+        private void setPerfectoCredentials(String perfectoUser, String perfectoPass, String perfectoToken, MutableCapabilities perfectoCapabilities){
+            if (!perfectoToken.isEmpty()) {
+                perfectoCapabilities.setCapability("securityToken", perfectoToken);
+            } else if (!perfectoUser.isEmpty()) {
+                perfectoCapabilities.setCapability("user", perfectoUser);
+                if (!perfectoPass.isEmpty()) {
+                    perfectoCapabilities.setCapability("password", perfectoPass);
+                }
+            }
+        }
+
+
     }
 }

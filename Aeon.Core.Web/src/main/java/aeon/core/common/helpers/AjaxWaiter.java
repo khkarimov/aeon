@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by JustinP on 6/2/2016.
+ * Allows for waiting for Ajax requests to complete on a page.
  */
 public class AjaxWaiter {
 

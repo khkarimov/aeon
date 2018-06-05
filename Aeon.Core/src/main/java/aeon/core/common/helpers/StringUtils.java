@@ -3,7 +3,7 @@ package aeon.core.common.helpers;
 import aeon.core.common.exceptions.ContainsWhiteSpaceException;
 
 /**
- * Created by DionnyS on 3/31/2016.
+ * Helper class for strings.
  */
 public class StringUtils {
 

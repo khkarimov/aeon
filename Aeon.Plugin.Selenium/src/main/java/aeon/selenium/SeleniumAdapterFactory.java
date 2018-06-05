@@ -11,8 +11,10 @@ import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
+import aeon.selenium.extensions.ISeleniumExtension;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
@@ -24,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.Duration;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverService;
@@ -68,11 +69,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String browserAcceptedLanguageCodes;
     private boolean useMobileUserAgent;
     private String proxyLocation;
-    private String perfectoUser;
-    private String perfectoPass;
-    private String perfectoToken;
     private String platformVersion;
-    private String browserVersion;
     private String app;
     private String appPackage;
     private String deviceName;
@@ -109,12 +106,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
-        perfectoUser = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_USER, "");
-        perfectoPass = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_PASS, "");
-        perfectoToken = configuration.getString(SeleniumConfiguration.Keys.PERFECTO_TOKEN, "");
         description = configuration.getString(SeleniumConfiguration.Keys.DEVICE_DESCRIPTION, "");
         platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
-        browserVersion = configuration.getString(SeleniumConfiguration.Keys.BROWSER_VERSION, "");
         app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
@@ -253,33 +246,16 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 trySetContext();
 
-                //Cleans the app data for a fresh new session.
-                if (ensureCleanEnvironment && !appPackage.isEmpty()) {
-
-                    try {
-                        log.info("Cleaning application environment...");
-
-                        //Clean command
-                        Map<String, Object> cleanParams = new HashMap<>();
-                        cleanParams.put("identifier", appPackage);
-                        ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
-
-                        //Re-opens the application
-                        Map<String, Object> openParams = new HashMap<>();
-                        openParams.put("identifier", appPackage);
-                        ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
-                    } catch (Exception e) {
-                        driver.quit();
-
-                        throw e;
-                    }
-                }
-
                 break;
 
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
+        }
+        //Let plugins know that the product was successfully launched
+        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
+        for (ISeleniumExtension extension: extensions) {
+            extension.onAfterLaunch(configuration, driver);
         }
     }
 
@@ -351,13 +327,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     desiredCapabilities.setCapability("description", description);
                 }
 
-                // Perfecto
-                setPerfectoCredentials(desiredCapabilities);
-
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "mobileSafari");
-                desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("automationName", configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, ""));
                 desiredCapabilities.setCapability("deviceName", deviceName);
                 desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
@@ -372,25 +344,17 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     desiredCapabilities.setCapability("description", description);
                 }
 
-                // Perfecto
-                setPerfectoCredentials(desiredCapabilities);
-
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "Chrome");
-                desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("deviceName", deviceName);
                 break;
 
             case IOSHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
 
-                // Perfecto
-                setPerfectoCredentials(desiredCapabilities);
-
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
-                desiredCapabilities.setCapability("browserVersion", browserVersion);
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
 
                 // Appium
@@ -425,9 +389,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
 
-                // Perfecto
-                setPerfectoCredentials(desiredCapabilities);
-
                 // Appium
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
@@ -439,9 +400,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
 
-                if (!browserVersion.isEmpty()) {
-                    desiredCapabilities.setCapability("browserVersion", browserVersion);
-                }
                 if (!platformVersion.isEmpty()) {
                     desiredCapabilities.setCapability("platformVersion", platformVersion);
                 }
@@ -478,18 +436,13 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 throw new ConfigurationException("BrowserType", "configuration", String.format("%1$s is not a supported browser", browserType));
         }
 
-        return desiredCapabilities;
-    }
-
-    private void setPerfectoCredentials(MutableCapabilities perfectoCapabilities){
-        if (!perfectoToken.isEmpty()) {
-            perfectoCapabilities.setCapability("securityToken", perfectoToken);
-        } else if (!perfectoUser.isEmpty()) {
-            perfectoCapabilities.setCapability("user", perfectoUser);
-            if (!perfectoPass.isEmpty()) {
-                perfectoCapabilities.setCapability("password", perfectoPass);
-            }
+        //add capabilities from other plugins
+        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
+        for (ISeleniumExtension extension: extensions) {
+            extension.onGenerateCapabilities(configuration, desiredCapabilities);
         }
+
+        return desiredCapabilities;
     }
 
     private DesiredCapabilities getMarionetteCapabilities() {

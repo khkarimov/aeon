@@ -3,7 +3,7 @@ package aeon.selenium;
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
 /**
- * Created by PatrickA on 5/16/2016.
+ * Plugin class for Selenium Plugin.
  */
 public class SeleniumPlugin extends Plugin {
     /**

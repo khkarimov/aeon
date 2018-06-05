@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by DionnyS on 4/1/2016.
+ * Helper class for processes.
  */
 public class Process {
 

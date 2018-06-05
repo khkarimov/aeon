@@ -1,5 +1,6 @@
 package aeon.core.common.web.selectors;
 
+import aeon.core.common.web.interfaces.IByJQuery;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
@@ -76,6 +77,15 @@ public class By implements IByWeb {
      */
     public final ByJQuery toJQuery() {
         return new ByJQuery(getSelector());
+    }
+
+    @Override
+    public final IByWeb find(IByWeb selector) {
+        if (selector instanceof IByJQuery) {
+            return this.toJQuery().find(selector);
+        }
+
+        return By.cssSelector(getSelector() + " " + selector);
     }
 
     /**

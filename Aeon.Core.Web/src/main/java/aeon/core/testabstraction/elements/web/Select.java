@@ -9,7 +9,7 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Created by RafaelT on 6/2/2016.
+ * Model class for select elements.
  */
 public class Select extends WebElement {
 

@@ -4,7 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Created by AdamC on 4/13/2016.
+ * Model class for links.
  */
 public class Link extends WebElement {
 

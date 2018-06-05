@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import static aeon.core.testabstraction.product.Aeon.launch;
 
 /**
- * Created by SebastianR on 11/23/2016.
  * This test file was created to show Aeon working on a UltiPro environment and to test the switch mechanism.
  */
 public class UltiProTests {

@@ -24,11 +24,7 @@ import static org.mockito.Mockito.when;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class IsNotLikeCommandTests {
 
-    private IsNotLikeCommand isNotLikeCommandObjectRaw;
-    private IsNotLikeCommand isNotLikeCommandObjectText;
     private String value = "Value";
-    private ComparisonOption rawOption = ComparisonOption.Raw;
-    private ComparisonOption textOption = ComparisonOption.Text;
     private String attribute = "Attribute";
 
     @Mock
@@ -42,16 +38,10 @@ public class IsNotLikeCommandTests {
     @Mock
     private Consumer<IDriver> action;
 
-    @BeforeEach
-    public void setup() {
-        // two isNotLikeCommandObjects are created to test both ComparisonOption enums
-        isNotLikeCommandObjectRaw = new IsNotLikeCommand(selector, initializer, value, rawOption, attribute);
-        isNotLikeCommandObjectText = new IsNotLikeCommand(selector, initializer, value, textOption, attribute);
-    }
-
     @Test
     public void commandDelegateIsNotLikeCommandWithRaw() {
         // Arrange
+        IsNotLikeCommand isNotLikeCommandObjectRaw = new IsNotLikeCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -60,12 +50,13 @@ public class IsNotLikeCommandTests {
         actionRaw.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isNotLike(control, value, rawOption, attribute);
+        verify(driver, times(1)).isNotLike(control, value, ComparisonOption.Raw, attribute);
     }
 
     @Test
     public void commandDelegateIsNotLikeCommandWithText() {
         // Arrange
+        IsNotLikeCommand isNotLikeCommandObjectText = new IsNotLikeCommand(selector, initializer, value, ComparisonOption.Text, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -74,6 +65,6 @@ public class IsNotLikeCommandTests {
         actionText.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isNotLike(control, value, textOption, attribute);
+        verify(driver, times(1)).isNotLike(control, value, ComparisonOption.Text, attribute);
     }
 }

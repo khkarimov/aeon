@@ -78,7 +78,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Gets the web driver.
      * @return The web driver is returned.
      */
-    protected WebDriver getWebDriver() {
+    public WebDriver getWebDriver() {
         return webDriver;
     }
 
