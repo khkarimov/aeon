@@ -83,29 +83,6 @@ allprojects {
         testCompile('org.mockito:mockito-junit-jupiter:2.18.0')
         testCompile('org.junit.platform:junit-platform-launcher:1.2.0')
     }
-
-    test {
-        maxParallelForks = 4
-        useJUnit {
-            def includeList = System.getenv('tests.included.tags')
-            if (includeList != null)
-            {
-                def categories = includeList.split("\\s*(,|\\s)\\s*")
-                categories.each {category ->
-                    includeCategories 'categories.' + category
-                }
-            }
-            def excludeList = System.getenv('tests.excluded.tags')
-            if (excludeList != null)
-            {
-                def categories = excludeList.split("\\s*(,|\\s)\\s*")
-                categories.each {category ->
-                    excludeCategories 'categories.' + category
-                }
-            }
-        }
-    }
-
 }
 
 buildscript {
