@@ -26,7 +26,7 @@ test {
         {
             def categories = includeList.split("\\s*(,|\\s)\\s*")
             categories.each {category ->
-                includeCategories 'tags.' + category
+                includeCategories 'categories.' + category
             }
         }
         def excludeList = System.getenv('tests.excluded.tags')
@@ -34,7 +34,7 @@ test {
         {
             def categories = excludeList.split("\\s*(,|\\s)\\s*")
             categories.each {category ->
-                excludeCategories 'tags.' + category
+                excludeCategories 'categories.' + category
             }
         }
     }
