@@ -87,7 +87,7 @@ allprojects {
     test {
         maxParallelForks = 4
         useJUnit {
-            def includeList = System.getenv('tests.included.categories')
+            def includeList = System.getenv('tests.included.tags')
             if (includeList != null)
             {
                 def categories = includeList.split("\\s*(,|\\s)\\s*")
@@ -95,7 +95,7 @@ allprojects {
                     includeCategories 'categories.' + category
                 }
             }
-            def excludeList = System.getenv('tests.excluded.categories')
+            def excludeList = System.getenv('tests.excluded.tags')
             if (excludeList != null)
             {
                 def categories = excludeList.split("\\s*(,|\\s)\\s*")
