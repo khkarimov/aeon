@@ -56,6 +56,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+
 /**
  * The driver factory for Web.
  */
@@ -79,8 +80,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
-    protected String loggingPath;
-    protected String loggingLevel;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -98,6 +97,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      * @param configuration The configuration of the adapter.
      */
     protected void prepare(SeleniumConfiguration configuration) {
+        String loggingPath;
+        String loggingLevel;
+        String finalLoggingLevel;
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
         configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome")));
@@ -112,9 +114,21 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
-        loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "");
+        loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "/log/selenium.default.log");
         loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG");
-;        URL seleniumHubUrl = null;
+        switch (loggingLevel)
+        { case "FATAL":
+            case "INFO":
+            case "ERROR":
+            case "DEBUG":
+            case "TRACE":
+            case "WARN":
+                break;
+            default:
+                loggingLevel = "DEBUG";
+        }
+        finalLoggingLevel = loggingLevel;
+        URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         if (StringUtils.isNotBlank(hubUrlString)) {
             try {
@@ -181,12 +195,11 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     } else {
                         InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
                         System.setProperty("webdriver.ie.driver", ieDirectory);
-                        if (loggingPath.isEmpty()) {
+                        if (StringUtils.isBlank(loggingPath) || StringUtils.isBlank(finalLoggingLevel)) {
                             driver = new InternetExplorerDriver(ieOptions);
                         } else {
                             InternetExplorerDriverService.Builder service = new InternetExplorerDriverService.Builder();
-                           // System.setProperty("InternetExplorerDriverLogLevel",loggingLevel);
-                            service = service.withLogLevel(InternetExplorerDriverLogLevel.valueOf(loggingLevel));
+                            service = service.withLogLevel(InternetExplorerDriverLogLevel.valueOf(finalLoggingLevel));
                             service = service.withLogFile(new File(loggingPath));
                             driver = new InternetExplorerDriver(service.build(), ieOptions);
                         }
