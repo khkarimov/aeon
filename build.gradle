@@ -85,6 +85,29 @@ allprojects {
     }
 }
 
+test {
+    maxParallelForks = 4
+    useJUnitPlatform {
+        def includeList = System.getenv('tests.included.tags')
+        if (includeList != null)
+        {
+            def tags = includeList.split("\\s*(,|\\s)\\s*")
+            tags.each {tag ->
+                includeTags tag
+            }
+        }
+        def excludeList = System.getenv('tests.excluded.tags')
+        if (excludeList != null)
+        {
+            def tags = excludeList.split("\\s*(,|\\s)\\s*")
+            tags.each {tag ->
+                excludeTags tag
+            }
+        }
+    }
+}
+
+
 buildscript {
     repositories {
         jcenter()
