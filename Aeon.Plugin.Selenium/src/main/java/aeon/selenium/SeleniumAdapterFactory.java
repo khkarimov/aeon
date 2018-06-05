@@ -116,8 +116,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
         loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "/log/selenium.default.log");
         loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG");
-        switch (loggingLevel)
-        {
+        switch (loggingLevel) {
             case "FATAL":
             case "INFO":
             case "ERROR":
