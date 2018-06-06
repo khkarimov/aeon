@@ -56,7 +56,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-
 /**
  * The driver factory for Web.
  */
@@ -111,6 +110,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
+
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         if (StringUtils.isNotBlank(hubUrlString)) {
@@ -192,7 +192,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         String finalLoggingLevel = loggingLevel;
                         InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
                         System.setProperty("webdriver.ie.driver", ieDirectory);
-                        if (StringUtils.isBlank(loggingPath) || StringUtils.isBlank(finalLoggingLevel)) {
+                        if (StringUtils.isBlank(loggingPath)) {
                             driver = new InternetExplorerDriver(ieOptions);
                         } else {
                             InternetExplorerDriverService.Builder service = new InternetExplorerDriverService.Builder();
@@ -528,7 +528,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         ieOptions.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, ensureCleanSession);
         ieOptions.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, ElementScrollBehavior.TOP);
         ieOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
-        ieOptions.setCapability("ie.fileUploadDialogTimeout", 100000);
+        ieOptions.setCapability("ie.fileUploadDialogTimeout", 10000);
         setProxySettings(ieOptions, proxyLocation);
 
         return ieOptions;
