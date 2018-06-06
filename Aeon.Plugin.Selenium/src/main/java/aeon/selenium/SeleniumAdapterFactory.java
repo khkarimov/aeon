@@ -97,9 +97,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      * @param configuration The configuration of the adapter.
      */
     protected void prepare(SeleniumConfiguration configuration) {
-        String loggingPath;
-        String loggingLevel;
-        String finalLoggingLevel;
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
         configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome")));
@@ -114,20 +111,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
-        loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "/log/selenium.default.log");
-        loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG");
-        switch (loggingLevel) {
-            case "FATAL":
-            case "INFO":
-            case "ERROR":
-            case "DEBUG":
-            case "TRACE":
-            case "WARN":
-                break;
-            default:
-                loggingLevel = "DEBUG";
-        }
-        finalLoggingLevel = loggingLevel;
         URL seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         if (StringUtils.isNotBlank(hubUrlString)) {
@@ -193,6 +176,20 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
                         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
+                        String loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "/log/selenium.default.log");
+                        String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG");
+                        switch (loggingLevel) {
+                            case "FATAL":
+                            case "INFO":
+                            case "ERROR":
+                            case "DEBUG":
+                            case "TRACE":
+                            case "WARN":
+                                break;
+                            default:
+                                loggingLevel = "DEBUG";
+                        }
+                        String finalLoggingLevel = loggingLevel;
                         InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
                         System.setProperty("webdriver.ie.driver", ieDirectory);
                         if (StringUtils.isBlank(loggingPath) || StringUtils.isBlank(finalLoggingLevel)) {
