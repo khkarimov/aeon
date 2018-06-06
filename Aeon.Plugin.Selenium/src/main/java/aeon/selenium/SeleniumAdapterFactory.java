@@ -176,7 +176,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
                         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
-                        String loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "/log/selenium.default.log");
+                        String loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "C:/iedriverserver.log");
                         String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG");
                         switch (loggingLevel) {
                             case "FATAL":
