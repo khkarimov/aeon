@@ -54,22 +54,32 @@ public class ReportingPlugin extends Plugin {
         static long currentStartTime = System.currentTimeMillis();
 
         @Override
-        public void onStartUp(Configuration aeonConfiguration) {
-            configuration = new ReportingConfiguration();
-
-            try {
-                configuration.loadConfiguration();
-            } catch (IllegalAccessException | IOException e) {
-                log.warn("Could not load plugin configuration, using Aeon configuration");
-
-                configuration = aeonConfiguration;
-            }
-
-            ReportingPlugin.aeonConfiguration = aeonConfiguration;
+        public void onBeforeTestClass() {
             report_bean = new Report();
             startTime = System.currentTimeMillis();
             log.info("Start Time " + report_date_format.format(new Date(startTime)));
             report_bean.setSuiteName(suiteName);
+        }
+
+        /**
+         * This gets called by the AutomationInfo constructor.
+         * @param aeonConfiguration The aeon Configuration for the tests.
+         */
+        @Override
+        public void onStartUp(Configuration aeonConfiguration) {
+            if (configuration == null) {
+                configuration = new ReportingConfiguration();
+
+                try {
+                    configuration.loadConfiguration();
+                } catch (IllegalAccessException | IOException e) {
+                    log.warn("Could not load plugin configuration, using Aeon configuration");
+
+                    configuration = aeonConfiguration;
+                }
+
+                ReportingPlugin.aeonConfiguration = aeonConfiguration;
+            }
         }
 
         @Override

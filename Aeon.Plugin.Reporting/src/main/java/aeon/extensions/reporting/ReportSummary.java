@@ -90,6 +90,7 @@ public class ReportSummary {
 
         htmlBody = htmlBody + this.createEmptySpaceInReport();
         htmlBody = htmlBody + this.createEmptySpaceInReport();
+        htmlBody = htmlBody + this.createEmptySpaceInReport();
 
         return Utils.htmlToPngFile(htmlBody, Utils.getResourcesPath() + title + ".png");
     }
@@ -107,8 +108,8 @@ public class ReportSummary {
         for (Scenario scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase("PASSED")) {
                 finalBody.append(createRow(
-                        createColumn(scenario.getModuleName())
-                                + createColumn(scenario.getScenarioName())
+                        createWrappingColumn(scenario.getModuleName())
+                                + createWrappingColumn(scenario.getScenarioName())
                                 + createColumnAndAssignColor(scenario.getStatus())
                 ));
             }
@@ -121,10 +122,10 @@ public class ReportSummary {
         for (Scenario scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase(status)) {
                 finalBody.append(createRow(
-                        createColumn(scenario.getModuleName())
-                                + createColumn(scenario.getScenarioName())
+                        createWrappingColumn(scenario.getModuleName())
+                                + createWrappingColumn(scenario.getScenarioName())
                                 + createColumnAndAssignColor(scenario.getStatus())
-                                + createColumn(scenario.getErrorMessage())
+                                + createWrappingColumn(scenario.getErrorMessage())
                 ));
             }
         }
@@ -167,7 +168,7 @@ public class ReportSummary {
     }
 
     private String createTable(String tableValue, String id) {
-        return "<table id=" + id + ">" + tableValue + "</table>";
+        return "<table style='table-layout: fixed' id=" + id + ">" + tableValue + "</table>";
     }
 
     private String createRow(String rowValue) {
@@ -180,6 +181,10 @@ public class ReportSummary {
 
     private String createColumn(String columnValue) {
         return "<td>" + columnValue + "</td>";
+    }
+
+    private String createWrappingColumn(String columnValue) {
+        return "<td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" + columnValue + "</td>";
     }
 
     private String createHeader(String header) {

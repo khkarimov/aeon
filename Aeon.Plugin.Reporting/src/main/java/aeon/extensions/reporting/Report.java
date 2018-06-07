@@ -5,13 +5,25 @@ import java.util.List;
 
 public class Report {
     private String suiteName;
-    private int total = 0;
-    private int passed = 0;
-    private int failed = 0;
-    private int skipped = 0;
-    private int broken = 0;
-    private List<Scenario> scenarioBeans;
+    private int total;
+    private int passed;
+    private int failed;
+    private int skipped;
+    private int broken;
+    private ArrayList<Scenario> scenarioBeans;
     private String totalTime;
+
+    public Report()
+    {
+        suiteName = "";
+        total = 0;
+        passed = 0;
+        failed = 0;
+        skipped = 0;
+        broken = 0;
+        scenarioBeans = new ArrayList<>();
+        totalTime = "";
+    }
 
     public String getSuiteName() {
         return this.suiteName;
@@ -88,12 +100,8 @@ public class Report {
     public boolean isSuiteSkipped() {
         return this.skipped >= 1;
     }
-    public List<Scenario> getScenarioBeans() {
-        if (this.scenarioBeans == null) {
-            this.scenarioBeans = new ArrayList<>();
-        }
-        return this.scenarioBeans;
-    }
+
+    public List<Scenario> getScenarioBeans() { return this.scenarioBeans; }
 }
 
 

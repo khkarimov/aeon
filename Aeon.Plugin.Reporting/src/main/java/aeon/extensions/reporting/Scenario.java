@@ -32,7 +32,11 @@ public class Scenario {
     }
 
     public String getErrorMessage() {
-        return this.errorMessage;
+        String errorMessageSanitized = this.errorMessage;
+        errorMessageSanitized = errorMessageSanitized.replace("&", "&amp;");
+        errorMessageSanitized = errorMessageSanitized.replace("<","&lt;");
+        errorMessageSanitized = errorMessageSanitized.replace(">", "&gt;");
+        return errorMessageSanitized;
     }
 
     public void setErrorMessage(String errorMessage) {

@@ -17,6 +17,11 @@ public interface ITestExecutionExtension extends ExtensionPoint {
     void onStartUp(Configuration configuration);
 
     /**
+     * Is called before a test class begins test execution.
+     */
+    void onBeforeTestClass();
+
+    /**
      * Is called after a product was successfully launched.
      *
      * @param configuration The Aeon configuration object.

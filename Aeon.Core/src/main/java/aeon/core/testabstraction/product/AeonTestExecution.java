@@ -36,6 +36,17 @@ public class AeonTestExecution {
     }
 
     /**
+     * Should be called in the @BeforeClass step of a test class.
+     */
+    public static void beforeTestClass() {
+        init();
+
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onBeforeTestClass();
+        }
+    }
+
+    /**
      * May be called at the end of all test executions.
      *
      * Should be called through Aeon.

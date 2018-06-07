@@ -23,6 +23,7 @@ import org.openqa.selenium.WebDriver;
 import org.pf4j.Extension;
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +61,12 @@ public class PerfectoPlugin extends Plugin {
 
         @Override
         public void onStartUp(Configuration configuration) {
+            // No actions needed
+        }
 
+        @Override
+        public void onBeforeTestClass() {
+            // No actions needed
         }
 
         @Override
