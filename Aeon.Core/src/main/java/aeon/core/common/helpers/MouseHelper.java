@@ -11,6 +11,32 @@ public class MouseHelper {
     // SR - I made this a boolean so that the Adapter can determine whether to throw an error or not
 
     /**
+     * Function uses coordinates to click at a specified location.
+     * @param xCoordinate the x coordinate.
+     * @param yCoordinate the y coordinate.
+     * @return returns false if the adapter needs to throw an error.
+     */
+    public static boolean click(int xCoordinate, int yCoordinate) {
+        // Get the current coordinates
+        Point pointLocation = MouseInfo.getPointerInfo().getLocation();
+        int xOriginal = (int) pointLocation.getX();
+        int yOriginal = (int) pointLocation.getY();
+
+        try {
+            Robot mouseRobot = new Robot();
+            mouseRobot.mouseMove(xCoordinate, yCoordinate);
+            mouseRobot.mousePress(InputEvent.BUTTON1_MASK);
+            mouseRobot.mouseRelease(InputEvent.BUTTON1_MASK);
+
+            //return mouse to original position
+            mouseRobot.mouseMove(xOriginal, yOriginal);
+            return true;
+        } catch (AWTException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    /**
      * Function uses coordinates to click and hold for a specific amount of time.
      * @param xCoordinate the x coordinate.
      * @param yCoordinate the y coordinate.
