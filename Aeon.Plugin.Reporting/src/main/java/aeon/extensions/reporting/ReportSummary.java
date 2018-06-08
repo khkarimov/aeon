@@ -67,7 +67,7 @@ public class ReportSummary {
             //Suite Summary for JUnit so no Suite column
             htmlBody = htmlBody + createHeader("Overall Summary") +
                     createTable(new String[]{"Total Tests", "Passed", "Failed",
-                            "Broken", "Skipped", "Total Time"}, getTableBodyForSuiteSummaryJUnit(reportBean), "t01");
+                            "Skipped", "Total Time"}, getTableBodyForSuiteSummaryJUnit(reportBean), "t01");
         } else {
             //Suite Summary for TestNG
             htmlBody = htmlBody + createHeader("Overall Summary") +
@@ -88,10 +88,6 @@ public class ReportSummary {
                     + createTable(new String[]{"Class Name", "Test Name", "Status"},
                     getTableBodyForPassList(reportBean.getScenarioBeans()), "t04") + "<br>";
 
-        htmlBody = htmlBody + this.createEmptySpaceInReport();
-        htmlBody = htmlBody + this.createEmptySpaceInReport();
-        htmlBody = htmlBody + this.createEmptySpaceInReport();
-
         return Utils.htmlToPngFile(htmlBody, Utils.getResourcesPath() + title + ".png");
     }
 
@@ -108,8 +104,8 @@ public class ReportSummary {
         for (Scenario scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase("PASSED")) {
                 finalBody.append(createRow(
-                        createWrappingColumn(scenario.getModuleName())
-                                + createWrappingColumn(scenario.getScenarioName())
+                        createColumn(scenario.getModuleName())
+                                + createColumn(scenario.getScenarioName())
                                 + createColumnAndAssignColor(scenario.getStatus())
                 ));
             }
@@ -122,10 +118,10 @@ public class ReportSummary {
         for (Scenario scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase(status)) {
                 finalBody.append(createRow(
-                        createWrappingColumn(scenario.getModuleName())
-                                + createWrappingColumn(scenario.getScenarioName())
+                        createColumn(scenario.getModuleName())
+                                + createColumn(scenario.getScenarioName())
                                 + createColumnAndAssignColor(scenario.getStatus())
-                                + createWrappingColumn(scenario.getErrorMessage())
+                                + createWrappingColumn(scenario.getShortenedErrorMessage(300))
                 ));
             }
         }
@@ -147,13 +143,12 @@ public class ReportSummary {
                  createColumn("" + report.getTotal())
                         + createColumn("" + report.getPassed())
                         + createColumn("" + report.getFailed())
-                        + createColumn("" + report.getBroken())
                         + createColumn("" + report.getSkipped())
                         + createColumn("" + report.getTotalTime()));
     }
 
     private String getHead() {
-        return "<head><style> @page { size: A4 landscape;} table { width:85%;font-size:x-small}, th, td {font-family: Trebuchet MS,"
+        return "<head><style> @page { size: A4 landscape;} table { width:100%;font-size:x-small}, th, td {font-family: Trebuchet MS,"
                 + "Arial, Helvetica, sans-serif;border: 1px solid black; border-collapse: collapse;} "
                 + "th, td { padding: 5px; text-align: left;}"
                 + "table#t01 tr.alt td {background-color: #E0ECF8;} "
@@ -184,17 +179,12 @@ public class ReportSummary {
     }
 
     private String createWrappingColumn(String columnValue) {
-        return "<td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" + columnValue + "</td>";
+        return "<td style='width: 40%'>" + columnValue + "</td>";
     }
 
     private String createHeader(String header) {
         return "<h4>" + header + "</h4>";
     }
-
-    private String createEmptySpaceInReport() {
-        return "<h2 style=\"color:#279723\">" + " " + "</h4>";
-    }
-
 
     private String createColumnAndAssignColor(String columnValue) {
         String finalString = "<td><font color=\"{Color}\">{ColumnValue}</font></td>";

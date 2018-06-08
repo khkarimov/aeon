@@ -31,49 +31,49 @@ public class ReportingPluginTestCases extends SampleBaseTest {
         assumeNotNull(nullString);
     }
 
-//    @Test
-//    public void repeatedSuccess1() { Assert.assertEquals(4, 4); }
-//
-//    @Test
-//    public void repeatedSuccess2() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess3() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess4() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess5() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess6() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess7() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess8() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess9() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess10() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess11() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess12() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess13() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess14() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess15() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess16() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess17() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess18() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess19() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess20() { Assert.assertEquals(4, 4); }
-//    @Test
-//    public void repeatedSuccess21() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess1() { Assert.assertEquals(4, 4); }
+
+    @Test
+    public void repeatedSuccess2() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess3() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess4() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess5() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess6() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess7() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess8() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess9() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess10() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess11() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess12() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess13() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess14() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess15() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess16() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess17() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess18() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess19() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess20() { Assert.assertEquals(4, 4); }
+    @Test
+    public void repeatedSuccess21() { Assert.assertEquals(4, 4); }
 
     @Test
     public void failureWithLongException() throws Exception {

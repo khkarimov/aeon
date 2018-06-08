@@ -32,10 +32,19 @@ public class Scenario {
     }
 
     public String getErrorMessage() {
+        return this.errorMessage;
+    }
+
+    public String getShortenedErrorMessage(int characterLimit) {
         String errorMessageSanitized = this.errorMessage;
         errorMessageSanitized = errorMessageSanitized.replace("&", "&amp;");
         errorMessageSanitized = errorMessageSanitized.replace("<","&lt;");
         errorMessageSanitized = errorMessageSanitized.replace(">", "&gt;");
+        if (errorMessageSanitized.length() > characterLimit)
+        {
+            errorMessageSanitized = errorMessageSanitized.substring(0, characterLimit) + "...";
+        }
+
         return errorMessageSanitized;
     }
 
