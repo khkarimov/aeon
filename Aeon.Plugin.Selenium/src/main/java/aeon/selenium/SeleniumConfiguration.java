@@ -38,6 +38,7 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String IE_DIRECTORY = "aeon.selenium.ie.driver";
         public static final String MARIONETTE_DIRECTORY = "aeon.selenium.firefox.driver";
         public static final String EDGE_DIRECTORY = "aeon.selenium.edge.driver";
+        public static final String SAFARI_DIRECTORY = "aeon.selenium.safari.driver";
         public static final String CHROME_BINARY = "aeon.selenium.chrome.binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
         public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
@@ -108,6 +109,7 @@ public class SeleniumConfiguration extends WebConfiguration {
         String output = System.getProperty("user.dir");
         properties.setProperty(Keys.IE_DIRECTORY, output + "/lib/Windows/IEDriverServer.exe");
         properties.setProperty(Keys.EDGE_DIRECTORY, output + "/lib/Windows/MicrosoftWebDriver.exe");
+        properties.setProperty(Keys.SAFARI_DIRECTORY, output + "/lib/MacOS/safaridriver");
         switch (OsCheck.getOperatingSystemType()) {
             case Windows:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/Windows/geckodriver.exe");

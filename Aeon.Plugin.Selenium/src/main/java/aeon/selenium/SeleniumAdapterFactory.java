@@ -36,6 +36,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -129,6 +131,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
+        String safariDirectory = configuration.getString(SeleniumConfiguration.Keys.SAFARI_DIRECTORY, null);
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
         isRemote = seleniumHubUrl != null;
@@ -192,6 +195,23 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         driver = new EdgeDriver(
                                 new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
                                 getEdgeOptions(proxyLocation));
+                    }
+
+                    return driver;
+                });
+                break;
+
+            case Safari:
+                driver = getDriver(() -> {
+                    if (isRemote) {
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                    } else {
+                        SafariOptions safariOptions = new SafariOptions();
+                        safariOptions = ((SafariOptions) setProxySettings(safariOptions, proxyLocation));
+                        System.setProperty("webdriver.safari.driver", safariDirectory);
+                        driver = new SafariDriver(safariOptions);
+
                     }
 
                     return driver;
@@ -303,6 +323,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Edge:
                 desiredCapabilities = getEdgeOptions(null);
+                break;
+
+            case Safari:
+                desiredCapabilities = DesiredCapabilities.safari();
                 break;
 
             case IOSSafari:
