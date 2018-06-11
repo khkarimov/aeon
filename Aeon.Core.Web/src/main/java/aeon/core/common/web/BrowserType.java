@@ -24,7 +24,7 @@ public enum BrowserType {
     Firefox,
 
     /**
-     * Safari
+     * Safari.
      */
     Safari,
 
