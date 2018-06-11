@@ -325,7 +325,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case Edge:
-                desiredCapabilities = getEdgeOptions(null);
+                desiredCapabilities = DesiredCapabilities.edge();
                 break;
 
             case IOSSafari:
