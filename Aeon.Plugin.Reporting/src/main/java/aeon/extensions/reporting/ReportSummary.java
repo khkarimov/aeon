@@ -2,10 +2,12 @@ package aeon.extensions.reporting;
 
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.interfaces.IConfiguration;
+import aeon.core.extensions.PluginConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportSummary {
@@ -13,6 +15,8 @@ public class ReportSummary {
     private IConfiguration aeonConfiguration;
     private IConfiguration pluginConfiguration;
     private SlackBot slackBot;
+    private boolean displayClassName;
+    private int errorMessageCharLimit;
 
     private static Logger log = LogManager.getLogger(ReportSummary.class);
 
@@ -20,6 +24,8 @@ public class ReportSummary {
         this.aeonConfiguration = aeonConfiguration;
         this.pluginConfiguration = pluginConfiguration;
         this.slackBot = new SlackBot(pluginConfiguration);
+        this.displayClassName = Boolean.valueOf(pluginConfiguration.getString(ReportingConfiguration.Keys.DISPLAY_CLASS_NAME, "true"));
+        this.errorMessageCharLimit = Integer.valueOf(pluginConfiguration.getString(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, "300"));
     }
 
     public void sendSummaryReport(Report reportBean) {
@@ -60,6 +66,15 @@ public class ReportSummary {
     private File summaryReport(Report reportBean, String title) {
         String htmlBody = "";
         htmlBody = htmlBody + this.getHead();
+        String[] successHeaders;
+        String[] failureHeaders;
+        if (displayClassName) {
+            successHeaders = new String[]{"Class Name", "Test Name", "Status"};
+            failureHeaders = new String[]{"Class Name", "Test Name", "Status", "Error Message"};
+        } else {
+            successHeaders = new String[]{"Test Name", "Status"};
+            failureHeaders = new String[]{"Test Name", "Status", "Error Message"};
+        }
 
         //Job Info
         htmlBody = htmlBody + this.createTable(new String[]{"Test Configuration"}, this.getJobInformation(), "t02");
@@ -77,7 +92,7 @@ public class ReportSummary {
         //Broken Table
         if (reportBean.isSuiteFailed() || reportBean.isSuiteBroken() || reportBean.isSuiteSkipped())
             htmlBody = htmlBody + createHeader("Failed List")
-                    + createTable(new String[]{"Class Name", "Test Name", "Status", "Error Message"},
+                    + createTable(failureHeaders,
                     getTableBodyForFailedList(reportBean.getScenarioBeans(), "FAILED")
                             + getTableBodyForFailedList(reportBean.getScenarioBeans(), "BROKEN")
                             + getTableBodyForFailedList(reportBean.getScenarioBeans(), "SKIPPED"), "t03");
@@ -85,7 +100,7 @@ public class ReportSummary {
         //Pass List
         if (reportBean.isSuitePassed())
             htmlBody = htmlBody + createHeader("Pass List")
-                    + createTable(new String[]{"Class Name", "Test Name", "Status"},
+                    + createTable(successHeaders,
                     getTableBodyForPassList(reportBean.getScenarioBeans()), "t04") + "<br>";
 
         return Utils.htmlToPngFile(htmlBody, Utils.getResourcesPath() + title + ".png");
@@ -101,10 +116,18 @@ public class ReportSummary {
 
     private String getTableBodyForPassList(List<Scenario> scenarios) {
         StringBuilder finalBody = new StringBuilder();
+
         for (Scenario scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase("PASSED")) {
+                String classColumn;
+                if (displayClassName) {
+                    classColumn = createColumn(scenario.getModuleName());
+                } else {
+                    classColumn = "";
+                }
+
                 finalBody.append(createRow(
-                        createColumn(scenario.getModuleName())
+                        classColumn
                                 + createColumn(scenario.getScenarioName())
                                 + createColumnAndAssignColor(scenario.getStatus())
                 ));
@@ -115,13 +138,21 @@ public class ReportSummary {
 
     private String getTableBodyForFailedList(List<Scenario> scenarios, String status) {
         StringBuilder finalBody = new StringBuilder();
+
         for (Scenario scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase(status)) {
+                String classColumn;
+                if (displayClassName) {
+                    classColumn = createColumn(scenario.getModuleName());
+                } else {
+                    classColumn = "";
+                }
+
                 finalBody.append(createRow(
-                        createColumn(scenario.getModuleName())
+                        classColumn
                                 + createColumn(scenario.getScenarioName())
                                 + createColumnAndAssignColor(scenario.getStatus())
-                                + createWrappingColumn(scenario.getShortenedErrorMessage(300))
+                                + createWrappingColumn(scenario.getShortenedErrorMessage(errorMessageCharLimit))
                 ));
             }
         }
@@ -138,6 +169,7 @@ public class ReportSummary {
                         + createColumn("" + report.getSkipped())
                         + createColumn("" + report.getTotalTime()));
     }
+
     private String getTableBodyForSuiteSummaryJUnit(Report report) {
         return createRow(
                  createColumn("" + report.getTotal())
@@ -148,7 +180,7 @@ public class ReportSummary {
     }
 
     private String getHead() {
-        return "<head><style> @page { size: A4 landscape;} table { width:100%;font-size:x-small}, th, td {font-family: Trebuchet MS,"
+        return "<head><style> @page { size: A4 landscape;} table {width:100%;font-size:x-small}, th, td {font-family: Trebuchet MS,"
                 + "Arial, Helvetica, sans-serif;border: 1px solid black; border-collapse: collapse;} "
                 + "th, td { padding: 5px; text-align: left;}"
                 + "table#t01 tr.alt td {background-color: #E0ECF8;} "
@@ -163,7 +195,7 @@ public class ReportSummary {
     }
 
     private String createTable(String tableValue, String id) {
-        return "<table style='table-layout: fixed' id=" + id + ">" + tableValue + "</table>";
+        return "<table id=" + id + ">" + tableValue + "</table>";
     }
 
     private String createRow(String rowValue) {
@@ -179,7 +211,7 @@ public class ReportSummary {
     }
 
     private String createWrappingColumn(String columnValue) {
-        return "<td style='width: 40%'>" + columnValue + "</td>";
+        return "<td style='width:150px; max-width:150px'>" + columnValue + "</td>";
     }
 
     private String createHeader(String header) {

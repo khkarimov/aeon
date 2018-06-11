@@ -59,6 +59,7 @@ public class ReportingPlugin extends Plugin {
             startTime = System.currentTimeMillis();
             log.info("Start Time " + report_date_format.format(new Date(startTime)));
             report_bean.setSuiteName(suiteName);
+            initializeConfiguration();
         }
 
         /**
@@ -67,19 +68,7 @@ public class ReportingPlugin extends Plugin {
          */
         @Override
         public void onStartUp(Configuration aeonConfiguration) {
-            if (configuration == null) {
-                configuration = new ReportingConfiguration();
-
-                try {
-                    configuration.loadConfiguration();
-                } catch (IllegalAccessException | IOException e) {
-                    log.warn("Could not load plugin configuration, using Aeon configuration");
-
-                    configuration = aeonConfiguration;
-                }
-
-                ReportingPlugin.aeonConfiguration = aeonConfiguration;
-            }
+            initializeConfiguration(aeonConfiguration);
         }
 
         @Override
@@ -89,9 +78,16 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTest(String name, String... tags) {
-            String[] nameParts = name.split("\\.", 2);
-            currentClass = nameParts[1];
-            currentTest = nameParts[0];
+            boolean displayClassName = Boolean.valueOf(configuration.getString(ReportingConfiguration.Keys.DISPLAY_CLASS_NAME, "true"));
+
+            if (displayClassName) {
+                int classNameIndex = name.lastIndexOf('.');
+                currentTest = name.substring(0,classNameIndex);
+                currentClass = name.substring(classNameIndex);
+            } else {
+                currentTest = name;
+            }
+
             currentStartTime = System.currentTimeMillis();
         }
 
@@ -134,10 +130,12 @@ public class ReportingPlugin extends Plugin {
             new ReportSummary(configuration, aeonConfiguration).sendSummaryReport(report_bean);
         }
     }
+
     public static String getTime() {
         Date resultDate = new Date(ReportingTestExecutionExtension.startTime);
         return resultDate.toString();
     }
+
     private static Scenario setScenarioDetails(String testName, long startTime) {
         Scenario scenarioBean = new Scenario();
         scenarioBean.setScenarioName(testName);
@@ -159,6 +157,31 @@ public class ReportingPlugin extends Plugin {
             return minutes + " minutes " + seconds + " seconds";
         } else {
             return seconds + " seconds";
+        }
+    }
+
+    private static void initializeConfiguration() {
+        if (configuration == null) {
+            configuration = new ReportingConfiguration();
+            try {
+                configuration.loadConfiguration();
+            } catch (IllegalAccessException | IOException e) {
+                log.warn("Could not load plugin configuration.");
+            }
+        }
+    }
+
+    private static void initializeConfiguration(Configuration aeonConfiguration) {
+        if (configuration == null) {
+            configuration = new ReportingConfiguration();
+            try {
+                configuration.loadConfiguration();
+            } catch (IllegalAccessException | IOException e) {
+                log.warn("Could not load plugin configuration, using Aeon configuration.");
+
+                configuration = aeonConfiguration;
+            }
+            ReportingPlugin.aeonConfiguration = aeonConfiguration;
         }
     }
 }

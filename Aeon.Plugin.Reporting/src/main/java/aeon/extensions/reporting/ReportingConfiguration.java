@@ -24,6 +24,8 @@ public class ReportingConfiguration extends PluginConfiguration {
         public static final String SLACK_BOT_TOKEN = "aeon.extensions.reporting.slack.bot.token";
         public static final String CHANNEL_1 = "aeon.extensions.reporting.slack.channel.1";
         public static final String CHANNEL_2 = "aeon.extensions.reporting.slack.channel.2";
+        public static final String DISPLAY_CLASS_NAME = "aeon.extensions.reporting.display_class_name";
+        public static final String ERROR_MESSAGE_CHARACTER_LIMIT = "aeon.extensions.reporting.error_message_character_limit";
     }
 
     @Override
