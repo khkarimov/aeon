@@ -17,6 +17,9 @@ import static aeon.core.testabstraction.product.AeonTestExecution.*;
 
 @Category({WindowsTests.class, UbuntuTests.class})
 public class SampleBaseTest {
+
+    public static Sample product;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -44,8 +47,6 @@ public class SampleBaseTest {
             testSkipped();
         }
     };
-
-    public static Sample product;
 
     @BeforeClass
     public static void oneTimeSetup() { beforeTestClass(); }

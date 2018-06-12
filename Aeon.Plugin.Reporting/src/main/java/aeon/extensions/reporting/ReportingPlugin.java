@@ -55,10 +55,12 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTestClass() {
-            report_bean = new Report();
-            startTime = System.currentTimeMillis();
-            log.info("Start Time " + report_date_format.format(new Date(startTime)));
-            report_bean.setSuiteName(suiteName);
+            if (report_bean == null) {
+                report_bean = new Report();
+                startTime = System.currentTimeMillis();
+                log.info("Start Time " + report_date_format.format(new Date(startTime)));
+                report_bean.setSuiteName(suiteName);
+            }
             initializeConfiguration();
         }
 
@@ -68,6 +70,12 @@ public class ReportingPlugin extends Plugin {
          */
         @Override
         public void onStartUp(Configuration aeonConfiguration) {
+            if (report_bean == null) {
+                report_bean = new Report();
+                startTime = System.currentTimeMillis();
+                log.info("Start Time " + report_date_format.format(new Date(startTime)));
+                report_bean.setSuiteName(suiteName);
+            }
             initializeConfiguration(aeonConfiguration);
         }
 
@@ -80,10 +88,10 @@ public class ReportingPlugin extends Plugin {
         public void onBeforeTest(String name, String... tags) {
             boolean displayClassName = Boolean.valueOf(configuration.getString(ReportingConfiguration.Keys.DISPLAY_CLASS_NAME, "true"));
 
-            if (displayClassName) {
+            if (displayClassName && name.lastIndexOf('.')>-1) {
                 int classNameIndex = name.lastIndexOf('.');
                 currentTest = name.substring(0,classNameIndex);
-                currentClass = name.substring(classNameIndex);
+                currentClass = name.substring(classNameIndex + 1);
             } else {
                 currentTest = name;
             }
