@@ -73,7 +73,10 @@ allprojects {
     }
 
     test {
-        maxParallelForks = 4
+        if (threads) {
+            maxParallelForks = threads.toInteger()
+        }
+
         useJUnitPlatform {
             def includeList = System.getenv('tests.included.tags')
             if (includeList != null)
