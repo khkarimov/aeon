@@ -86,7 +86,7 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTest(String name, String... tags) {
-            boolean displayClassName = Boolean.valueOf(configuration.getString(ReportingConfiguration.Keys.DISPLAY_CLASS_NAME, "true"));
+            boolean displayClassName = Boolean.valueOf(configuration.getString(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, "true"));
 
             if (displayClassName && name.lastIndexOf('.')>-1) {
                 int classNameIndex = name.lastIndexOf('.');

@@ -24,7 +24,7 @@ public class ReportSummary {
         this.aeonConfiguration = aeonConfiguration;
         this.pluginConfiguration = pluginConfiguration;
         this.slackBot = new SlackBot(pluginConfiguration);
-        this.displayClassName = Boolean.valueOf(pluginConfiguration.getString(ReportingConfiguration.Keys.DISPLAY_CLASS_NAME, "true"));
+        this.displayClassName = Boolean.valueOf(pluginConfiguration.getString(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, "true"));
         this.errorMessageCharLimit = Integer.valueOf(pluginConfiguration.getString(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, "300"));
     }
 

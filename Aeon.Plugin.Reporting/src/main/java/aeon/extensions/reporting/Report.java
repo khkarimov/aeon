@@ -10,7 +10,7 @@ public class Report {
     private int failed;
     private int skipped;
     private int broken;
-    private ArrayList<Scenario> scenarioBeans;
+    private List<Scenario> scenarioBeans;
     private String totalTime;
 
     public Report()
