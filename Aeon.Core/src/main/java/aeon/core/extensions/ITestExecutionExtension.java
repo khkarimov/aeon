@@ -19,7 +19,7 @@ public interface ITestExecutionExtension extends ExtensionPoint {
     /**
      * Is called before a test class begins test execution.
      */
-    void onBeforeTestClass();
+    void onBeforeStart();
 
     /**
      * Is called after a product was successfully launched.

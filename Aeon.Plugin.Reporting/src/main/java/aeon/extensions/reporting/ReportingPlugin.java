@@ -18,7 +18,7 @@ import java.util.Date;
  * Plugin class for Reporting Plugin.
  */
 public class ReportingPlugin extends Plugin {
-    private static Report report_bean;
+    private static Report reportBean;
     static final SimpleDateFormat report_date_format = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
 
     private static IConfiguration aeonConfiguration;
@@ -54,11 +54,9 @@ public class ReportingPlugin extends Plugin {
         static long currentStartTime = System.currentTimeMillis();
 
         @Override
-        public void onBeforeTestClass() {
-            report_bean = new Report();
-            startTime = System.currentTimeMillis();
-            log.info("Start Time " + report_date_format.format(new Date(startTime)));
-            report_bean.setSuiteName(suiteName);
+        public void onBeforeStart() {
+            // Don't check that reportBean is null, as it should be re-initialized with this message
+            initializeReport();
 
             initializeConfiguration();
         }
@@ -69,12 +67,9 @@ public class ReportingPlugin extends Plugin {
          */
         @Override
         public void onStartUp(Configuration aeonConfiguration) {
-            // This check is required, as TestNG projects will not need to call onBeforeTestClass()
-            if (report_bean == null) {
-                report_bean = new Report();
-                startTime = System.currentTimeMillis();
-                log.info("Start Time " + report_date_format.format(new Date(startTime)));
-                report_bean.setSuiteName(suiteName);
+            // This check is required, as TestNG projects will not call onBeforeStart
+            if (reportBean == null) {
+                initializeReport();
             }
             initializeConfiguration(aeonConfiguration);
         }
@@ -86,7 +81,7 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTest(String name, String... tags) {
-            boolean displayClassName = Boolean.valueOf(configuration.getString(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, "true"));
+            boolean displayClassName = configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
 
             if (displayClassName && name.lastIndexOf('.')>-1) {
                 int classNameIndex = name.lastIndexOf('.');
@@ -94,6 +89,7 @@ public class ReportingPlugin extends Plugin {
                 currentClass = name.substring(classNameIndex + 1);
             } else {
                 currentTest = name;
+                currentClass = "";
             }
 
             currentStartTime = System.currentTimeMillis();
@@ -101,7 +97,7 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onSucceededTest() {
-            report_bean.addPass();
+            reportBean.addPass();
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
             scenarioBean.setModuleName(currentClass);
             scenarioBean.setStatus("PASSED");
@@ -109,7 +105,7 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onSkippedTest() {
-            report_bean.addSkipped();
+            reportBean.addSkipped();
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
             scenarioBean.setModuleName(currentClass);
             scenarioBean.setErrorMessage("");
@@ -122,7 +118,7 @@ public class ReportingPlugin extends Plugin {
             scenarioBean.setModuleName(currentClass);
             scenarioBean.setErrorMessage(reason);
             scenarioBean.setStatus("FAILED");
-            report_bean.addFailed();
+            reportBean.addFailed();
         }
 
         @Override
@@ -134,8 +130,15 @@ public class ReportingPlugin extends Plugin {
         public void onDone() {
             long time = System.currentTimeMillis();
             log.info("End Time " + report_date_format.format(new Date(time)));
-            report_bean.setTotalTime(getTime(time - startTime));
-            new ReportSummary(configuration, aeonConfiguration).sendSummaryReport(report_bean);
+            reportBean.setTotalTime(getTime(time - startTime));
+            new ReportSummary(configuration, aeonConfiguration).sendSummaryReport(reportBean);
+        }
+
+        private void initializeReport() {
+            reportBean = new Report();
+            startTime = System.currentTimeMillis();
+            log.info("Start Time " + report_date_format.format(new Date(startTime)));
+            reportBean.setSuiteName(suiteName);
         }
     }
 
@@ -148,7 +151,7 @@ public class ReportingPlugin extends Plugin {
         Scenario scenarioBean = new Scenario();
         scenarioBean.setScenarioName(testName);
         scenarioBean.setStartTime(report_date_format.format(startTime));
-        report_bean.getScenarioBeans().add(scenarioBean);
+        reportBean.getScenarioBeans().add(scenarioBean);
         return scenarioBean;
     }
 

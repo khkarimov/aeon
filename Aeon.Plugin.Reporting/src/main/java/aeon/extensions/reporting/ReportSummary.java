@@ -24,8 +24,8 @@ public class ReportSummary {
         this.aeonConfiguration = aeonConfiguration;
         this.pluginConfiguration = pluginConfiguration;
         this.slackBot = new SlackBot(pluginConfiguration);
-        this.displayClassName = Boolean.valueOf(pluginConfiguration.getString(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, "true"));
-        this.errorMessageCharLimit = Integer.valueOf(pluginConfiguration.getString(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, "300"));
+        this.displayClassName = pluginConfiguration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
+        this.errorMessageCharLimit = (int) pluginConfiguration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
     }
 
     public void sendSummaryReport(Report reportBean) {
@@ -90,18 +90,20 @@ public class ReportSummary {
                             "Broken", "Skipped", "Total Time"}, getTableBodyForSuiteSummary(reportBean), "t01");
         }
         //Broken Table
-        if (reportBean.isSuiteFailed() || reportBean.isSuiteBroken() || reportBean.isSuiteSkipped())
+        if (reportBean.isSuiteFailed() || reportBean.isSuiteBroken() || reportBean.isSuiteSkipped()) {
             htmlBody = htmlBody + createHeader("Failed List")
                     + createTable(failureHeaders,
                     getTableBodyForFailedList(reportBean.getScenarioBeans(), "FAILED")
                             + getTableBodyForFailedList(reportBean.getScenarioBeans(), "BROKEN")
                             + getTableBodyForFailedList(reportBean.getScenarioBeans(), "SKIPPED"), "t03");
+        }
 
         //Pass List
-        if (reportBean.isSuitePassed())
+        if (reportBean.isSuitePassed()) {
             htmlBody = htmlBody + createHeader("Pass List")
                     + createTable(successHeaders,
                     getTableBodyForPassList(reportBean.getScenarioBeans()), "t04") + "<br>";
+        }
 
         return Utils.htmlToPngFile(htmlBody, Utils.getResourcesPath() + title + ".png");
     }

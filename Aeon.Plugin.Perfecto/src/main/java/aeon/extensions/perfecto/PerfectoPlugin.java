@@ -64,7 +64,7 @@ public class PerfectoPlugin extends Plugin {
         }
 
         @Override
-        public void onBeforeTestClass() {
+        public void onBeforeStart() {
             // No actions needed
         }
 

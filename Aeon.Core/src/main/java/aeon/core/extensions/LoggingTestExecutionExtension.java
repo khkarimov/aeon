@@ -20,7 +20,7 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     }
 
     @Override
-    public void onBeforeTestClass() {
+    public void onBeforeStart() {
         // Nothing to log
     }
 

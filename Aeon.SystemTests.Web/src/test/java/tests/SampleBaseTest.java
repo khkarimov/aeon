@@ -49,7 +49,7 @@ public class SampleBaseTest {
     };
 
     @BeforeClass
-    public static void oneTimeSetup() { beforeTestClass(); }
+    public static void oneTimeSetup() { beforeStart(); }
 
     @AfterClass
     public static void afterClass() {

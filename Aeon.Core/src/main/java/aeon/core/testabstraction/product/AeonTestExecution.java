@@ -38,11 +38,11 @@ public class AeonTestExecution {
     /**
      * Should be called in the @BeforeClass step of a test class.
      */
-    public static void beforeTestClass() {
+    public static void beforeStart() {
         init();
 
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeTestClass();
+            testExecutionPlugin.onBeforeStart();
         }
     }
 
