@@ -131,7 +131,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
-        String safariDirectory = System.getProperty("user.dir") + "/lib/MacOS/safaridriver";
+        String safariDirectory = "/usr/bin/safaridriver";
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
         isRemote = seleniumHubUrl != null;
