@@ -55,12 +55,11 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeTestClass() {
-            if (report_bean == null) {
-                report_bean = new Report();
-                startTime = System.currentTimeMillis();
-                log.info("Start Time " + report_date_format.format(new Date(startTime)));
-                report_bean.setSuiteName(suiteName);
-            }
+            report_bean = new Report();
+            startTime = System.currentTimeMillis();
+            log.info("Start Time " + report_date_format.format(new Date(startTime)));
+            report_bean.setSuiteName(suiteName);
+
             initializeConfiguration();
         }
 
@@ -70,6 +69,7 @@ public class ReportingPlugin extends Plugin {
          */
         @Override
         public void onStartUp(Configuration aeonConfiguration) {
+            // This check is required, as TestNG projects will not need to call onBeforeTestClass()
             if (report_bean == null) {
                 report_bean = new Report();
                 startTime = System.currentTimeMillis();
