@@ -102,7 +102,7 @@ public class GeneralActionTests extends SampleBaseTest{
     @Test
     public void testBlur() {
         //used to be set command
-        product.startPage.alertTitleTextBox.click();
+        product.startPage.alertTitleTextBox.set("");
         product.startPage.alertTitleTextBox.blur();
     }
 
