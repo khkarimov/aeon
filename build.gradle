@@ -98,7 +98,7 @@ allprojects {
                     includeTags tag
                 }
             }
-            def excludeList = "SafariNotSupported"
+            def excludeList = System.getenv('tests.excluded.tags')
             if (excludeList != null)
             {
                 def tags = excludeList.split("\\s*(,|\\s)\\s*")
