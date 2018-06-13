@@ -10,6 +10,7 @@ import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
+import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
 
 import java.util.ArrayList;
@@ -152,12 +153,15 @@ public class Browser {
      * Closes and terminates the active instances of the browser and WebDriver.
      */
     public void quit() {
-        info.testSucceeded();
+        if (info.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)) {
+            info.testSucceeded();
+        }
+
         info.getCommandExecutionFacade().execute(info, new QuitCommand());
     }
 
     /**
-     * Closes the currently focused browser window.     *
+     * Closes the currently focused browser window.
      */
     public void close() {
         info.getCommandExecutionFacade().execute(info, new CloseCommand());

@@ -13,6 +13,7 @@ import com.perfecto.reportium.client.ReportiumClientFactory;
 import com.perfecto.reportium.model.CustomField;
 import com.perfecto.reportium.model.PerfectoExecutionContext;
 import com.perfecto.reportium.test.TestContext;
+import com.perfecto.reportium.test.result.TestResult;
 import com.perfecto.reportium.test.result.TestResultFactory;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.LogManager;
@@ -59,7 +60,12 @@ public class PerfectoPlugin extends Plugin {
 
         @Override
         public void onStartUp(Configuration configuration) {
+            // No actions needed
+        }
 
+        @Override
+        public void onBeforeStart() {
+            // No actions needed
         }
 
         @Override
@@ -93,6 +99,13 @@ public class PerfectoPlugin extends Plugin {
         @Override
         public void onSucceededTest() {
             reportiumClient.testStop(TestResultFactory.createSuccess());
+
+            log.info("Test Report URL: " + reportiumClient.getReportUrl());
+        }
+
+        @Override
+        public void onSkippedTest() {
+            reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
 
             log.info("Test Report URL: " + reportiumClient.getReportUrl());
         }

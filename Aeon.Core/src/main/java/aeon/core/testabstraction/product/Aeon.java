@@ -129,7 +129,5 @@ public class Aeon {
      */
     public static void done() {
         AeonTestExecution.done();
-
-        getPluginManager().stopPlugins();
     }
 }

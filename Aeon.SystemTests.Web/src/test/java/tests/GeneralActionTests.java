@@ -2,13 +2,11 @@ package tests;
 
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.NoSuchCookieException;
-import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
-import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
+import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -89,8 +87,8 @@ public class GeneralActionTests extends SampleBaseTest{
         secondCookie = product.browser.getCookie(cookie.getName());
         assert(secondCookie.getValue().equals(cookieNewValue));
         product.browser.deleteCookie(cookie.getName());
-        Assertions.assertThrows(NoSuchCookieException.class,
-                () -> product.browser.getCookie(cookie.getName()));
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchCookieException.class));
+        product.browser.getCookie(cookie.getName());
     }
 
     @Test
