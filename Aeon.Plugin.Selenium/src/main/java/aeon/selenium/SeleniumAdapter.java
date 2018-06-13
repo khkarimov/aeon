@@ -806,9 +806,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         builder.clickAndHold(drop).perform();
         Sleep.wait(250);
+
         if (browserType == BrowserType.Firefox) {
             scrollElementIntoView(targetElement);
         }
+
         builder.moveToElement(target).perform();
         builder.release(target).perform();
     }
@@ -824,7 +826,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         log.trace("new Actions(IWebDriver).ContextClick(IWebElement);");
 
-        if (browserType == BrowserType.Firefox) {
+        if (browserType == BrowserType.Firefox || browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(element);
         }
         (new Actions(webDriver)).contextClick(
@@ -855,6 +857,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (this.browserType == BrowserType.Firefox) {
             doubleClickByJavaScript(element);
             return;
+        }
+
+        if (this.browserType == BrowserType.InternetExplorer) {
+            scrollElementIntoView(element);
         }
         log.trace("new Actions(IWebDriver).doubleClick(IWebElement);");
 
@@ -981,9 +987,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         Actions action = new Actions(webDriver);
 
         // click.
-        if (browserType == BrowserType.Firefox) {
+        if (browserType == BrowserType.Firefox || browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(seleniumElement);
         }
+
         action.clickAndHold(seleniumElement.getUnderlyingWebElement()).perform();
 
         // Hold the click.
@@ -1864,8 +1871,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void selectFile(WebControl control, String path) {
-        if (browserType.equals(BrowserType.InternetExplorer)){
-            click(control, moveMouseToOrigin);
+        if (!isRemote && browserType.equals(BrowserType.InternetExplorer)) {
+
+            WebElement underlyingWebElement = ((SeleniumElement) control).getUnderlyingWebElement();
+            Point webElementLocation = underlyingWebElement.getLocation();
+            Dimension elementSize = underlyingWebElement.getSize();
+            int x = webElementLocation.getX() + elementSize.width / 2;
+            int y = webElementLocation.getY() + elementSize.height / 2;
+            MouseHelper.click(x, y);
+
             try {
                 SendKeysHelper.sendKeysToKeyboard(path);
                 SendKeysHelper.sendEnterKey();
