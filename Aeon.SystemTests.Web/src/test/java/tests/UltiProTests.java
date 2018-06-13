@@ -53,7 +53,6 @@ public class UltiProTests {
     }
 
     @Test
-    @Category({SafariNotSupported.class})
     public void gridWithSwitchTest(){
         ultiPro.loginPage.userNameTextBox.set("wardenj");
         ultiPro.loginPage.passwordTextBox.set("password");
