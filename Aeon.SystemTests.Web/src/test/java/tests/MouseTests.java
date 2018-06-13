@@ -1,8 +1,13 @@
 package tests;
 
-import org.junit.jupiter.api.Test;
-
+import aeon.core.testabstraction.product.Aeon;
+import categories.UbuntuTests;
+import categories.WindowsTests;
+import org.junit.*;
+import org.junit.experimental.categories.Category;
+@Category({WindowsTests.class, UbuntuTests.class})
 public class MouseTests extends SampleBaseTest {
+
     @Test
     public void testClickAndHold() {
         product.startPage.dateLabel.clickAndHold(5000);

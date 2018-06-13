@@ -2,12 +2,18 @@ package tests;
 
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.WebSelectOption;
+import aeon.core.testabstraction.product.Aeon;
+import categories.UbuntuTests;
+import categories.WindowsTests;
+import main.sample.Sample;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
-public class GeneralAssertionsTests extends SampleBaseTest{
+@Category({WindowsTests.class, UbuntuTests.class})
+public class GeneralAssertionsTests extends SampleBaseTest {
 
     @Test
     public void testDisabled() {

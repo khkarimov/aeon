@@ -6,6 +6,7 @@ dependencies {
     compile project(':Aeon.Core.Web')
     compile project(':Aeon.Plugin.Appium')
     compile project(':Aeon.Plugin.Perfecto')
+    compile project(':Aeon.Plugin.Reporting')
     compile project(':Aeon.Plugin.Selenium')
     compile project(':Aeon.SystemTests.Web')
     compile project(':Aeon.SystemTests.Mobile')
@@ -27,6 +28,14 @@ task CopySeleniumPlugin(type: Copy) {
     include '*.jar'
 }
 
+//Copy reporting plugin into SystemTests plugins folder
+task CopyReportingPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Reporting/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
 //Copy perfecto plugin into SystemTests plugins folder
 task CopyPerfectoPlugin(type: Copy) {
     group 'copy'
@@ -38,6 +47,7 @@ task CopyPerfectoPlugin(type: Copy) {
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
+assemble.finalizedBy(CopyReportingPlugin)
 assemble.finalizedBy(CopyPerfectoPlugin)
 
 allprojects {
@@ -65,13 +75,15 @@ allprojects {
     }
 
     dependencies {
+        testCompile('junit:junit:4.12')
+        testRuntime("org.junit.vintage:junit-vintage-engine:5.2.0")
         testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
         testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
         testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
         testCompile('org.mockito:mockito-junit-jupiter:2.18.0')
         testCompile('org.junit.platform:junit-platform-launcher:1.2.0')
     }
-
+    
     test {
         if (threads) {
             maxParallelForks = threads.toInteger()
@@ -96,8 +108,8 @@ allprojects {
             }
         }
     }
-
 }
+
 
 buildscript {
     repositories {
