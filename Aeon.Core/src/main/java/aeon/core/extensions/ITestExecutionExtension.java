@@ -17,6 +17,11 @@ public interface ITestExecutionExtension extends ExtensionPoint {
     void onStartUp(Configuration configuration);
 
     /**
+     * Is called before a test class begins test execution.
+     */
+    void onBeforeStart();
+
+    /**
      * Is called after a product was successfully launched.
      *
      * @param configuration The Aeon configuration object.
@@ -36,6 +41,11 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called when the driver is quit or testSucceeded is used.
      */
     void onSucceededTest();
+
+    /**
+     * Is called when the driver is skipped.
+     */
+    void onSkippedTest();
 
     /**
      * Is called when a test failed.

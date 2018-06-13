@@ -1,9 +1,9 @@
 package tests;
 
 import main.ultipro.UltiPro;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
@@ -13,13 +13,13 @@ import static aeon.core.testabstraction.product.Aeon.launch;
 public class UltiProTests {
     private static UltiPro ultiPro;
 
-    @BeforeEach
+    @Before
     public void beforeTests() {
         ultiPro = launch(UltiPro.class);
         ultiPro.browser.goToUrl("http://legendsmkweb.mia.ucloud.int");
     }
 
-    @AfterEach
+    @After
     public void afterTests() {
         ultiPro.browser.quit();
     }
