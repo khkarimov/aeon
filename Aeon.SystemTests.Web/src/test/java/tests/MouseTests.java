@@ -1,6 +1,7 @@
 package tests;
 
 import aeon.core.testabstraction.product.Aeon;
+import categories.SafariNotSupported;
 import categories.UbuntuTests;
 import categories.WindowsTests;
 import org.junit.*;
@@ -9,12 +10,14 @@ import org.junit.experimental.categories.Category;
 public class MouseTests extends SampleBaseTest {
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testClickAndHold() {
         product.startPage.dateLabel.clickAndHold(5000);
         product.startPage.reactionLabel.is("mouse held for 5000");
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testDoubleClick() {
         product.startPage.ultimateLogoImage.doubleClick();
         product.startPage.ultimateLogoImageDoubleClick.visible();
@@ -22,6 +25,7 @@ public class MouseTests extends SampleBaseTest {
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testDragAndDrop() {
         product.browser.goToUrl("http://www.dhtmlgoodies.com/scripts/drag-drop-nodes/drag-drop-nodes-demo2.html");
         product.startPage.draggedListItem.notExists();
@@ -30,6 +34,7 @@ public class MouseTests extends SampleBaseTest {
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testRightClick() {
         product.startPage.dateLabel.rightClick();
         product.startPage.reactionLabel.is("right click");

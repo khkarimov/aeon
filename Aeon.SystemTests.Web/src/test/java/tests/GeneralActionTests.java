@@ -4,9 +4,11 @@ import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.NoSuchCookieException;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.WebConfiguration;
+import categories.SafariNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +16,7 @@ import java.util.Date;
 public class GeneralActionTests extends SampleBaseTest{
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testAddCookie_ModifyCookie_DeleteCookie_GetCookie() {
         if (product.getConfig(WebConfiguration.Keys.BROWSER, "").equals("InternetExplorer")) {
             return;

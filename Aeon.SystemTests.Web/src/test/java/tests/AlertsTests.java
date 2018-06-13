@@ -3,8 +3,10 @@ package tests;
 import aeon.core.common.exceptions.NoAlertException;
 import aeon.core.common.exceptions.ValuesAreNotAlikeException;
 import aeon.core.common.exceptions.ValuesAreNotEqualException;
+import categories.SafariNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class AlertsTests extends SampleBaseTest{
 
@@ -34,6 +36,7 @@ public class AlertsTests extends SampleBaseTest{
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testGetAlertText() {
         //Arrange
         String text;
@@ -50,6 +53,7 @@ public class AlertsTests extends SampleBaseTest{
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testVerifyAlertText() {
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
@@ -61,6 +65,7 @@ public class AlertsTests extends SampleBaseTest{
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testVerifyAlertTextLike() {
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();

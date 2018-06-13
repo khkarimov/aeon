@@ -1,9 +1,11 @@
 package tests;
 
+import categories.SafariNotSupported;
 import main.ultipro.UltiPro;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
@@ -51,6 +53,7 @@ public class UltiProTests {
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void gridWithSwitchTest(){
         ultiPro.loginPage.userNameTextBox.set("wardenj");
         ultiPro.loginPage.passwordTextBox.set("password");
