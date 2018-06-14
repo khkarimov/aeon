@@ -8,6 +8,7 @@ import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
 import aeon.core.common.helpers.*;
+import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.JQueryStringType;
@@ -336,7 +337,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param findBy Selector used to search with.
      * @return An IWebElementAdapter matching the findBy.
      */
-    public WebControl findElement(IByWeb findBy) {
+    public WebControl findElement(IBy findBy) {
         aeon.core.common.web.selectors.By by =
                 (aeon.core.common.web.selectors.By)
                         ((findBy instanceof aeon.core.common.web.selectors.By) ? findBy : null);
@@ -364,7 +365,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param findBy Selector passed to search.
      * @return A ReadOnlyCollection of IWebElementAdapter.
      */
-    public final Collection<WebControl> findElements(IByWeb findBy) {
+    public final Collection<WebControl> findElements(IBy findBy) {
         aeon.core.common.web.selectors.By by = (aeon.core.common.web.selectors.By) ((findBy instanceof aeon.core.common.web.selectors.By) ? findBy : null);
         if (by != null) {
             Collection<WebControl> collection;
@@ -376,11 +377,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                         .map(SeleniumElement::new)
                         .collect(Collectors.toList());
             } catch (org.openqa.selenium.NoSuchElementException e) {
-                throw new NoSuchElementsException(e, findBy);
+                throw new NoSuchElementsException(e, by);
             }
 
             if (collection.size() == 0) {
-                throw new NoSuchElementsException(findBy);
+                throw new NoSuchElementsException(by);
             }
 
             return collection;
@@ -391,7 +392,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             try {
                 return findElements(byJQuery);
             } catch (NoSuchElementException e) {
-                throw new NoSuchElementsException(e, findBy);
+                throw new NoSuchElementsException(e, byJQuery);
             }
         }
 

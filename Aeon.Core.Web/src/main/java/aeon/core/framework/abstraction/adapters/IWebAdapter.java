@@ -4,6 +4,7 @@ import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
+import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
@@ -78,7 +79,7 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException If FindBy is null.
      * @throws NoSuchElementException   If there is no such element.
      */
-    WebControl findElement(IByWeb findBy);
+    WebControl findElement(IBy findBy);
 
     /**
      * Finds all Elements within the current product
@@ -90,7 +91,7 @@ public interface IWebAdapter extends IAdapter {
      * @throws IllegalArgumentException If FindBy is null.
      * @throws NoSuchElementsException   If there is no such element.
      */
-    Collection<WebControl> findElements(IByWeb findBy);
+    Collection<WebControl> findElements(IBy findBy);
 
     /**
      * Finds the first Select Element using the given mechanism.
