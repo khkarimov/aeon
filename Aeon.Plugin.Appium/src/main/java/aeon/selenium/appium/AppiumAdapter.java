@@ -2,6 +2,7 @@ package aeon.selenium.appium;
 
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchElementsException;
+import aeon.core.common.interfaces.IBy;
 import aeon.core.common.mobile.interfaces.IByMobile;
 import aeon.core.common.mobile.interfaces.IByMobileXPath;
 import aeon.core.common.mobile.selectors.ByMobile;
@@ -614,7 +615,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * @param findBy Selector used to search with.
      * @return An IWebElementAdapter matching the findBy.
      */
-    public WebControl findElement(IByWeb findBy) {
+    public WebControl findElement(IBy findBy) {
         return findElement(findBy, true);
     }
 
@@ -624,7 +625,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * @param findBy Selector used to search with.
      * @return An IWebElementAdapter matching the findBy.
      */
-    private WebControl findElement(IByWeb findBy, boolean switchContext) {
+    private WebControl findElement(IBy findBy, boolean switchContext) {
         if (!(findBy instanceof IByMobile)) {
             return super.findElement(findBy);
         }
@@ -638,7 +639,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.xpath(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
-                throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
+                throw new aeon.core.common.exceptions.NoSuchElementException(e, (IByMobileXPath) findBy);
             } finally {
                 if (switchContext){
                     switchToWebViewContext();
