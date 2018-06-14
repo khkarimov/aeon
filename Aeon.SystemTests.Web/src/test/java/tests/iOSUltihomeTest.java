@@ -1,24 +1,25 @@
 package tests;
 
+import categories.IOSTests;
 import main.sample.Sample;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Tag("IOSTests")
+@Category({IOSTests.class})
 public class iOSUltihomeTest {
     private static Sample product;
 
-    @BeforeEach
+    @Before
     public void beforeTests() {
         product = launch(Sample.class);
         product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
     }
 
-    @AfterEach
+    @After
     public void afterTests() {
         product.browser.quit();
     }

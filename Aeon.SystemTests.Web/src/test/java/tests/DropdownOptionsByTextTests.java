@@ -5,12 +5,15 @@ import aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
 import aeon.core.common.exceptions.ElementHasOptionException;
 import aeon.core.common.exceptions.ElementsNotInOrderException;
 import aeon.core.common.web.WebSelectOption;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import categories.SafariNotSupported;
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class DropdownOptionsByTextTests extends SampleBaseTest {
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testHasOptions_ByText() {
         //Arrange
         String[] validOptionTexts = {"option0", "option1", "option2", "option3"};
@@ -21,11 +24,12 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
         product.startPage.dropDown.hasOptions(validOptionTexts, null, WebSelectOption.Text);
 
         //Assert
-        Assertions.assertThrows(ElementDoesNotHaveOptionException.class,
-                () -> product.startPage.dropDown.hasOptions(invalidOptions, null, WebSelectOption.Text));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        product.startPage.dropDown.hasOptions(invalidOptions, null, WebSelectOption.Text);
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testDoesNotHaveOptions_ByText() {
         //Arrange
         String[] invalidOptionTexts = {"Option-1", "Klingon", "nothing"};
@@ -36,16 +40,16 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
         product.startPage.dropDown.doesNotHaveOptions(invalidOptionTexts, null, WebSelectOption.Text);
 
         //Assert
-        Assertions.assertThrows(ElementHasOptionException.class,
-                () -> product.startPage.dropDown.doesNotHaveOptions(validOptionTexts, null, WebSelectOption.Text));
+        thrown.expect(IsInstanceOf.instanceOf(ElementHasOptionException.class));
+        product.startPage.dropDown.doesNotHaveOptions(validOptionTexts, null, WebSelectOption.Text);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByText_Ascending(){
         product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
 
-        Assertions.assertThrows(ElementsNotInOrderException.class,
-                () -> product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByText));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
     }
 
     @Test
@@ -58,15 +62,15 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
         product.startPage.dropDown.hasOptionsInOrder(validOptions, WebSelectOption.Text);
 
         //Assert
-        Assertions.assertThrows(ElementDoesNotHaveOptionException.class,
-                () -> product.startPage.dropDown.hasOptionsInOrder(invalidOptions, WebSelectOption.Text));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        product.startPage.dropDown.hasOptionsInOrder(invalidOptions, WebSelectOption.Text);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByText_Descending(){
         product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
 
-        Assertions.assertThrows(ElementsNotInOrderException.class,
-                () -> product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByText));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
     }
 }

@@ -2,8 +2,8 @@ package tests;
 
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserSize;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.Test;
 
 public class BrowserWindowTests extends SampleBaseTest{
 
@@ -11,8 +11,8 @@ public class BrowserWindowTests extends SampleBaseTest{
     public void testVerifyTitle() {
         product.browser.verifyTitle("Material Design Lite");
 
-        Assertions.assertThrows(ValuesAreNotEqualException.class,
-                () -> product.browser.verifyTitle("Fake Title"));
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        product.browser.verifyTitle("Fake Title");
     }
 
     @Test
@@ -20,8 +20,8 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.goToUrl("https://ci.mia.ucloud.int/login.html");
         product.browser.verifyURL("https://ci.mia.ucloud.int/login.html");
 
-        Assertions.assertThrows(ValuesAreNotEqualException.class,
-                () -> product.browser.verifyURL("http://www.espne.com/"));
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        product.browser.verifyURL("http://www.espne.com/");
     }
     @Test
     public void testVerifyWindowDoesNotExistByUrlVerifyWindowDoesNotExistByTitle() {
@@ -37,8 +37,8 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().unitPrice.is("$2.35");
         product.startPage.myGrid.rowBy.material("Acrylic").getRow().exists();
 
-        Assertions.assertThrows(NoSuchElementsException.class,
-                () -> product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click());
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchElementsException.class));
+        product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }
 
     @Test
@@ -55,8 +55,8 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.startPage.popupButton.click();
         product.browser.switchToWindowByTitle("Google");
 
-        Assertions.assertThrows(NotAllPopupWindowsClosedException.class,
-                () -> product.browser.switchToMainWindow(true));
+        thrown.expect(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
+        product.browser.switchToMainWindow(true);
     }
 
     @Test
@@ -66,8 +66,8 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.switchToWindowByTitle("Google");
         product.browser.verifyTitle("Google");
 
-        Assertions.assertThrows(NoSuchWindowException.class,
-                () -> product.browser.switchToWindowByTitle("Some Fake Title"));
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
+        product.browser.switchToWindowByTitle("Some Fake Title");
     }
 
     @Test
@@ -77,8 +77,8 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.switchToWindowByUrl("https://www.google.com");
         product.browser.verifyTitle("Google");
 
-        Assertions.assertThrows(NoSuchWindowException.class,
-                () -> product.browser.switchToWindowByUrl("www.fake.com"));
+        thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
+        product.browser.switchToWindowByUrl("www.fake.com");
     }
 
     @Test

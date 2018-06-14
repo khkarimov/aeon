@@ -20,6 +20,11 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     }
 
     @Override
+    public void onBeforeStart() {
+        // Nothing to log
+    }
+
+    @Override
     public void onAfterLaunch(Configuration configuration, IAdapter adapter) {
         // Launching is logged by default on the info level
     }
@@ -32,6 +37,11 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     @Override
     public void onSucceededTest() {
         log.info("TEST SUCCEEDED");
+    }
+
+    @Override
+    public void onSkippedTest() {
+        log.info("TEST SKIPPED");
     }
 
     @Override

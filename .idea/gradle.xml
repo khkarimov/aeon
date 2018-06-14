@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/Aeon.Core.Web" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Appium" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Perfecto" />
+            <option value="$PROJECT_DIR$/Aeon.Plugin.Reporting" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Selenium" />
             <option value="$PROJECT_DIR$/Aeon.SystemTests.Mobile" />
             <option value="$PROJECT_DIR$/Aeon.SystemTests.Web" />
