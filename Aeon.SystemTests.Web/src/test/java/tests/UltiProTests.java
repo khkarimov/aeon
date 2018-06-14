@@ -1,11 +1,9 @@
 package tests;
 
-import categories.EdgeNotSupported;
 import main.ultipro.UltiPro;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
