@@ -6,12 +6,15 @@ import aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
 import aeon.core.common.exceptions.ElementHasOptionException;
 import aeon.core.common.exceptions.ElementsNotInOrderException;
 import aeon.core.common.web.WebSelectOption;
+import categories.SafariNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class DropdownOptionsTests extends SampleBaseTest{
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testHasOptions_ByValue() {
         //Arrange
         String[] validOptionValues = {"0", "1", "2", "3"};
@@ -27,6 +30,7 @@ public class DropdownOptionsTests extends SampleBaseTest{
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testDoesNotHaveOptions_ByValue() {
         //Arrange
         String[] invalidOptionValues = {"-1", "h", "Klingon"};
