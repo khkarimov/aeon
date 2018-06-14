@@ -3,6 +3,7 @@ package tests;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.testabstraction.product.Aeon;
+import categories.EdgeNotSupported;
 import categories.UbuntuTests;
 import categories.WindowsTests;
 import main.sample.Sample;
@@ -43,6 +44,7 @@ public class GeneralAssertionsTests extends SampleBaseTest {
                 () -> product.startPage.nonExistentLabel.exists());
     }
 
+    @Category({EdgeNotSupported.class})
     @Test
     public void testNotSelected() {
         product.startPage.testCheckbox.notSelected();
@@ -53,6 +55,7 @@ public class GeneralAssertionsTests extends SampleBaseTest {
         product.startPage.nextRadioButton.notSelected();
     }
 
+    @Category({EdgeNotSupported.class})
     @Test
     public void testSelected() {
         product.startPage.testCheckbox.check();

@@ -1,9 +1,11 @@
 package tests;
 
+import categories.EdgeNotSupported;
 import main.ultipro.UltiPro;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
@@ -24,6 +26,7 @@ public class UltiProTests {
         ultiPro.browser.quit();
     }
 
+    @Category({EdgeNotSupported.class})
     @Test
     public void newHireTest(){
         ultiPro.loginPage.userNameTextBox.set("wardenj");
