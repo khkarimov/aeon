@@ -3,10 +3,8 @@ package tests;
 import aeon.core.common.exceptions.NoAlertException;
 import aeon.core.common.exceptions.ValuesAreNotAlikeException;
 import aeon.core.common.exceptions.ValuesAreNotEqualException;
-import categories.EdgeNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 public class AlertsTests extends SampleBaseTest{
 

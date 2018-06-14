@@ -26,7 +26,6 @@ public class UltiProTests {
         ultiPro.browser.quit();
     }
 
-    @Category({EdgeNotSupported.class})
     @Test
     public void newHireTest(){
         ultiPro.loginPage.userNameTextBox.set("wardenj");

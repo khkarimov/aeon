@@ -1,9 +1,7 @@
 package tests;
 
 import aeon.core.common.web.WebSelectOption;
-import categories.EdgeNotSupported;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 public class SetTests extends SampleBaseTest{
 
