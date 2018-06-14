@@ -3,8 +3,10 @@ package tests;
 import aeon.core.common.exceptions.NoAlertException;
 import aeon.core.common.exceptions.ValuesAreNotAlikeException;
 import aeon.core.common.exceptions.ValuesAreNotEqualException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import categories.SafariNotSupported;
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class AlertsTests extends SampleBaseTest{
 
@@ -34,6 +36,7 @@ public class AlertsTests extends SampleBaseTest{
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testGetAlertText() {
         //Arrange
         String text;
@@ -44,34 +47,32 @@ public class AlertsTests extends SampleBaseTest{
         product.browser.dismissAlert();
 
         //Assert
-        Assertions.assertThrows(NoAlertException.class,
-                () -> product.browser.getAlertText());
-        Assertions.assertEquals("Send some keys", text);
+        assert(text.equals("Send some keys"));
+        thrown.expect(IsInstanceOf.instanceOf(NoAlertException.class));
+        product.browser.getAlertText();
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testVerifyAlertText() {
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
         product.browser.verifyAlertText("Send some keys");
 
-        Assertions.assertThrows(ValuesAreNotEqualException.class,
-                () -> {
-                    product.browser.verifyAlertText("Send other keys");
-                    product.browser.acceptAlert();
-                });
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
+        product.browser.verifyAlertText("Send other keys");
+        product.browser.acceptAlert();
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testVerifyAlertTextLike() {
         product.startPage.openAlertButton.click();
         product.browser.verifyAlertExists();
         product.browser.verifyAlertTextLike("Send some keys", true);
 
-        Assertions.assertThrows(ValuesAreNotAlikeException.class,
-                () -> {
-                    product.browser.verifyAlertTextLike("send some keys", true);
-                    product.browser.acceptAlert();
-                });
+        thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotAlikeException.class));
+        product.browser.verifyAlertTextLike("send some keys", true);
+        product.browser.acceptAlert();
     }
 }

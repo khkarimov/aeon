@@ -6,12 +6,15 @@ import aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
 import aeon.core.common.exceptions.ElementHasOptionException;
 import aeon.core.common.exceptions.ElementsNotInOrderException;
 import aeon.core.common.web.WebSelectOption;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import categories.SafariNotSupported;
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class DropdownOptionsTests extends SampleBaseTest{
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testHasOptions_ByValue() {
         //Arrange
         String[] validOptionValues = {"0", "1", "2", "3"};
@@ -22,11 +25,12 @@ public class DropdownOptionsTests extends SampleBaseTest{
         product.startPage.dropDown.hasOptions(validOptionValues, null, WebSelectOption.Value);
 
         //Assert
-        Assertions.assertThrows(ElementDoesNotHaveOptionException.class,
-                () -> product.startPage.dropDown.hasOptions(invalidOptionValues, null, WebSelectOption.Value));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        product.startPage.dropDown.hasOptions(invalidOptionValues, null, WebSelectOption.Value);
     }
 
     @Test
+    @Category({SafariNotSupported.class})
     public void testDoesNotHaveOptions_ByValue() {
         //Arrange
         String[] invalidOptionValues = {"-1", "h", "Klingon"};
@@ -37,24 +41,24 @@ public class DropdownOptionsTests extends SampleBaseTest{
         product.startPage.dropDown.doesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
 
         //Assert
-        Assertions.assertThrows(ElementHasOptionException.class,
-                () -> product.startPage.dropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.Value));
+        thrown.expect(IsInstanceOf.instanceOf(ElementHasOptionException.class));
+        product.startPage.dropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.Value);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Ascending(){
         product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
 
-        Assertions.assertThrows(ElementsNotInOrderException.class,
-                () -> product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByValue));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Descending(){
         product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
 
-        Assertions.assertThrows(ElementsNotInOrderException.class,
-                () -> product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByValue));
+        thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
     }
 
     @Test
@@ -67,8 +71,8 @@ public class DropdownOptionsTests extends SampleBaseTest{
         product.startPage.dropDown.hasOptionsInOrder(validoptions, WebSelectOption.Value);
 
         //Assert
-        Assertions.assertThrows(ElementDoesNotHaveOptionException.class,
-                () -> product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Value));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
+        product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Value);
     }
 
     @Test
@@ -81,7 +85,7 @@ public class DropdownOptionsTests extends SampleBaseTest{
         product.startPage.dropDown.hasNumberOfOptions(totalOptions);
 
         //Assert
-        Assertions.assertThrows(ElementDoesNotHaveNumberOfOptionsException.class,
-                () -> product.startPage.dropDown.hasNumberOfOptions(totalOptionsToFail));
+        thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveNumberOfOptionsException.class));
+        product.startPage.dropDown.hasNumberOfOptions(totalOptionsToFail);
     }
 }

@@ -36,6 +36,17 @@ public class AeonTestExecution {
     }
 
     /**
+     * Should be called in the @BeforeClass step of a test class.
+     */
+    public static void beforeStart() {
+        init();
+
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onBeforeStart();
+        }
+    }
+
+    /**
      * May be called at the end of all test executions.
      *
      * Should be called through Aeon.
@@ -156,6 +167,16 @@ public class AeonTestExecution {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
             testExecutionPlugin.onFailedTest(message);
+        }
+    }
+
+    /**
+     * Method to indicate the skipping of a test.
+     */
+    public static void testSkipped() {
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onSkippedTest();
         }
     }
 }
