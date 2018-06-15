@@ -338,6 +338,16 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Chrome:
                 desiredCapabilities = DesiredCapabilities.chrome();
+
+                String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
+                if (StringUtils.isNotBlank(mobileEmulationDevice)) {
+                    Map<String, String> mobileEmulation = new HashMap<>();
+                    mobileEmulation.put("deviceName", mobileEmulationDevice);
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+                    desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                }
+
                 break;
 
             case InternetExplorer:
