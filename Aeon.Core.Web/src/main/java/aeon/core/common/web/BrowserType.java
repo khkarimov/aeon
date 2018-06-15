@@ -28,6 +28,11 @@ public enum BrowserType {
      */
     Safari,
 
+    /**
+     * Opera.
+     */
+    Opera,
+
     // Mobile Browsers
     /**
      * iOS Safari.
@@ -48,5 +53,5 @@ public enum BrowserType {
     /**
      * Android app.
      */
-    AndroidHybridApp
+    AndroidHybridApp;
 }

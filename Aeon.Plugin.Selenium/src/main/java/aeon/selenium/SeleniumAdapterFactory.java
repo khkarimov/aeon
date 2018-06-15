@@ -18,6 +18,7 @@ import aeon.selenium.extensions.ISeleniumExtension;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
+import com.google.common.collect.ImmutableList;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -39,6 +40,9 @@ import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaDriverService;
+import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
@@ -51,10 +55,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -133,6 +134,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
+        String operaDirectory = configuration.getString(SeleniumConfiguration.Keys.OPERA_DIRECTORY, null);
         String safariDirectory = "/usr/bin/safaridriver";
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
@@ -276,6 +278,22 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 trySetContext();
 
+                break;
+
+            case Opera:
+                driver = getDriver(() -> {
+                    if (isRemote) {
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                    } else {
+                        OperaOptions operaOptions = getOperaOptions();
+                        operaOptions = (OperaOptions) setProxySettings(operaOptions, proxyLocation);
+                        System.setProperty(OperaDriverService.OPERA_DRIVER_EXE_PROPERTY, operaDirectory);
+                        driver = new OperaDriver(operaOptions);
+                    }
+
+                    return driver;
+                });
                 break;
 
             default:
@@ -619,6 +637,17 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }});*/
 
         return chromeOptions;
+    }
+
+    private OperaOptions getOperaOptions() {
+        OperaOptions operaOptions = new OperaOptions();
+
+        String operaBinary = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, null);
+        if (operaBinary != null) {
+            operaOptions.setBinary(operaBinary);
+        }
+
+        return operaOptions;
     }
 
     private void setContext() {
