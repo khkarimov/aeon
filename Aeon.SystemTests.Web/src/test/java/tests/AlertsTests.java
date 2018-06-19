@@ -8,6 +8,8 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class AlertsTests extends SampleBaseTest{
 
     @Test
@@ -47,7 +49,7 @@ public class AlertsTests extends SampleBaseTest{
         product.browser.dismissAlert();
 
         //Assert
-        assert(text.equals("Send some keys"));
+        assertEquals("Send some keys", text);
         thrown.expect(IsInstanceOf.instanceOf(NoAlertException.class));
         product.browser.getAlertText();
     }

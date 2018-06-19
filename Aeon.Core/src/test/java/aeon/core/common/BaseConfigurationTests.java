@@ -180,9 +180,9 @@ public class BaseConfigurationTests {
     @Test
     public void testSetBoolean() {
         //Arrange
-        config.setBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES",true);
+        config.setBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", true);
         //Act
-        String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES","false");
+        String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "false");
         //Assert
         Assertions.assertEquals("true", testVar);
     }
@@ -190,9 +190,9 @@ public class BaseConfigurationTests {
     @Test
     public void testSetString()  {
         //Arrange
-        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES","true");
+        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "true");
         //Act
-        Boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES",false);
+        Boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", false);
         //Assert
         Assertions.assertEquals(true, testVar);
     }
@@ -202,7 +202,7 @@ public class BaseConfigurationTests {
         //Arrange
         config.setDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 6.7);
         //Act
-        String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES","4.58");
+        String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "4.58");
         //Assert
         Assertions.assertEquals("6.7", testVar);
     }
@@ -210,9 +210,9 @@ public class BaseConfigurationTests {
     @Test
     public void testGetBoolean() {
         //Arrange
-        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES","true");
+        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "true");
         //Act
-        boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES",false);
+        boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", false);
         //Assert
         Assertions.assertEquals(true, testVar, "Not returning a boolean value");
     }
@@ -220,20 +220,20 @@ public class BaseConfigurationTests {
     @Test
     public void testGetDouble()  {
         //Arrange
-        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES","4.50");
+        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "4.50");
         //Act
         double testVar = config.getDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 1.58);
         //Assert
-        Assertions.assertEquals(4.5,testVar);
+        Assertions.assertEquals(4.5, testVar);
     }
 
     @Test
     public void testGetString() {
         //Arrange
-        config.setDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES",6.7);
+        config.setDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 6.7);
         //Act
         String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "5.67");
         //Assert
-        Assertions.assertEquals("6.7",testVar, "Not returning correct string value");
+        Assertions.assertEquals("6.7", testVar, "Not returning correct string value");
     }
 }

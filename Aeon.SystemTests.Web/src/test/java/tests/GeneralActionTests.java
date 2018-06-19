@@ -8,12 +8,13 @@ import categories.EdgeNotSupported;
 import categories.SafariNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GeneralActionTests extends SampleBaseTest{
 
@@ -80,17 +81,17 @@ public class GeneralActionTests extends SampleBaseTest{
 
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        Assert.assertEquals(cookie.getName(), secondCookie.getName());
-        Assert.assertEquals(cookie.getDomain(), secondCookie.getDomain());
-        Assert.assertEquals(cookie.getValue(), secondCookie.getValue());
-        Assert.assertEquals(cookie.getSecure(), secondCookie.getSecure());
-        Assert.assertEquals(cookie.getPath(), secondCookie.getPath());
-        Assert.assertEquals(cookie.getExpiration(), secondCookie.getExpiration());
+        assertEquals(cookie.getName(), secondCookie.getName());
+        assertEquals(cookie.getDomain(), secondCookie.getDomain());
+        assertEquals(cookie.getValue(), secondCookie.getValue());
+        assertEquals(cookie.getSecure(), secondCookie.getSecure());
+        assertEquals(cookie.getPath(), secondCookie.getPath());
+        assertEquals(cookie.getExpiration(), secondCookie.getExpiration());
 
         String cookieNewValue = "NewCookieValue";
         product.browser.modifyCookie(cookie.getName(), cookieNewValue);
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert(secondCookie.getValue().equals(cookieNewValue));
+        assertEquals(cookieNewValue, secondCookie.getValue());
         product.browser.deleteCookie(cookie.getName());
         thrown.expect(IsInstanceOf.instanceOf(NoSuchCookieException.class));
         product.browser.getCookie(cookie.getName());
