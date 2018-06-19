@@ -32,7 +32,7 @@ public class DoesNotHaveCommandTests {
     @Mock
     private ICommandInitializer initializer;
 
-    private String [] messages = {"test", "test1", "test2", "test3"};
+    private String[] messages = {"test", "test1", "test2", "test3"};
 
     private String str = "teststes";
 
@@ -48,14 +48,12 @@ public class DoesNotHaveCommandTests {
     private WebControl control;
 
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         command = new DoesNotHaveCommand(selector, initializer, messages, str, ComparisonOption.Text, atr);
     }
 
     @Test
-    public void commandDelegateDoesNotHaveCommand()
-    {
+    public void commandDelegateDoesNotHaveCommand() {
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);

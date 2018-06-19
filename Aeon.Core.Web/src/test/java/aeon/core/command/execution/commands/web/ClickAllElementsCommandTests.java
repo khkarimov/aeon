@@ -37,7 +37,9 @@ public class ClickAllElementsCommandTests {
     private Consumer<IDriver> action;
 
     @BeforeEach
-    public void setup(){ clickAllElementsCommand = new ClickAllElementsCommand(selector, initializer); }
+    public void setup() {
+        clickAllElementsCommand = new ClickAllElementsCommand(selector, initializer);
+    }
 
     @Test
     public void commandDelegateClickAllElementsCommand() {

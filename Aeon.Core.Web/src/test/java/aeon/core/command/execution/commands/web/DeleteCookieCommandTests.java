@@ -23,7 +23,10 @@ public class DeleteCookieCommandTests {
     private IWebDriver driver;
 
     @BeforeEach
-    public void setUp(){deleteCookie = new DeleteCookieCommand(cookie);}
+    public void setUp() {
+        deleteCookie = new DeleteCookieCommand(cookie);
+    }
+
     @Test
     public void testDriverDelegate() {
         //Arrange
@@ -35,8 +38,9 @@ public class DeleteCookieCommandTests {
         verify(driver, times(1)).deleteCookie(cookie);
 
     }
+
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> deleteCookie.driverDelegate(null));
     }

@@ -39,8 +39,8 @@ public class ClickAndHoldCommandTests {
     private int duration;
 
     @ParameterizedTest
-    @ValueSource(ints = {0,1,3,5})
-    public void commandDelegateClickAndHoldCommand(int parameterDuration){
+    @ValueSource(ints = {0, 1, 3, 5})
+    public void commandDelegateClickAndHoldCommand(int parameterDuration) {
         //Arrange
         this.duration = parameterDuration;
         clickAndHoldCommandObject = new ClickAndHoldCommand(selector, initializer, duration);

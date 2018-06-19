@@ -33,6 +33,6 @@ public class DeleteAllCookiesCommandTests {
         deleteAllCookies.driverDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).deleteAllCookies();
+        verify(driver, times(1)).deleteAllCookies();
     }
 }

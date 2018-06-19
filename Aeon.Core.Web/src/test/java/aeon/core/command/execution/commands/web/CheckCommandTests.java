@@ -16,6 +16,7 @@ import org.mockito.quality.Strictness;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import java.util.function.Consumer;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,13 +35,14 @@ public class CheckCommandTests {
     private WebControl control;
     @Mock
     private Consumer<IDriver> action;
+
     @BeforeEach
     public void setup() {
         checkCommandObject = new CheckCommand(selector, initializer);
     }
 
     @Test
-    public void commandDelegateClickCommand(){
+    public void commandDelegateClickCommand() {
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);

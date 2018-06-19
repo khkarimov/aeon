@@ -16,28 +16,30 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class AcceptAlertCommandTests {
-        private AcceptAlertCommand acceptAlertCommand;
+    private AcceptAlertCommand acceptAlertCommand;
 
-        @Mock
-        private IWebDriver driver;
+    @Mock
+    private IWebDriver driver;
 
-        @BeforeEach
-        public void setUp(){ acceptAlertCommand = new AcceptAlertCommand(); }
+    @BeforeEach
+    public void setUp() {
+        acceptAlertCommand = new AcceptAlertCommand();
+    }
 
-        @Test
-        public void testDriverDelegate() {
-            //Arrange
+    @Test
+    public void testDriverDelegate() {
+        //Arrange
 
-            //Act
-            acceptAlertCommand.driverDelegate(driver);
+        //Act
+        acceptAlertCommand.driverDelegate(driver);
 
-            //Assert
-            verify(driver, times(1)).acceptAlert();
-        }
+        //Assert
+        verify(driver, times(1)).acceptAlert();
+    }
 
-        @Test
-        public void testDriverDelegateNullDriver(){
-            Assertions.assertThrows(IllegalArgumentException.class,
-                    () -> acceptAlertCommand.driverDelegate(null));
-        }
+    @Test
+    public void testDriverDelegateNullDriver() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> acceptAlertCommand.driverDelegate(null));
+    }
 }

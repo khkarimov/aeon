@@ -32,12 +32,12 @@ public class DisabledCommandTests {
     private WebControl control;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         disabledCommandObject = new DisabledCommand(selector, initializer);
     }
 
     @Test
-    public void DriverNullThrowsException(){
+    public void DriverNullThrowsException() {
         // Arrange
         Exception illegalArgumentException;
 
@@ -50,7 +50,7 @@ public class DisabledCommandTests {
     }
 
     @Test
-    public void ControlNullThrowsException(){
+    public void ControlNullThrowsException() {
         // Arrange
         Exception illegalArgumentException;
 
@@ -63,7 +63,7 @@ public class DisabledCommandTests {
     }
 
     @Test
-    public void DisabledCommandElementDisabled(){
+    public void DisabledCommandElementDisabled() {
         // Act
         disabledCommandObject.commandDelegate(driver, control);
 
