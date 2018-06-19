@@ -52,7 +52,7 @@ public class SeleniumCookie implements IWebCookie {
      * @return The domain the cookie is visible to is returned.
      */
     public final String getDomain() {
-        //Firefox adds a '.' before the domain of cookie, this prevents adding an another '.' , and adding it to a ip address.
+        // Firefox prepends a "." to the domain, this behavior is done to have consistency across all the browser regarding cookie's domain.
         if (underlyingCookie.getDomain().charAt(0) == '.' || underlyingCookie.getDomain().matches("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")) {
             return underlyingCookie.getDomain();
         } else {

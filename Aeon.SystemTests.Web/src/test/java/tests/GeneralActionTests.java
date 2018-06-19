@@ -8,6 +8,7 @@ import categories.EdgeNotSupported;
 import categories.SafariNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.joda.time.DateTime;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -79,12 +80,12 @@ public class GeneralActionTests extends SampleBaseTest{
 
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        assert(secondCookie.getName().equals(cookie.getName()));
-        assert(secondCookie.getDomain().equals(cookie.getDomain()));
-        assert(secondCookie.getValue().equals(cookie.getValue()));
-        assert(secondCookie.getSecure() == cookie.getSecure());
-        assert(secondCookie.getPath().equals(cookie.getPath()));
-        assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
+        Assert.assertEquals(cookie.getName(), secondCookie.getName());
+        Assert.assertEquals(cookie.getDomain(), secondCookie.getDomain());
+        Assert.assertEquals(cookie.getValue(), secondCookie.getValue());
+        Assert.assertEquals(cookie.getSecure(), secondCookie.getSecure());
+        Assert.assertEquals(cookie.getPath(), secondCookie.getPath());
+        Assert.assertEquals(cookie.getExpiration(), secondCookie.getExpiration());
 
         String cookieNewValue = "NewCookieValue";
         product.browser.modifyCookie(cookie.getName(), cookieNewValue);
