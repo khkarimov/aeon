@@ -283,8 +283,18 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case Opera:
                 driver = getDriver(() -> {
                     if (isRemote) {
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
-                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                       // MutableCapabilities operaCapabilities = DesiredCapabilities.operaBlink();
+//                      //  OperaOptions opera = new OperaOptions();
+//                      //  opera.
+//                       // poperaCapabilities.setCapability(OperaOptions.CAPABILITY, opera);
+                       // opera.addArguments("--start-maximized");
+//                        OperaOptions operaOptions = new OperaOptions();
+//                        ChromeOptions
+//                        operaOptions.setBinary("C:\\Program Files\\Opera\\launcher.exe");
+//                        operaOptions.setCapability("chrome_binary", "C:\\Program Files\\Opera\\launcher.exe");
+//                        operaOptions.setCapability("opera_binary", "C:\\Program Files\\Opera\\launcher.exe");
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, DesiredCapabilities.operaBlink());
+                       // ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
                         OperaOptions operaOptions = getOperaOptions();
                         operaOptions = (OperaOptions) setProxySettings(operaOptions, proxyLocation);
@@ -366,6 +376,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 }
 
+                break;
+
+            case Opera:
+                desiredCapabilities = DesiredCapabilities.operaBlink();
                 break;
 
             case InternetExplorer:
