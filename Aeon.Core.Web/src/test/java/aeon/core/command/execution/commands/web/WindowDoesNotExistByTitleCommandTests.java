@@ -26,10 +26,12 @@ public class WindowDoesNotExistByTitleCommandTests {
 
 
     @BeforeEach
-    public void setup(){windowDoesNotExistByTitleCommand = new WindowDoesNotExistByTitleCommand(windowTitle);}
+    public void setup() {
+        windowDoesNotExistByTitleCommand = new WindowDoesNotExistByTitleCommand(windowTitle);
+    }
 
     @Test
-    public void IllegalArgumentExceptionDriverNull(){
+    public void IllegalArgumentExceptionDriverNull() {
         // Arrange
         Exception illegalArgumentException;
 
@@ -42,7 +44,7 @@ public class WindowDoesNotExistByTitleCommandTests {
     }
 
     @Test
-    public void commandDelegateWindowDoesNotExistByTitle(){
+    public void commandDelegateWindowDoesNotExistByTitle() {
         //Arrange
 
         // Act

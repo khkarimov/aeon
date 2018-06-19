@@ -97,8 +97,8 @@ public class UnitTestsPerfecto {
         when(spyPerfectoConfiguration.getString(PerfectoConfiguration.Keys.PERFECTO_USER, "")).thenReturn("");
         when(spyPerfectoConfiguration.getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "")).thenReturn("test_pass");
         when(spyPerfectoConfiguration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "")).thenReturn("");
-        when(spyPerfectoConfiguration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT,false)).thenReturn(true);
-        when(spyPerfectoConfiguration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT,false)).thenReturn(true);
+        when(spyPerfectoConfiguration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT, false)).thenReturn(true);
+        when(spyPerfectoConfiguration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false)).thenReturn(true);
         mutableCapabilities = new DesiredCapabilities();
 
         //Act
@@ -131,7 +131,7 @@ public class UnitTestsPerfecto {
         aDriver = mock(AndroidDriver.class);
 
         //Act
-        seleniumExtension.onAfterLaunch(spyAeonConfiguration,aDriver);
+        seleniumExtension.onAfterLaunch(spyAeonConfiguration, aDriver);
 
         //Assert
         verify(log, times(1)).info("Cleaning application environment...");
@@ -145,7 +145,7 @@ public class UnitTestsPerfecto {
         aDriver = mock(AndroidDriver.class);
 
         //Act
-        seleniumExtension.onAfterLaunch(spyAeonConfiguration,null);
+        seleniumExtension.onAfterLaunch(spyAeonConfiguration, null);
 
         //Assert
         verifyZeroInteractions(log);
@@ -159,7 +159,7 @@ public class UnitTestsPerfecto {
         aDriver = mock(AndroidDriver.class);
 
         //Act
-        seleniumExtension.onAfterLaunch(spyAeonConfiguration,null);
+        seleniumExtension.onAfterLaunch(spyAeonConfiguration, null);
 
         //Assert
         verifyZeroInteractions(log);

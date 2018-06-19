@@ -13,8 +13,7 @@ public class Report {
     private List<Scenario> scenarioBeans;
     private String totalTime;
 
-    public Report()
-    {
+    public Report() {
         suiteName = "";
         total = 0;
         passed = 0;
@@ -101,7 +100,9 @@ public class Report {
         return this.skipped >= 1;
     }
 
-    public List<Scenario> getScenarioBeans() { return this.scenarioBeans; }
+    public List<Scenario> getScenarioBeans() {
+        return this.scenarioBeans;
+    }
 }
 
 

@@ -63,6 +63,7 @@ public class ReportingPlugin extends Plugin {
 
         /**
          * This gets called by the AutomationInfo constructor.
+         *
          * @param aeonConfiguration The aeon Configuration for the tests.
          */
         @Override
@@ -83,9 +84,9 @@ public class ReportingPlugin extends Plugin {
         public void onBeforeTest(String name, String... tags) {
             boolean displayClassName = configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
 
-            if (displayClassName && name.lastIndexOf('.')>-1) {
+            if (displayClassName && name.lastIndexOf('.') > -1) {
                 int classNameIndex = name.lastIndexOf('.');
-                currentTest = name.substring(0,classNameIndex);
+                currentTest = name.substring(0, classNameIndex);
                 currentClass = name.substring(classNameIndex + 1);
             } else {
                 currentTest = name;

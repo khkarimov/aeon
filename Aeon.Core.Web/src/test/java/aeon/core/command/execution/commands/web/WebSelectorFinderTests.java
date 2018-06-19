@@ -24,10 +24,12 @@ public class WebSelectorFinderTests {
     private IByWeb selector;
 
     @BeforeEach
-    public void setup(){webSelectorFinder = new WebSelectorFinder();}
+    public void setup() {
+        webSelectorFinder = new WebSelectorFinder();
+    }
 
     @Test
-    public void DriverNullThrowsException(){
+    public void DriverNullThrowsException() {
         // Arrange
         Exception illegalArgumentException;
 
@@ -40,7 +42,7 @@ public class WebSelectorFinderTests {
     }
 
     @Test
-    public void WebSelectorFinderFindSelector(){
+    public void WebSelectorFinderFindSelector() {
 
         // Act
         IByWeb iBy = webSelectorFinder.findSelector(driver, selector);

@@ -216,7 +216,7 @@ public class BrowserTests {
         when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(alertText);
         String returnedText = browserObject.getAlertText();
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAlertTextCommand.class));
-        Assertions.assertEquals(alertText,returnedText);
+        Assertions.assertEquals(alertText, returnedText);
     }
 
     @Test

@@ -25,7 +25,7 @@ public class iOSUltihomeTest {
     }
 
     @Test
-    public void ultihomeTest(){
+    public void ultihomeTest() {
         product.ultihome.userField.set("test username");
         product.ultihome.passField.set("test password");
         product.ultihome.loginButton.click();

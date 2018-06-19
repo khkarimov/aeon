@@ -22,10 +22,12 @@ public class VerifyAlertExistsCommandTests {
     private IWebDriver driver;
 
     @BeforeEach
-    public void setup(){verifyAlertExistsCommand = new VerifyAlertExistsCommand();}
+    public void setup() {
+        verifyAlertExistsCommand = new VerifyAlertExistsCommand();
+    }
 
     @Test
-    public void commandDelegateAlertTextLikeCommandTrue(){
+    public void commandDelegateAlertTextLikeCommandTrue() {
         //Arrange
 
         //Act
@@ -36,7 +38,7 @@ public class VerifyAlertExistsCommandTests {
     }
 
     @Test
-    public void testDriverDelegateNullDriver(){
+    public void testDriverDelegateNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> verifyAlertExistsCommand.driverDelegate(null));
     }

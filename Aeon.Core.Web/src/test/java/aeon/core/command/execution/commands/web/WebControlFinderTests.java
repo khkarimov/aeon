@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
+
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,15 +25,21 @@ public class WebControlFinderTests {
     private WebControlFinder webControlFinderDefault;
     private WebControlFinder webControlFinderSet;
 
-    @Mock private IByWeb selector;
-    @Mock private ICommandInitializer initializer;
-    @Mock private IWebDriver driver;
-    @Mock private WebControl control;
-    @Mock private Consumer<IDriver> action;
-    @Mock private IWebSelectorFinder selectorFinder;
+    @Mock
+    private IByWeb selector;
+    @Mock
+    private ICommandInitializer initializer;
+    @Mock
+    private IWebDriver driver;
+    @Mock
+    private WebControl control;
+    @Mock
+    private Consumer<IDriver> action;
+    @Mock
+    private IWebSelectorFinder selectorFinder;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         webControlFinderDefault = new WebControlFinder();
         webControlFinderSet = new WebControlFinder(selectorFinder);
     }
@@ -50,7 +57,7 @@ public class WebControlFinderTests {
     }
 
     @Test
-    public void verify_webControl_Default_After_Calling_findElement(){
+    public void verify_webControl_Default_After_Calling_findElement() {
         // Arrange
         when(driver.findElement(selector)).thenReturn(control);
 
@@ -62,7 +69,7 @@ public class WebControlFinderTests {
     }
 
     @Test
-    public void verify_webControl_Set_After_Calling_findElement(){
+    public void verify_webControl_Set_After_Calling_findElement() {
         // Arrange
         IByWeb selection = selectorFinder.findSelector(driver, selector);
         when(driver.findElement(selection)).thenReturn(control);

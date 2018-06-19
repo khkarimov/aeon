@@ -38,10 +38,9 @@ public class Scenario {
     public String getShortenedErrorMessage(int characterLimit) {
         String errorMessageSanitized = this.errorMessage;
         errorMessageSanitized = errorMessageSanitized.replace("&", "&amp;");
-        errorMessageSanitized = errorMessageSanitized.replace("<","&lt;");
+        errorMessageSanitized = errorMessageSanitized.replace("<", "&lt;");
         errorMessageSanitized = errorMessageSanitized.replace(">", "&gt;");
-        if (errorMessageSanitized.length() > characterLimit)
-        {
+        if (errorMessageSanitized.length() > characterLimit) {
             errorMessageSanitized = errorMessageSanitized.substring(0, characterLimit) + "...";
         }
 

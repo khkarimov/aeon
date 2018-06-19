@@ -36,11 +36,11 @@ public class VerifyTitleCommandTests {
         verifyTitleCommand.driverDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).verifyTitle(comparingText);
+        verify(driver, times(1)).verifyTitle(comparingText);
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> verifyTitleCommand.driverDelegate(null));
     }

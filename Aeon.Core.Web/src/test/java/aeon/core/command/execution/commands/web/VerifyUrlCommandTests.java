@@ -32,7 +32,8 @@ public class VerifyUrlCommandTests {
     @BeforeEach
     public void setUp() {
         String comparingURL = "http://google.com";
-        verifyUrlCommand = new VerifyUrlCommand(comparingURL); }
+        verifyUrlCommand = new VerifyUrlCommand(comparingURL);
+    }
 
     @Test
     public void driverDelegateVerifyUrlCommand() {
@@ -46,7 +47,7 @@ public class VerifyUrlCommandTests {
     }
 
     @Test
-    public void driverDelegateVerifyUrlCommandTestWithNullDriver(){
+    public void driverDelegateVerifyUrlCommandTestWithNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> verifyUrlCommand.driverDelegate(null));
     }

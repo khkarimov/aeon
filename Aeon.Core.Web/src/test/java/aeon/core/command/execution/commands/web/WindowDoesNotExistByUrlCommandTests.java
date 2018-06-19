@@ -25,10 +25,12 @@ public class WindowDoesNotExistByUrlCommandTests {
     private IWebDriver driver;
 
     @BeforeEach
-    public void setup(){windowDoesNotExistByUrlCommand = new WindowDoesNotExistByUrlCommand(url);}
+    public void setup() {
+        windowDoesNotExistByUrlCommand = new WindowDoesNotExistByUrlCommand(url);
+    }
 
     @Test
-    public void IllegalArgumentExceptionDriverNull(){
+    public void IllegalArgumentExceptionDriverNull() {
         //Arrange
         Exception illegalArgumentException;
 
@@ -41,7 +43,7 @@ public class WindowDoesNotExistByUrlCommandTests {
     }
 
     @Test
-    public void commandDelegateWindowDoesNotExistByTitle(){
+    public void commandDelegateWindowDoesNotExistByTitle() {
         //Arrange
 
         // Act

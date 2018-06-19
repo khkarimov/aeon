@@ -27,7 +27,7 @@ public class WebControlTests {
     }
 
     @Test
-    public void getAndSetForSelectorTest(){
+    public void getAndSetForSelectorTest() {
         // Arrange
 
         // Act
