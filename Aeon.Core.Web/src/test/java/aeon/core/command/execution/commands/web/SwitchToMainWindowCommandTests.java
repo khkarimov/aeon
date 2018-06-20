@@ -25,7 +25,7 @@ public class SwitchToMainWindowCommandTests {
 
     @BeforeEach
     public void setUp() {
-        switchToMainWindowCommand = new SwitchToMainWindowCommand(mainWindow,check);
+        switchToMainWindowCommand = new SwitchToMainWindowCommand(mainWindow, check);
     }
 
     @Test
@@ -36,11 +36,11 @@ public class SwitchToMainWindowCommandTests {
         switchToMainWindowCommand.driverDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).switchToMainWindow(mainWindow,check);
+        verify(driver, times(1)).switchToMainWindow(mainWindow, check);
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> switchToMainWindowCommand.driverDelegate(null));
     }

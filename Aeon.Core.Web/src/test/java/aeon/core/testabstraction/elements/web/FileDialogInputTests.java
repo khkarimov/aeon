@@ -54,7 +54,7 @@ public class FileDialogInputTests {
     private ICommandExecutionFacade commandExecutionFacade;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         info1 = new AutomationInfo(configuration, driver, adapter);
         info1.setCommandExecutionFacade(commandExecutionFacade);
         fileDialogInput1 = new FileDialogInput(info1, selector);

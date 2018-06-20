@@ -36,7 +36,7 @@ public class SelectTests {
     private String dummy = "dummy";
     private int dummyInt = 3;
     private CompareType compareType = CompareType.DescendingByText;
-
+    
     @Mock
     private IByWeb selector;
     @Mock
