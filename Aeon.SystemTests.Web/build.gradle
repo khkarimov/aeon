@@ -8,7 +8,7 @@ clean {
 }
 
 dependencies {
-    compile project(':Aeon.Plugin.Selenium')
+    compile project(':Aeon.Core.Web')
 }
 
 test {
