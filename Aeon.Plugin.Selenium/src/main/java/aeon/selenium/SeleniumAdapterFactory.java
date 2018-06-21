@@ -18,6 +18,7 @@ import aeon.selenium.extensions.ISeleniumExtension;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -58,6 +59,8 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+
+import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 
 /**
  * The driver factory for Web.
@@ -283,18 +286,14 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case Opera:
                 driver = getDriver(() -> {
                     if (isRemote) {
-                       // MutableCapabilities operaCapabilities = DesiredCapabilities.operaBlink();
-//                      //  OperaOptions opera = new OperaOptions();
-//                      //  opera.
-//                       // poperaCapabilities.setCapability(OperaOptions.CAPABILITY, opera);
-                       // opera.addArguments("--start-maximized");
-//                        OperaOptions operaOptions = new OperaOptions();
-//                        ChromeOptions
-//                        operaOptions.setBinary("C:\\Program Files\\Opera\\launcher.exe");
-//                        operaOptions.setCapability("chrome_binary", "C:\\Program Files\\Opera\\launcher.exe");
-//                        operaOptions.setCapability("opera_binary", "C:\\Program Files\\Opera\\launcher.exe");
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, DesiredCapabilities.operaBlink());
-                       // ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                        OperaOptions operaOptions = new OperaOptions();
+                        operaOptions.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
+                        String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
+                        Preconditions.checkArgument(StringUtils.isNotBlank(operaBinaryPath), SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
+                        operaOptions.setBinary(operaBinaryPath);
+                        operaOptions.addArguments("--start-maximized");
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, operaOptions);
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
                         OperaOptions operaOptions = getOperaOptions();
                         operaOptions = (OperaOptions) setProxySettings(operaOptions, proxyLocation);
