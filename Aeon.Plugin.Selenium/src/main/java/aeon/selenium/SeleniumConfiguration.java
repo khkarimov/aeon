@@ -66,8 +66,6 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
         public static final String WDA_PORT = "aeon.selenium.ios.wda_port";
         public static final String UDID = "aeon.selenium.ios.udid";
-
-
     }
 
     @Override
