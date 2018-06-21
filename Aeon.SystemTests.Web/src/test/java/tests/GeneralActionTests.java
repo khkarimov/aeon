@@ -25,7 +25,7 @@ public class GeneralActionTests extends SampleBaseTest{
             return;
         }
 
-        product.browser.goToUrl("https://ci.mia.ucloud.int");
+        product.browser.goToUrl("http://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
             String domain = ".ci.mia.ucloud.int";
