@@ -18,8 +18,6 @@ import aeon.selenium.extensions.ISeleniumExtension;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;

@@ -53,5 +53,5 @@ public enum BrowserType {
     /**
      * Android app.
      */
-    AndroidHybridApp;
+    AndroidHybridApp
 }
