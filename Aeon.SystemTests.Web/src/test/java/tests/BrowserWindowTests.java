@@ -2,8 +2,10 @@ package tests;
 
 import aeon.core.common.exceptions.*;
 import aeon.core.common.web.BrowserSize;
+import categories.EdgeNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class BrowserWindowTests extends SampleBaseTest{
 
@@ -41,6 +43,7 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }
 
+    @Category({EdgeNotSupported.class})
     @Test
     public void testSwitchToMainWindow() {
         product.browser.verifyTitle("Material Design Lite");
@@ -59,6 +62,7 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.switchToMainWindow(true);
     }
 
+    @Category({EdgeNotSupported.class})
     @Test
     public void testSwitchToWindowByTitle() {
         product.browser.verifyTitle("Material Design Lite");
@@ -70,6 +74,7 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.switchToWindowByTitle("Some Fake Title");
     }
 
+    @Category({EdgeNotSupported.class})
     @Test
     public void testSwitchToWindowByUrl() {
         product.browser.verifyTitle("Material Design Lite");
