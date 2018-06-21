@@ -14,7 +14,7 @@ import org.junit.experimental.categories.Category;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class GeneralActionTests extends SampleBaseTest{
 
@@ -25,10 +25,10 @@ public class GeneralActionTests extends SampleBaseTest{
             return;
         }
 
-        product.browser.goToUrl("http://ci.mia.ucloud.int");
+        product.browser.goToUrl("https://ultihome.ultimatesoftware.com");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = ".ci.mia.ucloud.int";
+            String domain = ".ultihome.ultimatesoftware.com";
             String value = "CookieValue";
             Date expiration = getNextYear();
             String path = "/";

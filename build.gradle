@@ -46,9 +46,9 @@ task CopyPerfectoPlugin(type: Copy) {
 
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
-assemble.finalizedBy(CopySeleniumPlugin)
-assemble.finalizedBy(CopyReportingPlugin)
-assemble.finalizedBy(CopyPerfectoPlugin)
+//assemble.finalizedBy(CopySeleniumPlugin)
+//assemble.finalizedBy(CopyReportingPlugin)
+//assemble.finalizedBy(CopyPerfectoPlugin)
 
 allprojects {
     group 'aeon'
