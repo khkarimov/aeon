@@ -286,13 +286,15 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case Opera:
                 driver = getDriver(() -> {
                     if (isRemote) {
-                        OperaOptions operaOptions = new OperaOptions();
-                        operaOptions.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
                         String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
-                        Preconditions.checkArgument(StringUtils.isNotBlank(operaBinaryPath), SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
-                        operaOptions.setBinary(operaBinaryPath);
-                        operaOptions.addArguments("--start-maximized");
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, operaOptions);
+                        if (StringUtils.isNotBlank(operaBinaryPath)) {
+                            throw new IllegalArgumentException(SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
+                        }
+
+                        OperaOptions operaOptions = getOperaOptions();
+                        // reset the browser name because of bug: https://github.com/SeleniumHQ/selenium/issues/6057
+                        operaOptions.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
                         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
                         OperaOptions operaOptions = getOperaOptions();
@@ -375,10 +377,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 }
 
-                break;
-
-            case Opera:
-                desiredCapabilities = DesiredCapabilities.operaBlink();
                 break;
 
             case InternetExplorer:
