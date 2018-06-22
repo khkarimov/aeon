@@ -285,7 +285,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 driver = getDriver(() -> {
                     if (isRemote) {
                         String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
-                        if (StringUtils.isNotBlank(operaBinaryPath)) {
+                        if (StringUtils.isBlank(operaBinaryPath)) {
                             throw new IllegalArgumentException(SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
                         }
 
@@ -387,6 +387,11 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Safari:
                 desiredCapabilities = DesiredCapabilities.safari();
+                break;
+
+            case Opera:
+                desiredCapabilities = getOperaOptions();
+                desiredCapabilities.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
                 break;
 
             case IOSSafari:
