@@ -1,5 +1,6 @@
 package aeon.selenium;
 
+
 import aeon.core.common.Capability;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.ConfigurationException;
@@ -283,6 +284,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Opera:
                 driver = getDriver(() -> {
+                    System.setProperty(OperaDriverService.OPERA_DRIVER_VERBOSE_LOG_PROPERTY, "true");
                     if (isRemote) {
                         String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
                         if (StringUtils.isBlank(operaBinaryPath)) {
