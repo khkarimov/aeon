@@ -293,7 +293,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                         OperaOptions operaOptions = getOperaOptions();
                         // reset the browser name because of bug: https://github.com/SeleniumHQ/selenium/issues/6057
-                        operaOptions.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
+                        // operaOptions.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
                         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
@@ -393,7 +393,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Opera:
                 desiredCapabilities = getOperaOptions();
-                desiredCapabilities.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
+                //desiredCapabilities.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
                 break;
 
             case IOSSafari:
@@ -657,7 +657,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     private OperaOptions getOperaOptions() {
         OperaOptions operaOptions = new OperaOptions();
-
+        operaOptions.addArguments("--no-sandbox");
         String operaBinary = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, null);
         if (operaBinary != null) {
             operaOptions.setBinary(operaBinary);
