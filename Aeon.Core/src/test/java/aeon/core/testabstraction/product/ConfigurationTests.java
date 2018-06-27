@@ -2,7 +2,6 @@ package aeon.core.testabstraction.product;
 
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -31,7 +32,7 @@ public class ConfigurationTests {
     @Test
     public void testGetDriver() {
         //Assert
-        Assertions.assertEquals(driver.getClass(), config.getDriver());
+        assertEquals(config.getDriver(), driver.getClass());
     }
 
     @Test
@@ -39,13 +40,13 @@ public class ConfigurationTests {
         //Act
         config.setDriver(IDriver.class);
         //Assert
-        assert(IDriver.class.equals(config.getDriver()));
+        assertEquals(config.getDriver(), IDriver.class);
     }
 
     @Test
     public void testGetAdapter() {
         //Assert
-        Assertions.assertEquals(adapter.getClass(), config.getAdapter());
+        assertEquals(config.getAdapter(), adapter.getClass());
     }
 
     @Test
@@ -53,7 +54,7 @@ public class ConfigurationTests {
         //Act
         config.setAdapter(IAdapter.class);
         //Assert
-        Assertions.assertEquals(IAdapter.class, config.getAdapter());
+        assertEquals(config.getAdapter(), IAdapter.class);
     }
 
 }
