@@ -689,7 +689,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             log.trace("WebDriver.Manage().Window.maximize();");
 
-            if (osIsMacOrLinux() && browserType.equals(BrowserType.Chrome)) {
+            if (osIsMacOrLinux() && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Opera))) {
                 //In the case of remote, current workaround doesnt work cause cannot get screensize
                 //so manually using the grid resolution for now.
                 if (isRemote) {

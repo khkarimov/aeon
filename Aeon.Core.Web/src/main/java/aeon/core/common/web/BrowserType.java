@@ -28,6 +28,11 @@ public enum BrowserType {
      */
     Safari,
 
+    /**
+     * Opera.
+     */
+    Opera,
+
     // Mobile Browsers
     /**
      * iOS Safari.
