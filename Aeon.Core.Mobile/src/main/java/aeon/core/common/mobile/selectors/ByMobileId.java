@@ -1,6 +1,8 @@
 package aeon.core.common.mobile.selectors;
 
 import aeon.core.common.mobile.interfaces.IByMobileId;
+import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.common.web.selectors.ByJQuery;
 
 /**
  * Class for selecting elements (default is via a CSS selector).
@@ -28,12 +30,26 @@ public class ByMobileId implements IByMobileId {
         return new ByMobileId(selector);
     }
 
+    @Override
+    public IByWeb find(IByWeb selector) {
+        throw new RuntimeException("Native selector cannot use 'find'.");
+    }
+
     /**
      * Gets the CSS selector.
      * @return the selector for the new element.
      */
     protected final String getSelector() {
         return selector;
+    }
+
+    /**
+     * Converts the current instance to {@link ByJQuery}.
+     *
+     * @return A {@link ByJQuery} object.
+     */
+    public final ByJQuery toJQuery() {
+        throw new RuntimeException("Cannot convert native selector to jQuery selector.");
     }
 
     /**

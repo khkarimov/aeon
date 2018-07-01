@@ -37,9 +37,11 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String CHROME_DIRECTORY = "aeon.selenium.chrome.driver";
         public static final String IE_DIRECTORY = "aeon.selenium.ie.driver";
         public static final String MARIONETTE_DIRECTORY = "aeon.selenium.firefox.driver";
+        public static final String OPERA_DIRECTORY = "aeon.selenium.opera.driver";
         public static final String EDGE_DIRECTORY = "aeon.selenium.edge.driver";
         public static final String CHROME_BINARY = "aeon.selenium.chrome.binary";
         public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
+        public static final String OPERA_BINARY = "aeon.selenium.opera.binary";
         public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
         public static final String CHROME_MOBILE_EMULATION_DEVICE = "aeon.selenium.chrome.mobile.emulation.device";
         public static final String IE_LOGGING_LEVEL = "aeon.selenium.ie.logging.level";
@@ -114,14 +116,17 @@ public class SeleniumConfiguration extends WebConfiguration {
             case Windows:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/Windows/geckodriver.exe");
                 properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/Windows/chromedriver.exe");
+                properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/Windows/operadriver.exe");
                 break;
             case MacOS:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/MacOS/geckodriver");
                 properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/MacOS/chromedriver");
+                properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/MacOS/operadriver");
                 break;
             case Linux:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/Linux/geckodriver");
                 properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/Linux/chromedriver");
+                properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/Linux/operadriver");
                 break;
             default:
                 throw new IllegalStateException("Unsupported Operating System");

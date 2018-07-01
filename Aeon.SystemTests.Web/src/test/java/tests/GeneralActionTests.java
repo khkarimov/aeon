@@ -14,6 +14,8 @@ import org.junit.experimental.categories.Category;
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.junit.Assert.assertEquals;
+
 public class GeneralActionTests extends SampleBaseTest{
 
     @Category({EdgeNotSupported.class, SafariNotSupported.class})
@@ -79,17 +81,17 @@ public class GeneralActionTests extends SampleBaseTest{
 
         product.browser.addCookie(cookie);
         IWebCookie secondCookie = product.browser.getCookie(cookie.getName());
-        assert(secondCookie.getName().equals(cookie.getName()));
-        assert(secondCookie.getDomain().equals(cookie.getDomain()));
-        assert(secondCookie.getValue().equals(cookie.getValue()));
-        assert(secondCookie.getSecure() == cookie.getSecure());
-        assert(secondCookie.getPath().equals(cookie.getPath()));
-        assert(secondCookie.getExpiration().equals(cookie.getExpiration()));
+        assertEquals(cookie.getName(), secondCookie.getName());
+        assertEquals(cookie.getDomain(), secondCookie.getDomain());
+        assertEquals(cookie.getValue(), secondCookie.getValue());
+        assertEquals(cookie.getSecure(), secondCookie.getSecure());
+        assertEquals(cookie.getPath(), secondCookie.getPath());
+        assertEquals(cookie.getExpiration(), secondCookie.getExpiration());
 
         String cookieNewValue = "NewCookieValue";
         product.browser.modifyCookie(cookie.getName(), cookieNewValue);
         secondCookie = product.browser.getCookie(cookie.getName());
-        assert(secondCookie.getValue().equals(cookieNewValue));
+        assertEquals(cookieNewValue, secondCookie.getValue());
         product.browser.deleteCookie(cookie.getName());
         thrown.expect(IsInstanceOf.instanceOf(NoSuchCookieException.class));
         product.browser.getCookie(cookie.getName());

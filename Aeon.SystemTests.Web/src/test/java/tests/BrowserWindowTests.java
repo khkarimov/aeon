@@ -86,6 +86,7 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.switchToWindowByUrl("www.fake.com");
     }
 
+    @Category({EdgeNotSupported.class})
     @Test
     public void testWindowResizing_GoBack_GoForward_ScrollToEnd_ScrollToTop() {
         product.browser.resize(BrowserSize.TabletLandscape);
@@ -99,3 +100,4 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.goForward();
     }
 }
+ 

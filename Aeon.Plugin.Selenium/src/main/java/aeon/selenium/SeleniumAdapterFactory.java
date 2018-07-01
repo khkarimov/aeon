@@ -1,5 +1,6 @@
 package aeon.selenium;
 
+
 import aeon.core.common.Capability;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.ConfigurationException;
@@ -39,6 +40,9 @@ import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaDriverService;
+import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
@@ -51,12 +55,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+
+import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 
 /**
  * The driver factory for Web.
@@ -133,6 +136,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
         String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
+        String operaDirectory = configuration.getString(SeleniumConfiguration.Keys.OPERA_DIRECTORY, null);
         String safariDirectory = "/usr/bin/safaridriver";
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
 
@@ -278,6 +282,28 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 break;
 
+            case Opera:
+                driver = getDriver(() -> {
+                    System.setProperty(OperaDriverService.OPERA_DRIVER_VERBOSE_LOG_PROPERTY, "true");
+                    if (isRemote) {
+                        String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
+                        if (StringUtils.isBlank(operaBinaryPath)) {
+                            throw new IllegalArgumentException(SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
+                        }
+
+                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
+                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+                    } else {
+                        OperaOptions operaOptions = getOperaOptions();
+                        operaOptions = (OperaOptions) setProxySettings(operaOptions, proxyLocation);
+                        System.setProperty(OperaDriverService.OPERA_DRIVER_EXE_PROPERTY, operaDirectory);
+                        driver = new OperaDriver(operaOptions);
+                    }
+
+                    return driver;
+                });
+                break;
+
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
@@ -360,6 +386,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Safari:
                 desiredCapabilities = DesiredCapabilities.safari();
+                break;
+
+            case Opera:
+                desiredCapabilities = getOperaOptions();
                 break;
 
             case IOSSafari:
@@ -619,6 +649,19 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }});*/
 
         return chromeOptions;
+    }
+
+    private OperaOptions getOperaOptions() {
+        OperaOptions operaOptions = new OperaOptions();
+        operaOptions.addArguments("--no-sandbox");
+        // reset the browser name because of bug: https://github.com/SeleniumHQ/selenium/issues/6057
+        operaOptions.setCapability(BROWSER_NAME, org.openqa.selenium.remote.BrowserType.OPERA);
+        String operaBinary = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, null);
+        if (operaBinary != null) {
+            operaOptions.setBinary(operaBinary);
+        }
+
+        return operaOptions;
     }
 
     private void setContext() {
