@@ -1,6 +1,6 @@
 # macOS Build Agent Setup
 
-1. Verify the agent is on Sierra or newer (skip to step 5, if it is already):
+1. Verify the agent is on Sierra or newer (skip to step 4, if it is already):
 ```bash
 $ sw_vers
 ProductName:	Mac OS X
@@ -8,7 +8,7 @@ ProductVersion:	10.12.6 <- This line should be 10.12.x or greater
 BuildVersion:	16G1408
 ```
 
-2. Resize the active disk to have at least 1GB free space behind it
+2. Resize the active disk to have at least 1GB free space.
 ```bash
 $ diskutil list
 /dev/disk0 (internal, physical):
@@ -18,41 +18,38 @@ $ diskutil list
    2:                  Apple_HFS Untitled                79.2 GB    disk0s2 
    3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
 ```
-Look for the largest partition, with the OS installation on it. In the above example, this partition is `disk0s2` (look under the `Identifier` column)
+Look for the partition with the OS installation on it (usually the largest one). In the above example, this partition is `disk0s2` (look under the `Identifier` column)
 
 #### Note
 > Do not skip this step if there is not a similiar disk to `disk0s3` of the above command. The installer will refuse to run.
-
 
 Now, actually resize the partition. Note: this implicitly entails that resulting free space created will be behind the new end of the partition.
 ```bash
 $ diskutil resizeVolume <partition id> <current size of parition - 1>GB
 ```
 
-3. [Download](https://itunes.apple.com/us/app/macos-sierra/id1127487414?ls=1&mt=12)/Open the macOS Sierra Installer.
+3. [Download](https://itunes.apple.com/us/app/macos-sierra/id1127487414?ls=1&mt=12), open, and install the macOS Sierra.
 
-4. Install macOS Sierra (this may take a bit)
+4. Install all available updates (not including OS upgrades)
 
-5. Install all available updates (not including OS upgrades)
-
-6. Configure automatic login.
+5. Configure automatic login.
     1. Open System Preferences
     1. Goto Users & Groups
     1. Unlock the page
     1. Open Login Options
     1. Enable Automatic Login for the build user
 
-7. Display sleep and turning the display off
+6. Display sleep and turning the display off
     1. Open System Preferences
     1. Goto Energy Saver
     1. Set both sliders to Never
 
-8. Disable the password for users in the admin group. (**Note** This command opens `vim`, if you don't know what that is, please familiar yourself with the basics of vim before continuing)
+7. Disable the password for users in the admin group. (**Note** This command opens `vim`; if you don't know what that is, please familiar yourself with the basics of vim before continuing)
 ```bash
 $ sudo visudo
 ```
 
-Inside the file, change the following line
+Inside the file, change the following line:
 ```
 %admin          ALL = (ALL) ALL
 ```
@@ -64,9 +61,9 @@ to
 Save and close the file
 
 #### Note
-> This article assumes that teamcity is already installed in ~/teamcity. ~ is the home directory of the build agent user.
+> This article assumes that the TeamCity Build Agent is already installed in ~/teamcity. ~ is the home directory of the build agent user.
 
-9. Install the build agent plist file
+8. Install the build agent plist file
 ```bash
 $ cp ~/teamcity/bin/jetbrains.teamcity.BuildAgent.plist ~/Library/LaunchAgents
 ```
@@ -74,15 +71,15 @@ $ cp ~/teamcity/bin/jetbrains.teamcity.BuildAgent.plist ~/Library/LaunchAgents
 ##### Warning
 > You can configure to start build agent on system boot, and place plist file to /Library/LaunchDaemons directory. But in this case there could **be some troubles with running GUI tests**, and with build agent auto-upgrade. So we do not recommend this approach. [Source](https://confluence.jetbrains.com/display/TCD10/Setting+up+and+Running+Additional+Build+Agents#SettingupandRunningAdditionalBuildAgents-AutomaticAgentStartunderMacOSx)
 
-10. Disable session restore on reboot
+9. Disable session restore on reboot
 ```bash
 $ sudo chown root:admin ~/Library/Preferences/ByHost/com.apple.loginwindow.*
 $ sudo chmod 1000 ~/Library/Preferences/ByHost/com.apple.loginwindow.*
 ```
 
-11. Reboot the computer, verify the agent automatically connects to the TeamCity build servers
+10. Reboot the computer, and verify the agent automatically connects to the TeamCity build servers
 
-12. Test the following commands from the build user's account
+11. Test the following commands from the build user's account:
 ```bash
 # Safari should open, exit code should be 0, nothing should be printed to the terminal
 $ open -a Safari
@@ -92,7 +89,7 @@ $ sudo safaridriver --enable
 $ safaridriver -p 0
 ```
 
-13. Test your build, and celebrate if everything works!
+12. Test your build, and celebrate if everything works!
 
 ### Troubleshooting
 `sudo safaridriver --enable` or `safaridriver -p 0` exits with error code 1.
