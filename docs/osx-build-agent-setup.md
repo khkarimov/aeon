@@ -21,7 +21,7 @@ $ diskutil list
 Look for the partition with the OS installation on it (usually the largest one). In the above example, this partition is `disk0s2` (look under the `Identifier` column)
 
 #### Note
-> Do not skip this step if there is not a similiar disk to `disk0s3` of the above command. The installer will refuse to run.
+> If a similiar disk to `disk0s3` does not exist in the output of the above command, do not skip this step. The installer will refuse to run.
 
 Now, actually resize the partition. Note: this implicitly entails that resulting free space created will be behind the new end of the partition.
 ```bash
@@ -81,12 +81,14 @@ $ sudo chmod 1000 ~/Library/Preferences/ByHost/com.apple.loginwindow.*
 
 11. Test the following commands from the build user's account:
 ```bash
-# Safari should open, exit code should be 0, nothing should be printed to the terminal
 $ open -a Safari
-# The following should exit with error code 0 (echo $?), take a few milliseconds, and should not ask for a password
+# Safari should open, exit code should be 0, nothing should be printed to the terminal
+
 $ sudo safaridriver --enable
-# The following should exit upon syscalls SIGTERM (killall safaridriver) and SIGINT (<ctrl>-C) with error code 0 (echo $?), and should not exit automatically
+# The above should exit with error code 0 (echo $?), take a few milliseconds, and it should not ask for a password
+
 $ safaridriver -p 0
+# The above should exit upon syscalls SIGTERM (killall safaridriver) and SIGINT (<ctrl>-C) with error code 0 (echo $?), and should not exit automatically
 ```
 
 12. Test your build, and celebrate if everything works!
