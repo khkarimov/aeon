@@ -104,8 +104,10 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         Image screenshot = null;
         try {
             screenshot = driver.getScreenshot();
+
+            automationInfo.screenshotTaken(screenshot);
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            log.warn(e.getMessage(), e);
         }
 
         if (screenshot == null) {
@@ -114,7 +116,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             log.error(ex.getMessage(), screenshot, /* TODO(DionnyS): JAVA_CONVERSION processList */ new ArrayList<>(), lastCaughtException);
         }
         if (automationInfo.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)) {
-            automationInfo.testFailed(ex.getMessage());
+            automationInfo.testFailed(ex.getMessage(), ex);
         }
         throw ex;
     }

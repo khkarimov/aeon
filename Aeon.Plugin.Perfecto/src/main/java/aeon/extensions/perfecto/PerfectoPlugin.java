@@ -111,8 +111,8 @@ public class PerfectoPlugin extends Plugin {
         }
 
         @Override
-        public void onFailedTest(String reason) {
-            reportiumClient.testStop(TestResultFactory.createFailure(reason));
+        public void onFailedTest(String reason, Throwable e) {
+            reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
 
             log.info("Test Report URL: " + reportiumClient.getReportUrl());
         }
@@ -120,6 +120,11 @@ public class PerfectoPlugin extends Plugin {
         @Override
         public void onBeforeStep(String message) {
             reportiumClient.stepStart(message);
+        }
+
+        @Override
+        public void onExecutionEvent(String eventName, Object payload) {
+            // No actions needed
         }
 
         @Override

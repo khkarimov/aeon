@@ -11,7 +11,7 @@ public class Report {
     private int skipped;
     private int broken;
     private List<Scenario> scenarioBeans;
-    private String totalTime;
+    private long totalTime;
 
     public Report() {
         suiteName = "";
@@ -21,7 +21,7 @@ public class Report {
         skipped = 0;
         broken = 0;
         scenarioBeans = new ArrayList<>();
-        totalTime = "";
+        totalTime = 0;
     }
 
     public String getSuiteName() {
@@ -32,7 +32,7 @@ public class Report {
         this.suiteName = suiteName;
     }
 
-    public int getTotal() {
+    int getTotal() {
         return this.total;
     }
 
@@ -76,11 +76,11 @@ public class Report {
         return "Report{total=" + this.total + ", passed=" + this.passed + ", failed=" + this.failed + '}';
     }
 
-    public void setTotalTime(String totalTime) {
+    public void setTotalTime(long totalTime) {
         this.totalTime = totalTime;
     }
 
-    public String getTotalTime() {
+    public long getTotalTime() {
         return this.totalTime;
     }
 

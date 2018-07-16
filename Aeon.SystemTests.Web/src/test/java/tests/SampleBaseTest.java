@@ -34,7 +34,7 @@ public class SampleBaseTest {
 
         @Override
         protected void failed(Throwable e, Description description) {
-            testFailed(e.getMessage());
+            testFailed(e.getMessage(), e);
         }
 
         @Override

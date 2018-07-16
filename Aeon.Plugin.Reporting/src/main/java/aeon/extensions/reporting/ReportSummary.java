@@ -2,15 +2,24 @@ package aeon.extensions.reporting;
 
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.interfaces.IConfiguration;
-import aeon.core.extensions.PluginConfiguration;
+import aeon.extensions.reporting.reportmodel.FailedExpectation;
+import aeon.extensions.reporting.reportmodel.Result;
+import aeon.extensions.reporting.reportmodel.ResultReport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.lang.management.ManagementFactory;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ReportSummary {
+class ReportSummary {
 
     private IConfiguration aeonConfiguration;
     private IConfiguration pluginConfiguration;
@@ -28,9 +37,81 @@ public class ReportSummary {
         this.errorMessageCharLimit = (int) pluginConfiguration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
     }
 
-    public void sendSummaryReport(Report reportBean) {
+    void createReportFile(Report report) {
+        ResultReport resultReport = new ResultReport();
+        resultReport.counts.passed = report.getPassed();
+        resultReport.counts.failed = report.getFailed();
+        resultReport.counts.disabled = report.getSkipped();
+        resultReport.timer.duration = report.getTotalTime();
+        for (Scenario scenario: report.getScenarioBeans()) {
+            Result result = new Result();
+            result.description = scenario.getScenarioName();
+            result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
+            result.status = scenario.getStatus().toLowerCase();
+            if (result.status.equals("failed")) {
+                FailedExpectation failedExpectation = new FailedExpectation();
+                failedExpectation.message = scenario.getErrorMessage();
+                failedExpectation.stack = scenario.getStackTrace();
+                result.failedExpectations.add(failedExpectation);
 
-        String title = "Automation Report - " + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
+                Image screenshot = scenario.getScreenshot();
+                if (screenshot != null) {
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    try {
+                        ImageIO.write((BufferedImage) screenshot, "png", stream);
+                        String data = DatatypeConverter.printBase64Binary(stream.toByteArray());
+                        result.screenshotPath = "data:image/png;base64," + data;
+                    } catch (IOException e) {
+                        log.warn("Could not write screenshot", e);
+                    }
+                }
+            }
+
+            resultReport.sequence.add(result);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+        try {
+            json = mapper.writeValueAsString(resultReport);
+
+        } catch (JsonProcessingException e) {
+            log.error("Could not write JSON results", e);
+
+            return;
+        }
+
+        String reportTemplate;
+        try (InputStream scriptReader = ReportingPlugin.class.getResourceAsStream("/report.tmpl.html")) {
+            reportTemplate =  new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path");
+
+            return;
+        } catch (IOException e) {
+            log.error("Problem reading from file");
+
+            return;
+        }
+
+        json = json.replace("\\n", "\\\\n")
+                .replace("\\t", "\\\\t")
+                .replace("\\\"", "\\\\\\\"");
+        String script = "<script>RESULTS.push(JSON.parse('" + json + "'));</script>";
+        reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
+
+        String fileName = "log/report-" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0] + "-" + Thread.currentThread().getId() +".html";
+        try (PrintWriter out = new PrintWriter(fileName)) {
+            out.println(reportTemplate);
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path");
+        }
+    }
+
+    void sendSummaryReport(Report reportBean) {
+
+        String title = "Automation Report - " + ReportingPlugin.reportDateFormat.format(reportBean.getScenarioBeans().get(0).getStartTime()).replace(":", "-");
 
         String slackChannel1 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
         String slackChannel2 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
@@ -169,7 +250,7 @@ public class ReportSummary {
                         + createColumn("" + report.getFailed())
                         + createColumn("" + report.getBroken())
                         + createColumn("" + report.getSkipped())
-                        + createColumn("" + report.getTotalTime()));
+                        + createColumn("" + getTime(report.getTotalTime())));
     }
 
     private String getTableBodyForSuiteSummaryJUnit(Report report) {
@@ -178,7 +259,7 @@ public class ReportSummary {
                         + createColumn("" + report.getPassed())
                         + createColumn("" + report.getFailed())
                         + createColumn("" + report.getSkipped())
-                        + createColumn("" + report.getTotalTime()));
+                        + createColumn("" + getTime(report.getTotalTime())));
     }
 
     private String getHead() {
@@ -246,5 +327,21 @@ public class ReportSummary {
 
         return "<td><p>Browser: " + browser + "</p>" +
                 "<p>Environment URL: " + environmentURL + "</p>";
+    }
+
+    private String getTime(long time) {
+        int seconds = (int) (time / 1000);
+        if (seconds >= 60) {
+            int minutes = seconds / 60;
+            if (minutes >= 60) {
+                int hours = minutes / 60;
+                minutes = minutes % 60;
+                return hours + " hours" + minutes + " minutes";
+            }
+            seconds = seconds % 60;
+            return minutes + " minutes " + seconds + " seconds";
+        } else {
+            return seconds + " seconds";
+        }
     }
 }

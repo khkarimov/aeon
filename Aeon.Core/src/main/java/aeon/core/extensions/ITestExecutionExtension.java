@@ -51,8 +51,9 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called when a test failed.
      *
      * @param reason Error message.
+     * @param e      Exception.
      */
-    void onFailedTest(String reason);
+    void onFailedTest(String reason, Throwable e);
 
     /**
      * Is called when a step method is used.
@@ -65,4 +66,12 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called when Aeon.done() is used.
      */
     void onDone();
+
+    /**
+     * Can be used to broadcast test execution events to plugins.
+     *
+     * @param eventName The name of the event in order to be able to identify it.
+     * @param payload   The payload of the event.
+     */
+    void onExecutionEvent(String eventName, Object payload);
 }

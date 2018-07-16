@@ -15,9 +15,9 @@ public class ScenarioTests {
     @Test
     public void startTimeTest() {
         Scenario scenario = new Scenario();
-        scenario.setStartTime("10:31");
+        scenario.setStartTime(2000);
 
-        Assert.assertEquals(scenario.getStartTime(), "10:31");
+        Assert.assertEquals(scenario.getStartTime(), 2000);
     }
 
     @Test
