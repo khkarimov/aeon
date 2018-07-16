@@ -15,6 +15,7 @@ import aeon.core.testabstraction.product.WebConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Browser class.
@@ -31,6 +32,11 @@ public class Browser {
      */
     public Browser(AutomationInfo info) {
         this.info = info;
+    }
+
+    
+    public List<String> getPerformanceLogs(){
+        return (List<String>) info.getCommandExecutionFacade().execute(info, new GetPerformanceLogs());
     }
 
     /**

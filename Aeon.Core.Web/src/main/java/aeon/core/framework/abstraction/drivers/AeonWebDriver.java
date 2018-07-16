@@ -43,6 +43,10 @@ public class AeonWebDriver implements IWebDriver {
         return this;
     }
 
+    public java.util.List<String> getPerformanceLogs(){
+        return adapter.getPerformanceLogs();
+    }
+
     @Override
     public WebControl findElement(IByWeb selector) {
         return adapter.findElement(selector);

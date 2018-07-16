@@ -18,11 +18,14 @@ import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.List;
 
 /**
  * The interface for the Web Adapter class.
  */
 public interface IWebAdapter extends IAdapter {
+
+    List<String> getPerformanceLogs();
 
     /**
      * Gets the title of the current browser window.

@@ -16,12 +16,15 @@ import org.joda.time.Period;
 import java.awt.Dimension;
 import java.net.URL;
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
  * The framework adapter interface.
  */
 public interface IWebDriver extends IDriver {
+
+    List<String> getPerformanceLogs();
 
     /**
      * Finds the first Element using the given mechanism.
