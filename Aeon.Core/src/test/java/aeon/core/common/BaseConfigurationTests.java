@@ -12,6 +12,7 @@ import java.util.*;
 import aeon.core.testabstraction.product.Configuration;
 import org.apache.logging.log4j.Logger;
 
+import org.mockito.InOrder;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -164,6 +165,49 @@ public class BaseConfigurationTests {
         //Assert
         verify(properties, times(1)).setProperty("aeon.timeout", "testEnv");
         verify(properties, times(1)).setProperty("aeon.throttle", "testEnv2");
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    public void testSetPropertiesWithUnderscoreEnvironmentVariable() throws Exception {
+        //Arrange
+        when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
+        when(spyConfig.getEnvironmentValue("aeon.throttle")).thenReturn("testEnv2");
+        when(spyConfig.getEnvironmentValue("aeon_throttle")).thenReturn("testEnv3");
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
+        when(properties.propertyNames()).thenReturn(enumerationList);
+
+        spyConfig.properties = properties;
+
+        //Act
+        spyConfig.loadConfiguration();
+
+        //Assert
+        InOrder inOrder = inOrder(properties);
+        inOrder.verify(properties, times(1)).setProperty("aeon.timeout", "testEnv");
+        inOrder.verify(properties, times(1)).setProperty("aeon.throttle", "testEnv3");
+        inOrder.verify(properties, times(1)).setProperty("aeon.throttle", "testEnv2");
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    public void testSetPropertiesWithUnderscoreEnvironmentVariableInsteadOfDot() throws Exception {
+        //Arrange
+        when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
+        when(spyConfig.getEnvironmentValue("aeon_throttle")).thenReturn("testEnv3");
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
+        when(properties.propertyNames()).thenReturn(enumerationList);
+
+        spyConfig.properties = properties;
+
+        //Act
+        spyConfig.loadConfiguration();
+
+        //Assert
+        InOrder inOrder = inOrder(properties);
+        inOrder.verify(properties, times(1)).setProperty("aeon.timeout", "testEnv");
+        inOrder.verify(properties, times(1)).setProperty("aeon.throttle", "testEnv3");
+        inOrder.verify(properties, times(0)).setProperty("aeon.throttle", "testEnv2");
     }
 
     @Test
