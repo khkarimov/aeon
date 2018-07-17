@@ -151,9 +151,9 @@ public class ReportingPlugin extends Plugin {
             long time = System.currentTimeMillis();
             log.info("End Time " + reportDateFormat.format(new Date(time)));
             reportBean.setTotalTime(time - startTime);
-            ReportSummary reportSummery = new ReportSummary(configuration, aeonConfiguration);
-            reportSummery.sendSummaryReport(reportBean);
-            reportSummery.createReportFile(reportBean);
+            ReportSummary reportSummary = new ReportSummary(configuration, aeonConfiguration);
+            reportSummary.sendSummaryReport(reportBean);
+            reportSummary.createReportFile(reportBean);
         }
 
         private void initializeReport() {
