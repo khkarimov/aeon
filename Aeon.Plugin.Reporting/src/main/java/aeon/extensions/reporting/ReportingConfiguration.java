@@ -26,6 +26,7 @@ public class ReportingConfiguration extends PluginConfiguration {
         public static final String CHANNEL_2 = "aeon.extensions.reporting.slack.channel.2";
         public static final String DISPLAY_CLASSNAME = "aeon.extensions.reporting.display_class_name";
         public static final String ERROR_MESSAGE_CHARACTER_LIMIT = "aeon.extensions.reporting.error_message_character_limit";
+        public static final String REPORTS_DIRECTORY = "aeon.extensions.reporting.directory";
     }
 
     @Override

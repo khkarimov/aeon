@@ -7,7 +7,7 @@ public class Scenario {
     private long startTime;
     private long endTime;
     private String status = "";
-    private String errorMessage;
+    private String errorMessage = "";
     private String moduleName;
     private String stackTrace;
     private Image screenshot;
@@ -28,11 +28,11 @@ public class Scenario {
         this.startTime = startTime;
     }
 
-    void setEndTime(long endTime) {
+    public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
 
-    long getEndTime() {
+    public long getEndTime() {
         return this.endTime;
     }
 
@@ -48,7 +48,7 @@ public class Scenario {
         return this.errorMessage;
     }
 
-    String getShortenedErrorMessage(int characterLimit) {
+    public String getShortenedErrorMessage(int characterLimit) {
         String errorMessageSanitized = this.errorMessage;
         errorMessageSanitized = errorMessageSanitized.replace("&", "&amp;");
         errorMessageSanitized = errorMessageSanitized.replace("<", "&lt;");
@@ -76,15 +76,15 @@ public class Scenario {
         this.stackTrace = stackTrace;
     }
 
-    String getStackTrace() {
+    public String getStackTrace() {
         return this.stackTrace;
     }
 
-    void setScreenshot(Image screenshot) {
+    public void setScreenshot(Image screenshot) {
         this.screenshot = screenshot;
     }
 
-    Image getScreenshot() {
+    public Image getScreenshot() {
         return this.screenshot;
     }
 }

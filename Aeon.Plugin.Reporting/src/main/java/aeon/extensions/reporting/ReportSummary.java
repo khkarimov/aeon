@@ -48,6 +48,10 @@ class ReportSummary {
             result.description = scenario.getScenarioName();
             result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
             result.status = scenario.getStatus().toLowerCase();
+            if (result.status.equals("skipped")) {
+                result.status = "disabled";
+            }
+
             if (result.status.equals("failed")) {
                 FailedExpectation failedExpectation = new FailedExpectation();
                 failedExpectation.message = scenario.getErrorMessage();
@@ -101,7 +105,9 @@ class ReportSummary {
         String script = "<script>RESULTS.push(JSON.parse('" + json + "'));</script>";
         reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
 
-        String fileName = "log/report-" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0] + "-" + Thread.currentThread().getId() +".html";
+        String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
+            + "/reports-" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0] + ".html";
+
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(reportTemplate);
         } catch (FileNotFoundException e) {
