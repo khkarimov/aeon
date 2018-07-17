@@ -7,6 +7,18 @@ import aeon.extensions.reporting.reportmodel.Result;
 import aeon.extensions.reporting.reportmodel.ResultReport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,8 +28,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.apache.http.HttpHeaders.USER_AGENT;
 
 class ReportSummary {
 
@@ -349,5 +364,52 @@ class ReportSummary {
         } else {
             return seconds + " seconds";
         }
+    }
+
+    private void uploadToArtifactory(String filePath) {
+        String artifactoryUrl = "url";
+        String artifactoryPath = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
+        String username = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
+        String password = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
+
+        CredentialsProvider provider = new BasicCredentialsProvider();
+        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+
+        HttpClient client = HttpClientBuilder.create()
+                .setDefaultCredentialsProvider(provider)
+                .build();
+        HttpPut put = new HttpPut(artifactoryUrl + artifactoryPath);
+
+        put.setHeader("User-Agent", USER_AGENT);
+
+        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+        urlParameters.add(new BasicNameValuePair("username", "C02G8416DRJM"));
+        urlParameters.add(new BasicNameValuePair("password", ""));
+        urlParameters.add(new BasicNameValuePair("locale", ""));
+        urlParameters.add(new BasicNameValuePair("caller", ""));
+        urlParameters.add(new BasicNameValuePair("num", "12345"));
+
+        try {
+            put.setEntity(new UrlEncodedFormEntity(urlParameters));
+        } catch (UnsupportedEncodingException e) {
+            log.warn("Unsupported encoding in artifactory url parameters");
+        }
+
+        StringBuffer result;
+        try {
+            HttpResponse response = client.execute(put);
+            BufferedReader rd = new BufferedReader(
+                    new InputStreamReader(response.getEntity().getContent()));
+
+            result = new StringBuffer();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+        } catch (IOException e) {
+            log.error("Could not send report file to artifactory");
+        }
+
+
     }
 }
