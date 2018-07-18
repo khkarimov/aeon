@@ -7,20 +7,13 @@ import aeon.extensions.reporting.reportmodel.Result;
 import aeon.extensions.reporting.reportmodel.ResultReport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.ContentBody;
-import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.HttpClient;
@@ -134,7 +127,6 @@ class ReportSummary {
         } catch (FileNotFoundException e) {
             log.error("File not found on path");
         }
-
     }
 
     void sendSummaryReport(Report reportBean) {
@@ -423,7 +415,5 @@ class ReportSummary {
         } catch (IOException e) {
             log.error(String.format("Could not upload report file '%s' to artifactory: %s", fullRequestUrl, e.getMessage()));
         }
-
-
     }
 }
