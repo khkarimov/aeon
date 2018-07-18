@@ -371,7 +371,7 @@ class ReportSummary {
         String username = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
         String password = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
 
-        if (artifactoryUrl == "" || artifactoryPath == "" || username == "" || password == "") {
+        if (artifactoryUrl.isEmpty() || artifactoryPath.isEmpty() || username.isEmpty() || password.isEmpty()) {
             log.info("Not all artifactory properties set, cancelling file upload");
             return;
         }
