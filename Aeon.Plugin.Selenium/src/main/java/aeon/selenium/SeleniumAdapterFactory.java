@@ -52,7 +52,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import org.pf4j.Extension;
-import sun.security.krb5.internal.crypto.Des;
 
 import java.io.File;
 import java.io.IOException;
@@ -174,9 +173,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         ChromeOptions chromeOptions = getChromeOptions();
                         chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
                         System.setProperty("webdriver.chrome.driver", chromeDirectory);
-                        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-                        capabilities.merge(getLoggingCapabilities());
-                        chromeOptions.merge(capabilities);
+                        chromeOptions.merge(getLoggingCapabilities());
                         driver = new ChromeDriver(chromeOptions);
                     }
 
