@@ -40,7 +40,7 @@ public class Browser {
      * @return A list of performance logs.
      */
     public List<String> getPerformanceLogs(){
-        return (List<String>) info.getCommandExecutionFacade().execute(info, new GetPerformanceLogs());
+        return (List<String>) info.getCommandExecutionFacade().execute(info, new GetPerformanceLogsCommand());
     }
 
     /**

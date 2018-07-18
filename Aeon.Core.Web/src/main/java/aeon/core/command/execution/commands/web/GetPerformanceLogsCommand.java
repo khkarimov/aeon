@@ -11,13 +11,13 @@ import java.util.Locale;
 /**
  * Retrieves the performance logs.
  */
-public class GetPerformanceLogs extends CommandWithReturn {
+public class GetPerformanceLogsCommand extends CommandWithReturn {
 
     /**
-     * Initializes a new instance of the {@link GetPerformanceLogs} class.
+     * Initializes a new instance of the {@link GetPerformanceLogsCommand} class.
      */
-    public GetPerformanceLogs() {
-        super(String.format(Locale.getDefault(), Resources.getString("GetPerformanceLogs_Info")));
+    public GetPerformanceLogsCommand() {
+        super(String.format(Locale.getDefault(), Resources.getString("GetPerformanceLogsCommand_Info")));
     }
 
 
