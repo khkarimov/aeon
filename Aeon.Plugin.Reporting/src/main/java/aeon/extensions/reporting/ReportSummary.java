@@ -7,17 +7,22 @@ import aeon.extensions.reporting.reportmodel.Result;
 import aeon.extensions.reporting.reportmodel.ResultReport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
+import org.apache.http.HttpStatus;
+import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +33,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -125,9 +129,12 @@ class ReportSummary {
 
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(reportTemplate);
+            out.close();
+            uploadToArtifactory(fileName);
         } catch (FileNotFoundException e) {
             log.error("File not found on path");
         }
+
     }
 
     void sendSummaryReport(Report reportBean) {
@@ -366,48 +373,55 @@ class ReportSummary {
         }
     }
 
-    private void uploadToArtifactory(String filePath) {
-        String artifactoryUrl = "url";
+    private void uploadToArtifactory(String filePathName) {
+        String artifactoryUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
         String artifactoryPath = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
         String username = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
         String password = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
 
+        if (artifactoryUrl == "" || artifactoryPath == "" || username == "" || password == "") {
+            log.info("Not all artifactory properties set, cancelling file upload");
+            return;
+        }
+
+        String fileName = filePathName.substring(filePathName.lastIndexOf("/")+1);
+        String fullRequestUrl = artifactoryUrl + "/" + artifactoryPath + "/" + fileName;
+
+        // Set basic auth information
         CredentialsProvider provider = new BasicCredentialsProvider();
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+        provider.setCredentials(AuthScope.ANY, credentials);
 
+        // Build file entity using InputStream
+        File file = new File(filePathName);
+        InputStreamEntity fileEntity = null;
+        try {
+            InputStream inputStream = new FileInputStream(filePathName);
+            fileEntity = new InputStreamEntity(inputStream, file.length());
+        } catch (FileNotFoundException e) {
+            log.error(String.format("Could not find file %s to upload to artifactory", filePathName));
+            return;
+        }
+
+        // Build HttpClient and build put request
         HttpClient client = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(provider)
                 .build();
-        HttpPut put = new HttpPut(artifactoryUrl + artifactoryPath);
+        HttpPut put = new HttpPut(fullRequestUrl);
 
         put.setHeader("User-Agent", USER_AGENT);
+        put.setHeader("Content-type", "text/html");
+        put.setEntity(fileEntity);
 
-        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("username", "C02G8416DRJM"));
-        urlParameters.add(new BasicNameValuePair("password", ""));
-        urlParameters.add(new BasicNameValuePair("locale", ""));
-        urlParameters.add(new BasicNameValuePair("caller", ""));
-        urlParameters.add(new BasicNameValuePair("num", "12345"));
-
-        try {
-            put.setEntity(new UrlEncodedFormEntity(urlParameters));
-        } catch (UnsupportedEncodingException e) {
-            log.warn("Unsupported encoding in artifactory url parameters");
-        }
-
-        StringBuffer result;
+        // Execute request and receive response
         try {
             HttpResponse response = client.execute(put);
-            BufferedReader rd = new BufferedReader(
-                    new InputStreamReader(response.getEntity().getContent()));
-
-            result = new StringBuffer();
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != HttpStatus.SC_CREATED || statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NO_CONTENT || statusCode == HttpStatus.SC_ACCEPTED) {
+                log.error(String.format("Did not receive successful status code for artifactory upload. Received: %d", statusCode));
             }
         } catch (IOException e) {
-            log.error("Could not send report file to artifactory");
+            log.error(String.format("Could not upload report file '%s' to artifactory: %s", fullRequestUrl, e.getMessage()));
         }
 
 

@@ -30,6 +30,7 @@ public class ReportingConfiguration extends PluginConfiguration {
         public static final String ARTIFACTORY_PATH = "aeon.extensions.reporting.artifactory.path";
         public static final String ARTIFACTORY_USERNAME = "aeon.extensions.reporting.artifactory.username";
         public static final String ARTIFACTORY_PASSWORD = "aeon.extensions.reporting.artifactory.password";
+        public static final String ARTIFACTORY_URL = "aeon.extensions.reporting.artifactory.url";
     }
 
     @Override
