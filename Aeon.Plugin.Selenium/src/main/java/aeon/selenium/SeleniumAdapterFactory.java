@@ -448,7 +448,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("nativeWebTap", true);
 
                 // Appium
                 if (!deviceName.isEmpty()) {
