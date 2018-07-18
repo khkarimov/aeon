@@ -36,8 +36,8 @@ public class Browser {
 
 
     /**
-     * Retrieves and returns a list of performance logs
-     * @return A list of performance logs
+     * Retrieves and returns a list of performance logs.
+     * @return A list of performance logs.
      */
     public List<String> getPerformanceLogs(){
         return (List<String>) info.getCommandExecutionFacade().execute(info, new GetPerformanceLogs());

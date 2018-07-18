@@ -84,7 +84,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public List<String> getPerformanceLogs(){
         List<LogEntry> logEntries = webDriver.manage().logs().get(LogType.PERFORMANCE).getAll();
         List<String> logEntryStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
-        logEntryStrings.forEach(l -> log.info(l));
+        logEntryStrings.forEach(logEntry -> log.info(logEntry));
         return logEntryStrings;
     }
 
