@@ -28,7 +28,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.ui.Quotes;
@@ -84,7 +83,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public List<String> getPerformanceLogs(){
         List<LogEntry> logEntries = webDriver.manage().logs().get(LogType.PERFORMANCE).getAll();
-        return logEntries.stream().map(log -> log.toString()).collect(Collectors.toList());
+        List<String> logEntryStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
+        logEntryStrings.forEach(l -> log.info(l));
+        return logEntryStrings;
     }
 
     /**
