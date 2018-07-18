@@ -173,7 +173,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         ChromeOptions chromeOptions = getChromeOptions();
                         chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
                         System.setProperty("webdriver.chrome.driver", chromeDirectory);
-                        chromeOptions.merge(getLoggingCapabilities());
                         driver = new ChromeDriver(chromeOptions);
                     }
 
@@ -301,7 +300,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         OperaOptions operaOptions = getOperaOptions();
                         operaOptions = (OperaOptions) setProxySettings(operaOptions, proxyLocation);
                         System.setProperty(OperaDriverService.OPERA_DRIVER_EXE_PROPERTY, operaDirectory);
-                        operaOptions.merge(getLoggingCapabilities());
                         driver = new OperaDriver(operaOptions);
                     }
 
@@ -356,18 +354,14 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             }
         }
     }
-    private Capabilities getLoggingCapabilities(){
+
+    private void setLoggingCapabilities(MutableCapabilities target){
         LoggingPreferences logs = new LoggingPreferences();
-        logs.enable(LogType.BROWSER, Level.ALL);
-        logs.enable(LogType.CLIENT, Level.ALL);
-        logs.enable(LogType.DRIVER, Level.ALL);
-        logs.enable(LogType.PERFORMANCE, Level.ALL);
-        logs.enable(LogType.PROFILER, Level.ALL);
-        logs.enable(LogType.SERVER, Level.ALL);
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(CapabilityType.LOGGING_PREFS, logs);
-        return capabilities;
+        String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.PERFORMANCE_LOGGING, Level.OFF.toString());
+        logs.enable(LogType.PERFORMANCE, Level.parse(loggingLevel));
+        target.setCapability(CapabilityType.LOGGING_PREFS, logs);
     }
+
     private Capabilities getCapabilities() {
         MutableCapabilities desiredCapabilities;
 
@@ -380,7 +374,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Chrome:
                 desiredCapabilities = DesiredCapabilities.chrome();
-                desiredCapabilities.merge(getLoggingCapabilities());
+                setLoggingCapabilities(desiredCapabilities);
 
                 String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
                 if (StringUtils.isNotBlank(mobileEmulationDevice)) {
@@ -407,7 +401,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Opera:
                 desiredCapabilities = getOperaOptions();
-                desiredCapabilities.merge(getLoggingCapabilities());
+                setLoggingCapabilities(desiredCapabilities);
                 break;
 
             case IOSSafari:
@@ -657,6 +651,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             chromeOptions.setBinary(chromeBinary);
         }
 
+        setLoggingCapabilities(chromeOptions);
+
 //        // DS - This is some ugly stuff. Couldn't find a better way...
 //        chromeOptions.setExperimentalOption("pref", new HashMap<String, Object>() {{
 //            put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
@@ -678,6 +674,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         if (operaBinary != null) {
             operaOptions.setBinary(operaBinary);
         }
+
+        setLoggingCapabilities(operaOptions);
 
         return operaOptions;
     }

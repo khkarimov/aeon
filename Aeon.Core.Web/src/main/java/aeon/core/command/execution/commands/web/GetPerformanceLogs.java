@@ -11,7 +11,7 @@ import java.util.Locale;
 public class GetPerformanceLogs extends CommandWithReturn {
 
     public GetPerformanceLogs() {
-        super(String.format(Locale.getDefault(), Resources.getString("GetPerformanceLogs_info")));
+        super(String.format(Locale.getDefault(), Resources.getString("GetPerformanceLogs_Info")));
     }
 
 
