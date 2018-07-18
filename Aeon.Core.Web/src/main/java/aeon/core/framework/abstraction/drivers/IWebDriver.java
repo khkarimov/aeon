@@ -24,6 +24,10 @@ import java.util.NoSuchElementException;
  */
 public interface IWebDriver extends IDriver {
 
+    /**
+     * Retrieves a list of performance logs
+     * @return A list of performance logs as String
+     */
     List<String> getPerformanceLogs();
 
     /**

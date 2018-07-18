@@ -40,6 +40,8 @@ import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaDriverService;
 import org.openqa.selenium.opera.OperaOptions;
@@ -50,6 +52,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import org.pf4j.Extension;
+import sun.security.krb5.internal.crypto.Des;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +61,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import java.util.logging.Level;
 
 import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 
@@ -170,6 +174,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         ChromeOptions chromeOptions = getChromeOptions();
                         chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
                         System.setProperty("webdriver.chrome.driver", chromeDirectory);
+                        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+                        capabilities.merge(getLoggingCapabilities());
+                        chromeOptions.merge(capabilities);
                         driver = new ChromeDriver(chromeOptions);
                     }
 
@@ -297,6 +304,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         OperaOptions operaOptions = getOperaOptions();
                         operaOptions = (OperaOptions) setProxySettings(operaOptions, proxyLocation);
                         System.setProperty(OperaDriverService.OPERA_DRIVER_EXE_PROPERTY, operaDirectory);
+                        operaOptions.merge(getLoggingCapabilities());
                         driver = new OperaDriver(operaOptions);
                     }
 
@@ -351,7 +359,18 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             }
         }
     }
-
+    private Capabilities getLoggingCapabilities(){
+        LoggingPreferences logs = new LoggingPreferences();
+        logs.enable(LogType.BROWSER, Level.ALL);
+        logs.enable(LogType.CLIENT, Level.ALL);
+        logs.enable(LogType.DRIVER, Level.ALL);
+        logs.enable(LogType.PERFORMANCE, Level.ALL);
+        logs.enable(LogType.PROFILER, Level.ALL);
+        logs.enable(LogType.SERVER, Level.ALL);
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.LOGGING_PREFS, logs);
+        return capabilities;
+    }
     private Capabilities getCapabilities() {
         MutableCapabilities desiredCapabilities;
 
@@ -364,6 +383,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Chrome:
                 desiredCapabilities = DesiredCapabilities.chrome();
+                desiredCapabilities.merge(getLoggingCapabilities());
 
                 String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
                 if (StringUtils.isNotBlank(mobileEmulationDevice)) {
@@ -390,6 +410,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Opera:
                 desiredCapabilities = getOperaOptions();
+                desiredCapabilities.merge(getLoggingCapabilities());
                 break;
 
             case IOSSafari:
@@ -430,6 +451,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("nativeWebTap", true);
 
                 // Appium
                 if (!deviceName.isEmpty()) {

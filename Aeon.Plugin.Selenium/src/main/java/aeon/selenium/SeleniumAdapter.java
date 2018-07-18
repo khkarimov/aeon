@@ -78,6 +78,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.isRemote = isRemote;
     }
 
+    /**
+     * Retrieves and returns the performance logs
+     * @return A list of performance logs
+     */
     public List<String> getPerformanceLogs(){
         List<LogEntry> logEntries = webDriver.manage().logs().get(LogType.PERFORMANCE).getAll();
         return logEntries.stream().map(log -> log.toString()).collect(Collectors.toList());
