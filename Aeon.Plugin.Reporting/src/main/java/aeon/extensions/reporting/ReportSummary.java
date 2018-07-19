@@ -66,8 +66,8 @@ class ReportSummary {
 
             if (result.status.equals("failed")) {
                 FailedExpectation failedExpectation = new FailedExpectation();
-                failedExpectation.message = scenario.getErrorMessage();
-                failedExpectation.stack = scenario.getStackTrace();
+                failedExpectation.message = escapeIllegalJSONCharacters(scenario.getErrorMessage());
+                failedExpectation.stack = escapeIllegalJSONCharacters(scenario.getStackTrace());
                 result.failedExpectations.add(failedExpectation);
 
                 Image screenshot = scenario.getScreenshot();
@@ -363,6 +363,21 @@ class ReportSummary {
         } else {
             return seconds + " seconds";
         }
+    }
+
+    private String escapeIllegalJSONCharacters(String input) {
+        return input.replace("&", "\\u0026")
+                .replace("[", "\\u005B")
+                .replace("]", "\\u005D")
+                .replace("'", "\\u0027")
+                .replace("\"", "\\u0022")
+                .replace("{", "\\u007B")
+                .replace("}", "\\u007D")
+                .replace("|", "\\u007C")
+                .replace(",", "\\u002C")
+                .replace("<", "\\u003C")
+                .replace(">", "\\u003E")
+                .replace(".", "\\u002E");
     }
 
     private void uploadToArtifactory(String filePathName) {
