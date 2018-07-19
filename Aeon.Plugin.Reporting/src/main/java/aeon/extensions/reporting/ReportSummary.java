@@ -78,6 +78,7 @@ class ReportSummary {
                         ImageIO.write((BufferedImage) screenshot, "png", stream);
                         String data = DatatypeConverter.printBase64Binary(stream.toByteArray());
                         result.screenshotPath = "data:image/png;base64," + data;
+                        stream.close();
                     } catch (IOException e) {
                         log.warn("Could not write screenshot", e);
                     }
