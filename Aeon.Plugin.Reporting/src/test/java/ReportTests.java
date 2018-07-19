@@ -12,7 +12,7 @@ public class ReportTests {
         //Arrange
         Report report = new Report();
         report.setSuiteName("suite");
-        report.setTotalTime("10");
+        report.setTotalTime(300);
         report.addFailed();
         report.addPass();
         report.addSkipped();
@@ -24,7 +24,7 @@ public class ReportTests {
         //Assert
         assertAll("properties",
                 () -> assertEquals("suite", report.getSuiteName()),
-                () -> assertEquals("10", report.getTotalTime()),
+                () -> assertEquals(300, report.getTotalTime()),
                 () -> assertEquals(1, report.getFailed()),
                 () -> assertEquals(1, report.getPassed()),
                 () -> assertEquals(1, report.getSkipped()),

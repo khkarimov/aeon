@@ -45,13 +45,18 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     }
 
     @Override
-    public void onFailedTest(String reason) {
+    public void onFailedTest(String reason, Throwable e) {
         log.info("TEST FAILED: " + reason);
     }
 
     @Override
     public void onBeforeStep(String message) {
         log.info(message);
+    }
+
+    @Override
+    public void onExecutionEvent(String eventName, Object payload) {
+        // Nothing to log
     }
 
     @Override

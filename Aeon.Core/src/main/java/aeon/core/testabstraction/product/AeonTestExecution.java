@@ -5,6 +5,7 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -166,7 +167,20 @@ public class AeonTestExecution {
     public static void testFailed(String message) {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onFailedTest(message);
+            testExecutionPlugin.onFailedTest(message, null);
+        }
+    }
+
+    /**
+     * Method to indicate the end of a test due to a failure.
+     *
+     * @param message The failure message.
+     * @param e       The exception of the failure.
+     */
+    public static void testFailed(String message, Throwable e) {
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onFailedTest(message, e);
         }
     }
 
@@ -177,6 +191,19 @@ public class AeonTestExecution {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
             testExecutionPlugin.onSkippedTest();
+        }
+    }
+
+    /**
+     * Can be used to broadcast test execution events to plugins.
+     *
+     * @param eventName The name of the event in order to be able to identify it.
+     * @param payload   The payload of the event.
+     */
+    public static void executionEvent(String eventName, Object payload) {
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onExecutionEvent(eventName, payload);
         }
     }
 }

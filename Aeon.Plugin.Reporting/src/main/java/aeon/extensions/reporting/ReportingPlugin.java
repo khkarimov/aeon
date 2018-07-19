@@ -10,7 +10,10 @@ import org.pf4j.Extension;
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
 
+import java.awt.*;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,13 +22,13 @@ import java.util.Date;
  */
 public class ReportingPlugin extends Plugin {
     private static Report reportBean;
-    static final SimpleDateFormat report_date_format = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+    static final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
 
     private static IConfiguration aeonConfiguration;
     private static IConfiguration configuration;
 
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
-    public static String suiteName;
+    static String suiteName;
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
@@ -52,6 +55,7 @@ public class ReportingPlugin extends Plugin {
         static String currentTest = "";
         static String currentClass = "";
         static long currentStartTime = System.currentTimeMillis();
+        static Image currentScreenshot = null;
 
         @Override
         public void onBeforeStart() {
@@ -94,6 +98,7 @@ public class ReportingPlugin extends Plugin {
             }
 
             currentStartTime = System.currentTimeMillis();
+            currentScreenshot = null;
         }
 
         @Override
@@ -114,11 +119,16 @@ public class ReportingPlugin extends Plugin {
         }
 
         @Override
-        public void onFailedTest(String reason) {
+        public void onFailedTest(String reason, Throwable e) {
             Scenario scenarioBean = setScenarioDetails(currentTest, currentStartTime);
             scenarioBean.setModuleName(currentClass);
             scenarioBean.setErrorMessage(reason);
+            final StringWriter sw = new StringWriter();
+            final PrintWriter pw = new PrintWriter(sw, true);
+            e.printStackTrace(pw);
+            scenarioBean.setStackTrace(sw.getBuffer().toString());
             scenarioBean.setStatus("FAILED");
+            scenarioBean.setScreenshot(currentScreenshot);
             reportBean.addFailed();
         }
 
@@ -128,22 +138,33 @@ public class ReportingPlugin extends Plugin {
         }
 
         @Override
+        public void onExecutionEvent(String eventName, Object payload) {
+            switch (eventName) {
+                case "screenshotTaken":
+                    currentScreenshot = (Image) payload;
+                    break;
+            }
+        }
+
+        @Override
         public void onDone() {
             long time = System.currentTimeMillis();
-            log.info("End Time " + report_date_format.format(new Date(time)));
-            reportBean.setTotalTime(getTime(time - startTime));
-            new ReportSummary(configuration, aeonConfiguration).sendSummaryReport(reportBean);
+            log.info("End Time " + reportDateFormat.format(new Date(time)));
+            reportBean.setTotalTime(time - startTime);
+            ReportSummary reportSummary = new ReportSummary(configuration, aeonConfiguration);
+            reportSummary.sendSummaryReport(reportBean);
+            reportSummary.createReportFile(reportBean);
         }
 
         private void initializeReport() {
             reportBean = new Report();
             startTime = System.currentTimeMillis();
-            log.info("Start Time " + report_date_format.format(new Date(startTime)));
+            log.info("Start Time " + reportDateFormat.format(new Date(startTime)));
             reportBean.setSuiteName(suiteName);
         }
     }
 
-    public static String getTime() {
+    static String getTime() {
         Date resultDate = new Date(ReportingTestExecutionExtension.startTime);
         return resultDate.toString();
     }
@@ -151,25 +172,10 @@ public class ReportingPlugin extends Plugin {
     private static Scenario setScenarioDetails(String testName, long startTime) {
         Scenario scenarioBean = new Scenario();
         scenarioBean.setScenarioName(testName);
-        scenarioBean.setStartTime(report_date_format.format(startTime));
+        scenarioBean.setStartTime(startTime);
+        scenarioBean.setEndTime(new Date().getTime());
         reportBean.getScenarioBeans().add(scenarioBean);
         return scenarioBean;
-    }
-
-    private static String getTime(long time) {
-        int seconds = (int) (time / 1000);
-        if (seconds >= 60) {
-            int minutes = seconds / 60;
-            if (minutes >= 60) {
-                int hours = minutes / 60;
-                minutes = minutes % 60;
-                return hours + " hours" + minutes + " minutes";
-            }
-            seconds = seconds % 60;
-            return minutes + " minutes " + seconds + " seconds";
-        } else {
-            return seconds + " seconds";
-        }
     }
 
     private static void initializeConfiguration() {

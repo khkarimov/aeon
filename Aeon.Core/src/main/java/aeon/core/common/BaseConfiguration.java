@@ -108,7 +108,11 @@ public class BaseConfiguration implements IConfiguration {
         for (Field key : keys) {
             key.setAccessible(true);
             String keyValue = key.get(null).toString();
-            String environmentValue = getEnvironmentValue(keyValue);
+            String environmentValue = getEnvironmentValue(keyValue.replace('.', '_'));
+            if (environmentValue != null) {
+                properties.setProperty(keyValue, environmentValue);
+            }
+            environmentValue = getEnvironmentValue(keyValue);
             if (environmentValue != null) {
                 properties.setProperty(keyValue, environmentValue);
             }

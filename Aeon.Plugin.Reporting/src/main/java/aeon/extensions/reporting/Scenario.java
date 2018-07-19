@@ -1,11 +1,16 @@
 package aeon.extensions.reporting;
 
+import java.awt.*;
+
 public class Scenario {
     private String scenarioName;
-    private String startTime;
-    private String status;
-    private String errorMessage;
+    private long startTime;
+    private long endTime;
+    private String status = "";
+    private String errorMessage = "";
     private String moduleName;
+    private String stackTrace;
+    private Image screenshot;
 
     public String getScenarioName() {
         return this.scenarioName;
@@ -15,12 +20,20 @@ public class Scenario {
         this.scenarioName = scenarioName;
     }
 
-    public String getStartTime() {
+    public long getStartTime() {
         return this.startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(long startTime) {
         this.startTime = startTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public long getEndTime() {
+        return this.endTime;
     }
 
     public String getStatus() {
@@ -59,5 +72,20 @@ public class Scenario {
         this.moduleName = moduleName;
     }
 
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
+    }
+
+    public String getStackTrace() {
+        return this.stackTrace;
+    }
+
+    public void setScreenshot(Image screenshot) {
+        this.screenshot = screenshot;
+    }
+
+    public Image getScreenshot() {
+        return this.screenshot;
+    }
 }
 

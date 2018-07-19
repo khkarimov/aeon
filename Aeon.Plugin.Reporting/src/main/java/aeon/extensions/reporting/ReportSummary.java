@@ -2,15 +2,36 @@ package aeon.extensions.reporting;
 
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.interfaces.IConfiguration;
-import aeon.core.extensions.PluginConfiguration;
+import aeon.extensions.reporting.reportmodel.FailedExpectation;
+import aeon.extensions.reporting.reportmodel.Result;
+import aeon.extensions.reporting.reportmodel.ResultReport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.client.HttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.lang.management.ManagementFactory;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ReportSummary {
+import static org.apache.http.HttpHeaders.USER_AGENT;
+
+class ReportSummary {
 
     private IConfiguration aeonConfiguration;
     private IConfiguration pluginConfiguration;
@@ -28,9 +49,90 @@ public class ReportSummary {
         this.errorMessageCharLimit = (int) pluginConfiguration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
     }
 
-    public void sendSummaryReport(Report reportBean) {
+    void createReportFile(Report report) {
+        ResultReport resultReport = new ResultReport();
+        resultReport.counts.passed = report.getPassed();
+        resultReport.counts.failed = report.getFailed();
+        resultReport.counts.disabled = report.getSkipped();
+        resultReport.timer.duration = report.getTotalTime();
+        for (Scenario scenario: report.getScenarioBeans()) {
+            Result result = new Result();
+            result.description = scenario.getScenarioName();
+            result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
+            result.status = scenario.getStatus().toLowerCase();
+            if (result.status.equals("skipped")) {
+                result.status = "disabled";
+            }
 
-        String title = "Automation Report - " + reportBean.getScenarioBeans().get(0).getStartTime().replace(":", "-");
+            if (result.status.equals("failed")) {
+                FailedExpectation failedExpectation = new FailedExpectation();
+                failedExpectation.message = escapeIllegalJSONCharacters(scenario.getErrorMessage());
+                failedExpectation.stack = escapeIllegalJSONCharacters(scenario.getStackTrace());
+                result.failedExpectations.add(failedExpectation);
+
+                Image screenshot = scenario.getScreenshot();
+                if (screenshot != null) {
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    try {
+                        ImageIO.write((BufferedImage) screenshot, "png", stream);
+                        String data = DatatypeConverter.printBase64Binary(stream.toByteArray());
+                        result.screenshotPath = "data:image/png;base64," + data;
+                        stream.close();
+                    } catch (IOException e) {
+                        log.warn("Could not write screenshot", e);
+                    }
+                }
+            }
+
+            resultReport.sequence.add(result);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+        try {
+            json = mapper.writeValueAsString(resultReport);
+
+        } catch (JsonProcessingException e) {
+            log.error("Could not write JSON results", e);
+
+            return;
+        }
+
+        String reportTemplate;
+        try (InputStream scriptReader = ReportingPlugin.class.getResourceAsStream("/report.tmpl.html")) {
+            reportTemplate =  new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path");
+
+            return;
+        } catch (IOException e) {
+            log.error("Problem reading from file");
+
+            return;
+        }
+
+        json = json.replace("\\n", "\\\\n")
+                .replace("\\t", "\\\\t")
+                .replace("\\\"", "\\\\\\\"");
+        String script = "<script>RESULTS.push(JSON.parse('" + json + "'));</script>";
+        reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
+
+        String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
+            + "/reports-" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0] + ".html";
+
+        try (PrintWriter out = new PrintWriter(fileName)) {
+            out.println(reportTemplate);
+            out.close();
+            uploadToArtifactory(fileName);
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path");
+        }
+    }
+
+    void sendSummaryReport(Report reportBean) {
+
+        String title = "Automation Report - " + ReportingPlugin.reportDateFormat.format(reportBean.getScenarioBeans().get(0).getStartTime()).replace(":", "-");
 
         String slackChannel1 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
         String slackChannel2 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
@@ -169,7 +271,7 @@ public class ReportSummary {
                         + createColumn("" + report.getFailed())
                         + createColumn("" + report.getBroken())
                         + createColumn("" + report.getSkipped())
-                        + createColumn("" + report.getTotalTime()));
+                        + createColumn("" + getTime(report.getTotalTime())));
     }
 
     private String getTableBodyForSuiteSummaryJUnit(Report report) {
@@ -178,7 +280,7 @@ public class ReportSummary {
                         + createColumn("" + report.getPassed())
                         + createColumn("" + report.getFailed())
                         + createColumn("" + report.getSkipped())
-                        + createColumn("" + report.getTotalTime()));
+                        + createColumn("" + getTime(report.getTotalTime())));
     }
 
     private String getHead() {
@@ -246,5 +348,88 @@ public class ReportSummary {
 
         return "<td><p>Browser: " + browser + "</p>" +
                 "<p>Environment URL: " + environmentURL + "</p>";
+    }
+
+    private String getTime(long time) {
+        int seconds = (int) (time / 1000);
+        if (seconds >= 60) {
+            int minutes = seconds / 60;
+            if (minutes >= 60) {
+                int hours = minutes / 60;
+                minutes = minutes % 60;
+                return hours + " hours" + minutes + " minutes";
+            }
+            seconds = seconds % 60;
+            return minutes + " minutes " + seconds + " seconds";
+        } else {
+            return seconds + " seconds";
+        }
+    }
+
+    private String escapeIllegalJSONCharacters(String input) {
+        return input.replace("&", "\\u0026")
+                .replace("[", "\\u005B")
+                .replace("]", "\\u005D")
+                .replace("'", "\\u0027")
+                .replace("\"", "\\u0022")
+                .replace("{", "\\u007B")
+                .replace("}", "\\u007D")
+                .replace("|", "\\u007C")
+                .replace(",", "\\u002C")
+                .replace("<", "\\u003C")
+                .replace(">", "\\u003E")
+                .replace(".", "\\u002E");
+    }
+
+    private void uploadToArtifactory(String filePathName) {
+        String artifactoryUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
+        String artifactoryPath = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
+        String username = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
+        String password = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
+
+        if (artifactoryUrl.isEmpty() || artifactoryPath.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            log.info("Not all artifactory properties set, cancelling file upload");
+            return;
+        }
+
+        String fileName = filePathName.substring(filePathName.lastIndexOf("/")+1);
+        String fullRequestUrl = artifactoryUrl + "/" + artifactoryPath + "/" + fileName;
+
+        // Set basic auth information
+        CredentialsProvider provider = new BasicCredentialsProvider();
+        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+        provider.setCredentials(AuthScope.ANY, credentials);
+
+        // Build file entity using InputStream
+        File file = new File(filePathName);
+        InputStreamEntity fileEntity = null;
+        try {
+            InputStream inputStream = new FileInputStream(filePathName);
+            fileEntity = new InputStreamEntity(inputStream, file.length());
+        } catch (FileNotFoundException e) {
+            log.error(String.format("Could not find file %s to upload to artifactory", filePathName));
+            return;
+        }
+
+        // Build HttpClient and build put request
+        HttpClient client = HttpClientBuilder.create()
+                .setDefaultCredentialsProvider(provider)
+                .build();
+        HttpPut put = new HttpPut(fullRequestUrl);
+
+        put.setHeader("User-Agent", USER_AGENT);
+        put.setHeader("Content-type", "text/html");
+        put.setEntity(fileEntity);
+
+        // Execute request and receive response
+        try {
+            HttpResponse response = client.execute(put);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != HttpStatus.SC_CREATED || statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NO_CONTENT || statusCode == HttpStatus.SC_ACCEPTED) {
+                log.error(String.format("Did not receive successful status code for artifactory upload. Received: %d", statusCode));
+            }
+        } catch (IOException e) {
+            log.error(String.format("Could not upload report file '%s' to artifactory: %s", fullRequestUrl, e.getMessage()));
+        }
     }
 }
