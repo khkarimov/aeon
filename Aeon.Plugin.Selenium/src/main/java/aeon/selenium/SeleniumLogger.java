@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.*;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.SessionId;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,11 +26,12 @@ public class SeleniumLogger {
     private WebDriver webDriver;
 
     SeleniumLogger(String directory, WebDriver webDriver) {
-        browserPath = directory + "/browser.log";
-        clientPath = directory + "/client.log";
-        driverPath = directory + "/driver.log";
-        performancePath = directory + "/performance.log";
-        serverPath = directory + "/server.log";
+        String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
+        browserPath = String.format("%s/browser-%s.log", directory, sessionId);
+        clientPath = String.format("%s/client-%s.log", directory, sessionId);
+        driverPath = String.format("%s/driver-%s.log", directory, sessionId);
+        performancePath = String.format("%s/performance-%s.log", directory, sessionId);
+        serverPath = String.format("%s/server-%s.log", directory, sessionId);
         this.webDriver = webDriver;
         availableLogTypes = webDriver.manage().logs().getAvailableLogTypes();
     }
