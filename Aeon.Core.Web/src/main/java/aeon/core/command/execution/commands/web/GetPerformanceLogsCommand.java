@@ -25,7 +25,7 @@ public class GetPerformanceLogsCommand extends CommandWithReturn {
      * Provides the logic for the command.
      *
      * @param driver The framework abstraction facade.
-     * @return A List<String> that represents the performance log entries.
+     * @return A List that represents the performance log entries.
      */
     @Override
     protected List<String> commandDelegate(IDriver driver) {

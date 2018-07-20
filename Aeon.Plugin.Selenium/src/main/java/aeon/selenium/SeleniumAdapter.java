@@ -28,8 +28,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.logging.LogEntry;
-import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -58,6 +56,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private boolean moveMouseToOrigin;
     protected BrowserType browserType;
     private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
+    private SeleniumLogger seleniumLogger;
     private boolean isRemote;
 
     /**
@@ -77,15 +76,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.isRemote = isRemote;
     }
 
+    void setSeleniumLogger(SeleniumLogger seleniumLogger){
+        this.seleniumLogger = seleniumLogger;
+    }
+
     /**
      * Retrieves and returns the performance logs
      * @return A list of performance logs
      */
     public List<String> getPerformanceLogs(){
-        List<LogEntry> logEntries = webDriver.manage().logs().get(LogType.PERFORMANCE).getAll();
-        List<String> logEntryStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
-        logEntryStrings.forEach(logEntry -> log.info(logEntry));
-        return logEntryStrings;
+        return seleniumLogger.getPerformanceLogs();
     }
 
     /**
@@ -549,6 +549,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void quit() {
         log.trace("WebDriver.quit();");
+        seleniumLogger.logAllToFiles();
         webDriver.quit();
     }
 

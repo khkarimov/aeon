@@ -87,6 +87,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
+    private LoggingPreferences loggingPreferences;
+    private String seleniumLogsDirectory;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -96,7 +98,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
+        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
+        adapter.setSeleniumLogger(new SeleniumLogger(seleniumLogsDirectory, driver));
+        return adapter;
     }
 
     /**
@@ -145,6 +149,20 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         isRemote = seleniumHubUrl != null;
         URL finalSeleniumHubUrl = seleniumHubUrl;
+
+        seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
+        loggingPreferences = new LoggingPreferences();
+        String defaultLevel = Level.OFF.toString();
+        String browserLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_BROWSER, defaultLevel);
+        String clientLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_CLIENT, defaultLevel);
+        String driverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DRIVER, defaultLevel);
+        String performanceLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_PERFORMANCE, defaultLevel);
+        String serverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_SERVER, defaultLevel);
+        loggingPreferences.enable(LogType.BROWSER, Level.parse(browserLevel));
+        loggingPreferences.enable(LogType.CLIENT, Level.parse(clientLevel));
+        loggingPreferences.enable(LogType.DRIVER, Level.parse(driverLevel));
+        loggingPreferences.enable(LogType.PERFORMANCE, Level.parse(performanceLevel));
+        loggingPreferences.enable(LogType.SERVER, Level.parse(serverLevel));
 
         switch (browserType) {
             case Firefox:
@@ -355,12 +373,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
     }
 
-    private void setLoggingCapabilities(MutableCapabilities target){
-        LoggingPreferences logs = new LoggingPreferences();
-        String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.PERFORMANCE_LOGGING, Level.OFF.toString());
-        logs.enable(LogType.PERFORMANCE, Level.parse(loggingLevel));
-        target.setCapability(CapabilityType.LOGGING_PREFS, logs);
+    private void setLoggingCapabilities(MutableCapabilities target) {
+        target.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
     }
+
 
     private Capabilities getCapabilities() {
         MutableCapabilities desiredCapabilities;
