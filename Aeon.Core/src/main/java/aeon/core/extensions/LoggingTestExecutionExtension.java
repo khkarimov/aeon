@@ -15,12 +15,12 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     private static Logger log = LogManager.getLogger(LoggingTestExecutionExtension.class);
 
     @Override
-    public void onStartUp(Configuration configuration) {
+    public void onStartUp(Configuration configuration, String correlationId) {
         // Nothing to log
     }
 
     @Override
-    public void onBeforeStart() {
+    public void onBeforeStart(String correlationId) {
         // Nothing to log
     }
 

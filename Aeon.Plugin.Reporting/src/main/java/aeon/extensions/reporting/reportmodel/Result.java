@@ -14,6 +14,8 @@ public class Result {
     public List<FailedExpectation> failedExpectations = new ArrayList<>();
     public List<Object> passedExpectations = new ArrayList<>();
     public List<Object> browserLogs = new ArrayList<>();
+    public String started;
+    public String stopped;
     public String duration;
     public String screenshotPath;
 }

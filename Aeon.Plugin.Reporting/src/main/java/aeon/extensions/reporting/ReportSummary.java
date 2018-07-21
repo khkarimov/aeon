@@ -7,13 +7,17 @@ import aeon.extensions.reporting.reportmodel.Result;
 import aeon.extensions.reporting.reportmodel.ResultReport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.HttpClient;
@@ -25,8 +29,10 @@ import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.lang.management.ManagementFactory;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.apache.http.HttpHeaders.USER_AGENT;
@@ -58,6 +64,9 @@ class ReportSummary {
         for (Scenario scenario: report.getScenarioBeans()) {
             Result result = new Result();
             result.description = scenario.getScenarioName();
+            result.prefix = ReportingPlugin.suiteName;
+            result.started = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getStartTime()));
+            result.stopped = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getEndTime()));
             result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
             result.status = scenario.getStatus().toLowerCase();
             if (result.status.equals("skipped")) {
@@ -119,14 +128,32 @@ class ReportSummary {
         reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
 
         String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
-            + "/reports-" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0] + ".html";
+            + "/report-" + ReportingPlugin.correlationId + ".html";
 
+        String reportUrl = null;
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(reportTemplate);
             out.close();
-            uploadToArtifactory(fileName);
+
+            reportUrl = uploadToArtifactory(fileName);
         } catch (FileNotFoundException e) {
-            log.error("File not found on path");
+            log.error("File not found on path.");
+        }
+
+        String rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
+        if (rnrUrl.isEmpty()) {
+            return;
+        }
+
+        // Write json result file
+        String jsonFileName = fileName.replace(".html", ".json");
+        try (PrintWriter out = new PrintWriter(jsonFileName)) {
+            out.println(json);
+            out.close();
+
+            uploadToRockNRoly(rnrUrl, jsonFileName, reportUrl);
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path.");
         }
     }
 
@@ -381,15 +408,15 @@ class ReportSummary {
                 .replace(".", "\\u002E");
     }
 
-    private void uploadToArtifactory(String filePathName) {
+    private String uploadToArtifactory(String filePathName) {
         String artifactoryUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
         String artifactoryPath = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
         String username = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
         String password = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
 
         if (artifactoryUrl.isEmpty() || artifactoryPath.isEmpty() || username.isEmpty() || password.isEmpty()) {
-            log.info("Not all artifactory properties set, cancelling file upload");
-            return;
+            log.info("Not all artifactory properties set, cancelling file upload.");
+            return null;
         }
 
         String fileName = filePathName.substring(filePathName.lastIndexOf("/")+1);
@@ -402,13 +429,13 @@ class ReportSummary {
 
         // Build file entity using InputStream
         File file = new File(filePathName);
-        InputStreamEntity fileEntity = null;
+        InputStreamEntity fileEntity;
         try {
             InputStream inputStream = new FileInputStream(filePathName);
             fileEntity = new InputStreamEntity(inputStream, file.length());
         } catch (FileNotFoundException e) {
             log.error(String.format("Could not find file %s to upload to artifactory", filePathName));
-            return;
+            return null;
         }
 
         // Build HttpClient and build put request
@@ -425,11 +452,81 @@ class ReportSummary {
         try {
             HttpResponse response = client.execute(put);
             int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_CREATED || statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NO_CONTENT || statusCode == HttpStatus.SC_ACCEPTED) {
+            if (statusCode != HttpStatus.SC_CREATED) {
                 log.error(String.format("Did not receive successful status code for artifactory upload. Received: %d", statusCode));
             }
         } catch (IOException e) {
-            log.error(String.format("Could not upload report file '%s' to artifactory: %s", fullRequestUrl, e.getMessage()));
+            log.error(String.format("Could not upload report file '%s' to artifactory: %s", fullRequestUrl, e.getMessage()), e);
+
+            return null;
+        }
+
+        log.info("Test Report URL: " + fullRequestUrl);
+
+        return fullRequestUrl;
+    }
+
+    private void uploadToRockNRoly(String rnrUrl, String filePathName, String reportUrl) {
+        String product = pluginConfiguration.getString(ReportingConfiguration.Keys.PRODUCT, "");
+        String team = pluginConfiguration.getString(ReportingConfiguration.Keys.TEAM, "");
+        String type = pluginConfiguration.getString(ReportingConfiguration.Keys.TYPE, "");
+        String branch = pluginConfiguration.getString(ReportingConfiguration.Keys.BRANCH, "");
+
+        if (product.isEmpty() || team.isEmpty() || type.isEmpty() || branch.isEmpty()) {
+            log.trace("Not all RnR properties are set, cancelling upload to RnR.");
+            return;
+        }
+
+        String fullRequestUrl = rnrUrl + "/testsuite";
+
+        // Build file entity using InputStream
+        File file = new File(filePathName);
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.addTextBody("namespace", team);
+        builder.addTextBody("project", product);
+        builder.addTextBody("type", type);
+        builder.addTextBody("branch", branch);
+        builder.addTextBody("correlationId", ReportingPlugin.correlationId);
+        builder.addBinaryBody("file", file,
+                ContentType.APPLICATION_OCTET_STREAM, "results.js");
+
+        Map<String, String> rnrMetaMap = new HashMap<>();
+        rnrMetaMap.put("screenshots", reportUrl);
+        rnrMetaMap.put("app", aeonConfiguration.getString("aeon.environment", ""));
+        rnrMetaMap.put("browser", aeonConfiguration.getString("aeon.browser", "Chrome"));
+
+        try {
+            String rnrMeta = new ObjectMapper().writeValueAsString(rnrMetaMap);
+            File rnrMetaFile = File.createTempFile("rnr-", "-meta.rnr");
+            rnrMetaFile.deleteOnExit();
+            PrintWriter out = new PrintWriter(rnrMetaFile);
+            out.println(rnrMeta);
+            out.close();
+            builder.addBinaryBody("metaFile", rnrMetaFile,
+                    ContentType.APPLICATION_OCTET_STREAM, "meta.rnr");
+        } catch (JsonProcessingException e) {
+            log.error("Could not write JSON results.", e);
+        } catch (IOException e) {
+            log.error("Could not write meta RnR file.", e);
+        }
+
+        HttpEntity multipart = builder.build();
+
+        // Build HttpClient and build post request
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(fullRequestUrl);
+        post.setEntity(multipart);
+
+        // Execute request and receive response
+        try {
+            HttpResponse response = client.execute(post);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != HttpStatus.SC_ACCEPTED) {
+                log.error(String.format("Did not receive successful status code for RnR upload. Received: %d.", statusCode));
+            }
+        } catch (IOException e) {
+            log.error(String.format("Could not upload report to RnR (%s): %s.", fullRequestUrl, e.getMessage()), e);
         }
     }
 }

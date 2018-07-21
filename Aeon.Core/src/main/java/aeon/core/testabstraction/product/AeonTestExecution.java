@@ -5,8 +5,8 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Provides methods for annotating tests with meta data for behavior driven development.
@@ -23,6 +23,8 @@ public class AeonTestExecution {
         }
     }
 
+    private static UUID correlationId = null;
+
     /**
      * Is called when Aeon is starting up.
      *
@@ -31,8 +33,12 @@ public class AeonTestExecution {
     public static void startUp(Configuration configuration) {
         init();
 
+        if (correlationId == null) {
+            correlationId = UUID.randomUUID();
+        }
+
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onStartUp(configuration);
+            testExecutionPlugin.onStartUp(configuration, correlationId.toString());
         }
     }
 
@@ -42,8 +48,10 @@ public class AeonTestExecution {
     public static void beforeStart() {
         init();
 
+        correlationId = UUID.randomUUID();
+
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeStart();
+            testExecutionPlugin.onBeforeStart(correlationId.toString());
         }
     }
 
@@ -54,6 +62,8 @@ public class AeonTestExecution {
      */
     static void done() {
         init();
+
+        correlationId = null;
 
         for (ITestExecutionExtension testExecutionPlugin : testExecutionPlugins) {
             testExecutionPlugin.onDone();
@@ -142,7 +152,7 @@ public class AeonTestExecution {
      *
      * @param message Title of the test step.
      */
-    public static void testStep(String message) {
+    private static void testStep(String message) {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
             testExecutionPlugin.onBeforeStep(message);

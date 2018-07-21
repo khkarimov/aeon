@@ -13,13 +13,16 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called when Aeon is starting up.
      *
      * @param configuration The aeon configuration object.
+     * @param correlationId UUID to uniquely identify this session.
      */
-    void onStartUp(Configuration configuration);
+    void onStartUp(Configuration configuration, String correlationId);
 
     /**
      * Is called before a test class begins test execution.
+     *
+     * @param correlationId UUID to uniquely identify this session.
      */
-    void onBeforeStart();
+    void onBeforeStart(String correlationId);
 
     /**
      * Is called after a product was successfully launched.

@@ -59,12 +59,12 @@ public class PerfectoPlugin extends Plugin {
     public static class PerfectoTestExecutionExtension implements ITestExecutionExtension {
 
         @Override
-        public void onStartUp(Configuration configuration) {
+        public void onStartUp(Configuration configuration, String correlationId) {
             // No actions needed
         }
 
         @Override
-        public void onBeforeStart() {
+        public void onBeforeStart(String correlationId) {
             // No actions needed
         }
 

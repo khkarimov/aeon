@@ -23,12 +23,14 @@ import java.util.Date;
 public class ReportingPlugin extends Plugin {
     private static Report reportBean;
     static final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+    static final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     private static IConfiguration aeonConfiguration;
     private static IConfiguration configuration;
 
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
     static String suiteName;
+    static String correlationId;
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
@@ -58,25 +60,24 @@ public class ReportingPlugin extends Plugin {
         static Image currentScreenshot = null;
 
         @Override
-        public void onBeforeStart() {
+        public void onBeforeStart(String correlationId) {
             // Don't check that reportBean is null, as it should be re-initialized with this message
             initializeReport();
 
             initializeConfiguration();
+
+            ReportingPlugin.correlationId = correlationId;
         }
 
-        /**
-         * This gets called by the AutomationInfo constructor.
-         *
-         * @param aeonConfiguration The aeon Configuration for the tests.
-         */
         @Override
-        public void onStartUp(Configuration aeonConfiguration) {
+        public void onStartUp(Configuration aeonConfiguration, String correlationId) {
             // This check is required, as TestNG projects will not call onBeforeStart
             if (reportBean == null) {
                 initializeReport();
             }
             initializeConfiguration(aeonConfiguration);
+
+            ReportingPlugin.correlationId = correlationId;
         }
 
         @Override
