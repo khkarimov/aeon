@@ -45,7 +45,7 @@ public class SlackBot {
         }
     }
 
-    public void publishMessageToSlack(File fileName, String channel) {
+    public void uploadReportToSlack(File fileName, String channel) {
         try {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.addBinaryBody("file", fileName);

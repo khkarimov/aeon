@@ -36,6 +36,8 @@ public class Aeon {
                 product.getConfiguration().setProperties(settings);
             }
 
+            AeonTestExecution.beforeLaunch(product.getConfiguration());
+
             log.info("Launching product");
 
             product.launch(plugin);

@@ -43,6 +43,19 @@ public class AeonTestExecution {
     }
 
     /**
+     * Is called right before the product is launched.
+     *
+     * @param configuration The aeon configuration object.
+     */
+    public static void beforeLaunch(Configuration configuration) {
+
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onBeforeLaunch(configuration);
+        }
+    }
+
+    /**
      * Should be called in the @BeforeClass step of a test class.
      */
     public static void beforeStart() {

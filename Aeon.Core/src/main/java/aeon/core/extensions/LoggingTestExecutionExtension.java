@@ -25,6 +25,11 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     }
 
     @Override
+    public void onBeforeLaunch(Configuration configuration) {
+        // Nothing to log
+    }
+
+    @Override
     public void onAfterLaunch(Configuration configuration, IAdapter adapter) {
         // Launching is logged by default on the info level
     }

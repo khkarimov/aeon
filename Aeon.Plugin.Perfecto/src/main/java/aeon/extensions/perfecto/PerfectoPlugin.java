@@ -69,6 +69,11 @@ public class PerfectoPlugin extends Plugin {
         }
 
         @Override
+        public void onBeforeLaunch(Configuration configuration) {
+            // No actions needed
+        }
+
+        @Override
         public void onAfterLaunch(Configuration configuration, IAdapter adapter) {
 
             List<String> configurationKeys = configuration.getConfigurationKeys();

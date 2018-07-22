@@ -28,8 +28,8 @@ public class SampleBaseTest {
 
         @Override
         protected void starting(Description description) {
-            String className = description.getClassName().substring(description.getClassName().lastIndexOf(".") + 1, description.getClassName().length() - 1);
-            startTest(description.getMethodName() + "." + className);
+            String className = description.getClassName().substring(description.getClassName().lastIndexOf(".") + 1, description.getClassName().length());
+            startTest(className + "." + description.getMethodName());
         }
 
         @Override

@@ -29,10 +29,8 @@ import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.apache.http.HttpHeaders.USER_AGENT;
@@ -46,16 +44,20 @@ class ReportSummary {
     private int errorMessageCharLimit;
 
     private static Logger log = LogManager.getLogger(ReportSummary.class);
+    private boolean uploadedToRnR;
+    private String correlationId;
 
-    ReportSummary(IConfiguration pluginConfiguration, IConfiguration aeonConfiguration) {
+    ReportSummary(IConfiguration pluginConfiguration, IConfiguration aeonConfiguration, String correlationId) {
         this.aeonConfiguration = aeonConfiguration;
         this.pluginConfiguration = pluginConfiguration;
         this.slackBot = new SlackBot(pluginConfiguration);
         this.displayClassName = pluginConfiguration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
         this.errorMessageCharLimit = (int) pluginConfiguration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
+
+        this.correlationId = correlationId;
     }
 
-    void createReportFile(Report report) {
+    String createReportFile(Report report) {
         ResultReport resultReport = new ResultReport();
         resultReport.counts.passed = report.getPassed();
         resultReport.counts.failed = report.getFailed();
@@ -105,7 +107,7 @@ class ReportSummary {
         } catch (JsonProcessingException e) {
             log.error("Could not write JSON results", e);
 
-            return;
+            return null;
         }
 
         String reportTemplate;
@@ -114,11 +116,11 @@ class ReportSummary {
         } catch (FileNotFoundException e) {
             log.error("File not found on path");
 
-            return;
+            return null;
         } catch (IOException e) {
             log.error("Problem reading from file");
 
-            return;
+            return null;
         }
 
         json = json.replace("\\n", "\\\\n")
@@ -142,7 +144,7 @@ class ReportSummary {
 
         String rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
         if (rnrUrl.isEmpty()) {
-            return;
+            return reportUrl;
         }
 
         // Write json result file
@@ -151,13 +153,15 @@ class ReportSummary {
             out.println(json);
             out.close();
 
-            uploadToRockNRoly(rnrUrl, jsonFileName, reportUrl);
+            this.uploadedToRnR = uploadToRnR(rnrUrl, jsonFileName, reportUrl);
         } catch (FileNotFoundException e) {
             log.error("File not found on path.");
         }
+
+        return reportUrl;
     }
 
-    void sendSummaryReport(Report reportBean) {
+    void sendSummaryReport(Report reportBean, String reportUrl) {
 
         String title = "Automation Report - " + ReportingPlugin.reportDateFormat.format(reportBean.getScenarioBeans().get(0).getStartTime()).replace(":", "-");
 
@@ -169,9 +173,23 @@ class ReportSummary {
             return;
         }
 
+        List<String> messages = new ArrayList<>();
+
+        if (reportUrl != null) {
+            messages.add("Test Report URL: " + reportUrl);
+        }
+
+        if (uploadedToRnR) {
+            messages.add("RnR URL: https://rnr.apps.mia.ulti.io/" + correlationId);
+        }
+
         if (StringUtils.isNotBlank(slackChannel1)) {
-            slackBot.publishMessageToSlack(this.summaryReport(reportBean, title), slackChannel1);
+            slackBot.uploadReportToSlack(this.summaryReport(reportBean, title), slackChannel1);
             Utils.deleteFiles(Utils.getResourcesPath() + title + ".png");
+
+            if (!messages.isEmpty()) {
+                slackBot.publishNotificationToSlack(slackChannel1, String.join("\n\n", messages));
+            }
         }
 
         if (StringUtils.isNotBlank(slackChannel2)) {
@@ -181,13 +199,16 @@ class ReportSummary {
             }
 
             if (failed) {
-                String message = "<!here> - There are test failures. Please see attached report below.";
-                slackBot.publishNotificationToSlack(slackChannel2, message);
-                slackBot.publishMessageToSlack(this.summaryReport(reportBean, title), slackChannel2);
+
+                messages.add(0, "<!here> - There are test failures. Please see attached report below.");
+
+                slackBot.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
+                slackBot.uploadReportToSlack(this.summaryReport(reportBean, title), slackChannel2);
                 Utils.deleteFiles(Utils.getResourcesPath() + title + ".png");
             } else {
-                String message = "Tests Passed for URL: " + aeonConfiguration.getString("aeon.environment", "") + " starting at " + ReportingPlugin.getTime();
-                slackBot.publishNotificationToSlack(slackChannel2, message);
+                messages.add(0, "Tests Passed for URL: " + aeonConfiguration.getString("aeon.environment", "") + " started at " + ReportingPlugin.getTime());
+
+                slackBot.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
             }
         }
     }
@@ -466,7 +487,7 @@ class ReportSummary {
         return fullRequestUrl;
     }
 
-    private void uploadToRockNRoly(String rnrUrl, String filePathName, String reportUrl) {
+    private boolean uploadToRnR(String rnrUrl, String filePathName, String reportUrl) {
         String product = pluginConfiguration.getString(ReportingConfiguration.Keys.PRODUCT, "");
         String team = pluginConfiguration.getString(ReportingConfiguration.Keys.TEAM, "");
         String type = pluginConfiguration.getString(ReportingConfiguration.Keys.TYPE, "");
@@ -474,7 +495,7 @@ class ReportSummary {
 
         if (product.isEmpty() || team.isEmpty() || type.isEmpty() || branch.isEmpty()) {
             log.trace("Not all RnR properties are set, cancelling upload to RnR.");
-            return;
+            return false;
         }
 
         String fullRequestUrl = rnrUrl + "/testsuite";
@@ -528,5 +549,7 @@ class ReportSummary {
         } catch (IOException e) {
             log.error(String.format("Could not upload report to RnR (%s): %s.", fullRequestUrl, e.getMessage()), e);
         }
+
+        return true;
     }
 }

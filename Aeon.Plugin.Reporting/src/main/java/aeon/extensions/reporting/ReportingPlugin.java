@@ -81,6 +81,11 @@ public class ReportingPlugin extends Plugin {
         }
 
         @Override
+        public void onBeforeLaunch(Configuration configuration) {
+            aeonConfiguration = configuration;
+        }
+
+        @Override
         public void onAfterLaunch(Configuration configuration, IAdapter adapter) {
             aeonConfiguration = configuration;
         }
@@ -152,9 +157,10 @@ public class ReportingPlugin extends Plugin {
             long time = System.currentTimeMillis();
             log.info("End Time " + reportDateFormat.format(new Date(time)));
             reportBean.setTotalTime(time - startTime);
-            ReportSummary reportSummary = new ReportSummary(configuration, aeonConfiguration);
-            reportSummary.sendSummaryReport(reportBean);
-            reportSummary.createReportFile(reportBean);
+            ReportSummary reportSummary = new ReportSummary(configuration, aeonConfiguration, correlationId);
+
+            String reportUrl = reportSummary.createReportFile(reportBean);
+            reportSummary.sendSummaryReport(reportBean, reportUrl);
         }
 
         private void initializeReport() {

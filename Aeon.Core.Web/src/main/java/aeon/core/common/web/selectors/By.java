@@ -30,7 +30,7 @@ public class By implements IByWeb {
     }
 
     /**
-     * Accepts a string containing a input attribute which is then put into the correct cssSelector
+     * Accepts a string containing an input attribute which is then put into the correct cssSelector
      * format and used to match a set of elements.
      * Ex: &lt;div data-automation="my-selector"&gt;...&lt;/div&gt;  would use   By.dataAutomationAttribute("my-selector")
      *
@@ -39,6 +39,19 @@ public class By implements IByWeb {
      */
     public static By dataAutomationAttribute(String input) {
         String selectorInput = "[data-automation=\"" + input + "\"]";
+        return new By(selectorInput);
+    }
+
+    /**
+     * Accepts a string containing an input attribute which is then put into the correct cssSelector
+     * format and used to match a set of elements.
+     * Ex: &lt;div da="my-selector"&gt;...&lt;/div&gt;  would use   By.da("my-selector")
+     *
+     * @param input A string containing the da input.
+     * @return A new {@link By} instance.
+     */
+    public static By da(String input) {
+        String selectorInput = "[da=\"" + input + "\"]";
         return new By(selectorInput);
     }
 

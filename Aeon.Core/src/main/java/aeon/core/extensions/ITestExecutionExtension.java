@@ -25,6 +25,13 @@ public interface ITestExecutionExtension extends ExtensionPoint {
     void onBeforeStart(String correlationId);
 
     /**
+     * Is called right before a product is launched.
+     *
+     * @param configuration The Aeon configuration object.
+     */
+    void onBeforeLaunch(Configuration configuration);
+
+    /**
      * Is called after a product was successfully launched.
      *
      * @param configuration The Aeon configuration object.
