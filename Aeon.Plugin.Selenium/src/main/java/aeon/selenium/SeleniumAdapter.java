@@ -1905,7 +1905,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     private void printSeleniumLogs(){
         long timeNow = System.currentTimeMillis();
-        for(String logType: seleniumLogsPreferences.getEnabledLogTypes()) {
+        for (String logType: seleniumLogsPreferences.getEnabledLogTypes()) {
             String filename = String.format("%s/%s-%d.log", seleniumLogsDirectory, logType, timeNow);
             try {
                 List<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll();
@@ -1920,7 +1920,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 } catch (IOException e) {
                     log.error("Couldn't write Selenium log entries to " + filename, e);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 log.info("The log type \"" + logType + "\" is either not supported or does not exist in this context.");
             }
         }

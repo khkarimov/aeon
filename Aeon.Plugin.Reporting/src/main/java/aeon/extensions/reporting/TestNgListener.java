@@ -7,7 +7,7 @@ import org.testng.*;
 public class TestNgListener implements ITestListener, ISuiteListener {
 
     public void onTestStart(ITestResult iTestResult) {
-        AeonTestExecution.startTest(iTestResult.getName() + "." + iTestResult.getInstanceName(), (String[]) null);
+        AeonTestExecution.startTest(iTestResult.getInstanceName() + "." + iTestResult.getName(), (String[]) null);
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
@@ -15,7 +15,7 @@ public class TestNgListener implements ITestListener, ISuiteListener {
     }
 
     public void onTestFailure(ITestResult iTestResult) {
-        AeonTestExecution.testFailed(iTestResult.getThrowable().getMessage());
+        AeonTestExecution.testFailed(iTestResult.getThrowable().getMessage(), iTestResult.getThrowable());
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
@@ -35,7 +35,7 @@ public class TestNgListener implements ITestListener, ISuiteListener {
     }
 
     public void onStart(ISuite iSuite) {
-        ReportingPlugin.suiteName = iSuite.getName();
+        AeonTestExecution.beforeStart(iSuite.getName());
     }
 
     public void onFinish(ISuite iSuite) {

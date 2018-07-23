@@ -4,6 +4,7 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.command.execution.commands.interfaces.ICommand;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.framework.abstraction.drivers.IDriver;
+import aeon.core.testabstraction.product.AeonTestExecution;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +45,8 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
         }
 
         log.info(message);
+
+        AeonTestExecution.executionEvent("commandInitialized", message);
     }
 
     /**

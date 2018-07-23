@@ -59,12 +59,17 @@ public class PerfectoPlugin extends Plugin {
     public static class PerfectoTestExecutionExtension implements ITestExecutionExtension {
 
         @Override
-        public void onStartUp(Configuration configuration) {
+        public void onStartUp(Configuration configuration, String correlationId) {
             // No actions needed
         }
 
         @Override
-        public void onBeforeStart() {
+        public void onBeforeStart(String correlationId, String suiteName) {
+            // No actions needed
+        }
+
+        @Override
+        public void onBeforeLaunch(Configuration configuration) {
             // No actions needed
         }
 
@@ -111,8 +116,8 @@ public class PerfectoPlugin extends Plugin {
         }
 
         @Override
-        public void onFailedTest(String reason) {
-            reportiumClient.testStop(TestResultFactory.createFailure(reason));
+        public void onFailedTest(String reason, Throwable e) {
+            reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
 
             log.info("Test Report URL: " + reportiumClient.getReportUrl());
         }
@@ -120,6 +125,11 @@ public class PerfectoPlugin extends Plugin {
         @Override
         public void onBeforeStep(String message) {
             reportiumClient.stepStart(message);
+        }
+
+        @Override
+        public void onExecutionEvent(String eventName, Object payload) {
+            // No actions needed
         }
 
         @Override

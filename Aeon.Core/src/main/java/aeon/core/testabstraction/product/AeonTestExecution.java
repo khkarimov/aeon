@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Provides methods for annotating tests with meta data for behavior driven development.
@@ -22,6 +23,8 @@ public class AeonTestExecution {
         }
     }
 
+    private static UUID correlationId = null;
+
     /**
      * Is called when Aeon is starting up.
      *
@@ -30,8 +33,40 @@ public class AeonTestExecution {
     public static void startUp(Configuration configuration) {
         init();
 
+        if (correlationId == null) {
+            correlationId = UUID.randomUUID();
+        }
+
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onStartUp(configuration);
+            testExecutionPlugin.onStartUp(configuration, correlationId.toString());
+        }
+    }
+
+    /**
+     * Is called right before the product is launched.
+     *
+     * @param configuration The aeon configuration object.
+     */
+    public static void beforeLaunch(Configuration configuration) {
+
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onBeforeLaunch(configuration);
+        }
+    }
+
+    /**
+     * Should be called in the @BeforeClass step of a test class.
+     *
+     * @param suiteName The name of the suite.
+     */
+    public static void beforeStart(String suiteName) {
+        init();
+
+        correlationId = UUID.randomUUID();
+
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onBeforeStart(correlationId.toString(), suiteName);
         }
     }
 
@@ -39,11 +74,7 @@ public class AeonTestExecution {
      * Should be called in the @BeforeClass step of a test class.
      */
     public static void beforeStart() {
-        init();
-
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeStart();
-        }
+        beforeStart(null);
     }
 
     /**
@@ -53,6 +84,8 @@ public class AeonTestExecution {
      */
     static void done() {
         init();
+
+        correlationId = null;
 
         for (ITestExecutionExtension testExecutionPlugin : testExecutionPlugins) {
             testExecutionPlugin.onDone();
@@ -141,7 +174,7 @@ public class AeonTestExecution {
      *
      * @param message Title of the test step.
      */
-    public static void testStep(String message) {
+    private static void testStep(String message) {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
             testExecutionPlugin.onBeforeStep(message);
@@ -166,7 +199,20 @@ public class AeonTestExecution {
     public static void testFailed(String message) {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onFailedTest(message);
+            testExecutionPlugin.onFailedTest(message, null);
+        }
+    }
+
+    /**
+     * Method to indicate the end of a test due to a failure.
+     *
+     * @param message The failure message.
+     * @param e       The exception of the failure.
+     */
+    public static void testFailed(String message, Throwable e) {
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onFailedTest(message, e);
         }
     }
 
@@ -177,6 +223,19 @@ public class AeonTestExecution {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
             testExecutionPlugin.onSkippedTest();
+        }
+    }
+
+    /**
+     * Can be used to broadcast test execution events to plugins.
+     *
+     * @param eventName The name of the event in order to be able to identify it.
+     * @param payload   The payload of the event.
+     */
+    public static void executionEvent(String eventName, Object payload) {
+        init();
+        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
+            testExecutionPlugin.onExecutionEvent(eventName, payload);
         }
     }
 }

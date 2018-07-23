@@ -50,6 +50,15 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         @PluginBuilderAttribute
         private boolean createOnDemand;
 
+        @PluginBuilderAttribute
+        private String filePermissions;
+
+        @PluginBuilderAttribute
+        private String fileOwner;
+
+        @PluginBuilderAttribute
+        private String fileGroup;
+
         @Override
         public PIdFileAppender build() {
             boolean bufferedIo = isBufferedIo();
@@ -64,7 +73,7 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
             final Layout<? extends Serializable> layout = getOrCreateLayout();
             this.fileName = appendIdToFileName(fileName);
             FileManager manager = FileManager.getFileManager(fileName, append, locking, bufferedIo, createOnDemand,
-                    advertiseUri, layout, bufferSize, getConfiguration());
+                    advertiseUri, layout, bufferSize, filePermissions, fileOwner, fileGroup, getConfiguration());
             if (manager == null) {
                 return null;
             }
@@ -135,6 +144,66 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
          */
         public B withLocking(final boolean locking) {
             this.locking = locking;
+            return asBuilder();
+        }
+
+        /**
+         * Returns the file permissions.
+         *
+         * @return The file permissions.
+         */
+        public String getFilePermissions() {
+            return filePermissions;
+        }
+
+        /**
+         * Returns the file owner.
+         *
+         * @return The file owner.
+         */
+        public String getFileOwner() {
+            return fileOwner;
+        }
+
+        /**
+         * Returns the file group.
+         *
+         * @return The file group.
+         */
+        public String getFileGroup() {
+            return fileGroup;
+        }
+
+        /**
+         * Function returns a Builder with the provided file permissions.
+         *
+         * @param filePermissions the file permissions to use.
+         * @return the Builder with the new file permissions.
+         */
+        public B withFilePermissions(final String filePermissions) {
+            this.filePermissions = filePermissions;
+            return asBuilder();
+        }
+
+        /**
+         * Function returns a Builder with the provided file owner.
+         *
+         * @param fileOwner the file owner to use.
+         * @return the Builder with the new file owner.
+         */
+        public B withFileOwner(final String fileOwner) {
+            this.fileOwner = fileOwner;
+            return asBuilder();
+        }
+
+        /**
+         * Function returns a Builder with the provided file group.
+         *
+         * @param fileGroup the file group to use.
+         * @return the Builder with the new file group.
+         */
+        public B withFileGroup(final String fileGroup) {
+            this.fileGroup = fileGroup;
             return asBuilder();
         }
     }

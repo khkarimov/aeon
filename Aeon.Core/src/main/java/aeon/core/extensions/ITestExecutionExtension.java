@@ -13,13 +13,24 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called when Aeon is starting up.
      *
      * @param configuration The aeon configuration object.
+     * @param correlationId UUID to uniquely identify this session.
      */
-    void onStartUp(Configuration configuration);
+    void onStartUp(Configuration configuration, String correlationId);
 
     /**
-     * Is called before a test class begins test execution.
+     * Is called before a test class or suite begins test execution.
+     *
+     * @param correlationId UUID to uniquely identify this session.
+     * @param suiteName     Optional Name of the suite (can be set to null).
      */
-    void onBeforeStart();
+    void onBeforeStart(String correlationId, String suiteName);
+
+    /**
+     * Is called right before a product is launched.
+     *
+     * @param configuration The Aeon configuration object.
+     */
+    void onBeforeLaunch(Configuration configuration);
 
     /**
      * Is called after a product was successfully launched.
@@ -51,8 +62,9 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called when a test failed.
      *
      * @param reason Error message.
+     * @param e      Exception.
      */
-    void onFailedTest(String reason);
+    void onFailedTest(String reason, Throwable e);
 
     /**
      * Is called when a step method is used.
@@ -65,4 +77,12 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called when Aeon.done() is used.
      */
     void onDone();
+
+    /**
+     * Can be used to broadcast test execution events to plugins.
+     *
+     * @param eventName The name of the event in order to be able to identify it.
+     * @param payload   The payload of the event.
+     */
+    void onExecutionEvent(String eventName, Object payload);
 }

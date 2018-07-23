@@ -5,6 +5,8 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.core.testabstraction.product.Configuration;
 
+import java.awt.*;
+
 /**
  * Provides access to data required for automation.
  */
@@ -123,5 +125,24 @@ public class AutomationInfo {
      */
     public void testFailed(String message) {
         AeonTestExecution.testFailed(message);
+    }
+
+    /**
+     * Method to indicate the end of a test due to a failure.
+     *
+     * @param message The failure message.
+     * @param e       The exception of the failure.
+     */
+    public void testFailed(String message, Exception e) {
+        AeonTestExecution.testFailed(message, e);
+    }
+
+    /**
+     * Method to indicate that a screenshot was taken.
+     *
+     * @param screenshot The screenshot that was taken.
+     */
+    public void screenshotTaken(Image screenshot) {
+        AeonTestExecution.executionEvent("screenshotTaken", screenshot);
     }
 }

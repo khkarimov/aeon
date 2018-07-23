@@ -28,13 +28,13 @@ public class SampleBaseTest {
 
         @Override
         protected void starting(Description description) {
-            String className = description.getClassName().substring(description.getClassName().lastIndexOf(".") + 1, description.getClassName().length() - 1);
-            startTest(description.getMethodName() + "." + className);
+            String className = description.getClassName().substring(description.getClassName().lastIndexOf(".") + 1, description.getClassName().length());
+            startTest(className + "." + description.getMethodName());
         }
 
         @Override
         protected void failed(Throwable e, Description description) {
-            testFailed(e.getMessage());
+            testFailed(e.getMessage(), e);
         }
 
         @Override
