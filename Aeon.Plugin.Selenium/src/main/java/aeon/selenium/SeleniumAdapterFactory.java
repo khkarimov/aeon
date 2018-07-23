@@ -376,35 +376,35 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             try {
                 loggingPreferences.enable(LogType.BROWSER, Level.parse(browserLevel));
             } catch(IllegalArgumentException e) {
-                log.warn("Invalid level: %s.", browserLevel);
+                log.warn(String.format("Invalid level \"%s\" for logging type \"browser\".", browserLevel));
             }
         }
         if(!clientLevel.equals(defaultLevel) && !clientLevel.isEmpty()) {
             try {
                 loggingPreferences.enable(LogType.CLIENT, Level.parse(clientLevel));
             } catch(IllegalArgumentException e) {
-                log.warn("Invalid level: %s.", clientLevel);
+                log.warn(String.format("Invalid level \"%s\" for logging type \"client\".", clientLevel));
             }
         }
         if(!driverLevel.equals(defaultLevel) && !driverLevel.isEmpty()) {
             try {
                 loggingPreferences.enable(LogType.DRIVER, Level.parse(driverLevel));
             } catch(IllegalArgumentException e) {
-                log.warn("Invalid level: %s.", driverLevel);
+                log.warn(String.format("Invalid level \"%s\" for logging type \"driver\".", driverLevel));
             }
         }
         if(!performanceLevel.equals(defaultLevel) && !performanceLevel.isEmpty()) {
             try {
                 loggingPreferences.enable(LogType.PERFORMANCE, Level.parse(performanceLevel));
             } catch (IllegalArgumentException e) {
-                log.warn("Invalid level: %s.", performanceLevel);
+                log.warn(String.format("Invalid level \"%s\" for logging type \"performance\".", performanceLevel));
             }
         }
         if(!serverLevel.equals(defaultLevel) && !serverLevel.isEmpty()) {
             try {
                 loggingPreferences.enable(LogType.SERVER, Level.parse(serverLevel));
             } catch(IllegalArgumentException e) {
-                log.warn("Invalid level: %s.", serverLevel);
+                log.warn(String.format("Invalid level \"%s\" for logging type \"server\".", serverLevel));
             }
         }
     }
