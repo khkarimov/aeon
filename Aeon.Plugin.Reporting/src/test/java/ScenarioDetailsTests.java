@@ -1,23 +1,23 @@
-import aeon.extensions.reporting.Scenario;
+import aeon.extensions.reporting.ScenarioDetails;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ScenarioTests {
+public class ScenarioDetailsTests {
 
     @Test
     public void scenarioNameTest() {
-        Scenario scenario = new Scenario();
-        scenario.setScenarioName("scenarioName");
+        ScenarioDetails scenario = new ScenarioDetails();
+        scenario.setTestName("scenarioName");
 
-        Assert.assertEquals(scenario.getScenarioName(), "scenarioName");
+        Assert.assertEquals(scenario.getTestName(), "scenarioName");
     }
 
     @Test
     public void startTimeTest() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         scenario.setStartTime(2000);
 
         Assert.assertEquals(scenario.getStartTime(), 2000);
@@ -25,7 +25,7 @@ public class ScenarioTests {
 
     @Test
     public void endTimeTest() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         scenario.setEndTime(2000);
 
         Assert.assertEquals(scenario.getEndTime(), 2000);
@@ -33,7 +33,7 @@ public class ScenarioTests {
 
     @Test
     public void stackTraceTest() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         scenario.setStackTrace("line1\nline2");
 
         Assert.assertEquals(scenario.getStackTrace(), "line1\nline2");
@@ -41,7 +41,7 @@ public class ScenarioTests {
 
     @Test
     public void screenshotTest() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         Image image = new BufferedImage(2, 2, BufferedImage.TYPE_BYTE_BINARY);
         scenario.setScreenshot(image);
 
@@ -50,7 +50,7 @@ public class ScenarioTests {
 
     @Test
     public void scenarioStatusTest() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         scenario.setStatus("FAILED");
 
         Assert.assertEquals(scenario.getStatus(), "FAILED");
@@ -58,7 +58,7 @@ public class ScenarioTests {
 
     @Test
     public void scenarioErrorMessageTest() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         scenario.setErrorMessage("out of bounds");
 
         Assert.assertEquals(scenario.getErrorMessage(), "out of bounds");
@@ -66,7 +66,7 @@ public class ScenarioTests {
 
     @Test
     public void shortenedErrorMessageTestUnderTheLimit() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         scenario.setErrorMessage("message with &, < and > characters");
 
         Assert.assertEquals(scenario.getShortenedErrorMessage(200),
@@ -75,7 +75,7 @@ public class ScenarioTests {
 
     @Test
     public void shortenedErrorMessageTestOverTheLimit() {
-        Scenario scenario = new Scenario();
+        ScenarioDetails scenario = new ScenarioDetails();
         scenario.setErrorMessage("message with &, < and > characters over the limit");
 
         Assert.assertEquals(scenario.getShortenedErrorMessage(55),
@@ -83,10 +83,10 @@ public class ScenarioTests {
     }
 
     @Test
-    public void scenarioModuleNameTest() {
-        Scenario scenario = new Scenario();
-        scenario.setModuleName("moduleName");
+    public void scenarioClassNameTest() {
+        ScenarioDetails scenario = new ScenarioDetails();
+        scenario.setClassName("moduleName");
 
-        Assert.assertEquals(scenario.getModuleName(), "moduleName");
+        Assert.assertEquals(scenario.getClassName(), "moduleName");
     }
 }

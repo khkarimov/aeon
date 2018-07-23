@@ -20,7 +20,7 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     }
 
     @Override
-    public void onBeforeStart(String correlationId) {
+    public void onBeforeStart(String correlationId, String suiteName) {
         // Nothing to log
     }
 

@@ -64,7 +64,7 @@ public class PerfectoPlugin extends Plugin {
         }
 
         @Override
-        public void onBeforeStart(String correlationId) {
+        public void onBeforeStart(String correlationId, String suiteName) {
             // No actions needed
         }
 
