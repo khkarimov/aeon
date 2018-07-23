@@ -16,7 +16,6 @@ import org.joda.time.Period;
 import java.awt.Dimension;
 import java.net.URL;
 import java.util.Collection;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**

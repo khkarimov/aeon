@@ -15,7 +15,6 @@ import aeon.core.testabstraction.product.WebConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Browser class.
@@ -33,7 +32,6 @@ public class Browser {
     public Browser(AutomationInfo info) {
         this.info = info;
     }
-
 
     /**
      * Function to accept an incoming alert.

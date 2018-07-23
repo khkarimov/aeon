@@ -53,7 +53,6 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String LOGGING_SERVER = "aeon.selenium.logging.server";
         public static final String LOGGING_DIRECTORY = "aeon.selenium.logging.directory";
 
-
         // Appium
         public static final String APP = "aeon.selenium.appium.app";
         public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
