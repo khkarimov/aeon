@@ -3,6 +3,7 @@ package aeon.extensions.reporting;
 import java.awt.*;
 
 public class ScenarioDetails {
+
     private long threadId = 0;
     private String className = "";
     private String testName = "";

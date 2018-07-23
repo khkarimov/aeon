@@ -8,6 +8,14 @@ import java.awt.image.BufferedImage;
 public class ScenarioDetailsTests {
 
     @Test
+    public void threadIdTest() {
+        ScenarioDetails scenario = new ScenarioDetails();
+        scenario.setThreadId(200);
+
+        Assert.assertEquals(scenario.getThreadId(), 200);
+    }
+
+    @Test
     public void scenarioNameTest() {
         ScenarioDetails scenario = new ScenarioDetails();
         scenario.setTestName("scenarioName");
@@ -46,6 +54,14 @@ public class ScenarioDetailsTests {
         scenario.setScreenshot(image);
 
         Assert.assertEquals(scenario.getScreenshot(), image);
+    }
+
+    @Test
+    public void videoUrlTest() {
+        ScenarioDetails scenario = new ScenarioDetails();
+        scenario.setVideoUrl("videoUrl");
+
+        Assert.assertEquals(scenario.getVideoUrl(), "videoUrl");
     }
 
     @Test

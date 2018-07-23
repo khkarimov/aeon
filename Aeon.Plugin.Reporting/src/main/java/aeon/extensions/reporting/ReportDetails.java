@@ -3,6 +3,7 @@ package aeon.extensions.reporting;
 import java.util.Queue;
 
 public class ReportDetails {
+
     private String suiteName = "";
     private long startTime;
     private long endTime;
