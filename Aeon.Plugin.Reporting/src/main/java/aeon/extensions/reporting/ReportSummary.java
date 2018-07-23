@@ -40,33 +40,33 @@ class ReportSummary {
     private IConfiguration aeonConfiguration;
     private IConfiguration pluginConfiguration;
     private SlackBot slackBot;
+    private ReportDetails reportDetails;
     private boolean displayClassName;
     private int errorMessageCharLimit;
 
     private static Logger log = LogManager.getLogger(ReportSummary.class);
-    private boolean uploadedToRnR;
-    private String correlationId;
+    private String rnrUrl;
 
-    ReportSummary(IConfiguration pluginConfiguration, IConfiguration aeonConfiguration, String correlationId) {
+    ReportSummary(IConfiguration pluginConfiguration, IConfiguration aeonConfiguration, ReportDetails reportDetails) {
         this.aeonConfiguration = aeonConfiguration;
         this.pluginConfiguration = pluginConfiguration;
         this.slackBot = new SlackBot(pluginConfiguration);
         this.displayClassName = pluginConfiguration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
         this.errorMessageCharLimit = (int) pluginConfiguration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
 
-        this.correlationId = correlationId;
+        this.reportDetails = reportDetails;
     }
 
-    String createReportFile(Report report) {
+    String createReportFile() {
         ResultReport resultReport = new ResultReport();
-        resultReport.counts.passed = report.getPassed();
-        resultReport.counts.failed = report.getFailed();
-        resultReport.counts.disabled = report.getSkipped();
-        resultReport.timer.duration = report.getTotalTime();
-        for (Scenario scenario: report.getScenarioBeans()) {
+        resultReport.counts.passed = reportDetails.getNumberOfPassedTests();
+        resultReport.counts.failed = reportDetails.getNumberOfFailedTests();
+        resultReport.counts.disabled = reportDetails.getNumberOfSkippedTests();
+        resultReport.timer.duration = reportDetails.getTotalTime();
+        for (ScenarioDetails scenario: reportDetails.getScenarios()) {
             Result result = new Result();
-            result.description = scenario.getScenarioName();
-            result.prefix = ReportingPlugin.suiteName;
+            result.description = scenario.getTestName();
+            result.prefix = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
             result.started = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getStartTime()));
             result.stopped = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getEndTime()));
             result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
@@ -130,7 +130,7 @@ class ReportSummary {
         reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
 
         String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
-            + "/report-" + ReportingPlugin.correlationId + ".html";
+            + "/report-" + reportDetails.getCorrelationId() + ".html";
 
         String reportUrl = null;
         try (PrintWriter out = new PrintWriter(fileName)) {
@@ -153,7 +153,7 @@ class ReportSummary {
             out.println(json);
             out.close();
 
-            this.uploadedToRnR = uploadToRnR(rnrUrl, jsonFileName, reportUrl);
+            this.rnrUrl = uploadToRnR(rnrUrl, jsonFileName, reportUrl);
         } catch (FileNotFoundException e) {
             log.error("File not found on path.");
         }
@@ -161,9 +161,14 @@ class ReportSummary {
         return reportUrl;
     }
 
-    void sendSummaryReport(Report reportBean, String reportUrl) {
+    void sendSummaryReport(String reportUrl) {
 
-        String title = "Automation Report - " + ReportingPlugin.reportDateFormat.format(reportBean.getScenarioBeans().get(0).getStartTime()).replace(":", "-");
+        String reportDate = "";
+        ScenarioDetails scenarioDetails = reportDetails.getScenarios().peek();
+        if (scenarioDetails != null) {
+            reportDate = ReportingPlugin.reportDateFormat.format(scenarioDetails.getStartTime());
+        }
+        String title = "Automation Report - " + reportDate.replace(":", "-");
 
         String slackChannel1 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
         String slackChannel2 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
@@ -179,12 +184,12 @@ class ReportSummary {
             messages.add("Test Report URL: " + reportUrl);
         }
 
-        if (uploadedToRnR) {
-            messages.add("RnR URL: https://rnr.apps.mia.ulti.io/" + correlationId);
+        if (this.rnrUrl != null) {
+            messages.add("RnR URL: " + rnrUrl);
         }
 
         if (StringUtils.isNotBlank(slackChannel1)) {
-            slackBot.uploadReportToSlack(this.summaryReport(reportBean, title), slackChannel1);
+            slackBot.uploadReportToSlack(this.summaryReport(title), slackChannel1);
             Utils.deleteFiles(Utils.getResourcesPath() + title + ".png");
 
             if (!messages.isEmpty()) {
@@ -194,7 +199,7 @@ class ReportSummary {
 
         if (StringUtils.isNotBlank(slackChannel2)) {
             Boolean failed = false;
-            if (reportBean.getPassed() != reportBean.getTotal()) {
+            if (reportDetails.getNumberOfFailedTests() > 0) {
                 failed = true;
             }
 
@@ -203,17 +208,19 @@ class ReportSummary {
                 messages.add(0, "<!here> - There are test failures. Please see attached report below.");
 
                 slackBot.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
-                slackBot.uploadReportToSlack(this.summaryReport(reportBean, title), slackChannel2);
+                slackBot.uploadReportToSlack(this.summaryReport(title), slackChannel2);
                 Utils.deleteFiles(Utils.getResourcesPath() + title + ".png");
             } else {
-                messages.add(0, "Tests Passed for URL: " + aeonConfiguration.getString("aeon.environment", "") + " started at " + ReportingPlugin.getTime());
+                String startTime = new Date(reportDetails.getStartTime()).toString();
+                String url = aeonConfiguration.getString("aeon.environment", "");
+                messages.add(0, "Tests Passed for URL: " + url + " started at " + startTime);
 
                 slackBot.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
             }
         }
     }
 
-    private File summaryReport(Report reportBean, String title) {
+    private File summaryReport(String title) {
         String htmlBody = "";
         htmlBody = htmlBody + this.getHead();
         String[] successHeaders;
@@ -228,31 +235,31 @@ class ReportSummary {
 
         //Job Info
         htmlBody = htmlBody + this.createTable(new String[]{"Test Configuration"}, this.getJobInformation(), "t02");
-        if (ReportingPlugin.suiteName == null) {
+        if (reportDetails.getSuiteName() == null) {
             //Suite Summary for JUnit so no Suite column
             htmlBody = htmlBody + createHeader("Overall Summary") +
                     createTable(new String[]{"Total Tests", "Passed", "Failed",
-                            "Skipped", "Total Time"}, getTableBodyForSuiteSummaryJUnit(reportBean), "t01");
+                            "Skipped", "Total Time"}, getTableBodyForSuiteSummaryJUnit(), "t01");
         } else {
             //Suite Summary for TestNG
             htmlBody = htmlBody + createHeader("Overall Summary") +
                     createTable(new String[]{"Suite Name", "Total Tests", "Passed", "Failed",
-                            "Broken", "Skipped", "Total Time"}, getTableBodyForSuiteSummary(reportBean), "t01");
+                            "Broken", "Skipped", "Total Time"}, getTableBodyForSuiteSummary(), "t01");
         }
         //Broken Table
-        if (reportBean.isSuiteFailed() || reportBean.isSuiteBroken() || reportBean.isSuiteSkipped()) {
+        if (reportDetails.getNumberOfFailedTests() > 0 || reportDetails.getNumberOfSkippedTests() > 0) {
             htmlBody = htmlBody + createHeader("Failed List")
                     + createTable(failureHeaders,
-                    getTableBodyForFailedList(reportBean.getScenarioBeans(), "FAILED")
-                            + getTableBodyForFailedList(reportBean.getScenarioBeans(), "BROKEN")
-                            + getTableBodyForFailedList(reportBean.getScenarioBeans(), "SKIPPED"), "t03");
+                    getTableBodyForFailedList(reportDetails.getScenarios(), "FAILED")
+                            + getTableBodyForFailedList(reportDetails.getScenarios(), "BROKEN")
+                            + getTableBodyForFailedList(reportDetails.getScenarios(), "SKIPPED"), "t03");
         }
 
         //Pass List
-        if (reportBean.isSuitePassed()) {
+        if (reportDetails.getNumberOfPassedTests() > 0) {
             htmlBody = htmlBody + createHeader("Pass List")
                     + createTable(successHeaders,
-                    getTableBodyForPassList(reportBean.getScenarioBeans()), "t04") + "<br>";
+                    getTableBodyForPassList(reportDetails.getScenarios()), "t04") + "<br>";
         }
 
         return Utils.htmlToPngFile(htmlBody, Utils.getResourcesPath() + title + ".png");
@@ -266,21 +273,21 @@ class ReportSummary {
         return this.createTable(finalHeader + tableBody, id);
     }
 
-    private String getTableBodyForPassList(List<Scenario> scenarios) {
+    private String getTableBodyForPassList(Queue<ScenarioDetails> scenarios) {
         StringBuilder finalBody = new StringBuilder();
 
-        for (Scenario scenario : scenarios) {
+        for (ScenarioDetails scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase("PASSED")) {
                 String classColumn;
                 if (displayClassName) {
-                    classColumn = createColumn(scenario.getModuleName());
+                    classColumn = createColumn(scenario.getClassName());
                 } else {
                     classColumn = "";
                 }
 
                 finalBody.append(createRow(
                         classColumn
-                                + createColumn(scenario.getScenarioName())
+                                + createColumn(scenario.getTestName())
                                 + createColumnAndAssignColor(scenario.getStatus())
                 ));
             }
@@ -288,21 +295,21 @@ class ReportSummary {
         return finalBody.toString();
     }
 
-    private String getTableBodyForFailedList(List<Scenario> scenarios, String status) {
+    private String getTableBodyForFailedList(Queue<ScenarioDetails> scenarios, String status) {
         StringBuilder finalBody = new StringBuilder();
 
-        for (Scenario scenario : scenarios) {
+        for (ScenarioDetails scenario : scenarios) {
             if (scenario.getStatus().equalsIgnoreCase(status)) {
                 String classColumn;
                 if (displayClassName) {
-                    classColumn = createColumn(scenario.getModuleName());
+                    classColumn = createColumn(scenario.getClassName());
                 } else {
                     classColumn = "";
                 }
 
                 finalBody.append(createRow(
                         classColumn
-                                + createColumn(scenario.getScenarioName())
+                                + createColumn(scenario.getTestName())
                                 + createColumnAndAssignColor(scenario.getStatus())
                                 + createWrappingColumn(scenario.getShortenedErrorMessage(errorMessageCharLimit))
                 ));
@@ -311,24 +318,24 @@ class ReportSummary {
         return finalBody.toString();
     }
 
-    private String getTableBodyForSuiteSummary(Report report) {
+    private String getTableBodyForSuiteSummary() {
         return createRow(
-                createColumn(report.getSuiteName())
-                        + createColumn("" + report.getTotal())
-                        + createColumn("" + report.getPassed())
-                        + createColumn("" + report.getFailed())
-                        + createColumn("" + report.getBroken())
-                        + createColumn("" + report.getSkipped())
-                        + createColumn("" + getTime(report.getTotalTime())));
+                createColumn(reportDetails.getSuiteName())
+                        + createColumn("" + reportDetails.getTotalNumberOfTests())
+                        + createColumn("" + reportDetails.getNumberOfPassedTests())
+                        + createColumn("" + reportDetails.getNumberOfFailedTests())
+                        + createColumn("" + 0)
+                        + createColumn("" + reportDetails.getNumberOfSkippedTests())
+                        + createColumn("" + getTime(reportDetails.getTotalTime())));
     }
 
-    private String getTableBodyForSuiteSummaryJUnit(Report report) {
+    private String getTableBodyForSuiteSummaryJUnit() {
         return createRow(
-                 createColumn("" + report.getTotal())
-                        + createColumn("" + report.getPassed())
-                        + createColumn("" + report.getFailed())
-                        + createColumn("" + report.getSkipped())
-                        + createColumn("" + getTime(report.getTotalTime())));
+                 createColumn("" + reportDetails.getTotalNumberOfTests())
+                        + createColumn("" + reportDetails.getNumberOfPassedTests())
+                        + createColumn("" + reportDetails.getNumberOfFailedTests())
+                        + createColumn("" + reportDetails.getNumberOfSkippedTests())
+                        + createColumn("" + getTime(reportDetails.getTotalTime())));
     }
 
     private String getHead() {
@@ -415,6 +422,11 @@ class ReportSummary {
     }
 
     private String escapeIllegalJSONCharacters(String input) {
+
+        if (input == null) {
+            return null;
+        }
+
         return input.replace("&", "\\u0026")
                 .replace("[", "\\u005B")
                 .replace("]", "\\u005D")
@@ -487,7 +499,7 @@ class ReportSummary {
         return fullRequestUrl;
     }
 
-    private boolean uploadToRnR(String rnrUrl, String filePathName, String reportUrl) {
+    private String uploadToRnR(String rnrUrl, String filePathName, String reportUrl) {
         String product = pluginConfiguration.getString(ReportingConfiguration.Keys.PRODUCT, "");
         String team = pluginConfiguration.getString(ReportingConfiguration.Keys.TEAM, "");
         String type = pluginConfiguration.getString(ReportingConfiguration.Keys.TYPE, "");
@@ -495,7 +507,7 @@ class ReportSummary {
 
         if (product.isEmpty() || team.isEmpty() || type.isEmpty() || branch.isEmpty()) {
             log.trace("Not all RnR properties are set, cancelling upload to RnR.");
-            return false;
+            return null;
         }
 
         String fullRequestUrl = rnrUrl + "/testsuite";
@@ -508,7 +520,7 @@ class ReportSummary {
         builder.addTextBody("project", product);
         builder.addTextBody("type", type);
         builder.addTextBody("branch", branch);
-        builder.addTextBody("correlationId", ReportingPlugin.correlationId);
+        builder.addTextBody("correlationId", reportDetails.getCorrelationId());
         builder.addBinaryBody("file", file,
                 ContentType.APPLICATION_OCTET_STREAM, "results.js");
 
@@ -550,6 +562,10 @@ class ReportSummary {
             log.error(String.format("Could not upload report to RnR (%s): %s.", fullRequestUrl, e.getMessage()), e);
         }
 
-        return true;
+        String rnrResultUrl = rnrUrl + "/" + reportDetails.getCorrelationId();
+
+        log.info("RnR URL: " + rnrResultUrl);
+
+        return rnrResultUrl;
     }
 }

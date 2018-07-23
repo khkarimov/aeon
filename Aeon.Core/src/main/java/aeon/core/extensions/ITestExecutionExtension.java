@@ -18,11 +18,12 @@ public interface ITestExecutionExtension extends ExtensionPoint {
     void onStartUp(Configuration configuration, String correlationId);
 
     /**
-     * Is called before a test class begins test execution.
+     * Is called before a test class or suite begins test execution.
      *
      * @param correlationId UUID to uniquely identify this session.
+     * @param suiteName     Optional Name of the suite (can be set to null).
      */
-    void onBeforeStart(String correlationId);
+    void onBeforeStart(String correlationId, String suiteName);
 
     /**
      * Is called right before a product is launched.

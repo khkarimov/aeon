@@ -58,14 +58,21 @@ public class AeonTestExecution {
     /**
      * Should be called in the @BeforeClass step of a test class.
      */
-    public static void beforeStart() {
+    public static void beforeStart(String suiteName) {
         init();
 
         correlationId = UUID.randomUUID();
 
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeStart(correlationId.toString());
+            testExecutionPlugin.onBeforeStart(correlationId.toString(), suiteName);
         }
+    }
+
+    /**
+     * Should be called in the @BeforeClass step of a test class.
+     */
+    public static void beforeStart() {
+        beforeStart(null);
     }
 
     /**
