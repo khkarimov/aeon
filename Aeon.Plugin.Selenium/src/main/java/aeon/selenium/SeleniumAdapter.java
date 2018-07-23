@@ -18,6 +18,7 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +29,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.logging.Logs;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -35,6 +40,7 @@ import javax.imageio.ImageIO;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -56,8 +62,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private boolean moveMouseToOrigin;
     protected BrowserType browserType;
     private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
-    private SeleniumLogger seleniumLogger;
     private boolean isRemote;
+    private String seleniumLogsDirectory;
+    private LoggingPreferences seleniumLogsPreferences;
 
     /**
      * Constructor for Selenium Adapter.
@@ -76,16 +83,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.isRemote = isRemote;
     }
 
-    void setSeleniumLogger(SeleniumLogger seleniumLogger){
-        this.seleniumLogger = seleniumLogger;
-    }
-
-    /**
-     * Retrieves and returns the performance logs
-     * @return A list of performance logs
-     */
-    public List<String> getPerformanceLogs(){
-        return seleniumLogger.getPerformanceLogs();
+    public void setSeleniumLogs(String seleniumLogsDirectory, LoggingPreferences seleniumLogsPreferences){
+        this.seleniumLogsDirectory = seleniumLogsDirectory;
+        this.seleniumLogsPreferences = seleniumLogsPreferences;
     }
 
     /**
@@ -549,7 +549,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void quit() {
         log.trace("WebDriver.quit();");
-        seleniumLogger.logAllToFiles();
+        printSeleniumLogs();
         webDriver.quit();
     }
 
@@ -1905,6 +1905,30 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         } else {
             sendKeysToElement(control, path);
         }
+    }
+
+    private void printSeleniumLogs(){
+        String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
+        for(String logType: seleniumLogsPreferences.getEnabledLogTypes()) {
+            String filename = String.format("%s/%s-%s.log", seleniumLogsDirectory, logType.toLowerCase(), sessionId);
+            try {
+                List<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll();
+                List<String> logStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
+                try {
+                    FileWriter fileWriter = new FileWriter(filename);
+                    for (String log : logStrings) {
+                        fileWriter.write(log);
+                        fileWriter.write('\n');
+                    }
+                    fileWriter.close();
+                } catch (IOException e) {
+                    log.error("Couldn't write Selenium log entries to " + filename, e);
+                }
+            } catch(Exception e) {
+                log.info("The log type that you enabled is either not supported or does not exist in this context.", e);
+            }
+        }
+
     }
 
     private boolean osIsMacOrLinux(){

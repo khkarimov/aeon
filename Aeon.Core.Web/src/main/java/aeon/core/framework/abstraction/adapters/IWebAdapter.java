@@ -17,19 +17,12 @@ import org.joda.time.Period;
 import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
  * The interface for the Web Adapter class.
  */
 public interface IWebAdapter extends IAdapter {
-
-    /**
-     * Retrieves performance logs and prints them to a log file.
-     * @return A list of the performance log entries.
-     */
-    List<String> getPerformanceLogs();
 
     /**
      * Gets the title of the current browser window.

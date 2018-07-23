@@ -99,7 +99,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         prepare(configuration);
 
         SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
-        adapter.setSeleniumLogger(new SeleniumLogger(seleniumLogsDirectory, driver));
+        adapter.setSeleniumLogs(seleniumLogsDirectory, loggingPreferences);
         return adapter;
     }
 
@@ -152,17 +152,22 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
         loggingPreferences = new LoggingPreferences();
-        String defaultLevel = Level.OFF.toString();
+        String defaultLevel = "OFF";
         String browserLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_BROWSER, defaultLevel);
         String clientLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_CLIENT, defaultLevel);
         String driverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DRIVER, defaultLevel);
         String performanceLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_PERFORMANCE, defaultLevel);
         String serverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_SERVER, defaultLevel);
-        loggingPreferences.enable(LogType.BROWSER, Level.parse(browserLevel));
-        loggingPreferences.enable(LogType.CLIENT, Level.parse(clientLevel));
-        loggingPreferences.enable(LogType.DRIVER, Level.parse(driverLevel));
-        loggingPreferences.enable(LogType.PERFORMANCE, Level.parse(performanceLevel));
-        loggingPreferences.enable(LogType.SERVER, Level.parse(serverLevel));
+        if(!browserLevel.equals(defaultLevel))
+            loggingPreferences.enable(LogType.BROWSER, Level.parse(browserLevel));
+        if(!clientLevel.equals(defaultLevel))
+            loggingPreferences.enable(LogType.CLIENT, Level.parse(clientLevel));
+        if(!driverLevel.equals(defaultLevel))
+            loggingPreferences.enable(LogType.DRIVER, Level.parse(driverLevel));
+        if(!performanceLevel.equals(defaultLevel))
+            loggingPreferences.enable(LogType.PERFORMANCE, Level.parse(performanceLevel));
+        if(!serverLevel.equals(defaultLevel))
+            loggingPreferences.enable(LogType.SERVER, Level.parse(serverLevel));
 
         switch (browserType) {
             case Firefox:

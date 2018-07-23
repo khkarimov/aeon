@@ -21,7 +21,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Web framework adapter.
@@ -42,11 +41,6 @@ public class AeonWebDriver implements IWebDriver {
         this.adapter = (IWebAdapter) adapter;
         this.configuration = configuration;
         return this;
-    }
-
-    @Override
-    public List<String> getPerformanceLogs(){
-        return adapter.getPerformanceLogs();
     }
 
     @Override
