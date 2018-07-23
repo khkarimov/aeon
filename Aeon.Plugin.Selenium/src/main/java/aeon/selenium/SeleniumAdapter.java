@@ -30,7 +30,6 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -72,16 +71,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
      * @param isRemote Whether we are testing remotely or locally.
+     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
+     * @param seleniumLogsPreferences Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, String seleniumLogsDirectory, LoggingPreferences seleniumLogsPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
         this.isRemote = isRemote;
-    }
-
-    public void setSeleniumLogs(String seleniumLogsDirectory, LoggingPreferences seleniumLogsPreferences){
         this.seleniumLogsDirectory = seleniumLogsDirectory;
         this.seleniumLogsPreferences = seleniumLogsPreferences;
     }
@@ -1906,9 +1904,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     private void printSeleniumLogs(){
-        String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
+        long timeNow = System.currentTimeMillis();
         for(String logType: seleniumLogsPreferences.getEnabledLogTypes()) {
-            String filename = String.format("%s/%s-%s.log", seleniumLogsDirectory, logType.toLowerCase(), sessionId);
+            String filename = String.format("%s/%s-%d.log", seleniumLogsDirectory, logType, timeNow);
             try {
                 List<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll();
                 List<String> logStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
@@ -1923,10 +1921,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     log.error("Couldn't write Selenium log entries to " + filename, e);
                 }
             } catch(Exception e) {
-                log.info("The log type that you enabled is either not supported or does not exist in this context.", e);
+                log.info("The log type \"" + logType + "\" is either not supported or does not exist in this context.");
             }
         }
-
     }
 
     private boolean osIsMacOrLinux(){

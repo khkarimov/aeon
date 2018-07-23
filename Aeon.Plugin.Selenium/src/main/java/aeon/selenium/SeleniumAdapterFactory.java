@@ -87,8 +87,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
-    private LoggingPreferences loggingPreferences;
-    private String seleniumLogsDirectory;
+    protected LoggingPreferences loggingPreferences;
+    protected String seleniumLogsDirectory;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -98,9 +98,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        SeleniumAdapter adapter = new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote);
-        adapter.setSeleniumLogs(seleniumLogsDirectory, loggingPreferences);
-        return adapter;
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -150,24 +148,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         isRemote = seleniumHubUrl != null;
         URL finalSeleniumHubUrl = seleniumHubUrl;
 
-        seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
-        loggingPreferences = new LoggingPreferences();
-        String defaultLevel = "OFF";
-        String browserLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_BROWSER, defaultLevel);
-        String clientLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_CLIENT, defaultLevel);
-        String driverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DRIVER, defaultLevel);
-        String performanceLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_PERFORMANCE, defaultLevel);
-        String serverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_SERVER, defaultLevel);
-        if(!browserLevel.equals(defaultLevel))
-            loggingPreferences.enable(LogType.BROWSER, Level.parse(browserLevel));
-        if(!clientLevel.equals(defaultLevel))
-            loggingPreferences.enable(LogType.CLIENT, Level.parse(clientLevel));
-        if(!driverLevel.equals(defaultLevel))
-            loggingPreferences.enable(LogType.DRIVER, Level.parse(driverLevel));
-        if(!performanceLevel.equals(defaultLevel))
-            loggingPreferences.enable(LogType.PERFORMANCE, Level.parse(performanceLevel));
-        if(!serverLevel.equals(defaultLevel))
-            loggingPreferences.enable(LogType.SERVER, Level.parse(serverLevel));
+        setLoggingConfiguration();
 
         switch (browserType) {
             case Firefox:
@@ -382,6 +363,51 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         target.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
     }
 
+    private void setLoggingConfiguration() {
+        seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
+        loggingPreferences = new LoggingPreferences();
+        String defaultLevel = "OFF";
+        String browserLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_BROWSER, defaultLevel);
+        String clientLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_CLIENT, defaultLevel);
+        String driverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DRIVER, defaultLevel);
+        String performanceLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_PERFORMANCE, defaultLevel);
+        String serverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_SERVER, defaultLevel);
+        if(!browserLevel.equals(defaultLevel) && !browserLevel.isEmpty()) {
+            try {
+                loggingPreferences.enable(LogType.BROWSER, Level.parse(browserLevel));
+            } catch(IllegalArgumentException e) {
+                log.warn("Invalid level: %s.", browserLevel);
+            }
+        }
+        if(!clientLevel.equals(defaultLevel) && !clientLevel.isEmpty()) {
+            try {
+                loggingPreferences.enable(LogType.CLIENT, Level.parse(clientLevel));
+            } catch(IllegalArgumentException e) {
+                log.warn("Invalid level: %s.", clientLevel);
+            }
+        }
+        if(!driverLevel.equals(defaultLevel) && !driverLevel.isEmpty()) {
+            try {
+                loggingPreferences.enable(LogType.DRIVER, Level.parse(driverLevel));
+            } catch(IllegalArgumentException e) {
+                log.warn("Invalid level: %s.", driverLevel);
+            }
+        }
+        if(!performanceLevel.equals(defaultLevel) && !performanceLevel.isEmpty()) {
+            try {
+                loggingPreferences.enable(LogType.PERFORMANCE, Level.parse(performanceLevel));
+            } catch (IllegalArgumentException e) {
+                log.warn("Invalid level: %s.", performanceLevel);
+            }
+        }
+        if(!serverLevel.equals(defaultLevel) && !serverLevel.isEmpty()) {
+            try {
+                loggingPreferences.enable(LogType.SERVER, Level.parse(serverLevel));
+            } catch(IllegalArgumentException e) {
+                log.warn("Invalid level: %s.", serverLevel);
+            }
+        }
+    }
 
     private Capabilities getCapabilities() {
         MutableCapabilities desiredCapabilities;

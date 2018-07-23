@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
+import org.openqa.selenium.logging.LoggingPreferences;
 
 import java.time.Duration;
 import java.util.*;
@@ -51,9 +52,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
      * @param isRemote Whether we are testing remotely or locally.
+     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
+     * @param seleniumLogsPreferences Preferences which contain which Selenium log types to enable
      */
-    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote) {
-        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote);
+    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, String seleniumLogsDirectory, LoggingPreferences seleniumLogsPreferences) {
+        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote, seleniumLogsDirectory, seleniumLogsPreferences);
 
         if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
             context = getMobileWebDriver().getContext();
