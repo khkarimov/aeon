@@ -115,6 +115,7 @@ public class ReportingPlugin extends Plugin {
             }
 
             ScenarioDetails scenario = new ScenarioDetails();
+            scenario.setThreadId(threadId);
             scenarios.put(threadId, scenario);
 
             return scenario;
@@ -187,6 +188,20 @@ public class ReportingPlugin extends Plugin {
             switch (eventName) {
                 case "screenshotTaken":
                     getCurrentScenarioBucket().setScreenshot((Image) payload);
+                    break;
+                case "videoDownloaded":
+                    String videoUrl = ReportSummary.uploadToArtifactory(configuration, (String) payload);
+
+                    if (videoUrl != null) {
+                        getCurrentScenarioBucket().setVideoUrl(videoUrl);
+                        for (ScenarioDetails scenario: finishedScenarios) {
+                            if (scenario.getVideoUrl().isEmpty()
+                                    && scenario.getThreadId() == Thread.currentThread().getId()) {
+                                scenario.setVideoUrl(videoUrl);
+                            }
+                        }
+                    }
+
                     break;
             }
         }

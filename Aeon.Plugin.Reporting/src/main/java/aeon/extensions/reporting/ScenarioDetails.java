@@ -3,6 +3,7 @@ package aeon.extensions.reporting;
 import java.awt.*;
 
 public class ScenarioDetails {
+    private long threadId = 0;
     private String className = "";
     private String testName = "";
     private long startTime = 0;
@@ -11,6 +12,15 @@ public class ScenarioDetails {
     private String errorMessage = "";
     private String stackTrace;
     private Image screenshot = null;
+    private String videoUrl = "";
+
+    public long getThreadId() {
+        return this.threadId;
+    }
+
+    public void setThreadId(long threadId) {
+        this.threadId = threadId;
+    }
 
     public String getClassName() {
         return this.className;
@@ -74,6 +84,14 @@ public class ScenarioDetails {
 
     public void setScreenshot(Image screenshot) {
         this.screenshot = screenshot;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public String getShortenedErrorMessage(int characterLimit) {

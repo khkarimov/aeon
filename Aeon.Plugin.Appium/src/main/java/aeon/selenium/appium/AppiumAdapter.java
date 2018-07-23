@@ -28,6 +28,7 @@ import org.joda.time.DateTime;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 
+import java.net.URL;
 import java.time.Duration;
 import java.util.*;
 
@@ -51,9 +52,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
      * @param isRemote Whether we are testing remotely or locally.
+     * @param seleniumHubUrl The used Selenium hub URL.
      */
-    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote) {
-        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote);
+    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl) {
+        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl);
 
         if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
             context = getMobileWebDriver().getContext();

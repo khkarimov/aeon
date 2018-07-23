@@ -18,4 +18,5 @@ public class Result {
     public String stopped;
     public String duration;
     public String screenshotPath;
+    public String videoUrl;
 }

@@ -96,6 +96,8 @@ class ReportSummary {
                 }
             }
 
+            result.videoUrl = scenario.getVideoUrl();
+
             resultReport.sequence.add(result);
         }
 
@@ -137,7 +139,11 @@ class ReportSummary {
             out.println(reportTemplate);
             out.close();
 
-            reportUrl = uploadToArtifactory(fileName);
+            reportUrl = uploadToArtifactory(pluginConfiguration, fileName);
+
+            if (reportUrl != null) {
+                log.info("Test Report URL: " + reportUrl);
+            }
         } catch (FileNotFoundException e) {
             log.error("File not found on path.");
         }
@@ -441,7 +447,7 @@ class ReportSummary {
                 .replace(".", "\\u002E");
     }
 
-    private String uploadToArtifactory(String filePathName) {
+    static String uploadToArtifactory(IConfiguration pluginConfiguration, String filePathName) {
         String artifactoryUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
         String artifactoryPath = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
         String username = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
@@ -493,8 +499,6 @@ class ReportSummary {
 
             return null;
         }
-
-        log.info("Test Report URL: " + fullRequestUrl);
 
         return fullRequestUrl;
     }

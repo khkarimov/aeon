@@ -18,6 +18,7 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +29,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -35,9 +37,13 @@ import javax.imageio.ImageIO;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +57,7 @@ import static aeon.core.common.helpers.StringUtils.normalizeSpacing;
  */
 public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
+    private final URL seleniumHubUrl;
     protected WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private boolean moveMouseToOrigin;
@@ -66,13 +73,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
      * @param isRemote Whether we are testing remotely or locally.
+     * @param seleniumHubUrl The used Selenium hub URL.
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
         this.isRemote = isRemote;
+        this.seleniumHubUrl = seleniumHubUrl;
     }
 
     /**
@@ -535,8 +544,59 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * close()'s and terminates 'this' instance of the browser and the WebDriver.
      */
     public void quit() {
+
         log.trace("WebDriver.quit();");
+
+        if (browserType == BrowserType.Chrome && isRemote) {
+
+            String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
+
+            webDriver.quit();
+
+            String videoPath = downloadVideo(sessionId);
+
+            if (videoPath != null) {
+                AeonTestExecution.executionEvent("videoDownloaded", videoPath);
+            }
+
+            return;
+        }
+
         webDriver.quit();
+    }
+
+    private String downloadVideo(String sessionId) {
+
+        URL downloadUrl;
+        try {
+            downloadUrl = new URL(
+                    seleniumHubUrl.getProtocol(),
+                    seleniumHubUrl.getHost(),
+                    seleniumHubUrl.getPort(),
+                    "/grid/admin/HubVideoDownloadServlet?sessionId=" + sessionId);
+        } catch (MalformedURLException e) {
+            log.error("Error creating video download URL", e);
+
+            return null;
+        }
+
+        File tempFile;
+        try {
+            ReadableByteChannel readableByteChannel = Channels.newChannel(downloadUrl.openStream());
+            tempFile = File.createTempFile("video-", ".webm");
+            tempFile.deleteOnExit();
+            FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
+            fileOutputStream.getChannel()
+                    .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+        } catch (IOException e) {
+            log.error("Error downloading video from Selenium Grid.", e);
+
+            return null;
+        }
+
+        log.info("Video downloaded from Selenium Grid: %s", tempFile.getAbsolutePath());
+
+        return tempFile.getAbsolutePath();
     }
 
     /**

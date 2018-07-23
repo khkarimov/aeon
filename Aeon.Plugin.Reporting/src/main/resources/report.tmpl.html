@@ -153,6 +153,12 @@
                 <div layout-padding ng-if="activeItem.browserLogs.length === 0">
                     <em>No logs</em>
                 </div>
+
+                <!-- video URL -->
+                <md-subheader ng-if="activeItem.videoUrl">Video URL</md-subheader>
+                <div layout-padding ng-if="activeItem.videoUrl">
+                    <a ng-href="{{activeItem.videoUrl}}">Download Video</a>
+                </div>
             </md-content>
 
         </md-dialog-content>

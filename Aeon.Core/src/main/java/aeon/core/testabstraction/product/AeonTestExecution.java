@@ -57,6 +57,8 @@ public class AeonTestExecution {
 
     /**
      * Should be called in the @BeforeClass step of a test class.
+     *
+     * @param suiteName The name of the suite.
      */
     public static void beforeStart(String suiteName) {
         init();
