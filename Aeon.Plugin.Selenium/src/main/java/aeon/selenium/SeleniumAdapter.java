@@ -588,6 +588,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             connection.setRequestMethod("HEAD");
             connection.connect();
             String contentType = connection.getContentType();
+            connection.disconnect();
             // The actual file is webm, but connection grabs it as mp4
             if (!contentType.equals("video/mp4")) {
                 log.trace("Test video not downloaded: Either this grid does not support video, or the given sessionId is invalid.");
