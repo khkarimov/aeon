@@ -87,8 +87,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
-    protected LoggingPreferences loggingPreferences;
     protected String seleniumLogsDirectory;
+    protected LoggingPreferences loggingPreferences;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -364,8 +364,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private void setLoggingConfiguration() {
-        seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
         loggingPreferences = new LoggingPreferences();
+        seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
         String defaultLevel = "OFF";
         String browserLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_BROWSER, defaultLevel);
         String clientLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_CLIENT, defaultLevel);
@@ -374,36 +374,40 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String serverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_SERVER, defaultLevel);
         if (!browserLevel.equals(defaultLevel) && !browserLevel.isEmpty()) {
             try {
-                loggingPreferences.enable(LogType.BROWSER, Level.parse(browserLevel));
+                Level parsedLevel = Level.parse(browserLevel);
+                loggingPreferences.enable(LogType.BROWSER, parsedLevel);
             } catch (IllegalArgumentException e) {
                 log.warn(String.format("Invalid level \"%s\" for logging type \"browser\".", browserLevel));
             }
         }
         if (!clientLevel.equals(defaultLevel) && !clientLevel.isEmpty()) {
             try {
-                loggingPreferences.enable(LogType.CLIENT, Level.parse(clientLevel));
+                Level parsedLevel = Level.parse(clientLevel);
+                loggingPreferences.enable(LogType.CLIENT, parsedLevel);
             } catch (IllegalArgumentException e) {
                 log.warn(String.format("Invalid level \"%s\" for logging type \"client\".", clientLevel));
             }
-
         }
         if (!driverLevel.equals(defaultLevel) && !driverLevel.isEmpty()) {
             try {
-                loggingPreferences.enable(LogType.DRIVER, Level.parse(driverLevel));
+                Level parsedLevel = Level.parse(driverLevel);
+                loggingPreferences.enable(LogType.DRIVER, parsedLevel);
             } catch (IllegalArgumentException e) {
                 log.warn(String.format("Invalid level \"%s\" for logging type \"driver\".", driverLevel));
             }
         }
         if (!performanceLevel.equals(defaultLevel) && !performanceLevel.isEmpty()) {
             try {
-                loggingPreferences.enable(LogType.PERFORMANCE, Level.parse(performanceLevel));
+                Level parsedLevel = Level.parse(performanceLevel);
+                loggingPreferences.enable(LogType.PERFORMANCE, parsedLevel);
             } catch (IllegalArgumentException e) {
                 log.warn(String.format("Invalid level \"%s\" for logging type \"performance\".", performanceLevel));
             }
         }
         if (!serverLevel.equals(defaultLevel) && !serverLevel.isEmpty()) {
             try {
-                loggingPreferences.enable(LogType.SERVER, Level.parse(serverLevel));
+                Level parsedLevel = Level.parse(serverLevel);
+                loggingPreferences.enable(LogType.SERVER, parsedLevel);
             } catch (IllegalArgumentException e) {
                 log.warn(String.format("Invalid level \"%s\" for logging type \"server\".", serverLevel));
             }
