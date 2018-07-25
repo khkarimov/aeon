@@ -40,6 +40,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -582,6 +583,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         File tempFile;
         try {
+            // Check for correct response and content type for graceful failure
+            HttpURLConnection connection = (HttpURLConnection) downloadUrl.openConnection();
+            connection.setRequestMethod("HEAD");
+            connection.connect();
+            String contentType = connection.getContentType();
+            // The actual file is webm, but connection grabs it as mp4
+            if (!contentType.equals("video/mp4")) {
+                log.warn("Test video not downloaded: Either this grid does not support video, or the given sessionId is invalid.");
+
+                return null;
+            }
+
             ReadableByteChannel readableByteChannel = Channels.newChannel(downloadUrl.openStream());
             tempFile = File.createTempFile("video-", ".webm");
             tempFile.deleteOnExit();
@@ -594,7 +607,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             return null;
         }
 
-        log.info("Video downloaded from Selenium Grid: %s", tempFile.getAbsolutePath());
+        log.info(String.format("Video downloaded from Selenium Grid: %s", tempFile.getAbsolutePath()));
 
         return tempFile.getAbsolutePath();
     }
