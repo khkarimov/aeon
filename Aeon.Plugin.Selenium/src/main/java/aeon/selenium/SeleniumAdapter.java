@@ -32,6 +32,7 @@ import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
+
 import javax.imageio.ImageIO;
 
 import java.awt.*;
