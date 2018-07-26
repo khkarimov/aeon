@@ -37,6 +37,7 @@ import javax.imageio.ImageIO;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -1911,7 +1912,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 List<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll();
                 List<String> logStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
                 try {
-                    FileWriter fileWriter = new FileWriter(filename);
+                    File file = new File(filename);
+                    file.getParentFile().mkdirs();
+                    FileWriter fileWriter = new FileWriter(file);
                     for (String log : logStrings) {
                         fileWriter.write(log);
                         fileWriter.write('\n');
