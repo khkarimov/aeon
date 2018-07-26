@@ -58,78 +58,13 @@ class ReportSummary {
     }
 
     String createReportFile() {
-        ResultReport resultReport = new ResultReport();
-        resultReport.counts.passed = reportDetails.getNumberOfPassedTests();
-        resultReport.counts.failed = reportDetails.getNumberOfFailedTests();
-        resultReport.counts.disabled = reportDetails.getNumberOfSkippedTests();
-        resultReport.timer.duration = reportDetails.getTotalTime();
-        for (ScenarioDetails scenario: reportDetails.getScenarios()) {
-            Result result = new Result();
-            result.description = scenario.getTestName();
-            result.prefix = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
-            result.started = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getStartTime()));
-            result.stopped = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getEndTime()));
-            result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
-            result.status = scenario.getStatus().toLowerCase();
-            if (result.status.equals("skipped")) {
-                result.status = "disabled";
-            }
+        ResultReport resultReport = constructReportFromDetails(true);
+        ResultReport rnrResultReport = constructReportFromDetails(false);
 
-            if (result.status.equals("failed")) {
-                FailedExpectation failedExpectation = new FailedExpectation();
-                failedExpectation.message = escapeIllegalJSONCharacters(scenario.getErrorMessage());
-                failedExpectation.stack = escapeIllegalJSONCharacters(scenario.getStackTrace());
-                result.failedExpectations.add(failedExpectation);
+        String jsonReport = toJsonString(resultReport);
+        String rnrJsonreport = toJsonString(rnrResultReport);
 
-                Image screenshot = scenario.getScreenshot();
-                if (screenshot != null) {
-
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    try {
-                        ImageIO.write((BufferedImage) screenshot, "png", stream);
-                        String data = DatatypeConverter.printBase64Binary(stream.toByteArray());
-                        result.screenshotPath = "data:image/png;base64," + data;
-                        stream.close();
-                    } catch (IOException e) {
-                        log.warn("Could not write screenshot", e);
-                    }
-                }
-            }
-
-            result.videoUrl = scenario.getVideoUrl();
-
-            resultReport.sequence.add(result);
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json;
-        try {
-            json = mapper.writeValueAsString(resultReport);
-
-        } catch (JsonProcessingException e) {
-            log.error("Could not write JSON results", e);
-
-            return null;
-        }
-
-        String reportTemplate;
-        try (InputStream scriptReader = ReportingPlugin.class.getResourceAsStream("/report.tmpl.html")) {
-            reportTemplate =  new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
-        } catch (FileNotFoundException e) {
-            log.error("File not found on path");
-
-            return null;
-        } catch (IOException e) {
-            log.error("Problem reading from file");
-
-            return null;
-        }
-
-        json = json.replace("\\n", "\\\\n")
-                .replace("\\t", "\\\\t")
-                .replace("\\\"", "\\\\\\\"");
-        String script = "<script>RESULTS.push(JSON.parse('" + json + "'));</script>";
-        reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
+        String reportTemplate = addJsonToHtmlTemplate(jsonReport);
 
         String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
             + "/report-" + reportDetails.getCorrelationId() + ".html";
@@ -156,7 +91,7 @@ class ReportSummary {
         // Write json result file
         String jsonFileName = fileName.replace(".html", ".json");
         try (PrintWriter out = new PrintWriter(jsonFileName)) {
-            out.println(json);
+            out.println(rnrJsonreport);
             out.close();
 
             this.rnrUrl = uploadToRnR(rnrUrl, jsonFileName, reportUrl);
@@ -445,6 +380,93 @@ class ReportSummary {
                 .replace("<", "\\u003C")
                 .replace(">", "\\u003E")
                 .replace(".", "\\u002E");
+    }
+
+    private ResultReport constructReportFromDetails(boolean escapeIllegalJSON) {
+        ResultReport resultReport = new ResultReport();
+        resultReport.counts.passed = reportDetails.getNumberOfPassedTests();
+        resultReport.counts.failed = reportDetails.getNumberOfFailedTests();
+        resultReport.counts.disabled = reportDetails.getNumberOfSkippedTests();
+        resultReport.timer.duration = reportDetails.getTotalTime();
+        for (ScenarioDetails scenario: reportDetails.getScenarios()) {
+            Result result = new Result();
+            result.description = scenario.getTestName();
+            result.prefix = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
+            result.started = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getStartTime()));
+            result.stopped = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getEndTime()));
+            result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
+            result.status = scenario.getStatus().toLowerCase();
+            if (result.status.equals("skipped")) {
+                result.status = "disabled";
+            }
+
+            if (result.status.equals("failed")) {
+                FailedExpectation failedExpectation = new FailedExpectation();
+                if (escapeIllegalJSON) {
+                    failedExpectation.message = escapeIllegalJSONCharacters(scenario.getErrorMessage());
+                    failedExpectation.stack = escapeIllegalJSONCharacters(scenario.getStackTrace());
+                } else {
+                    failedExpectation.message = scenario.getErrorMessage();
+                    failedExpectation.stack = scenario.getStackTrace();
+                }
+                result.failedExpectations.add(failedExpectation);
+
+                Image screenshot = scenario.getScreenshot();
+                if (screenshot != null) {
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    try {
+                        ImageIO.write((BufferedImage) screenshot, "png", stream);
+                        String data = DatatypeConverter.printBase64Binary(stream.toByteArray());
+                        result.screenshotPath = "data:image/png;base64," + data;
+                        stream.close();
+                    } catch (IOException e) {
+                        log.warn("Could not write screenshot", e);
+                    }
+                }
+            }
+
+            result.videoUrl = scenario.getVideoUrl();
+
+            resultReport.sequence.add(result);
+        }
+        return resultReport;
+    }
+
+    private String toJsonString(Object inputObject) {
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+        try {
+            json = mapper.writeValueAsString(inputObject);
+
+        } catch (JsonProcessingException e) {
+            log.error("Could not write JSON results", e);
+
+            return null;
+        }
+        return json;
+    }
+
+    private String addJsonToHtmlTemplate(String jsonReport) {
+        String reportTemplate;
+        try (InputStream scriptReader = ReportingPlugin.class.getResourceAsStream("/report.tmpl.html")) {
+            reportTemplate =  new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path");
+
+            return null;
+        } catch (IOException e) {
+            log.error("Problem reading from file");
+
+            return null;
+        }
+
+        jsonReport = jsonReport.replace("\\n", "\\\\n")
+                .replace("\\t", "\\\\t")
+                .replace("\\\"", "\\\\\\\"");
+        String script = "<script>RESULTS.push(JSON.parse('" + jsonReport + "'));</script>";
+        reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
+        return reportTemplate;
     }
 
     static String uploadToArtifactory(IConfiguration pluginConfiguration, String filePathName) {

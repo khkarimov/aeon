@@ -548,7 +548,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         log.trace("WebDriver.quit();");
 
-        if (browserType == BrowserType.Chrome && isRemote) {
+        if (isRemote && (
+                browserType == BrowserType.Chrome
+                        || browserType == BrowserType.Edge
+                        || browserType == BrowserType.Firefox
+                        || browserType == BrowserType.Opera
+                        || browserType == BrowserType.Safari
+                        || browserType == BrowserType.InternetExplorer
+        )) {
 
             String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
 
