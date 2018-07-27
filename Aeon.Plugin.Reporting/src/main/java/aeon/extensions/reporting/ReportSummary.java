@@ -58,13 +58,19 @@ class ReportSummary {
     }
 
     String createReportFile() {
-        ResultReport resultReport = constructReportFromDetails(true);
-        ResultReport rnrResultReport = constructReportFromDetails(false);
+        ResultReport resultReport = constructReportFromDetails();
 
-        String jsonReport = toJsonString(resultReport);
-        String rnrJsonreport = toJsonString(rnrResultReport);
+        String rnrJsonReport = toJsonString(resultReport);
 
-        String reportTemplate = addJsonToHtmlTemplate(jsonReport);
+        // Escape characters in errors for html template parsing
+        for (Result result : resultReport.sequence) {
+            for (FailedExpectation failedExpectation : result.failedExpectations) {
+                failedExpectation.message = escapeIllegalJSONCharacters(failedExpectation.message);
+                failedExpectation.stack = escapeIllegalJSONCharacters(failedExpectation.stack);
+            }
+        }
+        String htmlJsonReport = toJsonString(resultReport);
+        String reportTemplate = addJsonToHtmlTemplate(htmlJsonReport);
 
         String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
             + "/report-" + reportDetails.getCorrelationId() + ".html";
@@ -91,7 +97,7 @@ class ReportSummary {
         // Write json result file
         String jsonFileName = fileName.replace(".html", ".json");
         try (PrintWriter out = new PrintWriter(jsonFileName)) {
-            out.println(rnrJsonreport);
+            out.println(rnrJsonReport);
             out.close();
 
             this.rnrUrl = uploadToRnR(rnrUrl, jsonFileName, reportUrl);
@@ -382,7 +388,7 @@ class ReportSummary {
                 .replace(".", "\\u002E");
     }
 
-    private ResultReport constructReportFromDetails(boolean escapeIllegalJSON) {
+    private ResultReport constructReportFromDetails() {
         ResultReport resultReport = new ResultReport();
         resultReport.counts.passed = reportDetails.getNumberOfPassedTests();
         resultReport.counts.failed = reportDetails.getNumberOfFailedTests();
@@ -402,13 +408,8 @@ class ReportSummary {
 
             if (result.status.equals("failed")) {
                 FailedExpectation failedExpectation = new FailedExpectation();
-                if (escapeIllegalJSON) {
-                    failedExpectation.message = escapeIllegalJSONCharacters(scenario.getErrorMessage());
-                    failedExpectation.stack = escapeIllegalJSONCharacters(scenario.getStackTrace());
-                } else {
-                    failedExpectation.message = scenario.getErrorMessage();
-                    failedExpectation.stack = scenario.getStackTrace();
-                }
+                failedExpectation.message = scenario.getErrorMessage();
+                failedExpectation.stack = scenario.getStackTrace();
                 result.failedExpectations.add(failedExpectation);
 
                 Image screenshot = scenario.getScreenshot();
