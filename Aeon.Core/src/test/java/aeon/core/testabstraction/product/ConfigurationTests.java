@@ -31,29 +31,29 @@ public class ConfigurationTests {
 
     @Test
     public void testGetDriver() {
-        //Assert
+        // Assert
         assertEquals(config.getDriver(), driver.getClass());
     }
 
     @Test
     public void testSetDriver(){
-        //Act
+        // Act
         config.setDriver(IDriver.class);
-        //Assert
+        // Assert
         assertEquals(config.getDriver(), IDriver.class);
     }
 
     @Test
     public void testGetAdapter() {
-        //Assert
+        // Assert
         assertEquals(config.getAdapter(), adapter.getClass());
     }
 
     @Test
     public void testSetAdapter() {
-        //Act
+        // Act
         config.setAdapter(IAdapter.class);
-        //Assert
+        // Assert
         assertEquals(config.getAdapter(), IAdapter.class);
     }
 
