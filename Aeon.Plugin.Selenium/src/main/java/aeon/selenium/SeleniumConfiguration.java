@@ -46,6 +46,12 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String CHROME_MOBILE_EMULATION_DEVICE = "aeon.selenium.chrome.mobile.emulation.device";
         public static final String IE_LOGGING_LEVEL = "aeon.selenium.ie.logging.level";
         public static final String IE_LOGGING_PATH = "aeon.selenium.ie.logging.path";
+        public static final String LOGGING_BROWSER = "aeon.selenium.logging.type.browser";
+        public static final String LOGGING_CLIENT = "aeon.selenium.logging.type.client";
+        public static final String LOGGING_DRIVER = "aeon.selenium.logging.type.driver";
+        public static final String LOGGING_PERFORMANCE = "aeon.selenium.logging.type.performance";
+        public static final String LOGGING_SERVER = "aeon.selenium.logging.type.server";
+        public static final String LOGGING_DIRECTORY = "aeon.selenium.logging.directory";
 
         // Appium
         public static final String APP = "aeon.selenium.appium.app";

@@ -16,6 +16,7 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.selenium.SeleniumAdapter;
 import aeon.selenium.SeleniumElement;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
+import com.sun.javafx.util.Logging;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.TouchAction;
@@ -27,10 +28,12 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
+import org.openqa.selenium.logging.LoggingPreferences;
 
 import java.net.URL;
 import java.time.Duration;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * Mobile adapter for Appium.
@@ -53,9 +56,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * @param browserType The browser type for the adapter.
      * @param isRemote Whether we are testing remotely or locally.
      * @param seleniumHubUrl The used Selenium hub URL.
+     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
+     * @param loggingPreferences Preferences which contain which Selenium log types to enable
      */
-    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl) {
-        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl);
+    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
 
         if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
             context = getMobileWebDriver().getContext();

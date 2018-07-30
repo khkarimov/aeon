@@ -39,7 +39,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     public IAdapter create(AppiumConfiguration configuration) {
         prepare(configuration);
 
-        return new AppiumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl);
+        return new AppiumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 }
 

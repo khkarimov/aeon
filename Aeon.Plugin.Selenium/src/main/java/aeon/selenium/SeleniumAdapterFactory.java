@@ -40,6 +40,8 @@ import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.internal.ElementScrollBehavior;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaDriverService;
 import org.openqa.selenium.opera.OperaOptions;
@@ -58,6 +60,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import java.util.logging.Level;
 
 import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 
@@ -85,6 +88,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
     protected URL seleniumHubUrl;
+    protected String seleniumLogsDirectory;
+    protected LoggingPreferences loggingPreferences;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -94,7 +99,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl);
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -143,6 +148,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         isRemote = seleniumHubUrl != null;
         URL finalSeleniumHubUrl = seleniumHubUrl;
+
+        setLoggingConfiguration();
 
         switch (browserType) {
             case Firefox:
@@ -353,6 +360,61 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
     }
 
+    private void setLoggingCapabilities(MutableCapabilities target) {
+        target.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+    }
+
+    private void setLoggingConfiguration() {
+        loggingPreferences = new LoggingPreferences();
+        seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
+        String defaultLevel = "OFF";
+        String browserLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_BROWSER, defaultLevel);
+        String clientLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_CLIENT, defaultLevel);
+        String driverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DRIVER, defaultLevel);
+        String performanceLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_PERFORMANCE, defaultLevel);
+        String serverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_SERVER, defaultLevel);
+        if (!browserLevel.equals(defaultLevel) && !browserLevel.isEmpty()) {
+            try {
+                Level parsedLevel = Level.parse(browserLevel);
+                loggingPreferences.enable(LogType.BROWSER, parsedLevel);
+            } catch (IllegalArgumentException e) {
+                log.warn(String.format("Invalid level \"%s\" for logging type \"browser\".", browserLevel));
+            }
+        }
+        if (!clientLevel.equals(defaultLevel) && !clientLevel.isEmpty()) {
+            try {
+                Level parsedLevel = Level.parse(clientLevel);
+                loggingPreferences.enable(LogType.CLIENT, parsedLevel);
+            } catch (IllegalArgumentException e) {
+                log.warn(String.format("Invalid level \"%s\" for logging type \"client\".", clientLevel));
+            }
+        }
+        if (!driverLevel.equals(defaultLevel) && !driverLevel.isEmpty()) {
+            try {
+                Level parsedLevel = Level.parse(driverLevel);
+                loggingPreferences.enable(LogType.DRIVER, parsedLevel);
+            } catch (IllegalArgumentException e) {
+                log.warn(String.format("Invalid level \"%s\" for logging type \"driver\".", driverLevel));
+            }
+        }
+        if (!performanceLevel.equals(defaultLevel) && !performanceLevel.isEmpty()) {
+            try {
+                Level parsedLevel = Level.parse(performanceLevel);
+                loggingPreferences.enable(LogType.PERFORMANCE, parsedLevel);
+            } catch (IllegalArgumentException e) {
+                log.warn(String.format("Invalid level \"%s\" for logging type \"performance\".", performanceLevel));
+            }
+        }
+        if (!serverLevel.equals(defaultLevel) && !serverLevel.isEmpty()) {
+            try {
+                Level parsedLevel = Level.parse(serverLevel);
+                loggingPreferences.enable(LogType.SERVER, parsedLevel);
+            } catch (IllegalArgumentException e) {
+                log.warn(String.format("Invalid level \"%s\" for logging type \"server\".", serverLevel));
+            }
+        }
+    }
+
     private Capabilities getCapabilities() {
         MutableCapabilities desiredCapabilities;
 
@@ -365,6 +427,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Chrome:
                 desiredCapabilities = DesiredCapabilities.chrome();
+                setLoggingCapabilities(desiredCapabilities);
 
                 String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
                 if (StringUtils.isNotBlank(mobileEmulationDevice)) {
@@ -391,6 +454,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
             case Opera:
                 desiredCapabilities = getOperaOptions();
+                setLoggingCapabilities(desiredCapabilities);
                 break;
 
             case IOSSafari:
@@ -640,6 +704,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             chromeOptions.setBinary(chromeBinary);
         }
 
+        setLoggingCapabilities(chromeOptions);
+
 //        // DS - This is some ugly stuff. Couldn't find a better way...
 //        chromeOptions.setExperimentalOption("pref", new HashMap<String, Object>() {{
 //            put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
@@ -661,6 +727,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         if (operaBinary != null) {
             operaOptions.setBinary(operaBinary);
         }
+
+        setLoggingCapabilities(operaOptions);
 
         return operaOptions;
     }

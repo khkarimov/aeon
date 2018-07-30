@@ -30,6 +30,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
@@ -39,6 +41,7 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -65,6 +68,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     protected BrowserType browserType;
     private static Logger log = LogManager.getLogger(SeleniumAdapter.class);
     private boolean isRemote;
+    protected String seleniumLogsDirectory;
+    protected LoggingPreferences loggingPreferences;
 
     /**
      * Constructor for Selenium Adapter.
@@ -75,14 +80,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param browserType The browser type for the adapter.
      * @param isRemote Whether we are testing remotely or locally.
      * @param seleniumHubUrl The used Selenium hub URL.
+     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
+     * @param loggingPreferences Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
         this.isRemote = isRemote;
         this.seleniumHubUrl = seleniumHubUrl;
+        this.seleniumLogsDirectory = seleniumLogsDirectory;
+        this.loggingPreferences = loggingPreferences;
     }
 
     /**
@@ -559,6 +568,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
             String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
 
+            printSeleniumLogs();
+
             webDriver.quit();
 
             String videoPath = downloadVideo(sessionId);
@@ -569,6 +580,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
             return;
         }
+
+        printSeleniumLogs();
 
         webDriver.quit();
     }
@@ -1972,6 +1985,31 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         } else {
             sendKeysToElement(control, path);
         }
+    }
+
+    private void printSeleniumLogs(){
+        long timeNow = System.currentTimeMillis();
+        loggingPreferences.getEnabledLogTypes().forEach(logType -> {
+            String filename = String.format("%s/%s-%d.log", seleniumLogsDirectory, logType, timeNow);
+            try {
+                List<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll();
+                List<String> logStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
+                try {
+                    File file = new File(filename);
+                    file.getParentFile().mkdirs();
+                    FileWriter fileWriter = new FileWriter(file);
+                    for (String log : logStrings) {
+                        fileWriter.write(log);
+                        fileWriter.write('\n');
+                    }
+                    fileWriter.close();
+                } catch (IOException e) {
+                    log.error("Couldn't write Selenium log entries to " + filename, e);
+                }
+            } catch (Exception e) {
+                log.info("The log type \"" + logType + "\" is either not supported or does not exist in this context.");
+            }
+        });
     }
 
     private boolean osIsMacOrLinux(){
