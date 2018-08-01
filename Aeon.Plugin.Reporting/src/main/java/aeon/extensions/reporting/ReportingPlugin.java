@@ -180,7 +180,7 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeStep(String message) {
-            // Nothing to do
+            getCurrentScenarioBucket().addHighLevelStep(message);
         }
 
         @Override
@@ -188,6 +188,9 @@ public class ReportingPlugin extends Plugin {
             switch (eventName) {
                 case "screenshotTaken":
                     getCurrentScenarioBucket().setScreenshot((Image) payload);
+                    break;
+                case "commandInitialized":
+                    getCurrentScenarioBucket().addStep((String) payload);
                     break;
                 case "videoDownloaded":
                     String videoUrl = ReportSummary.uploadToArtifactory(configuration, (String) payload);

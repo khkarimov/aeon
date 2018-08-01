@@ -397,7 +397,11 @@ class ReportSummary {
         for (ScenarioDetails scenario: reportDetails.getScenarios()) {
             Result result = new Result();
             result.description = scenario.getTestName();
-            result.prefix = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
+            result.prefix = scenario.getClassName() + " ";
+            if (reportDetails.getSuiteName() != null) {
+                result.prefix  = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
+            }
+
             result.started = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getStartTime()));
             result.stopped = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getEndTime()));
             result.duration = getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
@@ -428,6 +432,7 @@ class ReportSummary {
             }
 
             result.videoUrl = scenario.getVideoUrl();
+            result.steps = scenario.getSteps();
 
             resultReport.sequence.add(result);
         }
@@ -464,7 +469,8 @@ class ReportSummary {
 
         jsonReport = jsonReport.replace("\\n", "\\\\n")
                 .replace("\\t", "\\\\t")
-                .replace("\\\"", "\\\\\\\"");
+                .replace("\\\"", "\\\\\\\"")
+                .replace("'", "\\\\\\\"");
         String script = "<script>RESULTS.push(JSON.parse('" + jsonReport + "'));</script>";
         reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
         return reportTemplate;

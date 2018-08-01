@@ -138,7 +138,7 @@
                 </div>
 
                 <!-- console logs -->
-                <md-subheader>Console Logs</md-subheader>
+                <md-subheader ng-if="activeItem.browserLogs.length !== 0">Console Logs</md-subheader>
                 <div class="console-logs" ng-class="log.level" flex layout="row" layout-padding ng-repeat="log in activeItem.browserLogs">
                     <div style="width: 75px;">
                         <strong>{{ log.level }}</strong>
@@ -152,6 +152,17 @@
                 </div>
                 <div layout-padding ng-if="activeItem.browserLogs.length === 0">
                     <em>No logs</em>
+                </div>
+
+                <!-- test steps -->
+                <md-subheader ng-if="activeItem.steps && activeItem.steps.length !== 0">Test Steps</md-subheader>
+                <div layout-padding ng-if="activeItem.steps && activeItem.steps.length !== 0">
+                    <div ng-repeat="highLevelStep in activeItem.steps track by $index">
+                        <div><strong>{{ highLevelStep.key }}</strong></div>
+                        <div layout-padding ng-repeat="step in highLevelStep.value track by $index">
+                            {{ step }}
+                        </div>
+                    </div>
                 </div>
 
                 <!-- video URL -->

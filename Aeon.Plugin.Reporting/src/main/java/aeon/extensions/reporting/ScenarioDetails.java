@@ -1,6 +1,10 @@
 package aeon.extensions.reporting;
 
+import javafx.util.Pair;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScenarioDetails {
 
@@ -14,6 +18,14 @@ public class ScenarioDetails {
     private String stackTrace;
     private Image screenshot = null;
     private String videoUrl = "";
+    private List<Pair<String, List<String>>> steps = new ArrayList<>();
+    private Pair<String, List<String>> currentHighLevelStep;
+
+    public ScenarioDetails() {
+        Pair<String, List<String>> unnamedHighLevelStep = new Pair<>("", new ArrayList<>());
+        currentHighLevelStep = unnamedHighLevelStep;
+        steps.add(unnamedHighLevelStep);
+    }
 
     public long getThreadId() {
         return this.threadId;
@@ -105,5 +117,20 @@ public class ScenarioDetails {
         }
 
         return errorMessageSanitized;
+    }
+
+    public void addHighLevelStep(String name) {
+
+        Pair<String, List<String>> newHighLevelStep = new Pair<>(name, new ArrayList<>());
+        currentHighLevelStep = newHighLevelStep;
+        steps.add(newHighLevelStep);
+    }
+
+    public void addStep(String name) {
+        currentHighLevelStep.getValue().add(name);
+    }
+
+    public List<Pair<String, List<String>>> getSteps() {
+        return steps;
     }
 }

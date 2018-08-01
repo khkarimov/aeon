@@ -1,5 +1,7 @@
 package aeon.extensions.reporting.reportmodel;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,4 +21,5 @@ public class Result {
     public String duration;
     public String screenshotPath;
     public String videoUrl;
+    public List<Pair<String, List<String>>> steps;
 }
