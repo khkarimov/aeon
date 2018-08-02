@@ -1,5 +1,4 @@
 import aeon.extensions.reporting.ScenarioDetails;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
