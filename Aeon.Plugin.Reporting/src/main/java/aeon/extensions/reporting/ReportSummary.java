@@ -7,6 +7,7 @@ import aeon.extensions.reporting.reportmodel.Result;
 import aeon.extensions.reporting.reportmodel.ResultReport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.util.Pair;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -59,51 +60,24 @@ class ReportSummary {
 
     String createReportFile() {
         ResultReport resultReport = constructReportFromDetails();
+        String rnrJsonReportNoEscape = toJsonString(resultReport);
 
-        String rnrJsonReport = toJsonString(resultReport);
+        ResultReport escapedResultReport = escapeMessagesAndLogsInReport(resultReport);
+        String htmlJsonReportEscaped = toJsonString(escapedResultReport);
 
-        // Escape characters in errors for html template parsing
-        for (Result result : resultReport.sequence) {
-            for (FailedExpectation failedExpectation : result.failedExpectations) {
-                failedExpectation.message = escapeIllegalJSONCharacters(failedExpectation.message);
-                failedExpectation.stack = escapeIllegalJSONCharacters(failedExpectation.stack);
-            }
-        }
-        String htmlJsonReport = toJsonString(resultReport);
-        String reportTemplate = addJsonToHtmlTemplate(htmlJsonReport);
+        String reportTemplate = addJsonToHtmlTemplate(htmlJsonReportEscaped);
 
         String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
             + "/report-" + reportDetails.getCorrelationId() + ".html";
 
-        String reportUrl = null;
-        try (PrintWriter out = new PrintWriter(fileName)) {
-            out.println(reportTemplate);
-            out.close();
-
-            reportUrl = uploadToArtifactory(pluginConfiguration, fileName);
-
-            if (reportUrl != null) {
-                log.info("Test Report URL: " + reportUrl);
-            }
-        } catch (FileNotFoundException e) {
-            log.error("File not found on path.");
-        }
+        String reportUrl = writeReportFileAndUploadToArtifactory(reportTemplate, fileName);
 
         String rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
         if (rnrUrl.isEmpty()) {
             return reportUrl;
         }
 
-        // Write json result file
-        String jsonFileName = fileName.replace(".html", ".json");
-        try (PrintWriter out = new PrintWriter(jsonFileName)) {
-            out.println(rnrJsonReport);
-            out.close();
-
-            this.rnrUrl = uploadToRnR(rnrUrl, jsonFileName, reportUrl);
-        } catch (FileNotFoundException e) {
-            log.error("File not found on path.");
-        }
+        writeJsonResultFile(fileName, rnrUrl, reportUrl, rnrJsonReportNoEscape);
 
         return reportUrl;
     }
@@ -388,6 +362,29 @@ class ReportSummary {
                 .replace(".", "\\u002E");
     }
 
+    private ResultReport escapeMessagesAndLogsInReport(ResultReport inputReport) {
+        for (Result result : inputReport.sequence) {
+            for (FailedExpectation failedExpectation : result.failedExpectations) {
+                failedExpectation.message = escapeIllegalJSONCharacters(failedExpectation.message);
+                failedExpectation.stack = escapeIllegalJSONCharacters(failedExpectation.stack);
+            }
+
+            List<Pair<String, List<String>>> replaceSteps = new ArrayList<>();
+            for (Pair<String, List<String>> highLevelStep : result.steps) {
+                String highLevelStepKey = escapeIllegalJSONCharacters(highLevelStep.getKey());
+                List<String> stepValues = new ArrayList<>();
+
+                for (String value : highLevelStep.getValue()) {
+                    stepValues.add(escapeIllegalJSONCharacters(value));
+                }
+
+                replaceSteps.add(new Pair<>(highLevelStepKey, stepValues));
+            }
+            result.steps = replaceSteps;
+        }
+        return inputReport;
+    }
+
     private ResultReport constructReportFromDetails() {
         ResultReport resultReport = new ResultReport();
         resultReport.counts.passed = reportDetails.getNumberOfPassedTests();
@@ -474,6 +471,36 @@ class ReportSummary {
         String script = "<script>RESULTS.push(JSON.parse('" + jsonReport + "'));</script>";
         reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
         return reportTemplate;
+    }
+
+    private String writeReportFileAndUploadToArtifactory(String reportTemplate, String fileName) {
+        String reportUrl = null;
+        try (PrintWriter out = new PrintWriter(fileName)) {
+            out.println(reportTemplate);
+            out.close();
+
+            reportUrl = uploadToArtifactory(pluginConfiguration, fileName);
+
+            if (reportUrl != null) {
+                log.info("Test Report URL: " + reportUrl);
+            }
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path.");
+        }
+
+        return reportUrl;
+    }
+
+    private void writeJsonResultFile(String fileName, String rnrUrl, String reportUrl, String jsonReport) {
+        String jsonFileName = fileName.replace(".html", ".json");
+        try (PrintWriter out = new PrintWriter(jsonFileName)) {
+            out.println(jsonReport);
+            out.close();
+
+            this.rnrUrl = uploadToRnR(rnrUrl, jsonFileName, reportUrl);
+        } catch (FileNotFoundException e) {
+            log.error("File not found on path.");
+        }
     }
 
     static String uploadToArtifactory(IConfiguration pluginConfiguration, String filePathName) {
