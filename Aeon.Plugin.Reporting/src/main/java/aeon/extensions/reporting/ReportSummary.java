@@ -60,12 +60,9 @@ class ReportSummary {
 
     String createReportFile() {
         ResultReport resultReport = constructReportFromDetails();
-        String rnrJsonReportNoEscape = toJsonString(resultReport);
+        String jsonReport = toJsonString(resultReport);
 
-        ResultReport escapedResultReport = escapeMessagesAndLogsInReport(resultReport);
-        String htmlJsonReportEscaped = toJsonString(escapedResultReport);
-
-        String reportTemplate = addJsonToHtmlTemplate(htmlJsonReportEscaped);
+        String reportTemplate = addJsonToHtmlTemplate(jsonReport);
 
         String fileName = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "")
             + "/report-" + reportDetails.getCorrelationId() + ".html";
@@ -77,7 +74,7 @@ class ReportSummary {
             return reportUrl;
         }
 
-        writeJsonResultFile(fileName, rnrUrl, reportUrl, rnrJsonReportNoEscape);
+        writeJsonResultFile(fileName, rnrUrl, reportUrl, jsonReport);
 
         return reportUrl;
     }
@@ -342,49 +339,6 @@ class ReportSummary {
         }
     }
 
-    private String escapeIllegalJSONCharacters(String input) {
-
-        if (input == null) {
-            return null;
-        }
-
-        return input.replace("&", "\\u0026")
-                .replace("[", "\\u005B")
-                .replace("]", "\\u005D")
-                .replace("'", "\\u0027")
-                .replace("\"", "\\u0022")
-                .replace("{", "\\u007B")
-                .replace("}", "\\u007D")
-                .replace("|", "\\u007C")
-                .replace(",", "\\u002C")
-                .replace("<", "\\u003C")
-                .replace(">", "\\u003E")
-                .replace(".", "\\u002E");
-    }
-
-    private ResultReport escapeMessagesAndLogsInReport(ResultReport inputReport) {
-        for (Result result : inputReport.sequence) {
-            for (FailedExpectation failedExpectation : result.failedExpectations) {
-                failedExpectation.message = escapeIllegalJSONCharacters(failedExpectation.message);
-                failedExpectation.stack = escapeIllegalJSONCharacters(failedExpectation.stack);
-            }
-
-            List<Pair<String, List<String>>> replaceSteps = new ArrayList<>();
-            for (Pair<String, List<String>> highLevelStep : result.steps) {
-                String highLevelStepKey = escapeIllegalJSONCharacters(highLevelStep.getKey());
-                List<String> stepValues = new ArrayList<>();
-
-                for (String value : highLevelStep.getValue()) {
-                    stepValues.add(escapeIllegalJSONCharacters(value));
-                }
-
-                replaceSteps.add(new Pair<>(highLevelStepKey, stepValues));
-            }
-            result.steps = replaceSteps;
-        }
-        return inputReport;
-    }
-
     private ResultReport constructReportFromDetails() {
         ResultReport resultReport = new ResultReport();
         resultReport.counts.passed = reportDetails.getNumberOfPassedTests();
@@ -464,11 +418,10 @@ class ReportSummary {
             return null;
         }
 
-        jsonReport = jsonReport.replace("\\n", "\\\\n")
-                .replace("\\t", "\\\\t")
-                .replace("\\\"", "\\\\\\\"")
-                .replace("'", "\\\\\\\"");
-        String script = "<script>RESULTS.push(JSON.parse('" + jsonReport + "'));</script>";
+        String script = "<script>\n" +
+                "let jsonReport = " + jsonReport + ";\n" +
+                "RESULTS.push(jsonReport);\n" +
+                "</script>";
         reportTemplate = reportTemplate.replace("<!-- inject::scripts -->", script);
         return reportTemplate;
     }
