@@ -1,6 +1,7 @@
-package aeon.extensions.reporting;
+package aeon.extensions.reporting.services;
 
 import aeon.core.common.interfaces.IConfiguration;
+import aeon.extensions.reporting.ReportingConfiguration;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,13 +19,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlackBot {
+public class SlackBotService {
 
-    private static Logger log = LogManager.getLogger(SlackBot.class);
+    private static Logger log = LogManager.getLogger(SlackBotService.class);
 
     private IConfiguration configuration;
 
-    SlackBot(IConfiguration pluginConfiguration) {
+    public SlackBotService(IConfiguration pluginConfiguration) {
         configuration = pluginConfiguration;
     }
 

@@ -1,4 +1,4 @@
-package aeon.extensions.reporting.reportmodel;
+package aeon.extensions.reporting.resultreportmodel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,5 +9,5 @@ import java.util.List;
 public class ResultReport {
     public Counts counts = new Counts();
     public Timer timer = new Timer();
-    public List<Result> sequence = new ArrayList<>();
+    public List<TestCaseResult> sequence = new ArrayList<>();
 }

@@ -4,6 +4,7 @@ import aeon.core.common.interfaces.IConfiguration;
 import aeon.core.extensions.ITestExecutionExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Configuration;
+import aeon.extensions.reporting.services.ArtifactoryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pf4j.Extension;
@@ -193,7 +194,8 @@ public class ReportingPlugin extends Plugin {
                     getCurrentScenarioBucket().addStep((String) payload);
                     break;
                 case "videoDownloaded":
-                    String videoUrl = ReportSummary.uploadToArtifactory(configuration, (String) payload);
+                    ArtifactoryService artifactoryService = new ArtifactoryService(configuration);
+                    String videoUrl = artifactoryService.uploadToArtifactory((String) payload);
 
                     if (videoUrl != null) {
                         getCurrentScenarioBucket().setVideoUrl(videoUrl);
@@ -216,10 +218,10 @@ public class ReportingPlugin extends Plugin {
 
             reportDetails.setEndTime(time);
             reportDetails.setScenarios(finishedScenarios);
-            ReportSummary reportSummary = new ReportSummary(configuration, aeonConfiguration, reportDetails);
+            ReportController reportController = new ReportController(configuration, aeonConfiguration, reportDetails);
 
-            String reportUrl = reportSummary.createReportFile();
-            reportSummary.sendSummaryReport(reportUrl);
+            String reportUrl = reportController.writeReportsAndUpload();
+            reportController.sendSummaryReportToSlack(reportUrl);
         }
 
         private void initializeReport(String suiteName) {

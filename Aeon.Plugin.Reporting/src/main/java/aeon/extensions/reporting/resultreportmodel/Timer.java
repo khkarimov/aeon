@@ -1,4 +1,4 @@
-package aeon.extensions.reporting.reportmodel;
+package aeon.extensions.reporting.resultreportmodel;
 
 /**
  * Duration of the test run.

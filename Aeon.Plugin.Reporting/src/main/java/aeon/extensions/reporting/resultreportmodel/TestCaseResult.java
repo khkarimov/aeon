@@ -1,4 +1,4 @@
-package aeon.extensions.reporting.reportmodel;
+package aeon.extensions.reporting.resultreportmodel;
 
 import javafx.util.Pair;
 
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Details about a test case.
  */
-public class Result {
+public class TestCaseResult {
     public String status;
     public String prefix;
     public String description;

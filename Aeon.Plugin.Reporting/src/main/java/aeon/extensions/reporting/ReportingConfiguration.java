@@ -18,7 +18,7 @@ public class ReportingConfiguration extends PluginConfiguration {
 
     private Logger log = LogManager.getLogger(ReportingPlugin.class);
 
-    static class Keys {
+    public static class Keys {
         public static final String SLACK_CHAT_URL = "aeon.extensions.reporting.slack.chat.url";
         public static final String SLACK_UPLOAD_URL = "aeon.extensions.reporting.slack.upload.url";
         public static final String SLACK_BOT_TOKEN = "aeon.extensions.reporting.slack.bot.token";
