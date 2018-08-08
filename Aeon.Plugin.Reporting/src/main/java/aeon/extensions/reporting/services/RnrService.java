@@ -46,7 +46,7 @@ public class RnrService {
         this.rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
     }
 
-    public String uploadToRnR(String jsonFileName, String angularReportUrl, String correlationId) {
+    public String uploadToRnr(String jsonFileName, String angularReportUrl, String correlationId) {
 
         if (!allConfigFieldsAreSet()) {
             log.trace("Not all RnR properties are set, cancelling upload to RnR.");
@@ -54,7 +54,6 @@ public class RnrService {
         }
 
         File resultsJsonFile = new File(jsonFileName);
-        log.info("RESULTSJSONFILE EXISTS: " + resultsJsonFile.exists());
 
         HttpEntity multiPartEntity = buildRnrMultiPartEntity(angularReportUrl, resultsJsonFile, correlationId);
 
@@ -82,7 +81,8 @@ public class RnrService {
     private HttpEntity buildRnrMultiPartEntity(String angularReportUrl, File resultsJsonFile, String correlationId) {
         Map<String, String> rnrMetaMap = buildRnrMetaMap(angularReportUrl);
         File rnrMetaFile = buildRnrMetaFile(rnrMetaMap);
-
+        // TODO REMOVE
+        log.info("META FILE EXISTS " + rnrMetaFile.exists());
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody("namespace", team);
         builder.addTextBody("project", product);
@@ -90,7 +90,7 @@ public class RnrService {
         builder.addTextBody("branch", branch);
         builder.addTextBody("correlationId", correlationId);
         builder.addBinaryBody("file", resultsJsonFile,
-                ContentType.APPLICATION_OCTET_STREAM, "results.json");
+                ContentType.APPLICATION_OCTET_STREAM, "results.js");
         builder.addBinaryBody("metaFile", rnrMetaFile,
                 ContentType.APPLICATION_OCTET_STREAM, "meta.rnr");
 
@@ -129,6 +129,7 @@ public class RnrService {
         try {
             HttpResponse response = client.execute(post);
             int statusCode = response.getStatusLine().getStatusCode();
+            log.info("rnr status code: " + statusCode);
             if (statusCode != HttpStatus.SC_ACCEPTED) {
                 log.error(String.format("Did not receive successful status code for RnR upload. Received: %d.", statusCode));
                 return false;

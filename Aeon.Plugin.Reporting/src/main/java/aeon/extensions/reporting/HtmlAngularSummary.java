@@ -57,9 +57,7 @@ public class HtmlAngularSummary {
     public String createJsonReportFile() {
         String jsonReportFileName = reportsDirectory
                 + "/report-" + reportDetails.getCorrelationId() + ".json";
-
         writeFile(jsonReport, jsonReportFileName);
-        log.info("JSONREPORTFILENAME: " + jsonReportFileName);
         return jsonReportFileName;
     }
 

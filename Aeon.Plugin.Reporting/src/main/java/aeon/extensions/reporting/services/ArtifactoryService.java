@@ -48,13 +48,17 @@ public class ArtifactoryService {
         String fullRequestUrl = getFullRequestUrl(fileName);
 
         InputStreamEntity fileEntity = buildFileEntity(filePathName);
-        if (fileEntity == null) return null;
+        if (fileEntity == null) {
+            return null;
+        }
 
         HttpPut put = buildHttpPut(fullRequestUrl, fileEntity);
         HttpClient client = buildHttpClient();
 
         boolean success = executeRequest(client, put);
-        if (!success) return null;
+        if (!success) {
+            return null;
+        }
 
         return fullRequestUrl;
     }

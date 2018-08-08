@@ -33,7 +33,8 @@ public class ReportController {
         this.rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
 
         this.reportDetails = reportDetails;
-        artifactoryService =  new ArtifactoryService(pluginConfiguration);
+        log.info("Controller Report cId: " + reportDetails.getCorrelationId());
+        artifactoryService =  ReportingPlugin.artifactoryService;
         rnrService = new RnrService(aeonConfiguration, pluginConfiguration);
     }
 
@@ -47,7 +48,8 @@ public class ReportController {
         }
         if (rnrUrl != null) {
             String rnrReportFileName = htmlAngularSummary.createJsonReportFile();
-            String rnrReportUrl = rnrService.uploadToRnR(rnrReportFileName, angularReportUrl, reportDetails.getCorrelationId());
+            String rnrReportUrl = rnrService.uploadToRnr(rnrReportFileName, angularReportUrl, reportDetails.getCorrelationId());
+            this.rnrUrl = rnrReportUrl;
             log.info("RnR URL: " + rnrReportUrl);
         }
         return angularReportUrl;

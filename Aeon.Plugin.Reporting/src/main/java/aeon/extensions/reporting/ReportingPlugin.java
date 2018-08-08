@@ -35,6 +35,8 @@ public class ReportingPlugin extends Plugin {
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
     private static ReportDetails reportDetails = null;
 
+    static ArtifactoryService artifactoryService;
+
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
      * Your plugins have to provide constructor with this exact signature to
@@ -61,7 +63,8 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeStart(String correlationId, String suiteName) {
-            // Don't check that reportContainer is null, as it should be re-initialized with this message
+            // Don't check that reportDetails is null, as it should be re-initialized with this message
+            log.trace("onBeforeStart called");
             initializeReport(suiteName);
 
             initializeConfiguration();
@@ -194,7 +197,6 @@ public class ReportingPlugin extends Plugin {
                     getCurrentScenarioBucket().addStep((String) payload);
                     break;
                 case "videoDownloaded":
-                    ArtifactoryService artifactoryService = new ArtifactoryService(configuration);
                     String videoUrl = artifactoryService.uploadToArtifactory((String) payload);
 
                     if (videoUrl != null) {
@@ -218,8 +220,8 @@ public class ReportingPlugin extends Plugin {
 
             reportDetails.setEndTime(time);
             reportDetails.setScenarios(finishedScenarios);
-            ReportController reportController = new ReportController(configuration, aeonConfiguration, reportDetails);
 
+            ReportController reportController = new ReportController(configuration, aeonConfiguration, reportDetails);
             String reportUrl = reportController.writeReportsAndUpload();
             reportController.sendSummaryReportToSlack(reportUrl);
         }
@@ -241,6 +243,7 @@ public class ReportingPlugin extends Plugin {
             } catch (IllegalAccessException | IOException e) {
                 log.warn("Could not load plugin configuration.");
             }
+            artifactoryService = new ArtifactoryService(configuration);
         }
     }
 
@@ -254,7 +257,7 @@ public class ReportingPlugin extends Plugin {
 
                 configuration = aeonConfiguration;
             }
-
+            artifactoryService = new ArtifactoryService(configuration);
             ReportingPlugin.aeonConfiguration = aeonConfiguration;
         }
     }
