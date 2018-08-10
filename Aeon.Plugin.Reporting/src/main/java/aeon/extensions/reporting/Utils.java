@@ -28,7 +28,6 @@ public class Utils {
         return resourcePath;
     }
 
-
     public static String getTime(long time) {
         int seconds = (int) (time / 1000);
         if (seconds >= 60) {
