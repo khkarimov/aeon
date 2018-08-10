@@ -3,7 +3,7 @@ package aeon.extensions.reporting;
 import java.io.File;
 import java.util.Queue;
 
-public class HtmlImageSummary {
+public class ImageReport {
 
     private ReportDetails reportDetails;
     private boolean displayClassName = ReportingPlugin.configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
@@ -11,11 +11,11 @@ public class HtmlImageSummary {
     private String browser = ReportingPlugin.aeonConfiguration.getString("aeon.browser", "");
     private String environmentUrl = ReportingPlugin.aeonConfiguration.getString("aeon.environment", "");
 
-    public HtmlImageSummary(ReportDetails reportDetails) {
+    public ImageReport(ReportDetails reportDetails) {
         this.reportDetails = reportDetails;
     }
 
-    public File constructSummaryImageFile(String title) {
+    public File buildImageReport(String title) {
         String htmlBody = "";
         htmlBody = htmlBody + this.getHead();
 

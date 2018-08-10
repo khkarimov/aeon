@@ -16,7 +16,7 @@ import java.io.*;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-public class HtmlAngularSummary {
+public class HtmlReport {
 
     private ReportDetails reportDetails;
     private String reportsDirectory= ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "");;
@@ -24,9 +24,9 @@ public class HtmlAngularSummary {
     private ResultReport resultReport;
     private String jsonReport;
 
-    private static Logger log = LogManager.getLogger(HtmlAngularSummary.class);
+    private static Logger log = LogManager.getLogger(HtmlReport.class);
 
-    public HtmlAngularSummary(ReportDetails reportDetails) {
+    public HtmlReport(ReportDetails reportDetails) {
         this.reportDetails = reportDetails;
 
         processInfo();

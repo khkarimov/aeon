@@ -17,15 +17,15 @@ public class ReportController {
     private static String rnrUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
 
     static String writeReportsAndUpload(ReportDetails reportDetails) {
-        HtmlAngularSummary htmlAngularSummary = new HtmlAngularSummary(reportDetails);
-        String angularReportFileName = htmlAngularSummary.createAngularReportFile();
+        HtmlReport htmlReport = new HtmlReport(reportDetails);
+        String angularReportFileName = htmlReport.createAngularReportFile();
         String angularReportUrl = ArtifactoryService.uploadToArtifactory(angularReportFileName);
 
         if (angularReportUrl != null) {
             log.info("Test Report URL: " + angularReportUrl);
         }
         if (rnrUrl != null) {
-            String rnrReportFileName = htmlAngularSummary.createJsonReportFile();
+            String rnrReportFileName = htmlReport.createJsonReportFile();
             String rnrReportUrl = RnrService.uploadToRnr(rnrReportFileName, angularReportUrl, reportDetails.getCorrelationId());
             rnrUrl = rnrReportUrl;
             log.info("RnR URL: " + rnrReportUrl);
@@ -41,8 +41,8 @@ public class ReportController {
             reportDate = ReportingPlugin.reportDateFormat.format(scenarioDetails.getStartTime());
         }
         String title = "Automation Report - " + reportDate.replace(":", "-");
-        HtmlImageSummary htmlImageSummary = new HtmlImageSummary(reportDetails);
-        File summaryReport = htmlImageSummary.constructSummaryImageFile(title);
+        ImageReport imageReport = new ImageReport(reportDetails);
+        File summaryReport = imageReport.buildImageReport(title);
         String slackChannel1 = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
         String slackChannel2 = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
         if (StringUtils.isBlank(slackChannel1) && StringUtils.isBlank(slackChannel2)) {
