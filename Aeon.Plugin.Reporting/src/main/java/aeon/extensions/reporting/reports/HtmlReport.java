@@ -1,5 +1,6 @@
-package aeon.extensions.reporting;
+package aeon.extensions.reporting.reports;
 
+import aeon.extensions.reporting.*;
 import aeon.extensions.reporting.resultreportmodel.FailedExpectation;
 import aeon.extensions.reporting.resultreportmodel.ResultReport;
 import aeon.extensions.reporting.resultreportmodel.TestCaseResult;

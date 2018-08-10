@@ -26,8 +26,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Plugin class for Reporting Plugin.
  */
 public class ReportingPlugin extends Plugin {
-    static final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
-    static final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    public static final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+    public static final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public static IConfiguration aeonConfiguration;
     public static IConfiguration configuration;
@@ -216,8 +216,7 @@ public class ReportingPlugin extends Plugin {
             reportDetails.setEndTime(time);
             reportDetails.setScenarios(finishedScenarios);
 
-            String reportUrl = ReportController.writeReportsAndUpload(reportDetails);
-            ReportController.sendSummaryReportToSlack(reportUrl, reportDetails);
+            ReportController.writeReportsAndUpload(reportDetails);
         }
 
         private void initializeReport(String suiteName) {

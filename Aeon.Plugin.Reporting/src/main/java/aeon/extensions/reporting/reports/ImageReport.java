@@ -1,4 +1,6 @@
-package aeon.extensions.reporting;
+package aeon.extensions.reporting.reports;
+
+import aeon.extensions.reporting.*;
 
 import java.io.File;
 import java.util.Queue;
