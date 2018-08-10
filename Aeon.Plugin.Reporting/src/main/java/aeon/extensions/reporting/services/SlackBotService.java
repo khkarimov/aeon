@@ -1,7 +1,7 @@
 package aeon.extensions.reporting.services;
 
-import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
+import aeon.extensions.reporting.ReportingPlugin;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -22,21 +22,18 @@ import java.util.List;
 public class SlackBotService {
 
     private static Logger log = LogManager.getLogger(SlackBotService.class);
+    private static String slackChatUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_CHAT_URL, "");
+    private static String slackBotToken = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "");
+    private static String slackUploadUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, "");
 
-    private IConfiguration configuration;
-
-    public SlackBotService(IConfiguration pluginConfiguration) {
-        configuration = pluginConfiguration;
-    }
-
-    public void publishNotificationToSlack(String channel, String message) {
+    public static void publishNotificationToSlack(String channel, String message) {
         try {
             HttpClient client = HttpClients.createDefault();
-            HttpPost httpPost = new HttpPost(configuration.getString(ReportingConfiguration.Keys.SLACK_CHAT_URL, ""));
+            HttpPost httpPost = new HttpPost(slackChatUrl);
 
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("channel", channel));
-            params.add(new BasicNameValuePair("token", configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "")));
+            params.add(new BasicNameValuePair("token", slackBotToken));
             params.add(new BasicNameValuePair("text", message));
             params.add(new BasicNameValuePair("as_user", "true"));
             httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -46,14 +43,14 @@ public class SlackBotService {
         }
     }
 
-    public void uploadReportToSlack(File fileName, String channel) {
+    public static void uploadReportToSlack(File fileName, String channel) {
         try {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.addBinaryBody("file", fileName);
             builder.addTextBody("channels", channel);
-            builder.addTextBody("token", configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, ""));
+            builder.addTextBody("token", slackBotToken);
             HttpEntity entity = builder.build();
-            HttpPost httpPost = new HttpPost(configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, ""));
+            HttpPost httpPost = new HttpPost(slackUploadUrl);
             httpPost.setEntity(entity);
             HttpClient client = HttpClientBuilder.create().build();
             executePost(httpPost, client);
@@ -62,7 +59,7 @@ public class SlackBotService {
         }
     }
 
-    private void executePost(HttpPost httpPost, HttpClient client) {
+    private static void executePost(HttpPost httpPost, HttpClient client) {
         try {
             HttpResponse response = client.execute(httpPost);
             if (response.getStatusLine().getStatusCode() != 200) {

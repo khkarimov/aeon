@@ -35,8 +35,6 @@ public class ReportingPlugin extends Plugin {
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
     private static ReportDetails reportDetails = null;
 
-    static ArtifactoryService artifactoryService;
-
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
      * Your plugins have to provide constructor with this exact signature to
@@ -195,7 +193,7 @@ public class ReportingPlugin extends Plugin {
                     getCurrentScenarioBucket().addStep((String) payload);
                     break;
                 case "videoDownloaded":
-                    String videoUrl = artifactoryService.uploadToArtifactory((String) payload);
+                    String videoUrl = ArtifactoryService.uploadToArtifactory((String) payload);
 
                     if (videoUrl != null) {
                         getCurrentScenarioBucket().setVideoUrl(videoUrl);
@@ -218,9 +216,8 @@ public class ReportingPlugin extends Plugin {
             reportDetails.setEndTime(time);
             reportDetails.setScenarios(finishedScenarios);
 
-            ReportController reportController = new ReportController(aeonConfiguration, configuration);
-            String reportUrl = reportController.writeReportsAndUpload(reportDetails);
-            reportController.sendSummaryReportToSlack(reportUrl, reportDetails);
+            String reportUrl = ReportController.writeReportsAndUpload(reportDetails);
+            ReportController.sendSummaryReportToSlack(reportUrl, reportDetails);
         }
 
         private void initializeReport(String suiteName) {
@@ -242,7 +239,6 @@ public class ReportingPlugin extends Plugin {
             } catch (IllegalAccessException | IOException e) {
                 log.warn("Could not load plugin configuration.");
             }
-            artifactoryService = new ArtifactoryService(configuration);
         }
     }
 
@@ -256,7 +252,6 @@ public class ReportingPlugin extends Plugin {
 
                 configuration = aeonConfiguration;
             }
-            artifactoryService = new ArtifactoryService(configuration);
             ReportingPlugin.aeonConfiguration = aeonConfiguration;
         }
     }

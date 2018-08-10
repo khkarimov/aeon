@@ -1,7 +1,6 @@
 package aeon.extensions.reporting;
 
 import aeon.core.common.helpers.StringUtils;
-import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.services.ArtifactoryService;
 import aeon.extensions.reporting.services.RnrService;
 import aeon.extensions.reporting.services.SlackBotService;
@@ -14,45 +13,27 @@ import java.util.List;
 
 public class ReportController {
 
-    private IConfiguration aeonConfiguration;
-    private IConfiguration pluginConfiguration;
-    private SlackBotService slackBotService;
-
-    private ArtifactoryService artifactoryService;
-    private RnrService rnrService;
-
     private static Logger log = LogManager.getLogger(ReportController.class);
-    private String rnrUrl;
+    private static String rnrUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
 
-    ReportController(IConfiguration pluginConfiguration, IConfiguration aeonConfiguration) {
-        this.aeonConfiguration = aeonConfiguration;
-        this.pluginConfiguration = pluginConfiguration;
-        this.slackBotService = new SlackBotService(pluginConfiguration);
-
-        this.rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
-
-        artifactoryService =  new ArtifactoryService(pluginConfiguration);
-        rnrService = new RnrService(aeonConfiguration, pluginConfiguration);
-    }
-
-    String writeReportsAndUpload(ReportDetails reportDetails) {
-        HtmlAngularSummary htmlAngularSummary = new HtmlAngularSummary(pluginConfiguration, reportDetails);
+    static String writeReportsAndUpload(ReportDetails reportDetails) {
+        HtmlAngularSummary htmlAngularSummary = new HtmlAngularSummary(reportDetails);
         String angularReportFileName = htmlAngularSummary.createAngularReportFile();
-        String angularReportUrl = artifactoryService.uploadToArtifactory(angularReportFileName);
+        String angularReportUrl = ArtifactoryService.uploadToArtifactory(angularReportFileName);
 
         if (angularReportUrl != null) {
             log.info("Test Report URL: " + angularReportUrl);
         }
         if (rnrUrl != null) {
             String rnrReportFileName = htmlAngularSummary.createJsonReportFile();
-            String rnrReportUrl = rnrService.uploadToRnr(rnrReportFileName, angularReportUrl, reportDetails.getCorrelationId());
-            this.rnrUrl = rnrReportUrl;
+            String rnrReportUrl = RnrService.uploadToRnr(rnrReportFileName, angularReportUrl, reportDetails.getCorrelationId());
+            rnrUrl = rnrReportUrl;
             log.info("RnR URL: " + rnrReportUrl);
         }
         return angularReportUrl;
     }
 
-    void sendSummaryReportToSlack(String reportUrl, ReportDetails reportDetails) {
+    static void sendSummaryReportToSlack(String reportUrl, ReportDetails reportDetails) {
 
         String reportDate = "";
         ScenarioDetails scenarioDetails = reportDetails.getScenarios().peek();
@@ -60,10 +41,10 @@ public class ReportController {
             reportDate = ReportingPlugin.reportDateFormat.format(scenarioDetails.getStartTime());
         }
         String title = "Automation Report - " + reportDate.replace(":", "-");
-        HtmlImageSummary htmlImageSummary = new HtmlImageSummary(aeonConfiguration, pluginConfiguration, reportDetails);
+        HtmlImageSummary htmlImageSummary = new HtmlImageSummary(reportDetails);
         File summaryReport = htmlImageSummary.constructSummaryImageFile(title);
-        String slackChannel1 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
-        String slackChannel2 = pluginConfiguration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
+        String slackChannel1 = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
+        String slackChannel2 = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
         if (StringUtils.isBlank(slackChannel1) && StringUtils.isBlank(slackChannel2)) {
             log.info("No Slack channel is set up.");
 
@@ -76,16 +57,15 @@ public class ReportController {
             messages.add("Test Report URL: " + reportUrl);
         }
 
-        if (this.rnrUrl != null) {
+        if (rnrUrl != null) {
             messages.add("RnR URL: " + rnrUrl);
         }
 
         if (StringUtils.isNotBlank(slackChannel1)) {
-            slackBotService.uploadReportToSlack(summaryReport, slackChannel1);
-            Utils.deleteFiles(Utils.getResourcesPath() + title + ".png");
+            SlackBotService.uploadReportToSlack(summaryReport, slackChannel1);
 
             if (!messages.isEmpty()) {
-                slackBotService.publishNotificationToSlack(slackChannel1, String.join("\n\n", messages));
+                SlackBotService.publishNotificationToSlack(slackChannel1, String.join("\n\n", messages));
             }
         }
 
@@ -99,15 +79,14 @@ public class ReportController {
 
                 messages.add(0, "<!here> - There are test failures. Please see attached report below.");
 
-                slackBotService.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
-                slackBotService.uploadReportToSlack(summaryReport, slackChannel2);
-                Utils.deleteFiles(Utils.getResourcesPath() + title + ".png");
+                SlackBotService.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
+                SlackBotService.uploadReportToSlack(summaryReport, slackChannel2);
             } else {
                 String startTime = new Date(reportDetails.getStartTime()).toString();
-                String url = aeonConfiguration.getString("aeon.environment", "");
+                String url = ReportingPlugin.aeonConfiguration.getString("aeon.environment", "");
                 messages.add(0, "Tests Passed for URL: " + url + " started at " + startTime);
 
-                slackBotService.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
+                SlackBotService.publishNotificationToSlack(slackChannel2, String.join("\n\n", messages));
             }
         }
     }

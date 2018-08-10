@@ -1,6 +1,5 @@
 package aeon.extensions.reporting.services;
 
-import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
 import aeon.extensions.reporting.ReportingPlugin;
 import org.apache.http.HttpResponse;
@@ -22,21 +21,14 @@ import static org.apache.http.HttpHeaders.USER_AGENT;
 
 public class ArtifactoryService {
 
-    private String artifactoryUrl;
-    private String artifactoryPath;
-    private String username;
-    private String password;
+    private static String artifactoryUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
+    private static String artifactoryPath = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
+    private static String username = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
+    private static String password = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
 
     private static Logger log = LogManager.getLogger(ArtifactoryService.class);
 
-    public ArtifactoryService(IConfiguration pluginConfiguration) {
-        this.artifactoryUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
-        this.artifactoryPath = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
-        this.username = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
-        this.password = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
-    }
-
-    public String uploadToArtifactory(String filePathName) {
+    public static String uploadToArtifactory(String filePathName) {
 
         if (!allConfigFieldsAreSet()) {
             log.info("Not all artifactory properties set, cancelling file upload.");
@@ -62,22 +54,22 @@ public class ArtifactoryService {
         return fullRequestUrl;
     }
 
-    private boolean allConfigFieldsAreSet() {
+    private static boolean allConfigFieldsAreSet() {
         return !(artifactoryUrl.isEmpty()
                 || artifactoryPath.isEmpty()
                 || username.isEmpty()
                 || password.isEmpty());
     }
 
-    private String getFileName(String filePathName) {
+    private static String getFileName(String filePathName) {
         return filePathName.substring(filePathName.lastIndexOf("/")+1);
     }
 
-    private String getFullRequestUrl(String fileName) {
+    private static String getFullRequestUrl(String fileName) {
         return artifactoryUrl + "/" + artifactoryPath + "/" + fileName;
     }
 
-    private CredentialsProvider getCredentials(String username, String password) {
+    private static CredentialsProvider getCredentials(String username, String password) {
         CredentialsProvider provider = new BasicCredentialsProvider();
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
         provider.setCredentials(AuthScope.ANY, credentials);
@@ -85,14 +77,14 @@ public class ArtifactoryService {
         return provider;
     }
 
-    private HttpClient buildHttpClient() {
+    private static HttpClient buildHttpClient() {
         CredentialsProvider provider = getCredentials(username, password);
         return HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(provider)
                 .build();
     }
 
-    private InputStreamEntity buildFileEntity(String filePathName) {
+    private static InputStreamEntity buildFileEntity(String filePathName) {
         InputStreamEntity fileEntity;
         File file = new File(filePathName);
         try {
@@ -105,7 +97,7 @@ public class ArtifactoryService {
         return fileEntity;
     }
 
-    private HttpPut buildHttpPut(String fullRequestUrl, InputStreamEntity fileEntity) {
+    private static HttpPut buildHttpPut(String fullRequestUrl, InputStreamEntity fileEntity) {
         HttpPut put = new HttpPut(fullRequestUrl);
         put.setHeader("User-Agent", USER_AGENT);
         put.setHeader("Content-type", "text/html");
@@ -113,7 +105,7 @@ public class ArtifactoryService {
         return put;
     }
 
-    private boolean executeRequest(HttpClient client, HttpPut put) {
+    private static boolean executeRequest(HttpClient client, HttpPut put) {
         try {
             HttpResponse response = client.execute(put);
             int statusCode = response.getStatusLine().getStatusCode();

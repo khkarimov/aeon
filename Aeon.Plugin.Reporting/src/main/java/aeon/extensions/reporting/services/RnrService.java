@@ -1,8 +1,7 @@
 package aeon.extensions.reporting.services;
 
-import aeon.core.common.interfaces.IConfiguration;
-import aeon.extensions.reporting.ReportDetails;
 import aeon.extensions.reporting.ReportingConfiguration;
+import aeon.extensions.reporting.ReportingPlugin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
@@ -24,29 +23,18 @@ import java.util.Map;
 
 public class RnrService {
 
-    private String browser;
-    private String environmentUrl;
+    private static String browser = ReportingPlugin.aeonConfiguration.getString("aeon.browser", "");
+    private static String environmentUrl = ReportingPlugin.aeonConfiguration.getString("aeon.environment", "");
 
-    private String product;
-    private String team;
-    private String type;
-    private String branch;
-    private String rnrUrl;
+    private static String product = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.PRODUCT, "");
+    private static String team = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.TEAM, "");
+    private static String type = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.TYPE, "");
+    private static String branch = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.BRANCH, "");
+    private static String rnrUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
 
     private static Logger log = LogManager.getLogger(RnrService.class);
 
-    public RnrService(IConfiguration aeonConfiguration, IConfiguration pluginConfiguration) {
-        this.browser = aeonConfiguration.getString("aeon.browser", "");
-        this.environmentUrl = aeonConfiguration.getString("aeon.environment", "");
-
-        this.product = pluginConfiguration.getString(ReportingConfiguration.Keys.PRODUCT, "");
-        this.team = pluginConfiguration.getString(ReportingConfiguration.Keys.TEAM, "");
-        this.type = pluginConfiguration.getString(ReportingConfiguration.Keys.TYPE, "");
-        this.branch = pluginConfiguration.getString(ReportingConfiguration.Keys.BRANCH, "");
-        this.rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
-    }
-
-    public String uploadToRnr(String jsonFileName, String angularReportUrl, String correlationId) {
+    public static String uploadToRnr(String jsonFileName, String angularReportUrl, String correlationId) {
 
         if (!allConfigFieldsAreSet()) {
             log.trace("Not all RnR properties are set, cancelling upload to RnR.");
@@ -71,18 +59,17 @@ public class RnrService {
         return rnrResultUrl;
     }
 
-    private boolean allConfigFieldsAreSet() {
+    private static boolean allConfigFieldsAreSet() {
         return !(product.isEmpty()
                 || team.isEmpty()
                 || type.isEmpty()
                 || branch.isEmpty());
     }
 
-    private HttpEntity buildRnrMultiPartEntity(String angularReportUrl, File resultsJsonFile, String correlationId) {
+    private static HttpEntity buildRnrMultiPartEntity(String angularReportUrl, File resultsJsonFile, String correlationId) {
         Map<String, String> rnrMetaMap = buildRnrMetaMap(angularReportUrl);
         File rnrMetaFile = buildRnrMetaFile(rnrMetaMap);
-        // TODO REMOVE
-        log.info("META FILE EXISTS " + rnrMetaFile.exists());
+
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody("namespace", team);
         builder.addTextBody("project", product);
@@ -97,7 +84,7 @@ public class RnrService {
         return builder.build();
     }
 
-    private Map<String, String> buildRnrMetaMap(String reportUrl) {
+    private static Map<String, String> buildRnrMetaMap(String reportUrl) {
         Map<String, String> rnrMetaMap = new HashMap<>();
         rnrMetaMap.put("screenshots", reportUrl);
         rnrMetaMap.put("app", browser);
@@ -105,7 +92,7 @@ public class RnrService {
         return rnrMetaMap;
     }
 
-    private File buildRnrMetaFile(Map<String, String> rnrMetaMap) {
+    private static File buildRnrMetaFile(Map<String, String> rnrMetaMap) {
         try {
             String rnrMeta = new ObjectMapper().writeValueAsString(rnrMetaMap);
 
@@ -125,11 +112,10 @@ public class RnrService {
         }
     }
 
-    private boolean executeRequest(HttpClient client, HttpPost post, String fullRequestUrl) {
+    private static boolean executeRequest(HttpClient client, HttpPost post, String fullRequestUrl) {
         try {
             HttpResponse response = client.execute(post);
             int statusCode = response.getStatusLine().getStatusCode();
-            log.info("rnr status code: " + statusCode);
             if (statusCode != HttpStatus.SC_ACCEPTED) {
                 log.error(String.format("Did not receive successful status code for RnR upload. Received: %d.", statusCode));
                 return false;

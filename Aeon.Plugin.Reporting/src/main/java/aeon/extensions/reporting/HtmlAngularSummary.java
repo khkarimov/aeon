@@ -1,10 +1,8 @@
 package aeon.extensions.reporting;
 
-import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.resultreportmodel.FailedExpectation;
 import aeon.extensions.reporting.resultreportmodel.ResultReport;
 import aeon.extensions.reporting.resultreportmodel.TestCaseResult;
-import aeon.extensions.reporting.services.RnrService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -21,18 +19,14 @@ import java.util.stream.Collectors;
 public class HtmlAngularSummary {
 
     private ReportDetails reportDetails;
-    private String reportsDirectory;
-    private String rnrUrl;
+    private String reportsDirectory= ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "");;
 
     private ResultReport resultReport;
     private String jsonReport;
 
     private static Logger log = LogManager.getLogger(HtmlAngularSummary.class);
 
-    public HtmlAngularSummary(IConfiguration pluginConfiguration, ReportDetails reportDetails) {
-        this.reportsDirectory = pluginConfiguration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "");
-        this.rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
-
+    public HtmlAngularSummary(ReportDetails reportDetails) {
         this.reportDetails = reportDetails;
 
         processInfo();

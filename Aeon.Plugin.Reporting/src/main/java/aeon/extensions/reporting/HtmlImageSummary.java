@@ -1,25 +1,17 @@
 package aeon.extensions.reporting;
 
-import aeon.core.common.interfaces.IConfiguration;
-
 import java.io.File;
 import java.util.Queue;
 
 public class HtmlImageSummary {
 
     private ReportDetails reportDetails;
-    private boolean displayClassName;
-    private int errorMessageCharLimit;
-    private String browser;
-    private String environmentUrl;
+    private boolean displayClassName = ReportingPlugin.configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
+    private int errorMessageCharLimit = (int) ReportingPlugin.configuration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
+    private String browser = ReportingPlugin.aeonConfiguration.getString("aeon.browser", "");
+    private String environmentUrl = ReportingPlugin.aeonConfiguration.getString("aeon.environment", "");
 
-    public HtmlImageSummary(IConfiguration aeonConfiguration, IConfiguration pluginConfiguration, ReportDetails reportDetails) {
-        this.browser = aeonConfiguration.getString("aeon.browser", "");
-        this.environmentUrl = aeonConfiguration.getString("aeon.environment", "");
-
-        this.displayClassName = pluginConfiguration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
-        this.errorMessageCharLimit = (int) pluginConfiguration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
-
+    public HtmlImageSummary(ReportDetails reportDetails) {
         this.reportDetails = reportDetails;
     }
 
