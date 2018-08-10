@@ -2,6 +2,7 @@ package aeon.extensions.reporting.services;
 
 import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
+import aeon.extensions.reporting.ReportingPlugin;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
@@ -9,7 +10,6 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -28,7 +28,6 @@ public class ArtifactoryService {
     private String password;
 
     private static Logger log = LogManager.getLogger(ArtifactoryService.class);
-
 
     public ArtifactoryService(IConfiguration pluginConfiguration) {
         this.artifactoryUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");

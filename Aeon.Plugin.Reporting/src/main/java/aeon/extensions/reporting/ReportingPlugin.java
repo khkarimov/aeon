@@ -29,8 +29,8 @@ public class ReportingPlugin extends Plugin {
     static final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
     static final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-    private static IConfiguration aeonConfiguration;
-    private static IConfiguration configuration;
+    public static IConfiguration aeonConfiguration;
+    public static IConfiguration configuration;
 
     private static Logger log = LogManager.getLogger(ReportingPlugin.class);
     private static ReportDetails reportDetails = null;
@@ -49,7 +49,7 @@ public class ReportingPlugin extends Plugin {
     }
 
     /**
-     * Test execution extension for sending test details to Slack or via email.
+     * Test execution extension for sending test details to Slack, Artifactory, Rnr, or via email.
      */
     @Extension
     public static class ReportingTestExecutionExtension implements ITestExecutionExtension {
@@ -64,7 +64,6 @@ public class ReportingPlugin extends Plugin {
         @Override
         public void onBeforeStart(String correlationId, String suiteName) {
             // Don't check that reportDetails is null, as it should be re-initialized with this message
-            log.trace("onBeforeStart called");
             initializeReport(suiteName);
 
             initializeConfiguration();
@@ -121,7 +120,6 @@ public class ReportingPlugin extends Plugin {
             ScenarioDetails scenario = new ScenarioDetails();
             scenario.setThreadId(threadId);
             scenarios.put(threadId, scenario);
-
             return scenario;
         }
 
@@ -132,6 +130,7 @@ public class ReportingPlugin extends Plugin {
 
             boolean displayClassName = configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
 
+            // Determines whether the testName should include the full suite/class or not
             if (displayClassName && name.lastIndexOf('.') > -1) {
                 int classNameIndex = name.lastIndexOf('.');
                 scenario.setClassName(name.substring(0, classNameIndex));
@@ -139,7 +138,6 @@ public class ReportingPlugin extends Plugin {
             } else {
                 scenario.setTestName(name);
             }
-
             scenario.setStartTime(System.currentTimeMillis());
         }
 
@@ -216,17 +214,18 @@ public class ReportingPlugin extends Plugin {
         @Override
         public void onDone() {
             long time = System.currentTimeMillis();
-            log.info("End Time " + reportDateFormat.format(new Date(time)));
 
             reportDetails.setEndTime(time);
             reportDetails.setScenarios(finishedScenarios);
 
-            ReportController reportController = new ReportController(configuration, aeonConfiguration, reportDetails);
-            String reportUrl = reportController.writeReportsAndUpload();
-            reportController.sendSummaryReportToSlack(reportUrl);
+            ReportController reportController = new ReportController(aeonConfiguration, configuration);
+            String reportUrl = reportController.writeReportsAndUpload(reportDetails);
+            reportController.sendSummaryReportToSlack(reportUrl, reportDetails);
         }
 
         private void initializeReport(String suiteName) {
+            finishedScenarios = new ConcurrentLinkedQueue<>();
+
             reportDetails = new ReportDetails();
             long startTime = System.currentTimeMillis();
             reportDetails.setStartTime(startTime);

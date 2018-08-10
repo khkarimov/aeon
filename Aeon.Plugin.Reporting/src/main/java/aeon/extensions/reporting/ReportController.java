@@ -17,7 +17,6 @@ public class ReportController {
     private IConfiguration aeonConfiguration;
     private IConfiguration pluginConfiguration;
     private SlackBotService slackBotService;
-    private ReportDetails reportDetails;
 
     private ArtifactoryService artifactoryService;
     private RnrService rnrService;
@@ -25,20 +24,18 @@ public class ReportController {
     private static Logger log = LogManager.getLogger(ReportController.class);
     private String rnrUrl;
 
-    ReportController(IConfiguration pluginConfiguration, IConfiguration aeonConfiguration, ReportDetails reportDetails) {
+    ReportController(IConfiguration pluginConfiguration, IConfiguration aeonConfiguration) {
         this.aeonConfiguration = aeonConfiguration;
         this.pluginConfiguration = pluginConfiguration;
         this.slackBotService = new SlackBotService(pluginConfiguration);
 
         this.rnrUrl = pluginConfiguration.getString(ReportingConfiguration.Keys.RNR_URL, "");
 
-        this.reportDetails = reportDetails;
-        log.info("Controller Report cId: " + reportDetails.getCorrelationId());
-        artifactoryService =  ReportingPlugin.artifactoryService;
+        artifactoryService =  new ArtifactoryService(pluginConfiguration);
         rnrService = new RnrService(aeonConfiguration, pluginConfiguration);
     }
 
-    String writeReportsAndUpload() {
+    String writeReportsAndUpload(ReportDetails reportDetails) {
         HtmlAngularSummary htmlAngularSummary = new HtmlAngularSummary(pluginConfiguration, reportDetails);
         String angularReportFileName = htmlAngularSummary.createAngularReportFile();
         String angularReportUrl = artifactoryService.uploadToArtifactory(angularReportFileName);
@@ -55,7 +52,7 @@ public class ReportController {
         return angularReportUrl;
     }
 
-    void sendSummaryReportToSlack(String reportUrl) {
+    void sendSummaryReportToSlack(String reportUrl, ReportDetails reportDetails) {
 
         String reportDate = "";
         ScenarioDetails scenarioDetails = reportDetails.getScenarios().peek();
