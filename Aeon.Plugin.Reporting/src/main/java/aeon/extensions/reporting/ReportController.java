@@ -17,7 +17,9 @@ public class ReportController {
 
         String htmlReportUrl = uploadHtmlReport(htmlReport);
 
-        logHtmlReportUrl(htmlReportUrl);
+        if (htmlReportUrl != null) {
+            log.info("Test Report URL: " + htmlReportUrl);
+        }
 
         String correlationId = reportDetails.getCorrelationId();
         String finalRnrUrl = uploadReportToRnr(htmlReport, htmlReportUrl, correlationId);
@@ -36,18 +38,12 @@ public class ReportController {
 
     private static String uploadReportToRnr(HtmlReport htmlReport, String htmlReportUrl, String correlationId) {
         if (rnrUrl == null) {
-            return "RnR report not uploaded.";
+            return null;
         }
 
         String rnrReportFileName = htmlReport.createJsonReportFile();
         String rnrReportUrl = RnrService.uploadToRnr(rnrReportFileName, htmlReportUrl, correlationId);
         log.info("RnR URL: " + rnrReportUrl);
         return rnrReportUrl;
-    }
-
-    private static void logHtmlReportUrl(String htmlReportUrl) {
-        if (htmlReportUrl != null) {
-            log.info("Test Report URL: " + htmlReportUrl);
-        }
     }
 }
