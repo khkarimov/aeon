@@ -37,7 +37,8 @@ public class ReportController {
     }
 
     private static String uploadReportToRnr(HtmlReport htmlReport, String htmlReportUrl, String correlationId) {
-        if (rnrUrl == null) {
+        if (rnrUrl.isEmpty()) {
+            log.trace("RnR URL not set, cancelling upload to RnR.");
             return null;
         }
 
