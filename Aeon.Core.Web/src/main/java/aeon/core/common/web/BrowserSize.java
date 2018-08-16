@@ -50,10 +50,19 @@ public enum BrowserSize {
         this.dimension = dimension;
     }
 
+    /**
+     * Dimensions class to be used for the browser size.
+     * <p>
+     */
     public static class Dimension {
         public int width;
         public int height;
 
+        /**
+         * Constructor for Dimension class.
+         * @param width width of window resolution
+         * @param height heigh of window resolution
+         */
         public Dimension(int width, int height) {
             this.width = width;
             this.height = height;
