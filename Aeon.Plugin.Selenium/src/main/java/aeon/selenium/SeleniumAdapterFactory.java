@@ -91,7 +91,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected URL seleniumHubUrl;
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
-    protected BrowserSize browserSize;
+    protected BrowserSize fallbackBrowserSize;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -101,7 +101,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -124,11 +124,11 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
         try {
-            browserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
+            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
         }
         catch (IllegalArgumentException e) {
             log.trace("Illegal browser size selected.  Set to default value: 'FullHD'");
-            browserSize = BrowserSize.FullHD;
+            fallbackBrowserSize = BrowserSize.FullHD;
         }
 
         seleniumHubUrl = null;

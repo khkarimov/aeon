@@ -73,13 +73,13 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
  *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
-     * @param browserSize
+     * @param fallbackBrowserSize The size the browser will be maximized to.
      * @param isRemote Whether we are testing remotely or locally.
      * @param seleniumHubUrl The used Selenium hub URL.
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
      * @param loggingPreferences Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
@@ -88,7 +88,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.seleniumHubUrl = seleniumHubUrl;
         this.seleniumLogsDirectory = seleniumLogsDirectory;
         this.loggingPreferences = loggingPreferences;
-        this.fallbackBrowserSize = browserSize;
+        this.fallbackBrowserSize = fallbackBrowserSize;
     }
 
     /**
