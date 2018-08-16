@@ -52,6 +52,7 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String LOGGING_PERFORMANCE = "aeon.selenium.logging.type.performance";
         public static final String LOGGING_SERVER = "aeon.selenium.logging.type.server";
         public static final String LOGGING_DIRECTORY = "aeon.selenium.logging.directory";
+        public static final String BROWSER_MAXIMIZE_FALLBACK = "aeon.browser.maximize.fallback";
 
         // Appium
         public static final String APP = "aeon.selenium.appium.app";

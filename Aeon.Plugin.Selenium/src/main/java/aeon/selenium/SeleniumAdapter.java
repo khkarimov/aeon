@@ -9,10 +9,7 @@ import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
 import aeon.core.common.helpers.*;
 import aeon.core.common.interfaces.IBy;
-import aeon.core.common.web.BrowserType;
-import aeon.core.common.web.ClientRects;
-import aeon.core.common.web.JQueryStringType;
-import aeon.core.common.web.WebSelectOption;
+import aeon.core.common.web.*;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
@@ -66,20 +63,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private boolean isRemote;
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
+    protected BrowserSize browserSize;
 
     /**
      * Constructor for Selenium Adapter.
      * @param seleniumWebDriver The driver for the adapter.
      * @param javaScriptExecutor The javaScript executor for the adapter.
      * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
-     *                          (top left corner of the browser window) before executing every action.
+ *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
+     * @param browserSize
      * @param isRemote Whether we are testing remotely or locally.
      * @param seleniumHubUrl The used Selenium hub URL.
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
      * @param loggingPreferences Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
@@ -88,6 +87,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.seleniumHubUrl = seleniumHubUrl;
         this.seleniumLogsDirectory = seleniumLogsDirectory;
         this.loggingPreferences = loggingPreferences;
+        this.browserSize = browserSize;
     }
 
     /**
@@ -782,7 +782,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             if (isRemote && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Firefox) || browserType.equals(BrowserType.Opera))) {
                 log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
                 webDriver.manage().window().setPosition(new Point(0, 0));
-                webDriver.manage().window().setSize(new Dimension(1920, 1080));
+                webDriver.manage().window().setSize(new Dimension(browserSize.dimension.width, browserSize.dimension.height));
             } else {
                 webDriver.manage().window().maximize();
             }
