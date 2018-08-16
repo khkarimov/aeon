@@ -777,27 +777,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
-            log.trace("WebDriver.Manage().Window.maximize();");
+            log.trace("Webdriver.Manage().Window.maximize();");
 
-            if (osIsMacOrLinux() && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Opera))) {
-                //In the case of remote, current workaround doesnt work cause cannot get screensize
-                //so manually using the grid resolution for now.
-                if (isRemote) {
-                    log.trace("Setting manual size  for remote test on linux and chrome.");
-                    webDriver.manage().window().setPosition(new Point(0, 0));
-                    webDriver.manage().window().setSize(new Dimension(1024, 768));
-                } else {
-                    //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
-                    int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-                    int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-                    Point position = new Point(0, 0);
-                    webDriver.manage().window().setPosition(position);
-
-                    Dimension maximizedScreenSize =
-                            new Dimension(screenWidth, screenHeight);
-                    log.trace(String.format("Using maximize workaround on chrome with resolution %s", maximizedScreenSize));
-                    webDriver.manage().window().setSize(maximizedScreenSize);
-                }
+            if (isRemote && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Firefox) || browserType.equals(BrowserType.Opera))) {
+                log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
+                webDriver.manage().window().setPosition(new Point(0, 0));
+                webDriver.manage().window().setSize(new Dimension(1920, 1080));
             } else {
                 webDriver.manage().window().maximize();
             }
@@ -806,6 +791,40 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             executeScript("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
         }
     }
+
+
+
+
+//        try {
+//            log.trace("WebDriver.Manage().Window.maximize();");
+//
+//            if (osIsMacOrLinux() && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Opera))) {
+//                //In the case of remote, current workaround doesnt work cause cannot get screensize
+//                //so manually using the grid resolution for now.
+//                if (isRemote) {
+//                    log.trace("Setting manual size  for remote test on linux and chrome.");
+//                    webDriver.manage().window().setPosition(new Point(0, 0));
+//                    webDriver.manage().window().setSize(new Dimension(1024, 768));
+//                } else {
+//                    //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
+//                    int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+//                    int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+//                    Point position = new Point(0, 0);
+//                    webDriver.manage().window().setPosition(position);
+//
+//                    Dimension maximizedScreenSize =
+//                            new Dimension(screenWidth, screenHeight);
+//                    log.trace(String.format("Using maximize workaround on chrome with resolution %s", maximizedScreenSize));
+//                    webDriver.manage().window().setSize(maximizedScreenSize);
+//                }
+//            } else {
+//                webDriver.manage().window().maximize();
+//            }
+//        } catch (IllegalStateException e) {
+//            log.trace("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
+//            executeScript("window.moveTo(0,0);window.resizeTo(screen.availWidth,screen.availHeight);");
+//        }
+//    }
 
     /**
      * Resizes the window to the desired Size dimensions.
