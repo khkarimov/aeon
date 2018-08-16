@@ -15,6 +15,7 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.testabstraction.models.Browser;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
@@ -63,7 +64,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private boolean isRemote;
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
-    protected BrowserSize browserSize;
+    protected BrowserSize fallbackBrowserSize;
 
     /**
      * Constructor for Selenium Adapter.
@@ -87,7 +88,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.seleniumHubUrl = seleniumHubUrl;
         this.seleniumLogsDirectory = seleniumLogsDirectory;
         this.loggingPreferences = loggingPreferences;
-        this.browserSize = browserSize;
+        this.fallbackBrowserSize = browserSize;
     }
 
     /**
@@ -780,9 +781,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             log.trace("Webdriver.Manage().Window.maximize();");
 
             if (isRemote && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Firefox) || browserType.equals(BrowserType.Opera))) {
+                java.awt.Dimension dimension = BrowserSizeMap.map(fallbackBrowserSize);
                 log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
                 webDriver.manage().window().setPosition(new Point(0, 0));
-                webDriver.manage().window().setSize(new Dimension(browserSize.dimension.width, browserSize.dimension.height));
+                webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
             } else {
                 webDriver.manage().window().maximize();
             }
