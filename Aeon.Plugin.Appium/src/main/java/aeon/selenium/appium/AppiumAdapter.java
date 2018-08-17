@@ -53,6 +53,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
+     * @param browserSize The screen resolution for the machine
      * @param isRemote Whether we are testing remotely or locally.
      * @param seleniumHubUrl The used Selenium hub URL.
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
