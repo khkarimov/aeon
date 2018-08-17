@@ -779,17 +779,24 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void maximize() {
         try {
             log.trace("Webdriver.Manage().Window.maximize();");
-
-            if ((isRemote && (browserType.equals(BrowserType.Chrome) ||
+            if (isRemote && (browserType.equals(BrowserType.Chrome) ||
                     browserType.equals(BrowserType.Firefox) ||
-                    browserType.equals(BrowserType.Opera))) ||
-                    (!isRemote && osIsMacOrLinux() &&
-                            (browserType.equals(BrowserType.Opera) ||
-                            browserType.equals(BrowserType.Chrome)))) {
+                    browserType.equals(BrowserType.Opera))) {
                 java.awt.Dimension dimension = BrowserSizeMap.map(fallbackBrowserSize);
                 log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
                 webDriver.manage().window().setPosition(new Point(0, 0));
                 webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
+            } else if (!isRemote && osIsMacOrLinux() &&
+                        (browserType.equals(BrowserType.Opera) ||
+                        browserType.equals(BrowserType.Chrome))) {
+                int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+                int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+                Point position = new Point(0, 0);
+                webDriver.manage().window().setPosition(position);
+                Dimension maximizedScreenSize =
+                        new Dimension(screenWidth, screenHeight);
+                log.trace(String.format("Using maximize workaround on local Ubuntu machines with resolution %s", maximizedScreenSize));
+                webDriver.manage().window().setSize(maximizedScreenSize);
             } else {
                 webDriver.manage().window().maximize();
             }
