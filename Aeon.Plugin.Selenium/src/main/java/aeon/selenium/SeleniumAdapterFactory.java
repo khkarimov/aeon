@@ -125,9 +125,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
         try {
             fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
-        }
-        catch (IllegalArgumentException e) {
-            log.trace("Illegal browser size selected.  Set to default value: 'FullHD'");
+        } catch (IllegalArgumentException e) {
+            log.warn("Illegal browser size selected.  Set to default value: 'FullHD'");
             fallbackBrowserSize = BrowserSize.FullHD;
         }
 
