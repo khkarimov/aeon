@@ -71,7 +71,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param seleniumWebDriver The driver for the adapter.
      * @param javaScriptExecutor The javaScript executor for the adapter.
      * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
- *                          (top left corner of the browser window) before executing every action.
+     *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
      * @param fallbackBrowserSize The size the browser will be maximized to.
      * @param isRemote Whether we are testing remotely or locally.
