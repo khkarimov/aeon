@@ -780,7 +780,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         try {
             log.trace("Webdriver.Manage().Window.maximize();");
 
-            if (isRemote && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Firefox) || browserType.equals(BrowserType.Opera))) {
+            if ((isRemote && (browserType.equals(BrowserType.Chrome) ||
+                    browserType.equals(BrowserType.Firefox) ||
+                    browserType.equals(BrowserType.Opera))) ||
+                    (!isRemote && osIsMacOrLinux() &&
+                            (browserType.equals(BrowserType.Opera) ||
+                            browserType.equals(BrowserType.Chrome)))) {
                 java.awt.Dimension dimension = BrowserSizeMap.map(fallbackBrowserSize);
                 log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
                 webDriver.manage().window().setPosition(new Point(0, 0));
