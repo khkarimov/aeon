@@ -795,7 +795,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 webDriver.manage().window().setPosition(position);
                 Dimension maximizedScreenSize =
                         new Dimension(screenWidth, screenHeight);
-                log.trace(String.format("Using maximize workaround on local Ubuntu machines with resolution %s", maximizedScreenSize));
+                log.trace(String.format("Using maximize workaround on local Mac or Linux machines with resolution %s", maximizedScreenSize));
                 webDriver.manage().window().setSize(maximizedScreenSize);
             } else {
                 webDriver.manage().window().maximize();
