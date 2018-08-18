@@ -786,8 +786,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
                 webDriver.manage().window().setPosition(new Point(0, 0));
                 webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
-            } else if (!isRemote && osIsMacOrLinux() &&
-                        (browserType.equals(BrowserType.Opera) ||
+            } else if (!isRemote && osIsMacOrLinux() && (browserType.equals(BrowserType.Opera) ||
                         browserType.equals(BrowserType.Chrome))) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
