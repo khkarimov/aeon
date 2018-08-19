@@ -19,6 +19,7 @@ public final class BrowserSizeMap {
         browserSizes.put(BrowserSize.SmallTabletLandscape, new Dimension(800, 600));
         browserSizes.put(BrowserSize.TabletPortrait, new Dimension(768, 1024));
         browserSizes.put(BrowserSize.TabletLandscape, new Dimension(1024, 768));
+        browserSizes.put(BrowserSize.FullHD, new Dimension(1920, 1080));
     }
 
     static {
@@ -29,6 +30,7 @@ public final class BrowserSizeMap {
         sizes.put(new Dimension(800, 600), BrowserSize.SmallTabletLandscape);
         sizes.put(new Dimension(768, 1024), BrowserSize.TabletPortrait);
         sizes.put(new Dimension(1024, 768), BrowserSize.TabletLandscape);
+        sizes.put(new Dimension(1920, 1080), BrowserSize.FullHD);
     }
 
     /**

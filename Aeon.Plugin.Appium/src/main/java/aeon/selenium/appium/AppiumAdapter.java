@@ -8,6 +8,7 @@ import aeon.core.common.mobile.interfaces.IByMobileXPath;
 import aeon.core.common.mobile.selectors.ByMobile;
 import aeon.core.common.mobile.selectors.ByMobileId;
 import aeon.core.common.mobile.selectors.MobileSelectOption;
+import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
@@ -16,7 +17,6 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.selenium.SeleniumAdapter;
 import aeon.selenium.SeleniumElement;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
-import com.sun.javafx.util.Logging;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.TouchAction;
@@ -33,7 +33,6 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import java.net.URL;
 import java.time.Duration;
 import java.util.*;
-import java.util.logging.Level;
 
 /**
  * Mobile adapter for Appium.
@@ -54,13 +53,14 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
      *                          (top left corner of the browser window) before executing every action.
      * @param browserType The browser type for the adapter.
+     * @param browserSize The screen resolution for the machine
      * @param isRemote Whether we are testing remotely or locally.
      * @param seleniumHubUrl The used Selenium hub URL.
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
      * @param loggingPreferences Preferences which contain which Selenium log types to enable
      */
-    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
-        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
 
         if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
             context = getMobileWebDriver().getContext();
