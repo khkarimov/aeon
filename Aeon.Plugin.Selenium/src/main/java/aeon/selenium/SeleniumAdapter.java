@@ -44,6 +44,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
 import static aeon.core.common.helpers.StringUtils.like;
@@ -1992,9 +1993,9 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         loggingPreferences.getEnabledLogTypes().forEach(logType -> {
             String filename = String.format("%s/%s-%d.log", seleniumLogsDirectory, logType, timeNow);
             try {
-                List<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll();
-                List<String> logStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
-                List<Map<String, Object>> logMapList = logEntries.stream().map(log -> {
+                Stream<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll().stream();
+                List<String> logStrings = logEntries.map(log -> log.toJson().toString()).collect(Collectors.toList());
+                List<Map<String, Object>> logMapList = logEntries.map(log -> {
                     Map<String, Object> map = new HashMap<>();
                     map.put("timestamp", log.getTimestamp());
                     map.put("level", log.getLevel().toString());
