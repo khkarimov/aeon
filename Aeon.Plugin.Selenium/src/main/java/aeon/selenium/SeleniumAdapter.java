@@ -34,6 +34,7 @@ import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -74,6 +75,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param moveMouseToOrigin     A boolean indicating whether or not the mouse will return to the origin
      *                              (top left corner of the browser window) before executing every action.
      * @param browserType           The browser type for the adapter.
+     * @param fallbackBrowserSize   The size the browser will be maximized to.
      * @param isRemote              Whether we are testing remotely or locally.
      * @param seleniumHubUrl        The used Selenium hub URL.
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
