@@ -68,7 +68,7 @@ public class SlackReport {
         String reportDate = "";
         ScenarioDetails scenarioDetails = reportDetails.getScenarios().peek();
         if (scenarioDetails != null) {
-            reportDate = ReportingPlugin.reportDateFormat.format(scenarioDetails.getStartTime());
+            reportDate = ReportingPlugin.REPORT_DATE_FORMAT.format(scenarioDetails.getStartTime());
         }
         return "Automation Report - " + reportDate.replace(":", "-");
     }

@@ -16,9 +16,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -26,8 +25,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Plugin class for Reporting Plugin.
  */
 public class ReportingPlugin extends Plugin {
-    public static final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
-    public static final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    public static final SimpleDateFormat REPORT_DATE_FORMAT = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+    public static final SimpleDateFormat UPLOAD_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public static IConfiguration aeonConfiguration;
     public static IConfiguration configuration;
@@ -51,10 +50,6 @@ public class ReportingPlugin extends Plugin {
      */
     @Extension
     public static class ReportingTestExecutionExtension implements ITestExecutionExtension {
-
-        public ReportingTestExecutionExtension() {
-
-        }
 
         static Map<Long, ScenarioDetails> scenarios = new ConcurrentHashMap<>();
         static Queue<ScenarioDetails> finishedScenarios = new ConcurrentLinkedQueue<>();
@@ -206,6 +201,20 @@ public class ReportingPlugin extends Plugin {
                     }
 
                     break;
+                case "browserLogsCollected":
+                    List<Map<String, Object>> logEntries = (List<Map<String, Object>>) payload;
+
+                    if (logEntries != null) {
+                        getCurrentScenarioBucket().setBrowserLogs(logEntries);
+                        for (ScenarioDetails scenario: finishedScenarios) {
+                            if (scenario.getBrowserLogs() == null
+                                    && scenario.getThreadId() == Thread.currentThread().getId()) {
+                                scenario.setBrowserLogs(logEntries);
+                            }
+                        }
+                    }
+
+                    break;
             }
         }
 
@@ -226,7 +235,7 @@ public class ReportingPlugin extends Plugin {
             long startTime = System.currentTimeMillis();
             reportDetails.setStartTime(startTime);
             reportDetails.setSuiteName(suiteName);
-            log.info("Start Time " + reportDateFormat.format(new Date(startTime)));
+            log.info("Start Time " + REPORT_DATE_FORMAT.format(new Date(startTime)));
         }
     }
 

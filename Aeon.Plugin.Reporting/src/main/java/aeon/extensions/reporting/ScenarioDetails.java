@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ScenarioDetails {
 
@@ -18,6 +19,7 @@ public class ScenarioDetails {
     private String stackTrace;
     private Image screenshot = null;
     private String videoUrl = "";
+    private List<Map<String, Object>> browserLogs = null;
     private List<Pair<String, List<String>>> steps = new ArrayList<>();
     private Pair<String, List<String>> currentHighLevelStep;
 
@@ -105,6 +107,14 @@ public class ScenarioDetails {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public List<Map<String, Object>> getBrowserLogs() {
+        return this.browserLogs;
+    }
+
+    public void setBrowserLogs(List<Map<String, Object>> browserLogs) {
+        this.browserLogs = browserLogs;
     }
 
     public String getShortenedErrorMessage(int characterLimit) {

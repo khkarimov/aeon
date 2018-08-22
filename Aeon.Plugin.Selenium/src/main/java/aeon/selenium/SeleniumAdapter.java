@@ -36,7 +36,6 @@ import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 
 import javax.imageio.ImageIO;
-
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -69,15 +68,16 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Constructor for Selenium Adapter.
-     * @param seleniumWebDriver The driver for the adapter.
-     * @param javaScriptExecutor The javaScript executor for the adapter.
-     * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
-     *                          (top left corner of the browser window) before executing every action.
-     * @param browserType The browser type for the adapter.
-     * @param isRemote Whether we are testing remotely or locally.
-     * @param seleniumHubUrl The used Selenium hub URL.
+     *
+     * @param seleniumWebDriver     The driver for the adapter.
+     * @param javaScriptExecutor    The javaScript executor for the adapter.
+     * @param moveMouseToOrigin     A boolean indicating whether or not the mouse will return to the origin
+     *                              (top left corner of the browser window) before executing every action.
+     * @param browserType           The browser type for the adapter.
+     * @param isRemote              Whether we are testing remotely or locally.
+     * @param seleniumHubUrl        The used Selenium hub URL.
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
-     * @param loggingPreferences Preferences which contain which Selenium log types to enable
+     * @param loggingPreferences    Preferences which contain which Selenium log types to enable
      */
     public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
@@ -92,6 +92,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Gets the web driver.
+     *
      * @return The web driver is returned.
      */
     public WebDriver getWebDriver() {
@@ -104,6 +105,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Gets the java script executor.
+     *
      * @return The java script executor is returned.
      */
     protected final IJavaScriptFlowExecutor getJavaScriptExecutor() {
@@ -120,7 +122,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
         String domain = cookie.getDomain();
-        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.'){
+        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.') {
             domain = domain.substring(1);
         }
 
@@ -201,7 +203,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
         String domain = cookie.getDomain();
-        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.'){
+        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.') {
             domain = domain.substring(1);
         }
 
@@ -564,7 +566,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
             String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
 
-            printSeleniumLogs();
+            collectSeleniumLogs();
 
             webDriver.quit();
 
@@ -577,7 +579,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             return;
         }
 
-        printSeleniumLogs();
+        collectSeleniumLogs();
 
         webDriver.quit();
     }
@@ -820,7 +822,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Clicks on a web control.
      *
-     * @param element The element to click on.
+     * @param element           The element to click on.
      * @param moveMouseToOrigin Whether to move the mouse to the top left corner before clicking or not.
      */
     protected void click(WebControl element, boolean moveMouseToOrigin) {
@@ -926,6 +928,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     // work around for marionette driver v.11.1
+
     /**
      * Performs a rightClick on the element passed as an argument by executing javascript.
      *
@@ -961,6 +964,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     // work around for marionette driver v.11.1
+
     /**
      * Performs a doubleClick on the element passed as an argument by executing javascript.
      *
@@ -994,11 +998,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
-            click(element, moveMouseToOrigin);
+        click(element, moveMouseToOrigin);
         //}
     }
 
     // Linked to selenium issue https://code.google.com/p/selenium/issues/detail?id=6702 and https://code.google.com/p/selenium/issues/detail?id=4618
+
     /**
      * Method to define the way the wrapping should be handled per browser. Clicks in the middle
      * of the coordinates provided in the list.
@@ -1234,6 +1239,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Takes the mouse pointer off an element.
+     *
      * @param element The element to take the mouse pointer off of.
      */
     @Override
@@ -1244,6 +1250,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Moves the mouse pointer over an element.
+     *
      * @param element The element to move the mouse pointer over.
      */
     @Override
@@ -1983,13 +1990,23 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
-    private void printSeleniumLogs(){
+    private void collectSeleniumLogs() {
         long timeNow = System.currentTimeMillis();
         loggingPreferences.getEnabledLogTypes().forEach(logType -> {
             String filename = String.format("%s/%s-%d.log", seleniumLogsDirectory, logType, timeNow);
             try {
                 List<LogEntry> logEntries = webDriver.manage().logs().get(logType).getAll();
                 List<String> logStrings = logEntries.stream().map(log -> log.toJson().toString()).collect(Collectors.toList());
+                List<Map<String, Object>> logMapList = logEntries.stream().map(log -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("timestamp", log.getTimestamp());
+                    map.put("level", log.getLevel().toString());
+                    map.put("message", log.getMessage());
+                    return map;
+                }).collect(Collectors.toList());
+
+                AeonTestExecution.executionEvent(logType + "LogsCollected", logMapList);
+
                 try {
                     File file = new File(filename);
                     file.getParentFile().mkdirs();
@@ -2008,7 +2025,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         });
     }
 
-    private boolean osIsMacOrLinux(){
+    private boolean osIsMacOrLinux() {
         return OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
                 || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux);
     }

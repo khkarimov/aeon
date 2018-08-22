@@ -70,8 +70,8 @@ public class HtmlReport {
                 testCaseResult.prefix  = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
             }
 
-            testCaseResult.started = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getStartTime()));
-            testCaseResult.stopped = ReportingPlugin.uploadDateFormat.format(new Date(scenario.getEndTime()));
+            testCaseResult.started = ReportingPlugin.UPLOAD_DATE_FORMAT.format(new Date(scenario.getStartTime()));
+            testCaseResult.stopped = ReportingPlugin.UPLOAD_DATE_FORMAT.format(new Date(scenario.getEndTime()));
             testCaseResult.duration = Utils.getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
             testCaseResult.status = scenario.getStatus().toLowerCase();
             if (testCaseResult.status.equals("skipped")) {
@@ -100,6 +100,7 @@ public class HtmlReport {
             }
 
             testCaseResult.videoUrl = scenario.getVideoUrl();
+            testCaseResult.browserLogs = scenario.getBrowserLogs();
             testCaseResult.steps = scenario.getSteps();
 
             resultReport.sequence.add(testCaseResult);
