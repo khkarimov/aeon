@@ -9,6 +9,7 @@ import aeon.core.common.helpers.OsCheck;
 import aeon.core.common.helpers.Process;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
+import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
@@ -90,6 +91,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected URL seleniumHubUrl;
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
+    protected BrowserSize fallbackBrowserSize;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -99,7 +101,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -121,6 +123,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
+        try {
+            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
+        } catch (IllegalArgumentException e) {
+            log.warn("Illegal browser size selected.  Set to default value: 'FullHD'");
+            fallbackBrowserSize = BrowserSize.FullHD;
+        }
 
         seleniumHubUrl = null;
         String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");

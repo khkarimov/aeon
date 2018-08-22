@@ -9,15 +9,13 @@ import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
 import aeon.core.common.helpers.*;
 import aeon.core.common.interfaces.IBy;
-import aeon.core.common.web.BrowserType;
-import aeon.core.common.web.ClientRects;
-import aeon.core.common.web.JQueryStringType;
-import aeon.core.common.web.WebSelectOption;
+import aeon.core.common.web.*;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
+import aeon.core.testabstraction.models.Browser;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
@@ -65,6 +63,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private boolean isRemote;
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
+    protected BrowserSize fallbackBrowserSize;
 
     /**
      * Constructor for Selenium Adapter.
@@ -79,7 +78,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
      * @param loggingPreferences    Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
@@ -88,6 +87,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         this.seleniumHubUrl = seleniumHubUrl;
         this.seleniumLogsDirectory = seleniumLogsDirectory;
         this.loggingPreferences = loggingPreferences;
+        this.fallbackBrowserSize = fallbackBrowserSize;
     }
 
     /**
@@ -779,27 +779,24 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void maximize() {
         try {
-            log.trace("WebDriver.Manage().Window.maximize();");
-
-            if (osIsMacOrLinux() && (browserType.equals(BrowserType.Chrome) || browserType.equals(BrowserType.Opera))) {
-                //In the case of remote, current workaround doesnt work cause cannot get screensize
-                //so manually using the grid resolution for now.
-                if (isRemote) {
-                    log.trace("Setting manual size  for remote test on linux and chrome.");
-                    webDriver.manage().window().setPosition(new Point(0, 0));
-                    webDriver.manage().window().setSize(new Dimension(1024, 768));
-                } else {
-                    //TODO(TOOL-6979): Added Linux due to chrome 60 bug.
-                    int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-                    int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-                    Point position = new Point(0, 0);
-                    webDriver.manage().window().setPosition(position);
-
-                    Dimension maximizedScreenSize =
-                            new Dimension(screenWidth, screenHeight);
-                    log.trace(String.format("Using maximize workaround on chrome with resolution %s", maximizedScreenSize));
-                    webDriver.manage().window().setSize(maximizedScreenSize);
-                }
+            log.trace("Webdriver.Manage().Window.maximize();");
+            if (isRemote && (browserType.equals(BrowserType.Chrome) ||
+                    browserType.equals(BrowserType.Firefox) ||
+                    browserType.equals(BrowserType.Opera))) {
+                java.awt.Dimension dimension = BrowserSizeMap.map(fallbackBrowserSize);
+                log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
+                webDriver.manage().window().setPosition(new Point(0, 0));
+                webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
+            } else if (!isRemote && osIsMacOrLinux() && (browserType.equals(BrowserType.Opera) ||
+                        browserType.equals(BrowserType.Chrome))) {
+                int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+                int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+                Point position = new Point(0, 0);
+                webDriver.manage().window().setPosition(position);
+                Dimension maximizedScreenSize =
+                        new Dimension(screenWidth, screenHeight);
+                log.trace(String.format("Using maximize workaround on local Mac or Linux machines with resolution %s", maximizedScreenSize));
+                webDriver.manage().window().setSize(maximizedScreenSize);
             } else {
                 webDriver.manage().window().maximize();
             }
