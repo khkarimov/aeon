@@ -6,9 +6,9 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 import java.io.*;
+import java.time.Duration;
 import java.util.stream.Collectors;
 
 /**
@@ -54,7 +54,7 @@ public class AjaxWaiter {
      * @return The timeout value, in milliseconds.
      */
     public long getTimeout() {
-        return timeout.getMillis();
+        return timeout.toMillis();
     }
 
     /**
@@ -62,7 +62,7 @@ public class AjaxWaiter {
      * @param millis The timeout value, in milliseconds, that the ajax waiter is set to have.
      */
     public void setTimeout(long millis) {
-        this.timeout = Duration.millis(millis);
+        this.timeout = Duration.ofMillis(millis);
     }
 
     /**
@@ -70,7 +70,7 @@ public class AjaxWaiter {
      */
     public void waitForAsync() {
         long count;
-        DateTime end = clock.getUtcNow().withDurationAdded(timeout.getMillis(), 1);
+        DateTime end = clock.getUtcNow().withDurationAdded(timeout.toMillis(), 1);
         do {
             try {
                 count = (long) webDriver.executeScript("return aeon.ajaxCounter;");
@@ -95,7 +95,7 @@ public class AjaxWaiter {
             String injectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeonAjaxWaiter');document.body.appendChild(a);";
             webDriver.executeScript(injectScriptTag);
-            webDriver.executeScript("aeon.ajaxJsonpElementTimeout = " + (timeout.getMillis() - 2000));
+            webDriver.executeScript("aeon.ajaxJsonpElementTimeout = " + (timeout.toMillis() - 2000));
             log.info("Injected JS");
         } catch (ScriptExecutionException e) {
             log.error("Could not inject JS");

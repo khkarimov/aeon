@@ -2,9 +2,9 @@ package aeon.core.common.exceptions;
 
 import aeon.core.common.Resources;
 import aeon.core.common.helpers.TimeUtils;
-import org.joda.time.Duration;
 
 import java.io.Serializable;
+import java.time.Duration;
 
 /**
  * This exception is thrown after an operation times out.

@@ -3,6 +3,7 @@ package aeon.core.common.helpers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.Duration;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
@@ -22,10 +23,10 @@ public class Wait {
      * case will bubble up the last thrown exception.
      *
      * @param task      The task to execute.
-     * @param timeout   Maximum time to wait in seconds.
-     * @param interval  The interval in which to execute the task in seconds.
+     * @param timeout   Maximum time to wait.
+     * @param interval  The interval in which to execute the task.
      */
-    public static void forSuccess(Runnable task, int timeout, int interval) {
+    public static void forSuccess(Runnable task, Duration timeout, Duration interval) {
 
         long startTime = System.currentTimeMillis();
         while (true) {
@@ -36,13 +37,13 @@ public class Wait {
                 return;
             } catch (RuntimeException e) {
 
-                if (startTime + timeout * 1000 >= System.currentTimeMillis()) {
+                if (startTime + timeout.toMillis() < System.currentTimeMillis()) {
                     throw e;
                 }
 
                 log.trace(e);
 
-                Sleep.wait(interval * 1000);
+                Sleep.wait(interval);
             }
         }
     }
@@ -54,11 +55,11 @@ public class Wait {
      * case will bubble up the last thrown exception.
      *
      * @param task      The task to execute.
-     * @param timeout   Maximum time to wait in seconds.
+     * @param timeout   Maximum time to wait.
      */
-    public static void forSuccess(Runnable task, int timeout) {
+    public static void forSuccess(Runnable task, Duration timeout) {
 
-        forSuccess(task, timeout, 1000);
+        forSuccess(task, timeout, Duration.ofMillis(1000));
     }
 
     /**
@@ -68,10 +69,10 @@ public class Wait {
      * case will bubble up the last thrown exception.
      *
      * @param task      The task to execute.
-     * @param timeout   Maximum time to wait in seconds.
-     * @param interval  The interval in which to execute the task in seconds.
+     * @param timeout   Maximum time to wait.
+     * @param interval  The interval in which to execute the task.
      */
-    public static void forSuccess(BooleanSupplier task, int timeout, int interval) {
+    public static void forSuccess(BooleanSupplier task, Duration timeout, Duration interval) {
 
         forSuccess(() -> {
             if (!task.getAsBoolean()) {
@@ -87,11 +88,11 @@ public class Wait {
      * case will bubble up the last thrown exception.
      *
      * @param task      The task to execute.
-     * @param timeout   Maximum time to wait in seconds.
+     * @param timeout   Maximum time to wait.
      */
-    public static void forSuccess(BooleanSupplier task, int timeout) {
+    public static void forSuccess(BooleanSupplier task, Duration timeout) {
 
-        forSuccess(task, timeout, 1000);
+        forSuccess(task, timeout, Duration.ofMillis(1000));
     }
 
     /**
@@ -104,11 +105,11 @@ public class Wait {
      *
      * @param task      The task to execute.
      * @param value     Expected value.
-     * @param timeout   Maximum time to wait in seconds.
-     * @param interval  The interval in which to execute the task in seconds.
+     * @param timeout   Maximum time to wait.
+     * @param interval  The interval in which to execute the task.
      * @param <T>       The type of the expected value.
      */
-    public static <T> void forValue(Supplier<T> task, T value, int timeout, int interval) {
+    public static <T> void forValue(Supplier<T> task, T value, Duration timeout, Duration interval) {
 
         forSuccess(() -> {
             T result = task.get();
@@ -130,12 +131,12 @@ public class Wait {
      *
      * @param task      The task to execute.
      * @param value     Expected value.
-     * @param timeout   Maximum time to wait in seconds.
+     * @param timeout   Maximum time to wait.
      * @param <T>       The type of the expected value.
      */
-    public static <T> void forValue(Supplier<T> task, T value, int timeout) {
+    public static <T> void forValue(Supplier<T> task, T value, Duration timeout) {
 
-        forValue(task, value, timeout, 1000);
+        forValue(task, value, timeout, Duration.ofMillis(1000));
     }
 
     /**
@@ -146,10 +147,10 @@ public class Wait {
      *
      * @param task      The task to execute.
      * @param value     Expected string.
-     * @param timeout   Maximum time to wait in seconds.
-     * @param interval  The interval in which to execute the task in seconds.
+     * @param timeout   Maximum time to wait.
+     * @param interval  The interval in which to execute the task.
      */
-    public static void forValue(Supplier<String> task, String value, int timeout, int interval) {
+    public static void forValue(Supplier<String> task, String value, Duration timeout, Duration interval) {
 
         forSuccess(() -> {
             String result = task.get();
@@ -168,10 +169,10 @@ public class Wait {
      *
      * @param task      The task to execute.
      * @param value     Expected string.
-     * @param timeout   Maximum time to wait in seconds.
+     * @param timeout   Maximum time to wait.
      */
-    public static void forValue(Supplier<String> task, String value, int timeout) {
+    public static void forValue(Supplier<String> task, String value, Duration timeout) {
 
-        forValue(task, value, timeout, 1000);
+        forValue(task, value, timeout, Duration.ofMillis(1000));
     }
 }

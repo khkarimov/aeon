@@ -1,7 +1,7 @@
 package aeon.selenium.jquery;
 
-import org.joda.time.Duration;
 
+import java.time.Duration;
 
 /**
  * Defines the interface through which the user can execute JavaScript.

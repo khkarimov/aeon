@@ -3,10 +3,10 @@ package aeon.selenium.jquery;
 import aeon.core.common.helpers.ConvertHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,7 +45,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
      */
     public final void setTimeout(Duration timeToWait) {
         log.trace(String.format("WebDriver.Manage().Timeouts().SetScriptTimeout(%1$s);", timeToWait));
-        getRemoteWebDriver().manage().timeouts().setScriptTimeout(timeToWait.getStandardSeconds(), TimeUnit.SECONDS);
+        getRemoteWebDriver().manage().timeouts().setScriptTimeout(timeToWait.getSeconds(), TimeUnit.SECONDS);
     }
 
     /**

@@ -11,9 +11,9 @@ import aeon.core.testabstraction.product.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 import java.awt.*;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -67,7 +67,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         RuntimeException lastCaughtException = null;
         int tries = 0;
 
-        DateTime end = clock.getUtcNow().withDurationAdded(timeout.getMillis(), 1);
+        DateTime end = clock.getUtcNow().withDurationAdded(timeout.toMillis(), 1);
         while (clock.getUtcNow().isBefore(end.toInstant())) {
             try {
                 tries++;

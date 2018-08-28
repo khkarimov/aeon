@@ -10,7 +10,8 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.models.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.Duration;
+
+import java.time.Duration;
 
 /**
  * Class to make a web product.
@@ -55,8 +56,8 @@ public class WebProduct extends Product {
         long ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
 
         WebCommandExecutionFacade commandExecutionFacade = new WebCommandExecutionFacade(
-                new DelegateRunnerFactory(Duration.millis(throttle), Duration.standardSeconds(timeout)),
-                new AjaxWaiter(this.automationInfo.getDriver(), Duration.standardSeconds(ajaxTimeout)));
+                new DelegateRunnerFactory(Duration.ofMillis(throttle), Duration.ofSeconds(timeout)),
+                new AjaxWaiter(this.automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout)));
 
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
 
