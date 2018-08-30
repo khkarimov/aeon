@@ -38,7 +38,7 @@ public class ReportingPlugin extends Plugin {
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
      * Your plugins have to provide constructor with this exact signature to
-     * be successfully loaded by manager.
+     * be successfully loaded by manag er.
      *
      * @param wrapper The plugin wrapper to be set.
      */
