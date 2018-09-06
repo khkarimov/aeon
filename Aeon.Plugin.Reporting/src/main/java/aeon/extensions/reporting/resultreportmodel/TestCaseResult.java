@@ -1,7 +1,6 @@
 package aeon.extensions.reporting.resultreportmodel;
 
-import javafx.util.Pair;
-
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,5 +21,5 @@ public class TestCaseResult {
     public String duration;
     public String screenshotPath;
     public String videoUrl;
-    public List<Pair<String, List<String>>> steps;
+    public List<AbstractMap.SimpleEntry<String, List<String>>> steps;
 }

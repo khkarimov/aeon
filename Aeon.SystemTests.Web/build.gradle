@@ -46,3 +46,7 @@ test {
         showStandardStreams = true
     }
 }
+
+sonarqube {
+    skipProject = true
+}

@@ -4,10 +4,12 @@ buildscript {
     }
     dependencies {
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.3"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
     }
 }
 
 apply plugin: 'java'
+apply plugin: 'org.sonarqube'
 
 dependencies {
     compile project(':Aeon.Core')

@@ -3,3 +3,7 @@ artifactoryPublish.skip = true
 dependencies {
     compile project(":Aeon.Core.Mobile")
 }
+
+sonarqube {
+    skipProject = true
+}

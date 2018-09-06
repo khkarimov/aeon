@@ -1,8 +1,7 @@
 package aeon.extensions.reporting;
 
-import javafx.util.Pair;
-
 import java.awt.*;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +19,11 @@ public class ScenarioDetails {
     private Image screenshot = null;
     private String videoUrl = "";
     private List<Map<String, Object>> browserLogs = null;
-    private List<Pair<String, List<String>>> steps = new ArrayList<>();
-    private Pair<String, List<String>> currentHighLevelStep;
+    private List<AbstractMap.SimpleEntry<String, List<String>>> steps = new ArrayList<>();
+    private AbstractMap.SimpleEntry<String, List<String>> currentHighLevelStep;
 
     public ScenarioDetails() {
-        Pair<String, List<String>> unnamedHighLevelStep = new Pair<>("", new ArrayList<>());
+        AbstractMap.SimpleEntry<String, List<String>> unnamedHighLevelStep = new AbstractMap.SimpleEntry<>("", new ArrayList<>());
         currentHighLevelStep = unnamedHighLevelStep;
         steps.add(unnamedHighLevelStep);
     }
@@ -131,7 +130,7 @@ public class ScenarioDetails {
 
     public void addHighLevelStep(String name) {
 
-        Pair<String, List<String>> newHighLevelStep = new Pair<>(name, new ArrayList<>());
+        AbstractMap.SimpleEntry<String, List<String>> newHighLevelStep = new AbstractMap.SimpleEntry<>(name, new ArrayList<>());
         currentHighLevelStep = newHighLevelStep;
         steps.add(newHighLevelStep);
     }
@@ -140,7 +139,7 @@ public class ScenarioDetails {
         currentHighLevelStep.getValue().add(name);
     }
 
-    public List<Pair<String, List<String>>> getSteps() {
+    public List<AbstractMap.SimpleEntry<String, List<String>>> getSteps() {
         return steps;
     }
 }
