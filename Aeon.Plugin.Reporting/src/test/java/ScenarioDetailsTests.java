@@ -1,10 +1,10 @@
 import aeon.extensions.reporting.ScenarioDetails;
-import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class ScenarioDetailsTests {
         String lowLevel1 = "SMOL STEP 1";
         String lowLevel2 = "SMOL STEP 2";
 
-        List<Pair<String, List<String>>> expectedSteps = new ArrayList<>();
+        List<AbstractMap.SimpleEntry<String, List<String>>> expectedSteps = new ArrayList<>();
         List<String> valuesList0 = new ArrayList<>();
         valuesList0.add("these are your first steps");
         List<String> valuesList1 = new ArrayList<>();
@@ -87,9 +87,9 @@ public class ScenarioDetailsTests {
         List<String> valuesList2 = new ArrayList<>();
         valuesList2.add(lowLevel1 + ".2");
         valuesList2.add(lowLevel2 + ".2");
-        expectedSteps.add(new Pair<>("", valuesList0));
-        expectedSteps.add(new Pair<>(highLevel1, valuesList1));
-        expectedSteps.add(new Pair<>(highLevel2, valuesList2));
+        expectedSteps.add(new AbstractMap.SimpleEntry<>("", valuesList0));
+        expectedSteps.add(new AbstractMap.SimpleEntry<>(highLevel1, valuesList1));
+        expectedSteps.add(new AbstractMap.SimpleEntry<>(highLevel2, valuesList2));
 
         // Act
         ScenarioDetails scenario = new ScenarioDetails();
@@ -100,13 +100,13 @@ public class ScenarioDetailsTests {
         scenario.addHighLevelStep(highLevel2);
         scenario.addStep(lowLevel1 + ".2");
         scenario.addStep(lowLevel2 + ".2");
-        List<Pair<String, List<String>>> resultSteps = scenario.getSteps();
+        List<AbstractMap.SimpleEntry<String, List<String>>> resultSteps = scenario.getSteps();
 
         // Assert
         Assert.assertEquals(expectedSteps.size(), resultSteps.size());
         for (int i = 0; i < expectedSteps.size(); i++) {
-            Pair<String, List<String>> expectedStep = expectedSteps.get(i);
-            Pair<String, List<String>> resultStep = resultSteps.get(i);
+            AbstractMap.SimpleEntry<String, List<String>> expectedStep = expectedSteps.get(i);
+            AbstractMap.SimpleEntry<String, List<String>> resultStep = resultSteps.get(i);
 
             Assert.assertEquals(expectedStep.getKey(), resultStep.getKey());
             Assert.assertEquals(expectedStep.getValue().size(), resultStep.getValue().size());

@@ -1,4 +1,15 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.3"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'org.sonarqube'
 
 dependencies {
     compile project(':Aeon.Core')
@@ -16,7 +27,6 @@ task wrapper(type: Wrapper) {
     group 'build setup'
     gradleVersion = '4.9'
 }
-
 
 //Copy selenium plugin into SystemTests plugins folder
 task CopySeleniumPlugin(type: Copy) {
@@ -105,16 +115,6 @@ allprojects {
                 }
             }
         }
-    }
-}
-
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.3"
     }
 }
 

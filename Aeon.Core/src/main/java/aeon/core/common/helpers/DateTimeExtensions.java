@@ -29,26 +29,11 @@ public class DateTimeExtensions {
      * @param delta The period to be converted to milliseconds.
      * @return a long of the period in milliseconds.
      */
-    public static long periodToMilliSeconds(Period delta) {
-        long dayMillis = delta.getDays() * DateTimeConstants.MILLIS_PER_DAY;
-        long hourMillis = delta.getHours() * DateTimeConstants.MILLIS_PER_HOUR;
-        long minutesMillis = delta.getMinutes() * DateTimeConstants.MILLIS_PER_MINUTE;
-        long secondsMillis = delta.getSeconds() * DateTimeConstants.MILLIS_PER_SECOND;
+    private static long periodToMilliSeconds(Period delta) {
+        long dayMillis = delta.getDays() * (long) DateTimeConstants.MILLIS_PER_DAY;
+        long hourMillis = delta.getHours() * (long) DateTimeConstants.MILLIS_PER_HOUR;
+        long minutesMillis = delta.getMinutes() * (long) DateTimeConstants.MILLIS_PER_MINUTE;
+        long secondsMillis = delta.getSeconds() * (long) DateTimeConstants.MILLIS_PER_SECOND;
         return dayMillis + hourMillis + minutesMillis + secondsMillis + delta.getMillis();
     }
-
-//    /**
-//     * Converts a string into a Date by using a specific format.
-//     * @param format The format that the date is in.
-//     * @param date The string to be formatted.
-//     * @return A Date Object.
-//     */
-//    public static Date StringToDate(String format, String date) {
-//        try {
-//            SimpleDateFormat formatter = new SimpleDateFormat(format);
-//            return formatter.parse(date);
-//        } catch (ParseException e) {
-//            throw new ElementAttributeNotADateException(format, date);
-//        }
-//    }
 }
