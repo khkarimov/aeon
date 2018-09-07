@@ -1,6 +1,7 @@
 package aeon.extensions.reporting.resultreportmodel;
 
-import java.util.AbstractMap;
+import aeon.extensions.reporting.HighLevelStep;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,5 +22,5 @@ public class TestCaseResult {
     public String duration;
     public String screenshotPath;
     public String videoUrl;
-    public List<AbstractMap.SimpleEntry<String, List<String>>> steps;
+    public List<HighLevelStep> steps;
 }
