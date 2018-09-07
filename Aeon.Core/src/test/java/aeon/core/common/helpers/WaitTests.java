@@ -44,7 +44,7 @@ public class WaitTests {
         Wait.forValue(() -> {
             this.valueToBe5++;
             return valueToBe5;
-        }, 5, Duration.ofMillis(3), Duration.ofMillis(1));
+        }, 5, Duration.ofMillis(1), Duration.ofMillis(1));
     }
 
     @Test
