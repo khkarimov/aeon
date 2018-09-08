@@ -106,6 +106,10 @@ public class BaseConfiguration implements IConfiguration {
         List<Field> keys = getConfigurationFields();
         keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
         for (Field key : keys) {
+            if (key.isSynthetic()) {
+                continue;
+            }
+
             key.setAccessible(true);
             String keyValue = key.get(null).toString();
             String environmentValue = getEnvironmentValue(keyValue.replace('.', '_'));

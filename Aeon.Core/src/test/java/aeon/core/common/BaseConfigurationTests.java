@@ -6,6 +6,8 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import aeon.core.testabstraction.product.Configuration;
 import org.apache.logging.log4j.Logger;
 import org.mockito.InOrder;
@@ -130,7 +132,9 @@ public class BaseConfigurationTests {
 
     @Test
     public void testKeys() throws IOException, IllegalAccessException {
-        List<Field> fieldList = Arrays.asList(Configuration.Keys.class.getDeclaredFields());
+        List<Field> fieldList = Arrays.stream(Configuration.Keys.class.getDeclaredFields())
+                .filter(field -> !field.isSynthetic())
+                .collect(Collectors.toList());
 
         // Arrange
         when(spyConfig.getConfigurationFields()).thenReturn(fieldList);
@@ -149,7 +153,9 @@ public class BaseConfigurationTests {
         // Arrange
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
         when(spyConfig.getEnvironmentValue("aeon.throttle")).thenReturn("testEnv2");
-        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.class.getDeclaredFields())
+                .filter(field -> !field.isSynthetic())
+                .collect(Collectors.toList()));
         when(properties.propertyNames()).thenReturn(enumerationList);
 
         spyConfig.properties = properties;
@@ -169,7 +175,9 @@ public class BaseConfigurationTests {
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
         when(spyConfig.getEnvironmentValue("aeon.throttle")).thenReturn("testEnv2");
         when(spyConfig.getEnvironmentValue("aeon_throttle")).thenReturn("testEnv3");
-        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.class.getDeclaredFields())
+                .filter(field -> !field.isSynthetic())
+                .collect(Collectors.toList()));
         when(properties.propertyNames()).thenReturn(enumerationList);
 
         spyConfig.properties = properties;
@@ -190,7 +198,9 @@ public class BaseConfigurationTests {
         // Arrange
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
         when(spyConfig.getEnvironmentValue("aeon_throttle")).thenReturn("testEnv3");
-        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.asList(Configuration.Keys.class.getDeclaredFields()));
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.class.getDeclaredFields())
+                .filter(field -> !field.isSynthetic())
+                .collect(Collectors.toList()));
         when(properties.propertyNames()).thenReturn(enumerationList);
 
         spyConfig.properties = properties;
