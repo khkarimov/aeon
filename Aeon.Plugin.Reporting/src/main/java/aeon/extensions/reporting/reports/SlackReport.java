@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,8 @@ public class SlackReport {
 
     private ReportDetails reportDetails;
     private List<String> messages;
+
+    private final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
 
     private static Logger log = LogManager.getLogger(SlackReport.class);
 
@@ -68,7 +71,7 @@ public class SlackReport {
         String reportDate = "";
         ScenarioDetails scenarioDetails = reportDetails.getScenarios().peek();
         if (scenarioDetails != null) {
-            reportDate = ReportingPlugin.REPORT_DATE_FORMAT.format(scenarioDetails.getStartTime());
+            reportDate = reportDateFormat.format(scenarioDetails.getStartTime());
         }
         return "Automation Report - " + reportDate.replace(":", "-");
     }

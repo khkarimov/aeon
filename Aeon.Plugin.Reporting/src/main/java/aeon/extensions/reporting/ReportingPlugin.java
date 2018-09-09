@@ -27,8 +27,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Plugin class for Reporting Plugin.
  */
 public class ReportingPlugin extends Plugin {
-    public static final SimpleDateFormat REPORT_DATE_FORMAT = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
-    public static final SimpleDateFormat UPLOAD_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public static IConfiguration aeonConfiguration;
     public static IConfiguration configuration;
@@ -55,6 +53,8 @@ public class ReportingPlugin extends Plugin {
 
         static Map<Long, ScenarioDetails> scenarios = new ConcurrentHashMap<>();
         static Queue<ScenarioDetails> finishedScenarios = new ConcurrentLinkedQueue<>();
+
+        final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
 
         @Override
         public void onBeforeStart(String correlationId, String suiteName) {
@@ -237,7 +237,7 @@ public class ReportingPlugin extends Plugin {
             long startTime = System.currentTimeMillis();
             reportDetails.setStartTime(startTime);
             reportDetails.setSuiteName(suiteName);
-            log.info("Start Time " + REPORT_DATE_FORMAT.format(new Date(startTime)));
+            log.info("Start Time " + this.reportDateFormat.format(new Date(startTime)));
         }
     }
 

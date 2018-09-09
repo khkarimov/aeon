@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -27,8 +28,8 @@ public class SlackBotService {
     private static String slackUploadUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, "");
 
     public static void publishNotificationToSlack(String channel, String message) {
-        try {
-            HttpClient client = HttpClients.createDefault();
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+
             HttpPost httpPost = new HttpPost(slackChatUrl);
 
             List<NameValuePair> params = new ArrayList<>();

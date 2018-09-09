@@ -534,7 +534,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
             webDriver.switchTo().window(window);
 
-            if (getUrl().toString().toLowerCase().contains(value.toLowerCase())) {
+            URL url = getUrl();
+            if (url != null && url.toString().toLowerCase().contains(value.toLowerCase())) {
                 return window;
             }
         }
@@ -617,10 +618,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 return null;
             }
 
-            ReadableByteChannel readableByteChannel = Channels.newChannel(downloadUrl.openStream());
             tempFile = File.createTempFile("video-", ".webm");
             tempFile.deleteOnExit();
-            FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
+
+        } catch (IOException e) {
+            log.error("Error checking for response type for video download from Selenium Grid.", e);
+
+            return null;
+        }
+
+        try (ReadableByteChannel readableByteChannel = Channels.newChannel(downloadUrl.openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(tempFile);) {
+
             fileOutputStream.getChannel()
                     .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
         } catch (IOException e) {
@@ -1090,11 +1099,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         action.clickAndHold(seleniumElement.getUnderlyingWebElement()).perform();
 
         // Hold the click.
-        try {
-            Thread.sleep(duration);
-        } catch (InterruptedException e) {
-            throw new UnableToHoldClickException();
-        }
+        Sleep.wait(duration);
 
         // Release click.
         action.release(seleniumElement.getUnderlyingWebElement()).perform();
@@ -1825,8 +1830,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void verifyURL(URL comparingURL) {
-        if (!getUrl().equals(comparingURL)) {
-            throw new ValuesAreNotEqualException(getUrl().toString(), comparingURL.toString());
+
+        URL url = getUrl();
+        if (url == null) {
+            throw new IllegalArgumentException("url");
+        }
+
+        if (comparingURL == null) {
+            throw new IllegalArgumentException("comparingURL");
+        }
+
+        if (!url.equals(comparingURL)) {
+            throw new ValuesAreNotEqualException(url.toString(), comparingURL.toString());
         }
     }
 

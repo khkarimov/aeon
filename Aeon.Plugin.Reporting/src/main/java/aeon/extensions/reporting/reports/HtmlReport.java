@@ -14,6 +14,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,8 @@ public class HtmlReport {
 
     private ResultReport resultReport;
     private String jsonReport;
+
+    public final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     private static Logger log = LogManager.getLogger(HtmlReport.class);
 
@@ -70,8 +73,8 @@ public class HtmlReport {
                 testCaseResult.prefix  = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
             }
 
-            testCaseResult.started = ReportingPlugin.UPLOAD_DATE_FORMAT.format(new Date(scenario.getStartTime()));
-            testCaseResult.stopped = ReportingPlugin.UPLOAD_DATE_FORMAT.format(new Date(scenario.getEndTime()));
+            testCaseResult.started = uploadDateFormat.format(new Date(scenario.getStartTime()));
+            testCaseResult.stopped = uploadDateFormat.format(new Date(scenario.getEndTime()));
             testCaseResult.duration = Utils.getTime(scenario.getEndTime() - scenario.getStartTime()).replace(" seconds", "s");
             testCaseResult.status = scenario.getStatus().toLowerCase();
             if (testCaseResult.status.equals("skipped")) {
