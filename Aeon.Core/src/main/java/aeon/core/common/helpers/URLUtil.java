@@ -9,8 +9,17 @@ import java.net.URL;
  * Class to represent a url utility.
  */
 public class URLUtil {
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private URLUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Given a string URL, it creates a URL object.
+     *
      * @param url the input url as a string.
      * @return the new URL object.
      */
@@ -18,7 +27,6 @@ public class URLUtil {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
             throw new UnableToCreateURLException(url);
         }
     }

@@ -1,5 +1,6 @@
 package aeon.core.common.helpers;
 
+import aeon.core.common.exceptions.TimeoutExpiredException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +16,13 @@ import java.util.function.Supplier;
 public class Wait {
 
     private static Logger log = LogManager.getLogger(Wait.class);
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private Wait() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Repeatedly executes a task until it completes successfully, ie without throwing an exception.
@@ -76,7 +84,7 @@ public class Wait {
 
         forSuccess(() -> {
             if (!task.getAsBoolean()) {
-                throw new RuntimeException("Found false instead of true for task");
+                throw new TimeoutExpiredException("Found false instead of true for task", timeout);
             }
         }, timeout, interval);
     }
@@ -115,8 +123,8 @@ public class Wait {
             T result = task.get();
 
             if (result != value) {
-                throw new RuntimeException(
-                        String.format("Expected \"%s\", but found \"%s\" for task", value, result));
+                throw new TimeoutExpiredException(
+                        String.format("Expected \"%s\", but found \"%s\" for task", value, result), timeout);
             }
         }, timeout, interval);
     }
@@ -155,8 +163,8 @@ public class Wait {
         forSuccess(() -> {
             String result = task.get();
             if (!result.equals(value)) {
-                throw new RuntimeException(
-                        String.format("Expected \"%s\", but found \"%s\"", value, result));
+                throw new TimeoutExpiredException(
+                        String.format("Expected \"%s\", but found \"%s\"", value, result), timeout);
             }
         }, timeout, interval);
     }

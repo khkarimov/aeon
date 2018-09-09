@@ -1,5 +1,8 @@
 package aeon.core.common.helpers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.awt.*;
 import java.awt.event.InputEvent;
 
@@ -8,7 +11,14 @@ import java.awt.event.InputEvent;
  */
 public class MouseHelper {
 
-    // SR - I made this a boolean so that the Adapter can determine whether to throw an error or not
+    private static Logger log = LogManager.getLogger(MouseHelper.class);
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private MouseHelper() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Function uses coordinates to click at a specified location.
@@ -32,7 +42,8 @@ public class MouseHelper {
             mouseRobot.mouseMove(xOriginal, yOriginal);
             return true;
         } catch (AWTException e) {
-            e.printStackTrace();
+            log.error("Error clicking via Robot.", e);
+
             return false;
         }
     }
@@ -42,6 +53,7 @@ public class MouseHelper {
      * @param yCoordinate the y coordinate.
      * @param durationMillis the duration in milliseconds to hold.
      * @return returns false if the adapter needs to throw an error.
+     * @deprecated This method will be removed in a future version of Aeon.
      */
     public static boolean clickAndHold(int xCoordinate, int yCoordinate, int durationMillis) {
         //get the current coordinates
@@ -60,7 +72,8 @@ public class MouseHelper {
             mouseRobot.mouseMove(xOriginal, yOriginal);
             return true;
         } catch (AWTException e) {
-            e.printStackTrace();
+            log.error("Error clicking and holding via Robot.", e);
+
             return false;
         }
     }
@@ -72,12 +85,9 @@ public class MouseHelper {
      * @param endXCoordinate The ending x coordinate.
      * @param endYCoordinate the ending y coordinate.
      * @return a boolean of success or failure.
+     * @deprecated This method will be removed in a future version of Aeon.
      */
     public static boolean dragAndDrop(int startXCoordinate, int startYCoordinate, int endXCoordinate, int endYCoordinate) {
-        //get the current coordinates
-        Point pointLocation = MouseInfo.getPointerInfo().getLocation();
-        int xOriginal = (int) pointLocation.getX();
-        int yOriginal = (int) pointLocation.getY();
 
         try {
             Robot mouseRobot = new Robot();
@@ -89,7 +99,8 @@ public class MouseHelper {
 
             return true;
         } catch (AWTException e) {
-            e.printStackTrace();
+            log.error("Error dragging and dropping via Robot.", e);
+
             return false;
         }
     }

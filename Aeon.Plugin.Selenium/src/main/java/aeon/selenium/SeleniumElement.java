@@ -310,7 +310,7 @@ public class SeleniumElement extends WebControl {
                 Robot robot = new Robot();
                 robot.mouseMove(0, 0);
             } catch (AWTException e) {
-                e.printStackTrace();
+                log.error("Error moving mouse to origin", e);
             }
         }
 

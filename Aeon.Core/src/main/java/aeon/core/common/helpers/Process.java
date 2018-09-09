@@ -1,5 +1,8 @@
 package aeon.core.common.helpers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,6 +13,15 @@ import java.util.List;
  * Helper class for processes.
  */
 public class Process {
+
+    private static Logger log = LogManager.getLogger(Process.class);
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private Process() {
+        throw new IllegalStateException("Utility class");
+    }
 
     // SR - we should make this agnostic of the OS
 
@@ -35,7 +47,7 @@ public class Process {
             }
             return output;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error retrieving processes", e);
         }
 
         return null;
@@ -68,7 +80,7 @@ public class Process {
             try {
                 Runtime.getRuntime().exec(command);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Error killing processes", e);
             }
         }
     }
