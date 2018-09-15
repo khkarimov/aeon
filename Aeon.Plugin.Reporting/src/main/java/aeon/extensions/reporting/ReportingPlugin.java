@@ -147,7 +147,12 @@ public class ReportingPlugin extends Plugin {
         }
 
         @Override
-        public void onSkippedTest() {
+        public void onSkippedTest(String name, String... tags) {
+
+            // Test didn't run
+            // Treat is as if it just started and ended
+            onBeforeTest(name, tags);
+
             ScenarioDetails scenario = getCurrentScenarioBucket();
 
             scenario.setEndTime(new Date().getTime());
@@ -158,6 +163,7 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onFailedTest(String reason, Throwable e) {
+
             ScenarioDetails scenario = getCurrentScenarioBucket();
 
             scenario.setErrorMessage(reason);
@@ -187,7 +193,12 @@ public class ReportingPlugin extends Plugin {
                     getCurrentScenarioBucket().setScreenshot((Image) payload);
                     break;
                 case "commandInitialized":
-                    getCurrentScenarioBucket().addStep((String) payload);
+                    ScenarioDetails currentScenarioDetails = getCurrentScenarioBucket();
+
+                    // Only add steps if the test is not marked as completed yet.
+                    if (currentScenarioDetails.getStatus().equals("")) {
+                        getCurrentScenarioBucket().addStep((String) payload);
+                    }
                     break;
                 case "videoDownloaded":
                     String videoUrl = ArtifactoryService.uploadToArtifactory((String) payload);

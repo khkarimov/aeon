@@ -45,8 +45,8 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
     }
 
     @Override
-    public void onSkippedTest() {
-        log.info("TEST SKIPPED");
+    public void onSkippedTest(String name, String... tags) {
+        log.info("TEST SKIPPED: " + name);
     }
 
     @Override

@@ -55,8 +55,11 @@ public interface ITestExecutionExtension extends ExtensionPoint {
 
     /**
      * Is called when the driver is skipped.
+     *
+     * @param name Test name
+     * @param tags Tags to add
      */
-    void onSkippedTest();
+    void onSkippedTest(String name, String... tags);
 
     /**
      * Is called when a test failed.

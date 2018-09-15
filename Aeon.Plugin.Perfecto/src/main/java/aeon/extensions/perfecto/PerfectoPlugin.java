@@ -109,7 +109,7 @@ public class PerfectoPlugin extends Plugin {
         }
 
         @Override
-        public void onSkippedTest() {
+        public void onSkippedTest(String name, String... tags) {
             reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
 
             log.info("Test Report URL: " + reportiumClient.getReportUrl());

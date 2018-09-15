@@ -218,11 +218,14 @@ public class AeonTestExecution {
 
     /**
      * Method to indicate the skipping of a test.
+     *
+     * @param name The name of the test.
+     * @param tags Tags to add.
      */
-    public static void testSkipped() {
+    public static void testSkipped(String name, String... tags) {
         init();
         for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onSkippedTest();
+            testExecutionPlugin.onSkippedTest(name, tags);
         }
     }
 

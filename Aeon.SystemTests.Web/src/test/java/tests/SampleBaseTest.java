@@ -44,7 +44,8 @@ public class SampleBaseTest {
 
         @Override
         protected void skipped(AssumptionViolatedException e, Description description) {
-            testSkipped();
+            String className = description.getClassName().substring(description.getClassName().lastIndexOf(".") + 1, description.getClassName().length());
+            testSkipped(className + "." + description.getMethodName());
         }
     };
 
