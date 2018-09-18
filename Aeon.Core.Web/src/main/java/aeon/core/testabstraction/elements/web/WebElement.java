@@ -5,6 +5,7 @@ import aeon.core.command.execution.commands.initialization.WebCommandInitializer
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
+import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
@@ -115,9 +116,11 @@ public class WebElement extends Element {
 
     /**
      * Executes the drag and drop command.
+     * @deprecated use dragAndDrop(WebElement) instead.
      *
-     * @param dropTarget The element to be dropped.
+     * @param dropTarget The element to be dropped at.
      */
+    @Deprecated
     public void dragAndDrop(String dropTarget) {
         info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
                 selector,
@@ -125,6 +128,17 @@ public class WebElement extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
 
+    /**
+     * Executes the drag and drop command.
+     *
+     * @param dropTarget The element to be dropped at.
+     */
+    public void dragAndDrop(WebElement dropTarget) {
+        info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
+                selector,
+                dropTarget.selector,
+                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
+    }
     /**
      * Executes the enabled command.
      */
