@@ -891,19 +891,19 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Drag and drops the dropElement to the targetElement area.
+     * Drag and drops the draggableElement to the targetElement area.
      *
-     * @param dropElement   Element to be dragged.
-     * @param targetElement Where the element will be dropped.
+     * @param draggableElement Element to be dragged.
+     * @param targetElement    Where the element will be dropped.
      */
-    public final void dragAndDrop(WebControl dropElement, IByWeb targetElement) {
+    public final void dragAndDrop(WebControl draggableElement, IByWeb targetElement) {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        WebElement drop = ((SeleniumElement) dropElement).getUnderlyingWebElement();
+        WebElement draggable = ((SeleniumElement) draggableElement).getUnderlyingWebElement();
         WebElement target = ((SeleniumElement) findElement(targetElement)).getUnderlyingWebElement();
 
-        if (isHtml5Draggable(drop)) {
+        if (isHtml5Draggable(draggable)) {
             log.trace("Executing drag and drop with javascript script");
             executeScript("function createEvent(typeOfEvent) {\n" + "var event =document.createEvent(\"CustomEvent\");\n"
                     + "event.initCustomEvent(typeOfEvent,true, true, null);\n" + "event.dataTransfer = {\n" + "data: {},\n"
@@ -920,12 +920,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     + "var dragEndEvent = createEvent('dragend');\n"
                     + "dispatchEvent(element, dragEndEvent,dropEvent.dataTransfer);\n" + "}\n" + "\n"
                     + "var source = arguments[0][0];\n" + "var destination = arguments[0][1];\n"
-                    + "simulateHTML5DragAndDrop(source, destination)", drop, target);
+                    + "simulateHTML5DragAndDrop(source, destination)", draggable, target);
         } else {
             log.trace("new Actions(IWebDriver).dragAndDrop(IWebElement, IWebElement);");
             Actions builder = new Actions(webDriver);
-
-            builder.clickAndHold(drop).perform();
+            builder.clickAndHold(draggable).perform();
             Sleep.wait(250);
 
             if (browserType == BrowserType.Firefox) {
@@ -937,8 +936,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
-    private boolean isHtml5Draggable(WebElement drop) {
-        String draggable = drop.getAttribute("draggable");
+    private boolean isHtml5Draggable(WebElement draggableElement) {
+        String draggable = draggableElement.getAttribute("draggable");
         if (draggable == null) {
             return false;
         }

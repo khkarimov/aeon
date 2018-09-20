@@ -1,11 +1,11 @@
 package tests;
 
-import aeon.core.testabstraction.product.Aeon;
 import categories.SafariNotSupported;
 import categories.UbuntuTests;
 import categories.WindowsTests;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
+
 @Category({WindowsTests.class, UbuntuTests.class})
 public class MouseTests extends SampleBaseTest {
 

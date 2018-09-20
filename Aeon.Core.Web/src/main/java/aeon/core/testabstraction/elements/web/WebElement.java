@@ -5,8 +5,6 @@ import aeon.core.command.execution.commands.initialization.WebCommandInitializer
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.interfaces.IBy;
-import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.Element;
