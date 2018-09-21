@@ -2011,25 +2011,25 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void selectFile(WebControl control, String path) {
-        if (!isRemote && browserType.equals(BrowserType.InternetExplorer)) {
-
-            WebElement underlyingWebElement = ((SeleniumElement) control).getUnderlyingWebElement();
-            Point webElementLocation = underlyingWebElement.getLocation();
-            Dimension elementSize = underlyingWebElement.getSize();
-            int x = webElementLocation.getX() + elementSize.width / 2;
-            int y = webElementLocation.getY() + elementSize.height / 2;
-            MouseHelper.click(x, y);
-
-            try {
-                SendKeysHelper.sendKeysToKeyboard(path);
-                SendKeysHelper.sendEnterKey();
-            } catch (AWTException e) {
-                log.error(e.getMessage());
-                throw new RuntimeException(e);
-            }
-        } else {
+//        if (!isRemote && browserType.equals(BrowserType.InternetExplorer)) {
+//
+//            WebElement underlyingWebElement = ((SeleniumElement) control).getUnderlyingWebElement();
+//            Point webElementLocation = underlyingWebElement.getLocation();
+//            Dimension elementSize = underlyingWebElement.getSize();
+//            int x = webElementLocation.getX() + elementSize.width / 2;
+//            int y = webElementLocation.getY() + elementSize.height / 2;
+//            MouseHelper.click(x, y);
+//
+//            try {
+//                SendKeysHelper.sendKeysToKeyboard(path);
+//                SendKeysHelper.sendEnterKey();
+//            } catch (AWTException e) {
+//                log.error(e.getMessage());
+//                throw new RuntimeException(e);
+//            }
+//        } else {
             sendKeysToElement(control, path);
-        }
+        //}
     }
 
     private void collectSeleniumLogs() {
