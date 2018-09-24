@@ -35,6 +35,15 @@ public class MouseTests extends SampleBaseTest {
 
     @Test
     @Category({SafariNotSupported.class})
+    public void testDragAndDropHTML5() {
+        product.browser.goToUrl("https://www.w3schools.com/html/html5_draganddrop.asp");
+        product.startPage.draggedHTML5Item.notExists();
+        product.startPage.draggableHTML5Item.dragAndDrop("[id='div2']");
+        product.startPage.draggedHTML5Item.exists();
+    }
+    
+    @Test
+    @Category({SafariNotSupported.class})
     public void testRightClick() {
         product.startPage.dateLabel.rightClick();
         product.startPage.reactionLabel.is("right click");
