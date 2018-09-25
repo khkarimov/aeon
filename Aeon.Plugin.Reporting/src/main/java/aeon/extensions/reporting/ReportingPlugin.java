@@ -183,7 +183,13 @@ public class ReportingPlugin extends Plugin {
 
         @Override
         public void onBeforeStep(String message) {
-            getCurrentScenarioBucket().addHighLevelStep(message);
+
+            ScenarioDetails currentScenarioDetails = getCurrentScenarioBucket();
+
+            // Only add steps if the test is not marked as completed yet.
+            if (currentScenarioDetails.getStatus().equals("")) {
+                currentScenarioDetails.addHighLevelStep(message);
+            }
         }
 
         @Override
@@ -197,7 +203,7 @@ public class ReportingPlugin extends Plugin {
 
                     // Only add steps if the test is not marked as completed yet.
                     if (currentScenarioDetails.getStatus().equals("")) {
-                        getCurrentScenarioBucket().addStep((String) payload);
+                        currentScenarioDetails.addStep((String) payload);
                     }
                     break;
                 case "videoDownloaded":
