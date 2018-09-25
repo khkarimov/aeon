@@ -60,7 +60,7 @@ assemble.finalizedBy(CopyPerfectoPlugin)
 
 allprojects {
     group 'aeon'
-    version '1.14.0'
+    version '1.14.1'
 
     apply plugin: 'java'
     apply plugin: 'jacoco'
