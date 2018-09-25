@@ -3,14 +3,16 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="/usr/local/opt/gradle/libexec" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Aeon.Core" />
             <option value="$PROJECT_DIR$/Aeon.Core.Mobile" />
             <option value="$PROJECT_DIR$/Aeon.Core.Web" />
+            <option value="$PROJECT_DIR$/Aeon.Platform" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Appium" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Perfecto" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Reporting" />

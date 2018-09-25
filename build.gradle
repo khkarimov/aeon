@@ -21,6 +21,7 @@ dependencies {
     compile project(':Aeon.Plugin.Selenium')
     compile project(':Aeon.SystemTests.Web')
     compile project(':Aeon.SystemTests.Mobile')
+    compile project(':Aeon.Platform')
 }
 
 task wrapper(type: Wrapper) {
