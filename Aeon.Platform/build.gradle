@@ -2,21 +2,22 @@ plugins {
     id 'java'
     id 'application'
     id 'org.springframework.boot' version '2.0.5.RELEASE'
-}
-
-bootJar {
-    //add mainClassName
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
 }
 
 dependencies {
     compile project(':Aeon.Core.Mobile')
+    compile project(':Aeon.Plugin.Selenium')
 
-    compile 'com.google.guava:guava:23.0'
+    compile('org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')
+
     testCompile 'junit:junit:4.12'
+    testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
+}
 
-    implementation 'org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+configurations {
+    compile.exclude module: 'spring-boot-starter-logging'
 }
 
 repositories {
