@@ -2,7 +2,6 @@ package browser;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
-import aeon.core.command.execution.commands.CloseCommand;
 import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
@@ -21,6 +20,9 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
+/**
+ * Controller for browser.
+ */
 @RestController("/")
 public class BrowserController {
 
@@ -48,8 +50,12 @@ public class BrowserController {
         return plugin.createAdapter(configuration);
     }
 
+    /**
+     * Launches a browser.
+     * @throws Exception Throws exception if error occurs
+     */
     @GetMapping("launch")
-    public void launch() throws InstantiationException, IllegalAccessException, IOException {
+    public void launch() throws Exception{
         IAdapterExtension plugin = loadPlugins();
 
         IDriver driver;
@@ -58,19 +64,20 @@ public class BrowserController {
         configuration = plugin.getConfiguration();
         adapter = createAdapter(plugin);
 
-        driver = (IDriver)configuration.getDriver().newInstance();
+        driver = (IDriver) configuration.getDriver().newInstance();
         driver.configure(adapter, configuration);
 
         this.automationInfo = new AutomationInfo(configuration, driver, adapter);
-
-        System.out.println("launch");
     }
 
+    /**
+     * Closes the launched browser.
+     */
     @GetMapping("close")
     public void close() {
-        timeout = (long)configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-        throttle = (long)configuration.getDouble(Configuration.Keys.THROTTLE, 100);
-        ajaxTimeout = (long)configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
+        timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+        throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 100);
+        ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
 
         delegateRunnerFactory = new DelegateRunnerFactory(Duration.ofMillis(throttle), Duration.ofSeconds(timeout));
         ajaxWaiter = new AjaxWaiter(this.automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout));
@@ -79,7 +86,5 @@ public class BrowserController {
 
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
         commandExecutionFacade.execute(automationInfo, new QuitCommand());
-
-        System.out.println("close");
     }
 }

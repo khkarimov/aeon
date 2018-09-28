@@ -2,11 +2,17 @@ package browser;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * Launches browser.
+ */
 @SpringBootApplication
 public class BrowserApp {
 
+    /**
+     * Main method of the application.
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(BrowserApp.class, args);
     }
