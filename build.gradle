@@ -53,11 +53,20 @@ task CopyPerfectoPlugin(type: Copy) {
     include '*.jar'
 }
 
+//Copy selenium plugin into Platform plugins folder
+task CopySeleniumPlatformPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Selenium/build/libs'
+    into 'Aeon.Platform/plugins'
+    include '*.jar'
+}
+
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
 assemble.finalizedBy(CopyReportingPlugin)
 assemble.finalizedBy(CopyPerfectoPlugin)
+assemble.finalizedBy(CopySeleniumPlatformPlugin)
 
 allprojects {
     group 'aeon'
