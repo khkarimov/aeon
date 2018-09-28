@@ -501,7 +501,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities = new DesiredCapabilities();
 
                 desiredCapabilities.setCapability("platformName", "iOS");
-                desiredCapabilities.setCapability("browserName", "mobileOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
 
                 // Appium
