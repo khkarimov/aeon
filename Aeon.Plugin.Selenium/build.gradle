@@ -39,9 +39,9 @@ jar {
                 'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
     }
 
-    //from configurations.pluginImplementation.collect {
-    //   it.isDirectory() ? it : zipTree(it)
-    //}
+    from configurations.pluginImplementation.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
 }
 
 task fatJar(type: Jar) {

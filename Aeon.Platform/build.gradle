@@ -11,7 +11,6 @@ bootJar {
 
 dependencies {
     compile project(':Aeon.Core.Mobile')
-    compile project(':Aeon.Plugin.Selenium')
 
     compile('org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')
