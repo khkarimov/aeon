@@ -155,8 +155,9 @@ public class WebElementTests {
     @Test
     public void dragAndDropExecute_NullArgument() {
         //Act
-        webElement1.dragAndDrop(null);
-        webElement2.dragAndDrop(null);
+        String nullString = null;
+        webElement1.dragAndDrop(nullString);
+        webElement2.dragAndDrop(nullString);
 
         //Assert
         verify(commandExecutionFacade, times(1))

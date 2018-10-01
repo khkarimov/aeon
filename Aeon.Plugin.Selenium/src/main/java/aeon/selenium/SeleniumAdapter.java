@@ -891,30 +891,57 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Drag and drops the dropElement to the targetElement area.
+     * Drag and drops the draggableElement to the targetElement area.
      *
-     * @param dropElement   Element to be dragged.
-     * @param targetElement Where the element will be dropped.
+     * @param draggableElement Element to be dragged.
+     * @param targetElement    Where the element will be dropped.
      */
-    public final void dragAndDrop(WebControl dropElement, IByWeb targetElement) {
+    public final void dragAndDrop(WebControl draggableElement, IByWeb targetElement) {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        log.trace("new Actions(IWebDriver).dragAndDrop(IWebElement, IWebElement);");
-        WebElement drop = ((SeleniumElement) dropElement).getUnderlyingWebElement();
+        WebElement draggable = ((SeleniumElement) draggableElement).getUnderlyingWebElement();
         WebElement target = ((SeleniumElement) findElement(targetElement)).getUnderlyingWebElement();
 
-        Actions builder = new Actions(webDriver);
+        if (isHtml5Draggable(draggable)) {
+            log.trace("Executing drag and drop with javascript script");
+            executeScript("function createEvent(typeOfEvent) {\n" + "var event =document.createEvent(\"CustomEvent\");\n"
+                    + "event.initCustomEvent(typeOfEvent,true, true, null);\n" + "event.dataTransfer = {\n" + "data: {},\n"
+                    + "setData: function (key, value) {\n" + "this.data[key] = value;\n" + "},\n"
+                    + "getData: function (key) {\n" + "return this.data[key];\n" + "}\n" + "};\n" + "return event;\n"
+                    + "}\n" + "\n" + "function dispatchEvent(element, event,transferData) {\n"
+                    + "if (transferData !== undefined) {\n" + "event.dataTransfer = transferData;\n" + "}\n"
+                    + "if (element.dispatchEvent) {\n" + "element.dispatchEvent(event);\n"
+                    + "} else if (element.fireEvent) {\n" + "element.fireEvent(\"on\" + event.type, event);\n" + "}\n"
+                    + "}\n" + "\n" + "function simulateHTML5DragAndDrop(element, destination) {\n"
+                    + "var dragStartEvent =createEvent('dragstart');\n" + "dispatchEvent(element, dragStartEvent);\n"
+                    + "var dropEvent = createEvent('drop');\n"
+                    + "dispatchEvent(destination, dropEvent,dragStartEvent.dataTransfer);\n"
+                    + "var dragEndEvent = createEvent('dragend');\n"
+                    + "dispatchEvent(element, dragEndEvent,dropEvent.dataTransfer);\n" + "}\n" + "\n"
+                    + "var source = arguments[0][0];\n" + "var destination = arguments[0][1];\n"
+                    + "simulateHTML5DragAndDrop(source, destination)", draggable, target);
+        } else {
+            log.trace("new Actions(IWebDriver).dragAndDrop(IWebElement, IWebElement);");
+            Actions builder = new Actions(webDriver);
+            builder.clickAndHold(draggable).perform();
+            Sleep.wait(250);
 
-        builder.clickAndHold(drop).perform();
-        Sleep.wait(250);
+            if (browserType == BrowserType.Firefox) {
+                scrollElementIntoView(targetElement);
+            }
 
-        if (browserType == BrowserType.Firefox) {
-            scrollElementIntoView(targetElement);
+            builder.moveToElement(target).perform();
+            builder.release(target).perform();
         }
+    }
 
-        builder.moveToElement(target).perform();
-        builder.release(target).perform();
+    private boolean isHtml5Draggable(WebElement draggableElement) {
+        String draggable = draggableElement.getAttribute("draggable");
+        if (draggable == null) {
+            return false;
+        }
+        return draggable.equalsIgnoreCase("true");
     }
 
     /**

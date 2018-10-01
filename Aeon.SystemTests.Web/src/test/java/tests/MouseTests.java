@@ -1,11 +1,11 @@
 package tests;
 
-import aeon.core.testabstraction.product.Aeon;
 import categories.SafariNotSupported;
 import categories.UbuntuTests;
 import categories.WindowsTests;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
+
 @Category({WindowsTests.class, UbuntuTests.class})
 public class MouseTests extends SampleBaseTest {
 
@@ -33,6 +33,15 @@ public class MouseTests extends SampleBaseTest {
         product.startPage.draggedListItem.exists();
     }
 
+    @Test
+    @Category({SafariNotSupported.class})
+    public void testDragAndDropHTML5() {
+        product.browser.goToUrl("https://www.w3schools.com/html/html5_draganddrop.asp");
+        product.startPage.draggedHTML5Item.notExists();
+        product.startPage.draggableHTML5Item.dragAndDrop("[id='div2']");
+        product.startPage.draggedHTML5Item.exists();
+    }
+    
     @Test
     @Category({SafariNotSupported.class})
     public void testRightClick() {
