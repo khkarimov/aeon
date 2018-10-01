@@ -5,13 +5,14 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.6.RELEASE'
 }
 
+mainClassName = 'browser.BrowserApp'
+
 bootJar {
     mainClassName = 'browser.BrowserApp'
 }
 
 dependencies {
     compile project(':Aeon.Core.Mobile')
-    compile project(':Aeon.Plugin.Selenium')
 
     compile('org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')

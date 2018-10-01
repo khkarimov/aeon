@@ -16,7 +16,7 @@ public class AndroidUltihomeTest {
     @Before
     public void beforeTests() {
         product = launch(Sample.class);
-        product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
+        product.browser.goToUrl("https://ultihome.ultimatesoftware.com");
     }
 
     @After
