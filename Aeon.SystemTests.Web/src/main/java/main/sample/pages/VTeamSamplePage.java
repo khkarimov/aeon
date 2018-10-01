@@ -28,6 +28,8 @@ public class VTeamSamplePage extends Page {
     public TextBox alertTitleTextBox;
     public ListItem draggableListItem;
     public ListItem draggedListItem;
+    public ListItem draggableHTML5Item;
+    public ListItem draggedHTML5Item;
     public Link tryLink;
     public Select dropDown;
     public Checkbox checkbox100;
@@ -71,6 +73,8 @@ public class VTeamSamplePage extends Page {
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
         draggableListItem = new ListItem(info, By.cssSelector("li[id='node1']"));
         draggedListItem = new ListItem(info, By.cssSelector("ul[id='box2'] li[id='node1']"));
+        draggableHTML5Item = new ListItem(info, By.cssSelector("[id='drag1']"));
+        draggedHTML5Item = new ListItem(info, By.cssSelector("[id='div2'] [id='drag1']"));
 
         checkbox100 = new Checkbox(info, By.cssSelector("input[id='checkbox100']"));
         div = new WebElement(info, By.cssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
