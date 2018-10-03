@@ -74,7 +74,7 @@ public class Configuration extends BaseConfiguration {
      *
      * @param properties The properties to set.
      */
-    void setProperties(Properties properties) {
+    public void setProperties(Properties properties) {
         this.properties.putAll(properties);
     }
 
