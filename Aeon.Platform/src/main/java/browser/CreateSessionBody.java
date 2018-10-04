@@ -11,6 +11,15 @@ public class CreateSessionBody {
 
     private ObjectId sessionId;
     private Properties settings;
+    private String command;
+
+    /**
+     * Get the command.
+     * @return Command
+     */
+    public String getCommand() {
+        return command;
+    }
 
     /**
      * Get the session ID.

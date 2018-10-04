@@ -127,42 +127,51 @@ public class BrowserController {
         //sessionId = body.getSessionId();
         sessionTable.put(sessionId, automationInfo);
 
-        return new ResponseEntity<>(sessionId, HttpStatus.CREATED);
+        return new ResponseEntity<>(sessionId.toString(), HttpStatus.CREATED);
     }
 
     /**
      * Executes a given command.
      * @param sessionId Session ID
-     * @param command Command
+     * @param body Body
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
-    @PostMapping("sessions/{sessionId}/{command}")
-    public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @PathVariable String command) throws Exception {
-        automationInfo = sessionTable.get(sessionId);
+    // move commands and args to RequestBody body
+    // change /{command} to /execute
+    @PostMapping("sessions/{sessionId}/execute")
+    public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody CreateSessionBody body) throws Exception {
+
+        if (body.getCommand() != null) {
+            automationInfo = sessionTable.get(sessionId);
+
+            // guidelines: all lowercase & hyphenate multi-word paths. maybe we can use this to get correct capitalization
+
+            // assume string has correct capitalization
+            //String commandString = command + "Command";
+            String commandString = body.getCommand();
+            //String commandString = command.substring(0, 1).toUpperCase() + command.substring(1) + "Command";
+
+            //System.out.printf(commandString);
+
+            Class cmd;
 
 
-        // guidelines: all lowercase & hyphenate multi-word paths. maybe we can use this to get correct capitalization
+            // right now, ignores mobile commands
+            if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
+                cmd = Class.forName("aeon.core.command.execution.commands." + commandString);
+                sessionTable.remove(sessionId);
+            } else {
+                cmd = Class.forName("aeon.core.command.execution.commands.web." + commandString);
+            }
 
-        // assume string has correct capitalization
-        String commandString = command + "Command";
-        //String commandString = command.substring(0, 1).toUpperCase() + command.substring(1) + "Command";
+            commandExecutionFacade.execute(automationInfo, (Command) cmd.newInstance());
+            //commandExecutionFacade.execute(automationInfo, body.getCommand());
 
-        //System.out.printf(commandString);
-
-        Class cmd;
-
-
-        // right now, ignores mobile commands
-        if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
-            cmd = Class.forName("aeon.core.command.execution.commands." + commandString);
-            sessionTable.remove(sessionId);
-        } else {
-            cmd = Class.forName("aeon.core.command.execution.commands.web." + commandString);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
-        commandExecutionFacade.execute(automationInfo, (Command) cmd.newInstance());
-
-        return new ResponseEntity<>(sessionId, HttpStatus.OK);
+        // return success/ failure message
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
