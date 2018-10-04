@@ -24,8 +24,9 @@ public class ResizeCommand extends Command {
      *
      * @param size The new browser size.
      */
-    public ResizeCommand(BrowserSize size) {
+    public ResizeCommand(String size) {
         super(Resources.getString("ResizeCommand_Info"));
+        this.size =
         this.size = BrowserSizeMap.map(size);
     }
 

@@ -68,4 +68,13 @@ public final class BrowserSizeMap {
     public static Dimension map(BrowserSize browserSize) {
         return browserSizes.get(browserSize);
     }
+
+    /**
+     * Function takes a Browser Size and returns the {@link Dimension} of a browser.
+     * @param browserSize the input browserSize.
+     * @return the Size of the input.
+     */
+    public static Dimension map(String browserSize) {
+        return browserSizes.get(Enum.valueOf(BrowserSize.class, browserSize));
+    }
 }

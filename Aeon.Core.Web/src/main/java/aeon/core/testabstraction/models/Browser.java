@@ -129,7 +129,7 @@ public class Browser {
      * @param url The URL the navigate to.
      */
     public void goToUrl(String url) {
-        mainWindowHandle = (String) info.getCommandExecutionFacade().execute(info, new GoToUrlCommand(URLUtil.createURL(url)));
+        mainWindowHandle = (String) info.getCommandExecutionFacade().execute(info, new GoToUrlCommand(url));
     }
 
     /**
@@ -181,7 +181,7 @@ public class Browser {
      * @param size The new size of the browser window based off the enumerable BrowserSize.
      */
     public void resize(BrowserSize size) {
-        info.getCommandExecutionFacade().execute(info, new ResizeCommand(size));
+        info.getCommandExecutionFacade().execute(info, new ResizeCommand(size.toString()));
     }
 
     /**

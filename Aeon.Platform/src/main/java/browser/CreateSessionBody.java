@@ -1,7 +1,9 @@
 package browser;
 
 import org.bson.types.ObjectId;
+import org.springframework.lang.Nullable;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -12,6 +14,17 @@ public class CreateSessionBody {
     private ObjectId sessionId;
     private Properties settings;
     private String command;
+
+    @Nullable
+    private List<Object> args;
+
+    /**
+     * Get the arguments for the command.
+     * @return Arguments
+     */
+    public List<Object> getArgs() {
+        return args;
+    }
 
     /**
      * Get the command.

@@ -3,6 +3,7 @@ package browser;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.commands.Command;
+import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
 import aeon.core.common.helpers.AjaxWaiter;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Constructor;
 import java.time.Duration;
 import java.util.*;
 
@@ -152,23 +154,86 @@ public class BrowserController {
             String commandString = body.getCommand();
             //String commandString = command.substring(0, 1).toUpperCase() + command.substring(1) + "Command";
 
-            //System.out.printf(commandString);
-
-            Class cmd;
 
 
+            Class command;
             // right now, ignores mobile commands
             if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
-                cmd = Class.forName("aeon.core.command.execution.commands." + commandString);
+                command = Class.forName("aeon.core.command.execution.commands." + commandString);
                 sessionTable.remove(sessionId);
             } else {
-                cmd = Class.forName("aeon.core.command.execution.commands.web." + commandString);
+                command = Class.forName("aeon.core.command.execution.commands.web." + commandString);
             }
 
-            commandExecutionFacade.execute(automationInfo, (Command) cmd.newInstance());
+
+            List<Object> args = body.getArgs();
+
+
+            Constructor[] cons = command.getConstructors();
+            Class[] parameters = cons[0].getParameterTypes();
+            Constructor commandCons = command.getConstructor(parameters);
+
+
+            System.out.println("constructors: " + cons.length);
+            System.out.println("parameters: " + parameters.length);
+            System.out.println("command constructor: " + commandCons.getName());
+
+
+            //Constructor commandCons = command.getConstructor(cons[0].getParameterTypes());
+            //Class[] commandParams = commandCons.getParameterTypes();
+
+
+            // problem w command vs CommandWithReturn
+            // -number of args?
+            // may need to create a constructor for commands that takes list
+
+            // Super.class.isAssignableFrom(Sub.class) how to test if Sub is a subclass of Super
+            //Command.class.isAssignableFrom(command.getClass());
+
+            if ((parameters.length == 0 && args == null) || (args != null && parameters.length == args.size())) {
+
+                Object[] params = new Object[0];
+
+                if (args != null) {
+
+                    params = new Object[parameters.length];
+
+
+                    for (int i = 0; i < args.size(); i++) {
+                        if (parameters[i].getName().equals("String")) {
+                            params[i] = (String) args.get(i);
+                        } else if (parameters[i].getName().equals("boolean")) {
+                            params[i] = (boolean) args.get(i);
+                        }
+                    }
+                }
+
+                if (CommandWithReturn.class.isAssignableFrom(command)) {
+                    commandExecutionFacade.execute(automationInfo, (CommandWithReturn) commandCons.newInstance(params));
+
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } else if (Command.class.isAssignableFrom(command)) {
+                    commandExecutionFacade.execute(automationInfo, (Command) commandCons.newInstance(params));
+
+
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+            }
+
+
+            //Class superclass = command.getSuperclass();
+            //Object cmd = commandCons.newInstance(URLUtil.createURL((String) args.get(0)));
+            //superclass.cast(cmd);
+
+
+            //commandExecutionFacade.execute(automationInfo, (superclass) commandCons.newInstance(URLUtil.createURL((String) args.get(0))));
+
+
+            //command execute w args
+
+
             //commandExecutionFacade.execute(automationInfo, body.getCommand());
 
-            return new ResponseEntity<>(HttpStatus.OK);
         }
 
         // return success/ failure message
