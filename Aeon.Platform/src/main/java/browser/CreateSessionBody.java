@@ -1,8 +1,5 @@
 package browser;
 
-import org.bson.types.ObjectId;
-import org.springframework.lang.Nullable;
-
 import java.util.List;
 import java.util.Properties;
 
@@ -11,11 +8,8 @@ import java.util.Properties;
  */
 public class CreateSessionBody {
 
-    private ObjectId sessionId;
     private Properties settings;
     private String command;
-
-    @Nullable
     private List<Object> args;
 
     /**
@@ -35,26 +29,10 @@ public class CreateSessionBody {
     }
 
     /**
-     * Get the session ID.
-     * @return Session ID
-     */
-    public ObjectId getSessionId() {
-        return sessionId;
-    }
-
-    /**
      * Get the settings.
      * @return Settings
      */
     public Properties getSettings() {
         return settings;
-    }
-
-    /**
-     * Sets the session ID.
-     * @param id ID
-     */
-    public void setSessionId(ObjectId id) {
-        sessionId = id;
     }
 }

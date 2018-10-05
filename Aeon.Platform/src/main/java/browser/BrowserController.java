@@ -81,11 +81,6 @@ public class BrowserController {
     @PostMapping("sessions")
     public ResponseEntity createSession(@RequestBody CreateSessionBody body) throws Exception {
         ObjectId sessionId = new ObjectId();
-        body.setSessionId(sessionId);
-
-        System.out.println("sessionID = " + sessionId.toString());
-        System.out.println("sessionID = " + body.getSessionId().toString());
-
 
         IAdapterExtension plugin = loadPlugins();
 
@@ -125,8 +120,6 @@ public class BrowserController {
         properties.setProperty("hi", "there");
 
 
-
-        //sessionId = body.getSessionId();
         sessionTable.put(sessionId, automationInfo);
 
         return new ResponseEntity<>(sessionId.toString(), HttpStatus.CREATED);
@@ -139,8 +132,6 @@ public class BrowserController {
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
-    // move commands and args to RequestBody body
-    // change /{command} to /execute
     @PostMapping("sessions/{sessionId}/execute")
     public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody CreateSessionBody body) throws Exception {
 
@@ -150,7 +141,6 @@ public class BrowserController {
             // guidelines: all lowercase & hyphenate multi-word paths. maybe we can use this to get correct capitalization
 
             // assume string has correct capitalization
-            //String commandString = command + "Command";
             String commandString = body.getCommand();
             //String commandString = command.substring(0, 1).toUpperCase() + command.substring(1) + "Command";
 
@@ -174,19 +164,6 @@ public class BrowserController {
             Constructor commandCons = command.getConstructor(parameters);
 
 
-            System.out.println("constructors: " + cons.length);
-            System.out.println("parameters: " + parameters.length);
-            System.out.println("command constructor: " + commandCons.getName());
-
-
-            //Constructor commandCons = command.getConstructor(cons[0].getParameterTypes());
-            //Class[] commandParams = commandCons.getParameterTypes();
-
-
-            // problem w command vs CommandWithReturn
-            // -number of args?
-            // may need to create a constructor for commands that takes list
-
             // Super.class.isAssignableFrom(Sub.class) how to test if Sub is a subclass of Super
             //Command.class.isAssignableFrom(command.getClass());
 
@@ -200,8 +177,11 @@ public class BrowserController {
 
 
                     for (int i = 0; i < args.size(); i++) {
-                        if (parameters[i].getName().equals("String")) {
+                        // getSimpleName?
+                        if (parameters[i].getName().equals("java.lang.String")) {
                             params[i] = (String) args.get(i);
+                        } else if (parameters[i].getName().equals("java.lang.Boolean")) {
+                            params[i] = (Boolean) args.get(i);
                         } else if (parameters[i].getName().equals("boolean")) {
                             params[i] = (boolean) args.get(i);
                         }
@@ -219,21 +199,6 @@ public class BrowserController {
                     return new ResponseEntity<>(HttpStatus.OK);
                 }
             }
-
-
-            //Class superclass = command.getSuperclass();
-            //Object cmd = commandCons.newInstance(URLUtil.createURL((String) args.get(0)));
-            //superclass.cast(cmd);
-
-
-            //commandExecutionFacade.execute(automationInfo, (superclass) commandCons.newInstance(URLUtil.createURL((String) args.get(0))));
-
-
-            //command execute w args
-
-
-            //commandExecutionFacade.execute(automationInfo, body.getCommand());
-
         }
 
         // return success/ failure message
