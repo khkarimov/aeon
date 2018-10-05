@@ -4,9 +4,14 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.command.execution.commands.CommandWithReturn;
+import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
+import aeon.core.command.execution.commands.web.WebControlFinder;
+import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
 import aeon.core.common.helpers.AjaxWaiter;
+import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.common.web.selectors.By;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -37,11 +42,8 @@ public class BrowserController {
     private long ajaxTimeout;
     private DelegateRunnerFactory delegateRunnerFactory;
     private AjaxWaiter ajaxWaiter;
-
-
     private Map<ObjectId, AutomationInfo> sessionTable = new HashMap<>();
     // synchronize w Collections.synchronizedMap? or ConcurrentHashMap?
-
 
     /**
      *
@@ -134,7 +136,6 @@ public class BrowserController {
      */
     @PostMapping("sessions/{sessionId}/execute")
     public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody CreateSessionBody body) throws Exception {
-
         if (body.getCommand() != null) {
             automationInfo = sessionTable.get(sessionId);
 
@@ -143,8 +144,6 @@ public class BrowserController {
             // assume string has correct capitalization
             String commandString = body.getCommand();
             //String commandString = command.substring(0, 1).toUpperCase() + command.substring(1) + "Command";
-
-
 
             Class command;
             // right now, ignores mobile commands
@@ -155,9 +154,7 @@ public class BrowserController {
                 command = Class.forName("aeon.core.command.execution.commands.web." + commandString);
             }
 
-
             List<Object> args = body.getArgs();
-
 
             Constructor[] cons = command.getConstructors();
             Class[] parameters = cons[0].getParameterTypes();
@@ -168,22 +165,48 @@ public class BrowserController {
             //Command.class.isAssignableFrom(command.getClass());
 
             if ((parameters.length == 0 && args == null) || (args != null && parameters.length == args.size())) {
-
                 Object[] params = new Object[0];
 
                 if (args != null) {
-
                     params = new Object[parameters.length];
-
 
                     for (int i = 0; i < args.size(); i++) {
                         // getSimpleName?
-                        if (parameters[i].getName().equals("java.lang.String")) {
-                            params[i] = (String) args.get(i);
-                        } else if (parameters[i].getName().equals("java.lang.Boolean")) {
-                            params[i] = (Boolean) args.get(i);
-                        } else if (parameters[i].getName().equals("boolean")) {
-                            params[i] = (boolean) args.get(i);
+                        switch (parameters[i].getName()) {
+                            case "java.lang.String":
+                                params[i] = (String) args.get(i);
+                                break;
+                            case "java.lang.Boolean":
+                                params[i] = (Boolean) args.get(i);
+                                break;
+                            case "boolean":
+                                params[i] = (boolean) args.get(i);
+                                break;
+                            case "aeon.core.common.web.interfaces.IByWeb":
+                                if (body.getByWebArgs() != null) {
+                                    String selector = body.getByWebArgs().getSelector();
+                                    String type = body.getByWebArgs().getType();
+
+                                    switch (type.toLowerCase()) {
+                                        case "css":
+                                            params[i] = By.cssSelector(selector);
+                                            break;
+                                        case "data":
+                                            params[i] = By.dataAutomationAttribute(selector);
+                                            break;
+                                        case "da":
+                                            params[i] = By.da(selector);
+                                            break;
+                                        case "jquery":
+                                            params[i] = By.jQuery(selector);
+                                            break;
+                                    }
+                                }
+                                break;
+                            case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
+                                // switchMechanism = null, for now
+                                params[i] = new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), null);
+                                break;
                         }
                     }
                 }
@@ -194,7 +217,6 @@ public class BrowserController {
                     return new ResponseEntity<>(HttpStatus.OK);
                 } else if (Command.class.isAssignableFrom(command)) {
                     commandExecutionFacade.execute(automationInfo, (Command) commandCons.newInstance(params));
-
 
                     return new ResponseEntity<>(HttpStatus.OK);
                 }

@@ -11,6 +11,7 @@ public class CreateSessionBody {
     private Properties settings;
     private String command;
     private List<Object> args;
+    private ByWebArgs byWebArgs;
 
     /**
      * Get the arguments for the command.
@@ -18,6 +19,14 @@ public class CreateSessionBody {
      */
     public List<Object> getArgs() {
         return args;
+    }
+
+    /**
+     * Get the arguments for the IByWeb object.
+     * @return IByWeb arguments
+     */
+    public ByWebArgs getByWebArgs() {
+        return byWebArgs;
     }
 
     /**
