@@ -10,7 +10,6 @@ import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
 import aeon.core.common.helpers.AjaxWaiter;
-import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;

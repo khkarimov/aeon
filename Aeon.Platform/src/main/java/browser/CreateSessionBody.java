@@ -14,6 +14,20 @@ public class CreateSessionBody {
     private ByWebArgs byWebArgs;
 
     /**
+     * Creates a session body.
+     * @param settings Settings
+     * @param command Command
+     * @param args Arguments
+     * @param byWebArgs IByWeb arguments
+     */
+    public CreateSessionBody(Properties settings, String command, List<Object> args, ByWebArgs byWebArgs) {
+        this.settings = settings;
+        this.command = command;
+        this.args = args;
+        this.byWebArgs = byWebArgs;
+    }
+
+    /**
      * Get the arguments for the command.
      * @return Arguments
      */
