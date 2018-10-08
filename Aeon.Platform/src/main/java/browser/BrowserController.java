@@ -44,12 +44,6 @@ public class BrowserController {
     private Map<ObjectId, AutomationInfo> sessionTable = new HashMap<>();
     // synchronize w Collections.synchronizedMap? or ConcurrentHashMap?
 
-    /**
-     *
-     * @param <T>
-     * @return
-     * @throws RuntimeException
-     */
     private static <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
         List<IAdapterExtension> extensions = Aeon.getExtensions(IAdapterExtension.class);
 
@@ -62,16 +56,9 @@ public class BrowserController {
         throw new RuntimeException("No valid adapter found");
     }
 
-    /**
-     *
-     * @param plugin
-     * @return
-     */
     private IAdapter createAdapter(IAdapterExtension plugin) {
         return plugin.createAdapter(configuration);
     }
-
-
 
     /**
      * Creates a new session.
@@ -99,8 +86,6 @@ public class BrowserController {
         driver = (IDriver) configuration.getDriver().newInstance();
         driver.configure(adapter, configuration);
 
-
-
         this.automationInfo = new AutomationInfo(configuration, driver, adapter);
 
         timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
@@ -111,15 +96,7 @@ public class BrowserController {
         ajaxWaiter = new AjaxWaiter(this.automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout));
 
         commandExecutionFacade = new WebCommandExecutionFacade(delegateRunnerFactory, ajaxWaiter);
-
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
-
-
-
-        Properties properties = new Properties();
-        properties.setProperty("hello", "world");
-        properties.setProperty("hi", "there");
-
 
         sessionTable.put(sessionId, automationInfo);
 
@@ -138,14 +115,10 @@ public class BrowserController {
         if (body.getCommand() != null) {
             automationInfo = sessionTable.get(sessionId);
 
-            // guidelines: all lowercase & hyphenate multi-word paths. maybe we can use this to get correct capitalization
-
-            // assume string has correct capitalization
             String commandString = body.getCommand();
-            //String commandString = command.substring(0, 1).toUpperCase() + command.substring(1) + "Command";
 
             Class command;
-            // right now, ignores mobile commands
+
             if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
                 command = Class.forName("aeon.core.command.execution.commands." + commandString);
                 sessionTable.remove(sessionId);
@@ -159,10 +132,6 @@ public class BrowserController {
             Class[] parameters = cons[0].getParameterTypes();
             Constructor commandCons = command.getConstructor(parameters);
 
-
-            // Super.class.isAssignableFrom(Sub.class) how to test if Sub is a subclass of Super
-            //Command.class.isAssignableFrom(command.getClass());
-
             if ((parameters.length == 0 && args == null) || (args != null && parameters.length == args.size())) {
                 Object[] params = new Object[0];
 
@@ -170,7 +139,6 @@ public class BrowserController {
                     params = new Object[parameters.length];
 
                     for (int i = 0; i < args.size(); i++) {
-                        // getSimpleName?
                         switch (parameters[i].getName()) {
                             case "java.lang.String":
                                 params[i] = (String) args.get(i);
@@ -203,7 +171,6 @@ public class BrowserController {
                                 }
                                 break;
                             case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
-                                // switchMechanism = null, for now
                                 params[i] = new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), null);
                                 break;
                         }
@@ -222,7 +189,6 @@ public class BrowserController {
             }
         }
 
-        // return success/ failure message
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
