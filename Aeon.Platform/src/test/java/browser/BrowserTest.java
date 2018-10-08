@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -101,6 +102,68 @@ public class BrowserTest {
                 .andReturn();
 
         sessionId = result.getResponse().getContentAsString();
+
+        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void elementExistsTest() throws Exception {
+        command = "ExistsCommand";
+        args = new ArrayList<>(Arrays.asList("selector", "initializer"));
+        byWebArgs = new ArrayList<>(Arrays.asList("*", "css"));
+        body = new CreateSessionBody(settings, command, args, byWebArgs);
+
+        String json = mapper.writeValueAsString(body);
+
+        MvcResult result = mvc.perform(post("/sessions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        sessionId = result.getResponse().getContentAsString();
+
+        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void clickElementTest() throws Exception {
+        command = "GoToUrlCommand";
+        args = new ArrayList<>(Collections.singletonList("https://google.com"));
+        body = new CreateSessionBody(settings, command, args, byWebArgs);
+
+        String json = mapper.writeValueAsString(body);
+
+        MvcResult result = mvc.perform(post("/sessions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        sessionId = result.getResponse().getContentAsString();
+
+        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        command = "ClickCommand";
+        args = new ArrayList<>(Arrays.asList("selector", "initializer"));
+        byWebArgs = new ArrayList<>(Arrays.asList("a", "css"));
+        body = new CreateSessionBody(settings, command, args, byWebArgs);
+
+        json = mapper.writeValueAsString(body);
 
         mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
                 .contentType(MediaType.APPLICATION_JSON)
