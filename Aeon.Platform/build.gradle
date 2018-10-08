@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'application'
     id 'org.springframework.boot' version '2.0.5.RELEASE'
-    //id 'io.spring.dependency-management' version '1.0.6.RELEASE'
 }
 
 mainClassName = 'browser.BrowserApp'
@@ -14,10 +13,8 @@ bootJar {
 dependencies {
     compile project(':Aeon.Core.Mobile')
 
-    //compile('org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb:2.0.5.RELEASE')
-
 
     testCompile 'junit:junit:4.12'
     testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
