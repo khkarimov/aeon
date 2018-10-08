@@ -11,7 +11,7 @@ public class CreateSessionBody {
     private Properties settings;
     private String command;
     private List<Object> args;
-    private ByWebArgs byWebArgs;
+    private List<String> byWebArgs;
 
     /**
      * Creates a session body.
@@ -20,7 +20,7 @@ public class CreateSessionBody {
      * @param args Arguments
      * @param byWebArgs IByWeb arguments
      */
-    public CreateSessionBody(Properties settings, String command, List<Object> args, ByWebArgs byWebArgs) {
+    public CreateSessionBody(Properties settings, String command, List<Object> args, List<String> byWebArgs) {
         this.settings = settings;
         this.command = command;
         this.args = args;
@@ -39,7 +39,7 @@ public class CreateSessionBody {
      * Get the arguments for the IByWeb object.
      * @return IByWeb arguments
      */
-    public ByWebArgs getByWebArgs() {
+    public List<String> getByWebArgs() {
         return byWebArgs;
     }
 

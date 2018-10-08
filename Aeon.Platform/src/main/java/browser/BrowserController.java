@@ -36,11 +36,6 @@ public class BrowserController {
     private Configuration configuration;
     private AutomationInfo automationInfo;
     private WebCommandExecutionFacade commandExecutionFacade;
-    private long timeout;
-    private long throttle;
-    private long ajaxTimeout;
-    private DelegateRunnerFactory delegateRunnerFactory;
-    private AjaxWaiter ajaxWaiter;
     private Map<ObjectId, AutomationInfo> sessionTable = new HashMap<>();
     // synchronize w Collections.synchronizedMap? or ConcurrentHashMap?
 
@@ -88,12 +83,12 @@ public class BrowserController {
 
         this.automationInfo = new AutomationInfo(configuration, driver, adapter);
 
-        timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-        throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 100);
-        ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
+        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+        long throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 100);
+        long ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
 
-        delegateRunnerFactory = new DelegateRunnerFactory(Duration.ofMillis(throttle), Duration.ofSeconds(timeout));
-        ajaxWaiter = new AjaxWaiter(this.automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout));
+        DelegateRunnerFactory delegateRunnerFactory = new DelegateRunnerFactory(Duration.ofMillis(throttle), Duration.ofSeconds(timeout));
+        AjaxWaiter ajaxWaiter = new AjaxWaiter(this.automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout));
 
         commandExecutionFacade = new WebCommandExecutionFacade(delegateRunnerFactory, ajaxWaiter);
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
@@ -116,6 +111,8 @@ public class BrowserController {
             automationInfo = sessionTable.get(sessionId);
 
             String commandString = body.getCommand();
+            List<Object> args = body.getArgs();
+            List<String> byWebArgs = body.getByWebArgs();
 
             Class command;
 
@@ -126,19 +123,17 @@ public class BrowserController {
                 command = Class.forName("aeon.core.command.execution.commands.web." + commandString);
             }
 
-            List<Object> args = body.getArgs();
-
             Constructor[] cons = command.getConstructors();
             Class[] parameters = cons[0].getParameterTypes();
             Constructor commandCons = command.getConstructor(parameters);
 
-            if ((parameters.length == 0 && args == null) || (args != null && parameters.length == args.size())) {
+            if ((parameters.length == 0) || (args != null && parameters.length == args.size()) || (byWebArgs.size() == 2 && parameters[0].getName().equals("aeon.core.common.web.interfaces.IByWeb"))) {
                 Object[] params = new Object[0];
 
-                if (args != null) {
+                if (args != null || byWebArgs != null) {
                     params = new Object[parameters.length];
 
-                    for (int i = 0; i < args.size(); i++) {
+                    for (int i = 0; i < parameters.length; i++) {
                         switch (parameters[i].getName()) {
                             case "java.lang.String":
                                 params[i] = (String) args.get(i);
@@ -151,8 +146,8 @@ public class BrowserController {
                                 break;
                             case "aeon.core.common.web.interfaces.IByWeb":
                                 if (body.getByWebArgs() != null) {
-                                    String selector = body.getByWebArgs().getSelector();
-                                    String type = body.getByWebArgs().getType();
+                                    String selector = body.getByWebArgs().get(0);
+                                    String type = body.getByWebArgs().get(1);
 
                                     switch (type.toLowerCase()) {
                                         case "css":
