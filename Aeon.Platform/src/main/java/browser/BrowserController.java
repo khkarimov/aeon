@@ -130,7 +130,7 @@ public class BrowserController {
             if ((parameters.length == 0) || (args != null && parameters.length == args.size())) {
                 Object[] params = new Object[0];
 
-                if (args != null) {
+                if (args != null || byWebArgs != null) {
                     params = new Object[parameters.length];
 
                     for (int i = 0; i < parameters.length; i++) {
