@@ -11,10 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,13 +23,12 @@ public class BrowserTest {
 
     @Autowired
     private MockMvc mvc;
-    private String sessionId;
 
+    private String sessionId;
     private Properties settings;
     private String command;
     private List<Object> args;
-    private ByWebArgs byWebArgs;
-
+    private List<String> byWebArgs;
     private CreateSessionBody body;
 
     @Autowired
@@ -44,14 +40,11 @@ public class BrowserTest {
 
         String json = mapper.writeValueAsString(body);
 
-        MvcResult result = mvc.perform(post("/sessions")
+        mvc.perform(post("/sessions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();
-
-        sessionId = result.getResponse().getContentAsString();
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -62,16 +55,11 @@ public class BrowserTest {
 
         String json = mapper.writeValueAsString(body);
 
-        System.out.println("\njson body: " + json.toString() + "\n\n");
-
-        MvcResult result = mvc.perform(post("/sessions")
+        mvc.perform(post("/sessions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();
-
-        sessionId = result.getResponse().getContentAsString();
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -100,7 +88,7 @@ public class BrowserTest {
     @Test
     public void goToUrlTest() throws Exception {
         command = "GoToUrlCommand";
-        args = new ArrayList<>(Arrays.asList("https://google.com"));
+        args = new ArrayList<>(Collections.singletonList("https://google.com"));
         body = new CreateSessionBody(settings, command, args, byWebArgs);
 
         String json = mapper.writeValueAsString(body);
