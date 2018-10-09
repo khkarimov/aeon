@@ -42,7 +42,7 @@ public class BrowserService {
     }
 
     /**
-     * Creates a new session ID
+     * Creates a new session ID.
      * @return New ObjectID
      */
     public ObjectId createSessionId() {
