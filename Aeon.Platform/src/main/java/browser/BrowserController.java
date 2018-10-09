@@ -59,7 +59,11 @@ public class BrowserController {
                 sessionTable.remove(sessionId);
             }
 
-            return CommandHelper.executeCommand(commandCons, body, automationInfo, commandExecutionFacade);
+            try {
+                return CommandHelper.executeCommand(commandCons, body, automationInfo, commandExecutionFacade);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

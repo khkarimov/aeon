@@ -9,7 +9,7 @@ public class ExecuteCommandBody {
 
     private String command;
     private List<Object> args;
-    private WebSelector selector;
+    private Selector selector;
 
     /**
      * Creates a command execution body.
@@ -17,7 +17,7 @@ public class ExecuteCommandBody {
      * @param args Arguments
      * @param selector IByWeb arguments
      */
-    public ExecuteCommandBody(String command, List<Object> args, WebSelector selector) {
+    public ExecuteCommandBody(String command, List<Object> args, Selector selector) {
         this.command = command;
         this.args = args;
         this.selector = selector;
@@ -35,7 +35,7 @@ public class ExecuteCommandBody {
      * Get the IByWeb arguments.
      * @return IByWeb arguments
      */
-    public WebSelector getSelector() {
+    public Selector getSelector() {
         return selector;
     }
 

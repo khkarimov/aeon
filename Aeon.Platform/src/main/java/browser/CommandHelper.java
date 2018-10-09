@@ -42,6 +42,35 @@ public class CommandHelper {
         return command.getConstructor(parameters);
     }
 
+
+    public static Object parseParameter(Class[] parameters, List<Object> args, Selector selector, int i) throws NullPointerException {
+        Object param = null;
+
+        switch (parameters[i].getName()) {
+            case "java.lang.String":
+                param = (String) args.get(i);
+                break;
+            case "java.lang.Boolean":
+                param = (Boolean) args.get(i);
+                break;
+            case "boolean":
+                param = (boolean) args.get(i);
+                break;
+            case "aeon.core.common.web.interfaces.IByWeb":
+                if (selector != null && selector.getValue() != null && selector.getType() != null) {
+                    param = parseIByWeb(selector);
+                } else {
+                    throw new NullPointerException("Selector and its value and type cannot be null");
+                }
+                break;
+            case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
+                param = parseICommandInitializer(null);
+                break;
+        }
+
+        return param;
+    }
+
     /**
      * Executes a command.
      * @param commandCons Command constructor
@@ -54,7 +83,7 @@ public class CommandHelper {
     public static ResponseEntity executeCommand(Constructor commandCons, ExecuteCommandBody body, AutomationInfo automationInfo, WebCommandExecutionFacade commandExecutionFacade) throws Exception {
         Class[] parameters = commandCons.getParameterTypes();
         List<Object> args = body.getArgs();
-        WebSelector selector = body.getSelector();
+        Selector selector = body.getSelector();
 
         if ((parameters.length == 0) || (args != null && parameters.length == args.size())) {
             Object[] params = new Object[0];
@@ -63,27 +92,7 @@ public class CommandHelper {
                 params = new Object[parameters.length];
 
                 for (int i = 0; i < parameters.length; i++) {
-                    switch (parameters[i].getName()) {
-                        case "java.lang.String":
-                            params[i] = parseString(args.get(i));
-                            break;
-                        case "java.lang.Boolean":
-                            params[i] = parseBooleanObject(args.get(i));
-                            break;
-                        case "boolean":
-                            params[i] = parseBoolean(args.get(i));
-                            break;
-                        case "aeon.core.common.web.interfaces.IByWeb":
-                            if (selector != null && selector.getValue() != null && selector.getType() != null) {
-                                params[i] = parseIByWeb(selector);
-                            } else {
-                                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                            }
-                            break;
-                        case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
-                            params[i] = parseICommandInitializer(null);
-                            break;
-                    }
+                    params[i] = parseParameter(parameters, args, selector, i);
                 }
             }
 
@@ -102,39 +111,12 @@ public class CommandHelper {
     }
 
     /**
-     * Parses the String parameter.
-     * @param arg Argument object
-     * @return Argument as a String
-     */
-    public static String parseString(Object arg) {
-        return (String) arg;
-    }
-
-    /**
-     * Parses the Boolean parameter.
-     * @param arg Argument object
-     * @return Argument as a Boolean
-     */
-    public static Boolean parseBooleanObject(Object arg) {
-        return (Boolean) arg;
-    }
-
-    /**
-     * Parses the boolean parameter.
-     * @param arg Argument object
-     * @return Argument as a boolean
-     */
-    public static boolean parseBoolean(Object arg) {
-        return (boolean) arg;
-    }
-
-    /**
      * Parses the IByWeb parameter.
      * @param selector Web Selector
      * @return IByWeb
      * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
      */
-    public static IByWeb parseIByWeb(WebSelector selector) throws IllegalArgumentException {
+    public static IByWeb parseIByWeb(Selector selector) throws IllegalArgumentException {
         IByWeb by;
 
         String value = selector.getValue();
@@ -154,7 +136,7 @@ public class CommandHelper {
                 by = By.jQuery(value);
                 break;
             default:
-                throw new IllegalArgumentException("Valid arguments for WebSelector type: css, data, da, jquery");
+                throw new IllegalArgumentException("Valid arguments for Selector type: css, data, da, jquery");
         }
 
         return by;

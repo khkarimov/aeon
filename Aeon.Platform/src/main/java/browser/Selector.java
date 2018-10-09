@@ -3,7 +3,7 @@ package browser;
 /**
  * Class to hold IByWeb arguments.
  */
-public class WebSelector {
+public class Selector {
 
     private String value;
     private String type;
@@ -13,7 +13,7 @@ public class WebSelector {
      * @param value Value
      * @param type Type
      */
-    public WebSelector(String value, String type) {
+    public Selector(String value, String type) {
         this.value = value;
         this.type = type;
     }
