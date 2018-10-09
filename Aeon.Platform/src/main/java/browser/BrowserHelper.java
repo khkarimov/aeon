@@ -33,7 +33,7 @@ public class BrowserHelper {
         throw new RuntimeException("No valid adapter found");
     }
 
-    private IAdapter createAdapter(IAdapterExtension plugin, Configuration configuration) {
+    private static IAdapter createAdapter(IAdapterExtension plugin, Configuration configuration) {
         return plugin.createAdapter(configuration);
     }
 
@@ -43,7 +43,7 @@ public class BrowserHelper {
      * @return Automation info
      * @throws Exception Throws an exception if an error occurs
      */
-    public AutomationInfo setUpAutomationInfo(CreateSessionBody body) throws Exception {
+    public static AutomationInfo setUpAutomationInfo(CreateSessionBody body) throws Exception {
         IAdapterExtension plugin = loadPlugins();
 
         IDriver driver;
@@ -68,7 +68,7 @@ public class BrowserHelper {
      * @param automationInfo Automation info
      * @return Command execution facade
      */
-    public WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
+    public static WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
         Configuration configuration = automationInfo.getConfiguration();
 
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
