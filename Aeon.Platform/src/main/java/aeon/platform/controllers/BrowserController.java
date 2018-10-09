@@ -78,11 +78,12 @@ public class BrowserController {
     public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) throws Exception {
         if (body.getCommand() != null) {
             automationInfo = sessionTable.get(sessionId);
+            commandExecutionFacade = (WebCommandExecutionFacade) automationInfo.getCommandExecutionFacade();
             String commandString = body.getCommand();
 
             Constructor commandCons = commandService.createConstructor(commandString);
 
-            if (commandCons.getName().equals("aeon.core.command.execution.commands." + commandString)) {
+            if (commandCons.getName().equals("aeon.core.command.execution.commands.QuitCommand")) {
                 sessionTable.remove(sessionId);
             }
 
