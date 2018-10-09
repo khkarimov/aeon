@@ -1,173 +1,63 @@
 package browser;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import aeon.core.command.execution.AutomationInfo;
+import aeon.core.command.execution.WebCommandExecutionFacade;
+import org.bson.types.ObjectId;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoRule;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = BrowserApp.class)
-@AutoConfigureMockMvc
+@RunWith(MockitoJUnitRunner.class)
 public class BrowserTest {
 
-    @Autowired
-    private MockMvc mvc;
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public ExpectedException expectedException = ExpectedException.none();
 
-    private String sessionId;
-    private Properties settings;
-    private String command;
-    private List<Object> args;
-    private List<String> byWebArgs;
-    private CreateSessionBody body;
+    private BrowserController browserController;
 
-    @Autowired
-    private ObjectMapper mapper;
+    @Mock private AutomationInfo automationInfoMock;
+    @Mock private WebCommandExecutionFacade commandExecutionFacadeMock;
+    @Mock private Map<ObjectId, AutomationInfo> sessionTableMock;
 
-    @Test
-    public void launchBrowserTest() throws Exception {
-        body = new CreateSessionBody(settings, command, args, byWebArgs);
+    @Mock private CreateSessionBody bodyMock;
+    @Mock private ObjectId sessionIdMock;
 
-        String json = mapper.writeValueAsString(body);
+    @Mock private BrowserHelper browserHelperMock;
+    @Mock private CommandHelper commandHelperMock;
 
-        mvc.perform(post("/sessions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
+    @Before
+    public void setUp() {
+        browserController = new BrowserController(browserHelperMock, commandHelperMock);
+        browserController.setSessionTable(sessionTableMock);
     }
 
     @Test
-    public void launchWithSettingsTest() throws Exception {
-        settings = new Properties();
-        settings.setProperty("aeon.browser", "Firefox");
-        body = new CreateSessionBody(settings, command, args, byWebArgs);
+    public void launchBrowser() throws Exception {
+        when(browserHelperMock.createSessionId()).thenReturn(sessionIdMock);
+        when(browserHelperMock.setUpAutomationInfo(bodyMock)).thenReturn(automationInfoMock);
+        when(browserHelperMock.setUpCommandExecutionFacade(automationInfoMock)).thenReturn(commandExecutionFacadeMock);
+        when(sessionTableMock.put(sessionIdMock, automationInfoMock)).thenReturn(automationInfoMock);
 
-        String json = mapper.writeValueAsString(body);
+        ResponseEntity response = browserController.createSession(bodyMock);
 
-        mvc.perform(post("/sessions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
+        verify(browserHelperMock, times(1)).setUpAutomationInfo(bodyMock);
+        verify(browserHelperMock, times(1)).setUpCommandExecutionFacade(automationInfoMock);
+        verify(sessionTableMock, times(1)).put(sessionIdMock, automationInfoMock);
 
-    @Test
-    public void launchAndCloseTest() throws Exception {
-        command = "QuitCommand";
-        body = new CreateSessionBody(settings, command, args, byWebArgs);
-
-        String json = mapper.writeValueAsString(body);
-
-        MvcResult result = mvc.perform(post("/sessions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();
-
-        sessionId = result.getResponse().getContentAsString();
-
-        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void goToUrlTest() throws Exception {
-        command = "GoToUrlCommand";
-        args = new ArrayList<>(Collections.singletonList("https://google.com"));
-        body = new CreateSessionBody(settings, command, args, byWebArgs);
-
-        String json = mapper.writeValueAsString(body);
-
-        MvcResult result = mvc.perform(post("/sessions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();
-
-        sessionId = result.getResponse().getContentAsString();
-
-        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void elementExistsTest() throws Exception {
-        command = "ExistsCommand";
-        args = new ArrayList<>(Arrays.asList("selector", "initializer"));
-        byWebArgs = new ArrayList<>(Arrays.asList("*", "css"));
-        body = new CreateSessionBody(settings, command, args, byWebArgs);
-
-        String json = mapper.writeValueAsString(body);
-
-        MvcResult result = mvc.perform(post("/sessions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();
-
-        sessionId = result.getResponse().getContentAsString();
-
-        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void clickElementTest() throws Exception {
-        command = "GoToUrlCommand";
-        args = new ArrayList<>(Collections.singletonList("https://google.com"));
-        body = new CreateSessionBody(settings, command, args, byWebArgs);
-
-        String json = mapper.writeValueAsString(body);
-
-        MvcResult result = mvc.perform(post("/sessions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andReturn();
-
-        sessionId = result.getResponse().getContentAsString();
-
-        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-        command = "ClickCommand";
-        args = new ArrayList<>(Arrays.asList("selector", "initializer"));
-        byWebArgs = new ArrayList<>(Arrays.asList("a", "css"));
-        body = new CreateSessionBody(settings, command, args, byWebArgs);
-
-        json = mapper.writeValueAsString(body);
-
-        mvc.perform(post("/sessions/{sessionID}/execute", sessionId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        Assert.assertEquals(sessionIdMock.toString(), response.getBody());
+        Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 }

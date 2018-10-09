@@ -3,6 +3,7 @@ package browser;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,28 @@ public class BrowserController {
     private Map<ObjectId, AutomationInfo> sessionTable = new HashMap<>();
     // synchronize w Collections.synchronizedMap? or ConcurrentHashMap?
 
+    private BrowserHelper browserHelper;
+    private CommandHelper commandHelper;
+
+    /**
+     * Constructs Browser Controller.
+     * @param browserHelper Browser helper class
+     * @param commandHelper Command helper class
+     */
+    @Autowired
+    public BrowserController(BrowserHelper browserHelper, CommandHelper commandHelper) {
+        this.browserHelper = browserHelper;
+        this.commandHelper = commandHelper;
+    }
+
+    /**
+     * Sets the session table.
+     * @param sessionTable Session table
+     */
+    public void setSessionTable(Map<ObjectId, AutomationInfo> sessionTable) {
+        this.sessionTable = sessionTable;
+    }
+
     /**
      * Creates a new session.
      * @param body Body
@@ -30,10 +53,10 @@ public class BrowserController {
      */
     @PostMapping("sessions")
     public ResponseEntity createSession(@RequestBody CreateSessionBody body) throws Exception {
-        ObjectId sessionId = new ObjectId();
+        ObjectId sessionId = browserHelper.createSessionId();
 
-        automationInfo = BrowserHelper.setUpAutomationInfo(body);
-        commandExecutionFacade = BrowserHelper.setUpCommandExecutionFacade(automationInfo);
+        automationInfo = browserHelper.setUpAutomationInfo(body);
+        commandExecutionFacade = browserHelper.setUpCommandExecutionFacade(automationInfo);
 
         sessionTable.put(sessionId, automationInfo);
 
@@ -53,14 +76,14 @@ public class BrowserController {
             automationInfo = sessionTable.get(sessionId);
             String commandString = body.getCommand();
 
-            Constructor commandCons = CommandHelper.createConstructor(commandString);
+            Constructor commandCons = commandHelper.createConstructor(commandString);
 
             if (commandCons.getName().equals("aeon.core.command.execution.commands." + commandString)) {
                 sessionTable.remove(sessionId);
             }
 
             try {
-                return CommandHelper.executeCommand(commandCons, body, automationInfo, commandExecutionFacade);
+                return commandHelper.executeCommand(commandCons, body, automationInfo, commandExecutionFacade);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

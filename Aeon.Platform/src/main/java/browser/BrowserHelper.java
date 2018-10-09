@@ -12,6 +12,7 @@ import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.Product;
 import aeon.core.testabstraction.product.WebConfiguration;
+import org.bson.types.ObjectId;
 
 import java.time.Duration;
 import java.util.List;
@@ -19,9 +20,10 @@ import java.util.List;
 /**
  * Browser helper class.
  */
+@org.springframework.context.annotation.Configuration
 public class BrowserHelper {
 
-    private static <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
+    private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
         List<IAdapterExtension> extensions = Aeon.getExtensions(IAdapterExtension.class);
 
         for (IAdapterExtension extension : extensions) {
@@ -33,8 +35,16 @@ public class BrowserHelper {
         throw new RuntimeException("No valid adapter found");
     }
 
-    private static IAdapter createAdapter(IAdapterExtension plugin, Configuration configuration) {
+    private IAdapter createAdapter(IAdapterExtension plugin, Configuration configuration) {
         return plugin.createAdapter(configuration);
+    }
+
+    /**
+     * Creates a new session ID
+     * @return New ObjectID
+     */
+    public ObjectId createSessionId() {
+        return new ObjectId();
     }
 
     /**
@@ -43,7 +53,7 @@ public class BrowserHelper {
      * @return Automation info
      * @throws Exception Throws an exception if an error occurs
      */
-    public static AutomationInfo setUpAutomationInfo(CreateSessionBody body) throws Exception {
+    public AutomationInfo setUpAutomationInfo(CreateSessionBody body) throws Exception {
         IAdapterExtension plugin = loadPlugins();
 
         IDriver driver;
@@ -68,7 +78,7 @@ public class BrowserHelper {
      * @param automationInfo Automation info
      * @return Command execution facade
      */
-    public static WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
+    public WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
         Configuration configuration = automationInfo.getConfiguration();
 
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);

@@ -10,6 +10,7 @@ import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * Command execution helper class.
  */
+@Configuration
 public class CommandHelper {
 
     /**
@@ -27,7 +29,7 @@ public class CommandHelper {
      * @return Constructor
      * @throws Exception Throws an exception if an error occurs
      */
-    public static Constructor createConstructor(String commandString) throws Exception {
+    public Constructor createConstructor(String commandString) throws Exception {
         Class command;
 
         if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
@@ -42,8 +44,16 @@ public class CommandHelper {
         return command.getConstructor(parameters);
     }
 
-
-    public static Object parseParameter(Class[] parameters, List<Object> args, Selector selector, int i) throws NullPointerException {
+    /**
+     * Parses a parameter.
+     * @param parameters Classes of parameters
+     * @param args Arguments
+     * @param selector Selector
+     * @param i Index number
+     * @return Object
+     * @throws NullPointerException Throws an exception if Selector or any of its parameters is null
+     */
+    public Object parseParameter(Class[] parameters, List<Object> args, Selector selector, int i) throws NullPointerException {
         Object param = null;
 
         switch (parameters[i].getName()) {
@@ -80,7 +90,7 @@ public class CommandHelper {
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
-    public static ResponseEntity executeCommand(Constructor commandCons, ExecuteCommandBody body, AutomationInfo automationInfo, WebCommandExecutionFacade commandExecutionFacade) throws Exception {
+    public ResponseEntity executeCommand(Constructor commandCons, ExecuteCommandBody body, AutomationInfo automationInfo, WebCommandExecutionFacade commandExecutionFacade) throws Exception {
         Class[] parameters = commandCons.getParameterTypes();
         List<Object> args = body.getArgs();
         Selector selector = body.getSelector();
@@ -116,7 +126,7 @@ public class CommandHelper {
      * @return IByWeb
      * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
      */
-    public static IByWeb parseIByWeb(Selector selector) throws IllegalArgumentException {
+    public IByWeb parseIByWeb(Selector selector) throws IllegalArgumentException {
         IByWeb by;
 
         String value = selector.getValue();
@@ -147,7 +157,7 @@ public class CommandHelper {
      * @param switchMechanism Switch mechanism
      * @return Web Command Initializer
      */
-    public static ICommandInitializer parseICommandInitializer(Iterable<IByWeb> switchMechanism) {
+    public ICommandInitializer parseICommandInitializer(Iterable<IByWeb> switchMechanism) {
         return new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism);
     }
 }
