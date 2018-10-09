@@ -1,4 +1,4 @@
 /**
  * Controllers for interacting with browsers.
  */
-package browser;
+package aeon.platform.controllers;

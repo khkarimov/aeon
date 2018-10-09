@@ -1,7 +1,11 @@
-package browser;
+package aeon.platform.controllers;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
+import aeon.platform.controllers.BrowserController;
+import aeon.platform.models.CreateSessionBody;
+import aeon.platform.services.BrowserService;
+import aeon.platform.services.CommandService;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +25,7 @@ import java.util.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BrowserTest {
+public class BrowserControllerTests {
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule public ExpectedException expectedException = ExpectedException.none();
@@ -35,29 +39,34 @@ public class BrowserTest {
     @Mock private CreateSessionBody bodyMock;
     @Mock private ObjectId sessionIdMock;
 
-    @Mock private BrowserHelper browserHelperMock;
-    @Mock private CommandHelper commandHelperMock;
+    @Mock private BrowserService browserServiceMock;
+    @Mock private CommandService commandServiceMock;
 
     @Before
     public void setUp() {
-        browserController = new BrowserController(browserHelperMock, commandHelperMock);
+        browserController = new BrowserController(browserServiceMock, commandServiceMock);
         browserController.setSessionTable(sessionTableMock);
     }
 
     @Test
     public void launchBrowser() throws Exception {
-        when(browserHelperMock.createSessionId()).thenReturn(sessionIdMock);
-        when(browserHelperMock.setUpAutomationInfo(bodyMock)).thenReturn(automationInfoMock);
-        when(browserHelperMock.setUpCommandExecutionFacade(automationInfoMock)).thenReturn(commandExecutionFacadeMock);
+        when(browserServiceMock.createSessionId()).thenReturn(sessionIdMock);
+        when(browserServiceMock.setUpAutomationInfo(bodyMock)).thenReturn(automationInfoMock);
+        when(browserServiceMock.setUpCommandExecutionFacade(automationInfoMock)).thenReturn(commandExecutionFacadeMock);
         when(sessionTableMock.put(sessionIdMock, automationInfoMock)).thenReturn(automationInfoMock);
 
         ResponseEntity response = browserController.createSession(bodyMock);
 
-        verify(browserHelperMock, times(1)).setUpAutomationInfo(bodyMock);
-        verify(browserHelperMock, times(1)).setUpCommandExecutionFacade(automationInfoMock);
+        verify(browserServiceMock, times(1)).setUpAutomationInfo(bodyMock);
+        verify(browserServiceMock, times(1)).setUpCommandExecutionFacade(automationInfoMock);
         verify(sessionTableMock, times(1)).put(sessionIdMock, automationInfoMock);
 
         Assert.assertEquals(sessionIdMock.toString(), response.getBody());
         Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    }
+
+    @Test
+    public void goToUrl() {
+
     }
 }

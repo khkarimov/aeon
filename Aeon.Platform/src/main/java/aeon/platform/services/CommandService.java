@@ -1,4 +1,4 @@
-package browser;
+package aeon.platform.services;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
@@ -10,9 +10,11 @@ import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
-import org.springframework.context.annotation.Configuration;
+import aeon.platform.models.ExecuteCommandBody;
+import aeon.platform.models.Selector;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -20,8 +22,8 @@ import java.util.List;
 /**
  * Command execution helper class.
  */
-@Configuration
-public class CommandHelper {
+@Service
+public class CommandService {
 
     /**
      * Creates the class constructor.

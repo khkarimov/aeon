@@ -1,4 +1,4 @@
-package browser;
+package aeon.platform.models;
 
 import java.util.List;
 

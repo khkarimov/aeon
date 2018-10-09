@@ -1,4 +1,4 @@
-package browser;
+package aeon.platform.services;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
@@ -12,7 +12,9 @@ import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.Product;
 import aeon.core.testabstraction.product.WebConfiguration;
+import aeon.platform.models.CreateSessionBody;
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
@@ -20,8 +22,8 @@ import java.util.List;
 /**
  * Browser helper class.
  */
-@org.springframework.context.annotation.Configuration
-public class BrowserHelper {
+@Service
+public class BrowserService {
 
     private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
         List<IAdapterExtension> extensions = Aeon.getExtensions(IAdapterExtension.class);
