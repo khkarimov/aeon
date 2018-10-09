@@ -63,7 +63,7 @@ public class BrowserController {
 
             String commandString = body.getCommand();
             List<Object> args = body.getArgs();
-            List<String> byWebArgs = body.getByWebArgs();
+            WebSelector selector = body.getSelector();
 
             Class command;
 
@@ -96,22 +96,22 @@ public class BrowserController {
                                 params[i] = (boolean) args.get(i);
                                 break;
                             case "aeon.core.common.web.interfaces.IByWeb":
-                                if (body.getByWebArgs().size() == 2) {
-                                    String selector = body.getByWebArgs().get(0);
-                                    String type = body.getByWebArgs().get(1);
+                                if (selector.getValue() != null && selector.getType() != null) {
+                                    String value = selector.getValue();
+                                    String type = selector.getType();
 
                                     switch (type.toLowerCase()) {
                                         case "css":
-                                            params[i] = By.cssSelector(selector);
+                                            params[i] = By.cssSelector(value);
                                             break;
                                         case "data":
-                                            params[i] = By.dataAutomationAttribute(selector);
+                                            params[i] = By.dataAutomationAttribute(value);
                                             break;
                                         case "da":
-                                            params[i] = By.da(selector);
+                                            params[i] = By.da(value);
                                             break;
                                         case "jquery":
-                                            params[i] = By.jQuery(selector);
+                                            params[i] = By.jQuery(value);
                                             break;
                                     }
                                 } else {

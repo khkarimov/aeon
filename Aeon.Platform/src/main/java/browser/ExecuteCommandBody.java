@@ -9,18 +9,18 @@ public class ExecuteCommandBody {
 
     private String command;
     private List<Object> args;
-    private List<String> byWebArgs;
+    private WebSelector selector;
 
     /**
      * Creates a command execution body.
      * @param command Command
      * @param args Arguments
-     * @param byWebArgs IByWeb arguments
+     * @param selector IByWeb arguments
      */
-    public ExecuteCommandBody(String command, List<Object> args, List<String> byWebArgs) {
+    public ExecuteCommandBody(String command, List<Object> args, WebSelector selector) {
         this.command = command;
         this.args = args;
-        this.byWebArgs = byWebArgs;
+        this.selector = selector;
     }
 
     /**
@@ -32,11 +32,11 @@ public class ExecuteCommandBody {
     }
 
     /**
-     * Get the arguments for the IByWeb object.
+     * Get the IByWeb arguments.
      * @return IByWeb arguments
      */
-    public List<String> getByWebArgs() {
-        return byWebArgs;
+    public WebSelector getSelector() {
+        return selector;
     }
 
     /**
