@@ -148,6 +148,5 @@ public class BrowserControllerTests {
                 .executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock);
 
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
     }
 }
