@@ -18,12 +18,13 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Browser helper class.
  */
 @Service
-public class BrowserService {
+public class SessionService {
 
     private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
         List<IAdapterExtension> extensions = Aeon.getExtensions(IAdapterExtension.class);
@@ -51,11 +52,11 @@ public class BrowserService {
 
     /**
      * Sets up the automation info.
-     * @param body Session settings
+     * @param settings Session settings
      * @return Automation info
      * @throws Exception Throws an exception if an error occurs
      */
-    public AutomationInfo setUpAutomationInfo(CreateSessionBody body) throws Exception {
+    public AutomationInfo setUpAutomationInfo(Properties settings) throws Exception {
         IAdapterExtension plugin = loadPlugins();
 
         IDriver driver;
@@ -63,8 +64,8 @@ public class BrowserService {
 
         Configuration configuration = plugin.getConfiguration();
 
-        if (body.getSettings() != null) {
-            configuration.setProperties(body.getSettings());
+        if (settings != null) {
+            configuration.setProperties(settings);
         }
 
         adapter = createAdapter(plugin, configuration);

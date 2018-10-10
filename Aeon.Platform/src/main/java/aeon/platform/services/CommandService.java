@@ -8,6 +8,7 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
 import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
+import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
 import aeon.platform.models.ExecuteCommandBody;
@@ -128,8 +129,8 @@ public class CommandService {
      * @return IByWeb
      * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
      */
-    public IByWeb parseIByWeb(Selector selector) throws IllegalArgumentException {
-        IByWeb by;
+    public IBy parseIByWeb(Selector selector) throws IllegalArgumentException {
+        IBy by;
 
         String value = selector.getValue();
         String type = selector.getType();

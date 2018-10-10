@@ -4,7 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.platform.models.CreateSessionBody;
 import aeon.platform.models.ExecuteCommandBody;
-import aeon.platform.services.BrowserService;
+import aeon.platform.services.SessionService;
 import aeon.platform.services.CommandService;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
@@ -26,12 +26,12 @@ import java.util.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BrowserControllerTests {
+public class SessionControllerTests {
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule public ExpectedException expectedException = ExpectedException.none();
 
-    private BrowserController browserController;
+    private SessionController sessionController;
 
     @Mock private AutomationInfo automationInfoMock;
     @Mock private WebCommandExecutionFacade commandExecutionFacadeMock;
@@ -42,25 +42,25 @@ public class BrowserControllerTests {
     @Mock private ObjectId sessionIdMock;
     @Mock private Constructor constructorMock;
 
-    @Mock private BrowserService browserServiceMock;
+    @Mock private SessionService sessionServiceMock;
     @Mock private CommandService commandServiceMock;
 
     @Before
     public void setUp() {
-        browserController = new BrowserController(browserServiceMock, commandServiceMock);
-        browserController.setSessionTable(sessionTableMock);
+        sessionController = new SessionController(sessionServiceMock, commandServiceMock);
+        sessionController.setSessionTable(sessionTableMock);
     }
 
     @Test
     public void createSessionTest() throws Exception {
-        when(browserServiceMock.createSessionId()).thenReturn(sessionIdMock);
-        when(browserServiceMock.setUpAutomationInfo(createSessionBodyMock)).thenReturn(automationInfoMock);
-        when(browserServiceMock.setUpCommandExecutionFacade(automationInfoMock)).thenReturn(commandExecutionFacadeMock);
+        when(sessionServiceMock.createSessionId()).thenReturn(sessionIdMock);
+        when(sessionServiceMock.setUpAutomationInfo(null)).thenReturn(automationInfoMock);
+        when(sessionServiceMock.setUpCommandExecutionFacade(automationInfoMock)).thenReturn(commandExecutionFacadeMock);
 
-        ResponseEntity response = browserController.createSession(createSessionBodyMock);
+        ResponseEntity response = sessionController.createSession(createSessionBodyMock);
 
-        verify(browserServiceMock, times(1)).setUpAutomationInfo(createSessionBodyMock);
-        verify(browserServiceMock, times(1)).setUpCommandExecutionFacade(automationInfoMock);
+        verify(sessionServiceMock, times(1)).setUpAutomationInfo(null);
+        verify(sessionServiceMock, times(1)).setUpCommandExecutionFacade(automationInfoMock);
         verify(sessionTableMock, times(1)).put(sessionIdMock, automationInfoMock);
 
         Assert.assertEquals(sessionIdMock.toString(), response.getBody());
@@ -71,7 +71,7 @@ public class BrowserControllerTests {
     public void executeNullCommandTest() throws Exception {
         when(executeCommandBodyMock.getCommand()).thenReturn(null);
 
-        ResponseEntity response = browserController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(1)).getCommand();
 
@@ -88,7 +88,7 @@ public class BrowserControllerTests {
         when(commandServiceMock.executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        ResponseEntity response = browserController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(2)).getCommand();
         verify(sessionTableMock, times(1)).get(sessionIdMock);
@@ -112,7 +112,7 @@ public class BrowserControllerTests {
         when(commandServiceMock.executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        ResponseEntity response = browserController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(2)).getCommand();
         verify(sessionTableMock, times(1)).get(sessionIdMock);
@@ -136,7 +136,7 @@ public class BrowserControllerTests {
         when(commandServiceMock.executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock))
                 .thenThrow(new Exception());
 
-        ResponseEntity response = browserController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(2)).getCommand();
         verify(sessionTableMock, times(1)).get(sessionIdMock);

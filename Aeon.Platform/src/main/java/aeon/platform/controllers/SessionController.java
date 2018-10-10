@@ -4,7 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.platform.models.CreateSessionBody;
 import aeon.platform.models.ExecuteCommandBody;
-import aeon.platform.services.BrowserService;
+import aeon.platform.services.SessionService;
 import aeon.platform.services.CommandService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,30 +14,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Controller for browser.
  */
 @RestController
 @RequestMapping("api/v1")
-public class BrowserController {
+public class SessionController {
 
     private AutomationInfo automationInfo;
     private WebCommandExecutionFacade commandExecutionFacade;
-    private Map<ObjectId, AutomationInfo> sessionTable = new HashMap<>();
-    // synchronize w Collections.synchronizedMap? or ConcurrentHashMap?
+    private Map<ObjectId, AutomationInfo> sessionTable = new ConcurrentHashMap<>();
 
-    private BrowserService browserService;
+    private SessionService sessionService;
     private CommandService commandService;
 
     /**
      * Constructs Browser Controller.
-     * @param browserService Browser helper class
+     * @param sessionService Browser helper class
      * @param commandService Command helper class
      */
     @Autowired
-    public BrowserController(BrowserService browserService, CommandService commandService) {
-        this.browserService = browserService;
+    public SessionController(SessionService sessionService, CommandService commandService) {
+        this.sessionService = sessionService;
         this.commandService = commandService;
     }
 
@@ -57,10 +57,10 @@ public class BrowserController {
      */
     @PostMapping("sessions")
     public ResponseEntity createSession(@RequestBody CreateSessionBody body) throws Exception {
-        ObjectId sessionId = browserService.createSessionId();
+        ObjectId sessionId = sessionService.createSessionId();
 
-        automationInfo = browserService.setUpAutomationInfo(body);
-        commandExecutionFacade = browserService.setUpCommandExecutionFacade(automationInfo);
+        automationInfo = sessionService.setUpAutomationInfo(body.getSettings());
+        commandExecutionFacade = sessionService.setUpCommandExecutionFacade(automationInfo);
 
         sessionTable.put(sessionId, automationInfo);
 
@@ -74,7 +74,7 @@ public class BrowserController {
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
-    @PostMapping("sessions/{sessionId}/execute")
+    @PostMapping("sessions/{sessionId}/commands")
     public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) throws Exception {
         if (body.getCommand() != null) {
             automationInfo = sessionTable.get(sessionId);
