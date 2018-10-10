@@ -81,7 +81,12 @@ public class SessionController {
             commandExecutionFacade = (WebCommandExecutionFacade) automationInfo.getCommandExecutionFacade();
             String commandString = body.getCommand();
 
-            Constructor commandCons = commandService.createConstructor(commandString);
+            Constructor commandCons;
+            try {
+                commandCons = commandService.createConstructor(commandString);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
 
             if (commandCons.getName().equals("aeon.core.command.execution.commands.QuitCommand")) {
                 sessionTable.remove(sessionId);

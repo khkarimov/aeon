@@ -38,7 +38,11 @@ public class CommandService {
         if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
             command = Class.forName("aeon.core.command.execution.commands." + commandString);
         } else {
-            command = Class.forName("aeon.core.command.execution.commands.web." + commandString);
+            try {
+                command = Class.forName("aeon.core.command.execution.commands.web." + commandString);
+            } catch (Exception e) {
+                throw new IllegalArgumentException("No valid command entered.");
+            }
         }
 
         Constructor[] cons = command.getConstructors();
