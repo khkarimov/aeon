@@ -4,10 +4,10 @@ plugins {
     id 'org.springframework.boot' version '2.0.5.RELEASE'
 }
 
-mainClassName = 'aeon.platform.BrowserApp'
+mainClassName = 'aeon.platform.AeonApp'
 
 bootJar {
-    mainClassName = 'aeon.platform.BrowserApp'
+    mainClassName = 'aeon.platform.AeonApp'
 }
 
 dependencies {

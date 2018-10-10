@@ -8,28 +8,42 @@ import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.Product;
 import aeon.core.testabstraction.product.WebConfiguration;
-import aeon.platform.models.CreateSessionBody;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 /**
- * Browser helper class.
+ * Service for sessions.
  */
 @Service
 public class SessionService {
 
-    private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
-        List<IAdapterExtension> extensions = Aeon.getExtensions(IAdapterExtension.class);
+    private Supplier<List<IAdapterExtension>> supplier;
 
-        for (IAdapterExtension extension : extensions) {
+    /**
+     * Constructs a Session Service.
+     * @param adapterExtensionsSupplier Adapter extensions supplier
+     */
+    @Autowired
+    public SessionService(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier) {
+        this.supplier = adapterExtensionsSupplier;
+    }
+
+    private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
+        List<IAdapterExtension> extensions = supplier.get();
+
+        for (int i = 0; i < extensions.size(); i++) {
+        //for (IAdapterExtension extension : extensions) {
+            IAdapterExtension extension = extensions.get(i);
+
             if (extension.getProvidedCapability() == Capability.WEB) {
                 return extension;
             }

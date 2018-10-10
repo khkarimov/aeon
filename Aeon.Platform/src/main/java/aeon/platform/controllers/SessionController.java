@@ -4,8 +4,8 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.platform.models.CreateSessionBody;
 import aeon.platform.models.ExecuteCommandBody;
-import aeon.platform.services.SessionService;
 import aeon.platform.services.CommandService;
+import aeon.platform.services.SessionService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Controller for browser.
+ * Controller for session.
  */
 @RestController
 @RequestMapping("api/v1")
@@ -31,8 +31,8 @@ public class SessionController {
     private CommandService commandService;
 
     /**
-     * Constructs Browser Controller.
-     * @param sessionService Browser helper class
+     * Constructs a Session Controller.
+     * @param sessionService Session helper class
      * @param commandService Command helper class
      */
     @Autowired

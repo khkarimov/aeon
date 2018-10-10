@@ -21,7 +21,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 /**
- * Command execution helper class.
+ * Service for command execution.
  */
 @Service
 public class CommandService {
@@ -56,7 +56,7 @@ public class CommandService {
      * @return Object
      * @throws NullPointerException Throws an exception if Selector or any of its parameters is null
      */
-    public Object parseParameter(Class[] parameters, List<Object> args, Selector selector, int i) throws NullPointerException {
+    private Object parseParameter(Class[] parameters, List<Object> args, Selector selector, int i) throws NullPointerException {
         Object param = null;
 
         switch (parameters[i].getName()) {
@@ -129,7 +129,7 @@ public class CommandService {
      * @return IByWeb
      * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
      */
-    public IBy parseIByWeb(Selector selector) throws IllegalArgumentException {
+    private IBy parseIByWeb(Selector selector) throws IllegalArgumentException {
         IBy by;
 
         String value = selector.getValue();
@@ -160,7 +160,7 @@ public class CommandService {
      * @param switchMechanism Switch mechanism
      * @return Web Command Initializer
      */
-    public ICommandInitializer parseICommandInitializer(Iterable<IByWeb> switchMechanism) {
+    private ICommandInitializer parseICommandInitializer(Iterable<IByWeb> switchMechanism) {
         return new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism);
     }
 }
