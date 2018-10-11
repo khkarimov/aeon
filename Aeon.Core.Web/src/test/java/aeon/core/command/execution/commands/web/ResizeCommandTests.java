@@ -1,6 +1,5 @@
 package aeon.core.command.execution.commands.web;
 
-import aeon.core.common.web.BrowserSize;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.verify;
 public class ResizeCommandTests {
     private ResizeCommand resizeCommand;
     private Dimension dimensionSize;
-    private String browserSize;
+    private String browserSize = "Maximized";
 
     @Mock
     private IWebDriver driver;
@@ -29,6 +28,8 @@ public class ResizeCommandTests {
     @BeforeEach
     public void setUp() {
         resizeCommand = new ResizeCommand(browserSize);
+        dimensionSize = new Dimension();
+        dimensionSize.setSize(0, 0);
     }
 
     @Test
