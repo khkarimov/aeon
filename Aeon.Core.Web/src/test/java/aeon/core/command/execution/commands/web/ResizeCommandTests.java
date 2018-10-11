@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 public class ResizeCommandTests {
     private ResizeCommand resizeCommand;
     private Dimension dimensionSize;
-    private BrowserSize browserSize;
+    private String browserSize;
 
     @Mock
     private IWebDriver driver;

@@ -20,6 +20,7 @@ import java.net.URL;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class GoToUrlCommandTests {
     private GoToUrlCommand goToUrlCommand;
+    private String urlString = "https://www.google.com";
     private URL url = new URL("https://www.google.com");
 
     @Mock
@@ -30,7 +31,7 @@ public class GoToUrlCommandTests {
 
     @BeforeEach
     public void setup() {
-        goToUrlCommand = new GoToUrlCommand(url);
+        goToUrlCommand = new GoToUrlCommand(urlString);
     }
 
     @Test

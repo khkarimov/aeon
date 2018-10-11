@@ -26,7 +26,6 @@ public class ResizeCommand extends Command {
      */
     public ResizeCommand(String size) {
         super(Resources.getString("ResizeCommand_Info"));
-        this.size =
         this.size = BrowserSizeMap.map(size);
     }
 

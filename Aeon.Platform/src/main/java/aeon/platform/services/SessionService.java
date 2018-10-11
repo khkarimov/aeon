@@ -41,7 +41,6 @@ public class SessionService {
         List<IAdapterExtension> extensions = supplier.get();
 
         for (int i = 0; i < extensions.size(); i++) {
-        //for (IAdapterExtension extension : extensions) {
             IAdapterExtension extension = extensions.get(i);
 
             if (extension.getProvidedCapability() == Capability.WEB) {
