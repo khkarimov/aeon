@@ -17,6 +17,7 @@ public class AeonApp {
 
     /**
      * Returns a supplier for IAdapterExtensions.
+     * @return Adapter extensions supplier
      */
     @Bean
     public Supplier<List<IAdapterExtension>> getAdapterExtensionsSupplier() {

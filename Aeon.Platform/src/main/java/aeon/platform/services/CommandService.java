@@ -75,7 +75,7 @@ public class CommandService {
                 break;
             case "aeon.core.common.web.interfaces.IByWeb":
                 if (selector != null && selector.getValue() != null && selector.getType() != null) {
-                    param = parseIByWeb(selector);
+                    param = parseIBy(selector);
                 } else {
                     throw new NullPointerException("Selector and its value and type cannot be null");
                 }
@@ -128,12 +128,12 @@ public class CommandService {
     }
 
     /**
-     * Parses the IByWeb parameter.
-     * @param selector Web Selector
-     * @return IByWeb
+     * Parses the IBy parameter.
+     * @param selector Selector
+     * @return IBy
      * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
      */
-    private IBy parseIByWeb(Selector selector) throws IllegalArgumentException {
+    private IBy parseIBy(Selector selector) throws IllegalArgumentException {
         IBy by;
 
         String value = selector.getValue();
