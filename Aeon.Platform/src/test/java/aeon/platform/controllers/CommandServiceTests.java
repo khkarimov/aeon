@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.rules.ExpectedException;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -43,10 +44,15 @@ public class CommandServiceTests {
 
     private Selector selector;
 
+    @Mock private Selector selectorMock;
+
     @Mock private Constructor commandConsMock;
     @Mock private ExecuteCommandBody bodyMock;
     @Mock private AutomationInfo automationInfoMock;
     @Mock private WebCommandExecutionFacade commandExecutionFacadeMock;
+
+    @Mock private CommandWithReturn commandWithReturnMock;
+    @Mock private Command commandMock;
 
     @Before
     public void setUp() {
@@ -94,6 +100,7 @@ public class CommandServiceTests {
         when(bodyMock.getArgs()).thenReturn(args);
         when(bodyMock.getSelector()).thenReturn(null);
         when(commandConsMock.getDeclaringClass()).thenReturn(CommandWithReturn.class);
+        when(commandConsMock.newInstance("https://google.com")).thenReturn(commandWithReturnMock);
 
         ResponseEntity response = commandService.executeCommand(commandConsMock, bodyMock, automationInfoMock, commandExecutionFacadeMock);
 
@@ -101,7 +108,7 @@ public class CommandServiceTests {
         verify(bodyMock, times(1)).getArgs();
         verify(bodyMock, times(1)).getSelector();
         verify(commandConsMock, times(1)).getDeclaringClass();
-        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, (CommandWithReturn) null);
+        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandWithReturnMock);
         verify(commandConsMock, times(1)).newInstance("https://google.com");
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -109,10 +116,16 @@ public class CommandServiceTests {
 
     @Test
     public void executeCommandIByTest() throws Exception {
+        ArgumentCaptor<Object[]> captor = ArgumentCaptor.forClass(Object[].class);
+
+
         when(commandConsMock.getParameterTypes()).thenReturn(parametersIBy);
         when(bodyMock.getArgs()).thenReturn(argsIBy);
         when(bodyMock.getSelector()).thenReturn(selector);
+        when(selectorMock.getType()).thenReturn(null);
+        when(selectorMock.getValue()).thenReturn(null);
         when(commandConsMock.getDeclaringClass()).thenReturn(WebControlCommand.class);
+        when(commandConsMock.newInstance(captor.capture())).thenReturn(commandMock);
 
         ResponseEntity response = commandService.executeCommand(commandConsMock, bodyMock, automationInfoMock, commandExecutionFacadeMock);
 
@@ -120,7 +133,8 @@ public class CommandServiceTests {
         verify(bodyMock, times(1)).getArgs();
         verify(bodyMock, times(1)).getSelector();
         verify(commandConsMock, times(2)).getDeclaringClass();
-        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, (Command) null);
+        verify(commandConsMock, times(1)).newInstance(captor.capture());
+        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandMock);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -130,7 +144,6 @@ public class CommandServiceTests {
         when(commandConsMock.getParameterTypes()).thenReturn(parameters);
         when(bodyMock.getArgs()).thenReturn(null);
         when(bodyMock.getSelector()).thenReturn(null);
-        when(commandConsMock.getDeclaringClass()).thenReturn(CommandWithReturn.class);
 
         ResponseEntity response = commandService.executeCommand(commandConsMock, bodyMock, automationInfoMock, commandExecutionFacadeMock);
 
@@ -138,7 +151,7 @@ public class CommandServiceTests {
         verify(bodyMock, times(1)).getArgs();
         verify(bodyMock, times(1)).getSelector();
         verify(commandConsMock, times(0)).getDeclaringClass();
-        verify(commandExecutionFacadeMock, times(0)).execute(automationInfoMock, (CommandWithReturn) null);
+        verify(commandExecutionFacadeMock, times(0)).execute(automationInfoMock, commandWithReturnMock);
         verify(commandConsMock, times(0)).newInstance("https://google.com");
 
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
