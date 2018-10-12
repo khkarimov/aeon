@@ -11,6 +11,7 @@ import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
+import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.models.Selector;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Service for command execution.
@@ -114,9 +116,13 @@ public class CommandService {
             }
 
             if (CommandWithReturn.class.isAssignableFrom(commandCons.getDeclaringClass())) {
-                commandExecutionFacade.execute(automationInfo, (CommandWithReturn) commandCons.newInstance(params));
+                CommandWithReturn commandObject = (CommandWithReturn) commandCons.newInstance(params);
+                Function<IDriver, Object> commandDelegate = commandObject.getCommandDelegate();
+                Object result = commandDelegate.apply(automationInfo.getDriver());
 
-                return new ResponseEntity<>(HttpStatus.OK);
+                commandExecutionFacade.execute(automationInfo, commandObject);
+
+                return new ResponseEntity<>(result, HttpStatus.OK);
             } else if (Command.class.isAssignableFrom(commandCons.getDeclaringClass())) {
                 commandExecutionFacade.execute(automationInfo, (Command) commandCons.newInstance(params));
 
