@@ -86,7 +86,7 @@ public class SessionControllerTests {
         when(commandServiceMock.createConstructor("GoToUrlCommand")).thenReturn(constructorMock);
         when(constructorMock.getName()).thenReturn("aeon.core.command.execution.commands.web.GoToUrlCommand");
         when(commandServiceMock.executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock))
-                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
+                .thenReturn(new ResponseEntity<>(new Object(), HttpStatus.OK));
 
         ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
@@ -99,6 +99,7 @@ public class SessionControllerTests {
         verify(commandServiceMock, times(1))
                 .executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock);
 
+        Assert.assertNotNull(response.getBody());
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 

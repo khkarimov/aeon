@@ -7,6 +7,7 @@ import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.command.execution.commands.web.WebControlCommand;
 import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.models.Selector;
 import aeon.platform.services.CommandService;
@@ -26,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.mockito.Mockito.*;
 
@@ -36,6 +38,7 @@ public class CommandServiceTests {
 
     private CommandService commandService;
 
+    private Class[] parametersEmpty;
     private Class[] parameters;
     private Class[] parametersIBy;
 
@@ -51,12 +54,17 @@ public class CommandServiceTests {
     @Mock private AutomationInfo automationInfoMock;
     @Mock private WebCommandExecutionFacade commandExecutionFacadeMock;
 
+    @Mock private Function<IDriver, Object> commandDelegateMock;
+    @Mock private IDriver driverMock;
+
     @Mock private CommandWithReturn commandWithReturnMock;
     @Mock private Command commandMock;
 
     @Before
     public void setUp() {
         commandService = new CommandService();
+
+        parametersEmpty = new Class[0];
 
         parameters = new Class[1];
         parameters[0] = String.class;
@@ -96,11 +104,34 @@ public class CommandServiceTests {
 
     @Test
     public void executeCommandTest() throws Exception {
+        when(commandConsMock.getParameterTypes()).thenReturn(parametersEmpty);
+        when(bodyMock.getArgs()).thenReturn(null);
+        when(bodyMock.getSelector()).thenReturn(null);
+        when(commandConsMock.getDeclaringClass()).thenReturn(Command.class);
+        when(commandConsMock.newInstance(new Object[0])).thenReturn(commandMock);
+
+        ResponseEntity response = commandService.executeCommand(commandConsMock, bodyMock, automationInfoMock, commandExecutionFacadeMock);
+
+        verify(commandConsMock, times(1)).getParameterTypes();
+        verify(bodyMock, times(1)).getArgs();
+        verify(bodyMock, times(1)).getSelector();
+        verify(commandConsMock, times(2)).getDeclaringClass();
+        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandMock);
+        verify(commandConsMock, times(1)).newInstance(new Object[0]);
+
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void executeCommandWithReturnTest() throws Exception {
         when(commandConsMock.getParameterTypes()).thenReturn(parameters);
         when(bodyMock.getArgs()).thenReturn(args);
         when(bodyMock.getSelector()).thenReturn(null);
         when(commandConsMock.getDeclaringClass()).thenReturn(CommandWithReturn.class);
         when(commandConsMock.newInstance("https://google.com")).thenReturn(commandWithReturnMock);
+        when(commandWithReturnMock.getCommandDelegate()).thenReturn(commandDelegateMock);
+        when(automationInfoMock.getDriver()).thenReturn(driverMock);
+        when(commandDelegateMock.apply(driverMock)).thenReturn(new Object());
 
         ResponseEntity response = commandService.executeCommand(commandConsMock, bodyMock, automationInfoMock, commandExecutionFacadeMock);
 
@@ -108,16 +139,19 @@ public class CommandServiceTests {
         verify(bodyMock, times(1)).getArgs();
         verify(bodyMock, times(1)).getSelector();
         verify(commandConsMock, times(1)).getDeclaringClass();
-        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandWithReturnMock);
         verify(commandConsMock, times(1)).newInstance("https://google.com");
+        verify(commandWithReturnMock, times(1)).getCommandDelegate();
+        verify(automationInfoMock, times(1)).getDriver();
+        verify(commandDelegateMock, times(1)).apply(driverMock);
+        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandWithReturnMock);
 
+        Assert.assertNotNull(response.getBody());
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void executeCommandIByTest() throws Exception {
         ArgumentCaptor<Object[]> captor = ArgumentCaptor.forClass(Object[].class);
-
 
         when(commandConsMock.getParameterTypes()).thenReturn(parametersIBy);
         when(bodyMock.getArgs()).thenReturn(argsIBy);
