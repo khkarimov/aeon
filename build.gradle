@@ -22,6 +22,8 @@ dependencies {
     compile project(':Aeon.SystemTests.Web')
     compile project(':Aeon.SystemTests.Mobile')
     compile project(':Aeon.Platform')
+    compile project(':Aeon.Platform.Http')
+    compile project(':Aeon.Platform.Python')
 }
 
 task wrapper(type: Wrapper) {

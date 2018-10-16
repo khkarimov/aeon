@@ -1,4 +1,4 @@
-package aeon.platform.http;
+package aeon.platform.controllers.http;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,8 +27,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping("api/v1")
 public class HttpSessionController {
 
-    private AutomationInfo automationInfo;
-    private WebCommandExecutionFacade commandExecutionFacade;
+//    private AutomationInfo automationInfo;
+//    private WebCommandExecutionFacade commandExecutionFacade;
     private Map<ObjectId, ISession> sessionTable = new ConcurrentHashMap<>();
 
     private SessionService sessionService;

@@ -11,9 +11,6 @@ import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.Product;
 import aeon.core.testabstraction.product.WebConfiguration;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
@@ -23,7 +20,6 @@ import java.util.function.Supplier;
 /**
  * Service for sessions.
  */
-@Service
 public class SessionService {
 
     private Supplier<List<IAdapterExtension>> supplier;
@@ -32,7 +28,6 @@ public class SessionService {
      * Constructs a Session Service.
      * @param adapterExtensionsSupplier Adapter extensions supplier
      */
-    @Autowired
     public SessionService(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier) {
         this.supplier = adapterExtensionsSupplier;
     }
@@ -53,14 +48,6 @@ public class SessionService {
 
     private IAdapter createAdapter(IAdapterExtension plugin, Configuration configuration) {
         return plugin.createAdapter(configuration);
-    }
-
-    /**
-     * Creates a new session ID.
-     * @return New ObjectID
-     */
-    public ObjectId createSessionId() {
-        return new ObjectId();
     }
 
     /**

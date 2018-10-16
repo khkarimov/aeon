@@ -14,9 +14,6 @@ import aeon.core.common.web.selectors.By;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.models.Selector;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -25,7 +22,6 @@ import java.util.function.Function;
 /**
  * Service for command execution.
  */
-@Service
 public class CommandService {
 
     /**
@@ -99,7 +95,7 @@ public class CommandService {
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
-    public ResponseEntity executeCommand(Constructor commandCons, ExecuteCommandBody body, AutomationInfo automationInfo, WebCommandExecutionFacade commandExecutionFacade) throws Exception {
+    public Object executeCommand(Constructor commandCons, ExecuteCommandBody body, AutomationInfo automationInfo, WebCommandExecutionFacade commandExecutionFacade) throws Exception {
         Class[] parameters = commandCons.getParameterTypes();
         List<Object> args = body.getArgs();
         Selector selector = body.getSelector();
@@ -123,15 +119,18 @@ public class CommandService {
 //                commandExecutionFacade.execute(automationInfo, commandObject);
                 Object result = commandExecutionFacade.execute(automationInfo, (CommandWithReturn) commandCons.newInstance(params));
 
-                return new ResponseEntity<>(result, HttpStatus.OK);
+                return result;
+                //return new ResponseEntity<>(result, HttpStatus.OK);
             } else if (Command.class.isAssignableFrom(commandCons.getDeclaringClass())) {
                 commandExecutionFacade.execute(automationInfo, (Command) commandCons.newInstance(params));
 
-                return new ResponseEntity<>(HttpStatus.OK);
+                return null;
+                //return new ResponseEntity<>(HttpStatus.OK);
             }
         }
 
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return null;
+        //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**

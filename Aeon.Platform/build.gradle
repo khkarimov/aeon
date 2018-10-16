@@ -1,27 +1,7 @@
-plugins {
-    id 'java'
-    id 'application'
-    id 'org.springframework.boot' version '2.0.5.RELEASE'
-}
-
-mainClassName = 'aeon.platform.AeonApp'
-
-bootJar {
-    mainClassName = 'aeon.platform.AeonApp'
-}
-
 dependencies {
     compile project(':Aeon.Core.Mobile')
 
-    compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')
-    compile('org.springframework.boot:spring-boot-starter-data-mongodb:2.0.5.RELEASE')
-
     testCompile('junit:junit:4.12')
-    testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
-}
-
-configurations {
-    compile.exclude module: 'spring-boot-starter-logging'
 }
 
 repositories {

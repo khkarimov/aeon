@@ -3,7 +3,7 @@ package aeon.platform.http;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.platform.ISession;
-import aeon.platform.Session;
+import aeon.platform.controllers.http.HttpSessionController;
 import aeon.platform.models.CreateSessionBody;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.services.SessionService;
