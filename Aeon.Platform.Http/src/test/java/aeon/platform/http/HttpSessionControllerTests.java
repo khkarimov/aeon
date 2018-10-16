@@ -1,7 +1,9 @@
-package aeon.platform.controllers;
+package aeon.platform.http;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
+import aeon.platform.ISession;
+import aeon.platform.Session;
 import aeon.platform.models.CreateSessionBody;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.services.SessionService;
@@ -26,16 +28,18 @@ import java.util.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SessionControllerTests {
+public class HttpSessionControllerTests {
 
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule public ExpectedException expectedException = ExpectedException.none();
 
-    private SessionController sessionController;
+    private HttpSessionController httpSessionController;
+
+    @Mock private ISession sessionMock;
 
     @Mock private AutomationInfo automationInfoMock;
     @Mock private WebCommandExecutionFacade commandExecutionFacadeMock;
-    @Mock private Map<ObjectId, AutomationInfo> sessionTableMock;
+    @Mock private Map<ObjectId, ISession> sessionTableMock;
 
     @Mock private CreateSessionBody createSessionBodyMock;
     @Mock private ExecuteCommandBody executeCommandBodyMock;
@@ -47,8 +51,8 @@ public class SessionControllerTests {
 
     @Before
     public void setUp() {
-        sessionController = new SessionController(sessionServiceMock, commandServiceMock);
-        sessionController.setSessionTable(sessionTableMock);
+        httpSessionController = new HttpSessionController(sessionServiceMock, commandServiceMock);
+        httpSessionController.setSessionTable(sessionTableMock);
     }
 
     @Test
@@ -57,11 +61,12 @@ public class SessionControllerTests {
         when(sessionServiceMock.setUpAutomationInfo(null)).thenReturn(automationInfoMock);
         when(sessionServiceMock.setUpCommandExecutionFacade(automationInfoMock)).thenReturn(commandExecutionFacadeMock);
 
-        ResponseEntity response = sessionController.createSession(createSessionBodyMock);
+        ResponseEntity response = httpSessionController.createSession(createSessionBodyMock);
 
         verify(sessionServiceMock, times(1)).setUpAutomationInfo(null);
         verify(sessionServiceMock, times(1)).setUpCommandExecutionFacade(automationInfoMock);
-        verify(sessionTableMock, times(1)).put(sessionIdMock, automationInfoMock);
+        verify(sessionTableMock, times(1)).put(sessionIdMock, sessionMock);
+        //verify(sessionTableMock, times(1)).put(sessionIdMock, automationInfoMock);
 
         Assert.assertEquals(sessionIdMock.toString(), response.getBody());
         Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -71,7 +76,7 @@ public class SessionControllerTests {
     public void executeNullCommandTest() throws Exception {
         when(executeCommandBodyMock.getCommand()).thenReturn(null);
 
-        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = httpSessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(1)).getCommand();
 
@@ -81,14 +86,15 @@ public class SessionControllerTests {
     @Test
     public void executeGoToUrlCommandTest() throws Exception {
         when(executeCommandBodyMock.getCommand()).thenReturn("GoToUrlCommand");
-        when(sessionTableMock.get(sessionIdMock)).thenReturn(automationInfoMock);
+        when(sessionTableMock.get(sessionIdMock)).thenReturn(sessionMock);
+        //when(sessionTableMock.get(sessionIdMock)).thenReturn(automationInfoMock);
         when(automationInfoMock.getCommandExecutionFacade()).thenReturn(commandExecutionFacadeMock);
         when(commandServiceMock.createConstructor("GoToUrlCommand")).thenReturn(constructorMock);
         when(constructorMock.getName()).thenReturn("aeon.core.command.execution.commands.web.GoToUrlCommand");
         when(commandServiceMock.executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock))
                 .thenReturn(new ResponseEntity<>(new Object(), HttpStatus.OK));
 
-        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = httpSessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(2)).getCommand();
         verify(sessionTableMock, times(1)).get(sessionIdMock);
@@ -106,14 +112,15 @@ public class SessionControllerTests {
     @Test
     public void executeQuitCommandTest() throws Exception {
         when(executeCommandBodyMock.getCommand()).thenReturn("QuitCommand");
-        when(sessionTableMock.get(sessionIdMock)).thenReturn(automationInfoMock);
+        when(sessionTableMock.get(sessionIdMock)).thenReturn(sessionMock);
+        //when(sessionTableMock.get(sessionIdMock)).thenReturn(automationInfoMock);
         when(automationInfoMock.getCommandExecutionFacade()).thenReturn(commandExecutionFacadeMock);
         when(commandServiceMock.createConstructor("QuitCommand")).thenReturn(constructorMock);
         when(constructorMock.getName()).thenReturn("aeon.core.command.execution.commands.QuitCommand");
         when(commandServiceMock.executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = httpSessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(2)).getCommand();
         verify(sessionTableMock, times(1)).get(sessionIdMock);
@@ -130,14 +137,15 @@ public class SessionControllerTests {
     @Test
     public void executeCommandExceptionTest() throws Exception {
         when(executeCommandBodyMock.getCommand()).thenReturn("GoToUrlCommand");
-        when(sessionTableMock.get(sessionIdMock)).thenReturn(automationInfoMock);
+        when(sessionTableMock.get(sessionIdMock)).thenReturn(sessionMock);
+        //when(sessionTableMock.get(sessionIdMock)).thenReturn(automationInfoMock);
         when(automationInfoMock.getCommandExecutionFacade()).thenReturn(commandExecutionFacadeMock);
         when(commandServiceMock.createConstructor("GoToUrlCommand")).thenReturn(constructorMock);
         when(constructorMock.getName()).thenReturn("aeon.core.command.execution.commands.web.GoToUrlCommand");
         when(commandServiceMock.executeCommand(constructorMock, executeCommandBodyMock, automationInfoMock, commandExecutionFacadeMock))
                 .thenThrow(new Exception());
 
-        ResponseEntity response = sessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
+        ResponseEntity response = httpSessionController.executeCommand(sessionIdMock, executeCommandBodyMock);
 
         verify(executeCommandBodyMock, times(2)).getCommand();
         verify(sessionTableMock, times(1)).get(sessionIdMock);

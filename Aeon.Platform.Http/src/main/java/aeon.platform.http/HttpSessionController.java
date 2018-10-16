@@ -1,4 +1,4 @@
-package aeon.platform.controllers;
+package aeon.platform.http;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RestController
 @RequestMapping("api/v1")
-public class SessionController {
+public class HttpSessionController {
 
     private AutomationInfo automationInfo;
     private WebCommandExecutionFacade commandExecutionFacade;
@@ -39,27 +39,23 @@ public class SessionController {
      * @param commandService Command helper class
      */
     @Autowired
-    public SessionController(SessionService sessionService, CommandService commandService) {
+    public HttpSessionController(SessionService sessionService, CommandService commandService) {
         this.sessionService = sessionService;
         this.commandService = commandService;
     }
 
     //??????
 
-//    public SessionController(Map<ObjectId, ISession> sessionTable) {
-//        this.sessionTable = sessionTable;
-//    }
 
 
 
-
-//    /**
-//     * Sets the session table.
-//     * @param sessionTable ISession table
-//     */
-//    public void setSessionTable(Map<ObjectId, ISession> sessionTable) {
-//        this.sessionTable = sessionTable;
-//    }
+    /**
+     * Sets the session table.
+     * @param sessionTable ISession table
+     */
+    public void setSessionTable(Map<ObjectId, ISession> sessionTable) {
+        this.sessionTable = sessionTable;
+    }
 
     /**
      * Creates a new session.

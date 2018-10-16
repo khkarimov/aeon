@@ -4,7 +4,7 @@
 //import aeon.core.command.execution.WebCommandExecutionFacade;
 //import aeon.core.command.execution.commands.Command;
 //import aeon.core.command.execution.commands.QuitCommand;
-//import aeon.platform.controllers.SessionController;
+//import aeon.platform.http.HttpSessionController;
 //import aeon.platform.models.CreateSessionBody;
 //import aeon.platform.models.ExecuteCommandBody;
 //import aeon.platform.services.CommandService;
@@ -27,7 +27,7 @@
 //public class HttpController {
 //
 //
-//    private Map<ObjectId, SessionController> sessionTable = new ConcurrentHashMap<>();
+//    private Map<ObjectId, HttpSessionController> sessionTable = new ConcurrentHashMap<>();
 //
 //
 //
@@ -46,7 +46,7 @@
 //    @PostMapping("sessions")
 //    public ResponseEntity createHttpSession(@RequestBody CreateSessionBody body) throws Exception {
 //
-//        SessionController sessionController = super();
+//        HttpSessionController sessionController = super();
 //
 //
 //        //ObjectId sessionId = super.createSession(body);
