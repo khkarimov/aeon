@@ -5,6 +5,7 @@ import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.platform.services.SessionService;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Supplier;

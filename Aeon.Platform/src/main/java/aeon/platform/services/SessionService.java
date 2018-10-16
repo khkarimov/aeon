@@ -8,9 +8,14 @@ import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
+import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.Product;
 import aeon.core.testabstraction.product.WebConfiguration;
+import aeon.platform.Session;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import java.time.Duration;
 import java.util.List;
@@ -28,6 +33,7 @@ public class SessionService {
      * Constructs a Session Service.
      * @param adapterExtensionsSupplier Adapter extensions supplier
      */
+    @Inject
     public SessionService(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier) {
         this.supplier = adapterExtensionsSupplier;
     }

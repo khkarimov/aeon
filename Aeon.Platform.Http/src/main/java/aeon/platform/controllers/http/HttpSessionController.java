@@ -2,13 +2,12 @@ package aeon.platform.controllers.http;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
-import aeon.platform.ISession;
-import aeon.platform.Session;
-import aeon.platform.SessionFactory;
+import aeon.platform.*;
 import aeon.platform.models.CreateSessionBody;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.services.CommandService;
 import aeon.platform.services.SessionService;
+import dagger.internal.DaggerCollections;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +31,7 @@ public class HttpSessionController {
     private Map<ObjectId, ISession> sessionTable = new ConcurrentHashMap<>();
 
     private SessionService sessionService;
-    private CommandService commandService;
+   // private CommandService commandService;
 
     /**
      * Constructs a Session Controller.
@@ -40,16 +39,15 @@ public class HttpSessionController {
      * @param commandService Command helper class
      */
     @Autowired
-    public HttpSessionController(SessionService sessionService, CommandService commandService) {
+    public HttpSessionController(SessionService sessionService) {
+    //public HttpSessionController(SessionService sessionService, CommandService commandService) {
         this.sessionService = sessionService;
-        this.commandService = commandService;
+        //this.commandService = commandService;
     }
 
-    //??????
 
 
-
-
+// ??
     /**
      * Sets the session table.
      * @param sessionTable ISession table
@@ -69,6 +67,16 @@ public class HttpSessionController {
     //public ObjectId createSession(CreateSessionBody body) throws Exception {
     //public ResponseEntity createSession(CreateSessionBody body) throws Exception {
         ObjectId sessionId = new ObjectId();
+
+
+//
+//        SessionComponent sessionComponent = DaggerSessionComponent.create();
+//        SessionModule sessionModule = new SessionModule();
+//        SessionComponent sessionComponent = DaggerSessionComponent.builder().sessionModule(sessionModule).build();
+//        sessionService = sessionComponent.buildSessionService();
+
+
+        //SessionComponent sessionComponent = SessionComponent
 
         //
         SessionFactory sessionFactory = new SessionFactory(sessionService);
