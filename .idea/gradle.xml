@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/Aeon.Core.Mobile" />
             <option value="$PROJECT_DIR$/Aeon.Core.Web" />
             <option value="$PROJECT_DIR$/Aeon.Platform" />
+            <option value="$PROJECT_DIR$/Aeon.Platform.Http" />
+            <option value="$PROJECT_DIR$/Aeon.Platform.Python" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Appium" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Perfecto" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Reporting" />

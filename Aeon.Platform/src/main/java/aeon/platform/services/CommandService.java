@@ -116,11 +116,12 @@ public class CommandService {
             }
 
             if (CommandWithReturn.class.isAssignableFrom(commandCons.getDeclaringClass())) {
-                CommandWithReturn commandObject = (CommandWithReturn) commandCons.newInstance(params);
-                Function<IDriver, Object> commandDelegate = commandObject.getCommandDelegate();
-                Object result = commandDelegate.apply(automationInfo.getDriver());
-
-                commandExecutionFacade.execute(automationInfo, commandObject);
+//                CommandWithReturn commandObject = (CommandWithReturn) commandCons.newInstance(params);
+//                Function<IDriver, Object> commandDelegate = commandObject.getCommandDelegate();
+//                Object result = commandDelegate.apply(automationInfo.getDriver());
+//
+//                commandExecutionFacade.execute(automationInfo, commandObject);
+                Object result = commandExecutionFacade.execute(automationInfo, (CommandWithReturn) commandCons.newInstance(params));
 
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else if (Command.class.isAssignableFrom(commandCons.getDeclaringClass())) {
