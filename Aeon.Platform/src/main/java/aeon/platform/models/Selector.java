@@ -10,6 +10,11 @@ public class Selector {
 
     /**
      * Creates a Web Selector.
+     */
+    public Selector() {}
+
+    /**
+     * Creates a Web Selector.
      * @param value Value
      * @param type Type
      */

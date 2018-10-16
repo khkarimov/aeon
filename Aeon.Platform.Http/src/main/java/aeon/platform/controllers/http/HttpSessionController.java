@@ -1,13 +1,9 @@
 package aeon.platform.controllers.http;
 
-import aeon.core.command.execution.AutomationInfo;
-import aeon.core.command.execution.WebCommandExecutionFacade;
-import aeon.platform.*;
 import aeon.platform.models.CreateSessionBody;
 import aeon.platform.models.ExecuteCommandBody;
-import aeon.platform.services.CommandService;
-import aeon.platform.services.SessionService;
-import dagger.internal.DaggerCollections;
+import aeon.platform.services.SessionFactory;
+import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,23 +21,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping("api/v1")
 public class HttpSessionController {
 
-//    private AutomationInfo automationInfo;
-//    private WebCommandExecutionFacade commandExecutionFacade;
     private Map<ObjectId, ISession> sessionTable = new ConcurrentHashMap<>();
-
-    private SessionService sessionService;
-   // private CommandService commandService;
+    private SessionFactory sessionFactory;
 
     /**
      * Constructs a Session Controller.
-     * @param sessionService ISession helper class
-     * @param commandService Command helper class
+     * @param sessionFactory Session factory
      */
     @Autowired
-    public HttpSessionController(SessionService sessionService) {
-    //public HttpSessionController(SessionService sessionService, CommandService commandService) {
-        this.sessionService = sessionService;
-        //this.commandService = commandService;
+    public HttpSessionController(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 
@@ -58,47 +46,22 @@ public class HttpSessionController {
 
     /**
      * Creates a new session.
-     * @param body Body
+     * @param body Session body
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
     @PostMapping("sessions")
     public ResponseEntity createSession(@RequestBody CreateSessionBody body) throws Exception {
-    //public ObjectId createSession(CreateSessionBody body) throws Exception {
-    //public ResponseEntity createSession(CreateSessionBody body) throws Exception {
         ObjectId sessionId = new ObjectId();
-
-
-//
-//        SessionComponent sessionComponent = DaggerSessionComponent.create();
-//        SessionModule sessionModule = new SessionModule();
-//        SessionComponent sessionComponent = DaggerSessionComponent.builder().sessionModule(sessionModule).build();
-//        sessionService = sessionComponent.buildSessionService();
-
-
-        //SessionComponent sessionComponent = SessionComponent
-
-        //
-        SessionFactory sessionFactory = new SessionFactory(sessionService);
-        //sessionFactory.createSession(body.getSettings());
-
-
-
-//        automationInfo = sessionService.setUpAutomationInfo(body.getSettings());
-//        commandExecutionFacade = sessionService.setUpCommandExecutionFacade(automationInfo);
-
         sessionTable.put(sessionId, sessionFactory.getSession(body.getSettings()));
 
-
-
-        //return sessionId;
         return new ResponseEntity<>(sessionId.toString(), HttpStatus.CREATED);
     }
 
     /**
      * Executes a given command.
      * @param sessionId ISession ID
-     * @param body Body
+     * @param body Command body
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
@@ -112,34 +75,10 @@ public class HttpSessionController {
 
         Object result = session.executeCommand(body);
 
-        if (result == null) {
+        if (result.equals("Bad Request")) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return (ResponseEntity) result;
-//        if (body.getCommand() != null) {
-//            automationInfo = sessionTable.get(sessionId);
-//            commandExecutionFacade = (WebCommandExecutionFacade) automationInfo.getCommandExecutionFacade();
-//            String commandString = body.getCommand();
-//
-//            Constructor commandCons;
-//            try {
-//                commandCons = commandService.createConstructor(commandString);
-//            } catch (Exception e) {
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }
-//
-//            if (commandCons.getName().equals("aeon.core.command.execution.commands.QuitCommand")) {
-//                sessionTable.remove(sessionId);
-//            }
-//
-//            try {
-//                return commandService.executeCommand(commandCons, body, automationInfo, commandExecutionFacade);
-//            } catch (Exception e) {
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }
-//        }
-
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

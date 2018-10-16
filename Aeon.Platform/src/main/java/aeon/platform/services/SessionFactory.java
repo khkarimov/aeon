@@ -1,6 +1,7 @@
 package aeon.platform.services;
 
 import aeon.core.command.execution.AutomationInfo;
+import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
@@ -8,14 +9,13 @@ import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.Product;
 import aeon.core.testabstraction.product.WebConfiguration;
-import aeon.platform.Session;
+import aeon.platform.session.ISession;
+import aeon.platform.session.Session;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import java.time.Duration;
 import java.util.List;
@@ -23,9 +23,9 @@ import java.util.Properties;
 import java.util.function.Supplier;
 
 /**
- * Service for sessions.
+ * Service for session.
  */
-public class SessionService {
+public class SessionFactory {
 
     private Supplier<List<IAdapterExtension>> supplier;
 
@@ -34,8 +34,21 @@ public class SessionService {
      * @param adapterExtensionsSupplier Adapter extensions supplier
      */
     @Inject
-    public SessionService(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier) {
+    public SessionFactory(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier) {
         this.supplier = adapterExtensionsSupplier;
+    }
+
+    /**
+     * Creates a new session.
+     * @param settings Settings
+     * @return Session
+     * @throws Exception Throws an exception if an error occurs
+     */
+    public ISession getSession(Properties settings) throws Exception {
+        AutomationInfo automationInfo = setUpAutomationInfo(settings);
+        ICommandExecutionFacade commandExecutionFacade = setUpCommandExecutionFacade(automationInfo);
+
+        return new Session(automationInfo, commandExecutionFacade);
     }
 
     private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
@@ -62,7 +75,7 @@ public class SessionService {
      * @return Automation info
      * @throws Exception Throws an exception if an error occurs
      */
-    public AutomationInfo setUpAutomationInfo(Properties settings) throws Exception {
+    private AutomationInfo setUpAutomationInfo(Properties settings) throws Exception {
         IAdapterExtension plugin = loadPlugins();
 
         IDriver driver;
@@ -87,7 +100,7 @@ public class SessionService {
      * @param automationInfo Automation info
      * @return Command execution facade
      */
-    public WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
+    private WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
         Configuration configuration = automationInfo.getConfiguration();
 
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);

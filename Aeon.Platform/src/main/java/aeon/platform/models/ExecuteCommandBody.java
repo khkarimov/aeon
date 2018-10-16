@@ -13,6 +13,11 @@ public class ExecuteCommandBody {
 
     /**
      * Creates a command execution body.
+     */
+    public ExecuteCommandBody() {}
+
+    /**
+     * Creates a command execution body.
      * @param command Command
      * @param args Arguments
      * @param selector IByWeb arguments

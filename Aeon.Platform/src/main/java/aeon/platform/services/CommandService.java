@@ -30,7 +30,7 @@ public class CommandService {
      * @return Constructor
      * @throws Exception Throws an exception if an error occurs
      */
-    public Constructor createConstructor(String commandString) throws Exception {
+    public Constructor getCommandInstance(String commandString) throws Exception {
         Class command;
 
         if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {

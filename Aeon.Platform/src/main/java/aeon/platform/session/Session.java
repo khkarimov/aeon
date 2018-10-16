@@ -1,4 +1,4 @@
-package aeon.platform;
+package aeon.platform.session;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
@@ -8,44 +8,48 @@ import aeon.platform.services.CommandService;
 
 import java.lang.reflect.Constructor;
 
+/**
+ * Creates a Session object.
+ */
 public class Session implements ISession {
 
     private AutomationInfo automationInfo;
     private ICommandExecutionFacade commandExecutionFacade;
     private CommandService commandService = new CommandService();
 
+    /**
+     * Constructs a Session.
+     * @param automationInfo Automation info
+     * @param commandExecutionFacade Command execution facade
+     */
     public Session(AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade) {
         this.automationInfo = automationInfo;
         this.commandExecutionFacade = commandExecutionFacade;
     }
 
+    /**
+     * Executes a given command.
+     * @param body Command body
+     * @return Object
+     */
     public Object executeCommand(ExecuteCommandBody body) {
         if (body.getCommand() != null) {
-//            automationInfo = sessionTable.get(sessionId);
-//            commandExecutionFacade = (WebCommandExecutionFacade) automationInfo.getCommandExecutionFacade();
             String commandString = body.getCommand();
 
             Constructor commandCons;
             try {
-                commandCons = commandService.createConstructor(commandString);
+                commandCons = commandService.getCommandInstance(commandString);
             } catch (Exception e) {
-                return null;
-                //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return "Bad Request";
             }
-
-//            if (commandCons.getName().equals("aeon.core.command.execution.commands.QuitCommand")) {
-//                sessionTable.remove(sessionId);
-//            }
 
             try {
                 return commandService.executeCommand(commandCons, body, automationInfo, (WebCommandExecutionFacade) commandExecutionFacade);
             } catch (Exception e) {
-                return null;
-                //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return "Bad Request";
             }
         }
 
-        return null;
-        //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return "Bad Request";
     }
 }

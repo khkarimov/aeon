@@ -5,17 +5,21 @@ import aeon.core.testabstraction.product.Aeon;
 import dagger.Module;
 import dagger.Provides;
 
-import javax.inject.Singleton;
-
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * Module to provide Adapter Extensions Supplier.
+ */
 @Module
-public class SessionModule {
+public class AeonPlatformModule {
 
+    /**
+     * Provides the Adapter Extensions Supplier.
+     * @return Adapter Extensions Supplier
+     */
     @Provides
     public Supplier<List<IAdapterExtension>> provideAdapterExtensionsSupplier() {
-//    public Supplier<List<IAdapterExtension>> getAdapterExtensionsSupplier() {
         return () -> Aeon.getExtensions(IAdapterExtension.class);
     }
 }
