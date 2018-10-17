@@ -31,25 +31,18 @@ public class Session implements ISession {
      * Executes a given command.
      * @param body Command body
      * @return Object
+     * @throws Exception Throws an exception if an error occurs
      */
-    public Object executeCommand(ExecuteCommandBody body) {
+    public Object executeCommand(ExecuteCommandBody body) throws Exception {
         if (body.getCommand() != null) {
             String commandString = body.getCommand();
 
             Constructor commandCons;
-            try {
-                commandCons = commandService.getCommandInstance(commandString);
-            } catch (Exception e) {
-                return "Bad Request";
-            }
+            commandCons = commandService.getCommandInstance(commandString);
 
-            try {
-                return commandService.executeCommand(commandCons, body, automationInfo, (WebCommandExecutionFacade) commandExecutionFacade);
-            } catch (Exception e) {
-                return "Bad Request";
-            }
+            return commandService.executeCommand(commandCons, body, automationInfo, (WebCommandExecutionFacade) commandExecutionFacade);
         }
 
-        return "Bad Request";
+        throw new Exception();
     }
 }

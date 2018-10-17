@@ -63,19 +63,20 @@ public class HttpSessionController {
      * @param sessionId ISession ID
      * @param body Command body
      * @return Response entity
-     * @throws Exception Throws an exception if an error occurs
      */
     @PostMapping("sessions/{sessionId}/commands")
-    public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) throws Exception {
+    public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
         ISession session = sessionTable.get(sessionId);
 
         if (body.getCommand().equals("QuitCommand")) {
             sessionTable.remove(sessionId);
         }
 
-        Object result = session.executeCommand(body);
+        Object result;
 
-        if (result.equals("Bad Request")) {
+        try {
+            result = session.executeCommand(body);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

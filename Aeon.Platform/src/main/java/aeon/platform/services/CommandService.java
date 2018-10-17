@@ -112,25 +112,15 @@ public class CommandService {
             }
 
             if (CommandWithReturn.class.isAssignableFrom(commandCons.getDeclaringClass())) {
-//                CommandWithReturn commandObject = (CommandWithReturn) commandCons.newInstance(params);
-//                Function<IDriver, Object> commandDelegate = commandObject.getCommandDelegate();
-//                Object result = commandDelegate.apply(automationInfo.getDriver());
-//
-//                commandExecutionFacade.execute(automationInfo, commandObject);
-                Object result = commandExecutionFacade.execute(automationInfo, (CommandWithReturn) commandCons.newInstance(params));
-
-                return result;
-                //return new ResponseEntity<>(result, HttpStatus.OK);
+                return commandExecutionFacade.execute(automationInfo, (CommandWithReturn) commandCons.newInstance(params));
             } else if (Command.class.isAssignableFrom(commandCons.getDeclaringClass())) {
                 commandExecutionFacade.execute(automationInfo, (Command) commandCons.newInstance(params));
 
                 return null;
-                //return new ResponseEntity<>(HttpStatus.OK);
             }
         }
 
-        return null;
-        //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        throw new Exception();
     }
 
     /**
