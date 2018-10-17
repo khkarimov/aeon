@@ -139,7 +139,7 @@ public class CommandServiceTests {
         verify(commandConsMock, times(1)).newInstance("https://google.com");
         verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandWithReturnMock);
 
-        Assert.assertNotNull(object);
+        Assert.assertEquals("GoToUrlCommand Successful", object);
     }
 
     @Test

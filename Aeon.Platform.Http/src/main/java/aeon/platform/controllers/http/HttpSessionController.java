@@ -32,9 +32,6 @@ public class HttpSessionController {
         this.sessionFactory = sessionFactory;
     }
 
-
-
-// ??
     /**
      * Sets the session table.
      * @param sessionTable ISession table
@@ -67,18 +64,14 @@ public class HttpSessionController {
     public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
         ISession session = sessionTable.get(sessionId);
 
-        if (body.getCommand().equals("QuitCommand")) {
+        if (body.getCommand() != null && body.getCommand().equals("QuitCommand")) {
             sessionTable.remove(sessionId);
         }
 
-        Object result;
-
         try {
-            result = session.executeCommand(body);
+            return new ResponseEntity<>(session.executeCommand(body), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
