@@ -23,14 +23,14 @@ import java.util.Properties;
 import java.util.function.Supplier;
 
 /**
- * Service for session.
+ * Factory for session.
  */
 public class SessionFactory {
 
     private Supplier<List<IAdapterExtension>> supplier;
 
     /**
-     * Constructs a Session Service.
+     * Constructs a Session Factory.
      * @param adapterExtensionsSupplier Adapter extensions supplier
      */
     @Inject

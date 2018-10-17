@@ -1,5 +1,6 @@
 package aeon.platform.services;
 
+import aeon.core.WebExtension;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.commands.Command;
@@ -10,14 +11,11 @@ import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.common.web.selectors.By;
-import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.models.Selector;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Service for command execution.
@@ -73,7 +71,7 @@ public class CommandService {
                 break;
             case "aeon.core.common.web.interfaces.IByWeb":
                 if (selector != null && selector.getValue() != null && selector.getType() != null) {
-                    param = parseIBy(selector);
+                    param = parseSelector(selector);
                 } else {
                     throw new NullPointerException("Selector and its value and type cannot be null");
                 }
@@ -129,27 +127,16 @@ public class CommandService {
      * @return IBy
      * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
      */
-    private IBy parseIBy(Selector selector) throws IllegalArgumentException {
+    private IBy parseSelector(Selector selector) throws IllegalArgumentException {
         IBy by;
 
         String value = selector.getValue();
         String type = selector.getType();
 
-        switch (type.toLowerCase()) {
-            case "css":
-                by = By.cssSelector(value);
-                break;
-            case "data":
-                by = By.dataAutomationAttribute(value);
-                break;
-            case "da":
-                by = By.da(value);
-                break;
-            case "jquery":
-                by = By.jQuery(value);
-                break;
-            default:
-                throw new IllegalArgumentException("Valid arguments for Selector type: css, data, da, jquery");
+        by = WebExtension.parseWebSelector(value, type);
+
+        if (by == null) {
+            throw new IllegalArgumentException("Type is invalid.");
         }
 
         return by;
