@@ -25,4 +25,13 @@ public class WebExtension implements IProductTypeExtension {
                 return null;
         }
     }
+
+    @Override
+    public Class<?> createCommand(String commandString) {
+        try {
+            return Class.forName("aeon.core.command.execution.commands.web." + commandString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

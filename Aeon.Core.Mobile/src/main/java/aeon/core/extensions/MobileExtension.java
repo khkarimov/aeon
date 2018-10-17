@@ -23,4 +23,13 @@ public class MobileExtension implements IProductTypeExtension {
                 return null;
         }
     }
+
+    @Override
+    public Class<?> createCommand(String commandString) {
+        try {
+            return Class.forName("aeon.core.command.execution.commands.mobile." + commandString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

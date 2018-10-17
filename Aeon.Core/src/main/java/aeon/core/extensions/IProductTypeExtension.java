@@ -15,4 +15,11 @@ public interface IProductTypeExtension extends ExtensionPoint {
      * @return By
      */
     IBy createSelector(String value, String type);
+
+    /**
+     * Creates a command class based on a String.
+     * @param commandString Command string
+     * @return Class
+     */
+    Class<?> createCommand(String commandString);
 }

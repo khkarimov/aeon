@@ -31,21 +31,21 @@ public class CommandService {
      * @throws Exception Throws an exception if an error occurs
      */
     public Constructor getCommandInstance(String commandString) throws Exception {
-        Class<?> command;
+        Class<?> command = null;
 
         if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
             command = Class.forName("aeon.core.command.execution.commands." + commandString);
         } else {
-            // use extension point instead
+            PluginManager pluginManager = new DefaultPluginManager();
+            List<IProductTypeExtension> extensions = pluginManager.getExtensions(IProductTypeExtension.class);
 
-            try {
-                command = Class.forName("aeon.core.command.execution.commands.web." + commandString);
-            } catch (Exception e) {
-                try {
-                    command = Class.forName("aeon.core.command.execution.commands.mobile." + commandString);
-                } catch (Exception n) {
-                    throw new IllegalArgumentException("Command is invalid.");
-                }
+            while (command == null && !extensions.isEmpty()) {
+                command = extensions.get(0).createCommand(commandString);
+                extensions.remove(0);
+            }
+
+            if (command == null) {
+                throw new IllegalArgumentException("Command is invalid.");
             }
         }
 
