@@ -69,12 +69,6 @@ public class SessionFactory {
         return plugin.createAdapter(configuration);
     }
 
-    /**
-     * Sets up the automation info.
-     * @param settings Session settings
-     * @return Automation info
-     * @throws Exception Throws an exception if an error occurs
-     */
     private AutomationInfo setUpAutomationInfo(Properties settings) throws Exception {
         IAdapterExtension plugin = loadPlugins();
 
@@ -95,11 +89,6 @@ public class SessionFactory {
         return new AutomationInfo(configuration, driver, adapter);
     }
 
-    /**
-     * Sets up the command execution facade.
-     * @param automationInfo Automation info
-     * @return Command execution facade
-     */
     private WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
         Configuration configuration = automationInfo.getConfiguration();
 

@@ -56,50 +56,6 @@ public class CommandService {
     }
 
     /**
-     * Parses a parameter.
-     * @param parameters Classes of parameters
-     * @param args Arguments
-     * @param selector Selector
-     * @param i Index number
-     * @return Object
-     * @throws NullPointerException Throws an exception if Selector or any of its parameters is null
-     */
-    private Object parseParameter(Class[] parameters, List<Object> args, Selector selector, int i) throws NullPointerException {
-        Object param = null;
-
-        switch (parameters[i].getName()) {
-            case "java.lang.String":
-                param = (String) args.get(i);
-                break;
-            case "java.lang.Boolean":
-                param = (Boolean) args.get(i);
-                break;
-            case "boolean":
-                param = (boolean) args.get(i);
-                break;
-            case "int":
-                param = (int) args.get(i);
-                break;
-            case "double":
-                param = (double) args.get(i);
-                break;
-            case "aeon.core.common.web.interfaces.IByWeb":
-                if (selector != null && selector.getValue() != null && selector.getType() != null) {
-                    param = parseSelector(selector);
-                } else {
-                    throw new NullPointerException("Selector and its value and type cannot be null");
-                }
-                break;
-            case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
-                // switchMechanism is always null
-                param = parseICommandInitializer(null);
-                break;
-        }
-
-        return param;
-    }
-
-    /**
      * Executes a command.
      * @param commandCons Command constructor
      * @param body Execute command body
@@ -136,12 +92,41 @@ public class CommandService {
         throw new Exception();
     }
 
-    /**
-     * Parses the IBy parameter.
-     * @param selector Selector
-     * @return IBy
-     * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
-     */
+    private Object parseParameter(Class[] parameters, List<Object> args, Selector selector, int i) throws NullPointerException {
+        Object param = null;
+
+        switch (parameters[i].getName()) {
+            case "java.lang.String":
+                param = (String) args.get(i);
+                break;
+            case "java.lang.Boolean":
+                param = (Boolean) args.get(i);
+                break;
+            case "boolean":
+                param = (boolean) args.get(i);
+                break;
+            case "int":
+                param = (int) args.get(i);
+                break;
+            case "double":
+                param = (double) args.get(i);
+                break;
+            case "aeon.core.common.web.interfaces.IByWeb":
+                if (selector != null && selector.getValue() != null && selector.getType() != null) {
+                    param = parseSelector(selector);
+                } else {
+                    throw new NullPointerException("Selector and its value and type cannot be null");
+                }
+                break;
+            case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
+                // switchMechanism is always null
+                param = parseICommandInitializer(null);
+                break;
+        }
+
+        return param;
+    }
+
     private IBy parseSelector(Selector selector) throws IllegalArgumentException {
         IBy by = null;
 
@@ -163,11 +148,6 @@ public class CommandService {
         return by;
     }
 
-    /**
-     * Parses the ICommandInitializer parameter.
-     * @param switchMechanism Switch mechanism
-     * @return Web Command Initializer
-     */
     private ICommandInitializer parseICommandInitializer(Iterable<IByWeb> switchMechanism) {
         return new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism);
     }
