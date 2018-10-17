@@ -7,7 +7,6 @@ import aeon.core.command.execution.commands.mobile.NativeSetDateCommand;
 import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.common.web.interfaces.IByWeb;
-import org.joda.time.DateTime;
 
 /**
  * Element that provides a native date picker on mobile devices.
@@ -49,7 +48,7 @@ public class NativeDatePicker extends NativeAppElement {
      *
      * @param dateTime Date to which the date picker should be set.
      */
-    public void setDate(DateTime dateTime) {
+    public void setDate(String dateTime) {
         info.getCommandExecutionFacade().execute(info, new NativeClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));

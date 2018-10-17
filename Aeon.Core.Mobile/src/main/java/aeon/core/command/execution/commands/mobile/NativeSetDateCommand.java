@@ -20,9 +20,9 @@ public class NativeSetDateCommand extends MobileCommand {
      *
      * @param dateTime Date the date picker should be set to.
      */
-    public NativeSetDateCommand(DateTime dateTime) {
+    public NativeSetDateCommand(String dateTime) {
         super(Resources.getString("NativeSetDateCommand_Info"));
-        this.date = dateTime;
+        this.date = DateTime.parse(dateTime);
     }
 
     /**

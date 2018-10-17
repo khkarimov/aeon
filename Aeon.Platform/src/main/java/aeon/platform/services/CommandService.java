@@ -1,6 +1,5 @@
 package aeon.platform.services;
 
-import aeon.core.WebExtension;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.commands.Command;
@@ -11,8 +10,11 @@ import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.extensions.IProductTypeExtension;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.models.Selector;
+import org.pf4j.DefaultPluginManager;
+import org.pf4j.PluginManager;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -29,15 +31,21 @@ public class CommandService {
      * @throws Exception Throws an exception if an error occurs
      */
     public Constructor getCommandInstance(String commandString) throws Exception {
-        Class command;
+        Class<?> command;
 
         if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
             command = Class.forName("aeon.core.command.execution.commands." + commandString);
         } else {
+            // use extension point instead
+
             try {
                 command = Class.forName("aeon.core.command.execution.commands.web." + commandString);
             } catch (Exception e) {
-                throw new IllegalArgumentException("No valid command entered.");
+                try {
+                    command = Class.forName("aeon.core.command.execution.commands.mobile." + commandString);
+                } catch (Exception n) {
+                    throw new IllegalArgumentException("Command is invalid.");
+                }
             }
         }
 
@@ -69,6 +77,12 @@ public class CommandService {
             case "boolean":
                 param = (boolean) args.get(i);
                 break;
+            case "int":
+                param = (int) args.get(i);
+                break;
+            case "double":
+                param = (double) args.get(i);
+                break;
             case "aeon.core.common.web.interfaces.IByWeb":
                 if (selector != null && selector.getValue() != null && selector.getType() != null) {
                     param = parseSelector(selector);
@@ -77,6 +91,7 @@ public class CommandService {
                 }
                 break;
             case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
+                // switchMechanism is always null
                 param = parseICommandInitializer(null);
                 break;
         }
@@ -128,12 +143,18 @@ public class CommandService {
      * @throws IllegalArgumentException Throws an exception if user tries to input type other than those accepted
      */
     private IBy parseSelector(Selector selector) throws IllegalArgumentException {
-        IBy by;
+        IBy by = null;
 
         String value = selector.getValue();
         String type = selector.getType();
 
-        by = WebExtension.parseWebSelector(value, type);
+        PluginManager pluginManager = new DefaultPluginManager();
+        List<IProductTypeExtension> extensions = pluginManager.getExtensions(IProductTypeExtension.class);
+
+        while (by == null && !extensions.isEmpty()) {
+            by = extensions.get(0).createSelector(value, type);
+            extensions.remove(0);
+        }
 
         if (by == null) {
             throw new IllegalArgumentException("Type is invalid.");

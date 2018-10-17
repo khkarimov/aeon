@@ -6,7 +6,6 @@ import aeon.core.command.execution.commands.mobile.NativeClickCommand;
 import aeon.core.command.execution.commands.mobile.NativeSelectCommand;
 import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
-import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
@@ -50,7 +49,7 @@ public class NativeSelect extends NativeAppElement {
      * @param selectOption  Option to be set
      * @param value         New Value
      */
-    public void set(MobileSelectOption selectOption, String value) {
+    public void set(String selectOption, String value) {
         info.getCommandExecutionFacade().execute(info, new NativeClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
@@ -64,7 +63,7 @@ public class NativeSelect extends NativeAppElement {
      * @param selectOption  Option to be set
      * @param value         New Value
      */
-    public void select(MobileSelectOption selectOption, String value) {
+    public void select(String selectOption, String value) {
         info.getCommandExecutionFacade().execute(info, new NativeSelectCommand(
                 selectOption,
                 value));

@@ -18,9 +18,9 @@ public class NativeSelectCommand extends MobileCommand {
      * @param selectOption Type based on which an option should be selected.
      * @param value The value to select.
      */
-    public NativeSelectCommand(MobileSelectOption selectOption, String value) {
+    public NativeSelectCommand(String selectOption, String value) {
         super(String.format(Resources.getString("NativeSelectCommand_Info"), value));
-        this.selectOption = selectOption;
+        this.selectOption = MobileSelectOption.valueOf(selectOption);
         this.value = value;
     }
 
