@@ -28,6 +28,14 @@ public class Session implements ISession {
     }
 
     /**
+     * Sets the Command Service.
+     * @param commandService Command service
+     */
+    public void setCommandService(CommandService commandService) {
+        this.commandService = commandService;
+    }
+
+    /**
      * Executes a given command.
      * @param body Command body
      * @return Object
