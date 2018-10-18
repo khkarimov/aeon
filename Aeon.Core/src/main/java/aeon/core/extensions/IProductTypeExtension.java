@@ -3,6 +3,8 @@ package aeon.core.extensions;
 import aeon.core.common.interfaces.IBy;
 import org.pf4j.ExtensionPoint;
 
+import java.util.List;
+
 /**
  * The Extension point Interface for web and mobile extensions.
  */
@@ -17,9 +19,23 @@ public interface IProductTypeExtension extends ExtensionPoint {
     IBy createSelector(String value, String type);
 
     /**
-     * Creates a command class based on a String.
-     * @param commandString Command string
-     * @return Class
+     * Creates a parameter by parsing arguments.
+     * @param parameters Types of parameters
+     * @param args Arguments
+     * @param value Selector value
+     * @param type Selector type
+     * @param i Counter
+     * @return Parameter object
      */
-    Class<?> createCommand(String commandString);
+    Object createParameter(Class[] parameters, List<Object> args, String value, String type, int i);
+
+    /**
+     * Creates a command object.
+     * @param commandString Command string
+     * @param args Arguments
+     * @param value Selector value
+     * @param type Selector type
+     * @return Command object
+     */
+    Object createCommand(String commandString, List<Object> args, String value, String type);
 }

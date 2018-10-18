@@ -2,10 +2,7 @@ plugins {
     id 'net.ltgt.apt' version '0.10'
     id 'idea'
     id 'java'
-    id 'application'
 }
-
-mainClassName = 'aeon.platform.MainPlatformApp'
 
 dependencies {
     compile project(':Aeon.Core.Mobile')

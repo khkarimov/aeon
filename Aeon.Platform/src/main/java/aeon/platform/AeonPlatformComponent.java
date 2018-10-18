@@ -1,5 +1,6 @@
 package aeon.platform;
 
+import aeon.platform.services.CommandService;
 import aeon.platform.services.SessionFactory;
 import dagger.Component;
 
@@ -17,4 +18,10 @@ public interface AeonPlatformComponent {
      * @return Session Factory
      */
     SessionFactory buildSessionFactory();
+
+    /**
+     * Builds a Command Service.
+     * @return Command Service
+     */
+    CommandService buildCommandService();
 }
