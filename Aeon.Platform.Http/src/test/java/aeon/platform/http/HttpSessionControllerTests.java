@@ -154,7 +154,7 @@ public class HttpSessionControllerTests {
         verify(sessionTableMock, times(1)).get(sessionId);
         verify(sessionMock, times(1)).quitSession();
         verify(sessionTableMock, times(1)).remove(sessionId);
-i
+
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 

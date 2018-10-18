@@ -1,23 +1,16 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.springframework.boot' version '2.0.5.RELEASE'
 }
 
-mainClassName = 'aeon.platform.python.AeonApp'
-
-bootJar {
-    mainClassName = 'aeon.platform.python.AeonApp'
-}
+mainClassName = 'aeon.platform.python.Main'
 
 dependencies {
     compile project(':Aeon.Platform')
 
-    compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')
-    compile('org.springframework.boot:spring-boot-starter-data-mongodb:2.0.5.RELEASE')
+    compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.7'
 
     testCompile('junit:junit:4.12')
-    testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
 }
 
 configurations {
