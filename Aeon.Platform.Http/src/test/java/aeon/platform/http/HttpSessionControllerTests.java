@@ -82,14 +82,14 @@ public class HttpSessionControllerTests {
 
     @Test
     public void executeCommandTest() throws Exception {
+        when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
-        when(executeCommandBodyMock.getCommand()).thenReturn("GoToUrlCommand");
         when(sessionMock.executeCommand(executeCommandBodyMock)).thenReturn("GoToUrlCommand Successful");
 
         ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
 
+        verify(sessionTableMock, times(1)).containsKey(sessionId);
         verify(sessionTableMock, times(1)).get(sessionId);
-        verify(executeCommandBodyMock, times(2)).getCommand();
         verify(sessionTableMock, times(0)).remove(sessionId);
         verify(sessionMock, times(1)).executeCommand(executeCommandBodyMock);
 
@@ -99,14 +99,14 @@ public class HttpSessionControllerTests {
 
     @Test
     public void executeNullCommandTest() throws Exception {
+        when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
-        when(executeCommandBodyMock.getCommand()).thenReturn(null);
         when(sessionMock.executeCommand(executeCommandBodyMock)).thenThrow(new Exception());
 
         ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
 
+        verify(sessionTableMock, times(1)).containsKey(sessionId);
         verify(sessionTableMock, times(1)).get(sessionId);
-        verify(executeCommandBodyMock, times(1)).getCommand();
         verify(sessionTableMock, times(0)).remove(sessionId);
         verify(sessionMock, times(1)).executeCommand(executeCommandBodyMock);
 
@@ -115,19 +115,59 @@ public class HttpSessionControllerTests {
 
     @Test
     public void executeQuitCommandTest() throws Exception {
+        when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
-        when(executeCommandBodyMock.getCommand()).thenReturn("QuitCommand");
         when(sessionMock.executeCommand(executeCommandBodyMock)).thenReturn(null);
 
         ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
 
+        verify(sessionTableMock, times(1)).containsKey(sessionId);
         verify(sessionTableMock, times(1)).get(sessionId);
-        verify(executeCommandBodyMock, times(2)).getCommand();
-        verify(sessionTableMock, times(1)).remove(sessionId);
         verify(sessionMock, times(1)).executeCommand(executeCommandBodyMock);
 
         Assert.assertNull(response.getBody());
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    public void executeCommandSessionNotFoundTest() {
+        when(sessionTableMock.containsKey(sessionId)).thenReturn(false);
+
+        ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
+
+        verify(sessionTableMock, times(1)).containsKey(sessionId);
+        verify(sessionTableMock, times(0)).get(sessionId);
+        verify(executeCommandBodyMock, times(0)).getCommand();
+        verify(sessionTableMock, times(0)).remove(sessionId);
+
+        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void quitSessionTest() {
+        when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
+        when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
+
+        ResponseEntity response = httpSessionController.quitSession(sessionId);
+
+        verify(sessionTableMock, times(1)).containsKey(sessionId);
+        verify(sessionTableMock, times(1)).get(sessionId);
+        verify(sessionMock, times(1)).quitSession();
+        verify(sessionTableMock, times(1)).remove(sessionId);
+i
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void quitSessionSessionNotFoundTest() {
+        when(sessionTableMock.containsKey(sessionId)).thenReturn(false);
+
+        ResponseEntity response = httpSessionController.quitSession(sessionId);
+
+        verify(sessionTableMock, times(1)).containsKey(sessionId);
+        verify(sessionTableMock, times(0)).get(sessionId);
+        verify(sessionTableMock, times(0)).remove(sessionId);
+
+        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 }

@@ -2,7 +2,7 @@ package aeon.platform.session;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
-import aeon.platform.DaggerAeonPlatformComponent;
+import aeon.core.command.execution.commands.QuitCommand;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.services.CommandService;
 
@@ -11,28 +11,19 @@ import aeon.platform.services.CommandService;
  */
 public class Session implements ISession {
 
+    private CommandService commandService;
     private AutomationInfo automationInfo;
     private ICommandExecutionFacade commandExecutionFacade;
 
-    private CommandService commandService;
-
     /**
      * Constructs a Session.
+     * @param commandService Command service
      * @param automationInfo Automation info
      * @param commandExecutionFacade Command execution facade
      */
-    public Session(AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade) {
+    public Session(CommandService commandService, AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade) {
         this.automationInfo = automationInfo;
         this.commandExecutionFacade = commandExecutionFacade;
-
-        commandService = DaggerAeonPlatformComponent.create().buildCommandService();
-    }
-
-    /**
-     * Sets the Command Service.
-     * @param commandService Command service
-     */
-    void setCommandService(CommandService commandService) {
         this.commandService = commandService;
     }
 
@@ -50,5 +41,12 @@ public class Session implements ISession {
         }
 
         throw new Exception();
+    }
+
+    /**
+     * Quits the current session.
+     */
+    public void quitSession() {
+        commandExecutionFacade.execute(automationInfo, new QuitCommand());
     }
 }

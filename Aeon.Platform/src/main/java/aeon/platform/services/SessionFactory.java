@@ -28,14 +28,17 @@ import java.util.function.Supplier;
 public class SessionFactory {
 
     private Supplier<List<IAdapterExtension>> supplier;
+    private CommandService commandService;
 
     /**
      * Constructs a Session Factory.
      * @param adapterExtensionsSupplier Adapter extensions supplier
+     * @param commandService Command service
      */
     @Inject
-    public SessionFactory(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier) {
+    public SessionFactory(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier, CommandService commandService) {
         this.supplier = adapterExtensionsSupplier;
+        this.commandService = commandService;
     }
 
     /**
@@ -48,7 +51,7 @@ public class SessionFactory {
         AutomationInfo automationInfo = setUpAutomationInfo(settings);
         ICommandExecutionFacade commandExecutionFacade = setUpCommandExecutionFacade(automationInfo);
 
-        return new Session(automationInfo, commandExecutionFacade);
+        return new Session(commandService, automationInfo, commandExecutionFacade);
     }
 
     private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {

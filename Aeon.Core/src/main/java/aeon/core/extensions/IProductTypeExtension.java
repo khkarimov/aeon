@@ -19,17 +19,6 @@ public interface IProductTypeExtension extends ExtensionPoint {
     IBy createSelector(String value, String type);
 
     /**
-     * Creates a parameter by parsing arguments.
-     * @param parameters Types of parameters
-     * @param args Arguments
-     * @param value Selector value
-     * @param type Selector type
-     * @param i Counter
-     * @return Parameter object
-     */
-    Object createParameter(Class[] parameters, List<Object> args, String value, String type, int i);
-
-    /**
      * Creates a command object.
      * @param commandString Command string
      * @param args Arguments

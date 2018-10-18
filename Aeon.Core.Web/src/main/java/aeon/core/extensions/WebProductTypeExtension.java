@@ -18,6 +18,8 @@ import java.util.List;
 @Extension
 public class WebProductTypeExtension implements IProductTypeExtension {
 
+    String commandPackage = "aeon.core.command.execution.commands.web.";
+
     @Override
     public IBy createSelector(String value, String type) {
         switch (type.toLowerCase()) {
@@ -36,15 +38,11 @@ public class WebProductTypeExtension implements IProductTypeExtension {
 
     @Override
     public Object createCommand(String commandString, List<Object> args, String value, String type) {
-        Object command = null;
         Class<?> commandClass;
 
         try {
-            if (commandString.equals("QuitCommand") || commandString.equals("CloseCommand")) {
-                commandClass = Class.forName("aeon.core.command.execution.commands." + commandString);
-            } else {
-                commandClass = Class.forName("aeon.core.command.execution.commands.web." + commandString);
-            }
+            commandClass = Class.forName(commandPackage + commandString);
+
         } catch (Exception e) {
             return null;
         }
@@ -59,45 +57,41 @@ public class WebProductTypeExtension implements IProductTypeExtension {
             return null;
         }
 
-        if (parameters.length == 0 || (args != null && parameters.length == args.size())) {
-            Object[] params = new Object[0];
+        if (parameters.length != 0 && (args == null || parameters.length != args.size())) {
+            return null;
+        }
 
-            if (args != null) {
-                params = new Object[parameters.length];
+        Object[] params = getParameters(args, value, type, parameters);
 
-                for (int i = 0; i < parameters.length; i++) {
-                    try {
-                        params[i] = createParameter(parameters, args, value, type, i);
-                    } catch (Exception e) {
-                        return null;
-                    }
+        try {
+            return commandConstructor.newInstance(params);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private Object[] getParameters(List<Object> args, String value, String type, Class[] parameters) {
+        Object[] params = new Object[0];
+
+        if (args != null) {
+            params = new Object[parameters.length];
+
+            for (int i = 0; i < parameters.length; i++) {
+                try {
+                    params[i] = createParameter(parameters, args, value, type, i);
+                } catch (Exception e) {
+                    return null;
                 }
-            }
-
-            try {
-                command = commandConstructor.newInstance(params);
-            } catch (Exception e) {
-                return null;
             }
         }
 
-        return command;
+        return params;
     }
 
-    @Override
-    public Object createParameter(Class[] parameters, List<Object> args, String value, String type, int i) {
-        Object param = null;
+    private Object createParameter(Class[] parameters, List<Object> args, String value, String type, int i) {
+        Object param;
 
         switch (parameters[i].getName()) {
-            case "java.lang.String":
-                param = (String) args.get(i);
-                break;
-            case "java.lang.Boolean":
-                param = (Boolean) args.get(i);
-                break;
-            case "boolean":
-                param = (boolean) args.get(i);
-                break;
             case "aeon.core.common.web.interfaces.IByWeb":
                 if (value != null && type != null) {
                     param = createSelector(value, type);
@@ -109,6 +103,8 @@ public class WebProductTypeExtension implements IProductTypeExtension {
                 // switchMechanism is always null
                 param = parseICommandInitializer(null);
                 break;
+            default:
+                param = args.get(i);
         }
 
         return param;

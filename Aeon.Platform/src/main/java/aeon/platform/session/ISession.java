@@ -14,4 +14,9 @@ public interface ISession {
      * @throws Exception Throws an exception if an error occurs
      */
     Object executeCommand(ExecuteCommandBody body) throws Exception;
+
+    /**
+     * Quits the current session.
+     */
+    void quitSession();
 }

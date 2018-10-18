@@ -1,5 +1,6 @@
-package aeon.core.command.execution.commands;
+package aeon.core.command.execution.commands.web;
 
+import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
 

@@ -34,7 +34,7 @@ public class HttpSessionController {
 
     /**
      * Sets the session table.
-     * @param sessionTable ISession table
+     * @param sessionTable Session table
      */
     public void setSessionTable(Map<ObjectId, ISession> sessionTable) {
         this.sessionTable = sessionTable;
@@ -56,22 +56,41 @@ public class HttpSessionController {
 
     /**
      * Executes a given command.
-     * @param sessionId ISession ID
+     * @param sessionId Session ID
      * @param body Command body
      * @return Response entity
      */
     @PostMapping("sessions/{sessionId}/commands")
     public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
-        ISession session = sessionTable.get(sessionId);
-
-        if (body.getCommand() != null && body.getCommand().equals("QuitCommand")) {
-            sessionTable.remove(sessionId);
+        if (!sessionTable.containsKey(sessionId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        ISession session = sessionTable.get(sessionId);
 
         try {
             return new ResponseEntity<>(session.executeCommand(body), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * Quits the current session.
+     * @param sessionId Session ID
+     * @return Response entity
+     */
+    @DeleteMapping("sessions/{sessionId}")
+    public ResponseEntity quitSession(@PathVariable ObjectId sessionId) {
+        if (!sessionTable.containsKey(sessionId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        ISession session = sessionTable.get(sessionId);
+
+        session.quitSession();
+        sessionTable.remove(sessionId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -39,6 +39,7 @@ public class SessionFactoryTests {
     @Mock private IWebDriver driverMock;
     @Mock private Configuration configurationMock;
 
+    @Mock private CommandService commandServiceMock;
     @Mock private Supplier<List<IAdapterExtension>> supplierMock;
     @Mock private List<IAdapterExtension> extensionsMock;
     @Mock private IAdapterExtension pluginMock;
@@ -47,7 +48,7 @@ public class SessionFactoryTests {
 
     @Before
     public void setUp() {
-        sessionFactory = new SessionFactory(supplierMock);
+        sessionFactory = new SessionFactory(supplierMock, commandServiceMock);
     }
 
     @Test

@@ -2,6 +2,7 @@ package aeon.platform.session;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
+import aeon.core.command.execution.commands.QuitCommand;
 import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.services.CommandService;
 import org.junit.Assert;
@@ -31,8 +32,7 @@ public class SessionTests {
 
     @Before
     public void setUp() {
-        session = new Session(automationInfoMock, commandExecutionFacadeMock);
-        session.setCommandService(commandServiceMock);
+        session = new Session(commandServiceMock, automationInfoMock, commandExecutionFacadeMock);
     }
 
     @Test
@@ -55,5 +55,12 @@ public class SessionTests {
         when(bodyMock.getCommand()).thenReturn(null);
 
         Assertions.assertThrows(Exception.class, () -> session.executeCommand(bodyMock));
+    }
+
+    @Test
+    public void quitSessionTest() {
+        session.quitSession();
+
+        verify(commandExecutionFacadeMock, times(1)).execute(eq(automationInfoMock), any(QuitCommand.class));
     }
 }
