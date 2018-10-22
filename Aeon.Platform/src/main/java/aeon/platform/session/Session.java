@@ -3,8 +3,9 @@ package aeon.platform.session;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.command.execution.commands.QuitCommand;
-import aeon.platform.models.ExecuteCommandBody;
 import aeon.platform.services.CommandService;
+
+import java.util.List;
 
 /**
  * Creates a Session object.
@@ -29,15 +30,14 @@ public class Session implements ISession {
 
     /**
      * Executes a given command.
-     * @param body Command body
+     * @param commandString Command string
+     * @param args Arguments
      * @return Object
      * @throws Exception Throws an exception if an error occurs
      */
-    public Object executeCommand(ExecuteCommandBody body) throws Exception {
-        String commandString = body.getCommand();
-
+    public Object executeCommand(String commandString, List<Object> args) throws Exception {
         if (commandString != null) {
-            return commandService.executeCommand(commandString, body, automationInfo, commandExecutionFacade);
+            return commandService.executeCommand(commandString, args, automationInfo, commandExecutionFacade);
         }
 
         throw new Exception();

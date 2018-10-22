@@ -11,6 +11,7 @@ import org.pf4j.Extension;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Web product extension.
@@ -21,7 +22,14 @@ public class WebProductTypeExtension implements IProductTypeExtension {
     String commandPackage = "aeon.core.command.execution.commands.web.";
 
     @Override
-    public IBy createSelector(String value, String type) {
+    public IBy createSelector(Map<String, String> selector) {
+        String value = selector.get("value");
+        String type = selector.get("type");
+
+        if (value == null) {
+            return null;
+        }
+
         switch (type.toLowerCase()) {
             case "css":
                 return By.cssSelector(value);
@@ -37,7 +45,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
     }
 
     @Override
-    public Object createCommand(String commandString, List<Object> args, String value, String type) {
+    public Object createCommand(String commandString, List<Object> args) {
         Class<?> commandClass;
 
         try {
@@ -61,7 +69,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
             return null;
         }
 
-        Object[] params = getParameters(args, value, type, parameters);
+        Object[] params = getParameters(args, parameters);
 
         try {
             return commandConstructor.newInstance(params);
@@ -70,7 +78,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
         }
     }
 
-    private Object[] getParameters(List<Object> args, String value, String type, Class[] parameters) {
+    private Object[] getParameters(List<Object> args, Class[] parameters) {
         Object[] params = new Object[0];
 
         if (args != null) {
@@ -78,7 +86,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
 
             for (int i = 0; i < parameters.length; i++) {
                 try {
-                    params[i] = createParameter(parameters, args, value, type, i);
+                    params[i] = createParameter(parameters, args, i);
                 } catch (Exception e) {
                     return null;
                 }
@@ -88,13 +96,13 @@ public class WebProductTypeExtension implements IProductTypeExtension {
         return params;
     }
 
-    private Object createParameter(Class[] parameters, List<Object> args, String value, String type, int i) {
+    private Object createParameter(Class[] parameters, List<Object> args, int i) {
         Object param;
 
         switch (parameters[i].getName()) {
             case "aeon.core.common.web.interfaces.IByWeb":
-                if (value != null && type != null) {
-                    param = createSelector(value, type);
+                if (Map.class.isAssignableFrom(args.get(i).getClass())) {
+                    param = createSelector((Map) args.get(i));
                 } else {
                     return null;
                 }

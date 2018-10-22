@@ -47,9 +47,15 @@ public class HttpSessionController {
      * @throws Exception Throws an exception if an error occurs
      */
     @PostMapping("sessions")
-    public ResponseEntity createSession(@RequestBody CreateSessionBody body) throws Exception {
+    public ResponseEntity createSession(@RequestBody(required = false) CreateSessionBody body) throws Exception {
         ObjectId sessionId = new ObjectId();
-        sessionTable.put(sessionId, sessionFactory.getSession(body.getSettings()));
+
+        if (body != null) {
+            sessionTable.put(sessionId, sessionFactory.getSession(body.getSettings()));
+        } else {
+            sessionTable.put(sessionId, sessionFactory.getSession(null));
+
+        }
 
         return new ResponseEntity<>(sessionId.toString(), HttpStatus.CREATED);
     }
@@ -69,7 +75,7 @@ public class HttpSessionController {
         ISession session = sessionTable.get(sessionId);
 
         try {
-            return new ResponseEntity<>(session.executeCommand(body), HttpStatus.OK);
+            return new ResponseEntity<>(session.executeCommand(body.getCommand(), body.getArgs()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

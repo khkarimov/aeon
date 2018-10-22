@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.function.Supplier;
 
@@ -47,8 +48,14 @@ public class SessionFactory {
      * @return Session
      * @throws Exception Throws an exception if an error occurs
      */
-    public ISession getSession(Properties settings) throws Exception {
-        AutomationInfo automationInfo = setUpAutomationInfo(settings);
+    public ISession getSession(Map settings) throws Exception {
+        Properties properties = new Properties();
+
+        if (settings != null) {
+            properties.putAll(settings);
+        }
+
+        AutomationInfo automationInfo = setUpAutomationInfo(properties);
         ICommandExecutionFacade commandExecutionFacade = setUpCommandExecutionFacade(automationInfo);
 
         return new Session(commandService, automationInfo, commandExecutionFacade);

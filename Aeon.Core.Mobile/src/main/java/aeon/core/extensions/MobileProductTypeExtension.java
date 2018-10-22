@@ -4,6 +4,8 @@ import aeon.core.common.interfaces.IBy;
 import aeon.core.common.mobile.selectors.ByMobile;
 import org.pf4j.Extension;
 
+import java.util.Map;
+
 /**
  * Mobile product extension.
  */
@@ -18,7 +20,14 @@ public class MobileProductTypeExtension extends WebProductTypeExtension {
     }
 
     @Override
-    public IBy createSelector(String value, String type) {
+    public IBy createSelector(Map<String, String> selector) {
+        String value = selector.get("value");
+        String type = selector.get("type");
+
+        if (value == null) {
+            return null;
+        }
+
         switch (type.toLowerCase()) {
             case "accessibility":
                 return ByMobile.accessibilityId(value);

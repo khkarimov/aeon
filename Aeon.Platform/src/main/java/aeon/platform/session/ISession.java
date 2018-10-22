@@ -1,6 +1,6 @@
 package aeon.platform.session;
 
-import aeon.platform.models.ExecuteCommandBody;
+import java.util.List;
 
 /**
  * Interface for session.
@@ -9,11 +9,12 @@ public interface ISession {
 
     /**
      * Executes a given command.
-     * @param body Command body
+     * @param commandString Command string
+     * @param args Arguments
      * @return Object
      * @throws Exception Throws an exception if an error occurs
      */
-    Object executeCommand(ExecuteCommandBody body) throws Exception;
+    Object executeCommand(String commandString, List<Object> args) throws Exception;
 
     /**
      * Quits the current session.

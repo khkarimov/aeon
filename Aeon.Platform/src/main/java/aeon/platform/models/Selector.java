@@ -1,9 +1,11 @@
 package aeon.platform.models;
 
+import java.util.Hashtable;
+
 /**
  * Class to hold IByWeb arguments.
  */
-public class Selector {
+public class Selector extends Hashtable {
 
     private String value;
     private String type;
