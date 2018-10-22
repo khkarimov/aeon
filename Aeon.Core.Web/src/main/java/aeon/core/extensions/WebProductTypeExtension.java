@@ -1,15 +1,22 @@
 package aeon.core.extensions;
 
+import aeon.core.command.execution.AutomationInfo;
+import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
 import aeon.core.command.execution.commands.web.WebControlFinder;
 import aeon.core.command.execution.commands.web.WebSelectorFinder;
+import aeon.core.command.execution.consumers.DelegateRunnerFactory;
+import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
+import aeon.core.testabstraction.product.Configuration;
+import aeon.core.testabstraction.product.WebConfiguration;
 import org.pf4j.Extension;
 
 import java.lang.reflect.Constructor;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +27,23 @@ import java.util.Map;
 public class WebProductTypeExtension implements IProductTypeExtension {
 
     String commandPackage = "aeon.core.command.execution.commands.web.";
+
+    @Override
+    public WebCommandExecutionFacade createCommandExecutionFacade(AutomationInfo automationInfo) {
+        Configuration configuration = automationInfo.getConfiguration();
+
+        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+        long throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 100);
+        long ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
+
+        DelegateRunnerFactory delegateRunnerFactory = new DelegateRunnerFactory(Duration.ofMillis(throttle), Duration.ofSeconds(timeout));
+        AjaxWaiter ajaxWaiter = new AjaxWaiter(automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout));
+
+        WebCommandExecutionFacade commandExecutionFacade = new WebCommandExecutionFacade(delegateRunnerFactory, ajaxWaiter);
+        automationInfo.setCommandExecutionFacade(commandExecutionFacade);
+
+        return commandExecutionFacade;
+    }
 
     @Override
     public IBy createSelector(Map<String, String> selector) {

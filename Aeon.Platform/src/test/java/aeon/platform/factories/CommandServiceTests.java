@@ -1,12 +1,12 @@
-package aeon.platform.services;
+package aeon.platform.factories;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.extensions.IProductTypeExtension;
-import aeon.platform.models.ExecuteCommandBody;
-import aeon.platform.models.Selector;
+import aeon.platform.http.models.ExecuteCommandBody;
+import aeon.platform.http.models.Selector;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;

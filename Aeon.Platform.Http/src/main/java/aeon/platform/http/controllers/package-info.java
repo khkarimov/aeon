@@ -1,4 +1,4 @@
 /**
  * Controllers for interacting with the Aeon platform.
  */
-package aeon.platform.controllers.http;
+package aeon.platform.http.controllers;

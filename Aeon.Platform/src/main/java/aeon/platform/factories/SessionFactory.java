@@ -1,23 +1,20 @@
-package aeon.platform.services;
+package aeon.platform.factories;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
-import aeon.core.command.execution.WebCommandExecutionFacade;
-import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
-import aeon.core.common.helpers.AjaxWaiter;
+import aeon.core.extensions.IProductTypeExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.Product;
-import aeon.core.testabstraction.product.WebConfiguration;
 import aeon.platform.session.ISession;
 import aeon.platform.session.Session;
+import org.pf4j.Extension;
 
 import javax.inject.Inject;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -26,28 +23,24 @@ import java.util.function.Supplier;
 /**
  * Factory for session.
  */
-public class SessionFactory {
+@Extension
+public class SessionFactory implements ISessionFactory {
 
-    private Supplier<List<IAdapterExtension>> supplier;
-    private CommandService commandService;
+    private Supplier<List<IAdapterExtension>> adapterExtensionsSupplier;
+    private Supplier<List<IProductTypeExtension>> productTypeExtensionsSupplier;
 
     /**
      * Constructs a Session Factory.
      * @param adapterExtensionsSupplier Adapter extensions supplier
-     * @param commandService Command service
+     * @param productTypeExtensionsSupplier Product type extensions supplier
      */
     @Inject
-    public SessionFactory(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier, CommandService commandService) {
-        this.supplier = adapterExtensionsSupplier;
-        this.commandService = commandService;
+    public SessionFactory(Supplier<List<IAdapterExtension>> adapterExtensionsSupplier, Supplier<List<IProductTypeExtension>> productTypeExtensionsSupplier) {
+        this.adapterExtensionsSupplier = adapterExtensionsSupplier;
+        this.productTypeExtensionsSupplier = productTypeExtensionsSupplier;
     }
 
-    /**
-     * Creates a new session.
-     * @param settings Settings
-     * @return Session
-     * @throws Exception Throws an exception if an error occurs
-     */
+    @Override
     public ISession getSession(Map settings) throws Exception {
         Properties properties = new Properties();
 
@@ -58,15 +51,13 @@ public class SessionFactory {
         AutomationInfo automationInfo = setUpAutomationInfo(properties);
         ICommandExecutionFacade commandExecutionFacade = setUpCommandExecutionFacade(automationInfo);
 
-        return new Session(commandService, automationInfo, commandExecutionFacade);
+        return new Session(productTypeExtensionsSupplier, automationInfo, commandExecutionFacade);
     }
 
     private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
-        List<IAdapterExtension> extensions = supplier.get();
+        List<IAdapterExtension> extensions = adapterExtensionsSupplier.get();
 
-        for (int i = 0; i < extensions.size(); i++) {
-            IAdapterExtension extension = extensions.get(i);
-
+        for (IAdapterExtension extension : extensions) {
             if (extension.getProvidedCapability() == Capability.WEB) {
                 return extension;
             }
@@ -99,18 +90,21 @@ public class SessionFactory {
         return new AutomationInfo(configuration, driver, adapter);
     }
 
-    private WebCommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
-        Configuration configuration = automationInfo.getConfiguration();
+    private ICommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) throws Exception {
+        ICommandExecutionFacade commandExecutionFacade = null;
+        List<IProductTypeExtension> extensions = productTypeExtensionsSupplier.get();
 
-        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-        long throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 100);
-        long ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
+        for (IProductTypeExtension extension : extensions) {
+            commandExecutionFacade = extension.createCommandExecutionFacade(automationInfo);
 
-        DelegateRunnerFactory delegateRunnerFactory = new DelegateRunnerFactory(Duration.ofMillis(throttle), Duration.ofSeconds(timeout));
-        AjaxWaiter ajaxWaiter = new AjaxWaiter(automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout));
+            if (commandExecutionFacade != null) {
+                break;
+            }
+        }
 
-        WebCommandExecutionFacade commandExecutionFacade = new WebCommandExecutionFacade(delegateRunnerFactory, ajaxWaiter);
-        automationInfo.setCommandExecutionFacade(commandExecutionFacade);
+        if (commandExecutionFacade == null) {
+            throw new Exception();
+        }
 
         return commandExecutionFacade;
     }

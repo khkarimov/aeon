@@ -1,7 +1,6 @@
 package aeon.platform;
 
-import aeon.platform.services.CommandService;
-import aeon.platform.services.SessionFactory;
+import aeon.platform.factories.SessionFactory;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -18,10 +17,4 @@ public interface AeonPlatformComponent {
      * @return Session Factory
      */
     SessionFactory buildSessionFactory();
-
-    /**
-     * Builds a Command Service.
-     * @return Command Service
-     */
-    CommandService buildCommandService();
 }

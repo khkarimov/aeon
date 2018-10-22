@@ -2,30 +2,33 @@ package aeon.platform.session;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
+import aeon.core.command.execution.commands.Command;
+import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.QuitCommand;
-import aeon.platform.services.CommandService;
+import aeon.core.extensions.IProductTypeExtension;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Creates a Session object.
  */
 public class Session implements ISession {
 
-    private CommandService commandService;
     private AutomationInfo automationInfo;
     private ICommandExecutionFacade commandExecutionFacade;
+    private Supplier<List<IProductTypeExtension>> supplier;
 
     /**
      * Constructs a Session.
-     * @param commandService Command service
+     * @param supplier Product type extension supplier
      * @param automationInfo Automation info
      * @param commandExecutionFacade Command execution facade
      */
-    public Session(CommandService commandService, AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade) {
+    public Session(Supplier<List<IProductTypeExtension>> supplier, AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade) {
         this.automationInfo = automationInfo;
         this.commandExecutionFacade = commandExecutionFacade;
-        this.commandService = commandService;
+        this.supplier = supplier;
     }
 
     /**
@@ -33,14 +36,35 @@ public class Session implements ISession {
      * @param commandString Command string
      * @param args Arguments
      * @return Object
-     * @throws Exception Throws an exception if an error occurs
      */
-    public Object executeCommand(String commandString, List<Object> args) throws Exception {
-        if (commandString != null) {
-            return commandService.executeCommand(commandString, args, automationInfo, commandExecutionFacade);
+    public Object executeCommand(String commandString, List<Object> args) {
+        if (commandString == null) {
+            throw new IllegalArgumentException("Command is null");
         }
 
-        throw new Exception();
+        Object command = null;
+
+        List<IProductTypeExtension> extensions = supplier.get();
+
+        for (IProductTypeExtension extension : extensions) {
+            command = extension.createCommand(commandString, args);
+
+            if (command != null) {
+                break;
+            }
+        }
+
+        if (command == null) {
+            throw new IllegalArgumentException("Command is invalid.");
+        }
+
+        if (CommandWithReturn.class.isAssignableFrom(command.getClass())) {
+            return commandExecutionFacade.execute(automationInfo, (CommandWithReturn) command);
+        } else {
+            commandExecutionFacade.execute(automationInfo, (Command) command);
+        }
+
+        return null;
     }
 
     /**

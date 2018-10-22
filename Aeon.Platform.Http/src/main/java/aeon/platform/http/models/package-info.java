@@ -1,4 +1,4 @@
 /**
  * Models for interacting with browsers.
  */
-package aeon.platform.models;
+package aeon.platform.http.models;

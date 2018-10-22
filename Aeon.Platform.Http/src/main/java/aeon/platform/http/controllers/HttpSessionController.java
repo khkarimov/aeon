@@ -1,8 +1,8 @@
-package aeon.platform.controllers.http;
+package aeon.platform.http.controllers;
 
-import aeon.platform.models.CreateSessionBody;
-import aeon.platform.models.ExecuteCommandBody;
-import aeon.platform.services.SessionFactory;
+import aeon.platform.http.models.CreateSessionBody;
+import aeon.platform.http.models.ExecuteCommandBody;
+import aeon.platform.factories.SessionFactory;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;

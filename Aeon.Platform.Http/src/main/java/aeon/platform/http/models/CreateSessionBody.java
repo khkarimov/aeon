@@ -1,4 +1,4 @@
-package aeon.platform.models;
+package aeon.platform.http.models;
 
 import java.util.Properties;
 

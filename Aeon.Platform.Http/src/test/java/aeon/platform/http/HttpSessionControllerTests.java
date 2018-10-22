@@ -1,10 +1,10 @@
 package aeon.platform.http;
 
+import aeon.platform.http.controllers.HttpSessionController;
 import aeon.platform.session.ISession;
-import aeon.platform.controllers.http.HttpSessionController;
-import aeon.platform.models.CreateSessionBody;
-import aeon.platform.models.ExecuteCommandBody;
-import aeon.platform.services.SessionFactory;
+import aeon.platform.http.models.CreateSessionBody;
+import aeon.platform.http.models.ExecuteCommandBody;
+import aeon.platform.factories.SessionFactory;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;

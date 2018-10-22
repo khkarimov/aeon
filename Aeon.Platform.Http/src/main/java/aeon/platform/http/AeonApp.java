@@ -1,6 +1,7 @@
-package aeon.platform;
+package aeon.platform.http;
 
-import aeon.platform.services.SessionFactory;
+import aeon.platform.DaggerAeonPlatformComponent;
+import aeon.platform.factories.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +17,8 @@ public class AeonApp {
      * @return Sessions service
      */
     @Bean
-    public SessionFactory getSessionService() {
-        AeonPlatformComponent aeonPlatformComponent = DaggerAeonPlatformComponent.create();
-        return aeonPlatformComponent.buildSessionFactory();
+    public SessionFactory getSessionFactory() {
+        return DaggerAeonPlatformComponent.create().buildSessionFactory();
     }
 
     /**

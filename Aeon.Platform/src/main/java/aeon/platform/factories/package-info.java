@@ -1,4 +1,4 @@
 /**
  * Services for interacting with browsers.
  */
-package aeon.platform.services;
+package aeon.platform.factories;

@@ -1,4 +1,4 @@
-package aeon.platform.services;
+package aeon.platform.factories;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.Capability;

@@ -1,5 +1,7 @@
 package aeon.core.extensions;
 
+import aeon.core.command.execution.AutomationInfo;
+import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.common.interfaces.IBy;
 import org.pf4j.ExtensionPoint;
 
@@ -10,6 +12,13 @@ import java.util.Map;
  * The Extension point Interface for web and mobile extensions.
  */
 public interface IProductTypeExtension extends ExtensionPoint {
+
+    /**
+     * Creates a command execution facade.
+     * @param automationInfo Automation info
+     * @return Command execution facade
+     */
+    ICommandExecutionFacade createCommandExecutionFacade(AutomationInfo automationInfo);
 
     /**
      * Creates a By selector by parsing value and type.
