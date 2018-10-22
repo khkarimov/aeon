@@ -65,10 +65,6 @@ public class WebProductTypeExtension implements IProductTypeExtension {
             return null;
         }
 
-        if (parameters.length != 0 && (args == null || parameters.length != args.size())) {
-            return null;
-        }
-
         Object[] params = getParameters(args, parameters);
 
         try {
@@ -85,11 +81,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
             params = new Object[parameters.length];
 
             for (int i = 0; i < parameters.length; i++) {
-                try {
-                    params[i] = createParameter(parameters, args, i);
-                } catch (Exception e) {
-                    return null;
-                }
+                params[i] = createParameter(parameters, args, i);
             }
         }
 
