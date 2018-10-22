@@ -2,9 +2,9 @@ package aeon.platform.session;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
+import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.QuitCommand;
-import aeon.platform.http.models.ExecuteCommandBody;
-import aeon.platform.factories.CommandService;
+import aeon.core.extensions.IProductTypeExtension;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,6 +14,10 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 import static org.mockito.Mockito.*;
 
@@ -26,35 +30,55 @@ public class SessionTests {
 
     @Mock private AutomationInfo automationInfoMock;
     @Mock private ICommandExecutionFacade commandExecutionFacadeMock;
-    @Mock private CommandService commandServiceMock;
+    @Mock private Supplier<List<IProductTypeExtension>> supplierMock;
 
-    @Mock private ExecuteCommandBody bodyMock;
+    @Mock private List<Object> argsMock;
+
+
+    private List<IProductTypeExtension> extensions;
+
+
+    @Mock private IProductTypeExtension extensionMock;
+    @Mock private CommandWithReturn commandMock;
 
     @Before
     public void setUp() {
-        session = new Session(commandServiceMock, automationInfoMock, commandExecutionFacadeMock);
+        session = new Session(automationInfoMock, commandExecutionFacadeMock, supplierMock);
+
+        extensions = new ArrayList<>();
+        extensions.add(extensionMock);
     }
 
     @Test
     public void executeCommandTest() throws Exception {
-        when(bodyMock.getCommand()).thenReturn("GoToUrlCommand");
-        when(commandServiceMock.executeCommand("GoToUrlCommand", bodyMock, automationInfoMock, commandExecutionFacadeMock))
-                .thenReturn("GoToUrlCommand Successful");
+        when(supplierMock.get()).thenReturn(extensions);
+        when(extensionMock.createCommand("GoToUrlCommand", argsMock)).thenReturn(commandMock);
+        when(commandExecutionFacadeMock.execute(automationInfoMock, commandMock)).thenReturn("GoToUrlCommand Successful");
 
-        Object object = session.executeCommand(bodyMock);
+        Object object = session.executeCommand("GoToUrlCommand", argsMock);
 
-        verify(bodyMock, times(1)).getCommand();
-        verify(commandServiceMock, times(1))
-                .executeCommand("GoToUrlCommand", bodyMock, automationInfoMock, commandExecutionFacadeMock);
+        verify(supplierMock, times(1)).get();
+        verify(extensionMock, times(1)).createCommand("GoToUrlCommand", argsMock);
+        verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandMock);
 
         Assert.assertEquals("GoToUrlCommand Successful", object);
     }
 
     @Test
     public void executeNullCommandTest() throws Exception {
-        when(bodyMock.getCommand()).thenReturn(null);
+        when(supplierMock.get()).thenReturn(extensions);
+        when(extensionMock.createCommand("GoToUrlCommand", argsMock)).thenReturn(null);
 
-        Assertions.assertThrows(Exception.class, () -> session.executeCommand(bodyMock));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> session.executeCommand("GoToUrlCommand", argsMock));
+
+        verify(supplierMock, times(1)).get();
+        verify(extensionMock, times(1)).createCommand("GoToUrlCommand", argsMock);
+        verify(commandExecutionFacadeMock, times(0)).execute(automationInfoMock, commandMock);
+    }
+
+    @Test
+    public void executeNullCommandStringTest() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> session.executeCommand(null, null));
     }
 
     @Test

@@ -42,16 +42,17 @@ public class SessionFactory implements ISessionFactory {
 
     @Override
     public ISession getSession(Map settings) throws Exception {
-        Properties properties = new Properties();
+        Properties properties = null;
 
         if (settings != null) {
+            properties = new Properties();
             properties.putAll(settings);
         }
 
         AutomationInfo automationInfo = setUpAutomationInfo(properties);
         ICommandExecutionFacade commandExecutionFacade = setUpCommandExecutionFacade(automationInfo);
 
-        return new Session(productTypeExtensionsSupplier, automationInfo, commandExecutionFacade);
+        return new Session(automationInfo, commandExecutionFacade, productTypeExtensionsSupplier);
     }
 
     private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {

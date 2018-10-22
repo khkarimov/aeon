@@ -25,7 +25,7 @@ public class Session implements ISession {
      * @param automationInfo Automation info
      * @param commandExecutionFacade Command execution facade
      */
-    public Session(Supplier<List<IProductTypeExtension>> supplier, AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade) {
+    public Session(AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade, Supplier<List<IProductTypeExtension>> supplier) {
         this.automationInfo = automationInfo;
         this.commandExecutionFacade = commandExecutionFacade;
         this.supplier = supplier;

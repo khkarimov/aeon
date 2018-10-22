@@ -1,27 +1,30 @@
 package aeon.platform.factories;
 
 import aeon.core.command.execution.AutomationInfo;
+import aeon.core.command.execution.ICommandExecutionFacade;
+import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.Capability;
+import aeon.core.extensions.IProductTypeExtension;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
-import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.product.Configuration;
-import aeon.core.testabstraction.product.WebConfiguration;
 import aeon.platform.session.ISession;
+import net.bytebuddy.asm.Advice;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
 
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static org.mockito.Mockito.*;
@@ -33,30 +36,39 @@ public class SessionFactoryTests {
     @Rule public ExpectedException expectedException = ExpectedException.none();
 
     private SessionFactory sessionFactory;
+    private List<IAdapterExtension> adapterExtensions;
+    private List<IProductTypeExtension> productExtensions;
+    private Map settings;
 
-    @Mock private Properties settingsMock;
     @Mock private IWebAdapter adapterMock;
-    @Mock private IWebDriver driverMock;
     @Mock private Configuration configurationMock;
 
-    @Mock private CommandService commandServiceMock;
-    @Mock private Supplier<List<IAdapterExtension>> supplierMock;
-    @Mock private List<IAdapterExtension> extensionsMock;
+    @Mock private Supplier<List<IAdapterExtension>> adapterSupplierMock;
+    @Mock private Supplier<List<IProductTypeExtension>> productSupplierMock;
     @Mock private IAdapterExtension pluginMock;
+    @Mock private IProductTypeExtension extensionMock;
 
     @Mock private AutomationInfo automationInfoMock;
+    @Mock private WebCommandExecutionFacade commandExecutionFacadeMock;
 
     @Before
     public void setUp() {
-        sessionFactory = new SessionFactory(supplierMock, commandServiceMock);
+        sessionFactory = new SessionFactory(adapterSupplierMock, productSupplierMock);
+
+        settings = new HashMap();
+        settings.put("aeon.browser", "Firefox");
+
+        adapterExtensions = new ArrayList<>();
+        adapterExtensions.add(pluginMock);
+
+        productExtensions = new ArrayList<>();
+        productExtensions.add(extensionMock);
     }
 
     @Test
     public void getSessionTest() throws Exception {
         // loadPlugins
-        when(supplierMock.get()).thenReturn(extensionsMock);
-        when(extensionsMock.size()).thenReturn(1);
-        when(extensionsMock.get(0)).thenReturn(pluginMock);
+        when(adapterSupplierMock.get()).thenReturn(adapterExtensions);
         when(pluginMock.getProvidedCapability()).thenReturn(Capability.WEB);
 
         // createAdapter
@@ -67,18 +79,13 @@ public class SessionFactoryTests {
         when(configurationMock.getDriver()).thenReturn(AeonWebDriver.class);
 
         // setUpCommandExecutionFacade
-        when(automationInfoMock.getConfiguration()).thenReturn(configurationMock);
-        when(configurationMock.getDouble(Configuration.Keys.TIMEOUT, 10)).thenReturn(1.0);
-        when(configurationMock.getDouble(Configuration.Keys.THROTTLE, 100)).thenReturn(1.0);
-        when(configurationMock.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20)).thenReturn(1.0);
-        when(automationInfoMock.getDriver()).thenReturn(driverMock);
+        when(productSupplierMock.get()).thenReturn(productExtensions);
+        when(extensionMock.createCommandExecutionFacade(any(AutomationInfo.class))).thenReturn(commandExecutionFacadeMock);
 
-        ISession session = sessionFactory.getSession(settingsMock);
+        ISession session = sessionFactory.getSession(settings);
 
         // loadPlugins
-        verify(supplierMock, times(1)).get();
-        verify(extensionsMock, times(1)).size();
-        verify(extensionsMock, times(1)).get(0);
+        verify(adapterSupplierMock, times(1)).get();
         verify(pluginMock, times(1)).getProvidedCapability();
 
         // createAdapter
@@ -86,24 +93,21 @@ public class SessionFactoryTests {
 
         // setUpAutomationInfo
         verify(pluginMock, times(1)).getConfiguration();
-        verify(configurationMock, times(1)).setProperties(settingsMock);
+        verify(configurationMock, times(1)).setProperties(any(Properties.class));
         verify(configurationMock, times(1)).getDriver();
 
         // setUpCommandExecutionFacade
-        verify(configurationMock, times(1)).getDouble(Configuration.Keys.TIMEOUT, 10);
-        verify(configurationMock, times(1)).getDouble(Configuration.Keys.THROTTLE, 100);
-        verify(configurationMock, times(1)).getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
+        verify(productSupplierMock, times(1)).get();
+        verify(extensionMock, times(1)).createCommandExecutionFacade(any(AutomationInfo.class));
 
         Assert.assertNotNull(session);
     }
 
 
     @Test
-    public void setUpAutomationInfoNullSettingsTest() throws Exception {
+    public void getSessionNullSettingsTest() throws Exception {
         // loadPlugins
-        when(supplierMock.get()).thenReturn(extensionsMock);
-        when(extensionsMock.size()).thenReturn(1);
-        when(extensionsMock.get(0)).thenReturn(pluginMock);
+        when(adapterSupplierMock.get()).thenReturn(adapterExtensions);
         when(pluginMock.getProvidedCapability()).thenReturn(Capability.WEB);
 
         // createAdapter
@@ -114,18 +118,13 @@ public class SessionFactoryTests {
         when(configurationMock.getDriver()).thenReturn(AeonWebDriver.class);
 
         // setUpCommandExecutionFacade
-        when(automationInfoMock.getConfiguration()).thenReturn(configurationMock);
-        when(configurationMock.getDouble(Configuration.Keys.TIMEOUT, 10)).thenReturn(1.0);
-        when(configurationMock.getDouble(Configuration.Keys.THROTTLE, 100)).thenReturn(1.0);
-        when(configurationMock.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20)).thenReturn(1.0);
-        when(automationInfoMock.getDriver()).thenReturn(driverMock);
+        when(productSupplierMock.get()).thenReturn(productExtensions);
+        when(extensionMock.createCommandExecutionFacade(any(AutomationInfo.class))).thenReturn(commandExecutionFacadeMock);
 
         ISession session = sessionFactory.getSession(null);
 
         // loadPlugins
-        verify(supplierMock, times(1)).get();
-        verify(extensionsMock, times(1)).size();
-        verify(extensionsMock, times(1)).get(0);
+        verify(adapterSupplierMock, times(1)).get();
         verify(pluginMock, times(1)).getProvidedCapability();
 
         // createAdapter
@@ -137,9 +136,8 @@ public class SessionFactoryTests {
         verify(configurationMock, times(1)).getDriver();
 
         // setUpCommandExecutionFacade
-        verify(configurationMock, times(1)).getDouble(Configuration.Keys.TIMEOUT, 10);
-        verify(configurationMock, times(1)).getDouble(Configuration.Keys.THROTTLE, 100);
-        verify(configurationMock, times(1)).getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
+        verify(productSupplierMock, times(1)).get();
+        verify(extensionMock, times(1)).createCommandExecutionFacade(any(AutomationInfo.class));
 
         Assert.assertNotNull(session);
     }
