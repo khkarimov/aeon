@@ -1,6 +1,7 @@
 package aeon.core.common.helpers;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.time.Duration;
@@ -85,6 +86,15 @@ public class WaitTests {
                 throw new RuntimeException("unlucky");
             }
         }, Duration.ofMillis(10), Duration.ofMillis(1));
+    }
+
+    @Test
+    public void testForSuccessUsingExceptionsThrowsThrowable() {
+        // Act
+        Assertions.assertThrows(Throwable.class, () -> Wait.forSuccess(() -> {
+            this.valueToBe5++;
+            return valueToBe5 == 0;
+        }, Duration.ofMillis(10), Duration.ofMillis(1)));
     }
 
     @Test
