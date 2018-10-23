@@ -92,7 +92,7 @@ public class SessionFactory implements ISessionFactory {
         return new AutomationInfo(configuration, driver, adapter);
     }
 
-    private ICommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) throws Exception {
+    private ICommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) {
         ICommandExecutionFacade commandExecutionFacade;
         List<IProductTypeExtension> extensions = productTypeExtensionsSupplier.get();
 

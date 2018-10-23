@@ -1,7 +1,5 @@
 package aeon.platform.session;
 
-import aeon.core.common.exceptions.CommandExecutionException;
-
 import java.util.List;
 
 /**
@@ -14,9 +12,8 @@ public interface ISession {
      * @param commandString Command string
      * @param args Arguments
      * @return Object
-     * @throws CommandExecutionException Throws an exception if an error occurs
      */
-    Object executeCommand(String commandString, List<Object> args) throws CommandExecutionException;
+    Object executeCommand(String commandString, List<Object> args);
 
     /**
      * Quits the current session.
