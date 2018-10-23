@@ -3,6 +3,7 @@ package aeon.platform.factories;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.common.Capability;
+import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.extensions.IProductTypeExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
@@ -92,21 +93,17 @@ public class SessionFactory implements ISessionFactory {
     }
 
     private ICommandExecutionFacade setUpCommandExecutionFacade(AutomationInfo automationInfo) throws Exception {
-        ICommandExecutionFacade commandExecutionFacade = null;
+        ICommandExecutionFacade commandExecutionFacade;
         List<IProductTypeExtension> extensions = productTypeExtensionsSupplier.get();
 
         for (IProductTypeExtension extension : extensions) {
             commandExecutionFacade = extension.createCommandExecutionFacade(automationInfo);
 
             if (commandExecutionFacade != null) {
-                break;
+                return commandExecutionFacade;
             }
         }
 
-        if (commandExecutionFacade == null) {
-            throw new Exception();
-        }
-
-        return commandExecutionFacade;
+        throw new UnableToCreateDriverException("Could not create CommandExecutionFacade.");
     }
 }

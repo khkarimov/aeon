@@ -5,6 +5,7 @@ import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.QuitCommand;
+import aeon.core.common.exceptions.CommandExecutionException;
 import aeon.core.extensions.IProductTypeExtension;
 
 import java.util.List;
@@ -31,18 +32,13 @@ public class Session implements ISession {
         this.supplier = supplier;
     }
 
-    /**
-     * Executes a given command.
-     * @param commandString Command string
-     * @param args Arguments
-     * @return Object
-     */
-    public Object executeCommand(String commandString, List<Object> args) {
+    @Override
+    public Object executeCommand(String commandString, List<Object> args) throws CommandExecutionException {
         if (commandString == null) {
             throw new IllegalArgumentException("Command is null");
         }
 
-        Object command = null;
+        Object command;
 
         List<IProductTypeExtension> extensions = supplier.get();
 
@@ -50,21 +46,17 @@ public class Session implements ISession {
             command = extension.createCommand(commandString, args);
 
             if (command != null) {
-                break;
+                if (CommandWithReturn.class.isAssignableFrom(command.getClass())) {
+                    return commandExecutionFacade.execute(automationInfo, (CommandWithReturn) command);
+                } else {
+                    commandExecutionFacade.execute(automationInfo, (Command) command);
+                }
+
+                return null;
             }
         }
 
-        if (command == null) {
-            throw new IllegalArgumentException("Command is invalid.");
-        }
-
-        if (CommandWithReturn.class.isAssignableFrom(command.getClass())) {
-            return commandExecutionFacade.execute(automationInfo, (CommandWithReturn) command);
-        } else {
-            commandExecutionFacade.execute(automationInfo, (Command) command);
-        }
-
-        return null;
+        throw new CommandExecutionException("Command is invalid.");
     }
 
     /**

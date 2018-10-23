@@ -1,5 +1,6 @@
 package aeon.platform.http;
 
+import aeon.core.common.exceptions.CommandExecutionException;
 import aeon.platform.http.controllers.HttpSessionController;
 import aeon.platform.session.ISession;
 import aeon.platform.http.models.CreateSessionBody;
@@ -107,7 +108,7 @@ public class HttpSessionControllerTests {
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
         when(executeCommandBodyMock.getCommand()).thenReturn(null);
         when(executeCommandBodyMock.getArgs()).thenReturn(null);
-        when(sessionMock.executeCommand(null, null)).thenThrow(new Exception());
+        when(sessionMock.executeCommand(null, null)).thenThrow(new CommandExecutionException("Invalid command."));
 
         ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
 

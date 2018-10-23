@@ -4,6 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.QuitCommand;
+import aeon.core.common.exceptions.CommandExecutionException;
 import aeon.core.extensions.IProductTypeExtension;
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,7 +70,7 @@ public class SessionTests {
         when(supplierMock.get()).thenReturn(extensions);
         when(extensionMock.createCommand("GoToUrlCommand", argsMock)).thenReturn(null);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> session.executeCommand("GoToUrlCommand", argsMock));
+        Assertions.assertThrows(CommandExecutionException.class, () -> session.executeCommand("GoToUrlCommand", argsMock));
 
         verify(supplierMock, times(1)).get();
         verify(extensionMock, times(1)).createCommand("GoToUrlCommand", argsMock);

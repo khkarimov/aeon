@@ -4,6 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.Capability;
+import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.extensions.IProductTypeExtension;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
@@ -15,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -140,5 +142,25 @@ public class SessionFactoryTests {
         verify(extensionMock, times(1)).createCommandExecutionFacade(any(AutomationInfo.class));
 
         Assert.assertNotNull(session);
+    }
+
+    @Test
+    public void getSessionExceptionTest() throws Exception {
+        // loadPlugins
+        when(adapterSupplierMock.get()).thenReturn(adapterExtensions);
+        when(pluginMock.getProvidedCapability()).thenReturn(Capability.WEB);
+
+        // createAdapter
+        when(pluginMock.createAdapter(configurationMock)).thenReturn(adapterMock);
+
+        // setUpAutomationInfo
+        when(pluginMock.getConfiguration()).thenReturn(configurationMock);
+        when(configurationMock.getDriver()).thenReturn(AeonWebDriver.class);
+
+        // setUpCommandExecutionFacade
+        when(productSupplierMock.get()).thenReturn(productExtensions);
+        when(extensionMock.createCommandExecutionFacade(any(AutomationInfo.class))).thenReturn(null);
+
+        Assertions.assertThrows(UnableToCreateDriverException.class, () -> sessionFactory.getSession(null));
     }
 }
