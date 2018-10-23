@@ -4,7 +4,7 @@ import aeon.platform.DaggerAeonPlatformComponent;
 import aeon.platform.factories.SessionFactory;
 import py4j.GatewayServer;
 
-public class Main {
+public class AeonApp {
 
     public static void main(String args[]) {
 
@@ -13,5 +13,6 @@ public class Main {
         GatewayServer gatewayServer = new GatewayServer(sessionFactory);
         gatewayServer.start();
 
+        System.out.println("\n\nGateway server started.\n");
     }
 }
