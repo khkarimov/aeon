@@ -89,12 +89,25 @@ public class WaitTests {
     }
 
     @Test
-    public void testForSuccessUsingExceptionsThrowsThrowable() {
+    public void testForSuccessUsingThrowablesEventuallyPasses() {
         // Act
-        Assertions.assertThrows(Throwable.class, () -> Wait.forSuccess(() -> {
+        Wait.forSuccess(() -> {
             this.valueToBe5++;
-            return valueToBe5 == 0;
-        }, Duration.ofMillis(10), Duration.ofMillis(1)));
+            if (valueToBe5 != 5) {
+                throw new Error("unlucky");
+            }
+            return true;
+        }, Duration.ofMillis(100), Duration.ofMillis(1));
+    }
+
+    @Test(expected=Throwable.class)
+    public void testForSuccessUsingThrowablesEventuallyFails() {
+        // Act
+        Wait.forSuccess(() -> {
+            if (valueToBe5 != 5) {
+                throw new Error("unlucky");
+            }
+        }, Duration.ofMillis(10), Duration.ofMillis(1));
     }
 
     @Test
