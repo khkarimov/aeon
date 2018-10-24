@@ -9,18 +9,18 @@ public class CreateSessionBody {
 
     private Properties settings;
 
-    /**
-     * Creates a session body.
-     */
-    public CreateSessionBody() {}
-
-    /**
-     * Creates a session body.
-     * @param settings Settings
-     */
-    public CreateSessionBody(Properties settings) {
-        this.settings = settings;
-    }
+//    /**
+//     * Creates a session body.
+//     */
+//    public CreateSessionBody() {}
+//
+//    /**
+//     * Creates a session body.
+//     * @param settings Settings
+//     */
+//    public CreateSessionBody(Properties settings) {
+//        this.settings = settings;
+//    }
 
     /**
      * Get the settings.

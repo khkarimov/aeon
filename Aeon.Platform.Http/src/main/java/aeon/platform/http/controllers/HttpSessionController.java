@@ -1,9 +1,9 @@
 package aeon.platform.http.controllers;
 
-import aeon.core.common.exceptions.CommandExecutionException;
 import aeon.platform.factories.SessionFactory;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
+import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,9 +76,11 @@ public class HttpSessionController {
         ISession session = sessionTable.get(sessionId);
 
         try {
-            return new ResponseEntity<>(session.executeCommand(body.getCommand(), body.getArgs()), HttpStatus.OK);
-        } catch (CommandExecutionException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            Object result = session.executeCommand(body.getCommand(), body.getArgs());
+
+            return new ResponseEntity<>(new ResponseBody(true, result.toString(), null), HttpStatus.OK);
+        } catch (Throwable e) {
+            return new ResponseEntity<>(new ResponseBody(false, null, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 

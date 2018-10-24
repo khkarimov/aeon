@@ -2,6 +2,7 @@ package aeon.platform.http;
 
 import aeon.core.common.exceptions.CommandExecutionException;
 import aeon.platform.http.controllers.HttpSessionController;
+import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
@@ -91,6 +92,7 @@ public class HttpSessionControllerTests {
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn("GoToUrlCommand Successful");
 
         ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
+        ResponseBody body = (ResponseBody) response.getBody();
 
         verify(sessionTableMock, times(1)).containsKey(sessionId);
         verify(sessionTableMock, times(1)).get(sessionId);
@@ -98,7 +100,9 @@ public class HttpSessionControllerTests {
         verify(executeCommandBodyMock, times(1)).getArgs();
         verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
 
-        Assert.assertEquals("GoToUrlCommand Successful", response.getBody());
+        Assert.assertTrue(body.getSuccess());
+        Assert.assertEquals("GoToUrlCommand Successful", body.getData());
+        Assert.assertNull(body.getFailureMessage());
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -111,6 +115,7 @@ public class HttpSessionControllerTests {
         when(sessionMock.executeCommand(null, null)).thenThrow(new CommandExecutionException("Invalid command."));
 
         ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
+        ResponseBody body = (ResponseBody) response.getBody();
 
         verify(sessionTableMock, times(1)).containsKey(sessionId);
         verify(sessionTableMock, times(1)).get(sessionId);
@@ -118,6 +123,9 @@ public class HttpSessionControllerTests {
         verify(executeCommandBodyMock, times(1)).getArgs();
         verify(sessionMock, times(1)).executeCommand(null, null);
 
+        Assert.assertFalse(body.getSuccess());
+        Assert.assertNull(body.getData());
+        Assert.assertEquals("Unable to execute command: Invalid command.", body.getFailureMessage());
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
