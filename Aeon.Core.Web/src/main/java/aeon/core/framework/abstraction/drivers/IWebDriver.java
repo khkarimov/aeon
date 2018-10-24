@@ -24,6 +24,11 @@ import java.util.NoSuchElementException;
 public interface IWebDriver extends IDriver {
 
     /**
+     * Close the current window, quitting the browser if it's the last window currently open.
+     */
+    void close();
+    
+    /**
      * Finds the first Element using the given mechanism.
      *
      * @param selector The locating mechanism to use.

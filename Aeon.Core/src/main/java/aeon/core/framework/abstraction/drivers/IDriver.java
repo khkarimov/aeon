@@ -20,11 +20,6 @@ public interface IDriver {
     IDriver configure(IAdapter adapter, Configuration configuration);
 
     /**
-     * Close the current window, quitting the browser if it's the last window currently open.
-     */
-    void close();
-
-    /**
      * Quits this driver, closing every associated window.
      */
     void quit();

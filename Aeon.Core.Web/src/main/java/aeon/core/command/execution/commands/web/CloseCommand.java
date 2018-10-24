@@ -3,6 +3,7 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IDriver;
+import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * <p>Closes the currently focused browser window.</p>
@@ -29,6 +30,6 @@ public class CloseCommand extends Command {
             throw new IllegalArgumentException("driver");
         }
 
-        driver.close();
+        ((IWebDriver) driver).close();
     }
 }
