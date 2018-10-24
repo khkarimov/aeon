@@ -78,6 +78,10 @@ public class HttpSessionController {
         try {
             Object result = session.executeCommand(body.getCommand(), body.getArgs());
 
+            if (result == null) {
+                return new ResponseEntity<>(new ResponseBody(true, null, null), HttpStatus.OK);
+            }
+
             return new ResponseEntity<>(new ResponseBody(true, result.toString(), null), HttpStatus.OK);
         } catch (Throwable e) {
             return new ResponseEntity<>(new ResponseBody(false, null, e.getMessage()), HttpStatus.BAD_REQUEST);

@@ -9,24 +9,6 @@ public class ExecuteCommandBody {
 
     private String command;
     private List<Object> args;
-//    private Selector selector;
-//
-//    /**
-//     * Creates a command execution body.
-//     */
-//    public ExecuteCommandBody() {}
-//
-//    /**
-//     * Creates a command execution body.
-//     * @param command Command
-//     * @param args Arguments
-//     * @param selector IByWeb arguments
-//     */
-//    public ExecuteCommandBody(String command, List<Object> args, Selector selector) {
-//        this.command = command;
-//        this.args = args;
-//        this.selector = selector;
-//    }
 
     /**
      * Get the arguments for the command.
@@ -35,14 +17,6 @@ public class ExecuteCommandBody {
     public List<Object> getArgs() {
         return args;
     }
-
-//    /**
-//     * Get the IByWeb arguments.
-//     * @return IByWeb arguments
-//     */
-//    public Selector getSelector() {
-//        return selector;
-//    }
 
     /**
      * Get the command.
