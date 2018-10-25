@@ -51,8 +51,6 @@ public class ArtifactoryService {
             return null;
         }
 
-        log.info("Video uploaded: " + fullRequestUrl);
-
         return fullRequestUrl;
     }
 

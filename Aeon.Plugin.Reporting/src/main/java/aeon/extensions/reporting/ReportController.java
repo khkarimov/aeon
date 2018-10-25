@@ -32,8 +32,8 @@ public class ReportController {
 
     private static String uploadHtmlReport(HtmlReport htmlReport) {
         String htmlReportFileName = htmlReport.createAngularReportFile();
-        String htmlReportUrl = ArtifactoryService.uploadToArtifactory(htmlReportFileName);
-        return htmlReportUrl;
+
+        return ArtifactoryService.uploadToArtifactory(htmlReportFileName);
     }
 
     private static String uploadReportToRnr(HtmlReport htmlReport, String htmlReportUrl, String correlationId) {
@@ -43,8 +43,7 @@ public class ReportController {
         }
 
         String rnrReportFileName = htmlReport.createJsonReportFile();
-        String rnrReportUrl = RnrService.uploadToRnr(rnrReportFileName, htmlReportUrl, correlationId);
-        log.info("RnR URL: " + rnrReportUrl);
-        return rnrReportUrl;
+
+        return RnrService.uploadToRnr(rnrReportFileName, htmlReportUrl, correlationId);
     }
 }

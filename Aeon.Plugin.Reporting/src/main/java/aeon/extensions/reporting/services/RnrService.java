@@ -56,6 +56,8 @@ public class RnrService {
 
         String rnrResultUrl = rnrUrl + "/" + correlationId;
 
+        log.info("RnR URL: " + rnrResultUrl);
+
         return rnrResultUrl;
     }
 

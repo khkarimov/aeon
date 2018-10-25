@@ -210,6 +210,9 @@ public class ReportingPlugin extends Plugin {
                     String videoUrl = ArtifactoryService.uploadToArtifactory((String) payload);
 
                     if (videoUrl != null) {
+
+                        log.info("Video uploaded: " + videoUrl);
+
                         getCurrentScenarioBucket().setVideoUrl(videoUrl);
                         for (ScenarioDetails scenario: finishedScenarios) {
                             if (scenario.getVideoUrl().isEmpty()

@@ -711,12 +711,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public final void quit() {
-        log.trace("WebDriver.quit();");
+        log.trace("AppiumWebDriver.quit();");
         if (browserType != BrowserType.AndroidChrome
                 && browserType != BrowserType.IOSSafari
                 && browserType != BrowserType.AndroidHybridApp
                 && browserType != BrowserType.IOSHybridApp) {
-            webDriver.quit();
+            super.quit();
 
             return;
         }
