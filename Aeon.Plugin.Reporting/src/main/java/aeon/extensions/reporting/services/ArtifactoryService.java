@@ -35,10 +35,11 @@ public class ArtifactoryService {
             return null;
         }
 
-        String fileName = getFileName(filePathName);
+        File file = new File(filePathName);
+        String fileName = file.getName();
         String fullRequestUrl = getFullRequestUrl(fileName);
 
-        InputStreamEntity fileEntity = buildFileEntity(filePathName);
+        InputStreamEntity fileEntity = buildFileEntity(file);
         if (fileEntity == null) {
             return null;
         }
@@ -61,10 +62,6 @@ public class ArtifactoryService {
                 || password.isEmpty());
     }
 
-    private static String getFileName(String filePathName) {
-        return filePathName.substring(filePathName.lastIndexOf("/")+1);
-    }
-
     private static String getFullRequestUrl(String fileName) {
         return artifactoryUrl + "/" + artifactoryPath + "/" + fileName;
     }
@@ -84,14 +81,13 @@ public class ArtifactoryService {
                 .build();
     }
 
-    private static InputStreamEntity buildFileEntity(String filePathName) {
+    private static InputStreamEntity buildFileEntity(File file) {
         InputStreamEntity fileEntity;
-        File file = new File(filePathName);
         try {
-            InputStream inputStream = new FileInputStream(filePathName);
+            InputStream inputStream = new FileInputStream(file);
             fileEntity = new InputStreamEntity(inputStream, file.length());
         } catch (FileNotFoundException e) {
-            log.error(String.format("Could not find file %s to upload to artifactory.", filePathName));
+            log.error(String.format("Could not find file %s to upload to artifactory.", file.getAbsolutePath()));
             return null;
         }
         return fileEntity;
