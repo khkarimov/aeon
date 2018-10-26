@@ -90,7 +90,7 @@ assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
 
 allprojects {
     group 'aeon'
-    version '1.14.3'
+    version '1.14.4'
 
     apply plugin: 'java'
     apply plugin: 'jacoco'
