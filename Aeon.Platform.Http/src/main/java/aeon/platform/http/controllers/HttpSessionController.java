@@ -9,10 +9,14 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * Controller for session.
@@ -86,6 +90,37 @@ public class HttpSessionController {
         } catch (Throwable e) {
             return new ResponseEntity<>(new ResponseBody(false, null, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("sessions/{sessionId}/async")
+    public void executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
+
+        new Thread(() -> {
+            System.out.println("Execute method asynchronously - " + Thread.currentThread().getName());
+
+            if (!sessionTable.containsKey(sessionId)) {
+                //return new AsyncResult<>(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                //response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            ISession session = sessionTable.get(sessionId);
+
+            try {
+                Object result = session.executeCommand(body.getCommand(), body.getArgs());
+
+                if (result == null) {
+                    //return new AsyncResult<>(new ResponseEntity<>(new ResponseBody(true, null, null), HttpStatus.OK));
+                }
+
+                System.out.println("\nResult from async process - " + result);
+                //return new AsyncResult<>(new ResponseEntity<>(new ResponseBody(true, result.toString(), null), HttpStatus.OK));
+            } catch (Throwable e) {
+                //return new AsyncResult<>(new ResponseEntity<>(new ResponseBody(false, null, e.getMessage()), HttpStatus.BAD_REQUEST));
+                System.out.println("\nBAD REQUEST");
+            }
+        }).start();
+
+        System.out.println("DONE");
     }
 
     /**
