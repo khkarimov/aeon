@@ -21,12 +21,21 @@ public class AeonApp {
     private static final String QUEUE_NAME = "AeonApp";
 
     /**
-     * Gets the session service.
-     * @return Sessions service
+     * Gets the session factory.
+     * @return Session factory
      */
     @Bean
     public SessionFactory getSessionFactory() {
         return DaggerAeonPlatformComponent.create().buildSessionFactory();
+    }
+
+    /**
+     * Gets the thread factory.
+     * @return Thread factory
+     */
+    @Bean
+    public ThreadFactory getThreadFactory() {
+        return new ThreadFactory();
     }
 
     /**

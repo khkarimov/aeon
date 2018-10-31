@@ -59,9 +59,7 @@ public class Session implements ISession {
         throw new CommandExecutionException("Command is invalid.");
     }
 
-    /**
-     * Quits the current session.
-     */
+    @Override
     public void quitSession() {
         commandExecutionFacade.execute(automationInfo, new QuitCommand());
     }

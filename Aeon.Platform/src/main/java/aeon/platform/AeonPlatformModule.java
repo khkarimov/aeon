@@ -32,4 +32,6 @@ public class AeonPlatformModule {
     public Supplier<List<IProductTypeExtension>> provideProductTypeExtensionsSupplier() {
         return () -> Aeon.getExtensions(IProductTypeExtension.class);
     }
+
+
 }

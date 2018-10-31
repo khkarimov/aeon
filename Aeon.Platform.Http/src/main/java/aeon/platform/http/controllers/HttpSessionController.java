@@ -1,6 +1,7 @@
 package aeon.platform.http.controllers;
 
 import aeon.platform.factories.SessionFactory;
+import aeon.platform.http.ThreadFactory;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
 import aeon.platform.http.models.ResponseBody;
@@ -8,8 +9,8 @@ import aeon.platform.session.ISession;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.bson.types.ObjectId;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
-
-import org.json.*;
 
 /**
  * Controller for session.
@@ -33,18 +32,20 @@ public class HttpSessionController {
 
     private Map<ObjectId, ISession> sessionTable = new ConcurrentHashMap<>();
     private SessionFactory sessionFactory;
+    private ThreadFactory threadFactory;
 
-    private ConnectionFactory factory;
     private Connection connection;
     private Channel channel;
 
     /**
      * Constructs a Session Controller.
      * @param sessionFactory Session factory
+     * @param threadFactory Thread factory
      */
     @Autowired
-    public HttpSessionController(SessionFactory sessionFactory) {
+    public HttpSessionController(SessionFactory sessionFactory, ThreadFactory threadFactory) {
         this.sessionFactory = sessionFactory;
+        this.threadFactory = threadFactory;
     }
 
     /**
@@ -72,9 +73,7 @@ public class HttpSessionController {
 
         }
 
-        // TODO return JSON, not just plain sessionid
         JSONObject sessionIdJson = new JSONObject();
-        //sessionIdJson.append("sessionId", sessionId.toString());
         sessionIdJson.put("sessionId", sessionId.toString());
 
         return new ResponseEntity<>(sessionIdJson.toString(), HttpStatus.CREATED);
@@ -107,73 +106,31 @@ public class HttpSessionController {
         }
     }
 
+    /**
+     * Executes a given command asynchronously.
+     * @param sessionId Session ID
+     * @param body Command body
+     * @return Response body
+     * @throws IOException Throws an exception if an IO error occurs
+     * @throws TimeoutException Throws an exception if a timeout error occurs
+     */
     @PostMapping("sessions/{sessionId}/async")
     public ResponseEntity executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) throws IOException, TimeoutException {
-        factory = new ConnectionFactory();
+        ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         connection = factory.newConnection();
         channel = connection.createChannel();
 
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 
+        if (!sessionTable.containsKey(sessionId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        //TODO(NicoletteC): possibly convert the responsebody object to bytes? also get rid of status code.
+        ISession session = sessionTable.get(sessionId);
 
+        threadFactory.getThread(sessionId, session, body.getCommand(), body.getArgs(), channel).start();
 
-        new Thread(() -> {
-            System.out.println("Execute method asynchronously - " + Thread.currentThread().getName());
-
-            if (!sessionTable.containsKey(sessionId)) {
-                //ResponseEntity response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-                String response = "<404 Not Found>";
-
-                try {
-                    channel.basicPublish("", QUEUE_NAME, null, response.getBytes());
-                    //channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
-                    return;
-                } catch (IOException e) {
-                    //
-                    e.printStackTrace();
-                }
-            }
-
-            ISession session = sessionTable.get(sessionId);
-
-            try {
-                Object result = session.executeCommand(body.getCommand(), body.getArgs());
-
-                if (result == null) {
-                    ResponseBody response = new ResponseBody(sessionId.toString(), true, null, null);
-                    //String response = "<200 OK, {success: true, data: null, failureMessage: null}>";
-
-                    channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
-                    return;
-                }
-
-                System.out.println("\nResult from async process - " + result);
-
-                //String response = "<200 OK, {success: true, data: " + result.toString() + ", failureMessage: null}>";
-                ResponseBody response = new ResponseBody(sessionId.toString(), true, result.toString(), null);
-
-                channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
-                return;
-            } catch (Throwable e) {
-                System.out.println("\nBAD REQUEST");
-
-                ResponseBody response = new ResponseBody(sessionId.toString(), false, null, e.getMessage());
-                //String response = "<400 Bad Request, {success: false, data: null, failureMessage: " + e.getMessage() + "}>";
-                //ResponseEntity response = new ResponseEntity<>(new ResponseBody(false, null, e.getMessage()), HttpStatus.BAD_REQUEST);
-                try {
-                    channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
-                    return;
-                } catch (IOException e1) {
-                    //
-                    e1.printStackTrace();
-                }
-            }
-        }).start();
-
-        System.out.println("DONE");
         return null;
     }
 
@@ -181,6 +138,8 @@ public class HttpSessionController {
      * Quits the current session.
      * @param sessionId Session ID
      * @return Response entity
+     * @throws IOException Throws an exception if an IO error occurs
+     * @throws TimeoutException Throws an exception if a timeout error occurs
      */
     @DeleteMapping("sessions/{sessionId}")
     public ResponseEntity quitSession(@PathVariable ObjectId sessionId) throws IOException, TimeoutException{
@@ -192,10 +151,6 @@ public class HttpSessionController {
 
         session.quitSession();
         sessionTable.remove(sessionId);
-
-        channel.close();
-        connection.close();
-        System.out.println("Closing channel and connection...");
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
