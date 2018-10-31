@@ -8,6 +8,7 @@ import aeon.platform.session.ISession;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
+
+import org.json.*;
 
 /**
  * Controller for session.
@@ -69,7 +72,12 @@ public class HttpSessionController {
 
         }
 
-        return new ResponseEntity<>(sessionId.toString(), HttpStatus.CREATED);
+        // TODO return JSON, not just plain sessionid
+        JSONObject sessionIdJson = new JSONObject();
+        //sessionIdJson.append("sessionId", sessionId.toString());
+        sessionIdJson.put("sessionId", sessionId.toString());
+
+        return new ResponseEntity<>(sessionIdJson.toString(), HttpStatus.CREATED);
     }
 
     /**
@@ -90,12 +98,12 @@ public class HttpSessionController {
             Object result = session.executeCommand(body.getCommand(), body.getArgs());
 
             if (result == null) {
-                return new ResponseEntity<>(new ResponseBody(true, null, null), HttpStatus.OK);
+                return new ResponseEntity<>(new ResponseBody(sessionId.toString(), true, null, null), HttpStatus.OK);
             }
 
-            return new ResponseEntity<>(new ResponseBody(true, result.toString(), null), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseBody(sessionId.toString(), true, result.toString(), null), HttpStatus.OK);
         } catch (Throwable e) {
-            return new ResponseEntity<>(new ResponseBody(false, null, e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseBody(sessionId.toString(), false, null, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -107,6 +115,10 @@ public class HttpSessionController {
         channel = connection.createChannel();
 
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+
+
+        //TODO(NicoletteC): possibly convert the responsebody object to bytes? also get rid of status code.
+
 
         new Thread(() -> {
             System.out.println("Execute method asynchronously - " + Thread.currentThread().getName());
@@ -131,29 +143,28 @@ public class HttpSessionController {
                 Object result = session.executeCommand(body.getCommand(), body.getArgs());
 
                 if (result == null) {
-                    String response = "<200 OK, {success: true, data: null, failureMessage: null}>";
+                    ResponseBody response = new ResponseBody(sessionId.toString(), true, null, null);
+                    //String response = "<200 OK, {success: true, data: null, failureMessage: null}>";
 
-                    //ResponseEntity response = new ResponseEntity<>(new ResponseBody(true, null, null), HttpStatus.OK);
-                    channel.basicPublish("", QUEUE_NAME, null, response.getBytes());
-                    //channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
+                    channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
                     return;
                 }
 
                 System.out.println("\nResult from async process - " + result);
 
-                String response = "<200 OK, {success: true, data: " + result.toString() + ", failureMessage: null}>";
-                //ResponseEntity response = new ResponseEntity<>(new ResponseBody(true, result.toString(), null), HttpStatus.OK);
-                channel.basicPublish("", QUEUE_NAME, null, response.getBytes());
-                //channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
+                //String response = "<200 OK, {success: true, data: " + result.toString() + ", failureMessage: null}>";
+                ResponseBody response = new ResponseBody(sessionId.toString(), true, result.toString(), null);
+
+                channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
                 return;
             } catch (Throwable e) {
                 System.out.println("\nBAD REQUEST");
 
-                String response = "<400 Bad Request, {success: false, data: null, failureMessage: " + e.getMessage() + "}>";
+                ResponseBody response = new ResponseBody(sessionId.toString(), false, null, e.getMessage());
+                //String response = "<400 Bad Request, {success: false, data: null, failureMessage: " + e.getMessage() + "}>";
                 //ResponseEntity response = new ResponseEntity<>(new ResponseBody(false, null, e.getMessage()), HttpStatus.BAD_REQUEST);
                 try {
-                    channel.basicPublish("", QUEUE_NAME, null, response.getBytes());
-                    //channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
+                    channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
                     return;
                 } catch (IOException e1) {
                     //

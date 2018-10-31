@@ -1,24 +1,37 @@
 package aeon.platform.http.models;
 
+import org.json.JSONObject;
+
 /**
  * Class to create a response body.
  */
 public class ResponseBody {
 
+    private String sessionId;
     private boolean success;
     private String data;
     private String failureMessage;
 
     /**
      * Constructs a response body.
+     * @param sessionId Session ID
      * @param success True if command was successfully executed, false otherwise
      * @param data Data returned from command execution
      * @param failureMessage Exception message
      */
-    public ResponseBody(boolean success, String data, String failureMessage) {
+    public ResponseBody(String sessionId, boolean success, String data, String failureMessage) {
+        this.sessionId = sessionId;
         this.success = success;
         this.data = data;
         this.failureMessage = failureMessage;
+    }
+
+    /**
+     * Get the session ID.
+     * @return Session ID
+     */
+    public String getSessionId() {
+        return sessionId;
     }
 
     /**
@@ -43,5 +56,12 @@ public class ResponseBody {
      */
     public String getFailureMessage() {
         return failureMessage;
+    }
+
+    @Override
+    public String toString() {
+        JSONObject responseJson = new JSONObject(this);
+
+        return responseJson.toString();
     }
 }

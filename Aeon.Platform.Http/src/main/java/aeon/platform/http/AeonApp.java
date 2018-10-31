@@ -3,11 +3,13 @@ package aeon.platform.http;
 import aeon.platform.DaggerAeonPlatformComponent;
 import aeon.platform.factories.SessionFactory;
 import com.rabbitmq.client.*;
+import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -30,6 +32,8 @@ public class AeonApp {
     /**
      * Main method of the application.
      * @param args Command line arguments
+     * @throws IOException Throws an exception if an IO error occurs
+     * @throws TimeoutException Throws an exception if a timeout error occurs
      */
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
@@ -42,10 +46,11 @@ public class AeonApp {
 
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
-            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String message = new String(body, "UTF-8");
-                //
-                System.out.println("\nReceived message: " + message);
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) {
+                String message = new String(body, StandardCharsets.UTF_8);
+                JSONObject messageJson = new JSONObject(message);
+
+                System.out.println("\nReceived message: " + messageJson);
             }
         };
 
