@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ThreadFactory {
 
-    public ThreadClass getThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, Channel channel) {
-        return new ThreadClass(sessionId, session, commandString, args, channel);
+    public ThreadClass getThread(ObjectId sessionId, ISession session, String commandString, List<Object> args) {
+        return new ThreadClass(sessionId, session, commandString, args);
     }
 }

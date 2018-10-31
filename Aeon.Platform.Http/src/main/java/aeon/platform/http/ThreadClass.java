@@ -1,9 +1,11 @@
 package aeon.platform.http;
 
-import aeon.platform.http.models.ExecuteCommandBody;
+import aeon.platform.DaggerAeonPlatformComponent;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import org.bson.types.ObjectId;
 
 import javax.inject.Inject;
@@ -14,21 +16,24 @@ public class ThreadClass extends Thread {
 
     private ObjectId sessionId;
     private ISession session;
-    private ExecuteCommandBody body;
+    private String commandString;
+    private List<Object> args;
     private Channel channel;
 
     private static final String QUEUE_NAME = "AeonApp";
 
-    public ThreadClass(ObjectId sessionId, ISession session, String commandString, List<Object> args, Channel channel) {
+    public ThreadClass(ObjectId sessionId, ISession session, String commandString, List<Object> args) {
         this.sessionId = sessionId;
         this.session = session;
-        this.body = body;
-        this.channel = channel;
+        this.commandString = commandString;
+        this.args = args;
+
+        this.channel = DaggerAeonPlatformComponent.create().buildChannel();
     }
 
     public void run() {
         try {
-            Object result = session.executeCommand(body.getCommand(), body.getArgs());
+            Object result = session.executeCommand(commandString, args);
 
             if (result == null) {
                 ResponseBody response = new ResponseBody(sessionId.toString(), true, null, null);

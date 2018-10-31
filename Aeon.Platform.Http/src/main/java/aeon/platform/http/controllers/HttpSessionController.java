@@ -34,9 +34,6 @@ public class HttpSessionController {
     private SessionFactory sessionFactory;
     private ThreadFactory threadFactory;
 
-    private Connection connection;
-    private Channel channel;
-
     /**
      * Constructs a Session Controller.
      * @param sessionFactory Session factory
@@ -115,21 +112,13 @@ public class HttpSessionController {
      * @throws TimeoutException Throws an exception if a timeout error occurs
      */
     @PostMapping("sessions/{sessionId}/async")
-    public ResponseEntity executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        connection = factory.newConnection();
-        channel = connection.createChannel();
-
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-
+    public ResponseEntity executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
         if (!sessionTable.containsKey(sessionId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         ISession session = sessionTable.get(sessionId);
-
-        threadFactory.getThread(sessionId, session, body.getCommand(), body.getArgs(), channel).start();
+        threadFactory.getThread(sessionId, session, body.getCommand(), body.getArgs()).start();
 
         return null;
     }
@@ -142,7 +131,7 @@ public class HttpSessionController {
      * @throws TimeoutException Throws an exception if a timeout error occurs
      */
     @DeleteMapping("sessions/{sessionId}")
-    public ResponseEntity quitSession(@PathVariable ObjectId sessionId) throws IOException, TimeoutException{
+    public ResponseEntity quitSession(@PathVariable ObjectId sessionId) {
         if (!sessionTable.containsKey(sessionId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
