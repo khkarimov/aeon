@@ -1,5 +1,6 @@
 plugins {
     id 'net.ltgt.apt' version '0.10'
+    id 'idea'
     id 'java'
     id 'application'
     id 'war'
@@ -21,7 +22,7 @@ dependencies {
     compile('org.json:json:20180813')
 
     annotationProcessor('com.google.dagger:dagger-compiler:2.15')
-    
+
     testCompile('junit:junit:4.12')
     testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
 }
