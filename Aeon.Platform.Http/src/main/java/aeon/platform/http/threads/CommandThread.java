@@ -1,18 +1,17 @@
-package aeon.platform.http;
+package aeon.platform.http.threads;
 
-import aeon.platform.DaggerAeonPlatformComponent;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 import org.bson.types.ObjectId;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
 
-public class ThreadClass extends Thread {
+/**
+ * Class to handle creating threads for sessions.
+ */
+public class CommandThread extends Thread {
 
     private ObjectId sessionId;
     private ISession session;
@@ -22,26 +21,33 @@ public class ThreadClass extends Thread {
 
     private static final String QUEUE_NAME = "AeonApp";
 
-    public ThreadClass(ObjectId sessionId, ISession session, String commandString, List<Object> args) {
+    /**
+     * Constructs a thread.
+     * @param sessionId Session ID
+     * @param session Session
+     * @param commandString Command string
+     * @param args Arguments
+     */
+    CommandThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, Channel channel) {
         this.sessionId = sessionId;
         this.session = session;
         this.commandString = commandString;
         this.args = args;
-
-        this.channel = DaggerAeonPlatformComponent.create().buildChannel();
+        this.channel = channel;
     }
 
+    @Override
     public void run() {
         try {
             Object result = session.executeCommand(commandString, args);
+            ResponseBody response;
 
             if (result == null) {
-                ResponseBody response = new ResponseBody(sessionId.toString(), true, null, null);
-                channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
-                return;
+                response = new ResponseBody(sessionId.toString(), true, null, null);
+            } else {
+                response = new ResponseBody(sessionId.toString(), true, result.toString(), null);
             }
 
-            ResponseBody response = new ResponseBody(sessionId.toString(), true, result.toString(), null);
             channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
         } catch (Throwable e) {
             ResponseBody response = new ResponseBody(sessionId.toString(), false, null, e.getMessage());

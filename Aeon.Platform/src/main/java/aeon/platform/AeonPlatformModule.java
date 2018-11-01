@@ -10,23 +10,22 @@ import dagger.Module;
 import dagger.Provides;
 
 import javax.inject.Singleton;
-import java.io.IOException;
+
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
 /**
  * Module to provide Adapter Extensions Supplier.
  */
 @Module
-public class AeonPlatformModule {
+class AeonPlatformModule {
 
     /**
      * Provides the Adapter Extensions Supplier.
      * @return Adapter Extensions Supplier
      */
     @Provides
-    public Supplier<List<IAdapterExtension>> provideAdapterExtensionsSupplier() {
+    Supplier<List<IAdapterExtension>> provideAdapterExtensionsSupplier() {
         return () -> Aeon.getExtensions(IAdapterExtension.class);
     }
 
@@ -35,13 +34,17 @@ public class AeonPlatformModule {
      * @return Product Type Extensions Supplier
      */
     @Provides
-    public Supplier<List<IProductTypeExtension>> provideProductTypeExtensionsSupplier() {
+    Supplier<List<IProductTypeExtension>> provideProductTypeExtensionsSupplier() {
         return () -> Aeon.getExtensions(IProductTypeExtension.class);
     }
 
+    /**
+     * Provides the Channel.
+     * @return Channel
+     */
     @Provides
     @Singleton
-    public Channel provideChannel() {
+    Channel provideChannel() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         try {
@@ -49,9 +52,8 @@ public class AeonPlatformModule {
 
             return connection.createChannel();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
-
-
 }

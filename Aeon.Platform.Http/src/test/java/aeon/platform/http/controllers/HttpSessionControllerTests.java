@@ -1,7 +1,8 @@
-package aeon.platform.http;
+package aeon.platform.http.controllers;
 
 import aeon.core.common.exceptions.CommandExecutionException;
-import aeon.platform.http.controllers.HttpSessionController;
+import aeon.platform.http.threads.CommandThread;
+import aeon.platform.http.threads.ThreadFactory;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import aeon.platform.http.models.CreateSessionBody;
@@ -21,9 +22,7 @@ import org.mockito.junit.MockitoRule;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.TimeoutException;
 
 import static org.mockito.Mockito.*;
 
@@ -47,7 +46,7 @@ public class HttpSessionControllerTests {
 
     @Mock private SessionFactory sessionFactoryMock;
     @Mock private ThreadFactory threadFactoryMock;
-    @Mock private ThreadClass threadMock;
+    @Mock private CommandThread threadMock;
 
     @Before
     public void setUp() {
@@ -186,7 +185,7 @@ public class HttpSessionControllerTests {
     }
 
     @Test
-    public void quitSessionTest() throws IOException, TimeoutException {
+    public void quitSessionTest() {
         when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
 
@@ -201,7 +200,7 @@ public class HttpSessionControllerTests {
     }
 
     @Test
-    public void quitSessionSessionNotFoundTest() throws IOException, TimeoutException {
+    public void quitSessionSessionNotFoundTest() {
         when(sessionTableMock.containsKey(sessionId)).thenReturn(false);
 
         ResponseEntity response = httpSessionController.quitSession(sessionId);

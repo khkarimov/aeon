@@ -51,7 +51,7 @@ public class SessionTests {
     }
 
     @Test
-    public void executeCommandTest() throws Exception {
+    public void executeCommandTest() {
         when(supplierMock.get()).thenReturn(extensions);
         when(extensionMock.createCommand("GoToUrlCommand", argsMock)).thenReturn(commandMock);
         when(commandExecutionFacadeMock.execute(automationInfoMock, commandMock)).thenReturn("GoToUrlCommand Successful");
@@ -66,7 +66,7 @@ public class SessionTests {
     }
 
     @Test
-    public void executeNullCommandTest() throws Exception {
+    public void executeNullCommandTest() {
         when(supplierMock.get()).thenReturn(extensions);
         when(extensionMock.createCommand("GoToUrlCommand", argsMock)).thenReturn(null);
 

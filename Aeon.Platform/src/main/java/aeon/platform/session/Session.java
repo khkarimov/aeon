@@ -33,7 +33,7 @@ public class Session implements ISession {
     }
 
     @Override
-    public Object executeCommand(String commandString, List<Object> args) {
+    public Object executeCommand(String commandString, List<Object> args) throws CommandExecutionException {
         if (commandString == null) {
             throw new IllegalArgumentException("Command is null.");
         }

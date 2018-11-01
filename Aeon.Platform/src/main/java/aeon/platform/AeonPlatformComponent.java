@@ -19,5 +19,9 @@ public interface AeonPlatformComponent {
      */
     SessionFactory buildSessionFactory();
 
+    /**
+     * Builds a Channel.
+     * @return Channel
+     */
     Channel buildChannel();
 }

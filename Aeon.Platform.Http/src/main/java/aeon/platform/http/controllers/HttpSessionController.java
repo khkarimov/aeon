@@ -1,14 +1,11 @@
 package aeon.platform.http.controllers;
 
 import aeon.platform.factories.SessionFactory;
-import aeon.platform.http.ThreadFactory;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
 import aeon.platform.http.models.ResponseBody;
+import aeon.platform.http.threads.ThreadFactory;
 import aeon.platform.session.ISession;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Controller for session.
@@ -27,8 +22,6 @@ import java.util.concurrent.TimeoutException;
 @RestController
 @RequestMapping("api/v1")
 public class HttpSessionController {
-
-    private static final String QUEUE_NAME = "AeonApp";
 
     private Map<ObjectId, ISession> sessionTable = new ConcurrentHashMap<>();
     private SessionFactory sessionFactory;
@@ -108,8 +101,6 @@ public class HttpSessionController {
      * @param sessionId Session ID
      * @param body Command body
      * @return Response body
-     * @throws IOException Throws an exception if an IO error occurs
-     * @throws TimeoutException Throws an exception if a timeout error occurs
      */
     @PostMapping("sessions/{sessionId}/async")
     public ResponseEntity executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
@@ -127,8 +118,6 @@ public class HttpSessionController {
      * Quits the current session.
      * @param sessionId Session ID
      * @return Response entity
-     * @throws IOException Throws an exception if an IO error occurs
-     * @throws TimeoutException Throws an exception if a timeout error occurs
      */
     @DeleteMapping("sessions/{sessionId}")
     public ResponseEntity quitSession(@PathVariable ObjectId sessionId) {
