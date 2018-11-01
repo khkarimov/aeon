@@ -1,13 +1,13 @@
 package aeon.platform.http.controllers;
 
 import aeon.core.common.exceptions.CommandExecutionException;
-import aeon.platform.http.threads.CommandThread;
-import aeon.platform.http.threads.ThreadFactory;
-import aeon.platform.http.models.ResponseBody;
-import aeon.platform.session.ISession;
+import aeon.platform.factories.SessionFactory;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
-import aeon.platform.factories.SessionFactory;
+import aeon.platform.http.models.ResponseBody;
+import aeon.platform.http.threads.CommandThread;
+import aeon.platform.http.threads.ThreadFactory;
+import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,31 +22,44 @@ import org.mockito.junit.MockitoRule;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpSessionControllerTests {
 
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-    @Rule public ExpectedException expectedException = ExpectedException.none();
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     private HttpSessionController httpSessionController;
     private ObjectId sessionId;
 
-    @Mock private ISession sessionMock;
-    @Mock private Map<ObjectId, ISession> sessionTableMock;
+    @Mock
+    private ISession sessionMock;
+    @Mock
+    private Map<ObjectId, ISession> sessionTableMock;
 
-    @Mock private Properties settingsMock;
-    @Mock private List<Object> argsMock;
+    @Mock
+    private Properties settingsMock;
+    @Mock
+    private List<Object> argsMock;
 
-    @Mock private CreateSessionBody createSessionBodyMock;
-    @Mock private ExecuteCommandBody executeCommandBodyMock;
+    @Mock
+    private CreateSessionBody createSessionBodyMock;
+    @Mock
+    private ExecuteCommandBody executeCommandBodyMock;
 
-    @Mock private SessionFactory sessionFactoryMock;
-    @Mock private ThreadFactory threadFactoryMock;
-    @Mock private CommandThread threadMock;
+    @Mock
+    private SessionFactory sessionFactoryMock;
+    @Mock
+    private ThreadFactory threadFactoryMock;
+    @Mock
+    private CommandThread threadMock;
 
     @Before
     public void setUp() {
@@ -87,7 +100,7 @@ public class HttpSessionControllerTests {
     }
 
     @Test
-    public void executeCommandTest() {
+    public void executeCommandTest() throws CommandExecutionException {
         when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
         when(executeCommandBodyMock.getCommand()).thenReturn("GoToUrlCommand");
@@ -111,7 +124,7 @@ public class HttpSessionControllerTests {
     }
 
     @Test
-    public void executeNullCommandTest() {
+    public void executeNullCommandTest() throws CommandExecutionException {
         when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
         when(executeCommandBodyMock.getCommand()).thenReturn(null);
@@ -135,7 +148,7 @@ public class HttpSessionControllerTests {
     }
 
     @Test
-    public void executeCommandSessionNotFoundTest() {
+    public void executeCommandSessionNotFoundTest() throws CommandExecutionException {
         when(sessionTableMock.containsKey(sessionId)).thenReturn(false);
 
         ResponseEntity response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);

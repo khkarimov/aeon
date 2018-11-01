@@ -8,7 +8,6 @@ import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -24,8 +23,10 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class CommandThreadTests {
 
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-    @Rule public ExpectedException expectedException = ExpectedException.none();
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     private CommandThread commandThread;
     private ObjectId sessionId;
@@ -36,9 +37,12 @@ public class CommandThreadTests {
 
     private Throwable e;
 
-    @Mock ISession sessionMock;
-    @Mock List<Object> argsMock;
-    @Mock Channel channelMock;
+    @Mock
+    ISession sessionMock;
+    @Mock
+    List<Object> argsMock;
+    @Mock
+    Channel channelMock;
 
     @Before
     public void setUp() {
@@ -53,7 +57,7 @@ public class CommandThreadTests {
     }
 
     @Test
-    public void runTest() throws IOException {
+    public void runTest() throws IOException, CommandExecutionException {
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn("Success");
 
         commandThread.run();
@@ -63,7 +67,7 @@ public class CommandThreadTests {
     }
 
     @Test
-    public void runNullResultTest() throws IOException {
+    public void runNullResultTest() throws IOException, CommandExecutionException {
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn(null);
 
         commandThread.run();
@@ -73,7 +77,7 @@ public class CommandThreadTests {
     }
 
     @Test
-    public void runThrowsExceptionTest() throws IOException {
+    public void runThrowsExceptionTest() throws IOException, CommandExecutionException {
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenThrow(e);
 
         commandThread.run();

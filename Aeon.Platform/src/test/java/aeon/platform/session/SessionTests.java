@@ -24,23 +24,31 @@ import static org.mockito.Mockito.*;
 
 public class SessionTests {
 
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-    @Rule public ExpectedException expectedException = ExpectedException.none();
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     private Session session;
 
-    @Mock private AutomationInfo automationInfoMock;
-    @Mock private ICommandExecutionFacade commandExecutionFacadeMock;
-    @Mock private Supplier<List<IProductTypeExtension>> supplierMock;
+    @Mock
+    private AutomationInfo automationInfoMock;
+    @Mock
+    private ICommandExecutionFacade commandExecutionFacadeMock;
+    @Mock
+    private Supplier<List<IProductTypeExtension>> supplierMock;
 
-    @Mock private List<Object> argsMock;
+    @Mock
+    private List<Object> argsMock;
 
 
     private List<IProductTypeExtension> extensions;
 
 
-    @Mock private IProductTypeExtension extensionMock;
-    @Mock private CommandWithReturn commandMock;
+    @Mock
+    private IProductTypeExtension extensionMock;
+    @Mock
+    private CommandWithReturn commandMock;
 
     @Before
     public void setUp() {
@@ -51,7 +59,7 @@ public class SessionTests {
     }
 
     @Test
-    public void executeCommandTest() {
+    public void executeCommandTest() throws CommandExecutionException {
         when(supplierMock.get()).thenReturn(extensions);
         when(extensionMock.createCommand("GoToUrlCommand", argsMock)).thenReturn(commandMock);
         when(commandExecutionFacadeMock.execute(automationInfoMock, commandMock)).thenReturn("GoToUrlCommand Successful");
