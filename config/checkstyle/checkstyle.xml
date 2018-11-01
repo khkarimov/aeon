@@ -14,12 +14,31 @@ page at http://checkstyle.sourceforge.net/config.html -->
         -->
     </module>
 
+    <module name="NewlineAtEndOfFile">
+        <property name="lineSeparator" value="lf"/>
+    </module>
+
     <module name="RegexpSingleline">
         <!-- Checks that FIXME is not used in comments.  TODO is preferred.
         -->
         <property name="format" value="((//.*)|(\*.*))FIXME"/>
         <property name="message"
                   value='TODO is preferred to FIXME.  e.g. "TODO(johndoe): Refactor when v2 is released."'/>
+    </module>
+
+    <module name="RegexpSingleline">
+        <!-- Checks that TODOs are named.  (Actually, just that they are followed
+        by an open paren.)
+        -->
+        <property name="format" value="((//.*)|(\*.*))TODO[^(]"/>
+        <property name="message"
+                  value='All TODOs should be named.  e.g. "TODO(johndoe): Refactor when v2 is released."'/>
+    </module>
+
+    <module name="JavadocPackage">
+        <!-- Checks that each Java package has a Javadoc file used for commenting.
+        Only allows a package-info.java, not package.html. -->
+        <property name="severity" value="error"/>
     </module>
 
     <!-- All Java AST specific tests live under TreeWalker module. -->
@@ -49,9 +68,33 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         <!--
 
-         NAMING CHECKS
+        JAVADOC CHECKS
 
-         -->
+        -->
+
+        <!-- Checks for Javadoc comments.                     -->
+        <!-- See http://checkstyle.sf.net/config_javadoc.html -->
+        <module name="JavadocMethod">
+            <property name="scope" value="protected"/>
+            <property name="allowThrowsTagsForSubclasses" value="true"/>
+            <property name="allowUndeclaredRTE" value="true"/>
+            <property name="severity" value="error"/>
+        </module>
+
+        <module name="JavadocType">
+            <property name="scope" value="protected"/>
+            <property name="severity" value="error"/>
+        </module>
+
+        <module name="JavadocStyle">
+            <property name="severity" value="error"/>
+        </module>
+
+        <!--
+
+        NAMING CHECKS
+
+        -->
 
         <!-- Item 38 - Adhere to generally accepted naming conventions -->
 
@@ -98,8 +141,19 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="severity" value="error"/>
         </module>
 
+        <module name="MemberNameCheck">
+            <!-- Validates non-static members against the supplied expression. -->
+            <metadata name="altname" value="MemberName"/>
+            <property name="applyToPublic" value="true"/>
+            <property name="applyToProtected" value="true"/>
+            <property name="applyToPackage" value="true"/>
+            <property name="applyToPrivate" value="true"/>
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+            <property name="severity" value="error"/>
+        </module>
+
         <module name="MethodNameCheck">
-            <!--&lt;!&ndash; Validates identifiers for method names. &ndash;&gt;-->
+            <!-- Validates identifiers for method names. -->
             <metadata name="altname" value="MethodName"/>
             <property name="format" value="^[a-z][a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$"/>
             <property name="severity" value="error"/>
@@ -144,6 +198,32 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="ignorePattern"
                       value="${com.puppycrawl.tools.checkstyle.checks.sizes.LineLength.ignorePattern}"
                       default="^(package .*;\s*)|(import .*;\s*)|( *(\*|//).*https?://.*)$"/>
+        </module>
+
+        <module name="LeftCurly">
+            <!-- Checks for placement of the left curly brace ('{'). -->
+            <property name="severity" value="error"/>
+        </module>
+
+        <module name="RightCurly">
+            <!-- Checks right curlies on CATCH, ELSE, and TRY blocks are on
+            the same line. e.g., the following example is fine:
+            <pre>
+              if {
+                ...
+              } else
+            </pre>
+            -->
+            <!-- This next example is not fine:
+            <pre>
+              if {
+                ...
+              }
+              else
+            </pre>
+            -->
+            <property name="option" value="same"/>
+            <property name="severity" value="error"/>
         </module>
 
         <!-- Checks for braces around if and else blocks -->

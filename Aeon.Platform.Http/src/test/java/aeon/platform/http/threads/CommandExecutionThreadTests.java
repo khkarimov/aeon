@@ -21,14 +21,14 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CommandThreadTests {
+public class CommandExecutionThreadTests {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private CommandThread commandThread;
+    private CommandExecutionThread commandExecutionThread;
     private ObjectId sessionId;
 
     private ResponseBody response;
@@ -47,7 +47,7 @@ public class CommandThreadTests {
     @Before
     public void setUp() {
         sessionId = new ObjectId();
-        commandThread = new CommandThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, channelMock);
+        commandExecutionThread = new CommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, channelMock);
 
         e = new CommandExecutionException("Command is invalid.");
 
@@ -60,7 +60,7 @@ public class CommandThreadTests {
     public void runTest() throws IOException, CommandExecutionException {
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn("Success");
 
-        commandThread.run();
+        commandExecutionThread.run();
 
         verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
         verify(channelMock, times(1)).basicPublish("", "AeonApp", null, response.toString().getBytes());
@@ -70,7 +70,7 @@ public class CommandThreadTests {
     public void runNullResultTest() throws IOException, CommandExecutionException {
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn(null);
 
-        commandThread.run();
+        commandExecutionThread.run();
 
         verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
         verify(channelMock, times(1)).basicPublish("", "AeonApp", null, nullResponse.toString().getBytes());
@@ -80,7 +80,7 @@ public class CommandThreadTests {
     public void runThrowsExceptionTest() throws IOException, CommandExecutionException {
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenThrow(e);
 
-        commandThread.run();
+        commandExecutionThread.run();
 
         verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
         verify(channelMock, times(1)).basicPublish("", "AeonApp", null, exceptionResponse.toString().getBytes());

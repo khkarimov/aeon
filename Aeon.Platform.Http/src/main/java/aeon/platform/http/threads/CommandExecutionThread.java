@@ -1,8 +1,11 @@
 package aeon.platform.http.threads;
 
+import aeon.platform.http.exceptions.PublishMessageException;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import com.rabbitmq.client.Channel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
@@ -11,7 +14,7 @@ import java.util.List;
 /**
  * Class to handle creating threads for sessions.
  */
-public class CommandThread extends Thread {
+public class CommandExecutionThread extends Thread {
 
     private ObjectId sessionId;
     private ISession session;
@@ -20,15 +23,17 @@ public class CommandThread extends Thread {
     private Channel channel;
 
     private static final String QUEUE_NAME = "AeonApp";
+    private static Logger log = LogManager.getLogger(CommandExecutionThread.class);
 
     /**
      * Constructs a thread.
-     * @param sessionId Session ID
-     * @param session Session
+     *
+     * @param sessionId     Session ID
+     * @param session       Session
      * @param commandString Command string
-     * @param args Arguments
+     * @param args          Arguments
      */
-    CommandThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, Channel channel) {
+    CommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, Channel channel) {
         this.sessionId = sessionId;
         this.session = session;
         this.commandString = commandString;
@@ -38,25 +43,25 @@ public class CommandThread extends Thread {
 
     @Override
     public void run() {
+        ResponseBody response;
+
         try {
             Object result = session.executeCommand(commandString, args);
-            ResponseBody response;
 
             if (result == null) {
                 response = new ResponseBody(sessionId.toString(), true, null, null);
             } else {
                 response = new ResponseBody(sessionId.toString(), true, result.toString(), null);
             }
-
-            channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
         } catch (Throwable e) {
-            ResponseBody response = new ResponseBody(sessionId.toString(), false, null, e.getMessage());
+            response = new ResponseBody(sessionId.toString(), false, null, e.getMessage());
+        }
 
-            try {
-                channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+        try {
+            channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
+        } catch (IOException e) {
+            log.error("Could not publish message.", e);
+            throw new PublishMessageException(e);
         }
     }
 }

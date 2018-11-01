@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -29,8 +29,9 @@ public class HttpSessionController {
 
     /**
      * Constructs a Session Controller.
+     *
      * @param sessionFactory Session factory
-     * @param threadFactory Thread factory
+     * @param threadFactory  Thread factory
      */
     @Autowired
     public HttpSessionController(SessionFactory sessionFactory, ThreadFactory threadFactory) {
@@ -40,6 +41,7 @@ public class HttpSessionController {
 
     /**
      * Sets the session table.
+     *
      * @param sessionTable Session table
      */
     public void setSessionTable(Map<ObjectId, ISession> sessionTable) {
@@ -48,6 +50,7 @@ public class HttpSessionController {
 
     /**
      * Creates a new session.
+     *
      * @param body Session body
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
@@ -71,8 +74,9 @@ public class HttpSessionController {
 
     /**
      * Executes a given command.
+     *
      * @param sessionId Session ID
-     * @param body Command body
+     * @param body      Command body
      * @return Response entity
      */
     @PostMapping("sessions/{sessionId}/commands")
@@ -98,24 +102,26 @@ public class HttpSessionController {
 
     /**
      * Executes a given command asynchronously.
+     *
      * @param sessionId Session ID
-     * @param body Command body
+     * @param body      Command body
      * @return Response body
      */
-    @PostMapping("sessions/{sessionId}/async")
+    @PostMapping("sessions/{sessionId}/async-commands")
     public ResponseEntity executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
         if (!sessionTable.containsKey(sessionId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         ISession session = sessionTable.get(sessionId);
-        threadFactory.getThread(sessionId, session, body.getCommand(), body.getArgs()).start();
+        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs()).start();
 
-        return null;
+        return new ResponseEntity<>(new ResponseBody(sessionId.toString(), true, "The asynchronous command was successfully scheduled.", null), HttpStatus.OK);
     }
 
     /**
      * Quits the current session.
+     *
      * @param sessionId Session ID
      * @return Response entity
      */

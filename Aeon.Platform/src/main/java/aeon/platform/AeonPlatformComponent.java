@@ -15,7 +15,7 @@ public interface AeonPlatformComponent {
     /**
      * Builds a Session Factory.
      *
-     * @return Session Factoryh
+     * @return Session Factory
      */
     SessionFactory buildSessionFactory();
 }

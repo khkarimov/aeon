@@ -5,7 +5,7 @@ import aeon.platform.factories.SessionFactory;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
 import aeon.platform.http.models.ResponseBody;
-import aeon.platform.http.threads.CommandThread;
+import aeon.platform.http.threads.CommandExecutionThread;
 import aeon.platform.http.threads.ThreadFactory;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
@@ -59,7 +59,7 @@ public class HttpSessionControllerTests {
     @Mock
     private ThreadFactory threadFactoryMock;
     @Mock
-    private CommandThread threadMock;
+    private CommandExecutionThread threadMock;
 
     @Before
     public void setUp() {
@@ -168,18 +168,23 @@ public class HttpSessionControllerTests {
         when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
         when(executeCommandBodyMock.getCommand()).thenReturn("GoToUrlCommand");
         when(executeCommandBodyMock.getArgs()).thenReturn(argsMock);
-        when(threadFactoryMock.getThread(sessionId, sessionMock, "GoToUrlCommand", argsMock)).thenReturn(threadMock);
+        when(threadFactoryMock.getCommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock)).thenReturn(threadMock);
 
         ResponseEntity response = httpSessionController.executeAsyncCommand(sessionId, executeCommandBodyMock);
+        ResponseBody body = (ResponseBody) response.getBody();
 
         verify(sessionTableMock, times(1)).containsKey(sessionId);
         verify(sessionTableMock, times(1)).get(sessionId);
         verify(executeCommandBodyMock, times(1)).getCommand();
         verify(executeCommandBodyMock, times(1)).getArgs();
-        verify(threadFactoryMock, times(1)).getThread(sessionId, sessionMock, "GoToUrlCommand", argsMock);
+        verify(threadFactoryMock, times(1)).getCommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock);
         verify(threadMock, times(1)).start();
 
-        Assert.assertNull(response);
+        Assert.assertEquals(sessionId.toString(), body.getSessionId());
+        Assert.assertTrue(body.getSuccess());
+        Assert.assertEquals("The asynchronous command was successfully scheduled.", body.getData());
+        Assert.assertNull(body.getFailureMessage());
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -192,7 +197,7 @@ public class HttpSessionControllerTests {
         verify(sessionTableMock, times(0)).get(sessionId);
         verify(executeCommandBodyMock, times(0)).getCommand();
         verify(executeCommandBodyMock, times(0)).getArgs();
-        verify(threadFactoryMock, times(0)).getThread(eq(sessionId), eq(sessionMock), anyString(), anyList());
+        verify(threadFactoryMock, times(0)).getCommandExecutionThread(eq(sessionId), eq(sessionMock), anyString(), anyList());
 
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
