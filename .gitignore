@@ -80,3 +80,5 @@ plugins/
 *~
 
 \.idea/emacs\.xml
+
+.idea/sonarlint/

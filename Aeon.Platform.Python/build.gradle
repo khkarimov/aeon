@@ -3,6 +3,10 @@ plugins {
     id 'application'
 }
 
+def baseProjectName = 'Aeon.Platform.Python'
+def baseProjectDescription = 'Aeon Platform Python Module'
+def base = baseProjectName
+
 mainClassName = 'aeon.platform.python.AeonApp'
 
 dependencies {
@@ -13,4 +17,25 @@ dependencies {
 
 repositories {
     jcenter()
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Main-Class': mainClassName
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    from('src/main/resources') {
+        include 'META-INF/extensions.idx'
+    }
+    with jar
 }
