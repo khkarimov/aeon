@@ -1,7 +1,6 @@
 package aeon.platform;
 
 import aeon.platform.factories.SessionFactory;
-import com.rabbitmq.client.Channel;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -15,13 +14,8 @@ public interface AeonPlatformComponent {
 
     /**
      * Builds a Session Factory.
-     * @return Session Factory
+     *
+     * @return Session Factoryh
      */
     SessionFactory buildSessionFactory();
-
-    /**
-     * Builds a Channel.
-     * @return Channel
-     */
-    Channel buildChannel();
 }

@@ -110,7 +110,6 @@ allprojects {
     apply plugin: 'checkstyle'
     checkstyle {
         toolVersion = "8.7"
-        configFile = new File(rootDir, "checkstyle.xml")
     }
 
     dependencies {
@@ -122,7 +121,7 @@ allprojects {
         testCompile('org.mockito:mockito-junit-jupiter:2.18.0')
         testCompile('org.junit.platform:junit-platform-launcher:1.2.0')
     }
-    
+
     test {
         if (threads) {
             maxParallelForks = threads.toInteger()
@@ -130,18 +129,16 @@ allprojects {
 
         useJUnitPlatform {
             def includeList = System.getenv('tests.included.tags')
-            if (includeList != null)
-            {
+            if (includeList != null) {
                 def tags = includeList.split("\\s*(,|\\s)\\s*")
-                tags.each {tag ->
+                tags.each { tag ->
                     includeTags tag
                 }
             }
             def excludeList = System.getenv('tests.excluded.tags')
-            if (excludeList != null)
-            {
+            if (excludeList != null) {
                 def tags = excludeList.split("\\s*(,|\\s)\\s*")
-                tags.each {tag ->
+                tags.each { tag ->
                     excludeTags tag
                 }
             }

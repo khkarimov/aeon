@@ -7,7 +7,7 @@ import java.util.Locale;
 /**
  * The exception that is thrown to indicate a command cannot be executed.
  */
-public class CommandExecutionException extends RuntimeException {
+public class CommandExecutionException extends Exception {
 
     /**
      * Initializes new instance of the {@link CommandExecutionException} class with the specified detail message.
