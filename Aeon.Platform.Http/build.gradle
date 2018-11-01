@@ -2,6 +2,7 @@ plugins {
     id 'net.ltgt.apt' version '0.10'
     id 'java'
     id 'application'
+    id 'war'
     id 'org.springframework.boot' version '2.0.5.RELEASE'
 }
 
@@ -14,12 +15,13 @@ bootJar {
 dependencies {
     compile project(':Aeon.Platform')
 
+    compile('com.rabbitmq:amqp-client:5.5.0')
     compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb:2.0.5.RELEASE')
     compile('org.json:json:20180813')
 
     annotationProcessor('com.google.dagger:dagger-compiler:2.15')
-
+    
     testCompile('junit:junit:4.12')
     testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
 }

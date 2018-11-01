@@ -1,7 +1,6 @@
 package aeon.platform.http.threads;
 
-//import aeon.platform.http.DaggerHttpAeonPlatformComponent;
-
+import aeon.platform.http.DaggerHttpAeonPlatformComponent;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 
@@ -22,6 +21,6 @@ public class ThreadFactory {
      * @return Thread
      */
     public CommandExecutionThread getCommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args) {
-        return new CommandExecutionThread(sessionId, session, commandString, args, null);
+        return new CommandExecutionThread(sessionId, session, commandString, args, DaggerHttpAeonPlatformComponent.create().buildChannel());
     }
 }

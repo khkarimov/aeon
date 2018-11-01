@@ -7,7 +7,6 @@ plugins {
 dependencies {
     compile project(':Aeon.Core.Mobile')
 
-    compile('com.rabbitmq:amqp-client:5.5.0')
     compile('com.google.dagger:dagger:2.15')
     annotationProcessor('com.google.dagger:dagger-compiler:2.15')
 
