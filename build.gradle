@@ -24,6 +24,7 @@ dependencies {
     compile project(':Aeon.Platform')
     compile project(':Aeon.Platform.Http')
     compile project(':Aeon.Platform.Python')
+    compile project(':Aeon.Cloud')
 }
 
 task wrapper(type: Wrapper) {

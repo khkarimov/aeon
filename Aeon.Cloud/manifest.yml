@@ -1,0 +1,10 @@
+name: aeon-cloud
+routes:
+- route: aeon-cloud.ulti.io
+memory: 1024m
+path: build/libs/Aeon.Cloud.jar
+buildpack: java-buildpack-v4-8
+disk_quota: 256MB
+instances: 1
+services:
+- mongo

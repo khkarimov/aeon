@@ -2,7 +2,7 @@ compileTestJava.options.encoding = 'utf-8'
 
 artifactoryPublish.skip = true
 
-clean {
+clean.doFirst {
     delete 'log'
     delete 'plugins'
 }
@@ -22,18 +22,16 @@ test {
     maxParallelForks = 4
     useJUnit {
         def includeList = System.getenv('tests.included.tags')
-        if (includeList != null)
-        {
+        if (includeList != null) {
             def categories = includeList.split("\\s*(,|\\s)\\s*")
-            categories.each {category ->
+            categories.each { category ->
                 includeCategories 'categories.' + category
             }
         }
         def excludeList = System.getenv('tests.excluded.tags')
-        if (excludeList != null)
-        {
+        if (excludeList != null) {
             def categories = excludeList.split("\\s*(,|\\s)\\s*")
-            categories.each {category ->
+            categories.each { category ->
                 excludeCategories 'categories.' + category
             }
         }

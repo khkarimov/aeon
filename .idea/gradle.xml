@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Aeon.Cloud" />
             <option value="$PROJECT_DIR$/Aeon.Core" />
             <option value="$PROJECT_DIR$/Aeon.Core.Mobile" />
             <option value="$PROJECT_DIR$/Aeon.Core.Web" />

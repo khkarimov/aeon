@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "3dbf66f0-1717-4972-abb5-bbf98228f21d",
+		"name": "Aeon-as-a-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "Create Session (Launch)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "486e4830-f387-42af-bccb-d3be927710a9",
+								"exec": [
+									"pm.environment.set(\"sessionId\", pm.response.json().sessionId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{aeon-runner-url}}/api/v1/sessions",
+							"host": [
+								"{{aeon-runner-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "End Session",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc32ae5e-9b73-4b57-bb7a-5cdcf9e13b48",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{aeon-runner-url}}/api/v1/sessions/{{sessionId}}",
+							"host": [
+								"{{aeon-runner-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"{{sessionId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Execute Command",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b9ce1264-6dd6-4828-ba4f-8cb6e8c8c58c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"command\": \"GoToUrlCommand\",\n\t\"args\": [\n\t\t\"https://google.com\"\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{aeon-runner-url}}/api/v1/sessions/{{sessionId}}/commands",
+							"host": [
+								"{{aeon-runner-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"{{sessionId}}",
+								"commands"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Runners",
+			"item": [
+				{
+					"name": "Create Runners",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "486e4830-f387-42af-bccb-d3be927710a9",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"count\": 2,\n\t\"type\": \"aeon-runner\",\n\t\"pcf\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{aeon-cloud-url}}/api/v1/runners",
+							"host": [
+								"{{aeon-cloud-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"runners"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Runners",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "486e4830-f387-42af-bccb-d3be927710a9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{aeon-cloud-url}}/api/v1/runners",
+							"host": [
+								"{{aeon-cloud-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"runners"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Runner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "486e4830-f387-42af-bccb-d3be927710a9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{aeon-cloud-url}}/api/v1/runners/{{runnerId}}",
+							"host": [
+								"{{aeon-cloud-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"runners",
+								"{{runnerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Runner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "486e4830-f387-42af-bccb-d3be927710a9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pcf\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{aeon-cloud-url}}/api/v1/runners/{{runnerId}}",
+							"host": [
+								"{{aeon-cloud-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"runners",
+								"{{runnerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Runners",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "486e4830-f387-42af-bccb-d3be927710a9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pcf\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{aeon-cloud-url}}/api/v1/runners/delete-all",
+							"host": [
+								"{{aeon-cloud-url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"runners",
+								"delete-all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
