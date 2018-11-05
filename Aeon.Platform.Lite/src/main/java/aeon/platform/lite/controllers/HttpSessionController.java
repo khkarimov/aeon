@@ -110,25 +110,29 @@ public class HttpSessionController {
                     .build();
         }
     }
-//
-//    /**
-//     * Executes a given command asynchronously.
-//     *
-//     * @param sessionId Session ID
-//     * @param body      Command body
-//     * @return Response body
-//     */
-//    @PostMapping("sessions/{sessionId}/async-commands")
-//    public ResponseEntity executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
-//        if (!sessionTable.containsKey(sessionId)) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND_404);
-//        }
-//
-//        ISession session = sessionTable.get(sessionId);
-//        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs()).start();
-//
-//        return new ResponseEntity<>(new ResponseBody(sessionId.toString(), true, "The asynchronous command was successfully scheduled.", null), HttpStatus.OK_200);
-//    }
+
+    /**
+     * Executes a given command asynchronously.
+     *
+     * @param sessionId Session ID
+     * @param body      Command body
+     * @return Response body
+     */
+    @POST
+    @Timed
+    @Path("sessions/{sessionId}/async-commands")
+    public Response executeAsyncCommand(@PathParam("sessionId") ObjectId sessionId, ExecuteCommandBody body) {
+        if (!sessionTable.containsKey(sessionId)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        ISession session = sessionTable.get(sessionId);
+        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs(), body.getCallbackUrl()).start();
+
+        return Response.status(Response.Status.OK)
+                .entity(new ResponseBody(sessionId.toString(), true, "The asynchronous command was successfully scheduled.", null))
+                .build();
+    }
 
     /**
      * Quits the current session.

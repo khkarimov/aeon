@@ -9,16 +9,6 @@ import io.dropwizard.setup.Environment;
  */
 public class AeonApp extends Application<AeonAppConfiguration> {
 
-//    @Override
-//    public String getName() {
-//        return "AeonApp";
-//    }
-//
-//    @Override
-//    public void initialize(Bootstrap<AeonAppConfiguration> bootstrap) {
-//        // nothing to do yet
-//    }
-
     @Override
     public void run(AeonAppConfiguration configuration, Environment environment) {
         final HttpSessionController controller = new HttpSessionController(
