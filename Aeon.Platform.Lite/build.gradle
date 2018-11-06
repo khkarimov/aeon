@@ -3,18 +3,21 @@ plugins {
     id 'idea'
     id 'java'
     id 'war'
+    id 'com.github.johnrengelman.shadow' version '4.0.2'
 }
 
 mainClassName = 'aeon.platform.lite.AeonApp'
 
-jar {
+shadowJar {
+    mergeServiceFiles()
+
     manifest {
-        attributes 'Main-Class': 'aeon.platform.lite.AeonApp'
+        attributes 'Main-Class': mainClassName
     }
 }
 
 run {
-    args 'server', 'config.yml'
+    args = ['server', 'config.yml']
 }
 
 dependencies {
