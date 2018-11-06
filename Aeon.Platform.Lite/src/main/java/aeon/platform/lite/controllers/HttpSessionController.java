@@ -15,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Controller for session.
@@ -24,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Produces(MediaType.APPLICATION_JSON)
 public class HttpSessionController {
 
-    private Map<ObjectId, ISession> sessionTable = new ConcurrentHashMap<>();
+    private Map<ObjectId, ISession> sessionTable;
     private SessionFactory sessionFactory;
     private ThreadFactory threadFactory;
 
@@ -33,18 +32,11 @@ public class HttpSessionController {
      *
      * @param sessionFactory Session factory
      * @param threadFactory  Thread factory
+     * @param sessionTable   Session table
      */
-    public HttpSessionController(SessionFactory sessionFactory, ThreadFactory threadFactory) {
+    public HttpSessionController(SessionFactory sessionFactory, ThreadFactory threadFactory, Map<ObjectId, ISession> sessionTable) {
         this.sessionFactory = sessionFactory;
         this.threadFactory = threadFactory;
-    }
-
-    /**
-     * Sets the session table.
-     *
-     * @param sessionTable Session table
-     */
-    public void setSessionTable(Map<ObjectId, ISession> sessionTable) {
         this.sessionTable = sessionTable;
     }
 

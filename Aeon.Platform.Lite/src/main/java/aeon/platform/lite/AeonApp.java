@@ -13,7 +13,8 @@ public class AeonApp extends Application<AeonAppConfiguration> {
     public void run(AeonAppConfiguration configuration, Environment environment) {
         final HttpSessionController controller = new HttpSessionController(
                 configuration.getSessionFactory(),
-                configuration.getThreadFactory()
+                configuration.getThreadFactory(),
+                configuration.getSessionTable()
         );
 
         environment.jersey().register(controller);

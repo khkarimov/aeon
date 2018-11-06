@@ -69,8 +69,7 @@ public class HttpSessionControllerTests {
 
     @Before
     public void setUp() {
-        httpSessionController = new HttpSessionController(sessionFactoryMock, threadFactoryMock);
-        httpSessionController.setSessionTable(sessionTableMock);
+        httpSessionController = new HttpSessionController(sessionFactoryMock, threadFactoryMock, sessionTableMock);
 
         sessionId = new ObjectId();
     }
