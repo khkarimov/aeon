@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 
 /**
- * Runner entity.
+ * Entity for deployment time records.
  */
 @Document(collection = "aeonCloudDeploymentTime")
 public class DeploymentTime {
@@ -27,7 +27,7 @@ public class DeploymentTime {
      *
      * @return The deployment time.
      */
-    public int getTime() {
+    int getTime() {
         return this.time;
     }
 }

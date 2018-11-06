@@ -1,7 +1,7 @@
 package aeon.cloud.models;
 
 /**
- * Aeon Cloud event payload.
+ * Model for Aeon Cloud event.
  */
 public class AeonCloudEvent {
 

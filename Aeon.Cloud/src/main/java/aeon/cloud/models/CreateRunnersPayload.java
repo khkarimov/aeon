@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 /**
- * Class to create session body.
+ * Model for payload of the endpoint for creating runners.
  */
 public class CreateRunnersPayload {
 

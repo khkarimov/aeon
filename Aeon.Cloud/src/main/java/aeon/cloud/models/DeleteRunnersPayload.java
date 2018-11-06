@@ -5,7 +5,7 @@ import org.springframework.lang.Nullable;
 import javax.validation.constraints.NotNull;
 
 /**
- * Class to create session body.
+ * Model for payload of the endpoints for deleting runners.
  */
 public class DeleteRunnersPayload {
 

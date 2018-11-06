@@ -1,4 +1,4 @@
 /**
- * Contains controllers to interact with the Aeon Cloud.
+ * Aeon Cloud Server.
  */
 package aeon.cloud;
