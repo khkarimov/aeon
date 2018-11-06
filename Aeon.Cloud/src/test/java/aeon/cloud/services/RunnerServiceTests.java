@@ -135,6 +135,7 @@ public class RunnerServiceTests {
         assertEquals("PENDING", this.argument.getValue().status);
         assertNull(argument.getValue().apiUrl);
         assertNull(argument.getValue().uiUrl);
+        assertNull(argument.getValue().baseUrl);
         assertNull(argument.getValue().pcfMetaData.guid);
 
         assertEquals("aeon-runner-" + runnerId, this.pushApplicationRequest.getValue().getName());
@@ -160,6 +161,7 @@ public class RunnerServiceTests {
         assertEquals("RUNNING", this.argument.getValue().status);
         assertEquals("URL/api/v1/", this.argument.getValue().apiUrl);
         assertEquals("URL/vnc_lite.html", this.argument.getValue().uiUrl);
+        assertEquals("URL", this.argument.getValue().baseUrl);
         assertEquals("guid", argument.getValue().pcfMetaData.guid);
         verify(this.runnerRepository, times(1)).save(this.argument.getValue());
         verify(this.notificationService, times(1)).notify(
@@ -190,6 +192,7 @@ public class RunnerServiceTests {
         assertEquals("PENDING", this.argument.getValue().status);
         assertNull(argument.getValue().apiUrl);
         assertNull(argument.getValue().uiUrl);
+        assertNull(argument.getValue().baseUrl);
         assertNull(argument.getValue().pcfMetaData.guid);
 
         assertEquals("aeon-runner-" + runnerId, this.pushApplicationRequest.getValue().getName());
@@ -208,6 +211,7 @@ public class RunnerServiceTests {
         assertEquals("FAILED", this.argument.getValue().status);
         assertNull(argument.getValue().apiUrl);
         assertNull(argument.getValue().uiUrl);
+        assertNull(argument.getValue().baseUrl);
         assertNull(argument.getValue().pcfMetaData.guid);
         assertEquals("aeon-runner-" + runnerId, this.deleteApplicationRequest.getValue().getName());
         verify(this.runnerRepository, times(1)).save(this.argument.getValue());
@@ -236,6 +240,7 @@ public class RunnerServiceTests {
         verify(this.deleteResult, times(1)).subscribe();
         assertEquals(runner.name, this.deleteApplicationRequest.getValue().getName());
         assertTrue(this.deleteApplicationRequest.getValue().getDeleteRoutes());
+        assertEquals("DELETING", this.runner.status);
 
         // Act: Trigger deletion success
         this.doOnSuccess.getValue().accept(null);
@@ -266,6 +271,7 @@ public class RunnerServiceTests {
         verify(this.deleteResult, times(1)).subscribe();
         assertEquals(runner.name, this.deleteApplicationRequest.getValue().getName());
         assertTrue(this.deleteApplicationRequest.getValue().getDeleteRoutes());
+        assertEquals("DELETING", this.runner.status);
 
         // Act: Trigger deletion success
         this.doOnError.getValue().accept(null);
@@ -296,6 +302,7 @@ public class RunnerServiceTests {
         verify(this.deleteResult, times(1)).subscribe();
         assertEquals(runner.name, this.deleteApplicationRequest.getValue().getName());
         assertTrue(this.deleteApplicationRequest.getValue().getDeleteRoutes());
+        assertEquals("DELETING", this.runner.status);
 
         // Act: Trigger deletion success
         this.doOnError.getValue().accept(null);

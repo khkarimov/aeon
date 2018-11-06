@@ -95,6 +95,9 @@ public class RunnerService {
                 .deleteRoutes(true)
                 .build();
 
+        runner.status = "DELETING";
+        this.runnerRepository.save(runner);
+
         Mono<Void> result = cloudFoundryOperations.applications().delete(request);
 
         result.doOnSuccess(
@@ -121,6 +124,7 @@ public class RunnerService {
                     runner.status = applicationDetail.getInstanceDetails().get(0).getState();
                     runner.apiUrl = applicationDetail.getUrls().get(0) + "/api/v1/";
                     runner.uiUrl = applicationDetail.getUrls().get(0) + "/vnc_lite.html";
+                    runner.baseUrl = applicationDetail.getUrls().get(0);
                     runner.pcfMetaData.guid = applicationDetail.getId();
                     this.runnerRepository.save(runner);
                     this.notificationService.notify(

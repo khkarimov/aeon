@@ -31,6 +31,9 @@ public class Runner {
     @Nullable
     public String uiUrl;
 
+    @Nullable
+    public String baseUrl;
+
     @NotNull
     public PCFMetaData pcfMetaData = new PCFMetaData();
 
