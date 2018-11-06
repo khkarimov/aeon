@@ -2,11 +2,12 @@ package aeon.platform.lite.threads;
 
 import aeon.platform.lite.models.ResponseBody;
 import aeon.platform.session.ISession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 
-import javax.ws.rs.client.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import java.util.List;
@@ -21,10 +22,7 @@ public class CommandExecutionThread extends Thread {
     private String commandString;
     private List<Object> args;
     private String url;
-
-    //private static final String baseUrl = "http://localhost:8080/api/v1/";
-    //    private static final String QUEUE_NAME = "AeonApp";
-    private static Logger log = LogManager.getLogger(CommandExecutionThread.class);
+    private Client client;
 
     /**
      * Constructs a thread.
@@ -33,20 +31,21 @@ public class CommandExecutionThread extends Thread {
      * @param session       Session
      * @param commandString Command string
      * @param args          Arguments
+     * @param url           Callback URL
+     * @param client        Client
      */
-    CommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url) {
+    CommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url, Client client) {
         this.sessionId = sessionId;
         this.session = session;
         this.commandString = commandString;
         this.args = args;
         this.url = url;
+        this.client = client;
     }
 
     @Override
     public void run() {
         ResponseBody response;
-
-        Client client = ClientBuilder.newClient();
 
         try {
             Object result = session.executeCommand(commandString, args);
