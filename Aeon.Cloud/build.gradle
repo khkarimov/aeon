@@ -1,5 +1,4 @@
 plugins {
-    id 'net.ltgt.apt' version '0.10'
     id 'idea'
     id 'java'
     id 'application'
@@ -7,33 +6,24 @@ plugins {
     id 'org.springframework.boot' version '2.0.5.RELEASE'
 }
 
-mainClassName = 'aeon.platform.http.AeonApp'
+mainClassName = 'aeon.cloud.AeonCloud'
 
 bootJar {
-    mainClassName = 'aeon.platform.http.AeonApp'
+    mainClassName = 'aeon.cloud.AeonCloud'
+    version = null
 }
 
 dependencies {
-    compile project(':Aeon.Platform')
-
-    compile('com.rabbitmq:amqp-client:5.5.0')
     compile('org.springframework.boot:spring-boot-starter-web:2.0.5.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb:2.0.5.RELEASE')
-    compile('org.json:json:20180813')
 
-    annotationProcessor('com.google.dagger:dagger-compiler:2.15')
+    compile 'org.cloudfoundry:cloudfoundry-client-reactor:3.11.0.RELEASE'
+    compile 'org.cloudfoundry:cloudfoundry-operations:3.11.0.RELEASE'
+    compile 'io.projectreactor:reactor-core:3.1.8.RELEASE'
+    compile 'io.projectreactor.ipc:reactor-netty:0.7.8.RELEASE'
 
     testCompile('junit:junit:4.12')
     testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
-}
-
-configurations {
-    compile.exclude module: 'spring-boot-starter-logging'
-}
-
-clean.doFirst {
-    delete 'log'
-    delete 'plugins'
 }
 
 repositories {
