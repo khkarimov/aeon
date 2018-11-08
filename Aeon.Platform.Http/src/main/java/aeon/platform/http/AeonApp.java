@@ -1,51 +1,42 @@
 package aeon.platform.http;
 
-import aeon.platform.DaggerAeonPlatformComponent;
-import aeon.platform.factories.SessionFactory;
-import aeon.platform.http.threads.ThreadFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
+import aeon.platform.http.controllers.HttpSessionController;
+import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
 
 /**
  * Launches browser.
  */
-@SpringBootApplication
-public class AeonApp extends SpringBootServletInitializer {
+public class AeonApp extends Application<AeonAppConfiguration> {
 
     @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(AeonApp.class);
+    public void initialize(Bootstrap<AeonAppConfiguration> bootstrap) {
+        bootstrap.setConfigurationSourceProvider(
+                new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
+                        new EnvironmentVariableSubstitutor(false)));
     }
 
-    /**
-     * Gets the session factory.
-     *
-     * @return Session factory
-     */
-    @Bean
-    public SessionFactory getSessionFactory() {
-        return DaggerAeonPlatformComponent.create().buildSessionFactory();
-    }
+    @Override
+    public void run(AeonAppConfiguration configuration, Environment environment) {
+        final HttpSessionController controller = new HttpSessionController(
+                configuration.getSessionFactory(),
+                configuration.getThreadFactory(),
+                configuration.getSessionTable()
+        );
 
-    /**
-     * Gets the thread factory.
-     *
-     * @return Thread factory
-     */
-    @Bean
-    public ThreadFactory getThreadFactory() {
-        return new ThreadFactory();
+        environment.jersey().register(controller);
     }
 
     /**
      * Main method of the application.
      *
      * @param args Command line arguments
+     * @throws Exception Throws an exception if an error occurs
      */
-    public static void main(String[] args) {
-        SpringApplication.run(AeonApp.class, args);
+    public static void main(String[] args) throws Exception {
+        new AeonApp().run(args);
     }
 }

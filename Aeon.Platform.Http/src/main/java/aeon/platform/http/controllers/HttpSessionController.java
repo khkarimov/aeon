@@ -6,24 +6,24 @@ import aeon.platform.http.models.ExecuteCommandBody;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.http.threads.ThreadFactory;
 import aeon.platform.session.ISession;
+import com.codahale.metrics.annotation.Timed;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Controller for session.
  */
-@RestController
-@RequestMapping("api/v1")
+@Path("/api/v1")
+@Produces(MediaType.APPLICATION_JSON)
 public class HttpSessionController {
 
-    private Map<ObjectId, ISession> sessionTable = new ConcurrentHashMap<>();
+    private Map<ObjectId, ISession> sessionTable;
     private SessionFactory sessionFactory;
     private ThreadFactory threadFactory;
 
@@ -32,19 +32,11 @@ public class HttpSessionController {
      *
      * @param sessionFactory Session factory
      * @param threadFactory  Thread factory
+     * @param sessionTable   Session table
      */
-    @Autowired
-    public HttpSessionController(SessionFactory sessionFactory, ThreadFactory threadFactory) {
+    public HttpSessionController(SessionFactory sessionFactory, ThreadFactory threadFactory, Map<ObjectId, ISession> sessionTable) {
         this.sessionFactory = sessionFactory;
         this.threadFactory = threadFactory;
-    }
-
-    /**
-     * Sets the session table.
-     *
-     * @param sessionTable Session table
-     */
-    public void setSessionTable(Map<ObjectId, ISession> sessionTable) {
         this.sessionTable = sessionTable;
     }
 
@@ -55,8 +47,11 @@ public class HttpSessionController {
      * @return Response entity
      * @throws Exception Throws an exception if an error occurs
      */
-    @PostMapping("sessions")
-    public ResponseEntity createSession(@RequestBody(required = false) CreateSessionBody body) throws Exception {
+    @POST
+    @Timed
+    @Path("sessions")
+    public Response createSession(CreateSessionBody body) throws Exception {
+
         ObjectId sessionId = new ObjectId();
 
         if (body != null) {
@@ -69,7 +64,7 @@ public class HttpSessionController {
         JSONObject sessionIdJson = new JSONObject();
         sessionIdJson.put("sessionId", sessionId.toString());
 
-        return new ResponseEntity<>(sessionIdJson.toString(), HttpStatus.CREATED);
+        return Response.status(Response.Status.CREATED).entity(sessionIdJson.toString()).build();
     }
 
     /**
@@ -79,10 +74,12 @@ public class HttpSessionController {
      * @param body      Command body
      * @return Response entity
      */
-    @PostMapping("sessions/{sessionId}/commands")
-    public ResponseEntity executeCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
+    @POST
+    @Timed
+    @Path("sessions/{sessionId}/commands")
+    public Response executeCommand(@PathParam("sessionId") ObjectId sessionId, ExecuteCommandBody body) {
         if (!sessionTable.containsKey(sessionId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         ISession session = sessionTable.get(sessionId);
@@ -91,12 +88,18 @@ public class HttpSessionController {
             Object result = session.executeCommand(body.getCommand(), body.getArgs());
 
             if (result == null) {
-                return new ResponseEntity<>(new ResponseBody(sessionId.toString(), true, null, null), HttpStatus.OK);
+                return Response.status(Response.Status.OK)
+                        .entity(new ResponseBody(sessionId.toString(), true, null, null))
+                        .build();
             }
 
-            return new ResponseEntity<>(new ResponseBody(sessionId.toString(), true, result.toString(), null), HttpStatus.OK);
+            return Response.status(Response.Status.OK)
+                    .entity(new ResponseBody(sessionId.toString(), true, result.toString(), null))
+                    .build();
         } catch (Throwable e) {
-            return new ResponseEntity<>(new ResponseBody(sessionId.toString(), false, null, e.getMessage()), HttpStatus.BAD_REQUEST);
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ResponseBody(sessionId.toString(), false, null, e.getMessage()))
+                    .build();
         }
     }
 
@@ -107,16 +110,20 @@ public class HttpSessionController {
      * @param body      Command body
      * @return Response body
      */
-    @PostMapping("sessions/{sessionId}/async-commands")
-    public ResponseEntity executeAsyncCommand(@PathVariable ObjectId sessionId, @RequestBody ExecuteCommandBody body) {
+    @POST
+    @Timed
+    @Path("sessions/{sessionId}/async-commands")
+    public Response executeAsyncCommand(@PathParam("sessionId") ObjectId sessionId, ExecuteCommandBody body) {
         if (!sessionTable.containsKey(sessionId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         ISession session = sessionTable.get(sessionId);
-        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs()).start();
+        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs(), body.getCallbackUrl()).start();
 
-        return new ResponseEntity<>(new ResponseBody(sessionId.toString(), true, "The asynchronous command was successfully scheduled.", null), HttpStatus.OK);
+        return Response.status(Response.Status.OK)
+                .entity(new ResponseBody(sessionId.toString(), true, "The asynchronous command was successfully scheduled.", null))
+                .build();
     }
 
     /**
@@ -125,10 +132,12 @@ public class HttpSessionController {
      * @param sessionId Session ID
      * @return Response entity
      */
-    @DeleteMapping("sessions/{sessionId}")
-    public ResponseEntity quitSession(@PathVariable ObjectId sessionId) {
+    @DELETE
+    @Timed
+    @Path("sessions/{sessionId}")
+    public Response quitSession(@PathParam("sessionId") ObjectId sessionId) {
         if (!sessionTable.containsKey(sessionId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         ISession session = sessionTable.get(sessionId);
@@ -136,6 +145,6 @@ public class HttpSessionController {
         session.quitSession();
         sessionTable.remove(sessionId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return Response.status(Response.Status.OK).build();
     }
 }

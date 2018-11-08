@@ -30,17 +30,15 @@ RUN apt-get install \
 
 # Clone noVNC from github
 RUN git clone  https://github.com/kanaka/noVNC.git /root/noVNC \
-#	&& git clone https://github.com/kanaka/websockify /root/noVNC/utils/websockify \
-	&& rm -rf /root/noVNC/.git 
-#	&& rm -rf /root/noVNC/utils/websockify/.git 
-#	&& apk del git
+	&& rm -rf /root/noVNC/.git
 
 COPY core_nginx.conf /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/conf.d/
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY lib lib
 COPY plugins plugins
-COPY Aeon.Platform.Http-1.14.4.jar aeon.jar
+COPY Aeon.Platform.Http-1.14.4-all.jar aeon.jar
+COPY config.yml config.yml
 
 # Modify the launch script 'ps -p'
 RUN sed -i -- "s/ps -p/ps -o pid | grep/g" /root/noVNC/utils/launch.sh
@@ -56,4 +54,3 @@ CMD export uri="\$uri" \
 #    && cat subst_ \
 #    && cp subst_ /etc/nginx/conf.d/nginx.conf \
     && /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
-

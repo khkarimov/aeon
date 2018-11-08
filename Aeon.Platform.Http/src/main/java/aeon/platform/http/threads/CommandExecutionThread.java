@@ -1,14 +1,15 @@
 package aeon.platform.http.threads;
 
-import aeon.platform.http.exceptions.PublishMessageException;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
-import com.rabbitmq.client.Channel;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bson.types.ObjectId;
 
-import java.io.IOException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
 import java.util.List;
 
 /**
@@ -20,10 +21,8 @@ public class CommandExecutionThread extends Thread {
     private ISession session;
     private String commandString;
     private List<Object> args;
-    private Channel channel;
-
-    private static final String QUEUE_NAME = "AeonApp";
-    private static Logger log = LogManager.getLogger(CommandExecutionThread.class);
+    private String url;
+    private Client client;
 
     /**
      * Constructs a thread.
@@ -32,13 +31,16 @@ public class CommandExecutionThread extends Thread {
      * @param session       Session
      * @param commandString Command string
      * @param args          Arguments
+     * @param url           Callback URL
+     * @param client        Client
      */
-    CommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, Channel channel) {
+    CommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url, Client client) {
         this.sessionId = sessionId;
         this.session = session;
         this.commandString = commandString;
         this.args = args;
-        this.channel = channel;
+        this.url = url;
+        this.client = client;
     }
 
     @Override
@@ -47,6 +49,10 @@ public class CommandExecutionThread extends Thread {
 
         try {
             Object result = session.executeCommand(commandString, args);
+
+            if (url == null || url.isEmpty()) {
+                return;
+            }
 
             if (result == null) {
                 response = new ResponseBody(sessionId.toString(), true, null, null);
@@ -57,11 +63,9 @@ public class CommandExecutionThread extends Thread {
             response = new ResponseBody(sessionId.toString(), false, null, e.getMessage());
         }
 
-        try {
-            channel.basicPublish("", QUEUE_NAME, null, response.toString().getBytes());
-        } catch (IOException e) {
-            log.error("Could not publish message.", e);
-            throw new PublishMessageException(e);
-        }
+        WebTarget target = client.target(url);
+
+        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.post(Entity.entity(response, MediaType.APPLICATION_JSON));
     }
 }

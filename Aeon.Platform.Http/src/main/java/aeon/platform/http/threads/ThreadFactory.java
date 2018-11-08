@@ -1,8 +1,9 @@
 package aeon.platform.http.threads;
 
-import aeon.platform.http.DaggerHttpAeonPlatformComponent;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
+
+import javax.ws.rs.client.ClientBuilder;
 
 import java.util.List;
 
@@ -18,9 +19,10 @@ public class ThreadFactory {
      * @param session       Session
      * @param commandString Command string
      * @param args          Arguments
+     * @param url           Callback URL
      * @return Thread
      */
-    public CommandExecutionThread getCommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args) {
-        return new CommandExecutionThread(sessionId, session, commandString, args, DaggerHttpAeonPlatformComponent.create().buildChannel());
+    public CommandExecutionThread getCommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url) {
+        return new CommandExecutionThread(sessionId, session, commandString, args, url, ClientBuilder.newClient());
     }
 }

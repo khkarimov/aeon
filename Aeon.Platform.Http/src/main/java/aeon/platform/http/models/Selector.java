@@ -13,12 +13,14 @@ public class Selector extends Hashtable {
     /**
      * Creates a Web Selector.
      */
-    public Selector() {}
+    public Selector() {
+    }
 
     /**
      * Creates a Web Selector.
+     *
      * @param value Value
-     * @param type Type
+     * @param type  Type
      */
     public Selector(String value, String type) {
         this.value = value;
@@ -27,6 +29,7 @@ public class Selector extends Hashtable {
 
     /**
      * Get the value.
+     *
      * @return Value
      */
     public String getValue() {
@@ -35,6 +38,7 @@ public class Selector extends Hashtable {
 
     /**
      * Get the type.
+     *
      * @return Type
      */
     public String getType() {

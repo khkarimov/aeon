@@ -14,9 +14,10 @@ public class ResponseBody {
 
     /**
      * Constructs a response body.
-     * @param sessionId Session ID
-     * @param success True if command was successfully executed, false otherwise
-     * @param data Data returned from command execution
+     *
+     * @param sessionId      Session ID
+     * @param success        True if command was successfully executed, false otherwise
+     * @param data           Data returned from command execution
      * @param failureMessage Exception message
      */
     public ResponseBody(String sessionId, boolean success, String data, String failureMessage) {
@@ -28,6 +29,7 @@ public class ResponseBody {
 
     /**
      * Get the session ID.
+     *
      * @return Session ID
      */
     public String getSessionId() {
@@ -36,6 +38,7 @@ public class ResponseBody {
 
     /**
      * Get the success flag.
+     *
      * @return Success
      */
     public boolean getSuccess() {
@@ -44,6 +47,7 @@ public class ResponseBody {
 
     /**
      * Get the data.
+     *
      * @return Data
      */
     public String getData() {
@@ -52,6 +56,7 @@ public class ResponseBody {
 
     /**
      * Get the failure message.
+     *
      * @return Failure message
      */
     public String getFailureMessage() {

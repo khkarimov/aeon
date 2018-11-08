@@ -11,6 +11,7 @@ public class CreateSessionBody {
 
     /**
      * Get the settings.
+     *
      * @return Settings
      */
     public Properties getSettings() {
