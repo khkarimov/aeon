@@ -71,7 +71,7 @@ public class RunnerService {
         result.doOnSuccess(
                 success -> deploymentSuccessful(cloudFoundryOperations, callbackUrl, runner)
         ).doOnError(
-                error -> deploymentFailed(cloudFoundryOperations, callbackUrl, runner)
+                error -> deploymentFailed(error, cloudFoundryOperations, callbackUrl, runner)
         ).subscribe();
 
         return runner;
@@ -122,9 +122,9 @@ public class RunnerService {
                 .get(getApplicationRequest)
                 .subscribe(applicationDetail -> {
                     runner.status = applicationDetail.getInstanceDetails().get(0).getState();
-                    runner.apiUrl = applicationDetail.getUrls().get(0) + "/api/v1/";
-                    runner.uiUrl = applicationDetail.getUrls().get(0) + "/vnc_lite.html";
-                    runner.baseUrl = applicationDetail.getUrls().get(0);
+                    runner.apiUrl = "https://" + applicationDetail.getUrls().get(0) + "/api/v1/";
+                    runner.uiUrl = "https://" + applicationDetail.getUrls().get(0) + "/vnc_lite.html";
+                    runner.baseUrl = "https://" + applicationDetail.getUrls().get(0);
                     runner.pcfMetaData.guid = applicationDetail.getId();
                     this.runnerRepository.save(runner);
                     this.notificationService.notify(
@@ -134,10 +134,11 @@ public class RunnerService {
                 });
     }
 
-    private void deploymentFailed(CloudFoundryOperations cloudFoundryOperations,
+    private void deploymentFailed(Throwable error, CloudFoundryOperations cloudFoundryOperations,
                                   String callbackUrl,
                                   Runner runner) {
         runner.status = "FAILED";
+        runner.errorMessage = error.getMessage();
         this.runnerRepository.save(runner);
         this.notificationService.notify(
                 NotificationService.EventType.RUNNER_FAILED,
@@ -146,6 +147,7 @@ public class RunnerService {
 
         DeleteApplicationRequest deleteApplicationRequest = DeleteApplicationRequest.builder()
                 .name(runner.name)
+                .deleteRoutes(true)
                 .build();
         cloudFoundryOperations.applications()
                 .delete(deleteApplicationRequest)
