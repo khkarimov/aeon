@@ -80,14 +80,6 @@ task CopySeleniumPlatformPythonPlugin(type: Copy) {
     include '*.jar'
 }
 
-//Copy selenium plugin into Platform Lite plugins folder
-task CopySeleniumPlatformLitePlugin(type: Copy) {
-    group 'copy'
-    from 'Aeon.Plugin.Selenium/build/libs'
-    into 'Aeon.Platform.Lite/plugins'
-    include '*.jar'
-}
-
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
@@ -96,7 +88,6 @@ assemble.finalizedBy(CopyPerfectoPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPlugin)
 assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
-assemble.finalizedBy(CopySeleniumPlatformLitePlugin)
 
 allprojects {
     group 'aeon'
