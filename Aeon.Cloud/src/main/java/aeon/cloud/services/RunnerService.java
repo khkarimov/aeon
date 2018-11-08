@@ -138,7 +138,7 @@ public class RunnerService {
                                   String callbackUrl,
                                   Runner runner) {
         runner.status = "FAILED";
-        runner.errorMessage = error.getMessage();
+        runner.message = error.getMessage();
         this.runnerRepository.save(runner);
         this.notificationService.notify(
                 NotificationService.EventType.RUNNER_FAILED,
