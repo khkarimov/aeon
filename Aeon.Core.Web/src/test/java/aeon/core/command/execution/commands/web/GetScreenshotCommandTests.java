@@ -10,8 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import java.awt.image.BufferedImage;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -30,6 +31,7 @@ public class GetScreenshotCommandTests {
     @Test
     public void commandDelegateGetSourceCommand() {
         //Arrange
+        when(driver.getScreenshot()).thenReturn(new BufferedImage(1, 1, 1));
 
         //Act
         getScreenshotCommand.commandDelegate(driver);
