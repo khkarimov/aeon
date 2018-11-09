@@ -58,7 +58,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -95,6 +98,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
+     *
      * @param configuration The configuration of the adapter.
      * @return The created Selenium adapter is returned.
      */
@@ -106,6 +110,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     /**
      * Prepares everything for a Selenium adapter for Aeon.core.
+     *
      * @param configuration The configuration of the adapter.
      */
     protected void prepare(SeleniumConfiguration configuration) {
@@ -326,7 +331,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
         //Let plugins know that the product was successfully launched
         List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
-        for (ISeleniumExtension extension: extensions) {
+        for (ISeleniumExtension extension : extensions) {
             extension.onAfterLaunch(configuration, driver);
         }
     }
@@ -353,17 +358,24 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private void trySetContext() {
-        try {
-            setContext();
-        } catch (RuntimeException e) {
-            // Sometimes web view context is not immediately available
-            Sleep.wait((int) configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000));
+
+        int i = 0;
+        int numberOfRetries = 30;
+        while (true) {
             try {
                 setContext();
-            } catch (RuntimeException runtimeException) {
-                driver.quit();
+                return;
+            } catch (RuntimeException e) {
+                // Sometimes web view context is not immediately available
+                log.trace("Web view context not available: " + e.getMessage(), e);
 
-                throw runtimeException;
+                if (i < numberOfRetries - 1) {
+                    Sleep.wait((int) configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000));
+                    log.trace("Retrying");
+                    i++;
+                } else {
+                    throw e;
+                }
             }
         }
     }
@@ -544,7 +556,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 }
 
                 desiredCapabilities.setCapability("platformName", "Android");
-                desiredCapabilities.setCapability("browserName", "mobileOS");
 
                 if (!platformVersion.isEmpty()) {
                     desiredCapabilities.setCapability("platformVersion", platformVersion);
@@ -584,7 +595,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         //add capabilities from other plugins
         List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
-        for (ISeleniumExtension extension: extensions) {
+        for (ISeleniumExtension extension : extensions) {
             extension.onGenerateCapabilities(configuration, desiredCapabilities);
         }
 
