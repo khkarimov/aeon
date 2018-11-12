@@ -358,7 +358,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     private void trySetContext() {
         double currentTime = System.currentTimeMillis();
-        double timeout = currentTime + configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000);
+        double timeout = currentTime + configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 30000);
         while (true) {
             try {
                 setContext();
@@ -368,7 +368,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 log.trace("Web view context not available: " + e.getMessage(), e);
 
                 if (currentTime < timeout) {
-                    Sleep.wait((int) configuration.getDouble(Configuration.Keys.THROTTLE, 30000));
+                    Sleep.wait((int) configuration.getDouble(Configuration.Keys.THROTTLE, 100));
                     log.trace("Retrying");
                     currentTime = System.currentTimeMillis();
                 } else {
