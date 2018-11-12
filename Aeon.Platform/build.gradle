@@ -13,6 +13,11 @@ dependencies {
     testCompile('junit:junit:4.12')
 }
 
+clean.doFirst {
+    delete 'log'
+    delete 'plugins'
+}
+
 repositories {
     jcenter()
 }

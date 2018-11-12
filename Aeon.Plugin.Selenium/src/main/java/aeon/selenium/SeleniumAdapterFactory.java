@@ -337,7 +337,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private WebDriver getDriver(Supplier<WebDriver> createDriver) {
-
         int i = 0;
         int numberOfRetries = 30;
         while (true) {
@@ -358,9 +357,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private void trySetContext() {
-
-        int i = 0;
-        int numberOfRetries = 30;
+        double currentTime = System.currentTimeMillis();
+        double timeout = currentTime + configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000);
         while (true) {
             try {
                 setContext();
@@ -369,10 +367,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 // Sometimes web view context is not immediately available
                 log.trace("Web view context not available: " + e.getMessage(), e);
 
-                if (i < numberOfRetries - 1) {
-                    Sleep.wait((int) configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 1000));
+                if (currentTime < timeout) {
+                    Sleep.wait((int) configuration.getDouble(Configuration.Keys.THROTTLE, 100));
                     log.trace("Retrying");
-                    i++;
+                    currentTime = System.currentTimeMillis();
                 } else {
                     throw e;
                 }
