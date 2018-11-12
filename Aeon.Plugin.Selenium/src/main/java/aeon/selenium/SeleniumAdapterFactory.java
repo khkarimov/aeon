@@ -368,10 +368,11 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 log.trace("Web view context not available: " + e.getMessage(), e);
 
                 if (currentTime < timeout) {
-                    Sleep.wait((int) configuration.getDouble(Configuration.Keys.THROTTLE, 100));
+                    Sleep.wait((int) configuration.getDouble(Configuration.Keys.THROTTLE, 30000));
                     log.trace("Retrying");
                     currentTime = System.currentTimeMillis();
                 } else {
+                    driver.quit();
                     throw e;
                 }
             }
