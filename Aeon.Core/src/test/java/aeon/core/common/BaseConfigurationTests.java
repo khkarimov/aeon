@@ -1,24 +1,27 @@
 package aeon.core.common;
 
+import aeon.core.testabstraction.product.Configuration;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
-
-import aeon.core.testabstraction.product.Configuration;
-import org.apache.logging.log4j.Logger;
-import org.mockito.InOrder;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.*;
 
@@ -223,7 +226,7 @@ public class BaseConfigurationTests {
         config.loadConfiguration();
 
         // Assert
-        verify(log, times(1)).info("These are the properties values currently in use:\naeon.timeout = 10\naeon.implicit_reporting = true\naeon.throttle = 50\n");
+        verify(log, times(1)).info("These are the properties values currently in use:\naeon.timeout = 30000\naeon.implicit_reporting = true\naeon.throttle = 50\n");
     }
 
     @Test
@@ -237,7 +240,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testSetString()  {
+    public void testSetString() {
         // Arrange
         config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "true");
         // Act
@@ -247,7 +250,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testSetDouble(){
+    public void testSetDouble() {
         // Arrange
         config.setDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 6.7);
         // Act
@@ -267,7 +270,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testGetDouble()  {
+    public void testGetDouble() {
         // Arrange
         config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "4.50");
         // Act
