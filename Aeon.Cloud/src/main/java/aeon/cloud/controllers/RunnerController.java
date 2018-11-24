@@ -4,9 +4,8 @@ import aeon.cloud.models.CreateRunnersPayload;
 import aeon.cloud.models.DeleteRunnersPayload;
 import aeon.cloud.models.Runner;
 import aeon.cloud.repositories.RunnerRepository;
-import aeon.cloud.services.CloudFoundryOperationsFactory;
-import aeon.cloud.services.RunnerService;
-import org.cloudfoundry.operations.CloudFoundryOperations;
+import aeon.cloud.services.IRunnerService;
+import aeon.cloud.services.RunnerServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,27 +23,23 @@ import java.util.Optional;
 @RequestMapping("api/v1")
 public class RunnerController {
 
-    private final RunnerService runnerService;
+    private final RunnerServiceFactory runnerServiceFactory;
     private final RunnerRepository runnerRepository;
-    private final CloudFoundryOperationsFactory cloudFoundryOperationsFactory;
     private String dockerUrl;
 
     /**
      * Constructs a RunnerController.
      *
-     * @param runnerService                 Runner service.
-     * @param runnerRepository              Runner repository.
-     * @param cloudFoundryOperationsFactory CloudFoundry operations.
-     * @param dockerUrl                     Base docker URL.
+     * @param runnerServiceFactory Runner service factory.
+     * @param runnerRepository     Runner repository.
+     * @param dockerUrl            Base docker URL.
      */
     @Autowired
-    public RunnerController(RunnerService runnerService,
+    public RunnerController(RunnerServiceFactory runnerServiceFactory,
                             RunnerRepository runnerRepository,
-                            CloudFoundryOperationsFactory cloudFoundryOperationsFactory,
                             @Value("${aeon.docker.url}") String dockerUrl) {
-        this.runnerService = runnerService;
+        this.runnerServiceFactory = runnerServiceFactory;
         this.runnerRepository = runnerRepository;
-        this.cloudFoundryOperationsFactory = cloudFoundryOperationsFactory;
         this.dockerUrl = dockerUrl;
     }
 
@@ -57,22 +52,12 @@ public class RunnerController {
     @PostMapping("runners")
     public ResponseEntity<List<Runner>> createRunners(@RequestBody CreateRunnersPayload body) {
 
-        CloudFoundryOperations cloudFoundryOperations
-                = cloudFoundryOperationsFactory.getCloudFoundryOperations(
-                body.pcf.apiHost,
-                body.pcf.username,
-                body.pcf.password,
-                body.pcf.organization,
-                body.pcf.space
-        );
+        IRunnerService runnerService = runnerServiceFactory.createRunnerService(body.credentials);
 
         List<Runner> runners = new ArrayList<>();
 
         for (int i = 0; i < body.count; i++) {
-            runners.add(runnerService.deploy(
-                    dockerUrl + body.type,
-                    cloudFoundryOperations,
-                    body.callbackUrl));
+            runners.add(runnerService.deploy(dockerUrl + body.type, body.callbackUrl));
         }
 
         return new ResponseEntity<>(runners, HttpStatus.OK);
@@ -97,16 +82,9 @@ public class RunnerController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
-        CloudFoundryOperations cloudFoundryOperations
-                = cloudFoundryOperationsFactory.getCloudFoundryOperations(
-                body.pcf.apiHost,
-                body.pcf.username,
-                body.pcf.password,
-                body.pcf.organization,
-                body.pcf.space
-        );
+        IRunnerService runnerService = runnerServiceFactory.createRunnerService(body.credentials);
 
-        this.runnerService.delete(runner.get(), cloudFoundryOperations, body.callbackUrl, force);
+        runnerService.delete(runner.get(), body.callbackUrl, force);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -123,19 +101,12 @@ public class RunnerController {
             @RequestParam(defaultValue = "false") boolean force,
             @RequestBody DeleteRunnersPayload body) {
 
+        IRunnerService runnerService = runnerServiceFactory.createRunnerService(body.credentials);
+
         List<Runner> runners = runnerRepository.findAll();
 
-        CloudFoundryOperations cloudFoundryOperations
-                = cloudFoundryOperationsFactory.getCloudFoundryOperations(
-                body.pcf.apiHost,
-                body.pcf.username,
-                body.pcf.password,
-                body.pcf.organization,
-                body.pcf.space
-        );
-
         for (Runner runner : runners) {
-            this.runnerService.delete(runner, cloudFoundryOperations, body.callbackUrl, force);
+            runnerService.delete(runner, body.callbackUrl, force);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);

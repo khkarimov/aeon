@@ -6,6 +6,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import java.util.Map;
+
 /**
  * Model for payload of the endpoint for creating runners.
  */
@@ -18,7 +20,7 @@ public class CreateRunnersPayload {
     public String type;
 
     @NotNull
-    public PCF pcf;
+    public Map<String, String> credentials;
 
     @Nullable
     public String callbackUrl;

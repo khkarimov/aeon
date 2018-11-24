@@ -148,7 +148,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"count\": 2,\n\t\"type\": \"aeon-runner\",\n\t\"pcf\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t}\n}"
+							"raw": "{\n\t\"count\": 2,\n\t\"type\": \"aeon-runner\",\n\t\"credentials\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t},\n\t\"callbackUrl\": \"\"\n}"
 						},
 						"url": {
 							"raw": "{{aeon-cloud-url}}/api/v1/runners",
@@ -188,7 +188,10 @@
 								"type": "text"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{aeon-cloud-url}}/api/v1/runners",
 							"host": [
@@ -227,7 +230,10 @@
 								"type": "text"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{aeon-cloud-url}}/api/v1/runners/{{runnerId}}",
 							"host": [
@@ -269,7 +275,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pcf\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t}\n}"
+							"raw": "{\n\t\"credentials\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t},\n\t\"callbackUrl\": \"\"\n}"
 						},
 						"url": {
 							"raw": "{{aeon-cloud-url}}/api/v1/runners/{{runnerId}}",
@@ -312,7 +318,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pcf\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t}\n}"
+							"raw": "{\n\t\"credentials\": {\n\t\t\"apiHost\": \"{{cf.apiHost}}\",\n        \"username\": \"{{cf.username}}\",\n        \"password\": \"{{cf.password}}\",\n        \"organization\": \"{{cf.organization}}\",\n        \"space\": \"{{cf.space}}\"\n\t},\n\t\"callbackUrl\": \"\"\n}"
 						},
 						"url": {
 							"raw": "{{aeon-cloud-url}}/api/v1/runners/delete-all",

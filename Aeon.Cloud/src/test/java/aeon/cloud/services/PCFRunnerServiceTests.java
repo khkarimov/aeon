@@ -26,9 +26,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RunnerServiceTests {
+public class PCFRunnerServiceTests {
 
-    private RunnerService runnerService;
+    private PCFRunnerService runnerService;
 
     @Mock
     private RunnerRepository runnerRepository;
@@ -88,10 +88,11 @@ public class RunnerServiceTests {
 
     @Before
     public void setUp() {
-        runnerService = new RunnerService(
+        runnerService = new PCFRunnerService(
                 this.runnerRepository,
                 this.deploymentTimeRepository,
-                this.notificationService);
+                this.notificationService,
+                this.cloudFoundryOperations);
 
         this.runner = new Runner("id", "name", "tenant");
 
@@ -120,7 +121,6 @@ public class RunnerServiceTests {
         // Act
         this.runnerService.deploy(
                 "dockerImage",
-                this.cloudFoundryOperations,
                 "callback"
         );
 
@@ -136,7 +136,7 @@ public class RunnerServiceTests {
         assertNull(argument.getValue().apiUrl);
         assertNull(argument.getValue().uiUrl);
         assertNull(argument.getValue().baseUrl);
-        assertNull(argument.getValue().pcfMetaData.guid);
+        assertNull(argument.getValue().metaData.get("guid"));
 
         assertEquals("aeon-runner-" + runnerId, this.pushApplicationRequest.getValue().getName());
         assertEquals("dockerImage", this.pushApplicationRequest.getValue().getDockerImage());
@@ -159,10 +159,10 @@ public class RunnerServiceTests {
 
         // Assert
         assertEquals("RUNNING", this.argument.getValue().status);
-        assertEquals("URL/api/v1/", this.argument.getValue().apiUrl);
-        assertEquals("URL/vnc_lite.html", this.argument.getValue().uiUrl);
-        assertEquals("URL", this.argument.getValue().baseUrl);
-        assertEquals("guid", argument.getValue().pcfMetaData.guid);
+        assertEquals("https://URL/api/v1/", this.argument.getValue().apiUrl);
+        assertEquals("https://URL/vnc_lite.html", this.argument.getValue().uiUrl);
+        assertEquals("https://URL", this.argument.getValue().baseUrl);
+        assertEquals("guid", argument.getValue().metaData.get("guid"));
         verify(this.runnerRepository, times(1)).save(this.argument.getValue());
         verify(this.notificationService, times(1)).notify(
                 NotificationService.EventType.RUNNER_DEPLOYED,
@@ -177,7 +177,6 @@ public class RunnerServiceTests {
         // Act
         this.runnerService.deploy(
                 "dockerImage",
-                this.cloudFoundryOperations,
                 "callback"
         );
 
@@ -193,7 +192,7 @@ public class RunnerServiceTests {
         assertNull(argument.getValue().apiUrl);
         assertNull(argument.getValue().uiUrl);
         assertNull(argument.getValue().baseUrl);
-        assertNull(argument.getValue().pcfMetaData.guid);
+        assertNull(argument.getValue().metaData.get("guid"));
 
         assertEquals("aeon-runner-" + runnerId, this.pushApplicationRequest.getValue().getName());
         assertEquals("dockerImage", this.pushApplicationRequest.getValue().getDockerImage());
@@ -203,16 +202,17 @@ public class RunnerServiceTests {
         verify(this.result, times(1)).subscribe();
 
         // Act: Trigger deployment failure
-        this.doOnError.getValue().accept(null);
+        this.doOnError.getValue().accept(new RuntimeException("test message"));
 
         // Assert
         verify(this.deploymentTimeRepository, times(0)).insert(any(DeploymentTime.class));
 
         assertEquals("FAILED", this.argument.getValue().status);
+        assertEquals("test message", this.argument.getValue().message);
         assertNull(argument.getValue().apiUrl);
         assertNull(argument.getValue().uiUrl);
         assertNull(argument.getValue().baseUrl);
-        assertNull(argument.getValue().pcfMetaData.guid);
+        assertNull(argument.getValue().metaData.get("guid"));
         assertEquals("aeon-runner-" + runnerId, this.deleteApplicationRequest.getValue().getName());
         verify(this.runnerRepository, times(1)).save(this.argument.getValue());
         verify(this.notificationService, times(1)).notify(
@@ -229,7 +229,6 @@ public class RunnerServiceTests {
         // Act
         this.runnerService.delete(
                 this.runner,
-                this.cloudFoundryOperations,
                 "callback",
                 false
         );
@@ -260,7 +259,6 @@ public class RunnerServiceTests {
         // Act
         this.runnerService.delete(
                 this.runner,
-                this.cloudFoundryOperations,
                 "callback",
                 false
         );
@@ -291,7 +289,6 @@ public class RunnerServiceTests {
         // Act
         this.runnerService.delete(
                 this.runner,
-                this.cloudFoundryOperations,
                 "callback",
                 true
         );
