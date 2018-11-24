@@ -27,8 +27,7 @@ dependencies {
     compile project(':Aeon.Cloud')
 }
 
-task wrapper(type: Wrapper) {
-    group 'build setup'
+wrapper {
     gradleVersion = '4.9'
 }
 

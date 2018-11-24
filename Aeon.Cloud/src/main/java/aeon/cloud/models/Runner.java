@@ -7,6 +7,9 @@ import org.springframework.lang.Nullable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Runner entity.
  */
@@ -38,7 +41,7 @@ public class Runner {
     public String message;
 
     @NotNull
-    public PCFMetaData pcfMetaData = new PCFMetaData();
+    public Map<String, String> metaData = new HashMap<>();
 
     /**
      * Constructor.
