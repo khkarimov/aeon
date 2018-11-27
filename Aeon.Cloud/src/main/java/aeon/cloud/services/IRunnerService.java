@@ -3,7 +3,7 @@ package aeon.cloud.services;
 import aeon.cloud.models.Runner;
 
 /**
- *
+ * Interface that runner deployment services have to implement.
  */
 public interface IRunnerService {
 

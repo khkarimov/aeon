@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +52,7 @@ public class RunnerController {
      * @return OK
      */
     @PostMapping("runners")
-    public ResponseEntity<List<Runner>> createRunners(@RequestBody CreateRunnersPayload body) {
+    public ResponseEntity<List<Runner>> createRunners(@Valid @RequestBody CreateRunnersPayload body) {
 
         IRunnerService runnerService = runnerServiceFactory.createRunnerService(body.credentials);
 
@@ -75,7 +77,7 @@ public class RunnerController {
     public ResponseEntity deleteRunner(
             @PathVariable String runnerId,
             @RequestParam(defaultValue = "false") boolean force,
-            @RequestBody DeleteRunnersPayload body) {
+            @Valid @RequestBody DeleteRunnersPayload body) {
 
         Optional<Runner> runner = runnerRepository.findById(runnerId);
         if (!runner.isPresent()) {
@@ -99,7 +101,7 @@ public class RunnerController {
     @DeleteMapping("runners/delete-all")
     public ResponseEntity deleteRunners(
             @RequestParam(defaultValue = "false") boolean force,
-            @RequestBody DeleteRunnersPayload body) {
+            @Valid @RequestBody DeleteRunnersPayload body) {
 
         IRunnerService runnerService = runnerServiceFactory.createRunnerService(body.credentials);
 
