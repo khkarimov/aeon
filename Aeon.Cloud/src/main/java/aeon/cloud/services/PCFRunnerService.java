@@ -154,7 +154,7 @@ public class PCFRunnerService implements IRunnerService {
         } else {
             runner.status = "FAILED";
         }
-        runner.message = "Delete failed: " + error.getMessage() + ". Try using force delete";
+        runner.message = "Delete failed: " + error.getMessage() + ". Try using force=true";
         this.runnerRepository.save(runner);
         this.notificationService.notify(
                 NotificationService.EventType.RUNNER_DELETION_FAILED,

@@ -240,6 +240,7 @@ public class PCFRunnerServiceTests {
         assertEquals(runner.name, this.deleteApplicationRequest.getValue().getName());
         assertTrue(this.deleteApplicationRequest.getValue().getDeleteRoutes());
         assertEquals("DELETING", this.runner.status);
+        assertNull(this.runner.message);
 
         // Act: Trigger deletion success
         this.doOnSuccess.getValue().accept(null);
@@ -254,6 +255,43 @@ public class PCFRunnerServiceTests {
 
     @Test
     public void deleteRunnerFailureTest() {
+        // Arrange
+        runner.baseUrl = "url";
+
+        // Act
+        this.runnerService.delete(
+                this.runner,
+                "callback",
+                false
+        );
+
+        // Assert
+        verify(this.runnerRepository, times(0)).delete(any());
+        verify(this.notificationService, times(0)).notify(any(), anyString(), any());
+        verify(this.deleteResult, times(1)).subscribe();
+        assertEquals(runner.name, this.deleteApplicationRequest.getValue().getName());
+        assertTrue(this.deleteApplicationRequest.getValue().getDeleteRoutes());
+        assertEquals("DELETING", this.runner.status);
+        assertNull(this.runner.message);
+
+        // Act: Trigger deletion success
+        this.doOnError.getValue().accept(new RuntimeException("test message"));
+
+        // Assert
+        verify(this.runnerRepository, times(0)).delete(any());
+
+        assertEquals("RUNNING", this.runner.status);
+        assertEquals("Delete failed: test message. Try using force=true", this.runner.message);
+
+        verify(this.runnerRepository, times(2)).save(this.runner);
+        verify(this.notificationService, times(1)).notify(
+                NotificationService.EventType.RUNNER_DELETION_FAILED,
+                "callback",
+                this.runner);
+    }
+
+    @Test
+    public void deleteFailedRunnerFailureTest() {
         // Arrange
 
         // Act
@@ -270,12 +308,18 @@ public class PCFRunnerServiceTests {
         assertEquals(runner.name, this.deleteApplicationRequest.getValue().getName());
         assertTrue(this.deleteApplicationRequest.getValue().getDeleteRoutes());
         assertEquals("DELETING", this.runner.status);
+        assertNull(this.runner.message);
 
         // Act: Trigger deletion success
-        this.doOnError.getValue().accept(null);
+        this.doOnError.getValue().accept(new RuntimeException("test message"));
 
         // Assert
         verify(this.runnerRepository, times(0)).delete(any());
+
+        assertEquals("FAILED", this.runner.status);
+        assertEquals("Delete failed: test message. Try using force=true", this.runner.message);
+
+        verify(this.runnerRepository, times(2)).save(this.runner);
         verify(this.notificationService, times(1)).notify(
                 NotificationService.EventType.RUNNER_DELETION_FAILED,
                 "callback",
@@ -302,7 +346,7 @@ public class PCFRunnerServiceTests {
         assertEquals("DELETING", this.runner.status);
 
         // Act: Trigger deletion success
-        this.doOnError.getValue().accept(null);
+        this.doOnError.getValue().accept(new RuntimeException("test message"));
 
         // Assert
         verify(this.runnerRepository, times(1)).delete(this.runner);
