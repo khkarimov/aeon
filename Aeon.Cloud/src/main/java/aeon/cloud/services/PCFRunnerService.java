@@ -78,6 +78,7 @@ public class PCFRunnerService implements IRunnerService {
                 .build();
 
         runner.status = "DELETING";
+        runner.message = null;
         this.runnerRepository.save(runner);
 
         Mono<Void> result = cloudFoundryOperations.applications().delete(request);
@@ -85,7 +86,7 @@ public class PCFRunnerService implements IRunnerService {
         result.doOnSuccess(
                 success -> deleteSuccessful(callbackUrl, runner)
         ).doOnError(
-                error -> deleteFailed(callbackUrl, runner, force)
+                error -> deleteFailed(error, callbackUrl, runner, force)
         ).subscribe();
     }
 
@@ -142,12 +143,19 @@ public class PCFRunnerService implements IRunnerService {
                 runner);
     }
 
-    private void deleteFailed(String callbackUrl, Runner runner, boolean force) {
+    private void deleteFailed(Throwable error, String callbackUrl, Runner runner, boolean force) {
 
         if (force) {
             this.runnerRepository.delete(runner);
         }
 
+        if (runner.baseUrl != null) {
+            runner.status = "RUNNING";
+        } else {
+            runner.status = "FAILED";
+        }
+        runner.message = "Delete failed: " + error.getMessage() + ". Try using force delete";
+        this.runnerRepository.save(runner);
         this.notificationService.notify(
                 NotificationService.EventType.RUNNER_DELETION_FAILED,
                 callbackUrl,
