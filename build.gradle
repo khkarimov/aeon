@@ -80,6 +80,18 @@ task CopySeleniumPlatformPythonPlugin(type: Copy) {
     include '*.jar'
 }
 
+task CopyDriversPlatformHttp(type: Copy) {
+    group 'copy'
+    from 'Aeon.SystemTests.Web/lib'
+    into 'Aeon.Platform.Http/lib'
+}
+
+task CopyDriversPlatformPython(type: Copy) {
+    group 'copy'
+    from 'Aeon.SystemTests.Web/lib'
+    into 'Aeon.Platform.Python/lib'
+}
+
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
@@ -88,6 +100,8 @@ assemble.finalizedBy(CopyPerfectoPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPlugin)
 assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
+assemble.finalizedBy(CopyDriversPlatformHttp)
+assemble.finalizedBy(CopyDriversPlatformPython)
 
 allprojects {
     group 'aeon'

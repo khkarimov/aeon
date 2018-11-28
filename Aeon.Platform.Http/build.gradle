@@ -37,6 +37,7 @@ configurations {
 clean.doFirst {
     delete 'log'
     delete 'plugins'
+    delete 'lib'
 }
 
 repositories {

@@ -15,6 +15,12 @@ dependencies {
     compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.7'
 }
 
+clean.doFirst {
+    delete 'log'
+    delete 'plugins'
+    delete 'lib'
+}
+
 repositories {
     jcenter()
 }
