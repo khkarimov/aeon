@@ -2,11 +2,11 @@ package aeon.cloud.controllers;
 
 import aeon.cloud.models.CreateRunnersPayload;
 import aeon.cloud.models.DeleteRunnersPayload;
-import aeon.cloud.models.PCF;
 import aeon.cloud.models.Runner;
 import aeon.cloud.repositories.RunnerRepository;
 import aeon.cloud.services.CloudFoundryOperationsFactory;
-import aeon.cloud.services.RunnerService;
+import aeon.cloud.services.PCFRunnerService;
+import aeon.cloud.services.RunnerServiceFactory;
 import org.cloudfoundry.operations.CloudFoundryOperations;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,10 @@ public class RunnerControllerTests {
     private Runner runner2;
 
     @Mock
-    private RunnerService runnerService;
+    private RunnerServiceFactory runnerServiceFactory;
+
+    @Mock
+    private PCFRunnerService runnerService;
 
     @Mock
     private RunnerRepository runnerRepository;
@@ -52,17 +55,9 @@ public class RunnerControllerTests {
     public void setUp() {
         String dockerUrl = "docker.mia.ulti.io/aeon/";
         this.runnerController = new RunnerController(
-                this.runnerService,
+                this.runnerServiceFactory,
                 this.runnerRepository,
-                this.cloudFoundryOperationsFactory,
                 dockerUrl);
-
-        PCF pcf = new PCF();
-        pcf.apiHost = "apiHost";
-        pcf.username = "username";
-        pcf.password = "password";
-        pcf.organization = "organization";
-        pcf.space = "space";
 
         this.runner1 = new Runner("id1", "name1", "tenant");
         this.runner2 = new Runner("id2", "name2", "tenant");
@@ -70,10 +65,8 @@ public class RunnerControllerTests {
         this.createRunnersPayload.count = 2;
         this.createRunnersPayload.type = "aeon-runner";
         this.createRunnersPayload.callbackUrl = "callback";
-        this.createRunnersPayload.pcf = pcf;
 
         this.deleteRunnersPayload.callbackUrl = "callback";
-        this.deleteRunnersPayload.pcf = pcf;
 
         when(this.cloudFoundryOperationsFactory.getCloudFoundryOperations(
                 "apiHost",
@@ -82,10 +75,7 @@ public class RunnerControllerTests {
                 "organization",
                 "space"))
                 .thenReturn(this.cloudFoundryOperations);
-        when(this.runnerService.deploy(
-                dockerUrl + "aeon-runner",
-                this.cloudFoundryOperations,
-                "callback"))
+        when(this.runnerService.deploy(dockerUrl + "aeon-runner", "callback"))
                 .thenReturn(
                         this.runner1,
                         this.runner2);
@@ -97,6 +87,8 @@ public class RunnerControllerTests {
 
         Optional<Runner> optionalRunner = Optional.of(this.runner2);
         when(this.runnerRepository.findById("runnerId")).thenReturn(optionalRunner);
+        when(this.runnerServiceFactory.createRunnerService(this.createRunnersPayload.credentials))
+                .thenReturn(this.runnerService);
     }
 
     @Test
@@ -130,10 +122,7 @@ public class RunnerControllerTests {
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(this.runnerService, times(1))
-                .delete(this.runner2,
-                        this.cloudFoundryOperations,
-                        "callback",
-                        false);
+                .delete(this.runner2, "callback", false);
     }
 
     @Test
@@ -152,10 +141,7 @@ public class RunnerControllerTests {
         assertNotNull(response);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         verify(this.runnerService, times(0))
-                .delete(any(Runner.class),
-                        any(CloudFoundryOperations.class),
-                        anyString(),
-                        anyBoolean());
+                .delete(any(Runner.class), anyString(), anyBoolean());
     }
 
     @Test
@@ -171,20 +157,11 @@ public class RunnerControllerTests {
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(this.runnerService, times(2))
-                .delete(any(),
-                        any(),
-                        anyString(),
-                        anyBoolean());
+                .delete(any(), anyString(), anyBoolean());
         verify(this.runnerService, times(1))
-                .delete(this.runner1,
-                        this.cloudFoundryOperations,
-                        "callback",
-                        false);
+                .delete(this.runner1, "callback", false);
         verify(this.runnerService, times(1))
-                .delete(this.runner2,
-                        this.cloudFoundryOperations,
-                        "callback",
-                        false);
+                .delete(this.runner2, "callback", false);
     }
 
     @Test

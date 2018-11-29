@@ -10,19 +10,18 @@ import org.cloudfoundry.operations.DefaultCloudFoundryOperations;
 import org.cloudfoundry.operations.applications.DeleteApplicationRequest;
 import org.cloudfoundry.operations.applications.GetApplicationRequest;
 import org.cloudfoundry.operations.applications.PushApplicationRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 /**
- * Service for managing runners.
+ * Service for managing runners in PCF.
  */
-@Service
-public class RunnerService {
+public class PCFRunnerService implements IRunnerService {
 
     private final RunnerRepository runnerRepository;
     private final DeploymentTimeRepository deploymentTimeRepository;
     private final NotificationService notificationService;
+    private final CloudFoundryOperations cloudFoundryOperations;
+    private static final String HTTPS = "https://";
 
     /**
      * Constructor.
@@ -30,27 +29,20 @@ public class RunnerService {
      * @param runnerRepository         The runner repository to use.
      * @param deploymentTimeRepository The deploymentTime repository to use.
      * @param notificationService      The notification service to use.
+     * @param cloudFoundryOperations   CloudFoundryOperations to use.
      */
-    @Autowired
-    public RunnerService(RunnerRepository runnerRepository,
-                         DeploymentTimeRepository deploymentTimeRepository,
-                         NotificationService notificationService) {
+    PCFRunnerService(RunnerRepository runnerRepository,
+                     DeploymentTimeRepository deploymentTimeRepository,
+                     NotificationService notificationService,
+                     CloudFoundryOperations cloudFoundryOperations) {
         this.runnerRepository = runnerRepository;
         this.deploymentTimeRepository = deploymentTimeRepository;
         this.notificationService = notificationService;
+        this.cloudFoundryOperations = cloudFoundryOperations;
     }
 
-    /**
-     * Deploys a runner.
-     *
-     * @param dockerImage            The docker image to use.
-     * @param cloudFoundryOperations CloudFoundryOperations to use.
-     * @param callbackUrl            Callback URL for notifications.
-     * @return The runner that is deployed.
-     */
-    public Runner deploy(String dockerImage,
-                         CloudFoundryOperations cloudFoundryOperations,
-                         String callbackUrl) {
+    @Override
+    public Runner deploy(String dockerImage, String callbackUrl) {
 
         ObjectId runnerId = new ObjectId();
         String runnerName = "aeon-runner-" + runnerId;
@@ -69,26 +61,16 @@ public class RunnerService {
         Mono<Void> result = cloudFoundryOperations.applications().push(request);
 
         result.doOnSuccess(
-                success -> deploymentSuccessful(cloudFoundryOperations, callbackUrl, runner)
+                success -> deploymentSuccessful(callbackUrl, runner)
         ).doOnError(
-                error -> deploymentFailed(error, cloudFoundryOperations, callbackUrl, runner)
+                error -> deploymentFailed(error, callbackUrl, runner)
         ).subscribe();
 
         return runner;
     }
 
-    /**
-     * Delete a runner.
-     *
-     * @param runner                 The runner to delete.
-     * @param cloudFoundryOperations CloudFoundryOperations to use.
-     * @param callbackUrl            Callback URL for notifications.
-     * @param force                  Force delete runners.
-     */
-    public void delete(Runner runner,
-                       CloudFoundryOperations cloudFoundryOperations,
-                       String callbackUrl,
-                       boolean force) {
+    @Override
+    public void delete(Runner runner, String callbackUrl, boolean force) {
 
         DeleteApplicationRequest request = DeleteApplicationRequest.builder()
                 .name(runner.name)
@@ -96,6 +78,7 @@ public class RunnerService {
                 .build();
 
         runner.status = "DELETING";
+        runner.message = null;
         this.runnerRepository.save(runner);
 
         Mono<Void> result = cloudFoundryOperations.applications().delete(request);
@@ -103,13 +86,11 @@ public class RunnerService {
         result.doOnSuccess(
                 success -> deleteSuccessful(callbackUrl, runner)
         ).doOnError(
-                error -> deleteFailed(callbackUrl, runner, force)
+                error -> deleteFailed(error, callbackUrl, runner, force)
         ).subscribe();
     }
 
-    private void deploymentSuccessful(CloudFoundryOperations cloudFoundryOperations,
-                                      String callbackUrl,
-                                      Runner runner) {
+    private void deploymentSuccessful(String callbackUrl, Runner runner) {
 
         ObjectId id = new ObjectId(runner.id);
         DeploymentTime deploymentTime = new DeploymentTime(new ObjectId().getTimestamp() - id.getTimestamp());
@@ -122,10 +103,10 @@ public class RunnerService {
                 .get(getApplicationRequest)
                 .subscribe(applicationDetail -> {
                     runner.status = applicationDetail.getInstanceDetails().get(0).getState();
-                    runner.apiUrl = "https://" + applicationDetail.getUrls().get(0) + "/api/v1/";
-                    runner.uiUrl = "https://" + applicationDetail.getUrls().get(0) + "/vnc_lite.html";
-                    runner.baseUrl = "https://" + applicationDetail.getUrls().get(0);
-                    runner.pcfMetaData.guid = applicationDetail.getId();
+                    runner.apiUrl = HTTPS + applicationDetail.getUrls().get(0) + "/api/v1/";
+                    runner.uiUrl = HTTPS + applicationDetail.getUrls().get(0) + "/vnc_lite.html";
+                    runner.baseUrl = HTTPS + applicationDetail.getUrls().get(0);
+                    runner.metaData.put("guid", applicationDetail.getId());
                     this.runnerRepository.save(runner);
                     this.notificationService.notify(
                             NotificationService.EventType.RUNNER_DEPLOYED,
@@ -134,9 +115,8 @@ public class RunnerService {
                 });
     }
 
-    private void deploymentFailed(Throwable error, CloudFoundryOperations cloudFoundryOperations,
-                                  String callbackUrl,
-                                  Runner runner) {
+    private void deploymentFailed(Throwable error, String callbackUrl, Runner runner) {
+
         runner.status = "FAILED";
         runner.message = error.getMessage();
         this.runnerRepository.save(runner);
@@ -155,6 +135,7 @@ public class RunnerService {
     }
 
     private void deleteSuccessful(String callbackUrl, Runner runner) {
+
         this.runnerRepository.delete(runner);
         this.notificationService.notify(
                 NotificationService.EventType.RUNNER_DELETED,
@@ -162,12 +143,19 @@ public class RunnerService {
                 runner);
     }
 
-    private void deleteFailed(String callbackUrl, Runner runner, boolean force) {
+    private void deleteFailed(Throwable error, String callbackUrl, Runner runner, boolean force) {
 
         if (force) {
             this.runnerRepository.delete(runner);
         }
 
+        if (runner.baseUrl != null) {
+            runner.status = "RUNNING";
+        } else {
+            runner.status = "FAILED";
+        }
+        runner.message = "Delete failed: " + error.getMessage() + ". Try using force=true";
+        this.runnerRepository.save(runner);
         this.notificationService.notify(
                 NotificationService.EventType.RUNNER_DELETION_FAILED,
                 callbackUrl,
