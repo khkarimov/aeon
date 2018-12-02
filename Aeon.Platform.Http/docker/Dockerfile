@@ -6,7 +6,6 @@ RUN apt-get install libxss1 libappindicator1 libindicator7 -y
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt install ./google-chrome*.deb -y
 
-# Setup demo environment variables
 ENV HOME=/root \
 	DEBIAN_FRONTEND=noninteractive \
 	LANG=en_US.UTF-8 \
@@ -22,11 +21,11 @@ RUN apt-get install \
 	git \
 	socat \
 	supervisor \
-        default-jre \
+    default-jre \
 	x11vnc \
 	xvfb \
-        gettext \
-        nginx -y
+    gettext \
+    nginx -y
 
 # Clone noVNC from github
 RUN git clone  https://github.com/kanaka/noVNC.git /root/noVNC \
@@ -38,7 +37,6 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY lib lib
 COPY plugins plugins
 COPY Aeon.Platform.Http-1.14.4-all.jar aeon.jar
-COPY config.yml config.yml
 
 # Modify the launch script 'ps -p'
 RUN sed -i -- "s/ps -p/ps -o pid | grep/g" /root/noVNC/utils/launch.sh
@@ -50,7 +48,4 @@ RUN addgroup nginx
 RUN adduser nginx --ingroup nginx --disabled-password
 CMD export uri="\$uri" \
     export http_upgrade="\$http_upgrade" \
-#    && envsubst < /etc/nginx/conf.d/nginx.conf > subst_ \
-#    && cat subst_ \
-#    && cp subst_ /etc/nginx/conf.d/nginx.conf \
     && /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

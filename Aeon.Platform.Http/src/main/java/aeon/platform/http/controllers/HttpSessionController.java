@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Controller for session.
  */
-@Path("/api/v1")
+@Path("api/v1/sessions")
 @Produces(MediaType.APPLICATION_JSON)
 public class HttpSessionController {
 
@@ -49,7 +49,6 @@ public class HttpSessionController {
      */
     @POST
     @Timed
-    @Path("sessions")
     public Response createSession(CreateSessionBody body) throws Exception {
 
         ObjectId sessionId = new ObjectId();
@@ -76,7 +75,7 @@ public class HttpSessionController {
      */
     @POST
     @Timed
-    @Path("sessions/{sessionId}/commands")
+    @Path("{sessionId}/commands")
     public Response executeCommand(@PathParam("sessionId") ObjectId sessionId, ExecuteCommandBody body) {
         if (!sessionTable.containsKey(sessionId)) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -112,7 +111,7 @@ public class HttpSessionController {
      */
     @POST
     @Timed
-    @Path("sessions/{sessionId}/async-commands")
+    @Path("{sessionId}/async-commands")
     public Response executeAsyncCommand(@PathParam("sessionId") ObjectId sessionId, ExecuteCommandBody body) {
         if (!sessionTable.containsKey(sessionId)) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -134,7 +133,7 @@ public class HttpSessionController {
      */
     @DELETE
     @Timed
-    @Path("sessions/{sessionId}")
+    @Path("{sessionId}")
     public Response quitSession(@PathParam("sessionId") ObjectId sessionId) {
         if (!sessionTable.containsKey(sessionId)) {
             return Response.status(Response.Status.NOT_FOUND).build();

@@ -7,9 +7,7 @@ import aeon.cloud.repositories.RunnerRepository;
 import org.bson.types.ObjectId;
 import org.cloudfoundry.operations.CloudFoundryOperations;
 import org.cloudfoundry.operations.DefaultCloudFoundryOperations;
-import org.cloudfoundry.operations.applications.DeleteApplicationRequest;
-import org.cloudfoundry.operations.applications.GetApplicationRequest;
-import org.cloudfoundry.operations.applications.PushApplicationRequest;
+import org.cloudfoundry.operations.applications.*;
 import reactor.core.publisher.Mono;
 
 /**
@@ -53,12 +51,21 @@ public class PCFRunnerService implements IRunnerService {
 
         this.runnerRepository.insert(runner);
 
-        PushApplicationRequest request = PushApplicationRequest.builder()
+        ApplicationManifest manifest = ApplicationManifest.builder()
                 .name(runnerName)
-                .dockerImage(dockerImage)
+                .docker(Docker.builder()
+                        .image(dockerImage)
+                        .build())
+                .healthCheckType(ApplicationHealthCheck.HTTP)
+                .healthCheckHttpEndpoint("api/admin/healthcheck")
                 .build();
 
-        Mono<Void> result = cloudFoundryOperations.applications().push(request);
+        PushApplicationManifestRequest request = PushApplicationManifestRequest.builder()
+                .manifest(manifest)
+                .build();
+
+
+        Mono<Void> result = cloudFoundryOperations.applications().pushManifest(request);
 
         result.doOnSuccess(
                 success -> deploymentSuccessful(callbackUrl, runner)
