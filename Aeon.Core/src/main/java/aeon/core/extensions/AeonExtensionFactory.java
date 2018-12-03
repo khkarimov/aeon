@@ -25,10 +25,10 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
 
 
         if (cache.containsKey(currentSessionId)) {
-            Map<String, Object> instances = cache.get(extensionClassName);
+            Map<String, Object> instances = cache.get(currentSessionId);
 
             if (instances.containsKey(extensionClassName)) {
-                return cache.get(extensionClassName);
+                return instances.get(extensionClassName);
             }
 
             Object extension = super.create(extensionClass);

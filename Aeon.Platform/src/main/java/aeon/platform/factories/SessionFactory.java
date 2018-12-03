@@ -9,7 +9,6 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
-import aeon.core.testabstraction.product.Product;
 import aeon.platform.session.ISession;
 import aeon.platform.session.Session;
 import org.pf4j.Extension;
@@ -32,7 +31,8 @@ public class SessionFactory implements ISessionFactory {
 
     /**
      * Constructs a Session Factory.
-     * @param adapterExtensionsSupplier Adapter extensions supplier
+     *
+     * @param adapterExtensionsSupplier     Adapter extensions supplier
      * @param productTypeExtensionsSupplier Product type extensions supplier
      */
     @Inject
@@ -56,7 +56,7 @@ public class SessionFactory implements ISessionFactory {
         return new Session(automationInfo, commandExecutionFacade, productTypeExtensionsSupplier);
     }
 
-    private <T extends Product> IAdapterExtension loadPlugins() throws RuntimeException {
+    private IAdapterExtension loadPlugins() {
         List<IAdapterExtension> extensions = adapterExtensionsSupplier.get();
 
         for (IAdapterExtension extension : extensions) {

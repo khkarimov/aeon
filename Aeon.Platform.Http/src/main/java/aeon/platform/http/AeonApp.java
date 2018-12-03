@@ -2,8 +2,10 @@ package aeon.platform.http;
 
 import aeon.core.testabstraction.product.Aeon;
 import aeon.platform.http.controllers.HttpSessionController;
+import com.codahale.metrics.health.HealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -16,7 +18,7 @@ public class AeonApp extends Application<AeonAppConfiguration> {
     @Override
     public void initialize(Bootstrap<AeonAppConfiguration> bootstrap) {
         bootstrap.setConfigurationSourceProvider(
-                new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
+                new SubstitutingSourceProvider(new ResourceConfigurationSourceProvider(),
                         new EnvironmentVariableSubstitutor(false)));
     }
 
@@ -29,6 +31,13 @@ public class AeonApp extends Application<AeonAppConfiguration> {
         );
 
         environment.jersey().register(controller);
+
+        environment.healthChecks().register("application", new HealthCheck() {
+            @Override
+            protected Result check() {
+                return Result.healthy();
+            }
+        });
 
         Aeon.setSessionIdProvider(new HttpSessionIdProvider());
     }

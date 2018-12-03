@@ -72,7 +72,7 @@ public class PCFRunnerServiceTests {
     private ArgumentCaptor<Consumer<Throwable>> doOnError;
 
     @Captor
-    private ArgumentCaptor<PushApplicationRequest> pushApplicationRequest;
+    private ArgumentCaptor<PushApplicationManifestRequest> pushApplicationManifestRequest;
 
     @Captor
     private ArgumentCaptor<GetApplicationRequest> getApplicationRequest;
@@ -98,7 +98,7 @@ public class PCFRunnerServiceTests {
 
         when(this.cloudFoundryOperations.applications()).thenReturn(this.applications);
         when(this.cloudFoundryOperations.getOrganization()).thenReturn("organization");
-        when(this.applications.push(this.pushApplicationRequest.capture())).thenReturn(this.result);
+        when(this.applications.pushManifest(this.pushApplicationManifestRequest.capture())).thenReturn(this.result);
         when(this.applications.delete(this.deleteApplicationRequest.capture())).thenReturn(this.deleteResult);
         when(this.applications.get(this.getApplicationRequest.capture())).thenReturn(this.applicationDetailResult);
         when(this.result.doOnSuccess(this.doOnSuccess.capture())).thenReturn(this.result);
@@ -138,8 +138,11 @@ public class PCFRunnerServiceTests {
         assertNull(argument.getValue().baseUrl);
         assertNull(argument.getValue().metaData.get("guid"));
 
-        assertEquals("aeon-runner-" + runnerId, this.pushApplicationRequest.getValue().getName());
-        assertEquals("dockerImage", this.pushApplicationRequest.getValue().getDockerImage());
+        ApplicationManifest manifest = this.pushApplicationManifestRequest.getValue().getManifests().get(0);
+        assertEquals("aeon-runner-" + runnerId, manifest.getName());
+        assertEquals("dockerImage", manifest.getDocker().getImage());
+        assertEquals("dockerImage", manifest.getDocker().getImage());
+        assertEquals(ApplicationHealthCheck.HTTP, manifest.getHealthCheckType());
         verify(this.deploymentTimeRepository, times(0)).insert(any(DeploymentTime.class));
         verify(this.notificationService, times(0)).notify(any(), anyString(), any());
         verify(this.runnerRepository, times(0)).save(any());
@@ -194,8 +197,11 @@ public class PCFRunnerServiceTests {
         assertNull(argument.getValue().baseUrl);
         assertNull(argument.getValue().metaData.get("guid"));
 
-        assertEquals("aeon-runner-" + runnerId, this.pushApplicationRequest.getValue().getName());
-        assertEquals("dockerImage", this.pushApplicationRequest.getValue().getDockerImage());
+        ApplicationManifest manifest = this.pushApplicationManifestRequest.getValue().getManifests().get(0);
+        assertEquals("aeon-runner-" + runnerId, manifest.getName());
+        assertEquals("dockerImage", manifest.getDocker().getImage());
+        assertEquals(ApplicationHealthCheck.HTTP, manifest.getHealthCheckType());
+        assertEquals("api/admin/healthcheck", manifest.getHealthCheckHttpEndpoint());
         verify(this.deploymentTimeRepository, times(0)).insert(any(DeploymentTime.class));
         verify(this.notificationService, times(0)).notify(any(), anyString(), any());
         verify(this.runnerRepository, times(0)).save(any());
