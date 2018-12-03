@@ -1,5 +1,6 @@
 package aeon.platform.http.threads;
 
+import aeon.platform.http.HttpSessionIdProvider;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 
@@ -22,7 +23,7 @@ public class ThreadFactory {
      * @param url           Callback URL
      * @return Thread
      */
-    public CommandExecutionThread getCommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url) {
-        return new CommandExecutionThread(sessionId, session, commandString, args, url, ClientBuilder.newClient());
+    public CommandExecutionThread getCommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url, HttpSessionIdProvider sessionIdProvider) {
+        return new CommandExecutionThread(sessionId, session, commandString, args, url, sessionIdProvider, ClientBuilder.newClient());
     }
 }

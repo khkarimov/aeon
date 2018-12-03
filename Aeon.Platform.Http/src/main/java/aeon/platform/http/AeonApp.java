@@ -1,5 +1,6 @@
 package aeon.platform.http;
 
+import aeon.core.testabstraction.product.Aeon;
 import aeon.platform.http.controllers.HttpSessionController;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -28,6 +29,8 @@ public class AeonApp extends Application<AeonAppConfiguration> {
         );
 
         environment.jersey().register(controller);
+
+        Aeon.setSessionIdProvider(new HttpSessionIdProvider());
     }
 
     /**

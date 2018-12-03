@@ -1,6 +1,8 @@
 package aeon.platform.http.controllers;
 
+import aeon.core.testabstraction.product.Aeon;
 import aeon.platform.factories.SessionFactory;
+import aeon.platform.http.HttpSessionIdProvider;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
 import aeon.platform.http.models.ResponseBody;
@@ -53,6 +55,7 @@ public class HttpSessionController {
     public Response createSession(CreateSessionBody body) throws Exception {
 
         ObjectId sessionId = new ObjectId();
+        getSessionIdProvider().setCurrentSessionId(sessionId.toString());
 
         if (body != null) {
             sessionTable.put(sessionId, sessionFactory.getSession(body.getSettings()));
@@ -83,6 +86,7 @@ public class HttpSessionController {
         }
 
         ISession session = sessionTable.get(sessionId);
+        getSessionIdProvider().setCurrentSessionId(sessionId.toString());
 
         try {
             Object result = session.executeCommand(body.getCommand(), body.getArgs());
@@ -119,7 +123,7 @@ public class HttpSessionController {
         }
 
         ISession session = sessionTable.get(sessionId);
-        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs(), body.getCallbackUrl()).start();
+        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs(), body.getCallbackUrl(), getSessionIdProvider()).start();
 
         return Response.status(Response.Status.OK)
                 .entity(new ResponseBody(sessionId.toString(), true, "The asynchronous command was successfully scheduled.", null))
@@ -141,10 +145,15 @@ public class HttpSessionController {
         }
 
         ISession session = sessionTable.get(sessionId);
+        getSessionIdProvider().setCurrentSessionId(sessionId.toString());
 
         session.quitSession();
         sessionTable.remove(sessionId);
 
         return Response.status(Response.Status.OK).build();
+    }
+
+    private HttpSessionIdProvider getSessionIdProvider() {
+        return (HttpSessionIdProvider) Aeon.getSessionIdProvider();
     }
 }

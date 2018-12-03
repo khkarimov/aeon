@@ -1,5 +1,6 @@
 package aeon.platform.http.threads;
 
+import aeon.platform.http.HttpSessionIdProvider;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
@@ -23,29 +24,33 @@ public class CommandExecutionThread extends Thread {
     private List<Object> args;
     private String url;
     private Client client;
+    private HttpSessionIdProvider sessionIdProvider;
 
     /**
      * Constructs a thread.
      *
-     * @param sessionId     Session ID
-     * @param session       Session
-     * @param commandString Command string
-     * @param args          Arguments
-     * @param url           Callback URL
-     * @param client        Client
+     * @param sessionId         Session ID
+     * @param session           Session
+     * @param commandString     Command string
+     * @param args              Arguments
+     * @param url               Callback URL
+     * @param sessionIdProvider Session ID provider
+     * @param client            Client
      */
-    CommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url, Client client) {
+    CommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url, HttpSessionIdProvider sessionIdProvider, Client client) {
         this.sessionId = sessionId;
         this.session = session;
         this.commandString = commandString;
         this.args = args;
         this.url = url;
         this.client = client;
+        this.sessionIdProvider = sessionIdProvider;
     }
 
     @Override
     public void run() {
         ResponseBody response;
+        this.sessionIdProvider.setCurrentSessionId(this.sessionId.toString());
 
         try {
             Object result = session.executeCommand(commandString, args);
