@@ -18,6 +18,7 @@ public class AeonPluginManager extends DefaultPluginManager {
      */
     public AeonPluginManager(ISessionIdProvider sessionIdProvider) {
         this.sessionIdProvider = sessionIdProvider;
+        initialize();
     }
 
     @Override

@@ -143,7 +143,7 @@ public class PerfectoPlugin extends Plugin {
 
         static Logger log = LogManager.getLogger(PerfectoSeleniumExtension.class);
 
-        private IConfiguration configuration;
+        IConfiguration configuration;
 
         @Override
         public void onGenerateCapabilities(Configuration configuration, MutableCapabilities capabilities) {

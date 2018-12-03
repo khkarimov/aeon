@@ -226,7 +226,7 @@ public class BaseConfigurationTests {
         config.loadConfiguration();
 
         // Assert
-        verify(log, times(1)).info("These are the properties values currently in use:\naeon.timeout = 10\naeon.implicit_reporting = true\naeon.throttle = 50\n");
+        verify(log, times(1)).info("These are the properties values currently in use for BaseConfiguration:\naeon.timeout = 10\naeon.implicit_reporting = true\naeon.throttle = 50\n");
     }
 
     @Test

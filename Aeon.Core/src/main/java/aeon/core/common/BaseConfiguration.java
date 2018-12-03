@@ -24,9 +24,9 @@ public class BaseConfiguration implements IConfiguration {
     protected Properties properties = new Properties();
 
     /**
-     *  Loads configuration from properties files.
+     * Loads configuration from properties files.
      *
-     * @throws IOException If properties are not defined.
+     * @throws IOException            If properties are not defined.
      * @throws IllegalAccessException If issue obtaining keys.
      */
     public void loadConfiguration() throws IOException, IllegalAccessException {
@@ -45,7 +45,7 @@ public class BaseConfiguration implements IConfiguration {
             } else {
                 log.info("No config file in use, using default values.");
             }
-        } catch (FileNotFoundException fe){
+        } catch (FileNotFoundException fe) {
             log.error("The specified config file was not found");
             throw fe;
         } catch (IOException e) {
@@ -65,8 +65,8 @@ public class BaseConfiguration implements IConfiguration {
     }
 
     /**
-     *  Gets InputStream from the file specified in the env variable AEON_CONFIG or test.properties
-     *  when the variable is not specified.
+     * Gets InputStream from the file specified in the env variable AEON_CONFIG or test.properties
+     * when the variable is not specified.
      *
      * @return InputStream of loaded properties.
      * @throws FileNotFoundException If issue finding config file.
@@ -77,7 +77,7 @@ public class BaseConfiguration implements IConfiguration {
             return getDefaultConfigInputStream();
         }
         Path configPath = Paths.get(envValue);
-        if (configPath.isAbsolute()){
+        if (configPath.isAbsolute()) {
             return new FileInputStream(configPath.toFile());
         } else {
             return getRelativeAeonConfigProperties(configPath);
@@ -85,7 +85,7 @@ public class BaseConfiguration implements IConfiguration {
     }
 
     /**
-     *  Gathers the properties found in the config file specified in the env variable AEON_CONFIG.
+     * Gathers the properties found in the config file specified in the env variable AEON_CONFIG.
      *
      * @param configPath The path to the config file.
      * @return InputStream of config file.
@@ -98,7 +98,7 @@ public class BaseConfiguration implements IConfiguration {
     }
 
     /**
-     *  Loads properties from environment variables, overriding settings from properties files.
+     * Loads properties from environment variables, overriding settings from properties files.
      *
      * @throws IllegalAccessException If issue obtaining keys.
      */
@@ -124,10 +124,12 @@ public class BaseConfiguration implements IConfiguration {
 
         Enumeration e = properties.propertyNames();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("These are the properties values currently in use:\n");
+        stringBuilder.append("These are the properties values currently in use for ");
+        stringBuilder.append(getClass().getSimpleName());
+        stringBuilder.append(":\n");
         while (e.hasMoreElements()) {
             String key = (String) e.nextElement();
-            stringBuilder.append(String.format("%1$s = %2$s\n", key, properties.getProperty(key)));
+            stringBuilder.append(String.format("%1$s = %2$s%n", key, properties.getProperty(key)));
         }
         log.info(stringBuilder.toString());
     }
@@ -137,16 +139,16 @@ public class BaseConfiguration implements IConfiguration {
      *
      * @return getResourceAsStream of "/test.properties" file
      */
-     InputStream getDefaultConfigInputStream() {
-         return BaseConfiguration.class.getResourceAsStream("/test.properties");
-     }
+    InputStream getDefaultConfigInputStream() {
+        return BaseConfiguration.class.getResourceAsStream("/test.properties");
+    }
 
     /**
      * Gets InputStream of aeon.properties.
      *
      * @return getResourceAsStream of "/aeon.properties" file
      */
-     InputStream getAeonInputStream() {
+    InputStream getAeonInputStream() {
         return BaseConfiguration.class.getResourceAsStream("/aeon.properties");
     }
 
@@ -182,7 +184,7 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Set boolean for a key and value pair.
      *
-     * @param key A key from {@link Keys}.
+     * @param key   A key from {@link Keys}.
      * @param value True or false.
      */
     public void setBoolean(String key, boolean value) {
@@ -191,7 +193,8 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Sets a key to a specific value.
-     * @param key the string of the key.
+     *
+     * @param key   the string of the key.
      * @param value the string value to set it to.
      */
     public void setString(String key, String value) {
@@ -200,7 +203,8 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Sets the double given a string key and a double value.
-     * @param key the string of the key to be set.
+     *
+     * @param key   the string of the key to be set.
      * @param value the value to set.
      */
     public void setDouble(String key, double value) {
@@ -209,7 +213,8 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Set the properties for the {@link Properties} command.
-     * @param key A key from {@link Keys}
+     *
+     * @param key   A key from {@link Keys}
      * @param value True or false.
      */
     private void set(String key, String value) {
@@ -218,7 +223,8 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Get the boolean value of a key and value pair.
-     * @param key A key from {@link Keys}.
+     *
+     * @param key          A key from {@link Keys}.
      * @param defaultValue True or false.
      * @return True or False representation of key and value pair.
      */
@@ -228,7 +234,8 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Get the double value of a key and value pair.
-     * @param key A key from {@link Keys}.
+     *
+     * @param key          A key from {@link Keys}.
      * @param defaultValue True or false.
      * @return Double representation of key and value pair.
      */
@@ -238,7 +245,8 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Get the string value of a key and value pair.
-     * @param key A key from {@link Keys}.
+     *
+     * @param key          A key from {@link Keys}.
      * @param defaultValue True or false.
      * @return String representation of key and value pair.
      */
@@ -248,7 +256,8 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Gets property associated with key and its default value.
-     * @param key a property key
+     *
+     * @param key          a property key
      * @param defaultValue a default property value
      * @return String value of property
      */

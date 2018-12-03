@@ -1,6 +1,7 @@
 package aeon.platform.http.threads;
 
 import aeon.core.common.exceptions.CommandExecutionException;
+import aeon.platform.http.HttpSessionIdProvider;
 import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
@@ -59,13 +60,16 @@ public class CommandExecutionThreadTests {
     @Mock
     private Invocation.Builder invocationBuilderMock;
 
+    @Mock
+    private HttpSessionIdProvider sessionIdProvider;
+
     @Captor
     ArgumentCaptor<Entity> entityArgumentCaptor = ArgumentCaptor.forClass(Entity.class);
 
     @Before
     public void setUp() {
         ObjectId sessionId = new ObjectId();
-        commandExecutionThread = new CommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl", clientMock);
+        commandExecutionThread = new CommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl", sessionIdProvider, clientMock);
 
         e = new CommandExecutionException("Command is invalid.");
 

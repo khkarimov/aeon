@@ -76,6 +76,7 @@ distrib/
 log/
 */plugins
 plugins/
+*/lib
 .DS_Store
 *~
 

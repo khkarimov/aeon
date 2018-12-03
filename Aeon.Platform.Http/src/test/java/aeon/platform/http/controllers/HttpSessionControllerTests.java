@@ -1,7 +1,9 @@
 package aeon.platform.http.controllers;
 
 import aeon.core.common.exceptions.CommandExecutionException;
+import aeon.core.testabstraction.product.Aeon;
 import aeon.platform.factories.SessionFactory;
+import aeon.platform.http.HttpSessionIdProvider;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
 import aeon.platform.http.models.ResponseBody;
@@ -67,8 +69,12 @@ public class HttpSessionControllerTests {
     @Mock
     private CommandExecutionThread threadMock;
 
+    @Mock
+    private HttpSessionIdProvider sessionIdProvider;
+
     @Before
     public void setUp() {
+        Aeon.setSessionIdProvider(this.sessionIdProvider);
         httpSessionController = new HttpSessionController(sessionFactoryMock, threadFactoryMock, sessionTableMock);
 
         sessionId = new ObjectId();
@@ -174,7 +180,7 @@ public class HttpSessionControllerTests {
         when(executeCommandBodyMock.getCommand()).thenReturn("GoToUrlCommand");
         when(executeCommandBodyMock.getArgs()).thenReturn(argsMock);
         when(executeCommandBodyMock.getCallbackUrl()).thenReturn("callbackUrl");
-        when(threadFactoryMock.getCommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl")).thenReturn(threadMock);
+        when(threadFactoryMock.getCommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl", sessionIdProvider)).thenReturn(threadMock);
 
         Response response = httpSessionController.executeAsyncCommand(sessionId, executeCommandBodyMock);
         ResponseBody body = (ResponseBody) response.getEntity();
@@ -183,7 +189,7 @@ public class HttpSessionControllerTests {
         verify(sessionTableMock, times(1)).get(sessionId);
         verify(executeCommandBodyMock, times(1)).getCommand();
         verify(executeCommandBodyMock, times(1)).getArgs();
-        verify(threadFactoryMock, times(1)).getCommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl");
+        verify(threadFactoryMock, times(1)).getCommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl", sessionIdProvider);
         verify(threadMock, times(1)).start();
 
         Assert.assertEquals(sessionId.toString(), body.getSessionId());
@@ -203,7 +209,7 @@ public class HttpSessionControllerTests {
         verify(sessionTableMock, times(0)).get(sessionId);
         verify(executeCommandBodyMock, times(0)).getCommand();
         verify(executeCommandBodyMock, times(0)).getArgs();
-        verify(threadFactoryMock, times(0)).getCommandExecutionThread(eq(sessionId), eq(sessionMock), anyString(), anyList(), anyString());
+        verify(threadFactoryMock, times(0)).getCommandExecutionThread(eq(sessionId), eq(sessionMock), anyString(), anyList(), anyString(), any());
 
         Assert.assertEquals(404, response.getStatus());
     }
