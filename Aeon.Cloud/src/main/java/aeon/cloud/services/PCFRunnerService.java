@@ -152,10 +152,6 @@ public class PCFRunnerService implements IRunnerService {
 
     private void deleteFailed(Throwable error, String callbackUrl, Runner runner, boolean force) {
 
-        if (force) {
-            this.runnerRepository.delete(runner);
-        }
-
         if (runner.baseUrl != null) {
             runner.status = "RUNNING";
         } else {
@@ -167,5 +163,9 @@ public class PCFRunnerService implements IRunnerService {
                 NotificationService.EventType.RUNNER_DELETION_FAILED,
                 callbackUrl,
                 runner);
+
+        if (force) {
+            this.runnerRepository.delete(runner);
+        }
     }
 }

@@ -9,9 +9,7 @@ import org.cloudfoundry.operations.applications.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import reactor.core.publisher.Mono;
 
@@ -280,7 +278,7 @@ public class PCFRunnerServiceTests {
         assertEquals("DELETING", this.runner.status);
         assertNull(this.runner.message);
 
-        // Act: Trigger deletion success
+        // Act: Trigger deletion failure
         this.doOnError.getValue().accept(new RuntimeException("test message"));
 
         // Assert
@@ -316,7 +314,7 @@ public class PCFRunnerServiceTests {
         assertEquals("DELETING", this.runner.status);
         assertNull(this.runner.message);
 
-        // Act: Trigger deletion success
+        // Act: Trigger deletion failure
         this.doOnError.getValue().accept(new RuntimeException("test message"));
 
         // Assert
@@ -335,6 +333,7 @@ public class PCFRunnerServiceTests {
     @Test
     public void deleteRunnerFailureWithForceTest() {
         // Arrange
+        InOrder inOrder = Mockito.inOrder(runnerRepository, notificationService);
 
         // Act
         this.runnerService.delete(
@@ -350,15 +349,18 @@ public class PCFRunnerServiceTests {
         assertEquals(runner.name, this.deleteApplicationRequest.getValue().getName());
         assertTrue(this.deleteApplicationRequest.getValue().getDeleteRoutes());
         assertEquals("DELETING", this.runner.status);
+        assertNull(this.runner.message);
 
-        // Act: Trigger deletion success
+        // Act: Trigger deletion failure
         this.doOnError.getValue().accept(new RuntimeException("test message"));
 
         // Assert
-        verify(this.runnerRepository, times(1)).delete(this.runner);
-        verify(this.notificationService, times(1)).notify(
+        inOrder.verify(runnerRepository, times(2)).save(this.runner);
+        inOrder.verify(notificationService).notify(
                 NotificationService.EventType.RUNNER_DELETION_FAILED,
                 "callback",
                 this.runner);
+        inOrder.verify(runnerRepository).delete(this.runner);
+        inOrder.verifyNoMoreInteractions();
     }
 }
