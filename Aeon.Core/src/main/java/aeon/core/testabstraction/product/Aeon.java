@@ -1,5 +1,6 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.exceptions.AeonLaunchException;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.extensions.AeonPluginManager;
 import aeon.core.extensions.DefaultSessionIdProvider;
@@ -20,6 +21,10 @@ public class Aeon {
     private static Logger log = LogManager.getLogger(Aeon.class);
     private static PluginManager pluginManager;
     private static ISessionIdProvider sessionIdProvider = new DefaultSessionIdProvider();
+
+    private Aeon() {
+        // Static classes should not be instantiated.
+    }
 
     /**
      * Launches an environment of the desired class and with the provided properties.
@@ -51,7 +56,7 @@ public class Aeon {
                 product.onLaunchFailure(e);
             }
 
-            throw new RuntimeException(e);
+            throw new AeonLaunchException(e);
         }
     }
 
@@ -63,10 +68,10 @@ public class Aeon {
      * @return A type T launch.
      */
     public static <T extends Product> T launch(Class<T> productClass) {
-        return launch(productClass, (Properties) null);
+        return launch(productClass, null);
     }
 
-    private static <T extends Product> IAdapterExtension loadPlugins(T product) throws RuntimeException {
+    private static <T extends Product> IAdapterExtension loadPlugins(T product) {
 
         List<IAdapterExtension> extensions = getExtensions(IAdapterExtension.class);
         for (IAdapterExtension extension : extensions) {
@@ -75,7 +80,8 @@ public class Aeon {
             }
         }
 
-        throw new RuntimeException("No valid adapter found");
+        throw new AeonLaunchException("No valid adapter found. Please check" +
+                "whether at least one matching adapter plugin is installed.");
     }
 
     /**

@@ -1,5 +1,5 @@
-import aeon.extensions.reporting.HighLevelStep;
-import aeon.extensions.reporting.ScenarioDetails;
+package aeon.extensions.reporting;
+
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 

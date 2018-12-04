@@ -6,9 +6,9 @@ import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -38,11 +38,11 @@ public class CommandExecutionThreadTests {
     public ExpectedException expectedException = ExpectedException.none();
 
     private CommandExecutionThread commandExecutionThread;
+    private ObjectId sessionId;
 
     private ResponseBody response;
     private ResponseBody nullResponse;
     private ResponseBody exceptionResponse;
-
     private Throwable e;
 
     @Mock
@@ -66,9 +66,9 @@ public class CommandExecutionThreadTests {
     @Captor
     ArgumentCaptor<Entity> entityArgumentCaptor = ArgumentCaptor.forClass(Entity.class);
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        ObjectId sessionId = new ObjectId();
+        sessionId = new ObjectId();
         commandExecutionThread = new CommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl", sessionIdProvider, clientMock);
 
         e = new CommandExecutionException("Command is invalid.");
@@ -80,16 +80,21 @@ public class CommandExecutionThreadTests {
 
     @Test
     public void runTest() throws CommandExecutionException {
+
+        // Arrange
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn("Success");
         when(clientMock.target("callbackUrl")).thenReturn(webTargetMock);
         when(webTargetMock.request(MediaType.APPLICATION_JSON)).thenReturn(invocationBuilderMock);
 
+        // Act
         commandExecutionThread.run();
 
+        // Assert
         verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
         verify(clientMock, times(1)).target("callbackUrl");
         verify(webTargetMock, times(1)).request(MediaType.APPLICATION_JSON);
         verify(invocationBuilderMock, times(1)).post(entityArgumentCaptor.capture());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(sessionId.toString());
 
         ResponseBody body = (ResponseBody) entityArgumentCaptor.getValue().getEntity();
 
@@ -101,16 +106,21 @@ public class CommandExecutionThreadTests {
 
     @Test
     public void runNullResultTest() throws CommandExecutionException {
+
+        // Arrange
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn(null);
         when(clientMock.target("callbackUrl")).thenReturn(webTargetMock);
         when(webTargetMock.request(MediaType.APPLICATION_JSON)).thenReturn(invocationBuilderMock);
 
+        // Act
         commandExecutionThread.run();
 
+        // Assert
         verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
         verify(clientMock, times(1)).target("callbackUrl");
         verify(webTargetMock, times(1)).request(MediaType.APPLICATION_JSON);
         verify(invocationBuilderMock, times(1)).post(entityArgumentCaptor.capture());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(sessionId.toString());
 
         ResponseBody body = (ResponseBody) entityArgumentCaptor.getValue().getEntity();
 
@@ -122,16 +132,21 @@ public class CommandExecutionThreadTests {
 
     @Test
     public void runThrowsExceptionTest() throws CommandExecutionException {
+
+        // Arrange
         when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenThrow(e);
         when(clientMock.target("callbackUrl")).thenReturn(webTargetMock);
         when(webTargetMock.request(MediaType.APPLICATION_JSON)).thenReturn(invocationBuilderMock);
 
+        // Act
         commandExecutionThread.run();
 
+        // Assert
         verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
         verify(clientMock, times(1)).target("callbackUrl");
         verify(webTargetMock, times(1)).request(MediaType.APPLICATION_JSON);
         verify(invocationBuilderMock, times(1)).post(entityArgumentCaptor.capture());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(sessionId.toString());
 
         ResponseBody body = (ResponseBody) entityArgumentCaptor.getValue().getEntity();
 
