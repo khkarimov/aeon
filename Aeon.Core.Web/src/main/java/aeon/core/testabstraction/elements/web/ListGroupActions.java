@@ -1,7 +1,7 @@
 package aeon.core.testabstraction.elements.web;
 
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.common.web.selectors.Function;
+import aeon.core.common.web.selectors.InlineJavaScript;
 
 /**
  * This class serves as a base for all grid row actions.
@@ -74,7 +74,7 @@ public abstract class ListGroupActions<T extends ListGroupActions, K extends Lis
     protected T findRowByExactMatch(String value, String elementSelector) {
         IByWeb updatedSelector = selector.toJQuery()
                 .find(elementSelector)
-                .filter(new Function(String.format("function() {return $(this).text() == \"%1$s\";}", value)))
+                .filter(new InlineJavaScript(String.format("function() {return $(this).text() == \"%1$s\";}", value)))
                 .parents(rowSelector);
 
         return newInstanceOfT(updatedSelector);

@@ -420,7 +420,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      * @return The {@link ByJQuery} object for chaining.
      */
     @Override
-    public final ByJQuery filter(Function function) {
+    public final ByJQuery filter(InlineJavaScript function) {
         return new ByJQuery(this, "filter", function);
     }
 

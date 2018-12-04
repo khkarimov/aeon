@@ -3,17 +3,17 @@ package aeon.core.common.web.selectors;
 /**
  * Struct for functions for {@link ByJQuery}.
  */
-public final class Function {
+public final class InlineJavaScript {
 
-    private String functionString;
+    private String inlineJavaScriptString;
 
     /**
-     * Initializes a new instance of the {@link Function} struct.
+     * Initializes a new instance of the {@link InlineJavaScript} struct.
      *
-     * @param function The parameter.
+     * @param inlineJavaScript The parameter.
      */
-    public Function(String function) {
-        this.functionString = function;
+    public InlineJavaScript(String inlineJavaScript) {
+        this.inlineJavaScriptString = inlineJavaScript;
     }
 
     /**
@@ -21,22 +21,22 @@ public final class Function {
      *
      * @return the object.
      */
-    public String getFunction() {
-        return this.functionString;
+    public String getInlineJavaScript() {
+        return this.inlineJavaScriptString;
     }
 
     /**
-     * Returns a {@link String} that represents the current {@link Function}.
+     * Returns a {@link String} that represents the current {@link InlineJavaScript}.
      *
-     * @return A {@link String} that represents the current {@link Function}.
+     * @return A {@link String} that represents the current {@link InlineJavaScript}.
      */
     @Override
     public String toString() {
-        if (this.functionString == null) {
+        if (this.inlineJavaScriptString == null) {
             return "";
         }
 
-        return this.functionString;
+        return this.inlineJavaScriptString;
     }
 
     /**
@@ -45,8 +45,8 @@ public final class Function {
      * @param other An object to compare with this object.
      * @return true if the current object is equal to the {@code other} parameter; otherwise, false.
      */
-    public boolean equals(Function other) {
-        return this.functionString.equals(other.functionString);
+    public boolean equals(InlineJavaScript other) {
+        return this.inlineJavaScriptString.equals(other.inlineJavaScriptString);
     }
 
     /**
@@ -57,7 +57,7 @@ public final class Function {
      */
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Function && equals((Function) obj);
+        return obj instanceof InlineJavaScript && equals((InlineJavaScript) obj);
     }
 
     /**
@@ -67,6 +67,6 @@ public final class Function {
      */
     @Override
     public int hashCode() {
-        return this.functionString.hashCode();
+        return this.inlineJavaScriptString.hashCode();
     }
 }

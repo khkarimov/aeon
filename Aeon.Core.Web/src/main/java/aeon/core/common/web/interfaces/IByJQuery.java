@@ -3,7 +3,7 @@ package aeon.core.common.web.interfaces;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.common.web.selectors.ByJQueryWithArithmeticOperatorOverload;
-import aeon.core.common.web.selectors.Function;
+import aeon.core.common.web.selectors.InlineJavaScript;
 
 /**
  * Interface for ByJQuery commands.
@@ -124,7 +124,7 @@ public interface IByJQuery {
      * @param function A string containing a function expression to match elements against.
      * @return The {@link ByJQuery} object for chaining.
      */
-    ByJQuery filter(Function function);
+    ByJQuery filter(InlineJavaScript function);
 
     /**
      * Reduce the set of matched elements to those that match the selector or pass the function's test.
