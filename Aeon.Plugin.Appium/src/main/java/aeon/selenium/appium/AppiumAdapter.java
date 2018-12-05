@@ -23,6 +23,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.touch.offset.PointOption;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -48,16 +49,16 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     /**
      * Constructor for Selenium Adapter.
      *
-     * @param seleniumWebDriver The driver for the adapter.
-     * @param javaScriptExecutor The javaScript executor for the adapter.
-     * @param moveMouseToOrigin A boolean indicating whether or not the mouse will return to the origin
-     *                          (top left corner of the browser window) before executing every action.
-     * @param browserType The browser type for the adapter.
-     * @param browserSize The screen resolution for the machine
-     * @param isRemote Whether we are testing remotely or locally.
-     * @param seleniumHubUrl The used Selenium hub URL.
+     * @param seleniumWebDriver     The driver for the adapter.
+     * @param javaScriptExecutor    The javaScript executor for the adapter.
+     * @param moveMouseToOrigin     A boolean indicating whether or not the mouse will return to the origin
+     *                              (top left corner of the browser window) before executing every action.
+     * @param browserType           The browser type for the adapter.
+     * @param browserSize           The screen resolution for the machine
+     * @param isRemote              Whether we are testing remotely or locally.
+     * @param seleniumHubUrl        The used Selenium hub URL.
      * @param seleniumLogsDirectory The path to the directory for Selenium Logs
-     * @param loggingPreferences Preferences which contain which Selenium log types to enable
+     * @param loggingPreferences    Preferences which contain which Selenium log types to enable
      */
     public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
@@ -80,10 +81,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     /**
      * Gets the web driver.
+     *
      * @return The web driver is returned.
      */
     public AppiumDriver getMobileWebDriver() {
-        if (!(webDriver instanceof AppiumDriver)){
+        if (!(webDriver instanceof AppiumDriver)) {
             throw new RuntimeException("This command is only supported by an AppiumDriver");
         }
 
@@ -159,8 +161,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         log.trace("Swipe start point: " + startX + ", " + startY);
 
         TouchAction action = new TouchAction(getMobileWebDriver());
-        action.press(startX, startY)
-                .moveTo(width - startX * 2, height - startY * 2)
+        action.press(PointOption.point(startX, startY))
+                .moveTo(PointOption.point(width - startX * 2, height - startY * 2))
                 .release()
                 .perform();
 
@@ -347,8 +349,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         int yStart = 0;
         int yEnd = (int) (height * .06);
         TouchAction action = new TouchAction(getMobileWebDriver());
-        action.longPress(xStart, yStart)
-                .moveTo(xStart, yEnd)
+        action.longPress(PointOption.point(xStart, yStart))
+                .moveTo(PointOption.point(xStart, yEnd))
                 .release()
                 .perform();
         log.trace("Swipe for notification exited");
@@ -410,7 +412,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         int yStart = height / 2;
         while (!checkAndClickYearElement(desiredYear)) {
             int yEnd = (int) (height * 0.2);
-            if (getWidgetNumber(currentYear, desiredYear) > 7){
+            if (getWidgetNumber(currentYear, desiredYear) > 7) {
                 yEnd = yEnd + yStart;
             }
             if (checkIfPerfectoInUse()) {
@@ -421,8 +423,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 }
             } else {
                 TouchAction action = new TouchAction(getMobileWebDriver());
-                action.longPress(xStart, yStart)
-                        .moveTo(xStart, yEnd)
+                action.longPress(PointOption.point(xStart, yStart))
+                        .moveTo(PointOption.point(xStart, yEnd))
                         .release()
                         .perform();
             }
@@ -494,7 +496,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void mobileSelect(MobileSelectOption selectOption, String value) {
-        if (browserType == BrowserType.AndroidHybridApp){
+        if (browserType == BrowserType.AndroidHybridApp) {
             switchToNativeAppContext();
             IByMobile selector = ByMobile.xpath(String.format("//android.widget.CheckedTextView[@text='%s']", value));
             click(findElement(selector, false), false);
@@ -514,7 +516,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * @param selector Element to scroll into view.
      */
     protected void scrollElementIntoView(IByWeb selector) {
-        if (selector instanceof IByMobile){
+        if (selector instanceof IByMobile) {
             return;
         }
 
@@ -523,7 +525,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void acceptAlert() {
-        switch (browserType){
+        switch (browserType) {
             case AndroidHybridApp:
                 // Break intentionally omitted
             case IOSHybridApp:
@@ -541,7 +543,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void dismissAlert() {
-        switch (browserType){
+        switch (browserType) {
             case AndroidHybridApp:
                 // Break intentionally omitted
             case IOSHybridApp:
@@ -648,7 +650,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new aeon.core.common.exceptions.NoSuchElementException(e, (IByMobileXPath) findBy);
             } finally {
-                if (switchContext){
+                if (switchContext) {
                     switchToWebViewContext();
                 }
             }
@@ -661,7 +663,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             } catch (org.openqa.selenium.NoSuchElementException e) {
                 throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
             } finally {
-                if (switchContext){
+                if (switchContext) {
                     switchToWebViewContext();
                 }
             }
@@ -673,7 +675,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         } catch (org.openqa.selenium.NoSuchElementException e) {
             throw new aeon.core.common.exceptions.NoSuchElementException(e, findBy);
         } finally {
-            if (switchContext){
+            if (switchContext) {
                 switchToWebViewContext();
             }
         }
@@ -790,7 +792,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         switchToNativeAppContext();
         TouchAction a = new TouchAction((AppiumDriver) getWebDriver());
         //a.tap(underlyingWebElement,elementSize.width/2, elementSize.height/2).perform();
-        a.tap(tapPoint.getX(), tapPoint.getY()).perform();
+        a.tap(PointOption.point(tapPoint.getX(), tapPoint.getY())).perform();
         switchToWebViewContext();
     }
 }
