@@ -23,7 +23,6 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
         String currentSessionId = sessionIdProvider.getCurrentSessionId();
         String extensionClassName = extensionClass.getName();
 
-
         if (cache.containsKey(currentSessionId)) {
             Map<String, Object> instances = cache.get(currentSessionId);
 

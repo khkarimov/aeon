@@ -67,7 +67,7 @@ public class SessionFactory implements ISessionFactory {
             }
         }
 
-        throw new AeonLaunchException("No valid adapter found. Please check" +
+        throw new AeonLaunchException("No valid adapter found. Please check " +
                 "whether at least one matching adapter plugin is installed.");
     }
 

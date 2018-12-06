@@ -26,7 +26,7 @@ class AeonPluginManagerTests {
     }
 
     @Test
-    void testCreateExtensionFactoryReturnsAeonExtensionFactory() {
+    void testCreateExtensionFactory_ReturnsAeonExtensionFactory() {
 
         // Arrange
 

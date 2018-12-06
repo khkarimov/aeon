@@ -28,7 +28,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateSessionIdDoesNotExist() {
+    void testCreateSession_IdDoesNotExit() {
 
         // Arrange
 
@@ -40,7 +40,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateSessionIdExistsButInstanceDoesNotExist() {
+    void testCreateSession_SessionIdExists_InstanceDoesNotExit() {
 
         // Arrange
         aeonExtensionFactory.create(String.class);
@@ -53,7 +53,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateSessionIdAndInstanceExist() {
+    void testCreateSession_IdAndInstanceExist() {
 
         // Arrange
         Object extension1 = aeonExtensionFactory.create(Object.class);
@@ -66,7 +66,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateInstanceExistsForDifferentSession() {
+    void testCreateSession_MultipleSessions() {
 
         // Arrange
         Object extension1 = aeonExtensionFactory.create(Object.class);

@@ -15,7 +15,7 @@ class DefaultSessionIdProviderTests {
     }
 
     @Test
-    void testGetCurrentSessionIdReturnsCurrentThreadId() {
+    void testGetCurrentSessionId_ReturnsCurrentThreadId() {
 
         // Arrange
         long threadId = Thread.currentThread().getId();
