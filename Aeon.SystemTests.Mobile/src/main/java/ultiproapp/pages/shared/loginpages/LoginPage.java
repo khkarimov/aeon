@@ -8,6 +8,9 @@ import aeon.core.testabstraction.elements.web.Link;
 import aeon.core.testabstraction.elements.web.TextBox;
 import aeon.core.testabstraction.models.Page;
 
+/**
+ * Login Page.
+ */
 public class LoginPage extends Page {
 
     public TextBox usernameInputField;
@@ -18,14 +21,17 @@ public class LoginPage extends Page {
     public Button clearAccessCodeButton;
     public Link supportLink;
 
+    /**
+     * Constructs a Login Page.
+     *
+     * @param info Automation info
+     */
     public LoginPage(AutomationInfo info) {
-
         usernameInputField = new TextBox(info, By.cssSelector("input[aria-labelledby=\"lbl-3\"]"));
         passwordInputField = new TextBox(info, By.cssSelector("input[aria-labelledby=\"lbl-4\"]"));
         signInButton = new Button(info, By.cssSelector("ion-button[data-automation=\"sign-in-button\"]"));
         companyAccessCodeLabel = new Label(info, By.cssSelector(".login-graphic-footer .company-access-code"));
         clearAccessCodeButton = new Button(info, By.cssSelector(".login-graphic-footer [data-automation=\"access-code-clear-icon\"]"));
         supportLink = new Link(info, By.cssSelector(".login-graphic-footer button[class*=\"btn-support\"]"));
-
     }
 }

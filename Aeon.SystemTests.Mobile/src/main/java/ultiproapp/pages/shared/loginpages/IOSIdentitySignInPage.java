@@ -6,6 +6,9 @@ import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.TextBox;
 import aeon.core.testabstraction.models.Page;
 
+/**
+ * iOS Identity Sign-in Page.
+ */
 public class IOSIdentitySignInPage extends Page {
 
     public Button doneButton;
@@ -13,13 +16,22 @@ public class IOSIdentitySignInPage extends Page {
     public TextBox passwordField;
     public Button signInButton;
 
+    /**
+     * Constructs an iOS Identity Sign-in Page.
+     *
+     * @param info Automation info
+     */
     public IOSIdentitySignInPage(AutomationInfo info) {
 
         doneButton = new Button(info, ByMobile.accessibilityId("Done"));
         usernameField = new TextBox(info, ByMobile.accessibilityId("Username"));
         passwordField = new TextBox(info, ByMobile.accessibilityId("Password"));
-        signInButton = new Button(info, ByMobile.xpath("//XCUIElementTypeApplication/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeWebView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton"));
-
+        signInButton = new Button(info, ByMobile.xpath("//XCUIElementTypeApplication/" +
+                "XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/" +
+                "XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/" +
+                "XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/" +
+                "XCUIElementTypeWebView/XCUIElementTypeOther/XCUIElementTypeOther/" +
+                "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/" +
+                "XCUIElementTypeOther/XCUIElementTypeButton"));
     }
-
 }
