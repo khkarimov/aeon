@@ -13,38 +13,15 @@ dependencies {
 }
 
 test {
-//    if (project.hasProperty("aeonEnvironment")) {
-//        ant.propertyfile(
-//                file: "src/test/resources/test.properties") {
-//            entry(key: "aeon.environment", value: project.aeonEnvironment)
-//        }
-//    }
-
     if (testConfiguration) {
         environment "AEON_CONFIG", "src/test/resources/" + testConfiguration + ".properties"
     }
     if (testConfiguration != "perfecto") {
         environment "AEON_DISABLED_PLUGINS", "aeon.extensions.perfecto"
     }
-//
-//    if (!System.getenv("ReportiumTags")) {
-//        environment "ReportiumJobBranch", "development"
-//        environment "ReportiumTags", "local"
-//        environment "ReportiumJobName", "Test run from local"
-//        environment "ReportiumJobNumber", "1"
-//        environment "ReportiumProjectVersion", "2.0"
-//        environment "ReportiumProjectName", "UltiPro App"
-//    }
-    maxParallelForks = 4
-    // This configures TestNG as the test runner.
-    useJUnit() {
-        //useTestNG() {
-        // This configures the number of test fixtures that are run concurrently through Gradle.
-        // The default value can be changed in the "gradle.properties" file.
-        //
-        // In the pipeline this option can be overridden by setting an environment variable
-        // called "ORG_GRADLE_PROJECT_threads".
 
+    maxParallelForks = 4
+    useJUnit() {
         def includeList = System.getenv('tests.included.tags')
         if (includeList != null) {
             def categories = includeList.split("\\s*(,|\\s)\\s*")
