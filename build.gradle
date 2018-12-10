@@ -119,12 +119,6 @@ task CopyDriversPlatformPython(type: Copy) {
     into 'Aeon.Platform.Python/lib'
 }
 
-task CopyDriversMobile(type: Copy) {
-    group 'copy'
-    from 'Aeon.SystemTests.Web/lib'
-    into 'Aeon.SystemTests.Mobile/lib'
-}
-
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
@@ -139,7 +133,6 @@ assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
 assemble.finalizedBy(CopyDriversPlatformHttp)
 assemble.finalizedBy(CopyDriversPlatformPython)
-assemble.finalizedBy(CopyDriversMobile)
 
 allprojects {
     group 'aeon'
