@@ -403,7 +403,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
     }
 
     /**
-     * Reduce the set of matched elements to those that match the selector or pass the function's test.
+     * Reduce the set of matched elements to those that match the selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery} object for chaining.
@@ -411,6 +411,17 @@ public class ByJQuery implements IByWeb, IByJQuery {
     @Override
     public final ByJQuery filter(String selector) {
         return new ByJQuery(this, "filter", selector);
+    }
+
+    /**
+     * Reduce the set of matched elements to those that pass the function's test.
+     *
+     * @param function A string containing a function expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
+     */
+    @Override
+    public final ByJQuery filter(InlineJavaScript function) {
+        return new ByJQuery(this, "filter", function);
     }
 
     /**
@@ -453,6 +464,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
 
     /**
      * Reduce the set of matched elements to the first in the set.
+     *
      * @return new instance of a {@link ByJQuery} object that is first.
      */
     @Override
