@@ -7,23 +7,24 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * Provides methods for annotating tests with meta data for behavior driven development.
  */
 public class AeonTestExecution {
 
-    private static List<ITestExecutionExtension> testExecutionPlugins;
-
     private static Logger log = LogManager.getLogger(AeonTestExecution.class);
 
-    private static void init() {
-        if (testExecutionPlugins == null) {
-            testExecutionPlugins = Aeon.getExtensions(ITestExecutionExtension.class);
+    private static UUID correlationId = null;
+
+    private static void trigger(Consumer<ITestExecutionExtension> consumer) {
+        List<ITestExecutionExtension> testExecutionExtensions = Aeon.getExtensions(ITestExecutionExtension.class);
+
+        for (ITestExecutionExtension testExecutionExtension : testExecutionExtensions) {
+            consumer.accept(testExecutionExtension);
         }
     }
-
-    private static UUID correlationId = null;
 
     /**
      * Is called when Aeon is starting up.
@@ -31,15 +32,11 @@ public class AeonTestExecution {
      * @param configuration The aeon configuration object.
      */
     public static void startUp(Configuration configuration) {
-        init();
-
         if (correlationId == null) {
             correlationId = UUID.randomUUID();
         }
 
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onStartUp(configuration, correlationId.toString());
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onStartUp(configuration, correlationId.toString()));
     }
 
     /**
@@ -47,12 +44,8 @@ public class AeonTestExecution {
      *
      * @param configuration The aeon configuration object.
      */
-    public static void beforeLaunch(Configuration configuration) {
-
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeLaunch(configuration);
-        }
+    static void beforeLaunch(Configuration configuration) {
+        trigger((testExecutionExtension) -> testExecutionExtension.onBeforeLaunch(configuration));
     }
 
     /**
@@ -61,13 +54,9 @@ public class AeonTestExecution {
      * @param suiteName The name of the suite.
      */
     public static void beforeStart(String suiteName) {
-        init();
-
         correlationId = UUID.randomUUID();
 
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeStart(correlationId.toString(), suiteName);
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onBeforeStart(correlationId.toString(), suiteName));
     }
 
     /**
@@ -79,33 +68,26 @@ public class AeonTestExecution {
 
     /**
      * May be called at the end of all test executions.
-     *
+     * <p>
      * Should be called through Aeon.
      */
     static void done() {
-        init();
-
         correlationId = null;
 
-        for (ITestExecutionExtension testExecutionPlugin : testExecutionPlugins) {
-            testExecutionPlugin.onDone();
-        }
+        trigger(ITestExecutionExtension::onDone);
     }
 
     /**
      * Method to indicate a successful launch of a product.
-     *
+     * <p>
      * Should be called through Aeon.
      *
      * @param configuration The aeon configuration.
-     * @param adapter The adapter that is  used.
+     * @param adapter       The adapter that is  used.
      */
     public static void launched(Configuration configuration, IAdapter adapter) {
-        init();
         try {
-            for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-                testExecutionPlugin.onAfterLaunch(configuration, adapter);
-            }
+            trigger((testExecutionExtension) -> testExecutionExtension.onAfterLaunch(configuration, adapter));
         } catch (Exception e) {
             log.warn(e.getMessage(), e);
         }
@@ -127,10 +109,7 @@ public class AeonTestExecution {
      * @param tags Tags to add.
      */
     public static void startTest(String name, String... tags) {
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeTest(name, tags);
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onBeforeTest(name, tags));
     }
 
     /**
@@ -175,20 +154,14 @@ public class AeonTestExecution {
      * @param message Title of the test step.
      */
     private static void testStep(String message) {
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onBeforeStep(message);
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onBeforeStep(message));
     }
 
     /**
      * Method to indicate the successful completion of a test.
      */
     public static void testSucceeded() {
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onSucceededTest();
-        }
+        trigger(ITestExecutionExtension::onSucceededTest);
     }
 
     /**
@@ -197,10 +170,7 @@ public class AeonTestExecution {
      * @param message The failure message.
      */
     public static void testFailed(String message) {
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onFailedTest(message, null);
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onFailedTest(message, null));
     }
 
     /**
@@ -210,10 +180,7 @@ public class AeonTestExecution {
      * @param e       The exception of the failure.
      */
     public static void testFailed(String message, Throwable e) {
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onFailedTest(message, e);
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onFailedTest(message, e));
     }
 
     /**
@@ -223,10 +190,7 @@ public class AeonTestExecution {
      * @param tags Tags to add.
      */
     public static void testSkipped(String name, String... tags) {
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onSkippedTest(name, tags);
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onSkippedTest(name, tags));
     }
 
     /**
@@ -236,9 +200,6 @@ public class AeonTestExecution {
      * @param payload   The payload of the event.
      */
     public static void executionEvent(String eventName, Object payload) {
-        init();
-        for (ITestExecutionExtension testExecutionPlugin: testExecutionPlugins) {
-            testExecutionPlugin.onExecutionEvent(eventName, payload);
-        }
+        trigger((testExecutionExtension) -> testExecutionExtension.onExecutionEvent(eventName, payload));
     }
 }
