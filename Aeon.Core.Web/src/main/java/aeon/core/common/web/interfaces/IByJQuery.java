@@ -3,6 +3,7 @@ package aeon.core.common.web.interfaces;
 import aeon.core.common.web.JQueryStringType;
 import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.common.web.selectors.ByJQueryWithArithmeticOperatorOverload;
+import aeon.core.common.web.selectors.InlineJavaScript;
 
 /**
  * Interface for ByJQuery commands.
@@ -110,12 +111,20 @@ public interface IByJQuery {
     ByJQuery eq(ByJQueryWithArithmeticOperatorOverload index);
 
     /**
-     * Reduce the set of matched elements to those that match the selector or pass the function's test.
+     * Reduce the set of matched elements to those that match the selector.
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
      */
     ByJQuery filter(String selector);
+
+    /**
+     * Reduce the set of matched elements to those that pass the function's test.
+     *
+     * @param function A string containing a function expression to match elements against.
+     * @return The {@link ByJQuery} object for chaining.
+     */
+    ByJQuery filter(InlineJavaScript function);
 
     /**
      * Reduce the set of matched elements to those that match the selector or pass the function's test.
