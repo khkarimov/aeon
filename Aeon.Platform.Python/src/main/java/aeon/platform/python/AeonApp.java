@@ -11,9 +11,10 @@ public class AeonApp {
 
     /**
      * Main method of the application.
+     *
      * @param args Command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         SessionFactory sessionFactory = DaggerAeonPlatformComponent.create().buildSessionFactory();
 
