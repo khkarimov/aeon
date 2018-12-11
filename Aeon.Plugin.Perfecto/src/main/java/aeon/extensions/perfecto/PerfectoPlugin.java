@@ -13,7 +13,6 @@ import com.perfecto.reportium.client.ReportiumClientFactory;
 import com.perfecto.reportium.model.CustomField;
 import com.perfecto.reportium.model.PerfectoExecutionContext;
 import com.perfecto.reportium.test.TestContext;
-import com.perfecto.reportium.test.result.TestResult;
 import com.perfecto.reportium.test.result.TestResultFactory;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.LogManager;
@@ -35,10 +34,6 @@ import java.util.Map;
  */
 public class PerfectoPlugin extends Plugin {
 
-    private static ReportiumClient reportiumClient;
-
-    static IConfiguration configuration;
-
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
      * Your plugins have to provide constructor with this exact signature to
@@ -50,13 +45,15 @@ public class PerfectoPlugin extends Plugin {
         super(wrapper);
     }
 
-    static Logger log = LogManager.getLogger(PerfectoPlugin.class);
-
     /**
      * Test execution extensions for sending test details to Perfecto.
      */
     @Extension
     public static class PerfectoTestExecutionExtension implements ITestExecutionExtension {
+
+        static Logger log = LogManager.getLogger(PerfectoTestExecutionExtension.class);
+
+        private ReportiumClient reportiumClient;
 
         @Override
         public void onStartUp(Configuration configuration, String correlationId) {
@@ -134,7 +131,7 @@ public class PerfectoPlugin extends Plugin {
 
         @Override
         public void onDone() {
-
+            // No actions needed
         }
     }
 
@@ -144,33 +141,37 @@ public class PerfectoPlugin extends Plugin {
     @Extension
     public static class PerfectoSeleniumExtension implements ISeleniumExtension {
 
+        static Logger log = LogManager.getLogger(PerfectoSeleniumExtension.class);
+
+        IConfiguration configuration;
+
         @Override
         public void onGenerateCapabilities(Configuration configuration, MutableCapabilities capabilities) {
-            //check if PerfectoConfiguration has been instantiated
-            if (PerfectoPlugin.configuration == null) {
-                PerfectoPlugin.configuration = new PerfectoConfiguration();
+
+            // Check if PerfectoConfiguration has been instantiated
+            if (this.configuration == null) {
+                this.configuration = new PerfectoConfiguration();
                 try {
-                    PerfectoPlugin.configuration.loadConfiguration();
+                    this.configuration.loadConfiguration();
                 } catch (IllegalAccessException | IOException e) {
                     log.info("Could not load plugin configuration, using Aeon configuration instead");
-                    PerfectoPlugin.configuration = configuration;
+                    this.configuration = configuration;
                 }
             }
 
-            //set variables
-            String perfectoUser = PerfectoPlugin.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
-            String perfectoPass = PerfectoPlugin.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
-            String perfectoToken = PerfectoPlugin.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
-            boolean perfectoAutoInstrument = PerfectoPlugin.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT, false);
-            boolean perfectoSensorInstrument = PerfectoPlugin.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
+            // Set variables
+            String perfectoUser = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+            String perfectoPass = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+            String perfectoToken = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+            boolean perfectoAutoInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT, false);
+            boolean perfectoSensorInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
 
-            //credentials
+            // Set credentials
             setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
 
-            //instrumentation
+            // Set instrumentation
             capabilities.setCapability("autoInstrument", perfectoAutoInstrument);
             capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
-
         }
 
         @Override
@@ -178,26 +179,24 @@ public class PerfectoPlugin extends Plugin {
             boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
             String appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
 
-            //Only if AndroidHybridApp
-            if (driver instanceof AndroidDriver) {
-                //Cleans the app data for a fresh new session.
-                if (ensureCleanEnvironment && !appPackage.isEmpty()) {
-                    try {
-                        log.info("Cleaning application environment...");
-                        //Clean command
-                        Map<String, Object> cleanParams = new HashMap<>();
-                        cleanParams.put("identifier", appPackage);
-                        ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
+            // Only if AndroidHybridApp
+            // Cleans the app data for a fresh new session.
+            if (driver instanceof AndroidDriver && ensureCleanEnvironment && !appPackage.isEmpty()) {
+                try {
+                    log.info("Cleaning application environment...");
+                    // Clean command
+                    Map<String, Object> cleanParams = new HashMap<>();
+                    cleanParams.put("identifier", appPackage);
+                    ((AndroidDriver) driver).executeScript("mobile:application:clean", cleanParams);
 
-                        //Re-opens the application
-                        Map<String, Object> openParams = new HashMap<>();
-                        openParams.put("identifier", appPackage);
-                        ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
-                    } catch (Exception e) {
-                        driver.quit();
+                    // Re-opens the application
+                    Map<String, Object> openParams = new HashMap<>();
+                    openParams.put("identifier", appPackage);
+                    ((AndroidDriver) driver).executeScript("mobile:application:open", openParams);
+                } catch (Exception e) {
+                    driver.quit();
 
-                        throw e;
-                    }
+                    throw e;
                 }
             }
         }
@@ -205,12 +204,14 @@ public class PerfectoPlugin extends Plugin {
         /**
          * Adds perfecto credentials to the list of capabilities. perfectoToken is enough for valid credentials
          * only takes username and password when token is not available.
-         * @param perfectoUser the user's login
-         * @param perfectoPass the user's password
-         * @param perfectoToken the user's token
+         *
+         * @param perfectoUser         the user's login
+         * @param perfectoPass         the user's password
+         * @param perfectoToken        the user's token
          * @param perfectoCapabilities the capabilities so far
          */
-        private void setPerfectoCredentials(String perfectoUser, String perfectoPass, String perfectoToken, MutableCapabilities perfectoCapabilities){
+        private void setPerfectoCredentials(String perfectoUser, String perfectoPass, String perfectoToken, MutableCapabilities perfectoCapabilities) {
+
             if (!perfectoToken.isEmpty()) {
                 perfectoCapabilities.setCapability("securityToken", perfectoToken);
             } else if (!perfectoUser.isEmpty()) {
@@ -220,7 +221,5 @@ public class PerfectoPlugin extends Plugin {
                 }
             }
         }
-
-
     }
 }

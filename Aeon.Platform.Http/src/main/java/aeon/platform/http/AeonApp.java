@@ -1,5 +1,6 @@
 package aeon.platform.http;
 
+import aeon.core.testabstraction.product.Aeon;
 import aeon.platform.http.controllers.HttpSessionController;
 import com.codahale.metrics.health.HealthCheck;
 import io.dropwizard.Application;
@@ -30,12 +31,15 @@ public class AeonApp extends Application<AeonAppConfiguration> {
         );
 
         environment.jersey().register(controller);
+
         environment.healthChecks().register("application", new HealthCheck() {
             @Override
             protected Result check() {
                 return Result.healthy();
             }
         });
+
+        Aeon.setSessionIdProvider(new HttpSessionIdProvider());
     }
 
     /**

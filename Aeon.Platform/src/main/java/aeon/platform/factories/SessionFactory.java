@@ -3,6 +3,7 @@ package aeon.platform.factories;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.common.Capability;
+import aeon.core.common.exceptions.AeonLaunchException;
 import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.extensions.IProductTypeExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
@@ -15,6 +16,7 @@ import org.pf4j.Extension;
 
 import javax.inject.Inject;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -42,7 +44,7 @@ public class SessionFactory implements ISessionFactory {
     }
 
     @Override
-    public ISession getSession(Map settings) throws Exception {
+    public ISession getSession(Map settings) throws IllegalAccessException, IOException, InstantiationException {
         Properties properties = null;
 
         if (settings != null) {
@@ -65,14 +67,15 @@ public class SessionFactory implements ISessionFactory {
             }
         }
 
-        throw new RuntimeException("No valid adapter found");
+        throw new AeonLaunchException("No valid adapter found. Please check " +
+                "whether at least one matching adapter plugin is installed.");
     }
 
     private IAdapter createAdapter(IAdapterExtension plugin, Configuration configuration) {
         return plugin.createAdapter(configuration);
     }
 
-    private AutomationInfo setUpAutomationInfo(Properties settings) throws Exception {
+    private AutomationInfo setUpAutomationInfo(Properties settings) throws IOException, IllegalAccessException, InstantiationException {
         IAdapterExtension plugin = loadPlugins();
 
         IDriver driver;

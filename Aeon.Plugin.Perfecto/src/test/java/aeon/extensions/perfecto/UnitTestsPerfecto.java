@@ -1,21 +1,20 @@
 package aeon.extensions.perfecto;
 
 import aeon.core.testabstraction.product.Configuration;
+import aeon.selenium.SeleniumConfiguration;
 import io.appium.java_client.android.AndroidDriver;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import aeon.selenium.SeleniumConfiguration;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import org.apache.logging.log4j.Logger;
 
 import static org.mockito.Mockito.*;
 
@@ -51,11 +50,11 @@ public class UnitTestsPerfecto {
         spyAeonConfiguration = Mockito.spy(aeonConfiguration);
 
         //plugin settings
-        PerfectoPlugin.log = log;
-        PerfectoPlugin.configuration = spyPerfectoConfiguration;
+        PerfectoPlugin.PerfectoSeleniumExtension.log = log;
 
         //instantiate target - PerfectoSeleniumExtension to test methods
         seleniumExtension = new PerfectoPlugin.PerfectoSeleniumExtension();
+        seleniumExtension.configuration = spyPerfectoConfiguration;
     }
 
     @Test
@@ -68,8 +67,7 @@ public class UnitTestsPerfecto {
         seleniumExtension.onGenerateCapabilities(aeonConfiguration, mutableCapabilities);
 
         //Assert
-        System.out.println(mutableCapabilities.getCapability("securityToken"));
-        Assertions.assertEquals(mutableCapabilities.getCapability("securityToken"), "test_token");
+        Assertions.assertEquals("test_token", mutableCapabilities.getCapability("securityToken"));
         Assertions.assertNull(mutableCapabilities.getCapability("user"));
         Assertions.assertNull(mutableCapabilities.getCapability("password"));
     }
@@ -87,8 +85,8 @@ public class UnitTestsPerfecto {
 
         //Assert
         Assertions.assertNull(mutableCapabilities.getCapability("securityToken"));
-        Assertions.assertEquals(mutableCapabilities.getCapability("user"), "test_user");
-        Assertions.assertEquals(mutableCapabilities.getCapability("password"), "test_pass");
+        Assertions.assertEquals("test_user", mutableCapabilities.getCapability("user"));
+        Assertions.assertEquals("test_pass", mutableCapabilities.getCapability("password"));
     }
 
     @Test
@@ -120,7 +118,7 @@ public class UnitTestsPerfecto {
         seleniumExtension.onGenerateCapabilities(aeonConfiguration, mutableCapabilities);
 
         //Assert
-        Assertions.assertNotEquals(spyPerfectoConfiguration, PerfectoPlugin.configuration);
+        Assertions.assertNotEquals(spyPerfectoConfiguration, seleniumExtension.configuration);
     }
 
     @Test

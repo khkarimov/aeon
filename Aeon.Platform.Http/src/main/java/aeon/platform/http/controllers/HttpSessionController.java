@@ -1,6 +1,8 @@
 package aeon.platform.http.controllers;
 
+import aeon.core.testabstraction.product.Aeon;
 import aeon.platform.factories.SessionFactory;
+import aeon.platform.http.HttpSessionIdProvider;
 import aeon.platform.http.models.CreateSessionBody;
 import aeon.platform.http.models.ExecuteCommandBody;
 import aeon.platform.http.models.ResponseBody;
@@ -14,6 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -45,19 +48,18 @@ public class HttpSessionController {
      *
      * @param body Session body
      * @return Response entity
-     * @throws Exception Throws an exception if an error occurs
      */
     @POST
     @Timed
-    public Response createSession(CreateSessionBody body) throws Exception {
+    public Response createSession(CreateSessionBody body) {
 
         ObjectId sessionId = new ObjectId();
+        getSessionIdProvider().setCurrentSessionId(sessionId.toString());
 
-        if (body != null) {
-            sessionTable.put(sessionId, sessionFactory.getSession(body.getSettings()));
-        } else {
-            sessionTable.put(sessionId, sessionFactory.getSession(null));
-
+        try {
+            sessionTable.put(sessionId, sessionFactory.getSession(body == null ? null : body.getSettings()));
+        } catch (IllegalAccessException | IOException | InstantiationException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
 
         JSONObject sessionIdJson = new JSONObject();
@@ -82,6 +84,7 @@ public class HttpSessionController {
         }
 
         ISession session = sessionTable.get(sessionId);
+        getSessionIdProvider().setCurrentSessionId(sessionId.toString());
 
         try {
             Object result = session.executeCommand(body.getCommand(), body.getArgs());
@@ -95,7 +98,7 @@ public class HttpSessionController {
             return Response.status(Response.Status.OK)
                     .entity(new ResponseBody(sessionId.toString(), true, result.toString(), null))
                     .build();
-        } catch (Throwable e) {
+        } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new ResponseBody(sessionId.toString(), false, null, e.getMessage()))
                     .build();
@@ -118,7 +121,7 @@ public class HttpSessionController {
         }
 
         ISession session = sessionTable.get(sessionId);
-        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs(), body.getCallbackUrl()).start();
+        threadFactory.getCommandExecutionThread(sessionId, session, body.getCommand(), body.getArgs(), body.getCallbackUrl(), getSessionIdProvider()).start();
 
         return Response.status(Response.Status.OK)
                 .entity(new ResponseBody(sessionId.toString(), true, "The asynchronous command was successfully scheduled.", null))
@@ -140,10 +143,15 @@ public class HttpSessionController {
         }
 
         ISession session = sessionTable.get(sessionId);
+        getSessionIdProvider().setCurrentSessionId(sessionId.toString());
 
         session.quitSession();
         sessionTable.remove(sessionId);
 
         return Response.status(Response.Status.OK).build();
+    }
+
+    private HttpSessionIdProvider getSessionIdProvider() {
+        return (HttpSessionIdProvider) Aeon.getSessionIdProvider();
     }
 }
