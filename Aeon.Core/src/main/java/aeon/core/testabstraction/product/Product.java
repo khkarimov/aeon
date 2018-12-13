@@ -2,12 +2,9 @@ package aeon.core.testabstraction.product;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.Capability;
-import aeon.core.extensions.ITestExecutionExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
-
-import java.util.List;
 
 /**
  * Abstract class for Product implementation.
@@ -60,13 +57,11 @@ public abstract class Product {
     /**
      * Abstract for launch function.
      *
-     *
      * @param plugin The IAdapterExtension to be added.
      * @throws InstantiationException If an instantiation exception is made.
-     * @throws IllegalAccessException If issue obataining keys.
-     *
+     * @throws IllegalAccessException If issue obtaining keys.
      */
-    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException{
+    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException {
         IDriver driver;
         IAdapter adapter;
 
@@ -92,8 +87,8 @@ public abstract class Product {
     /**
      * Create and returns and IAdapter given a plugin.
      *
-     * @param   plugin  The Product's plugin to be returned.
-     * @return          The plugin with a newly created adapter.
+     * @param plugin The Product's plugin to be returned.
+     * @return The plugin with a newly created adapter.
      */
     private IAdapter createAdapter(IAdapterExtension plugin) {
         return plugin.createAdapter(configuration);
@@ -136,7 +131,7 @@ public abstract class Product {
     /**
      * Returns a boolean based on a key and a defaultValue of the configuration.
      *
-     * @param key The key to be compared.
+     * @param key          The key to be compared.
      * @param defaultValue The default boolean to be compared.
      * @return the truth of the comparison.
      */
@@ -147,7 +142,7 @@ public abstract class Product {
     /**
      * Returns a string based on a key and a defaultValue of the configuration.
      *
-     * @param key The key to be compared.
+     * @param key          The key to be compared.
      * @param defaultValue The default string to be compared.
      * @return the string of the configuration.
      */
@@ -158,7 +153,7 @@ public abstract class Product {
     /**
      * Returns a double based on a key and a defaultValue of the configuration.
      *
-     * @param key The key to be compared.
+     * @param key          The key to be compared.
      * @param defaultValue The default string to be compared.
      * @return the double of the configuration.
      */
