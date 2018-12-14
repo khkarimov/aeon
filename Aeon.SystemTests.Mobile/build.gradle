@@ -1,7 +1,49 @@
+compileTestJava.options.encoding = 'utf-8'
+
 artifactoryPublish.skip = true
 
+clean.doFirst {
+    delete 'log'
+    delete 'lib'
+    delete 'plugins'
+}
+
 dependencies {
-    compile project(":Aeon.Core.Mobile")
+    compile project(':Aeon.Core.Mobile')
+}
+
+test {
+    if (testConfiguration) {
+        environment "AEON_CONFIG", "src/test/resources/" + testConfiguration + ".properties"
+    }
+    if (testConfiguration != "perfecto") {
+        environment "AEON_DISABLED_PLUGINS", "aeon.extensions.perfecto"
+    }
+
+    maxParallelForks = 4
+    useJUnit() {
+        def includeList = System.getenv('tests.included.tags')
+        if (includeList != null) {
+            def categories = includeList.split("\\s*(,|\\s)\\s*")
+            categories.each { category ->
+                includeCategories 'categories.' + category
+            }
+        }
+        def excludeList = System.getenv('tests.excluded.tags')
+        if (excludeList != null) {
+            def categories = excludeList.split("\\s*(,|\\s)\\s*")
+            categories.each { category ->
+                excludeCategories 'categories.' + category
+            }
+        }
+    }
+
+    testLogging {
+        // Make sure output from
+        // standard out or error is shown
+        // in Gradle output.
+        showStandardStreams = true
+    }
 }
 
 sonarqube {
