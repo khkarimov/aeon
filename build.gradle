@@ -39,6 +39,13 @@ task CopySeleniumPlugin(type: Copy) {
     include '*.jar'
 }
 
+task CopySeleniumPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Selenium/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
+    include '*.jar'
+}
+
 //Copy reporting plugin into SystemTests plugins folder
 task CopyReportingPlugin(type: Copy) {
     group 'copy'
@@ -47,11 +54,32 @@ task CopyReportingPlugin(type: Copy) {
     include '*.jar'
 }
 
+task CopyReportingPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Reporting/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
+    include '*.jar'
+}
+
 //Copy perfecto plugin into SystemTests plugins folder
 task CopyPerfectoPlugin(type: Copy) {
     group 'copy'
     from 'Aeon.Plugin.Perfecto/build/libs'
     into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+task CopyPerfectoPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Perfecto/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
+    include '*.jar'
+}
+
+task CopyAppiumPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Appium/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
     include '*.jar'
 }
 
@@ -94,8 +122,12 @@ task CopyDriversPlatformPython(type: Copy) {
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
+assemble.finalizedBy(CopySeleniumPluginMobile)
 assemble.finalizedBy(CopyReportingPlugin)
+assemble.finalizedBy(CopyReportingPluginMobile)
 assemble.finalizedBy(CopyPerfectoPlugin)
+assemble.finalizedBy(CopyPerfectoPluginMobile)
+assemble.finalizedBy(CopyAppiumPluginMobile)
 assemble.finalizedBy(CopySeleniumPlatformPlugin)
 assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
