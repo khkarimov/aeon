@@ -8,8 +8,8 @@ import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.testabstraction.models.Browser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -18,7 +18,7 @@ import java.time.Duration;
  */
 public class WebProduct extends Product {
 
-    private static Logger log = LogManager.getLogger(WebProduct.class);
+    private static Logger log = LoggerFactory.getLogger(WebProduct.class);
 
     public Browser browser;
 
@@ -48,7 +48,7 @@ public class WebProduct extends Product {
         super.afterLaunch();
 
         BrowserType browserType = ((WebConfiguration) configuration).getBrowserType();
-        log.info("Product successfully launched with " + browserType);
+        log.info("Product successfully launched with {}", browserType);
 
         // Set WebCommandExecutionFacade
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
@@ -82,7 +82,7 @@ public class WebProduct extends Product {
             browser.goToUrl(protocol + "://" + environment);
         }
     }
-    
+
     @Override
     protected void onLaunchFailure(Exception e) {
 

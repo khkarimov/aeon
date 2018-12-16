@@ -1,8 +1,8 @@
 package aeon.extensions.reporting;
 
 import aeon.core.extensions.PluginConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ReportingConfiguration extends PluginConfiguration {
 
-    private Logger log = LogManager.getLogger(ReportingPlugin.class);
+    private Logger log = LoggerFactory.getLogger(ReportingPlugin.class);
 
     public static class Keys {
         public static final String SLACK_CHAT_URL = "aeon.extensions.reporting.slack.chat.url";

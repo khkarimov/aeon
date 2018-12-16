@@ -3,11 +3,11 @@ package aeon.core.testabstraction.product;
 import aeon.core.common.BaseConfiguration;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Base configuration class for aeon.
@@ -16,17 +16,16 @@ import java.util.*;
  */
 public class Configuration extends BaseConfiguration {
 
-    static Logger log = LogManager.getLogger(Configuration.class);
     private Class driver;
     private Class adapter;
 
     /**
      * Initializes a new instance of the {@link Configuration} class.
      *
-     * @param driver AeonWebDriver.class.
+     * @param driver  AeonWebDriver.class.
      * @param adapter SeleniumAdapter.class.
-     * @param <D> AeonWebDriver.class.
-     * @param <A> SeleniumAdapter.class.
+     * @param <D>     AeonWebDriver.class.
+     * @param <A>     SeleniumAdapter.class.
      */
     public <D extends IDriver, A extends IAdapter> Configuration(Class<D> driver, Class<A> adapter) {
         this.driver = driver;

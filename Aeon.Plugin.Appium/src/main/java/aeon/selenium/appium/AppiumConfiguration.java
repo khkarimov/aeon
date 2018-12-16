@@ -2,8 +2,8 @@ package aeon.selenium.appium;
 
 import aeon.core.framework.abstraction.drivers.AeonMobileDriver;
 import aeon.selenium.SeleniumConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class AppiumConfiguration extends SeleniumConfiguration {
 
-    private Logger log = LogManager.getLogger(AppiumConfiguration.class);
+    private Logger log = LoggerFactory.getLogger(AppiumConfiguration.class);
 
     static class Keys {
     }

@@ -1,8 +1,8 @@
 package aeon.core.common;
 
 import aeon.core.common.interfaces.IConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class BaseConfiguration implements IConfiguration {
 
-    static Logger log = LogManager.getLogger(BaseConfiguration.class);
+    static Logger log = LoggerFactory.getLogger(BaseConfiguration.class);
     protected Properties properties = new Properties();
 
     /**

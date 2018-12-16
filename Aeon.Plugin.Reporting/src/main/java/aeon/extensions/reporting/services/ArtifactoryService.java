@@ -12,8 +12,8 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
@@ -26,7 +26,7 @@ public class ArtifactoryService {
     private static String username = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
     private static String password = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
 
-    private static Logger log = LogManager.getLogger(ArtifactoryService.class);
+    private static Logger log = LoggerFactory.getLogger(ArtifactoryService.class);
 
     public static String uploadToArtifactory(String filePathName) {
 

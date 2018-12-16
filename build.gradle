@@ -16,6 +16,7 @@ dependencies {
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Core.Web')
     compile project(':Aeon.Plugin.Appium')
+    compile project(':Aeon.Plugin.Log4J2')
     compile project(':Aeon.Plugin.Perfecto')
     compile project(':Aeon.Plugin.Reporting')
     compile project(':Aeon.Plugin.Selenium')

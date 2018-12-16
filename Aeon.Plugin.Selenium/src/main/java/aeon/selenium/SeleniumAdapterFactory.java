@@ -3,6 +3,7 @@ package aeon.selenium;
 
 import aeon.core.common.Capability;
 import aeon.core.common.Resources;
+import aeon.core.common.exceptions.AeonLaunchException;
 import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.exceptions.UnsupportedPlatformException;
 import aeon.core.common.helpers.OsCheck;
@@ -23,8 +24,6 @@ import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -52,6 +51,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +77,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     private final String mobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
-    private static Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
+    private static Logger log = LoggerFactory.getLogger(SeleniumAdapterFactory.class);
     protected BrowserType browserType;
     private String browserAcceptedLanguageCodes;
     private boolean useMobileUserAgent;
@@ -131,7 +132,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         try {
             fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
         } catch (IllegalArgumentException e) {
-            log.warn("Illegal browser size selected.  Set to default value: 'FullHD'");
+            log.warn("Illegal browser size selected. Set to default value: 'FullHD'");
             fallbackBrowserSize = BrowserSize.FullHD;
         }
 
@@ -144,8 +145,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 }
                 seleniumHubUrl = new URL(hubUrlString);
             } catch (MalformedURLException e) {
-                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-                throw new RuntimeException(e);
+                log.error("MalformedURLException for the selenium grid URL", e);
+                throw new AeonLaunchException(e);
             }
         }
 
@@ -343,7 +344,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             try {
                 return createDriver.get();
             } catch (Exception e) {
-                log.trace("Web driver instantiation failed: " + e.getMessage(), e);
+                log.trace("Web driver instantiation failed: {}" + e.getMessage(), e);
 
                 if (i < numberOfRetries - 1) {
                     Sleep.wait(1000);
