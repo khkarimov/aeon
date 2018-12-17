@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -26,10 +25,9 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Loads configuration from properties files.
      *
-     * @throws IOException            If properties are not defined.
-     * @throws IllegalAccessException If issue obtaining keys.
+     * @throws IOException If properties are not defined.
      */
-    public void loadConfiguration() throws IOException, IllegalAccessException {
+    public void loadConfiguration() throws IOException {
         try (
                 InputStream inAeon = getAeonInputStream();
                 InputStream inConfig = getConfigurationProperties()
@@ -99,19 +97,12 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Loads properties from environment variables, overriding settings from properties files.
-     *
-     * @throws IllegalAccessException If issue obtaining keys.
      */
-    private void setProperties() throws IllegalAccessException {
-        List<Field> keys = getConfigurationFields();
-        keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
-        for (Field key : keys) {
-            if (key.isSynthetic()) {
-                continue;
-            }
-
-            key.setAccessible(true);
-            String keyValue = key.get(null).toString();
+    private void setProperties() {
+        List<AeonConfigKey> keys = getConfigurationFields();
+        keys.addAll(Arrays.asList(Keys.values()));
+        for (AeonConfigKey key : keys) {
+            String keyValue = key.getKey();
             String environmentValue = getEnvironmentValue(keyValue.replace('.', '_'));
             if (environmentValue != null) {
                 properties.setProperty(keyValue, environmentValue);
@@ -132,6 +123,8 @@ public class BaseConfiguration implements IConfiguration {
             stringBuilder.append(String.format("%1$s = %2$s%n", key, properties.getProperty(key)));
         }
         log.info(stringBuilder.toString());
+
+        this.getString(Keys.TEST, "");
     }
 
     /**
@@ -168,8 +161,8 @@ public class BaseConfiguration implements IConfiguration {
      *
      * @return List containing fields
      */
-    protected List<Field> getConfigurationFields() {
-        return new ArrayList<>(Arrays.asList(Keys.class.getDeclaredFields()));
+    protected List<AeonConfigKey> getConfigurationFields() {
+        return new ArrayList<>(Arrays.asList(Keys.values()));
     }
 
     /**
@@ -255,6 +248,17 @@ public class BaseConfiguration implements IConfiguration {
     }
 
     /**
+     * adasdasdas.
+     *
+     * @param key          asdasd
+     * @param defaultValue asda
+     * @return asda
+     */
+    public String getString(AeonConfigKey key, String defaultValue) {
+        return get(key.getKey(), defaultValue);
+    }
+
+    /**
      * Gets property associated with key and its default value.
      *
      * @param key          a property key
@@ -279,6 +283,36 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Static class for the Configuration keys.
      */
-    public static class Keys {
+    //public static class Keys {
+    //}
+
+    /**
+     * sdfsdfer.
+     */
+    public enum Keys implements AeonConfigKey {
+
+        TEST("asdsad"),
+        TEST2("ASdasd");
+
+        private final String key;
+
+        Keys(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String getKey() {
+            return this.key;
+        }
+    }
+
+    interface AeonConfigKey {
+
+        /**
+         * asdasdas.
+         *
+         * @return asd.
+         */
+        String getKey();
     }
 }
