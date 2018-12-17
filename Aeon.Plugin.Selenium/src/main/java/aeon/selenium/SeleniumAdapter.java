@@ -3,10 +3,10 @@ package aeon.selenium;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.exceptions.*;
 import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.*;
 import aeon.core.common.helpers.*;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.*;
@@ -15,17 +15,14 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import aeon.core.testabstraction.models.Browser;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
-import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -42,10 +39,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
 import static aeon.core.common.helpers.StringUtils.like;
@@ -800,7 +798,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 webDriver.manage().window().setPosition(new Point(0, 0));
                 webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
             } else if (!isRemote && osIsMacOrLinux() && (browserType.equals(BrowserType.Opera) ||
-                        browserType.equals(BrowserType.Chrome))) {
+                    browserType.equals(BrowserType.Chrome))) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
                 Point position = new Point(0, 0);
@@ -1883,10 +1881,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *                      them having variable lengths.
      */
     @Override
-    public void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expectedDate, Period delta) {
+    public void datesApproximatelyEqual(WebControl element, String attributeName, LocalDate expectedDate, Period delta) {
         String actualString = ((SeleniumElement) element).getAttribute(attributeName);
         try {
-            DateTime actualDate = DateTime.parse(actualString);
+            LocalDate actualDate = LocalDate.parse(actualString);
             if (!approximatelyEquals(actualDate, expectedDate, delta)) {
                 throw new DatesNotApproximatelyEqualException(expectedDate, actualDate, delta);
             }

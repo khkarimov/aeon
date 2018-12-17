@@ -26,13 +26,14 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.offset.PointOption;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
 
 import java.net.URL;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -448,9 +449,9 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         return -1;
     }
 
-    private void setMonthOnAndroidDatePicker(DateTime date) {
+    private void setMonthOnAndroidDatePicker(LocalDate date) {
         int currentMonth = getMonthNumberOnAndroidDatePicker();
-        int desiredMonth = date.getMonthOfYear();
+        int desiredMonth = date.getMonthValue();
         WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
         if (date.getYear() != Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText())) {
             setYearOnAndroidDatePicker(date.getYear());
@@ -463,7 +464,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 WebControl previousMonth = findElement(ByMobile.accessibilityId("Previous month"), false);
                 click(previousMonth, false);
             }
-        } else if (currentMonth < desiredMonth) {
+        } else {
             for (int i = 0; i < desiredMonth - currentMonth; i++) {
                 WebControl nextMonth = findElement(ByMobile.accessibilityId("Next month"), false);
                 click(nextMonth, false);
@@ -472,12 +473,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     }
 
     @Override
-    public void setDate(DateTime date) {
+    public void setDate(LocalDate date) {
 
         if (browserType == BrowserType.AndroidHybridApp) {
             switchToNativeAppContext();
             setMonthOnAndroidDatePicker(date);
-            WebControl label = findElement(ByMobile.accessibilityId(date.toString("dd MMMM yyyy")), false);
+            WebControl label = findElement(ByMobile.accessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))), false);
             click(label, false);
             WebControl label1 = findElement(ByMobile.id("android:id/button1"), false);
             click(label1, false);
@@ -485,11 +486,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         } else {
             switchToNativeAppContext();
             WebControl month = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
-            ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.toString("MMMM"));
+            ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
             WebControl day = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[2]"), false);
-            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.toString("d"));
+            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("d")));
             WebControl year = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[3]"), false);
-            ((SeleniumElement) year).getUnderlyingWebElement().sendKeys(date.toString("yyyy"));
+            ((SeleniumElement) year).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("yyyy")));
             switchToWebViewContext();
         }
     }

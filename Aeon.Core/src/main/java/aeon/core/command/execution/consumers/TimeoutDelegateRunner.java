@@ -4,16 +4,15 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
 import aeon.core.common.Resources;
 import aeon.core.common.exceptions.TimeoutExpiredException;
-import aeon.core.common.helpers.IClock;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
 
 import java.awt.*;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -26,22 +25,20 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
     private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
     private IDriver driver;
-    private IClock clock;
     private Duration timeout;
     private AutomationInfo automationInfo;
 
     /**
      * Constructor for {@link TimeoutDelegateRunner} class.
-     * @param successor the delegate runner.
-     * @param driver the web driver.
-     * @param clock the clock.
-     * @param timeout the duration time.
+     *
+     * @param successor      the delegate runner.
+     * @param driver         the web driver.
+     * @param timeout        the duration time.
      * @param automationInfo The automation info.
      */
-    public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout, AutomationInfo automationInfo) {
+    public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, Duration timeout, AutomationInfo automationInfo) {
         super(successor);
         this.driver = driver;
-        this.clock = clock;
         this.timeout = timeout;
         this.automationInfo = automationInfo;
     }
@@ -67,8 +64,8 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         RuntimeException lastCaughtException = null;
         int tries = 0;
 
-        DateTime end = clock.getUtcNow().withDurationAdded(timeout.toMillis(), 1);
-        while (clock.getUtcNow().isBefore(end.toInstant())) {
+        LocalDateTime end = LocalDateTime.now().plus(timeout);
+        while (LocalDateTime.now().isBefore(end)) {
             try {
                 tries++;
                 Object returnValue = commandDelegateWrapper.get();
@@ -93,7 +90,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
         // If we have a last caught exception use that one
         // as the main exception for logging
-        if (lastCaughtException != null){
+        if (lastCaughtException != null) {
             lastCaughtException.addSuppressed(ex);
             ex = lastCaughtException;
         }

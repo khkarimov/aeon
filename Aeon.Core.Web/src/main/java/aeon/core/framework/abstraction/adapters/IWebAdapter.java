@@ -11,11 +11,11 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
@@ -89,7 +89,7 @@ public interface IWebAdapter extends IAdapter {
      * @return A ReadOnly Collection of found elements.
      * matching the current criteria, or an empty list if nothing matches.
      * @throws IllegalArgumentException If FindBy is null.
-     * @throws NoSuchElementsException   If there is no such element.
+     * @throws NoSuchElementsException  If there is no such element.
      */
     Collection<WebControl> findElements(IBy findBy);
 
@@ -221,7 +221,7 @@ public interface IWebAdapter extends IAdapter {
 
     /**
      * Move a single "item" forward in the browser's history.
-     *
+     * <p>
      * Does nothing if we are on the latest page viewed.
      */
     void forward();
@@ -727,13 +727,13 @@ public interface IWebAdapter extends IAdapter {
      * Obtains a date from an elements attribute and compares it with an expected date. has a
      * Margin of error. The date must be in the ISO-8601 standard.
      *
-     * @param element       The element that posseses the date.
+     * @param element       The element that possesses the date.
      * @param attributeName The name of the attribute that has the date.
      * @param expected      The expected date that the attribute should posses.
      * @param delta         The margin of error that the date can be within. Cannot posses any weeks, months or years due to
      *                      them having variable lengths.
      */
-    void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta);
+    void datesApproximatelyEqual(WebControl element, String attributeName, LocalDate expected, Period delta);
 
     /**
      * Returns the enumerable BrowserType representing the current browser.
@@ -787,7 +787,7 @@ public interface IWebAdapter extends IAdapter {
      * Selects a file for inputs of type file.
      *
      * @param control The control which gets the file path.
-     * @param path The path of the file to select.
+     * @param path    The path of the file to select.
      */
     void selectFile(WebControl control, String path);
 }
