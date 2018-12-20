@@ -1,17 +1,13 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.command.execution.AutomationInfo;
-import aeon.core.command.execution.WebCommandExecutionFacade;
-import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.Capability;
-import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
+import aeon.core.extensions.WebProductTypeExtension;
 import aeon.core.testabstraction.models.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.time.Duration;
 
 /**
  * Class to make a web product.
@@ -51,15 +47,7 @@ public class WebProduct extends Product {
         log.info("Product successfully launched with " + browserType);
 
         // Set WebCommandExecutionFacade
-        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-        long throttle = (long) configuration.getDouble(Configuration.Keys.THROTTLE, 100);
-        long ajaxTimeout = (long) configuration.getDouble(WebConfiguration.Keys.AJAX_TIMEOUT, 20);
-
-        WebCommandExecutionFacade commandExecutionFacade = new WebCommandExecutionFacade(
-                new DelegateRunnerFactory(Duration.ofMillis(throttle), Duration.ofSeconds(timeout)),
-                new AjaxWaiter(this.automationInfo.getDriver(), Duration.ofSeconds(ajaxTimeout)));
-
-        automationInfo.setCommandExecutionFacade(commandExecutionFacade);
+        new WebProductTypeExtension().createCommandExecutionFacade(this.automationInfo);
 
         // Instantiate browser and optionally maximize the window
         browser = new Browser(getAutomationInfo());
@@ -82,7 +70,7 @@ public class WebProduct extends Product {
             browser.goToUrl(protocol + "://" + environment);
         }
     }
-    
+
     @Override
     protected void onLaunchFailure(Exception e) {
 

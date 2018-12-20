@@ -3,6 +3,7 @@ package aeon.selenium;
 
 import aeon.core.common.Capability;
 import aeon.core.common.Resources;
+import aeon.core.common.exceptions.AeonLaunchException;
 import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.exceptions.UnsupportedPlatformException;
 import aeon.core.common.helpers.OsCheck;
@@ -35,11 +36,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
-import org.openqa.selenium.ie.InternetExplorerDriverService;
-import org.openqa.selenium.ie.InternetExplorerOptions;
-import org.openqa.selenium.internal.ElementScrollBehavior;
+import org.openqa.selenium.ie.*;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.opera.OperaDriver;
@@ -74,7 +71,7 @@ import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 @Extension
 public class SeleniumAdapterFactory implements IAdapterExtension {
 
-    private final String mobileUserAgent = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+    private static final String MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
     private static Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
     protected BrowserType browserType;
@@ -145,7 +142,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 seleniumHubUrl = new URL(hubUrlString);
             } catch (MalformedURLException e) {
                 log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-                throw new RuntimeException(e);
+                throw new AeonLaunchException(e);
             }
         }
 
@@ -189,7 +186,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
                         ChromeOptions chromeOptions = getChromeOptions();
-                        chromeOptions = (ChromeOptions) setProxySettings(chromeOptions, proxyLocation);
+                        setProxySettings(chromeOptions, proxyLocation);
                         System.setProperty("webdriver.chrome.driver", chromeDirectory);
                         driver = new ChromeDriver(chromeOptions);
                     }
@@ -256,7 +253,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
                         SafariOptions safariOptions = new SafariOptions();
-                        safariOptions = ((SafariOptions) setProxySettings(safariOptions, proxyLocation));
+                        setProxySettings(safariOptions, proxyLocation);
                         System.setProperty("webdriver.safari.driver", safariDirectory);
                         driver = new SafariDriver(safariOptions);
 
@@ -281,8 +278,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case IOSHybridApp:
-                if (seleniumHubUrl == null) {
-                    throw new RuntimeException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
+                if (finalSeleniumHubUrl == null) {
+                    throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
 
                 capabilities = (DesiredCapabilities) getCapabilities();
@@ -292,8 +289,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 break;
 
             case AndroidHybridApp:
-                if (seleniumHubUrl == null) {
-                    throw new RuntimeException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
+                if (finalSeleniumHubUrl == null) {
+                    throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
 
                 capabilities = (DesiredCapabilities) getCapabilities();
@@ -316,7 +313,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
                     } else {
                         OperaOptions operaOptions = getOperaOptions();
-                        operaOptions = (OperaOptions) setProxySettings(operaOptions, proxyLocation);
+                        setProxySettings(operaOptions, proxyLocation);
                         System.setProperty(OperaDriverService.OPERA_DRIVER_EXE_PROPERTY, operaDirectory);
                         driver = new OperaDriver(operaOptions);
                     }
@@ -607,7 +604,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
-    private MutableCapabilities setProxySettings(MutableCapabilities options, String proxyLocation) {
+    private void setProxySettings(MutableCapabilities options, String proxyLocation) {
         if (StringUtils.isNotBlank(proxyLocation)) {
             Proxy proxy = new Proxy();
             proxy.setHttpProxy(proxyLocation);
@@ -615,8 +612,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             proxy.setFtpProxy(proxyLocation);
             options.setCapability(CapabilityType.PROXY, proxy);
         }
-
-        return options;
     }
 
     private FirefoxProfile getFirefoxProfile() {
@@ -629,7 +624,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         firefoxProfile.setPreference("toolkit.startup.max_resumed_crashes", "-1");
         firefoxProfile.setPreference("browser.shell.checkDefaultBrowser", false);
         if (useMobileUserAgent) {
-            firefoxProfile.setPreference("general.useragent.override", mobileUserAgent);
+            firefoxProfile.setPreference("general.useragent.override", MOBILE_USER_AGENT);
         }
         return firefoxProfile;
     }
@@ -649,7 +644,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             firefoxOptions.addPreference("browser.tabs.remote.autostart", false);
         }
 
-        firefoxOptions.merge(setProxySettings(getMarionetteCapabilities(), proxyLocation));
+        DesiredCapabilities firefoxCapabilities = getMarionetteCapabilities();
+        setProxySettings(firefoxOptions, proxyLocation);
+        firefoxOptions.merge(firefoxCapabilities);
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.FATAL);
         return firefoxOptions;
     }
@@ -660,7 +657,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         List<String> processes = Process.getWindowsProcessesByName("iexplore");
-        if (processes != null && processes.size() > 0) {
+        if (processes != null && !processes.isEmpty()) {
             log.info(Resources.getString("InternetExplorerIsAlreadyRunning_Info"));
         }
 
@@ -686,13 +683,13 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         List<String> processes = Process.getWindowsProcessesByName("MicrosoftEdge");
-        if (processes != null && processes.size() > 0) {
+        if (processes != null && !processes.isEmpty()) {
             log.info(Resources.getString("MicrosoftEdgeIsAlreadyRunning_Info"));
         }
 
         EdgeOptions edgeOptions = new EdgeOptions();
 
-        edgeOptions = (EdgeOptions) setProxySettings(edgeOptions, proxyLocation);
+        setProxySettings(edgeOptions, proxyLocation);
         return edgeOptions;
     }
 
@@ -706,7 +703,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         chromeOptions.setHeadless(isHeadless);
 
         if (useMobileUserAgent) {
-            chromeOptions.addArguments("--user-agent=" + mobileUserAgent);
+            chromeOptions.addArguments("--user-agent=" + MOBILE_USER_AGENT);
         }
 
         if (StringUtils.isNotBlank(mobileEmulationDevice)) {
@@ -773,7 +770,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         String message = "Could not find any web view contexts, available contexts: " + String.join(", ", availableContexts);
-        throw new RuntimeException(message);
+        throw new ElementNotVisibleException(message);
     }
 
     @Override
@@ -783,9 +780,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     @Override
     public Configuration getConfiguration() throws IOException, IllegalAccessException {
-        Configuration configuration = new SeleniumConfiguration();
-        configuration.loadConfiguration();
-        return configuration;
+        Configuration seleniumConfiguration = new SeleniumConfiguration();
+        seleniumConfiguration.loadConfiguration();
+        return seleniumConfiguration;
     }
 
     @Override

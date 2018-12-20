@@ -64,7 +64,7 @@ public class CommandExecutionThread extends Thread {
             } else {
                 response = new ResponseBody(sessionId.toString(), true, result.toString(), null);
             }
-        } catch (Throwable e) {
+        } catch (Exception e) {
             response = new ResponseBody(sessionId.toString(), false, null, e.getMessage());
         }
 
