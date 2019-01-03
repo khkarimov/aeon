@@ -147,7 +147,7 @@ allprojects {
             url 'https://artifactory.mia.ulti.io/artifactory/maven/'
         }
         maven {
-            url 'http://repository-perfectomobile.forge.cloudbees.com/public/'
+            url 'https://repo1.perfectomobile.com/public/repositories/maven'
         }
     }
 

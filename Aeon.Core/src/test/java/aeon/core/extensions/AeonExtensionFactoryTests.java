@@ -28,7 +28,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateSession_IdDoesNotExit() {
+    void testCreate_IdDoesNotExit() {
 
         // Arrange
 
@@ -40,7 +40,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateSession_SessionIdExists_InstanceDoesNotExit() {
+    void testCreate_SessionIdExists_InstanceDoesNotExit() {
 
         // Arrange
         aeonExtensionFactory.create(String.class);
@@ -53,7 +53,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateSession_IdAndInstanceExist() {
+    void testCreate_IdAndInstanceExist() {
 
         // Arrange
         Object extension1 = aeonExtensionFactory.create(Object.class);
@@ -66,7 +66,7 @@ class AeonExtensionFactoryTests {
     }
 
     @Test
-    void testCreateSession_MultipleSessions() {
+    void testCreate_MultipleSessions() {
 
         // Arrange
         Object extension1 = aeonExtensionFactory.create(Object.class);
@@ -77,5 +77,79 @@ class AeonExtensionFactoryTests {
 
         // Assert
         assertNotEquals(extension1, extension2);
+    }
+
+    @Test
+    void testCreate_publicStaticCreateInstanceMethodDoesNotExist() {
+
+        // Arrange
+
+        // Act
+        Object extension = aeonExtensionFactory.create(ClassWithoutPublicStaticCreateInstanceMethod.class);
+
+        // Assert
+        assertTrue(extension instanceof ClassWithoutPublicStaticCreateInstanceMethod);
+        assertTrue(((ClassWithoutPublicStaticCreateInstanceMethod) extension).parameterLessConstructorCalled);
+    }
+
+    public static class ClassWithoutPublicStaticCreateInstanceMethod {
+        boolean parameterLessConstructorCalled;
+
+        public ClassWithoutPublicStaticCreateInstanceMethod() {
+            this.parameterLessConstructorCalled = true;
+        }
+    }
+
+    @Test
+    void testCreate_publicStaticCreateInstanceMethodExists() {
+
+        // Arrange
+
+        // Act
+        Object extension = aeonExtensionFactory.create(ClassWithPublicStaticCreateInstanceMethod.class);
+
+        // Assert
+        assertTrue(extension instanceof ClassWithPublicStaticCreateInstanceMethod);
+        assertFalse(((ClassWithPublicStaticCreateInstanceMethod) extension).parameterLessConstructorCalled);
+    }
+
+    private static class ClassWithPublicStaticCreateInstanceMethod {
+        boolean parameterLessConstructorCalled;
+
+        ClassWithPublicStaticCreateInstanceMethod() {
+            this.parameterLessConstructorCalled = true;
+        }
+
+        ClassWithPublicStaticCreateInstanceMethod(boolean test) {
+        }
+
+        public static Object createInstance() {
+            return new ClassWithPublicStaticCreateInstanceMethod(false);
+        }
+    }
+
+    @Test
+    void testCreate_publicStaticCreateInstanceMethodThrowsAnException() {
+
+        // Arrange
+
+        // Act
+        Object extension = aeonExtensionFactory.create(ClassWithPublicStaticCreateInstanceMethodThatThrowsAnException.class);
+
+        // Assert
+        assertTrue(extension instanceof ClassWithPublicStaticCreateInstanceMethodThatThrowsAnException);
+        assertTrue(((ClassWithPublicStaticCreateInstanceMethodThatThrowsAnException) extension).parameterLessConstructorCalled);
+    }
+
+    public static class ClassWithPublicStaticCreateInstanceMethodThatThrowsAnException {
+        boolean parameterLessConstructorCalled;
+
+        public ClassWithPublicStaticCreateInstanceMethodThatThrowsAnException() {
+            this.parameterLessConstructorCalled = true;
+        }
+
+        public static Object createInstance() {
+            throw new IllegalStateException();
+        }
     }
 }
