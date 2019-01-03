@@ -1,5 +1,6 @@
 package aeon.selenium.appium;
 
+import aeon.core.common.exceptions.BrowserTypeNotRecognizedException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchElementsException;
 import aeon.core.common.interfaces.IBy;
@@ -122,9 +123,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 ((IOSDriver) getMobileWebDriver()).lockDevice(Duration.ofSeconds(seconds));
                 break;
             default:
-                throw new RuntimeException(String.format(
-                        "Aeon.Appium does not support the browser type \"%s\".",
-                        browserType));
+                throw new BrowserTypeNotRecognizedException();
         }
     }
 
@@ -175,8 +174,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         if (browserType == BrowserType.AndroidHybridApp) {
             log.trace("ANDROID: Pressing home button");
             ((AndroidDriver) getMobileWebDriver()).pressKeyCode(AndroidKeyCode.HOME);
-        } else {
+        } else if (browserType == BrowserType.IOSHybridApp) {
             throw new RuntimeException("Automated pressing of home button currently not supported on IOS");
+        } else {
+            throw new BrowserTypeNotRecognizedException();
         }
     }
 

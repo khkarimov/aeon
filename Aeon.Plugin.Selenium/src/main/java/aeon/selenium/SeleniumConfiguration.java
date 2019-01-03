@@ -53,26 +53,6 @@ public class SeleniumConfiguration extends WebConfiguration {
         public static final String LOGGING_SERVER = "aeon.selenium.logging.type.server";
         public static final String LOGGING_DIRECTORY = "aeon.selenium.logging.directory";
         public static final String BROWSER_MAXIMIZE_FALLBACK = "aeon.browser.maximize.fallback";
-
-        // Appium
-        public static final String APP = "aeon.selenium.appium.app";
-        public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
-        public static final String DEVICE_DESCRIPTION = "aeon.selenium.appium.device_description";
-        public static final String PLATFORM_VERSION = "aeon.selenium.appium.platform_version";
-        public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
-        public static final String WEBVIEW_TIMEOUT = "aeon.selenium.appium.webview.timeout";
-        public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
-        public static final String AUTOMATION_NAME = "aeon.selenium.appium.automation_name";
-
-        // Android
-        public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
-        public static final String APP_ACTIVITY = "aeon.selenium.android.app_activity";
-        public static final String AVD_NAME = "aeon.selenium.android.avd_name";
-
-        //IOS
-        public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
-        public static final String WDA_PORT = "aeon.selenium.ios.wda_port";
-        public static final String UDID = "aeon.selenium.ios.udid";
     }
 
     @Override
@@ -85,7 +65,8 @@ public class SeleniumConfiguration extends WebConfiguration {
 
     /**
      * Constructor for the Selenium Configuration.  Configures that Aeon web driver and selenium adapter.
-     * @throws IOException Exception thrown if there is an IO violation when accessing test or propertion.
+     *
+     * @throws IOException            Exception thrown if there is an IO violation when accessing test or propertion.
      * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
     public SeleniumConfiguration() throws IOException, IllegalAccessException {
@@ -95,10 +76,10 @@ public class SeleniumConfiguration extends WebConfiguration {
     /**
      * Initializes a new instance of the {@link Configuration} class.
      *
-     * @param driver AeonWebDriver.class.
+     * @param driver  AeonWebDriver.class.
      * @param adapter SeleniumAdapter.class.
-     * @param <D> AeonWebDriver.class.
-     * @param <A> SeleniumAdapter.class.
+     * @param <D>     AeonWebDriver.class.
+     * @param <A>     SeleniumAdapter.class.
      */
     public <D extends IWebDriver, A extends IWebAdapter> SeleniumConfiguration(Class<D> driver, Class<A> adapter) {
         super(driver, adapter);

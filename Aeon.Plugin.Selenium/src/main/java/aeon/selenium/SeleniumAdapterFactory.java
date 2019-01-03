@@ -21,9 +21,6 @@ import aeon.selenium.extensions.ISeleniumExtension;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
@@ -58,7 +55,6 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.logging.Level;
@@ -78,12 +74,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String browserAcceptedLanguageCodes;
     private boolean useMobileUserAgent;
     private String proxyLocation;
-    private String platformVersion;
-    private String app;
-    private String appPackage;
-    private String deviceName;
-    private String description;
-    private String driverContext;
     protected WebDriver driver;
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
@@ -119,12 +109,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
-        description = configuration.getString(SeleniumConfiguration.Keys.DEVICE_DESCRIPTION, "");
-        platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
-        app = configuration.getString(SeleniumConfiguration.Keys.APP, "");
-        appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
-        deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
-        driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
+
         try {
             fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
         } catch (IllegalArgumentException e) {
@@ -263,43 +248,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case IOSSafari:
-                DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
-                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-                break;
-
-            case AndroidChrome:
-                capabilities = (DesiredCapabilities) getCapabilities();
-                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-                break;
-
-            case IOSHybridApp:
-                if (finalSeleniumHubUrl == null) {
-                    throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
-                }
-
-                capabilities = (DesiredCapabilities) getCapabilities();
-                driver = getDriver(() -> new IOSDriver(finalSeleniumHubUrl, capabilities));
-
-                trySetContext();
-                break;
-
-            case AndroidHybridApp:
-                if (finalSeleniumHubUrl == null) {
-                    throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
-                }
-
-                capabilities = (DesiredCapabilities) getCapabilities();
-                driver = getDriver(() -> new AndroidDriver(finalSeleniumHubUrl, capabilities));
-
-                trySetContext();
-
-                break;
-
             case Opera:
                 driver = getDriver(() -> {
                     System.setProperty(OperaDriverService.OPERA_DRIVER_VERBOSE_LOG_PROPERTY, "true");
@@ -347,29 +295,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     log.trace("Retrying");
                     i++;
                 } else {
-                    throw e;
-                }
-            }
-        }
-    }
-
-    private void trySetContext() {
-        double currentTime = System.currentTimeMillis();
-        double timeout = currentTime + configuration.getDouble(SeleniumConfiguration.Keys.WEBVIEW_TIMEOUT, 30000);
-        while (true) {
-            try {
-                setContext();
-                return;
-            } catch (RuntimeException e) {
-                // Sometimes web view context is not immediately available
-                log.trace("Web view context not available: " + e.getMessage(), e);
-
-                if (currentTime < timeout) {
-                    Sleep.wait((int) configuration.getDouble(Configuration.Keys.THROTTLE, 100));
-                    log.trace("Retrying");
-                    currentTime = System.currentTimeMillis();
-                } else {
-                    driver.quit();
                     throw e;
                 }
             }
@@ -471,118 +396,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             case Opera:
                 desiredCapabilities = getOperaOptions();
                 setLoggingCapabilities(desiredCapabilities);
-                break;
-
-            case IOSSafari:
-                desiredCapabilities = new DesiredCapabilities();
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
-                }
-
-                desiredCapabilities.setCapability("platformName", "iOS");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileSafari");
-                desiredCapabilities.setCapability("automationName", configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, ""));
-                desiredCapabilities.setCapability("deviceName", deviceName);
-                desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
-                break;
-
-            case AndroidChrome:
-                desiredCapabilities = new DesiredCapabilities();
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
-                }
-
-                desiredCapabilities.setCapability("platformName", "Android");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "Chrome");
-                desiredCapabilities.setCapability("deviceName", deviceName);
-                break;
-
-            case IOSHybridApp:
-                desiredCapabilities = new DesiredCapabilities();
-
-                desiredCapabilities.setCapability("platformName", "iOS");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
-
-                // Appium
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
-                }
-                if (!app.isEmpty()) {
-                    desiredCapabilities.setCapability("app", app);
-                }
-
-                String automationName = configuration.getString(SeleniumConfiguration.Keys.AUTOMATION_NAME, "Appium");
-                if (!StringUtils.isNotBlank(automationName)) {
-                    desiredCapabilities.setCapability("automationName", automationName);
-                }
-
-                // IOS Specific
-                desiredCapabilities.setCapability("bundleId", configuration.getString(SeleniumConfiguration.Keys.BUNDLE_ID, ""));
-                String udid = configuration.getString(SeleniumConfiguration.Keys.UDID, "");
-                if (!udid.isEmpty()) {
-                    desiredCapabilities.setCapability("udid", udid);
-                }
-                String webDriverAgentPort = configuration.getString(SeleniumConfiguration.Keys.WDA_PORT, "");
-                if (!webDriverAgentPort.isEmpty()) {
-                    desiredCapabilities.setCapability("wdaLocalPort", webDriverAgentPort);
-                }
-
-                break;
-
-            case AndroidHybridApp:
-                desiredCapabilities = new DesiredCapabilities();
-
-                // Appium
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
-                }
-
-                desiredCapabilities.setCapability("platformName", "Android");
-
-                if (!platformVersion.isEmpty()) {
-                    desiredCapabilities.setCapability("platformVersion", platformVersion);
-                }
-
-                // Android Specific
-                String avdName = configuration.getString(SeleniumConfiguration.Keys.AVD_NAME, "");
-                if (!avdName.isEmpty()) {
-                    desiredCapabilities.setCapability("avd", avdName);
-                }
-                if (!appPackage.isEmpty()) {
-                    desiredCapabilities.setCapability("appPackage", appPackage);
-                    String appActivity = configuration.getString(SeleniumConfiguration.Keys.APP_ACTIVITY, "");
-                    if (!appActivity.isEmpty()) {
-                        desiredCapabilities.setCapability("appActivity", appActivity);
-                    }
-                }
-                if (!app.isEmpty()) {
-                    desiredCapabilities.setCapability("app", app);
-                }
-
-                //Enables webview support for Crosswalk/Cordova applications
-                boolean crossWalkPatch = configuration.getBoolean(SeleniumConfiguration.Keys.CROSSWALK_PATCH, false);
-                if (crossWalkPatch && !appPackage.isEmpty()) {
-                    String androidDeviceSocket = appPackage + "_devtools_remote";
-                    desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
-                    LegacyChromeOptions chromeOptions = new LegacyChromeOptions();
-                    chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
-                    desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                }
-
                 break;
 
             default:
@@ -745,32 +558,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         setLoggingCapabilities(operaOptions);
 
         return operaOptions;
-    }
-
-    private void setContext() {
-        if (StringUtils.isNotBlank(driverContext)) {
-            log.trace("Switching to context " + driverContext + " as per configuration");
-            ((AppiumDriver) driver).context(driverContext);
-        } else {
-            switchToWebView();
-        }
-    }
-
-    private void switchToWebView() {
-        Set<String> availableContexts = ((AppiumDriver<WebElement>) driver).getContextHandles();
-        log.trace("Available contexts: " + String.join(", ", availableContexts));
-
-        for (String context : availableContexts) {
-            if (context.contains("WEBVIEW")) {
-                log.trace("Switching to context " + context);
-                ((AppiumDriver) driver).context(context);
-
-                return;
-            }
-        }
-
-        String message = "Could not find any web view contexts, available contexts: " + String.join(", ", availableContexts);
-        throw new ElementNotVisibleException(message);
     }
 
     @Override

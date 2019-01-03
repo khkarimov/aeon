@@ -15,7 +15,6 @@ import aeon.core.common.web.selectors.ByJQuery;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import aeon.core.testabstraction.models.Browser;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
@@ -45,7 +44,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
 import static aeon.core.common.helpers.StringUtils.like;
@@ -800,7 +798,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 webDriver.manage().window().setPosition(new Point(0, 0));
                 webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
             } else if (!isRemote && osIsMacOrLinux() && (browserType.equals(BrowserType.Opera) ||
-                        browserType.equals(BrowserType.Chrome))) {
+                    browserType.equals(BrowserType.Chrome))) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
                 Point position = new Point(0, 0);

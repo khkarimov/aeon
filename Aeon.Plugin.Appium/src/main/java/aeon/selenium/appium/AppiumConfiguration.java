@@ -20,6 +20,26 @@ public class AppiumConfiguration extends SeleniumConfiguration {
     private Logger log = LogManager.getLogger(AppiumConfiguration.class);
 
     static class Keys {
+
+        // Appium
+        public static final String APP = "aeon.selenium.appium.app";
+        public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
+        public static final String DEVICE_DESCRIPTION = "aeon.selenium.appium.device_description";
+        public static final String PLATFORM_VERSION = "aeon.selenium.appium.platform_version";
+        public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
+        public static final String WEBVIEW_TIMEOUT = "aeon.selenium.appium.webview.timeout";
+        public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
+        public static final String AUTOMATION_NAME = "aeon.selenium.appium.automation_name";
+
+        // Android
+        public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
+        public static final String APP_ACTIVITY = "aeon.selenium.android.app_activity";
+        public static final String AVD_NAME = "aeon.selenium.android.avd_name";
+
+        //IOS
+        public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
+        public static final String WDA_PORT = "aeon.selenium.ios.wda_port";
+        public static final String UDID = "aeon.selenium.ios.udid";
     }
 
     @Override
