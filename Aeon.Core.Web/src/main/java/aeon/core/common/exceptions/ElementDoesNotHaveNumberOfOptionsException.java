@@ -10,8 +10,9 @@ import java.util.Locale;
 public class ElementDoesNotHaveNumberOfOptionsException extends RuntimeException {
 
     /**
-     * Initializer for a new instance of the {@link ElementAttributeNotADateException} class.
-     * @param actualValue the integer input.
+     * Initializer for a new instance of the {@link ElementDoesNotHaveNumberOfOptionsException} class.
+     *
+     * @param actualValue   the integer input.
      * @param expectedValue the expected integer input.
      */
     public ElementDoesNotHaveNumberOfOptionsException(int actualValue, int expectedValue) {
