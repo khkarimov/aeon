@@ -19,7 +19,10 @@ public class AppiumConfiguration extends SeleniumConfiguration {
 
     private Logger log = LogManager.getLogger(AppiumConfiguration.class);
 
-    static class Keys {
+    /**
+     * Keys relevant to the Appium Configuration.
+     */
+    public static class Keys {
 
         // Appium
         public static final String APP = "aeon.selenium.appium.app";

@@ -6,9 +6,11 @@ import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
+import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
+import aeon.core.testabstraction.product.WebConfiguration;
 import aeon.selenium.LegacyChromeOptions;
 import aeon.selenium.SeleniumAdapterFactory;
 import aeon.selenium.SeleniumConfiguration;
@@ -67,6 +69,8 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
      */
     protected void prepare(AppiumConfiguration configuration) {
         this.configuration = configuration;
+        configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "")));
+        this.browserType = configuration.getBrowserType();
 
         description = configuration.getString(AppiumConfiguration.Keys.DEVICE_DESCRIPTION, "");
         platformVersion = configuration.getString(AppiumConfiguration.Keys.PLATFORM_VERSION, "");

@@ -7,6 +7,7 @@ import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.selenium.SeleniumAdapter;
 import aeon.selenium.SeleniumConfiguration;
+import aeon.selenium.appium.AppiumConfiguration;
 import aeon.selenium.extensions.ISeleniumExtension;
 import com.perfecto.reportium.client.ReportiumClient;
 import com.perfecto.reportium.client.ReportiumClientFactory;
@@ -177,7 +178,7 @@ public class PerfectoPlugin extends Plugin {
         @Override
         public void onAfterLaunch(Configuration configuration, WebDriver driver) {
             boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
-            String appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
+            String appPackage = configuration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "");
 
             // Only if AndroidHybridApp
             // Cleans the app data for a fresh new session.
