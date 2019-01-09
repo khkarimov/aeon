@@ -38,7 +38,7 @@ public class QuitCommandTest {
     }
 
     @Test
-    public void driverDelegate_nullDriver_throwIllegalArgumentException() {
+    public void driverDelegate_nullDriver_throwsException() {
         //Arrange
 
         //Act
