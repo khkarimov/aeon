@@ -160,7 +160,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                     log.trace("Retrying");
                     i++;
                 } else {
-                    throw new UnableToCreateDriverException(e);
+                    throw new UnableToCreateDriverException(e.getMessage());
                 }
             }
         }
