@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class QuitCommandTest {
+public class QuitCommandTests {
     private QuitCommand quitCommand;
 
     @Mock
@@ -38,7 +38,7 @@ public class QuitCommandTest {
     }
 
     @Test
-    public void driverDelegate_nullDriver_throwIllegalArgumentException() {
+    public void driverDelegate_nullDriver_throwsException() {
         //Arrange
 
         //Act
