@@ -1,4 +1,4 @@
-package ultiproapp.pages.shared.loginpages;
+package ultiproapp.pages.loginpages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.mobile.selectors.ByMobile;

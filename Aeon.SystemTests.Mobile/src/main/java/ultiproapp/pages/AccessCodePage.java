@@ -1,4 +1,4 @@
-package ultiproapp.pages.shared;
+package ultiproapp.pages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
