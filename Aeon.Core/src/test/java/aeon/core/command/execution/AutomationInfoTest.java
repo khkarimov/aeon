@@ -38,60 +38,96 @@ class AutomationInfoTest {
 
     @Test
     void getAdapter() {
+
+        //Arrange
+
+        //Act
+
         //Assert
         assertEquals(automationInfo.getAdapter(), adapter);
     }
 
     @Test
     void setAdapter() {
-        //Act
+
+        //Arrange
         IAdapter adapter = mock(IAdapter.class);
+
+        //Act
         automationInfo.setAdapter(adapter);
+
         //Assert
         assertEquals(automationInfo.getAdapter(), adapter);
     }
 
     @Test
     void getCommandExecutionFacade() {
+
+        //Arrange
+
+        //Act
+
         //Assert
         assertNull(automationInfo.getCommandExecutionFacade());
     }
 
     @Test
     void setCommandExecutionFacade() {
-        //Act
+
+        //Arrange
         CommandExecutionFacade commandExecutionFacade = new CommandExecutionFacade(mock(IDelegateRunnerFactory.class));
+
+        //Act
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
+
         //Assert
         assertEquals(automationInfo.getCommandExecutionFacade(), commandExecutionFacade);
     }
 
     @Test
     void getConfiguration() {
+
+        //Arrange
+
+        //Act
+
         //Assert
         assertEquals(automationInfo.getConfiguration(), config);
     }
 
     @Test
     void setConfiguration() {
-        //Act
+
+        //Arrange
         Configuration configuration = mock(Configuration.class);
+
+        //Act
         automationInfo.setConfiguration(configuration);
+
         //Assert
         assertEquals(automationInfo.getConfiguration(), configuration);
     }
 
     @Test
     void getDriver() {
+
+        //Arrange
+
+        //Act
+
         //Assert
         assertEquals(automationInfo.getDriver(), driver);
     }
 
     @Test
     void setDriver() {
-        //Act
+
+        //Arrange
         IDriver driver = mock(IDriver.class);
+
+        //Act
         automationInfo.setDriver(driver);
+
         //Assert
         assertEquals(automationInfo.getDriver(), driver);
     }
