@@ -39,6 +39,11 @@ public class QuitCommandTest {
 
     @Test
     public void testDriverDelegateNullDriver() {
+        //Arrange
+
+        //Act
+
+        //Assert
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> quitCommand.driverDelegate(null));
     }
