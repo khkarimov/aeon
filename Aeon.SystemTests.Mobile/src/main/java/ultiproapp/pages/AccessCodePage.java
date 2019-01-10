@@ -31,6 +31,6 @@ public class AccessCodePage extends Page {
         continueButton = new Button(info, By.cssSelector("[data-automation=\"continue-button\"]"));
         invalidCodeLabel = new Label(info, By.cssSelector("div.item-message p"));
         whatIsACompanyAccessCode = new Link(info, By.cssSelector("ion-button[data-automation=\"what-is-company-access-code-button\"]"));
-        supportLink = new Link(info, By.cssSelector(".login-graphic-footer ion-button[data-automation=\"support-button\"]"));
+        supportLink = new Link(info, By.cssSelector("ion-button[data-automation=\"support-button\"]"));
     }
 }
