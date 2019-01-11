@@ -59,47 +59,12 @@ public class ThrottledDelegateRunnerTests {
 
         // Assert
         verify(delegateRunner, times(1)).execute(commandDelegate1);
-        
+
         assertTrue(varr);
 
     }
 }
 
 
-//public class ThrottledDelegateRunnerTests {
-//
-//
-//    ThrottledDelegateRunner listMock;
-//
-//    private IDelegateRunner iDelegateRunner = mock(IDelegateRunner.class);
-//
-//
-//    @Mock
-//    private Consumer<IDriver> idriver;
-//
-//    @Mock
-//    private Function<IDriver, Object> idriver2;
-//
-//
-//    @BeforeEach
-//    void setup() {
-//        listMock = new ThrottledDelegateRunner(iDelegateRunner, Duration.ofSeconds(1));
-//    }
-//
-//    @Test
-//    public void testIfVoidSuccessorExecuteIsCalled() {
-//
-//        listMock.execute(idriver);
-//
-//        verify(iDelegateRunner, times(1)).execute(idriver);
-//    }
-//
-//    @Test
-//    public void testIfReturnSuccessorExecuteIsCalled() {
-//
-//        listMock.execute(idriver);
-//
-//        verify(iDelegateRunner, times(1)).execute(idriver);
-//    }
-//}
+
 
