@@ -75,8 +75,7 @@ public class CommandExecutionFacadeTests {
     public void execute_MockObjects_returnsDelegateFactoryCreateInstance() {
         //arrange
         when(delegateRunnerFactory.createInstance(automationInfo)).thenReturn(mock(IDelegateRunner.class));
-
-
+        
         //act
         executionFacade.execute(automationInfo, returnCommand);
 
