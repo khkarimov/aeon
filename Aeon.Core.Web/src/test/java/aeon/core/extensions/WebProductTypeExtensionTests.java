@@ -1,6 +1,7 @@
 package aeon.core.extensions;
 
 import aeon.core.command.execution.AutomationInfo;
+import aeon.core.command.execution.ICommandExecutionFacade;
 import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.testabstraction.product.Configuration;
@@ -63,18 +64,16 @@ public class WebProductTypeExtensionTests {
 
     @Test
     public void createCommandExecutionFacade_automationInfo_setsCommandExecutionFacade() {
-//        the weird test:
-//        org.mockito.exceptions.misusing.UnfinishedVerificationException:
-//        Missing method call for verify(mock) here:
-
         //Arrange
         when(automationInfo.getConfiguration()).thenReturn(configuration);
 
         //Act
-        webProductTypeExtension.createCommandExecutionFacade(automationInfo);
+        ICommandExecutionFacade resultCommandExecutionFacade = webProductTypeExtension.createCommandExecutionFacade(automationInfo);
 
         //Assert
-        verify(automationInfo, times(1)).setCommandExecutionFacade(commandExecutionFacade);
+        ICommandExecutionFacade currentCommandExecutionFacade = automationInfo.getCommandExecutionFacade();
+        Assert.assertEquals(resultCommandExecutionFacade, currentCommandExecutionFacade);
+
     }
 
     @Test
