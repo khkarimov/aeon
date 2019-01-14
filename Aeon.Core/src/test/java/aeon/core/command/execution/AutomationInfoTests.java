@@ -13,12 +13,11 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-class AutomationInfoTest {
+class AutomationInfoTests {
 
     private AutomationInfo automationInfo;
 
@@ -37,18 +36,7 @@ class AutomationInfoTest {
     }
 
     @Test
-    void getAdapter() {
-
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertEquals(automationInfo.getAdapter(), adapter);
-    }
-
-    @Test
-    void setAdapter() {
+    void setAdapter_returnsCorrectly() {
 
         //Arrange
         IAdapter adapter = mock(IAdapter.class);
@@ -61,18 +49,7 @@ class AutomationInfoTest {
     }
 
     @Test
-    void getCommandExecutionFacade() {
-
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertNull(automationInfo.getCommandExecutionFacade());
-    }
-
-    @Test
-    void setCommandExecutionFacade() {
+    void setCommandExecutionFacade_returnsCorrectly() {
 
         //Arrange
         CommandExecutionFacade commandExecutionFacade = new CommandExecutionFacade(mock(IDelegateRunnerFactory.class));
@@ -85,18 +62,7 @@ class AutomationInfoTest {
     }
 
     @Test
-    void getConfiguration() {
-
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertEquals(automationInfo.getConfiguration(), config);
-    }
-
-    @Test
-    void setConfiguration() {
+    void setConfiguration_returnsCorrectly() {
 
         //Arrange
         Configuration configuration = mock(Configuration.class);
@@ -109,18 +75,7 @@ class AutomationInfoTest {
     }
 
     @Test
-    void getDriver() {
-
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertEquals(automationInfo.getDriver(), driver);
-    }
-
-    @Test
-    void setDriver() {
+    void setDriver_returnsCorrectly() {
 
         //Arrange
         IDriver driver = mock(IDriver.class);
