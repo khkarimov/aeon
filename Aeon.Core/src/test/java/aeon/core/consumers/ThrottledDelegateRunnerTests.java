@@ -1,4 +1,5 @@
 package aeon.core.consumers;
+
 import aeon.core.command.execution.consumers.ThrottledDelegateRunner;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -8,9 +9,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+
 import java.time.Duration;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -49,12 +52,12 @@ public class ThrottledDelegateRunnerTests {
                 thenReturn(new Object());
 
         // Act
-        boolean objectInstance = throttledDelegateRunner.execute(commandDelegate1) instanceof Object;
+        boolean objectInstan = throttledDelegateRunner.execute(commandDelegate1) instanceof Object;
 
         // Assert
         verify(delegateRunner, times(1)).execute(commandDelegate1);
 
-        assertTrue(objectInstance);
+        assertTrue(objectInstan);
 
     }
 }
