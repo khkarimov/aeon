@@ -8,6 +8,7 @@ import aeon.core.testabstraction.product.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -55,9 +56,10 @@ class TimeoutDelegateRunnerTests {
         doThrow(OutOfMemoryError.class).when(successor).execute(functionCommandDelegate);
 
         // Act
+        Executable executable = () -> timeoutDelegateRunner.execute(functionCommandDelegate);
 
         // Assert
-        assertThrows(OutOfMemoryError.class, () -> timeoutDelegateRunner.execute(functionCommandDelegate));
+        assertThrows(OutOfMemoryError.class, executable);
         verify(driver, times(0)).getScreenshot();
         verify(automationInfo, times(0)).screenshotTaken(any());
     }
@@ -69,9 +71,10 @@ class TimeoutDelegateRunnerTests {
         doThrow(OutOfMemoryError.class).when(successor).execute(consumerCommandDelegate);
 
         //Act
+        Executable executable = () -> timeoutDelegateRunner.execute(consumerCommandDelegate);
 
         //Assert
-        assertThrows(OutOfMemoryError.class, () -> timeoutDelegateRunner.execute(consumerCommandDelegate));
+        assertThrows(OutOfMemoryError.class, executable);
         verify(driver, times(0)).getScreenshot();
         verify(automationInfo, times(0)).screenshotTaken(any());
     }
@@ -112,9 +115,10 @@ class TimeoutDelegateRunnerTests {
         when(automationInfo.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)).thenReturn(false);
 
         // Act
+        Executable executable = () -> timeoutDelegateRunner.execute(functionCommandDelegate);
 
         // Assert
-        assertThrows(RuntimeException.class, () -> timeoutDelegateRunner.execute(functionCommandDelegate));
+        assertThrows(RuntimeException.class, executable);
         verify(driver, times(1)).getScreenshot();
         verify(automationInfo, times(1)).screenshotTaken(any());
     }
@@ -127,9 +131,10 @@ class TimeoutDelegateRunnerTests {
         when(automationInfo.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)).thenReturn(false);
 
         // Act
+        Executable executable = () -> timeoutDelegateRunner.execute(consumerCommandDelegate);
 
         // Assert
-        assertThrows(RuntimeException.class, () -> timeoutDelegateRunner.execute(consumerCommandDelegate));
+        assertThrows(RuntimeException.class, executable);
         verify(driver, times(1)).getScreenshot();
         verify(automationInfo, times(1)).screenshotTaken(any());
     }
@@ -142,9 +147,10 @@ class TimeoutDelegateRunnerTests {
         when(automationInfo.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)).thenReturn(true);
 
         // Act
+        Executable executable = () -> timeoutDelegateRunner.execute(consumerCommandDelegate);
 
         // Assert
-        assertThrows(RuntimeException.class, () -> timeoutDelegateRunner.execute(consumerCommandDelegate));
+        assertThrows(RuntimeException.class, executable);
         verify(automationInfo, times(1)).testFailed(anyString(), any(RuntimeException.class));
     }
 }
