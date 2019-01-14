@@ -19,10 +19,6 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class CommandExecutionFacadeTests {
 
-
-    @Mock
-    private IDelegateRunner delegateRunner;
-
     @Mock
     private AutomationInfo automationInfo;
 
@@ -47,8 +43,9 @@ public class CommandExecutionFacadeTests {
         //arrange
         command = null;
         //act
-        assertThrows(IllegalArgumentException.class, () -> executionFacade.execute(automationInfo, command));
+
         //assert
+        assertThrows(IllegalArgumentException.class, () -> executionFacade.execute(automationInfo, command));
     }
 
     @Test
@@ -56,8 +53,9 @@ public class CommandExecutionFacadeTests {
         //arrange
         returnCommand = null;
         //act
-        assertThrows(IllegalArgumentException.class, () -> executionFacade.execute(automationInfo, returnCommand));
+
         //assert
+        assertThrows(IllegalArgumentException.class, () -> executionFacade.execute(automationInfo, returnCommand));
     }
 
     @Test
@@ -83,7 +81,6 @@ public class CommandExecutionFacadeTests {
         executionFacade.execute(automationInfo, returnCommand);
 
         //assert
-        //verify(delegateRunner, times(1)).execute(returnCommand.getCommandDelegate());
         verify(delegateRunnerFactory.createInstance(automationInfo), times(1)).execute(refEq(returnCommand.getCommandDelegate()));
 
     }
