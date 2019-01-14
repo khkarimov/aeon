@@ -55,7 +55,6 @@ public class WebProduct extends Product {
         if (maximizeBrowser
                 && !browserType.equals(BrowserType.AndroidChrome)
                 && !browserType.equals(BrowserType.IOSSafari)
-                // TODO(nicolettec): Remove apps and maybe mobile browsers
                 && !browserType.equals(BrowserType.AndroidHybridApp)
                 && !browserType.equals(BrowserType.IOSHybridApp)) {
             browser.maximize();

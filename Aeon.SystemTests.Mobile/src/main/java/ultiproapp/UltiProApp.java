@@ -2,9 +2,9 @@ package ultiproapp;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.testabstraction.product.MobileProduct;
-import ultiproapp.pages.AccessCodePage;
-import ultiproapp.pages.loginpages.IOSIdentitySignInPage;
-import ultiproapp.pages.loginpages.LoginPage;
+import ultiproapp.pages.shared.AccessCodePage;
+import ultiproapp.pages.shared.loginpages.IOSIdentitySignInPage;
+import ultiproapp.pages.shared.loginpages.LoginPage;
 
 /**
  * Sample UltiPro mobile app product.

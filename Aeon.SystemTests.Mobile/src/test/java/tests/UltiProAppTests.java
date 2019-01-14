@@ -1,16 +1,13 @@
 package tests;
 
 import aeon.core.common.web.BrowserType;
-import categories.AppTests;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import ultiproapp.UltiProApp;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({AppTests.class})
 public class UltiProAppTests {
 
     private UltiProApp ultiProApp;
