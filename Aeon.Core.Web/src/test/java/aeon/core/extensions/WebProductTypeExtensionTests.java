@@ -145,7 +145,6 @@ public class WebProductTypeExtensionTests {
     @Test
     public void createSelector_jqueryType_returnsIBy() {
         //Arrange
-        //Map<String, String> type = makeMapWithType("jquery");
         this.selectorMap.put("type", "jquery");
 
         //Act
