@@ -37,11 +37,16 @@ public class WebProductTypeExtensionTests {
     @Mock
     private WebCommandExecutionFacade commandExecutionFacade;
 
+    private Map<String, String> selectorMap;
 
     @Before
     public void setUp() {
         this.webProductTypeExtension = new WebProductTypeExtension();
+        this.selectorMap = new HashMap();
+        this.selectorMap.put("value", "some value");
+
     }
+
 
     @Test
     public void createCommandExecutionFacade_automationInfo_getsConfiguration() {
@@ -90,10 +95,10 @@ public class WebProductTypeExtensionTests {
     @Test
     public void createSelector_unknownType_returnsNull() {
         //Arrange
-        Map<String, String> unknownType = makeMapWithType("unknown");
+        this.selectorMap.put("type", "unknown");
 
         //Act
-        IBy createSelectorResult = webProductTypeExtension.createSelector(unknownType);
+        IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
 
 
         //Assert
@@ -103,10 +108,10 @@ public class WebProductTypeExtensionTests {
     @Test
     public void createSelector_cssType_returnsIBy() {
         //Arrange
-        Map<String, String> type = makeMapWithType("css");
+        this.selectorMap.put("type", "css");
 
         //Act
-        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
+        IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
 
 
         //Assert
@@ -116,10 +121,10 @@ public class WebProductTypeExtensionTests {
     @Test
     public void createSelector_dataType_returnsIBy() {
         //Arrange
-        Map<String, String> type = makeMapWithType("data");
+        this.selectorMap.put("type", "data");
 
         //Act
-        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
+        IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
 
 
         //Assert
@@ -129,10 +134,10 @@ public class WebProductTypeExtensionTests {
     @Test
     public void createSelector_daType_returnsIBy() {
         //Arrange
-        Map<String, String> type = makeMapWithType("da");
+        this.selectorMap.put("type", "da");
 
         //Act
-        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
+        IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
 
         //Assert
         Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
@@ -141,21 +146,13 @@ public class WebProductTypeExtensionTests {
     @Test
     public void createSelector_jqueryType_returnsIBy() {
         //Arrange
-        Map<String, String> type = makeMapWithType("jquery");
+        //Map<String, String> type = makeMapWithType("jquery");
+        this.selectorMap.put("type", "jquery");
 
         //Act
-        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
+        IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
 
         //Assert
         Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
-    }
-
-
-    private Map<String, String> makeMapWithType(String type) {
-        Map<String, String> ans = new HashMap();
-        ans.put("value", "some value");
-        ans.put("type", type);
-
-        return ans;
     }
 }
