@@ -78,10 +78,11 @@ public class WebProductTypeExtensionTests {
         Map<String, String> nullValueSelector = new HashMap<>();
 
         //Act
+        IBy createSelectorResult = webProductTypeExtension.createSelector(nullValueSelector);
 
 
         //Assert
-        Assert.assertNull(webProductTypeExtension.createSelector(nullValueSelector));
+        Assert.assertNull(createSelectorResult);
 
 
     }
@@ -92,9 +93,11 @@ public class WebProductTypeExtensionTests {
         Map<String, String> unknownType = makeMapWithType("unknown");
 
         //Act
+        IBy createSelectorResult = webProductTypeExtension.createSelector(unknownType);
+
 
         //Assert
-        Assert.assertNull(webProductTypeExtension.createSelector(unknownType));
+        Assert.assertNull(createSelectorResult);
     }
 
     @Test
@@ -103,9 +106,11 @@ public class WebProductTypeExtensionTests {
         Map<String, String> type = makeMapWithType("css");
 
         //Act
+        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
+
 
         //Assert
-        Assert.assertThat(webProductTypeExtension.createSelector(type), instanceOf(IBy.class));
+        Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
     }
 
     @Test
@@ -114,9 +119,11 @@ public class WebProductTypeExtensionTests {
         Map<String, String> type = makeMapWithType("data");
 
         //Act
+        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
+
 
         //Assert
-        Assert.assertThat(webProductTypeExtension.createSelector(type), instanceOf(IBy.class));
+        Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
     }
 
     @Test
@@ -125,9 +132,10 @@ public class WebProductTypeExtensionTests {
         Map<String, String> type = makeMapWithType("da");
 
         //Act
+        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
 
         //Assert
-        Assert.assertThat(webProductTypeExtension.createSelector(type), instanceOf(IBy.class));
+        Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
     }
 
     @Test
@@ -136,9 +144,10 @@ public class WebProductTypeExtensionTests {
         Map<String, String> type = makeMapWithType("jquery");
 
         //Act
+        IBy createSelectorResult = webProductTypeExtension.createSelector(type);
 
         //Assert
-        Assert.assertThat(webProductTypeExtension.createSelector(type), instanceOf(IBy.class));
+        Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
     }
 
 
