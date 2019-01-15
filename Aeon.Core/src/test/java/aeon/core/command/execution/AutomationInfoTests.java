@@ -41,9 +41,10 @@ class AutomationInfoTests {
 
         //Act
         automationInfo.setAdapter(adapter);
+        IAdapter automationInfoAdapter = automationInfo.getAdapter();
 
         //Assert
-        assertEquals(automationInfo.getAdapter(), adapter);
+        assertEquals(automationInfoAdapter, adapter);
     }
 
     @Test
@@ -54,9 +55,10 @@ class AutomationInfoTests {
 
         //Act
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
+        ICommandExecutionFacade automationInfoCommandExecutionFacade = automationInfo.getCommandExecutionFacade();
 
         //Assert
-        assertEquals(automationInfo.getCommandExecutionFacade(), commandExecutionFacade);
+        assertEquals(automationInfoCommandExecutionFacade, commandExecutionFacade);
     }
 
     @Test
@@ -66,9 +68,10 @@ class AutomationInfoTests {
 
         //Act
         automationInfo.setConfiguration(configuration);
+        Configuration automationInfoConfiguration = automationInfo.getConfiguration();
 
         //Assert
-        assertEquals(automationInfo.getConfiguration(), configuration);
+        assertEquals(automationInfoConfiguration, configuration);
     }
 
     @Test
@@ -78,8 +81,9 @@ class AutomationInfoTests {
 
         //Act
         automationInfo.setDriver(driver);
+        IDriver automationInfoDriver = automationInfo.getDriver();
 
         //Assert
-        assertEquals(automationInfo.getDriver(), driver);
+        assertEquals(automationInfoDriver, driver);
     }
 }
