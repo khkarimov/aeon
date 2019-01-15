@@ -15,8 +15,8 @@ import java.time.Duration;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -32,11 +32,11 @@ public class ThrottledDelegateRunnerTests {
     private Consumer commandDelegate;
 
     @Mock
-    Function<IDriver, Object> commandDelegate1;
+    Function<IDriver, Object> commandDelegateFunction;
 
     @BeforeEach
     void setup() {
-        throttledDelegateRunner = new ThrottledDelegateRunner(delegateRunner, Duration.ofSeconds(1));
+        throttledDelegateRunner = new ThrottledDelegateRunner(delegateRunner, Duration.ofSeconds(0));
     }
 
     @Test
@@ -54,21 +54,13 @@ public class ThrottledDelegateRunnerTests {
     @Test
     public void objectExecute_CallsExecute_ShouldBeCalled() {
 
-        // Arrange
-        when(throttledDelegateRunner.execute(any(Function.class))).
-                thenReturn(new Object());
+        //Arrange
 
         // Act
-        boolean objectInstance = throttledDelegateRunner.execute(commandDelegate1) instanceof Object;
+        throttledDelegateRunner.execute(commandDelegateFunction);
 
         // Assert
-        verify(delegateRunner, times(1)).execute(commandDelegate1);
-
-        assertTrue(objectInstance);
+        verify(delegateRunner, times(1)).execute(commandDelegateFunction);
 
     }
 }
-
-
-
-
