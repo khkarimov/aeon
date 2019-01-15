@@ -33,7 +33,7 @@ public class ProductTests {
 
     private Product product;
 
-    String key = null;
+    private String key = null;
 
     @BeforeEach
     public void setUp() {
@@ -173,8 +173,7 @@ public class ProductTests {
         verify(automationInfo, times(1)).launched();
 
     }
-
-
+    
     @Test
     public void getConfig_booleanArgument_returnsBoolean() {
 
