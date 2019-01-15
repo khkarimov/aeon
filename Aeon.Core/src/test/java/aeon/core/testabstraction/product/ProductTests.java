@@ -17,16 +17,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-class ProductChild extends Product {
-    @Override
-    public Capability getRequestedCapability() {
-        return null;
-    }
-}
-
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class ProductTests {
+
+    private class ProductChild extends Product {
+        @Override
+        public Capability getRequestedCapability() {
+            return null;
+        }
+    }
 
     @Mock
     private AutomationInfo automationInfo;
