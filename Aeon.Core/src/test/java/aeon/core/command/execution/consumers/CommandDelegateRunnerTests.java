@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class CommandDelegateRunnerTest {
+public class CommandDelegateRunnerTests {
 
     private CommandDelegateRunner commandDelegateRunner;
 
@@ -26,14 +26,14 @@ public class CommandDelegateRunnerTest {
     private Consumer<IDriver> consumer;
 
     @Mock
-    private IDriver idriver;
+    private IDriver driver;
 
     @Mock
     private Function<IDriver, Object> commandDelegate;
 
     @BeforeEach
     public void setUp() {
-        this.commandDelegateRunner = new CommandDelegateRunner(idriver);
+        this.commandDelegateRunner = new CommandDelegateRunner(driver);
     }
 
     @Test
@@ -55,8 +55,7 @@ public class CommandDelegateRunnerTest {
         commandDelegateRunner.execute(consumer);
 
         //Assert
-        verify(consumer, times(1)).accept(idriver);
-
+        verify(consumer,times(1)).accept(driver);
     }
 
     @Test
@@ -78,7 +77,6 @@ public class CommandDelegateRunnerTest {
         commandDelegateRunner.execute(commandDelegate);
 
         //Assert
-        verify(commandDelegate, times(1)).apply(idriver);
+        verify(commandDelegate,times(1)).apply(driver);
     }
-
 }
