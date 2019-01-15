@@ -1,6 +1,5 @@
 package aeon.core.command.execution;
 
-import aeon.core.command.execution.consumers.interfaces.IDelegateRunnerFactory;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
@@ -13,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -22,7 +20,7 @@ class AutomationInfoTests {
     private AutomationInfo automationInfo;
 
     @Mock
-    private Configuration config;
+    private Configuration configuration;
 
     @Mock
     private IDriver driver;
@@ -30,16 +28,16 @@ class AutomationInfoTests {
     @Mock
     private IAdapter adapter;
 
+
     @BeforeEach
     void setUp() {
-        automationInfo = new AutomationInfo(config, driver, adapter);
+        automationInfo = new AutomationInfo(null, null, null);
     }
 
     @Test
     void setAdapter_returnsCorrectly() {
 
         //Arrange
-        IAdapter adapter = mock(IAdapter.class);
 
         //Act
         automationInfo.setAdapter(adapter);
@@ -52,7 +50,7 @@ class AutomationInfoTests {
     void setCommandExecutionFacade_returnsCorrectly() {
 
         //Arrange
-        CommandExecutionFacade commandExecutionFacade = new CommandExecutionFacade(mock(IDelegateRunnerFactory.class));
+        CommandExecutionFacade commandExecutionFacade = new CommandExecutionFacade(null);
 
         //Act
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
@@ -65,7 +63,6 @@ class AutomationInfoTests {
     void setConfiguration_returnsCorrectly() {
 
         //Arrange
-        Configuration configuration = mock(Configuration.class);
 
         //Act
         automationInfo.setConfiguration(configuration);
@@ -78,7 +75,6 @@ class AutomationInfoTests {
     void setDriver_returnsCorrectly() {
 
         //Arrange
-        IDriver driver = mock(IDriver.class);
 
         //Act
         automationInfo.setDriver(driver);
