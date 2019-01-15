@@ -1,22 +1,28 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.command.execution.AutomationInfo;
+import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
+
+class ProductChild extends Product {
+    @Override
+    public Capability getRequestedCapability() {
+        return null;
+    }
+}
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -33,48 +39,26 @@ public class ProductTests {
 
     private Product product;
 
+    private Product spyproduct;
+
     private String key = null;
 
     @BeforeEach
     public void setUp() {
-        product = mock(Product.class, Mockito.CALLS_REAL_METHODS);
-    }
-
-    @Test
-    public void Product_noArguments_instantiateClass() {
-
-        //Arrange
-
-        //Act
-        product = mock(Product.class, Mockito.withSettings().useConstructor());
-
-        //Assert
-        assertNotNull(product);
-    }
-
-    @Test
-    public void Product_withArguments_instantiateClassWithParameters() {
-
-        //Arrange
-
-        //Act
-        product = mock(Product.class, Mockito.withSettings().useConstructor(automationInfo));
-
-        //Assert
-        assertNotNull(product);
-        assertEquals(product.automationInfo, automationInfo);
+        product = new ProductChild();
     }
 
     @Test
     public void getAutomationInfo_returnsAutomationInfoCorrectly() {
 
         //Arrange
-
-        //Act
         product.automationInfo = automationInfo;
 
+        //Act
+        AutomationInfo currentAutomationInfo = product.getAutomationInfo();
+
         //Assert
-        assertEquals(product.getAutomationInfo(), automationInfo);
+        assertEquals(currentAutomationInfo, automationInfo);
     }
 
     @Test
@@ -106,12 +90,13 @@ public class ProductTests {
     public void getConfiguration_returnsConfigurationCorrectly() {
 
         //Arrange
-
-        //Act
         product.configuration = configuration;
 
+        //Act
+        Configuration currentConfiguration = product.getConfiguration();
+
         //Assert
-        assertEquals(product.getConfiguration(), configuration);
+        assertEquals(currentConfiguration, configuration);
     }
 
     @Test
@@ -132,14 +117,15 @@ public class ProductTests {
     public void Launch_verifyAfterLaunchCall() throws Exception {
 
         // Arrange
-        product.setConfiguration(configuration);
+        spyproduct = org.mockito.Mockito.spy(product);
+        spyproduct.setConfiguration(configuration);
         when(configuration.getDriver()).thenReturn(AeonWebDriver.class);
 
         // Act
-        product.launch(plugin);
+        spyproduct.launch(plugin);
 
         // Assert
-        verify(product, times(1)).afterLaunch();
+        verify(spyproduct, times(1)).afterLaunch();
     }
 
     @Test
