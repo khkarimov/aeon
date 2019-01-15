@@ -7,6 +7,7 @@ import aeon.core.command.execution.consumers.interfaces.IDelegateRunnerFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -40,46 +41,54 @@ public class CommandExecutionFacadeTests {
 
     @Test
     public void execute_NullCommand_IllegalArgumentException() {
-        //arrange
-        command = null;
-        //act
 
-        //assert
-        assertThrows(IllegalArgumentException.class, () -> executionFacade.execute(automationInfo, command));
+        // Arrange
+        command = null;
+
+        // Act
+        Executable executable = () -> executionFacade.execute(automationInfo, command);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
     }
 
     @Test
     public void execute_ObjectNullCommand_IllegalArgumentException() {
-        //arrange
-        returnCommand = null;
-        //act
 
-        //assert
-        assertThrows(IllegalArgumentException.class, () -> executionFacade.execute(automationInfo, returnCommand));
+        // Arrange
+        returnCommand = null;
+
+        // Act
+        Executable executable = () -> executionFacade.execute(automationInfo, returnCommand);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, executable);
     }
 
     @Test
     public void execute_MockObjects_callsDelegateFactoryCreateInstance() {
-        //arrange
+
+        // Arrange
         when(delegateRunnerFactory.createInstance(automationInfo)).thenReturn(mock(IDelegateRunner.class));
 
-        //act
+        // Act
         executionFacade.execute(automationInfo, command);
 
-        //assert
+        // Assert
         verify(delegateRunnerFactory.createInstance(automationInfo), times(1)).execute(command.getCommandDelegate());
 
     }
 
     @Test
     public void execute_MockObjects_returnsDelegateFactoryCreateInstance() {
-        //arrange
-        when(delegateRunnerFactory.createInstance(automationInfo)).thenReturn(mock(IDelegateRunner.class));
         
-        //act
+        // Arrange
+        when(delegateRunnerFactory.createInstance(automationInfo)).thenReturn(mock(IDelegateRunner.class));
+
+        // Act
         executionFacade.execute(automationInfo, returnCommand);
 
-        //assert
+        // Assert
         verify(delegateRunnerFactory.createInstance(automationInfo), times(1)).execute(refEq(returnCommand.getCommandDelegate()));
 
     }
