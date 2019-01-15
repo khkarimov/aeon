@@ -100,7 +100,6 @@ public class ProductTests {
 
         //Assert
         assertEquals(product.configuration, configuration);
-
     }
 
     @Test
@@ -127,7 +126,6 @@ public class ProductTests {
 
         // Assert
         verify(plugin, times(1)).createAdapter(configuration);
-
     }
 
     @Test
@@ -142,7 +140,6 @@ public class ProductTests {
 
         // Assert
         verify(product, times(1)).afterLaunch();
-
     }
 
     @Test
@@ -157,7 +154,6 @@ public class ProductTests {
 
         // Assert
         assertNotEquals(automationInfo, product.getAutomationInfo());
-
     }
 
     @Test
@@ -171,9 +167,8 @@ public class ProductTests {
 
         //Assert
         verify(automationInfo, times(1)).launched();
-
     }
-    
+
     @Test
     public void getConfig_booleanArgument_returnsBoolean() {
 
@@ -187,7 +182,6 @@ public class ProductTests {
 
         //Assert
         assertTrue(called);
-
     }
 
     @Test
