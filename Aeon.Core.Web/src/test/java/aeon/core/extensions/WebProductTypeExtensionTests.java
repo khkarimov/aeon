@@ -45,9 +45,7 @@ public class WebProductTypeExtensionTests {
         this.webProductTypeExtension = new WebProductTypeExtension();
         this.selectorMap = new HashMap();
         this.selectorMap.put("value", "some value");
-
     }
-
 
     @Test
     public void createCommandExecutionFacade_automationInfo_getsConfiguration() {
@@ -59,7 +57,6 @@ public class WebProductTypeExtensionTests {
 
         //Assert
         verify(automationInfo, times(1)).getConfiguration();
-
     }
 
     @Test
@@ -73,7 +70,6 @@ public class WebProductTypeExtensionTests {
         //Assert
         ICommandExecutionFacade currentCommandExecutionFacade = automationInfo.getCommandExecutionFacade();
         Assert.assertEquals(resultCommandExecutionFacade, currentCommandExecutionFacade);
-
     }
 
     @Test
@@ -84,11 +80,8 @@ public class WebProductTypeExtensionTests {
         //Act
         IBy createSelectorResult = webProductTypeExtension.createSelector(nullValueSelector);
 
-
         //Assert
         Assert.assertNull(createSelectorResult);
-
-
     }
 
     @Test
@@ -98,7 +91,6 @@ public class WebProductTypeExtensionTests {
 
         //Act
         IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
-
 
         //Assert
         Assert.assertNull(createSelectorResult);
@@ -112,7 +104,6 @@ public class WebProductTypeExtensionTests {
         //Act
         IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
 
-
         //Assert
         Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
     }
@@ -124,7 +115,6 @@ public class WebProductTypeExtensionTests {
 
         //Act
         IBy createSelectorResult = webProductTypeExtension.createSelector(this.selectorMap);
-
 
         //Assert
         Assert.assertThat(createSelectorResult, instanceOf(IBy.class));
