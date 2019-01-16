@@ -55,7 +55,4 @@ public class PromptExceptionHandlerFactoryUnitTests {
         assertNotNull("Handler is not null!", handler);
     }
 
-    //Not sure about the web exception thing?
-
-
 }
