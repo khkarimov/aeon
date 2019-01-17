@@ -3,7 +3,7 @@ package aeon.core.testabstraction.product;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import aeon.core.framework.abstraction.drivers.AeonWebDriver;
+import aeon.core.framework.abstraction.drivers.IDriver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +27,9 @@ public class ProductTests {
             return null;
         }
     }
+
+    @Mock
+    private IDriver driver;
 
     @Mock
     private AutomationInfo automationInfo;
@@ -104,7 +107,7 @@ public class ProductTests {
 
         // Arrange
         product.setConfiguration(configuration);
-        when(configuration.getDriver()).thenReturn(AeonWebDriver.class);
+        when(configuration.getDriver()).thenReturn(driver.getClass());
 
         // Act
         product.launch(plugin);
@@ -119,7 +122,7 @@ public class ProductTests {
         // Arrange
         spyproduct = org.mockito.Mockito.spy(product);
         spyproduct.setConfiguration(configuration);
-        when(configuration.getDriver()).thenReturn(AeonWebDriver.class);
+        when(configuration.getDriver()).thenReturn(driver.getClass());
 
         // Act
         spyproduct.launch(plugin);
@@ -133,7 +136,7 @@ public class ProductTests {
 
         // Arrange
         product.setConfiguration(configuration);
-        when(configuration.getDriver()).thenReturn(AeonWebDriver.class);
+        when(configuration.getDriver()).thenReturn(driver.getClass());
 
         // Act
         product.launch(plugin);
