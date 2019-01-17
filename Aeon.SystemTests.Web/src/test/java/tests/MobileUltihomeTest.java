@@ -1,6 +1,6 @@
 package tests;
 
-import categories.AndroidTests;
+import categories.MobileTests;
 import main.sample.Sample;
 import org.junit.After;
 import org.junit.Before;
@@ -9,8 +9,8 @@ import org.junit.experimental.categories.Category;
 
 import static aeon.core.testabstraction.product.Aeon.launch;
 
-@Category({AndroidTests.class})
-public class AndroidUltihomeTest {
+@Category({MobileTests.class})
+public class MobileUltihomeTest {
     private static Sample product;
 
     @Before
@@ -25,7 +25,7 @@ public class AndroidUltihomeTest {
     }
 
     @Test
-    public void ultihomeTest(){
+    public void ultihomeTest() {
         product.ultihome.userField.set("test username");
         product.ultihome.passField.set("test password");
         product.ultihome.loginButton.click();
