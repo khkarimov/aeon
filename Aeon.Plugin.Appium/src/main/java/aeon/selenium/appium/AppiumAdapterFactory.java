@@ -23,15 +23,12 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.pf4j.Extension;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 /**
@@ -67,8 +64,13 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
      *
      * @param configuration The configuration of the adapter.
      */
-    protected void prepare(AppiumConfiguration configuration) {
-        this.configuration = configuration;
+    protected void prepare(SeleniumConfiguration configuration) {
+
+        // TODO(nicolettec): change AppiumConfig to SeleniumConfig and override, needs to check the super's prepare method
+
+        super.prepare(configuration);
+
+        this.configuration = (AppiumConfiguration) configuration;
         configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "")));
         this.browserType = configuration.getBrowserType();
 
@@ -78,45 +80,31 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         appPackage = configuration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(AppiumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(AppiumConfiguration.Keys.DRIVER_CONTEXT, "");
-
-        seleniumHubUrl = null;
-
-        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
-        if (StringUtils.isNotBlank(hubUrlString)) {
-            try {
-                if (!hubUrlString.endsWith("/wd/hub")) {
-                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
-                }
-                seleniumHubUrl = new URL(hubUrlString);
-            } catch (MalformedURLException e) {
-                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-                throw new AeonLaunchException(e);
-            }
-        }
+//
+//        seleniumHubUrl = null;
+//
+//        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+//        if (StringUtils.isNotBlank(hubUrlString)) {
+//            try {
+//                if (!hubUrlString.endsWith("/wd/hub")) {
+//                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
+//                }
+//                seleniumHubUrl = new URL(hubUrlString);
+//            } catch (MalformedURLException e) {
+//                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
+//                throw new AeonLaunchException(e);
+//            }
+//        }
 
         URL finalSeleniumHubUrl = seleniumHubUrl;
 
         switch (browserType) {
-            case IOSSafari:
-                DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
-                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-                break;
-
-            case AndroidChrome:
-                capabilities = (DesiredCapabilities) getCapabilities();
-                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-                break;
-
             case IOSHybridApp:
                 if (finalSeleniumHubUrl == null) {
                     throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
 
-                capabilities = (DesiredCapabilities) getCapabilities();
+                DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
                 driver = getDriver(() -> new IOSDriver(finalSeleniumHubUrl, capabilities));
 
                 trySetContext();
@@ -136,7 +124,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
 
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
-                        String.format("%1$s is not a supported browser.", browserType));
+                        String.format("%1$s is not a supported browser", browserType));
         }
 
         //Let plugins know that the product was successfully launched

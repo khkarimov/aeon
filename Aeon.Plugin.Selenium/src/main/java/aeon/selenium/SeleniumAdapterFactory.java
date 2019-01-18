@@ -270,6 +270,26 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
+            case IOSSafari:
+                DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
+                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
+                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                break;
+
+            case AndroidChrome:
+                capabilities = (DesiredCapabilities) getCapabilities();
+                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
+                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                break;
+
+            case IOSHybridApp:
+                return;
+
+            case AndroidHybridApp:
+                return;
+
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
