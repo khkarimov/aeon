@@ -9,13 +9,14 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 import static org.apache.http.HttpHeaders.USER_AGENT;
 
@@ -39,10 +40,7 @@ public class ArtifactoryService {
         String fileName = file.getName();
         String fullRequestUrl = getFullRequestUrl(fileName);
 
-        InputStreamEntity fileEntity = buildFileEntity(file);
-        if (fileEntity == null) {
-            return null;
-        }
+        FileEntity fileEntity = new FileEntity(file);
 
         HttpPut put = buildHttpPut(fullRequestUrl, fileEntity);
         HttpClient client = buildHttpClient();
@@ -81,19 +79,7 @@ public class ArtifactoryService {
                 .build();
     }
 
-    private static InputStreamEntity buildFileEntity(File file) {
-        InputStreamEntity fileEntity;
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            fileEntity = new InputStreamEntity(inputStream, file.length());
-        } catch (FileNotFoundException e) {
-            log.error(String.format("Could not find file %s to upload to artifactory.", file.getAbsolutePath()));
-            return null;
-        }
-        return fileEntity;
-    }
-
-    private static HttpPut buildHttpPut(String fullRequestUrl, InputStreamEntity fileEntity) {
+    private static HttpPut buildHttpPut(String fullRequestUrl, FileEntity fileEntity) {
         HttpPut put = new HttpPut(fullRequestUrl);
         put.setHeader("User-Agent", USER_AGENT);
         put.setHeader("Content-type", "text/html");
