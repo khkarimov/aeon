@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -27,7 +27,7 @@ public class PromptExceptionHandlerFactoryUnitTests {
         boolean checkPrompt = testPromptExceptionHandlerFactory.getPromptUserForContinueDecision();
 
         //Assert
-        assertTrue(checkPrompt == testPromptUserForContinueDecision);
+        assertEquals(testPromptUserForContinueDecision, checkPrompt);
     }
 
     @Test
