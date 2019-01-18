@@ -147,7 +147,7 @@ allprojects {
             url 'https://artifactory.mia.ulti.io/artifactory/maven/'
         }
         maven {
-            url 'http://repository-perfectomobile.forge.cloudbees.com/public/'
+            url 'https://repo1.perfectomobile.com/public/repositories/maven'
         }
     }
 
@@ -194,10 +194,10 @@ allprojects {
 
 subprojects {
     artifactory {
-        contextUrl = 'http://artifactory.mia.ucloud.int/artifactory/'
+        contextUrl = 'https://artifactory.mia.ulti.io/artifactory/'
         publish {
             repository {
-                repoKey = 'ultimate-gradle-local' // The Artifactory repository key to publish to
+                repoKey = 'genesis-maven-prod' // The Artifactory repository key to publish to
                 username = "${artifactory_username}" // The publisher user name
                 password = "${artifactory_password}" // The publisher password
             }

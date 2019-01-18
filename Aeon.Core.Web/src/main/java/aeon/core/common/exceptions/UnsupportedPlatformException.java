@@ -3,7 +3,7 @@ package aeon.core.common.exceptions;
 import aeon.core.common.Resources;
 
 /**
- * Class that handles the exception thrown when there is an unsupported platoform.
+ * Class that handles the exception thrown when there is an unsupported platform.
  */
 public class UnsupportedPlatformException extends RuntimeException {
 
