@@ -6,9 +6,9 @@ import aeon.platform.http.models.ResponseBody;
 import aeon.platform.session.ISession;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -24,6 +24,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import java.net.URI;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -66,7 +67,7 @@ public class CommandExecutionThreadTests {
     @Captor
     ArgumentCaptor<Entity> entityArgumentCaptor = ArgumentCaptor.forClass(Entity.class);
 
-    @BeforeEach
+    @Before
     public void setUp() {
         sessionId = new ObjectId();
         commandExecutionThread = new CommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "callbackUrl", sessionIdProvider, clientMock);
@@ -102,6 +103,48 @@ public class CommandExecutionThreadTests {
         Assert.assertEquals(response.getSuccess(), body.getSuccess());
         Assert.assertEquals(response.getData(), body.getData());
         Assert.assertEquals(response.getFailureMessage(), body.getFailureMessage());
+    }
+
+    @Test
+    public void testRun_WhenNoCallbackUrlSet_SkipsCallback() throws CommandExecutionException {
+
+        // Arrange
+        commandExecutionThread = new CommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, null, sessionIdProvider, clientMock);
+        when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn("Success");
+        when(webTargetMock.request(MediaType.APPLICATION_JSON)).thenReturn(invocationBuilderMock);
+
+        // Act
+        commandExecutionThread.run();
+
+        // Assert
+        verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
+        verify(clientMock, times(0)).target(any(String.class));
+        verify(clientMock, times(0)).target(any(URI.class));
+        verify(webTargetMock, times(0)).request(any(String.class));
+        verify(webTargetMock, times(0)).request(any(MediaType.class));
+        verify(invocationBuilderMock, times(0)).post(any());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(sessionId.toString());
+    }
+
+    @Test
+    public void testRun_WhenEmptyCallbackUrlSet_SkipsCallback() throws CommandExecutionException {
+
+        // Arrange
+        commandExecutionThread = new CommandExecutionThread(sessionId, sessionMock, "GoToUrlCommand", argsMock, "", sessionIdProvider, clientMock);
+        when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn("Success");
+        when(webTargetMock.request(MediaType.APPLICATION_JSON)).thenReturn(invocationBuilderMock);
+
+        // Act
+        commandExecutionThread.run();
+
+        // Assert
+        verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
+        verify(clientMock, times(0)).target(any(String.class));
+        verify(clientMock, times(0)).target(any(URI.class));
+        verify(webTargetMock, times(0)).request(any(String.class));
+        verify(webTargetMock, times(0)).request(any(MediaType.class));
+        verify(invocationBuilderMock, times(0)).post(any());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(sessionId.toString());
     }
 
     @Test

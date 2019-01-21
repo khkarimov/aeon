@@ -108,6 +108,72 @@ public class HttpSessionControllerTests {
     }
 
     @Test
+    public void testCreateSession_throwsIllegalAccessException() throws IllegalAccessException, IOException, InstantiationException {
+
+        // Arrange
+        when(createSessionBodyMock.getSettings()).thenReturn(settingsMock);
+        when(sessionFactoryMock.getSession(settingsMock)).thenThrow(new IllegalAccessException("test-exception"));
+        when(sessionTableMock.put(sessionIdArgumentCaptor.capture(), eq(sessionMock))).thenReturn(sessionMock);
+
+        // Act
+        Response response = httpSessionController.createSession(createSessionBodyMock);
+
+        // Assert
+        verify(createSessionBodyMock, times(1)).getSettings();
+        verify(sessionFactoryMock, times(1)).getSession(settingsMock);
+        verify(sessionTableMock, times(0)).put(any(), any());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(any());
+
+        Assert.assertNotNull(response.getEntity());
+        Assert.assertEquals(400, response.getStatus());
+        Assert.assertEquals("test-exception", response.getEntity());
+    }
+
+    @Test
+    public void testCreateSession_throwsIOException() throws IllegalAccessException, IOException, InstantiationException {
+
+        // Arrange
+        when(createSessionBodyMock.getSettings()).thenReturn(settingsMock);
+        when(sessionFactoryMock.getSession(settingsMock)).thenThrow(new IllegalAccessException("test-io-exception"));
+        when(sessionTableMock.put(sessionIdArgumentCaptor.capture(), eq(sessionMock))).thenReturn(sessionMock);
+
+        // Act
+        Response response = httpSessionController.createSession(createSessionBodyMock);
+
+        // Assert
+        verify(createSessionBodyMock, times(1)).getSettings();
+        verify(sessionFactoryMock, times(1)).getSession(settingsMock);
+        verify(sessionTableMock, times(0)).put(any(), any());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(any());
+
+        Assert.assertNotNull(response.getEntity());
+        Assert.assertEquals(400, response.getStatus());
+        Assert.assertEquals("test-io-exception", response.getEntity());
+    }
+
+    @Test
+    public void testCreateSession_throwsInstantiationException() throws IllegalAccessException, IOException, InstantiationException {
+
+        // Arrange
+        when(createSessionBodyMock.getSettings()).thenReturn(settingsMock);
+        when(sessionFactoryMock.getSession(settingsMock)).thenThrow(new IllegalAccessException("test-instantiation-exception"));
+        when(sessionTableMock.put(sessionIdArgumentCaptor.capture(), eq(sessionMock))).thenReturn(sessionMock);
+
+        // Act
+        Response response = httpSessionController.createSession(createSessionBodyMock);
+
+        // Assert
+        verify(createSessionBodyMock, times(1)).getSettings();
+        verify(sessionFactoryMock, times(1)).getSession(settingsMock);
+        verify(sessionTableMock, times(0)).put(any(), any());
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(any());
+
+        Assert.assertNotNull(response.getEntity());
+        Assert.assertEquals(400, response.getStatus());
+        Assert.assertEquals("test-instantiation-exception", response.getEntity());
+    }
+
+    @Test
     public void createSessionNullSettingsTest() throws IllegalAccessException, IOException, InstantiationException {
 
         // Arrange
@@ -158,7 +224,36 @@ public class HttpSessionControllerTests {
     }
 
     @Test
-    public void executeNullCommandTest() throws CommandExecutionException {
+    public void testExecuteCommand_commandReturnsNull() throws CommandExecutionException {
+
+        // Arrange
+        when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
+        when(sessionTableMock.get(sessionId)).thenReturn(sessionMock);
+        when(executeCommandBodyMock.getCommand()).thenReturn("GoToUrlCommand");
+        when(executeCommandBodyMock.getArgs()).thenReturn(argsMock);
+        when(sessionMock.executeCommand("GoToUrlCommand", argsMock)).thenReturn(null);
+
+        // Act
+        Response response = httpSessionController.executeCommand(sessionId, executeCommandBodyMock);
+        ResponseBody body = (ResponseBody) response.getEntity();
+
+        // Assert
+        verify(sessionTableMock, times(1)).containsKey(sessionId);
+        verify(sessionTableMock, times(1)).get(sessionId);
+        verify(executeCommandBodyMock, times(1)).getCommand();
+        verify(executeCommandBodyMock, times(1)).getArgs();
+        verify(sessionMock, times(1)).executeCommand("GoToUrlCommand", argsMock);
+        verify(sessionIdProvider, times(1)).setCurrentSessionId(sessionId.toString());
+
+        Assert.assertEquals(sessionId.toString(), body.getSessionId());
+        Assert.assertTrue(body.getSuccess());
+        Assert.assertNull(body.getData());
+        Assert.assertNull(body.getFailureMessage());
+        Assert.assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void testExecuteCommand_throwsCommandExecutionException() throws CommandExecutionException {
 
         // Arrange
         when(sessionTableMock.containsKey(sessionId)).thenReturn(true);
