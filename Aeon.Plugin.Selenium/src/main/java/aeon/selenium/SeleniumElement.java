@@ -343,8 +343,6 @@ public class SeleniumElement extends WebControl {
         underlyingWebElement.submit();
     }
 
-    //region functions specifically for select elements
-
     /**
      * Indicates whether the element supports selecting multiple options at the same time.
      *
@@ -486,5 +484,4 @@ public class SeleniumElement extends WebControl {
         }
         selectHelper.selectByValue(value);
     }
-    //endregion
 }
