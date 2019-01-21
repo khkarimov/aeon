@@ -89,8 +89,8 @@ public class RnrService {
     private static Map<String, String> buildRnrMetaMap(String reportUrl) {
         Map<String, String> rnrMetaMap = new HashMap<>();
         rnrMetaMap.put("screenshots", reportUrl);
-        rnrMetaMap.put("app", browser);
-        rnrMetaMap.put("browser", environmentUrl);
+        rnrMetaMap.put("app", environmentUrl);
+        rnrMetaMap.put("browser", browser);
         return rnrMetaMap;
     }
 

@@ -16,11 +16,12 @@ public class ThreadFactory {
     /**
      * Gets a new thread.
      *
-     * @param sessionId     Session ID
-     * @param session       Session
-     * @param commandString Command string
-     * @param args          Arguments
-     * @param url           Callback URL
+     * @param sessionId         Session ID
+     * @param session           Session
+     * @param commandString     Command string
+     * @param args              Arguments
+     * @param url               Callback URL
+     * @param sessionIdProvider Session ID provider to us
      * @return Thread
      */
     public CommandExecutionThread getCommandExecutionThread(ObjectId sessionId, ISession session, String commandString, List<Object> args, String url, HttpSessionIdProvider sessionIdProvider) {

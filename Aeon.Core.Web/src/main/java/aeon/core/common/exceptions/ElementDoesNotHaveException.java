@@ -10,7 +10,8 @@ import java.util.Locale;
 public class ElementDoesNotHaveException extends RuntimeException {
 
     /**
-     * Initializes a new instance of the {@link ElementAttributeNotADateException} class.
+     * Initializes a new instance of the {@link ElementDoesNotHaveException} class.
+     *
      * @param value the string input.
      */
     public ElementDoesNotHaveException(String value) {

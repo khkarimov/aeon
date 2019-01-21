@@ -89,6 +89,10 @@ public class Configuration extends BaseConfiguration {
      */
     public static class Keys {
 
+        private Keys() {
+            // Static classes should not be instantiated
+        }
+
         public static final String TIMEOUT = "aeon.timeout";
         public static final String THROTTLE = "aeon.throttle";
         public static final String REPORTING = "aeon.implicit_reporting";

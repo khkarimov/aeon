@@ -150,7 +150,7 @@ public class ReportingPlugin extends Plugin {
         public void onSkippedTest(String name, String... tags) {
 
             // Test didn't run
-            // Treat is as if it just started and ended
+            // Treat it as if it just started and ended
             onBeforeTest(name, tags);
 
             ScenarioDetails scenario = getCurrentScenarioBucket();
@@ -259,30 +259,30 @@ public class ReportingPlugin extends Plugin {
             reportDetails.setSuiteName(suiteName);
             log.info("Start Time " + this.reportDateFormat.format(new Date(startTime)));
         }
-    }
 
-    private static void initializeConfiguration() {
-        if (configuration == null) {
-            configuration = new ReportingConfiguration();
-            try {
-                configuration.loadConfiguration();
-            } catch (IllegalAccessException | IOException e) {
-                log.warn("Could not load plugin configuration.");
+        private static void initializeConfiguration() {
+            if (configuration == null) {
+                configuration = new ReportingConfiguration();
+                try {
+                    configuration.loadConfiguration();
+                } catch (IllegalAccessException | IOException e) {
+                    log.warn("Could not load plugin configuration.");
+                }
             }
         }
-    }
 
-    private static void initializeConfiguration(Configuration aeonConfiguration) {
-        if (configuration == null) {
-            configuration = new ReportingConfiguration();
-            try {
-                configuration.loadConfiguration();
-            } catch (IllegalAccessException | IOException e) {
-                log.warn("Could not load plugin configuration, using Aeon configuration.");
+        private static void initializeConfiguration(Configuration aeonConfiguration) {
+            if (configuration == null) {
+                configuration = new ReportingConfiguration();
+                try {
+                    configuration.loadConfiguration();
+                } catch (IllegalAccessException | IOException e) {
+                    log.warn("Could not load plugin configuration, using Aeon configuration.");
 
-                configuration = aeonConfiguration;
+                    configuration = aeonConfiguration;
+                }
+                ReportingPlugin.aeonConfiguration = aeonConfiguration;
             }
-            ReportingPlugin.aeonConfiguration = aeonConfiguration;
         }
     }
 }

@@ -36,7 +36,7 @@ public interface ITestExecutionExtension extends ExtensionPoint {
      * Is called after a product was successfully launched.
      *
      * @param configuration The Aeon configuration object.
-     * @param adapter The adapter that is used for the product.
+     * @param adapter       The adapter that is used for the product.
      */
     void onAfterLaunch(Configuration configuration, IAdapter adapter);
 
