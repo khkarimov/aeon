@@ -23,7 +23,6 @@ public class HtmlReport {
 
     private ReportDetails reportDetails;
     private String reportsDirectory = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "");
-    ;
 
     private ResultReport resultReport;
     private String jsonReport;
