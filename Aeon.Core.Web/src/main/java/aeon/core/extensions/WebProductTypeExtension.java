@@ -9,6 +9,7 @@ import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.common.interfaces.IBy;
+import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.product.Configuration;
@@ -109,7 +110,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
 
         int i = 0;
         int j = 0;
-        
+
         for (Class p : parameters) {
             switch (p.getName()) {
                 case "aeon.core.common.web.interfaces.IByWeb":
@@ -125,6 +126,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
                     j--;
                     break;
                 case "aeon.core.common.web.WebSelectOption":
+                    params[i] = WebSelectOption.valueOf((String) args.get(j));
                     break;
                 default:
                     params[i] = args.get(j);
