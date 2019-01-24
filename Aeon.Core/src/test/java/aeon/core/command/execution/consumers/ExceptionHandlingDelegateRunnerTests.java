@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -17,7 +16,6 @@ import org.mockito.quality.Strictness;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,9 +47,7 @@ class ExceptionHandlingDelegateRunnerTests {
         exceptionHandlingDelegateRunner.execute(consumerCommandDelegate);
 
         //Assert
-        ArgumentCaptor<java.lang.Class> ac = ArgumentCaptor.forClass(java.lang.Class.class);
-        verify(exceptionHandlerFactory).createHandlerFor(ac.capture());
-        assertEquals(TimeoutExpiredException.class, ac.getValue());
+        verify(exceptionHandlerFactory).createHandlerFor(TimeoutExpiredException.class);
     }
 
     @Test
@@ -63,9 +59,7 @@ class ExceptionHandlingDelegateRunnerTests {
         exceptionHandlingDelegateRunner.execute(consumerCommandDelegate);
 
         //Assert
-        ArgumentCaptor<java.lang.Class> ac = ArgumentCaptor.forClass(java.lang.Class.class);
-        verify(exceptionHandlerFactory).createHandlerFor(ac.capture());
-        assertEquals(RuntimeException.class, ac.getValue());
+        verify(exceptionHandlerFactory).createHandlerFor(RuntimeException.class);
     }
 
     @Test
@@ -88,9 +82,7 @@ class ExceptionHandlingDelegateRunnerTests {
         exceptionHandlingDelegateRunner.execute(functionCommandDelegate);
 
         //Assert
-        ArgumentCaptor<java.lang.Class> ac = ArgumentCaptor.forClass(java.lang.Class.class);
-        verify(exceptionHandlerFactory).createHandlerFor(ac.capture());
-        assertEquals(TimeoutExpiredException.class, ac.getValue());
+        verify(exceptionHandlerFactory).createHandlerFor(TimeoutExpiredException.class);
     }
 
     @Test
@@ -102,10 +94,7 @@ class ExceptionHandlingDelegateRunnerTests {
         exceptionHandlingDelegateRunner.execute(functionCommandDelegate);
 
         //Assert
-        ArgumentCaptor<java.lang.Class> ac = ArgumentCaptor.forClass(java.lang.Class.class);
-        verify(exceptionHandlerFactory).createHandlerFor(ac.capture());
-        assertEquals(RuntimeException.class, ac.getValue());
-
+        verify(exceptionHandlerFactory).createHandlerFor(RuntimeException.class);
     }
 
     @Test
