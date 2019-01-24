@@ -10,6 +10,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Properties;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +22,6 @@ public class ConfigurationTests {
 
     @Mock
     private IDriver driver;
-
     @Mock
     private IAdapter adapter;
 
@@ -29,32 +32,53 @@ public class ConfigurationTests {
         config = new Configuration(driver.getClass(), adapter.getClass());
     }
 
-    @Test
-    public void testGetDriver() {
-        // Assert
-        assertEquals(config.getDriver(), driver.getClass());
-    }
 
     @Test
-    public void testSetDriver(){
+    public void testGetSetDriver() {
         // Act
         config.setDriver(IDriver.class);
         // Assert
         assertEquals(config.getDriver(), IDriver.class);
     }
 
-    @Test
-    public void testGetAdapter() {
-        // Assert
-        assertEquals(config.getAdapter(), adapter.getClass());
-    }
 
     @Test
-    public void testSetAdapter() {
+    public void testGetSetAdapter() {
         // Act
         config.setAdapter(IAdapter.class);
         // Assert
         assertEquals(config.getAdapter(), IAdapter.class);
+    }
+
+    @Test
+    public void testSetProperties() {
+        // Arrange
+        Properties p = new Properties();
+        p.put("test", "Default");
+        p.setProperty("test", "Success");
+
+        // Act
+        config.setProperties(p);
+
+        // Assert
+        String actual = config.getString("test", "Default");
+        assertEquals("Success", actual);
+
+
+    }
+
+    @Test
+    public void testGetConfigFields() {
+        // Arrange
+
+        // Act
+        List<Field> keys = config.getConfigurationFields();
+
+        //Assert
+        assertEquals(Configuration.Keys.class.getDeclaredFields()[0], keys.get(0));
+        assertEquals(Configuration.Keys.class.getDeclaredFields()[1], keys.get(1));
+        assertEquals(Configuration.Keys.class.getDeclaredFields()[2], keys.get(2));
+
     }
 
 }
