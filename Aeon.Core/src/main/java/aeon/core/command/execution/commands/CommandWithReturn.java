@@ -6,8 +6,8 @@ import aeon.core.command.execution.consumers.CommandDelegateRunner;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.AeonTestExecution;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
@@ -16,7 +16,7 @@ import java.util.function.Function;
  */
 public abstract class CommandWithReturn implements ICommand<Function<IDriver, Object>> {
 
-    private static Logger log = LogManager.getLogger(CommandWithReturn.class);
+    private static Logger log = LoggerFactory.getLogger(CommandWithReturn.class);
     private ICommandInitializer commandInitializer;
 
     /**
@@ -93,7 +93,6 @@ public abstract class CommandWithReturn implements ICommand<Function<IDriver, Ob
      * The method which provides the logic for the command.
      *
      * @param driver The framework abstraction facade.
-     *
      * @return The command delegate property.
      */
     protected abstract Object commandDelegate(IDriver driver);

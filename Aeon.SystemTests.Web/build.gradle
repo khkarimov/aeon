@@ -9,6 +9,7 @@ clean.doFirst {
 
 dependencies {
     compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Plugin.Log4J2')
 }
 
 test {

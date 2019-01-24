@@ -1,10 +1,7 @@
 package aeon.core.command.execution.commands.mobile;
 
-import aeon.core.command.execution.commands.Command;
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IMobileDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 
@@ -13,7 +10,6 @@ import java.time.LocalDate;
  */
 public class NativeSetDateCommand extends MobileCommand {
 
-    private static Logger log = LogManager.getLogger(Command.class);
     private final LocalDate date;
 
     /**

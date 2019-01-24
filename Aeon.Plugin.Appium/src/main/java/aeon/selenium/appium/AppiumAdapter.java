@@ -24,11 +24,11 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.offset.PointOption;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.time.Duration;
@@ -41,7 +41,7 @@ import java.util.*;
  */
 public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
-    private static Logger log = LogManager.getLogger(AppiumAdapter.class);
+    private static Logger log = LoggerFactory.getLogger(AppiumAdapter.class);
 
     private String context;
 
@@ -728,12 +728,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             try {
                 getMobileWebDriver().closeApp();
             } catch (Exception e) {
-                log.trace(e);
+                log.trace("Failed to close app.", e);
             } finally {
                 getMobileWebDriver().close();
             }
         } catch (Exception e) {
-            log.trace(e);
+            log.trace("Failed to close.", e);
         } finally {
             getMobileWebDriver().quit();
         }

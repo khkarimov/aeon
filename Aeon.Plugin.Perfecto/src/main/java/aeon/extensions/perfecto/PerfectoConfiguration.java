@@ -1,10 +1,7 @@
 package aeon.extensions.perfecto;
 
 import aeon.core.extensions.PluginConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +12,6 @@ import java.util.List;
  */
 
 public class PerfectoConfiguration extends PluginConfiguration {
-
-    private Logger log = LogManager.getLogger(PerfectoConfiguration.class);
 
     /**
      * Keys relevant to the Perfecto Configuration.

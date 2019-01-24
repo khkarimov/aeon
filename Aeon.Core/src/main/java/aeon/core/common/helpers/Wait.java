@@ -1,8 +1,8 @@
 package aeon.core.common.helpers;
 
 import aeon.core.common.exceptions.TimeoutExpiredException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.function.BooleanSupplier;
@@ -10,12 +10,12 @@ import java.util.function.Supplier;
 
 /**
  * Utility class for waiting capabilities.
- *
+ * <p>
  * Can be used to wait for successful task completion or assertions.
  */
 public class Wait {
 
-    private static Logger log = LogManager.getLogger(Wait.class);
+    private static Logger log = LoggerFactory.getLogger(Wait.class);
 
     /**
      * Private constructor to prevent instantiation.
@@ -26,13 +26,13 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it completes successfully, ie without throwing an exception.
-     *
+     * <p>
      * The task is retried in the given interval until it completes successfully or the timeout is reached. The latter
      * case will bubble up the last thrown exception.
      *
-     * @param task      The task to execute.
-     * @param timeout   Maximum time to wait.
-     * @param interval  The interval in which to execute the task.
+     * @param task     The task to execute.
+     * @param timeout  Maximum time to wait.
+     * @param interval The interval in which to execute the task.
      */
     public static void forSuccess(Runnable task, Duration timeout, Duration interval) {
 
@@ -49,7 +49,7 @@ public class Wait {
                     throw e;
                 }
 
-                log.trace(e);
+                log.trace(e.getMessage(), e);
 
                 Sleep.wait(interval);
             }
@@ -58,12 +58,12 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it completes successfully, ie without throwing an exception.
-     *
+     * <p>
      * The task is retried every second until it completes successfully or the timeout is reached. The latter
      * case will bubble up the last thrown exception.
      *
-     * @param task      The task to execute.
-     * @param timeout   Maximum time to wait.
+     * @param task    The task to execute.
+     * @param timeout Maximum time to wait.
      */
     public static void forSuccess(Runnable task, Duration timeout) {
 
@@ -72,13 +72,13 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it returns true.
-     *
+     * <p>
      * The task is retried in the given interval until it returns true or the timeout is reached. The latter
      * case will bubble up the last thrown exception.
      *
-     * @param task      The task to execute.
-     * @param timeout   Maximum time to wait.
-     * @param interval  The interval in which to execute the task.
+     * @param task     The task to execute.
+     * @param timeout  Maximum time to wait.
+     * @param interval The interval in which to execute the task.
      */
     public static void forSuccess(BooleanSupplier task, Duration timeout, Duration interval) {
 
@@ -91,12 +91,12 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it returns true.
-     *
+     * <p>
      * The task is retried every second until it returns true or the timeout is reached. The latter
      * case will bubble up the last thrown exception.
      *
-     * @param task      The task to execute.
-     * @param timeout   Maximum time to wait.
+     * @param task    The task to execute.
+     * @param timeout Maximum time to wait.
      */
     public static void forSuccess(BooleanSupplier task, Duration timeout) {
 
@@ -105,17 +105,17 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it returns the expected value.
-     *
+     * <p>
      * The task is retried in the given interval until it returns the expected value or the timeout is reached.
      * The latter case will bubble up the last thrown exception.
-     *
+     * <p>
      * Please note that is using "==" instead of "equals" for comparing the values.
      *
-     * @param task      The task to execute.
-     * @param value     Expected value.
-     * @param timeout   Maximum time to wait.
-     * @param interval  The interval in which to execute the task.
-     * @param <T>       The type of the expected value.
+     * @param task     The task to execute.
+     * @param value    Expected value.
+     * @param timeout  Maximum time to wait.
+     * @param interval The interval in which to execute the task.
+     * @param <T>      The type of the expected value.
      */
     public static <T> void forValue(Supplier<T> task, T value, Duration timeout, Duration interval) {
 
@@ -131,16 +131,16 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it returns the expected value.
-     *
+     * <p>
      * The task is retried every second until it returns the expected value or the timeout is reached.
      * The latter case will bubble up the last thrown exception.
-     *
+     * <p>
      * Please note that is using "==" instead of "equals" for comparing the values.
      *
-     * @param task      The task to execute.
-     * @param value     Expected value.
-     * @param timeout   Maximum time to wait.
-     * @param <T>       The type of the expected value.
+     * @param task    The task to execute.
+     * @param value   Expected value.
+     * @param timeout Maximum time to wait.
+     * @param <T>     The type of the expected value.
      */
     public static <T> void forValue(Supplier<T> task, T value, Duration timeout) {
 
@@ -149,14 +149,14 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it returns the expected string.
-     *
+     * <p>
      * The task is retried in the given interval until it returns the expected string or the timeout is reached.
      * The latter case will bubble up the last thrown exception.
      *
-     * @param task      The task to execute.
-     * @param value     Expected string.
-     * @param timeout   Maximum time to wait.
-     * @param interval  The interval in which to execute the task.
+     * @param task     The task to execute.
+     * @param value    Expected string.
+     * @param timeout  Maximum time to wait.
+     * @param interval The interval in which to execute the task.
      */
     public static void forValue(Supplier<String> task, String value, Duration timeout, Duration interval) {
 
@@ -171,13 +171,13 @@ public class Wait {
 
     /**
      * Repeatedly executes a task until it returns the expected string.
-     *
+     * <p>
      * The task is retried every second until it returns the expected string or the timeout is reached.
      * The latter case will bubble up the last thrown exception.
      *
-     * @param task      The task to execute.
-     * @param value     Expected string.
-     * @param timeout   Maximum time to wait.
+     * @param task    The task to execute.
+     * @param value   Expected string.
+     * @param timeout Maximum time to wait.
      */
     public static void forValue(Supplier<String> task, String value, Duration timeout) {
 

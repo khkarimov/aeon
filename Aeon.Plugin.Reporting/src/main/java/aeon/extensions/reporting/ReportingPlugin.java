@@ -5,11 +5,11 @@ import aeon.core.extensions.ITestExecutionExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.extensions.reporting.services.ArtifactoryService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.pf4j.Extension;
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class ReportingPlugin extends Plugin {
     public static IConfiguration aeonConfiguration;
     public static IConfiguration configuration;
 
-    private static Logger log = LogManager.getLogger(ReportingPlugin.class);
+    private static Logger log = LoggerFactory.getLogger(ReportingPlugin.class);
     private static ReportDetails reportDetails = null;
 
     /**

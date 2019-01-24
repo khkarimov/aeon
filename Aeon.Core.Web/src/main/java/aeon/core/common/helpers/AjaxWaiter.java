@@ -3,8 +3,8 @@ package aeon.core.common.helpers;
 import aeon.core.common.exceptions.ScriptExecutionException;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.time.Duration;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class AjaxWaiter {
 
-    private static Logger log = LogManager.getLogger(AjaxWaiter.class);
+    private static Logger log = LoggerFactory.getLogger(AjaxWaiter.class);
     private IWebDriver webDriver;
     private Duration timeout;
 

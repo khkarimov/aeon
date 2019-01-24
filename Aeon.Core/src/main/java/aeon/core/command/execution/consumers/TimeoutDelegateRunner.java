@@ -7,8 +7,8 @@ import aeon.core.common.exceptions.TimeoutExpiredException;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.time.Duration;
@@ -23,7 +23,7 @@ import java.util.function.Supplier;
  */
 public class TimeoutDelegateRunner extends DelegateRunner {
 
-    private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
+    private static Logger log = LoggerFactory.getLogger(TimeoutDelegateRunner.class);
     private IDriver driver;
     private Duration timeout;
     private AutomationInfo automationInfo;

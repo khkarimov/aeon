@@ -1,8 +1,8 @@
 package aeon.core.common.helpers;
 
 import aeon.core.common.web.BrowserType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 
@@ -12,13 +12,14 @@ import java.awt.*;
 public final class ClientEnvironmentManager {
 
     private static final Dimension[] supportedResolutions = {new Dimension(1024, 768)};
-    private static Logger log = LogManager.getLogger(ClientEnvironmentManager.class);
+    private static Logger log = LoggerFactory.getLogger(ClientEnvironmentManager.class);
 
     /**
      * Function that ensures each environment browser is clean.
-     * @param browserType the browser type input.
+     *
+     * @param browserType                  the browser type input.
      * @param browserAcceptedLanguageCodes the browser's accepted language codes.
-     * @param ensureCleanEnvironment boolean of the environment's cleanliness.
+     * @param ensureCleanEnvironment       boolean of the environment's cleanliness.
      */
     public static void manageEnvironment(BrowserType browserType, String browserAcceptedLanguageCodes, boolean ensureCleanEnvironment) {
         if (ensureCleanEnvironment) {

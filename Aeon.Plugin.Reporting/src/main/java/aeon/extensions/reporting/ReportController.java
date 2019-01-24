@@ -4,12 +4,12 @@ import aeon.extensions.reporting.reports.HtmlReport;
 import aeon.extensions.reporting.reports.SlackReport;
 import aeon.extensions.reporting.services.ArtifactoryService;
 import aeon.extensions.reporting.services.RnrService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReportController {
 
-    private static Logger log = LogManager.getLogger(ReportController.class);
+    private static Logger log = LoggerFactory.getLogger(ReportController.class);
     private static String rnrUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
 
     static String writeReportsAndUpload(ReportDetails reportDetails) {

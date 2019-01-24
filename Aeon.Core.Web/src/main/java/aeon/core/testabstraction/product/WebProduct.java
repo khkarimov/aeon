@@ -6,15 +6,15 @@ import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
 import aeon.core.extensions.WebProductTypeExtension;
 import aeon.core.testabstraction.models.Browser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to make a web product.
  */
 public class WebProduct extends Product {
 
-    private static Logger log = LogManager.getLogger(WebProduct.class);
+    private static Logger log = LoggerFactory.getLogger(WebProduct.class);
 
     public Browser browser;
 
@@ -44,7 +44,7 @@ public class WebProduct extends Product {
         super.afterLaunch();
 
         BrowserType browserType = ((WebConfiguration) configuration).getBrowserType();
-        log.info("Product successfully launched with " + browserType);
+        log.info("Product successfully launched with {}", browserType);
 
         // Set WebCommandExecutionFacade
         new WebProductTypeExtension().createCommandExecutionFacade(this.automationInfo);

@@ -6,8 +6,8 @@ import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class SeleniumConfiguration extends WebConfiguration {
 
-    private Logger log = LogManager.getLogger(SeleniumConfiguration.class);
+    private Logger log = LoggerFactory.getLogger(SeleniumConfiguration.class);
 
     /**
      * Keys relevant to the Selenium Configuration.
@@ -85,7 +85,8 @@ public class SeleniumConfiguration extends WebConfiguration {
 
     /**
      * Constructor for the Selenium Configuration.  Configures that Aeon web driver and selenium adapter.
-     * @throws IOException Exception thrown if there is an IO violation when accessing test or propertion.
+     *
+     * @throws IOException            Exception thrown if there is an IO violation when accessing test or propertion.
      * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
     public SeleniumConfiguration() throws IOException, IllegalAccessException {
@@ -95,10 +96,10 @@ public class SeleniumConfiguration extends WebConfiguration {
     /**
      * Initializes a new instance of the {@link Configuration} class.
      *
-     * @param driver AeonWebDriver.class.
+     * @param driver  AeonWebDriver.class.
      * @param adapter SeleniumAdapter.class.
-     * @param <D> AeonWebDriver.class.
-     * @param <A> SeleniumAdapter.class.
+     * @param <D>     AeonWebDriver.class.
+     * @param <A>     SeleniumAdapter.class.
      */
     public <D extends IWebDriver, A extends IWebAdapter> SeleniumConfiguration(Class<D> driver, Class<A> adapter) {
         super(driver, adapter);
