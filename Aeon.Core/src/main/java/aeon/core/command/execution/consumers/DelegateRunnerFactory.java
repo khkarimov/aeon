@@ -48,6 +48,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
 
     /**
      * Creates an instance of the {@link IDelegateRunner} class which is used to run delegates.
+     *
      * @param automationInfo The automation Info.
      * @return a new instance of throttled delegate runner.
      */
@@ -57,7 +58,7 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver);
         TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(commandDelegateRunner, driver, clock, defaultTimeout, automationInfo);
-        ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(timeoutDelegateRunner, new SeleniumExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
+        ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(timeoutDelegateRunner, new PromptExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
         return new ThrottledDelegateRunner(exceptionHandlingDelegateRunner, throttleFactor);
     }
 }

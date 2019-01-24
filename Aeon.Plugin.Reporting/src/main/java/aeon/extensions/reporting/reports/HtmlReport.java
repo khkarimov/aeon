@@ -6,11 +6,12 @@ import aeon.extensions.reporting.resultreportmodel.ResultReport;
 import aeon.extensions.reporting.resultreportmodel.TestCaseResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -21,14 +22,14 @@ import java.util.stream.Collectors;
 public class HtmlReport {
 
     private ReportDetails reportDetails;
-    private String reportsDirectory= ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "");;
+    private String reportsDirectory = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.REPORTS_DIRECTORY, "");
 
     private ResultReport resultReport;
     private String jsonReport;
 
     public final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-    private static Logger log = LogManager.getLogger(HtmlReport.class);
+    private static Logger log = LoggerFactory.getLogger(HtmlReport.class);
 
     public HtmlReport(ReportDetails reportDetails) {
         this.reportDetails = reportDetails;
@@ -65,12 +66,12 @@ public class HtmlReport {
         resultReport.counts.failed = reportDetails.getNumberOfFailedTests();
         resultReport.counts.disabled = reportDetails.getNumberOfSkippedTests();
         resultReport.timer.duration = reportDetails.getTotalTime();
-        for (ScenarioDetails scenario: reportDetails.getScenarios()) {
+        for (ScenarioDetails scenario : reportDetails.getScenarios()) {
             TestCaseResult testCaseResult = new TestCaseResult();
             testCaseResult.description = scenario.getTestName();
             testCaseResult.prefix = scenario.getClassName() + " ";
             if (reportDetails.getSuiteName() != null) {
-                testCaseResult.prefix  = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
+                testCaseResult.prefix = reportDetails.getSuiteName() + " " + scenario.getClassName() + " ";
             }
 
             testCaseResult.started = uploadDateFormat.format(new Date(scenario.getStartTime()));
@@ -128,7 +129,7 @@ public class HtmlReport {
     private String addJsonToHtmlTemplate(String jsonReport) {
         String reportTemplate;
         try (InputStream scriptReader = ReportingPlugin.class.getResourceAsStream("/report.tmpl.html")) {
-            reportTemplate =  new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
+            reportTemplate = new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
         } catch (FileNotFoundException e) {
             log.error("File not found on path");
 

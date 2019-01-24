@@ -13,8 +13,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class SlackBotService {
 
-    private static Logger log = LogManager.getLogger(SlackBotService.class);
+    private static Logger log = LoggerFactory.getLogger(SlackBotService.class);
     private static String slackChatUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_CHAT_URL, "");
     private static String slackBotToken = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "");
     private static String slackUploadUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, "");

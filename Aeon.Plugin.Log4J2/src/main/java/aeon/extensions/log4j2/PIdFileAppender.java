@@ -1,6 +1,9 @@
-package aeon.core.common.logging;
+package aeon.extensions.log4j2;
 
-import org.apache.logging.log4j.core.*;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Core;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.appender.AbstractOutputStreamAppender;
 import org.apache.logging.log4j.core.appender.FileManager;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
@@ -9,7 +12,7 @@ import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.apache.logging.log4j.core.net.Advertiser;
 
-import java.io.*;
+import java.io.Serializable;
 import java.lang.management.ManagementFactory;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +32,7 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
      * @param <B> the type to build
      */
     public static class Builder<B extends Builder<B>> extends AbstractOutputStreamAppender.Builder<B>
-        implements org.apache.logging.log4j.core.util.Builder<PIdFileAppender> {
+            implements org.apache.logging.log4j.core.util.Builder<PIdFileAppender> {
 
         @PluginBuilderAttribute
         @Required
@@ -227,8 +230,8 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
     private final Object advertisement;
 
     private PIdFileAppender(final String name, final Layout<? extends Serializable> layout, final Filter filter,
-                                 FileManager manager, String filename, final boolean ignoreExceptions,
-                                 final boolean immediateFlush, final Advertiser advertiser) {
+                            FileManager manager, String filename, final boolean ignoreExceptions,
+                            final boolean immediateFlush, final Advertiser advertiser) {
         super(name, layout, filter, ignoreExceptions, immediateFlush, manager);
         if (advertiser != null) {
             final Map<String, String> configuration = new HashMap<>(layout.getContentFormat());
@@ -254,6 +257,7 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
 
     /**
      * Returns the file name this appender is associated with.
+     *
      * @return the file name.
      */
     public String getFileName() {

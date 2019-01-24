@@ -12,8 +12,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class RnrService {
     private static String branch = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.BRANCH, "");
     private static String rnrUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
 
-    private static Logger log = LogManager.getLogger(RnrService.class);
+    private static Logger log = LoggerFactory.getLogger(RnrService.class);
 
     public static String uploadToRnr(String jsonFileName, String angularReportUrl, String correlationId) {
 
@@ -89,8 +89,8 @@ public class RnrService {
     private static Map<String, String> buildRnrMetaMap(String reportUrl) {
         Map<String, String> rnrMetaMap = new HashMap<>();
         rnrMetaMap.put("screenshots", reportUrl);
-        rnrMetaMap.put("app", browser);
-        rnrMetaMap.put("browser", environmentUrl);
+        rnrMetaMap.put("app", environmentUrl);
+        rnrMetaMap.put("browser", browser);
         return rnrMetaMap;
     }
 

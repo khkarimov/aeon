@@ -5,13 +5,13 @@ import aeon.core.extensions.ITestExecutionExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.extensions.reporting.services.ArtifactoryService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.pf4j.Extension;
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.awt.Image;
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -31,7 +31,7 @@ public class ReportingPlugin extends Plugin {
     public static IConfiguration aeonConfiguration;
     public static IConfiguration configuration;
 
-    private static Logger log = LogManager.getLogger(ReportingPlugin.class);
+    private static Logger log = LoggerFactory.getLogger(ReportingPlugin.class);
     private static ReportDetails reportDetails = null;
 
     /**
@@ -102,8 +102,8 @@ public class ReportingPlugin extends Plugin {
          * Returns the scenario details of the currently active thread
          * creating the object if it doesn't exist and `create` is false.
          *
-         * @param create    Set to true if a new object should be created
-         *                  replacing the old one for the current thread.
+         * @param create Set to true if a new object should be created
+         *               replacing the old one for the current thread.
          * @return The scenario details object of the current thread.
          */
         ScenarioDetails getCurrentScenarioBucket(boolean create) {
@@ -150,7 +150,7 @@ public class ReportingPlugin extends Plugin {
         public void onSkippedTest(String name, String... tags) {
 
             // Test didn't run
-            // Treat is as if it just started and ended
+            // Treat it as if it just started and ended
             onBeforeTest(name, tags);
 
             ScenarioDetails scenario = getCurrentScenarioBucket();
@@ -214,7 +214,7 @@ public class ReportingPlugin extends Plugin {
                         log.info("Video uploaded: " + videoUrl);
 
                         getCurrentScenarioBucket().setVideoUrl(videoUrl);
-                        for (ScenarioDetails scenario: finishedScenarios) {
+                        for (ScenarioDetails scenario : finishedScenarios) {
                             if (scenario.getVideoUrl().isEmpty()
                                     && scenario.getThreadId() == Thread.currentThread().getId()) {
                                 scenario.setVideoUrl(videoUrl);
@@ -228,7 +228,7 @@ public class ReportingPlugin extends Plugin {
 
                     if (logEntries != null) {
                         getCurrentScenarioBucket().setBrowserLogs(logEntries);
-                        for (ScenarioDetails scenario: finishedScenarios) {
+                        for (ScenarioDetails scenario : finishedScenarios) {
                             if (scenario.getBrowserLogs() == null
                                     && scenario.getThreadId() == Thread.currentThread().getId()) {
                                 scenario.setBrowserLogs(logEntries);
@@ -259,30 +259,30 @@ public class ReportingPlugin extends Plugin {
             reportDetails.setSuiteName(suiteName);
             log.info("Start Time " + this.reportDateFormat.format(new Date(startTime)));
         }
-    }
 
-    private static void initializeConfiguration() {
-        if (configuration == null) {
-            configuration = new ReportingConfiguration();
-            try {
-                configuration.loadConfiguration();
-            } catch (IllegalAccessException | IOException e) {
-                log.warn("Could not load plugin configuration.");
+        private static void initializeConfiguration() {
+            if (configuration == null) {
+                configuration = new ReportingConfiguration();
+                try {
+                    configuration.loadConfiguration();
+                } catch (IllegalAccessException | IOException e) {
+                    log.warn("Could not load plugin configuration.");
+                }
             }
         }
-    }
 
-    private static void initializeConfiguration(Configuration aeonConfiguration) {
-        if (configuration == null) {
-            configuration = new ReportingConfiguration();
-            try {
-                configuration.loadConfiguration();
-            } catch (IllegalAccessException | IOException e) {
-                log.warn("Could not load plugin configuration, using Aeon configuration.");
+        private static void initializeConfiguration(Configuration aeonConfiguration) {
+            if (configuration == null) {
+                configuration = new ReportingConfiguration();
+                try {
+                    configuration.loadConfiguration();
+                } catch (IllegalAccessException | IOException e) {
+                    log.warn("Could not load plugin configuration, using Aeon configuration.");
 
-                configuration = aeonConfiguration;
+                    configuration = aeonConfiguration;
+                }
+                ReportingPlugin.aeonConfiguration = aeonConfiguration;
             }
-            ReportingPlugin.aeonConfiguration = aeonConfiguration;
         }
     }
 }

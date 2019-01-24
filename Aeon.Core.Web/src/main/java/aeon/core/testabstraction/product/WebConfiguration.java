@@ -4,13 +4,12 @@ import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  */
 public class WebConfiguration extends Configuration {
 
-    private Logger log = LogManager.getLogger(WebConfiguration.class);
+    private Logger log = LoggerFactory.getLogger(WebConfiguration.class);
 
     private BrowserType browserType;
 
@@ -40,10 +39,10 @@ public class WebConfiguration extends Configuration {
     /**
      * Initializes a new instance of the {@link Configuration} class.
      *
-     * @param driver AeonWebDriver.class.
+     * @param driver  AeonWebDriver.class.
      * @param adapter IWebAdapter.class.
-     * @param <D> AeonWebDriver.class.
-     * @param <A> IWebAdapter.class.
+     * @param <D>     AeonWebDriver.class.
+     * @param <A>     IWebAdapter.class.
      */
     public <D extends IWebDriver, A extends IWebAdapter> WebConfiguration(Class<D> driver, Class<A> adapter) {
         super(driver, adapter);
@@ -77,7 +76,8 @@ public class WebConfiguration extends Configuration {
 
     /**
      * Constructor for the Appium Configuration.  Configures that Aeon web driver and selenium adapter.
-     * @throws IOException Exception thrown if there is an IO violation when accessing test or propertion.
+     *
+     * @throws IOException            Exception thrown if there is an IO violation when accessing test or propertion.
      * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
     public WebConfiguration() throws IOException, IllegalAccessException {

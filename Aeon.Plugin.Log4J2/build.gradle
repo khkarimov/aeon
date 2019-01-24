@@ -1,0 +1,12 @@
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.1'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.log4j2'
+        }
+    }
+}

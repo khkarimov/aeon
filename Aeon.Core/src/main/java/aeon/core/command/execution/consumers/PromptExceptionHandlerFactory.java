@@ -6,20 +6,22 @@ import aeon.core.command.execution.consumers.interfaces.IExceptionHandlerFactory
 /**
  * Class of Selenium Exception Handler Factory.
  */
-public class SeleniumExceptionHandlerFactory implements IExceptionHandlerFactory {
+public class PromptExceptionHandlerFactory implements IExceptionHandlerFactory {
 
     private boolean promptUserForContinueDecision;
 
     /**
      * Constructor for the selenium exception handler factory.
+     *
      * @param promptUserForContinueDecision the initial value of the boolean.
      */
-    public SeleniumExceptionHandlerFactory(boolean promptUserForContinueDecision) {
+    public PromptExceptionHandlerFactory(boolean promptUserForContinueDecision) {
         this.promptUserForContinueDecision = promptUserForContinueDecision;
     }
 
     /**
      * Function that returns a boolean of the user's decision to continue.
+     *
      * @return the decision of the user to continue as a boolean.
      */
     public final boolean getPromptUserForContinueDecision() {
@@ -28,6 +30,7 @@ public class SeleniumExceptionHandlerFactory implements IExceptionHandlerFactory
 
     /**
      * Function creates a handler for the type of exception.
+     *
      * @param typeOfexceptionToHandle the type of exception.
      * @return new instance of continue at user exception handler.
      */
