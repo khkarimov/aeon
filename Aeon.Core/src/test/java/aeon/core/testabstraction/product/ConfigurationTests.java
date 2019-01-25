@@ -32,30 +32,33 @@ public class ConfigurationTests {
         config = new Configuration(driver.getClass(), adapter.getClass());
     }
 
-
     @Test
     public void getDriverSetDriver_happyPath_returnsDriverClass() {
+
         // Arrange
 
         // Act
         config.setDriver(IDriver.class);
+
         // Assert
         assertEquals(config.getDriver(), IDriver.class);
     }
 
-
     @Test
     public void getAdapterSetAdapter_happyPath_returnsAdapterClass() {
+
         // Arrange
 
         // Act
         config.setAdapter(IAdapter.class);
+
         // Assert
         assertEquals(config.getAdapter(), IAdapter.class);
     }
 
     @Test
     public void setProperties_happyPath_propertiesChanged() {
+
         // Arrange
         Properties p = new Properties();
         p.put("test", "Default");
@@ -67,13 +70,13 @@ public class ConfigurationTests {
         // Assert
         String actual = config.getString("test", "Default");
         assertEquals("Success", actual);
-
-
     }
 
     @Test
     public void getConfigurationFields_happyPath_returnsConfigurationFields() throws IllegalAccessException {
+
         // Arrange
+
         // Act
         List<Field> keys = config.getConfigurationFields();
 
@@ -81,8 +84,5 @@ public class ConfigurationTests {
         assertEquals("aeon.timeout", keys.get(0).get(config));
         assertEquals("aeon.throttle", keys.get(1).get(config));
         assertEquals("aeon.implicit_reporting", keys.get(2).get(config));
-
-
     }
-
 }
