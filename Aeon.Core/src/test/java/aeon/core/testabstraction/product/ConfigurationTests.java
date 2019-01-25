@@ -72,16 +72,16 @@ public class ConfigurationTests {
     }
 
     @Test
-    public void getConfigurationFields_happyPath_returnsConfigurationFields() {
+    public void getConfigurationFields_happyPath_returnsConfigurationFields() throws IllegalAccessException {
         // Arrange
-
         // Act
         List<Field> keys = config.getConfigurationFields();
 
         // Assert
-        assertEquals(Configuration.Keys.class.getDeclaredFields()[0], keys.get(0));
-        assertEquals(Configuration.Keys.class.getDeclaredFields()[1], keys.get(1));
-        assertEquals(Configuration.Keys.class.getDeclaredFields()[2], keys.get(2));
+        assertEquals("aeon.timeout", keys.get(0).get(config));
+        assertEquals("aeon.throttle", keys.get(1).get(config));
+        assertEquals("aeon.implicit_reporting", keys.get(2).get(config));
+
 
     }
 
