@@ -34,7 +34,9 @@ public class ConfigurationTests {
 
 
     @Test
-    public void testGetSetDriver() {
+    public void getDriverSetDriver_happyPath_returnsDriverClass() {
+        // Arrange
+
         // Act
         config.setDriver(IDriver.class);
         // Assert
@@ -43,7 +45,9 @@ public class ConfigurationTests {
 
 
     @Test
-    public void testGetSetAdapter() {
+    public void getAdapterSetAdapter_happyPath_returnsAdapterClass() {
+        // Arrange
+
         // Act
         config.setAdapter(IAdapter.class);
         // Assert
@@ -51,7 +55,7 @@ public class ConfigurationTests {
     }
 
     @Test
-    public void testSetProperties() {
+    public void setProperties_happyPath_propertiesChanged() {
         // Arrange
         Properties p = new Properties();
         p.put("test", "Default");
@@ -68,13 +72,13 @@ public class ConfigurationTests {
     }
 
     @Test
-    public void testGetConfigFields() {
+    public void getConfigurationFields_happyPath_returnsConfigurationFields() {
         // Arrange
 
         // Act
         List<Field> keys = config.getConfigurationFields();
 
-        //Assert
+        // Assert
         assertEquals(Configuration.Keys.class.getDeclaredFields()[0], keys.get(0));
         assertEquals(Configuration.Keys.class.getDeclaredFields()[1], keys.get(1));
         assertEquals(Configuration.Keys.class.getDeclaredFields()[2], keys.get(2));
