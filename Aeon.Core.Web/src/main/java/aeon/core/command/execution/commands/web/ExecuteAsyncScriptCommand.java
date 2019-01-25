@@ -18,7 +18,7 @@ public class ExecuteAsyncScriptCommand extends CommandWithReturn {
      * @param script Script to execute
      */
     public ExecuteAsyncScriptCommand(String script) {
-        super(Resources.getString("ExecuteScriptCommand_Info"));
+        super(Resources.getString("ExecuteAsyncScriptCommand_Info"));
         this.script = script;
     }
 
