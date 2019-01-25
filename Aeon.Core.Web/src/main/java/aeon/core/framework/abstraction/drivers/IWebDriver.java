@@ -13,7 +13,7 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.net.URL;
 import java.util.Collection;
 import java.util.NoSuchElementException;
@@ -27,7 +27,7 @@ public interface IWebDriver extends IDriver {
      * Close the current window, quitting the browser if it's the last window currently open.
      */
     void close();
-    
+
     /**
      * Finds the first Element using the given mechanism.
      *
@@ -46,7 +46,7 @@ public interface IWebDriver extends IDriver {
      * @return A ReadOnly Collection of found elements.
      * matching the current criteria, or an empty list if nothing matches.
      * @throws IllegalArgumentException If FindBy is null.
-     * @throws NoSuchElementsException If there is no such element.
+     * @throws NoSuchElementsException  If there is no such element.
      */
     Collection<WebControl> findElements(IByWeb selector);
 
@@ -135,6 +135,15 @@ public interface IWebDriver extends IDriver {
     Object executeScript(String script);
 
     /**
+     * Executes asynchronous JavaScript in the product of the currently selected frame or window.
+     *
+     * @param script The JavaScript code to execute.
+     * @return The value returned by the script.
+     * @throws ScriptExecutionException If the JavaScript encounters an error.
+     */
+    Object executeAsyncScript(String script);
+
+    /**
      * Clears the text of the given Element.
      *
      * @param element The element to be cleared.
@@ -167,7 +176,7 @@ public interface IWebDriver extends IDriver {
 
     /**
      * Move a single "item" forward in the browser's history.
-     *
+     * <p>
      * Does nothing if we are on the latest page viewed.
      */
     void goForward();
@@ -694,7 +703,7 @@ public interface IWebDriver extends IDriver {
      * Selects a file for inputs of type file.
      *
      * @param control The control which gets the file path.
-     * @param path The path of the file to select.
+     * @param path    The path of the file to select.
      */
     void selectFile(WebControl control, String path);
 }
