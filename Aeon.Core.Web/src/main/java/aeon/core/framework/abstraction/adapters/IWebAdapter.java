@@ -89,7 +89,7 @@ public interface IWebAdapter extends IAdapter {
      * @return A ReadOnly Collection of found elements.
      * matching the current criteria, or an empty list if nothing matches.
      * @throws IllegalArgumentException If FindBy is null.
-     * @throws NoSuchElementsException   If there is no such element.
+     * @throws NoSuchElementsException  If there is no such element.
      */
     Collection<WebControl> findElements(IBy findBy);
 
@@ -215,13 +215,23 @@ public interface IWebAdapter extends IAdapter {
     Object executeScript(String script, Object... args);
 
     /**
+     * Executes asynchronous JavaScript in the product of the currently selected frame or window.
+     *
+     * @param script The JavaScript code to execute.
+     * @param args   The arguments to the script.
+     * @return The value returned by the script.
+     * @throws ScriptExecutionException If the JavaScript encounters an error.
+     */
+    Object executeAsyncScript(String script, Object... args);
+
+    /**
      * Move back a single entry in the browser's history.
      */
     void back();
 
     /**
      * Move a single "item" forward in the browser's history.
-     *
+     * <p>
      * Does nothing if we are on the latest page viewed.
      */
     void forward();
@@ -787,7 +797,7 @@ public interface IWebAdapter extends IAdapter {
      * Selects a file for inputs of type file.
      *
      * @param control The control which gets the file path.
-     * @param path The path of the file to select.
+     * @param path    The path of the file to select.
      */
     void selectFile(WebControl control, String path);
 }

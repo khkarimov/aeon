@@ -33,13 +33,14 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
 
     /**
      * Factory method that creates an Appium adapter for Aeon.Core.Mobile.
+     *
      * @param configuration The configuration of the adapter.
      * @return The created Appium adapter is returned.
      */
     public IAdapter create(AppiumConfiguration configuration) {
         prepare(configuration);
 
-        return new AppiumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new AppiumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 }
 
