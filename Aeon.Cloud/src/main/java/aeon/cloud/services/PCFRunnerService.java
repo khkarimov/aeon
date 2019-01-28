@@ -57,7 +57,8 @@ public class PCFRunnerService implements IRunnerService {
                         .image(dockerImage)
                         .build())
                 .healthCheckType(ApplicationHealthCheck.HTTP)
-                .healthCheckHttpEndpoint("api/admin/healthcheck")
+                .healthCheckHttpEndpoint("/api/admin/healthcheck")
+                .disk(2048)
                 .build();
 
         PushApplicationManifestRequest request = PushApplicationManifestRequest.builder()
