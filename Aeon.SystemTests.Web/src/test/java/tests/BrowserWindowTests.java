@@ -52,15 +52,15 @@ public class BrowserWindowTests extends SampleBaseTest {
     public void testSwitchToMainWindow() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("artifactory.mia.ulti.io");
-        product.browser.verifyTitle("artifactory.mia.ulti.io");
+        product.browser.switchToWindowByTitle("SonarQube");
+        product.browser.verifyTitle("SonarQube");
         product.browser.switchToMainWindow();
         product.browser.verifyTitle("Material Design Lite");
-        product.browser.switchToWindowByTitle("artifactory.mia.ulti.io");
+        product.browser.switchToWindowByTitle("SonarQube");
         product.browser.close();
         product.browser.switchToMainWindow(true);
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("artifactory.mia.ulti.io");
+        product.browser.switchToWindowByTitle("SonarQube");
 
         thrown.expect(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.switchToMainWindow(true);
@@ -71,8 +71,8 @@ public class BrowserWindowTests extends SampleBaseTest {
     public void testSwitchToWindowByTitle() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("artifactory.mia.ulti.io");
-        product.browser.verifyTitle("artifactory.mia.ulti.io");
+        product.browser.switchToWindowByTitle("SonarQube");
+        product.browser.verifyTitle("SonarQube");
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByTitle("Some Fake Title");
@@ -83,8 +83,8 @@ public class BrowserWindowTests extends SampleBaseTest {
     public void testSwitchToWindowByUrl() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByUrl("https://artifactory.mia.ulti.io");
-        product.browser.verifyTitle("artifactory.mia.ulti.io");
+        product.browser.switchToWindowByUrl("https://sonar.ulti.io");
+        product.browser.verifyTitle("SonarQube");
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByUrl("www.fake.com");
