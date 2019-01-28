@@ -35,8 +35,6 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.*;
 
-import aeon.core.common.exceptions.NoSuchElementException;
-
 /**
  * Mobile adapter for Appium.
  */
