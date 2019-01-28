@@ -287,9 +287,9 @@
                     var isEdge = !(/*@cc_on!@*/false || !!document.documentMode) && !!window.StyleMedia;
                     if (isEdge) {
                         var x = window.open('file:///C:/Projects/aeon/Aeon.SystemTests/Test%20Sample%20Context/index.html', 'Material Design Lite', 'width:500');
-                        x.location.href = "http://www.google.com";
+                        x.location.href = "https://artifactory.mia.ulti.io/";
                     } else {
-                        window.open('http://google.com', 'Google', 'width:300');
+                        window.open('https://artifactory.mia.ulti.io', 'artifactory.mia.ulti.io', 'width:300');
                     }
                 }
 
@@ -352,14 +352,14 @@
 </div>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
-	function popup(mylink, windowname) {
-	if (! window.focus) return true;
-	var href;
-	if (typeof(mylink) == 'string') href=mylink;
-	else href=mylink.href;
-	window.open(href, windowname, 'width=400,height=200,scrollbars=yes');
-	return false;
-}
+    function popup(mylink, windowname) {
+        if (!window.focus) return true;
+        var href;
+        if (typeof (mylink) == 'string') href = mylink;
+        else href = mylink.href;
+        window.open(href, windowname, 'width=400,height=200,scrollbars=yes');
+        return false;
+    }
 
 </script>
 <script>
@@ -390,6 +390,7 @@
         var data = event.dataTransfer.getData("Text");
         event.target.appendChild(document.getElementById(data));
     }
+
     document.getElementById("start").onmouseover = function () {
         document.getElementById("start").style.color = "red";
     }
@@ -458,26 +459,32 @@
     var timeUp;
     var promptText;
 
-    function promptTest(){
-      promptText = prompt('Send some keys');
-      document.getElementById("reaction-text").textContent = promptText;
+    function promptTest() {
+        promptText = prompt('Send some keys');
+        document.getElementById("reaction-text").textContent = promptText;
     }
 
-    function mouseDown(e){
-      timeDown = new Date();
-      switch (e.which) {
-        case 1: document.getElementById("reaction-text").textContent = "left click"; break;
-        case 2: document.getElementById("reaction-text").textContent = "middle click"; break;
-        case 3: document.getElementById("reaction-text").textContent = "right click"; break;
-      }
+    function mouseDown(e) {
+        timeDown = new Date();
+        switch (e.which) {
+            case 1:
+                document.getElementById("reaction-text").textContent = "left click";
+                break;
+            case 2:
+                document.getElementById("reaction-text").textContent = "middle click";
+                break;
+            case 3:
+                document.getElementById("reaction-text").textContent = "right click";
+                break;
+        }
     }
 
-    function mouseUp(e){
-      timeUp = new Date();
-      var diff = timeUp - timeDown;
-      if (diff >= 4980 ) {
-        document.getElementById("reaction-text").textContent = "mouse held for 5000";
-      }
+    function mouseUp(e) {
+        timeUp = new Date();
+        var diff = timeUp - timeDown;
+        if (diff >= 4980) {
+            document.getElementById("reaction-text").textContent = "mouse held for 5000";
+        }
     }
 
     $(document).ready(function () {
@@ -486,23 +493,23 @@
         $('#start').on('click', function () {
             $.ajax({
                 crossDomain: true,
-                url:"https://mockbin.org/delay/13000",
+                url: "https://mockbin.org/delay/13000",
                 dataType: "json"
             })
-            .done(function () {
-                $('.call-1').show();
-            });
+                .done(function () {
+                    $('.call-1').show();
+                });
             $.ajax({
                 crossDomain: true,
-                url:"https://mockbin.org/delay/15000",
+                url: "https://mockbin.org/delay/15000",
                 dataType: "json"
             })
-            .done(function () {
-                $('.call-2').show();
-                load("https://mockbin.org/delay/3000", function () {
-                    $('.call-3').show();
-                })
-            });
+                .done(function () {
+                    $('.call-2').show();
+                    load("https://mockbin.org/delay/3000", function () {
+                        $('.call-3').show();
+                    })
+                });
         });
 
     });
