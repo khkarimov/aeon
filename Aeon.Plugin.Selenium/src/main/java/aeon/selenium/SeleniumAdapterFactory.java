@@ -86,6 +86,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private String driverContext;
     protected WebDriver driver;
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
+    protected JavaScriptFlowExecutor asyncJavaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
     protected URL seleniumHubUrl;
@@ -102,7 +103,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -148,6 +149,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5));
+        asyncJavaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5), true);
+
         moveMouseToOrigin = configuration.getBoolean(SeleniumConfiguration.Keys.MOVE_MOUSE_TO_ORIGIN, true);
         String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.CHROME_DIRECTORY, null);
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
