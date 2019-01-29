@@ -79,6 +79,9 @@ public class ConfigurationTests {
 
         // Act
         List<Field> keys = config.getConfigurationFields();
+        for (Field field : keys) {
+            field.setAccessible(true);
+        }
 
         // Assert
         assertEquals("aeon.timeout", keys.get(0).get(config));
