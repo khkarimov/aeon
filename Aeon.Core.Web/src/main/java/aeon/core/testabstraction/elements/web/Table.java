@@ -6,9 +6,10 @@ import aeon.core.common.web.interfaces.IByWeb;
 /**
  * The class to model tables.
  *
- * @param <T> the {@link TableActions} class for this table model.
+ * @param <T> the {@link ComponentTable} class for this table model.
  */
-public abstract class Table<T extends TableActions> {
+@Deprecated
+public abstract class Table<T extends ComponentTable> {
 
     public T rowBy;
 
@@ -16,8 +17,8 @@ public abstract class Table<T extends TableActions> {
      * Creates a new instance of {@link Table}.
      *
      * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
-     * @param rowBy The {@link TableActions} object to use for table actions
+     * @param selector       IBy selector that will identify the element.
+     * @param rowBy          The {@link ComponentTable} object to use for table actions
      */
     public Table(AutomationInfo automationInfo, IByWeb selector, T rowBy) {
         this.rowBy = rowBy;
@@ -28,10 +29,10 @@ public abstract class Table<T extends TableActions> {
     /**
      * Creates a new instance of {@link Table}.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo  The AutomationInfo.
+     * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
-     * @param rowBy The {@link TableActions} object to use for table actions
+     * @param rowBy           The {@link ComponentTable} object to use for table actions
      */
     public Table(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T rowBy) {
         this.rowBy = rowBy;

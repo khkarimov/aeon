@@ -6,17 +6,17 @@ import aeon.core.common.web.interfaces.IByWeb;
 /**
  * Parent class for modeling one row of elements of a table.
  */
-public abstract class TableElements extends RowElements {
+@Deprecated
+public abstract class Component extends RowElements {
 
     /**
      * Constructor for abstract class RowElements.
      *
-     * @param info The info for the constructor.
-     * @param selector The chosen element.
+     * @param info            The info for the constructor.
+     * @param selector        The chosen element.
      * @param switchMechanism The Iterable of IBy.
-     *
      */
-    public TableElements(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Component(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
         super(info, selector, switchMechanism);
     }
 }

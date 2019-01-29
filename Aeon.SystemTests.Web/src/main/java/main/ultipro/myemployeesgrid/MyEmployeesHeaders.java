@@ -1,12 +1,12 @@
 package main.ultipro.myemployeesgrid;
 
 import aeon.core.common.web.selectors.By;
-import aeon.core.testabstraction.elements.web.TableActions;
+import aeon.core.testabstraction.elements.web.ComponentTable;
 
 /**
  * Class for finding rows based on certain column values.
  */
-public class MyEmployeesHeaders extends TableActions<MyEmployeesHeaders, MyEmployeesRowElements> {
+public class MyEmployeesHeaders extends ComponentTable<MyEmployeesHeaders, MyEmployeesRowElements> {
 
     /**
      * Constructor.

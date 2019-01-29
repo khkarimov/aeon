@@ -2,12 +2,11 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.models.Component;
 
 /**
  * Parent class for modeling elements within one item of a list group.
  * <p>
- * Should not be inherited directly, please use {@link Component} or {@link TableElements} instead.
+ * Should not be inherited directly, please use {@link aeon.core.testabstraction.models.Component} or {@link Component} instead.
  */
 public abstract class RowElements extends WebElement {
 
