@@ -6,7 +6,7 @@ import aeon.core.testabstraction.elements.web.*;
 import aeon.core.testabstraction.models.Page;
 import main.sample.samplegrid.MyGrid;
 import main.sample.samplegrid.MyGridHeaders;
-import main.sample.samplelistgroup.MyListGroup;
+import main.sample.samplelistgroup.MyListContainer;
 import main.sample.samplelistgroup.MyListGroupActions;
 
 /**
@@ -50,7 +50,7 @@ public class VTeamSamplePage extends Page {
     public Button smileyFace2;
     public Button smileyFace3;
     public MyGrid myGrid;
-    public MyListGroup myListGroup;
+    public MyListContainer myListGroup;
 
     /**
      * Constructor.
@@ -95,6 +95,6 @@ public class VTeamSamplePage extends Page {
         myGrid = new MyGrid(info, gridSelector, new MyGridHeaders());
         divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));
         bodyTag = new Label(info, By.cssSelector("label[for='sample5']"));
-        myListGroup = new MyListGroup(info, By.cssSelector(".demo-list-three"), new MyListGroupActions());
+        myListGroup = new MyListContainer(info, By.cssSelector(".demo-list-three"), new MyListGroupActions());
     }
 }
