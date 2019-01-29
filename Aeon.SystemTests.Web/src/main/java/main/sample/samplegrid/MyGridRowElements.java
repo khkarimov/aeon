@@ -3,13 +3,13 @@ package main.sample.samplegrid;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.testabstraction.elements.web.Button;
-import aeon.core.testabstraction.elements.web.Component;
 import aeon.core.testabstraction.elements.web.Label;
+import aeon.core.testabstraction.elements.web.RowElements;
 
 /**
  * Models the elements of a table row.
  */
-public class MyGridRowElements extends Component {
+public class MyGridRowElements extends RowElements {
     public Button checkBoxButton;
     public Label unitPrice;
 

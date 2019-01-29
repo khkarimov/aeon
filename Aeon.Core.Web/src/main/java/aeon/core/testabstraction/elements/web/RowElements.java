@@ -6,7 +6,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 /**
  * Parent class for modeling elements within one item of a list group.
  * <p>
- * Should not be inherited directly, please use {@link aeon.core.testabstraction.models.Component} or {@link Component} instead.
+ * Should not be inherited directly, please use {@link aeon.core.testabstraction.models.Component}
  */
 public abstract class RowElements extends WebElement {
 
