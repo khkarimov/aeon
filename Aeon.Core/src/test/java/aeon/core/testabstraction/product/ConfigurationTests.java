@@ -90,8 +90,8 @@ public class ConfigurationTests {
         }
 
         // Assert
-        assertEquals("aeon.timeout", keys.get(0).get(config));
-        assertEquals("aeon.throttle", keys.get(1).get(config));
-        assertEquals("aeon.implicit_reporting", keys.get(2).get(config));
+        assertEquals("aeon.timeout", nonSynthetic.get(0).get(config));
+        assertEquals("aeon.throttle", nonSynthetic.get(1).get(config));
+        assertEquals("aeon.implicit_reporting", nonSynthetic.get(2).get(config));
     }
 }
