@@ -2,6 +2,7 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.testabstraction.models.Component;
 
 /**
  * Parent class for modeling elements within one item of a list group.

@@ -2,6 +2,7 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.InlineJavaScript;
+import aeon.core.testabstraction.models.Component;
 
 /**
  * This class serves as a base for all grid row actions.

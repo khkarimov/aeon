@@ -21,7 +21,7 @@ public class MyEmployeesHeaders extends TableActions<MyEmployeesHeaders, MyEmplo
      * @param value The number of the employee to search for in the employee number column.
      * @return An instance of the {@link MyEmployeesHeaders} class to support chaining and filtering by multiple columns.
      */
-    public MyEmployeesHeaders employeeNumber(String value){
+    public MyEmployeesHeaders employeeNumber(String value) {
         return findRow(value, By.cssSelector("#GridView1_colHeaders > th:nth-child(2)"));
     }
 

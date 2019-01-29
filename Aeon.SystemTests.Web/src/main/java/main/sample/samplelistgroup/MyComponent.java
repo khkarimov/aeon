@@ -2,7 +2,7 @@ package main.sample.samplelistgroup;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.Component;
+import aeon.core.testabstraction.models.Component;
 import aeon.core.testabstraction.elements.web.Label;
 
 /**
