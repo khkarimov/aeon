@@ -215,6 +215,16 @@ public interface IWebAdapter extends IAdapter {
     Object executeScript(String script, Object... args);
 
     /**
+     * Executes asynchronous JavaScript in the product of the currently selected frame or window.
+     *
+     * @param script The JavaScript code to execute.
+     * @param args   The arguments to the script.
+     * @return The value returned by the script.
+     * @throws ScriptExecutionException If the JavaScript encounters an error.
+     */
+    Object executeAsyncScript(String script, Object... args);
+
+    /**
      * Move back a single entry in the browser's history.
      */
     void back();

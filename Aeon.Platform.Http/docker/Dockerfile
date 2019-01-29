@@ -36,7 +36,7 @@ COPY nginx.conf /etc/nginx/conf.d/
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY lib lib
 COPY plugins plugins
-COPY Aeon.Platform.Http-1.14.4-all.jar aeon.jar
+COPY aeon.jar aeon.jar
 
 # Modify the launch script 'ps -p'
 RUN sed -i -- "s/ps -p/ps -o pid | grep/g" /root/noVNC/utils/launch.sh

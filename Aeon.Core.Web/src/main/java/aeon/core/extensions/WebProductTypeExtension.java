@@ -9,6 +9,7 @@ import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.command.execution.consumers.DelegateRunnerFactory;
 import aeon.core.common.helpers.AjaxWaiter;
 import aeon.core.common.interfaces.IBy;
+import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.product.Configuration;
@@ -101,37 +102,41 @@ public class WebProductTypeExtension implements IProductTypeExtension {
     private Object[] getParameters(List<Object> args, Class[] parameters) {
         Object[] params = new Object[0];
 
-        if (args != null) {
-            params = new Object[parameters.length];
+        if (args == null) {
+            return params;
+        }
 
-            for (int i = 0; i < parameters.length; i++) {
-                params[i] = createParameter(parameters, args, i);
+        params = new Object[parameters.length];
+
+        int i = 0;
+        int j = 0;
+
+        for (Class p : parameters) {
+            switch (p.getName()) {
+                case "aeon.core.common.web.interfaces.IByWeb":
+                    if (Map.class.isAssignableFrom(args.get(i).getClass())) {
+                        params[i] = createSelector((Map) args.get(j));
+                    } else {
+                        return null;
+                    }
+                    break;
+                case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
+                    // switchMechanism is always null
+                    params[i] = parseICommandInitializer(null);
+                    j--;
+                    break;
+                case "aeon.core.common.web.WebSelectOption":
+                    params[i] = WebSelectOption.valueOf((String) args.get(j));
+                    break;
+                default:
+                    params[i] = args.get(j);
             }
+
+            i++;
+            j++;
         }
 
         return params;
-    }
-
-    private Object createParameter(Class[] parameters, List<Object> args, int i) {
-        Object param;
-
-        switch (parameters[i].getName()) {
-            case "aeon.core.common.web.interfaces.IByWeb":
-                if (Map.class.isAssignableFrom(args.get(i).getClass())) {
-                    param = createSelector((Map) args.get(i));
-                } else {
-                    return null;
-                }
-                break;
-            case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
-                // switchMechanism is always null
-                param = parseICommandInitializer(null);
-                break;
-            default:
-                param = args.get(i);
-        }
-
-        return param;
     }
 
     private ICommandInitializer parseICommandInitializer(Iterable<IByWeb> switchMechanism) {

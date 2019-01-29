@@ -135,6 +135,15 @@ public interface IWebDriver extends IDriver {
     Object executeScript(String script);
 
     /**
+     * Executes asynchronous JavaScript in the product of the currently selected frame or window.
+     *
+     * @param script The JavaScript code to execute.
+     * @return The value returned by the script.
+     * @throws ScriptExecutionException If the JavaScript encounters an error.
+     */
+    Object executeAsyncScript(String script);
+
+    /**
      * Clears the text of the given Element.
      *
      * @param element The element to be cleared.

@@ -58,6 +58,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private final URL seleniumHubUrl;
     protected WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
+    private IJavaScriptFlowExecutor asyncJavaScriptExecutor;
     private boolean moveMouseToOrigin;
     protected BrowserType browserType;
     private static Logger log = LoggerFactory.getLogger(SeleniumAdapter.class);
@@ -69,19 +70,21 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Constructor for Selenium Adapter.
      *
-     * @param seleniumWebDriver     The driver for the adapter.
-     * @param javaScriptExecutor    The javaScript executor for the adapter.
-     * @param moveMouseToOrigin     A boolean indicating whether or not the mouse will return to the origin
-     *                              (top left corner of the browser window) before executing every action.
-     * @param browserType           The browser type for the adapter.
-     * @param fallbackBrowserSize   The size the browser will be maximized to.
-     * @param isRemote              Whether we are testing remotely or locally.
-     * @param seleniumHubUrl        The used Selenium hub URL.
-     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
-     * @param loggingPreferences    Preferences which contain which Selenium log types to enable
+     * @param seleniumWebDriver       The driver for the adapter.
+     * @param javaScriptExecutor      The javaScript executor for the adapter.
+     * @param asyncJavaScriptExecutor The asynchronous javaScript executor for the adapter.
+     * @param moveMouseToOrigin       A boolean indicating whether or not the mouse will return to the origin
+     *                                (top left corner of the browser window) before executing every action.
+     * @param browserType             The browser type for the adapter.
+     * @param fallbackBrowserSize     The size the browser will be maximized to.
+     * @param isRemote                Whether we are testing remotely or locally.
+     * @param seleniumHubUrl          The used Selenium hub URL.
+     * @param seleniumLogsDirectory   The path to the directory for Selenium Logs
+     * @param loggingPreferences      Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
+        this.asyncJavaScriptExecutor = asyncJavaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
@@ -738,6 +741,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public final Object executeScript(String script, Object... args) {
         try {
             return javaScriptExecutor.getExecutor()
+                    .apply(new SeleniumScriptExecutor(webDriver), script, Arrays.asList(args));
+        } catch (RuntimeException e) {
+            throw new ScriptExecutionException(script, e);
+        }
+    }
+
+    /**
+     * Executes asynchronous JavaScript.
+     *
+     * @param script Script to execute.
+     * @param args   Args to pass to JavaScriptExecutor.
+     * @return An object returned from the script executed.
+     */
+    public final Object executeAsyncScript(String script, Object... args) {
+        try {
+            return asyncJavaScriptExecutor.getExecutor()
                     .apply(new SeleniumScriptExecutor(webDriver), script, Arrays.asList(args));
         } catch (RuntimeException e) {
             throw new ScriptExecutionException(script, e);
