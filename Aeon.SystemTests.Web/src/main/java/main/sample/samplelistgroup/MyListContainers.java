@@ -2,12 +2,12 @@ package main.sample.samplelistgroup;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.ListContainers;
+import aeon.core.testabstraction.elements.web.ListContainer;
 
 /**
  * Model for the sample list group.
  */
-public class MyListContainers extends ListContainers<MyComponentList> {
+public class MyListContainers extends ListContainer<MyComponentList> {
 
     /**
      * Constructor.

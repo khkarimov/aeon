@@ -52,7 +52,7 @@ public abstract class ComponentTable<T extends ComponentTable, K extends Compone
      * Get a row by the value and column header.
      *
      * @param value        The value you are looking for.
-     * @param columnHeader THe header of the column.
+     * @param columnHeader The header of the column.
      * @return Returns an instance of T.
      */
     protected T findRow(String value, IByWeb columnHeader) {
