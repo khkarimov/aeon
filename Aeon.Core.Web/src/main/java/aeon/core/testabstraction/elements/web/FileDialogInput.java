@@ -2,13 +2,10 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.commands.initialization.WebCommandInitializer;
-import aeon.core.command.execution.commands.web.*;
+import aeon.core.command.execution.commands.web.SelectFileCommand;
+import aeon.core.command.execution.commands.web.WebControlFinder;
+import aeon.core.command.execution.commands.web.WebSelectorFinder;
 import aeon.core.common.web.interfaces.IByWeb;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 /**
@@ -19,8 +16,6 @@ public class FileDialogInput extends WebElement {
     private AutomationInfo info;
     private IByWeb selector;
     private Iterable<IByWeb> switchMechanism;
-
-    static Logger log = LogManager.getLogger(FileDialogInput.class);
 
     /**
      * Creates a new instance of {@link Button}.

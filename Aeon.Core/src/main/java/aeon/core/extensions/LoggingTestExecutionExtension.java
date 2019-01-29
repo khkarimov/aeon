@@ -2,9 +2,9 @@ package aeon.core.extensions;
 
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Configuration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test execution extension for logging test details.
@@ -12,7 +12,7 @@ import org.pf4j.Extension;
 @Extension
 public class LoggingTestExecutionExtension implements ITestExecutionExtension {
 
-    private static Logger log = LogManager.getLogger(LoggingTestExecutionExtension.class);
+    private static Logger log = LoggerFactory.getLogger(LoggingTestExecutionExtension.class);
 
     @Override
     public void onStartUp(Configuration configuration, String correlationId) {
@@ -36,7 +36,7 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
 
     @Override
     public void onBeforeTest(String name, String... tags) {
-        log.info("TEST STARTED: " + name);
+        log.info("TEST STARTED: {}", name);
     }
 
     @Override
@@ -46,12 +46,12 @@ public class LoggingTestExecutionExtension implements ITestExecutionExtension {
 
     @Override
     public void onSkippedTest(String name, String... tags) {
-        log.info("TEST SKIPPED: " + name);
+        log.info("TEST SKIPPED: {}", name);
     }
 
     @Override
     public void onFailedTest(String reason, Throwable e) {
-        log.info("TEST FAILED: " + reason);
+        log.info("TEST FAILED: {}", reason);
     }
 
     @Override

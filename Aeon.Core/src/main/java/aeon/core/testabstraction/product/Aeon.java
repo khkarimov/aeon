@@ -6,9 +6,9 @@ import aeon.core.extensions.AeonPluginManager;
 import aeon.core.extensions.DefaultSessionIdProvider;
 import aeon.core.extensions.ISessionIdProvider;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.pf4j.PluginManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Properties;
@@ -18,7 +18,7 @@ import java.util.Properties;
  **/
 public class Aeon {
 
-    private static Logger log = LogManager.getLogger(Aeon.class);
+    private static Logger log = LoggerFactory.getLogger(Aeon.class);
     private static PluginManager pluginManager;
     private static ISessionIdProvider sessionIdProvider = new DefaultSessionIdProvider();
 

@@ -4,8 +4,8 @@ import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
 import aeon.core.command.execution.consumers.interfaces.IExceptionHandlerFactory;
 import aeon.core.common.exceptions.TimeoutExpiredException;
 import aeon.core.framework.abstraction.drivers.IDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -16,12 +16,13 @@ import java.util.function.Supplier;
  */
 public class ExceptionHandlingDelegateRunner extends DelegateRunner {
 
-    private static Logger log = LogManager.getLogger(ExceptionHandlingDelegateRunner.class);
+    private static Logger log = LoggerFactory.getLogger(ExceptionHandlingDelegateRunner.class);
     private IExceptionHandlerFactory exceptionHandlerFactory;
 
     /**
      * Constructor for the exception handling delegate runner.
-     * @param successor the delegate runner to be set.
+     *
+     * @param successor               the delegate runner to be set.
      * @param exceptionHandlerFactory the exception handler factory to be set.
      */
     public ExceptionHandlingDelegateRunner(IDelegateRunner successor, IExceptionHandlerFactory exceptionHandlerFactory) {
@@ -31,6 +32,7 @@ public class ExceptionHandlingDelegateRunner extends DelegateRunner {
 
     /**
      * Function returns an ExceptionHandlerFactory.
+     *
      * @return the exception handler factory.
      */
     public final IExceptionHandlerFactory getExceptionHandlerFactory() {

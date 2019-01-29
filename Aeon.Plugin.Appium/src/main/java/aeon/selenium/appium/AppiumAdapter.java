@@ -24,12 +24,12 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.offset.PointOption;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.time.Duration;
@@ -40,7 +40,7 @@ import java.util.*;
  */
 public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
-    private static Logger log = LogManager.getLogger(AppiumAdapter.class);
+    private static Logger log = LoggerFactory.getLogger(AppiumAdapter.class);
 
     private String context;
 
@@ -49,19 +49,20 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     /**
      * Constructor for Selenium Adapter.
      *
-     * @param seleniumWebDriver     The driver for the adapter.
-     * @param javaScriptExecutor    The javaScript executor for the adapter.
-     * @param moveMouseToOrigin     A boolean indicating whether or not the mouse will return to the origin
-     *                              (top left corner of the browser window) before executing every action.
-     * @param browserType           The browser type for the adapter.
-     * @param browserSize           The screen resolution for the machine
-     * @param isRemote              Whether we are testing remotely or locally.
-     * @param seleniumHubUrl        The used Selenium hub URL.
-     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
-     * @param loggingPreferences    Preferences which contain which Selenium log types to enable
+     * @param seleniumWebDriver       The driver for the adapter.
+     * @param javaScriptExecutor      The javaScript executor for the adapter.
+     * @param asyncJavaScriptExecutor The asynchronous javaScript executor for the adapter.
+     * @param moveMouseToOrigin       A boolean indicating whether or not the mouse will return to the origin
+     *                                (top left corner of the browser window) before executing every action.
+     * @param browserType             The browser type for the adapter.
+     * @param browserSize             The screen resolution for the machine
+     * @param isRemote                Whether we are testing remotely or locally.
+     * @param seleniumHubUrl          The used Selenium hub URL.
+     * @param seleniumLogsDirectory   The path to the directory for Selenium Logs
+     * @param loggingPreferences      Preferences which contain which Selenium log types to enable
      */
-    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
-        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+        super(seleniumWebDriver, javaScriptExecutor, asyncJavaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
 
         if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
             context = getMobileWebDriver().getContext();
@@ -727,12 +728,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             try {
                 getMobileWebDriver().closeApp();
             } catch (Exception e) {
-                log.trace(e);
+                log.trace("Failed to close app.", e);
             } finally {
                 getMobileWebDriver().close();
             }
         } catch (Exception e) {
-            log.trace(e);
+            log.trace("Failed to close.", e);
         } finally {
             getMobileWebDriver().quit();
         }

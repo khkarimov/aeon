@@ -11,7 +11,7 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-public class DropdownOptionsTests extends SampleBaseTest{
+public class DropdownOptionsTests extends SampleBaseTest {
 
     @Test
     @Category({SafariNotSupported.class})
@@ -46,7 +46,7 @@ public class DropdownOptionsTests extends SampleBaseTest{
     }
 
     @Test
-    public void testHasAllOptionsInOrder_ByValue_Ascending(){
+    public void testHasAllOptionsInOrder_ByValue_Ascending() {
         product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
@@ -54,7 +54,7 @@ public class DropdownOptionsTests extends SampleBaseTest{
     }
 
     @Test
-    public void testHasAllOptionsInOrder_ByValue_Descending(){
+    public void testHasAllOptionsInOrder_ByValue_Descending() {
         product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
@@ -62,7 +62,7 @@ public class DropdownOptionsTests extends SampleBaseTest{
     }
 
     @Test
-    public void testHasOptionsInOrder_ByValue(){
+    public void testHasOptionsInOrder_ByValue() {
         //Arrange
         String[] validoptions = {"1", "2", "3"};
         String[] invalidoptions = {"1", "2", "3", "40", "5"};
@@ -76,9 +76,9 @@ public class DropdownOptionsTests extends SampleBaseTest{
     }
 
     @Test
-    public void testHasNumberOfOptions(){
+    public void testHasNumberOfOptions() {
         //Arrange
-        int totalOptions = 5000;
+        int totalOptions = 500;
         final int totalOptionsToFail = 50;
 
         //Act

@@ -1,13 +1,14 @@
 package aeon.extensions.reporting;
 
 import gui.ava.html.image.generator.HtmlImageGenerator;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class Utils {
 
-    private static org.apache.logging.log4j.Logger log = LogManager.getLogger(Utils.class);
+    private static Logger log = LoggerFactory.getLogger(Utils.class);
 
     public static File htmlToPngFile(String html, String filePath) {
         log.trace("Converting HTML file to Png");

@@ -1,7 +1,7 @@
 package aeon.core.common.helpers;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -11,7 +11,7 @@ import java.awt.event.InputEvent;
  */
 public class MouseHelper {
 
-    private static Logger log = LogManager.getLogger(MouseHelper.class);
+    private static Logger log = LoggerFactory.getLogger(MouseHelper.class);
 
     /**
      * Private constructor to prevent instantiation.
@@ -22,6 +22,7 @@ public class MouseHelper {
 
     /**
      * Function uses coordinates to click at a specified location.
+     *
      * @param xCoordinate the x coordinate.
      * @param yCoordinate the y coordinate.
      * @return returns false if the adapter needs to throw an error.
@@ -47,14 +48,17 @@ public class MouseHelper {
             return false;
         }
     }
+
     /**
      * Function uses coordinates to click and hold for a specific amount of time.
-     * @param xCoordinate the x coordinate.
-     * @param yCoordinate the y coordinate.
+     *
+     * @param xCoordinate    the x coordinate.
+     * @param yCoordinate    the y coordinate.
      * @param durationMillis the duration in milliseconds to hold.
      * @return returns false if the adapter needs to throw an error.
      * @deprecated This method will be removed in a future version of Aeon.
      */
+    @Deprecated
     public static boolean clickAndHold(int xCoordinate, int yCoordinate, int durationMillis) {
         //get the current coordinates
         Point pointLocation = MouseInfo.getPointerInfo().getLocation();
@@ -80,13 +84,15 @@ public class MouseHelper {
 
     /**
      * Function uses coordinates to click and drag from one starting set of coordinates to another.
+     *
      * @param startXCoordinate The starting x coordinate.
      * @param startYCoordinate The starting y coordinate.
-     * @param endXCoordinate The ending x coordinate.
-     * @param endYCoordinate the ending y coordinate.
+     * @param endXCoordinate   The ending x coordinate.
+     * @param endYCoordinate   the ending y coordinate.
      * @return a boolean of success or failure.
      * @deprecated This method will be removed in a future version of Aeon.
      */
+    @Deprecated
     public static boolean dragAndDrop(int startXCoordinate, int startYCoordinate, int endXCoordinate, int endYCoordinate) {
 
         try {

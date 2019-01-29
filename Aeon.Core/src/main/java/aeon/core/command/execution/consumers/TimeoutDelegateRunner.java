@@ -8,9 +8,9 @@ import aeon.core.common.helpers.IClock;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.time.Duration;
@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  */
 public class TimeoutDelegateRunner extends DelegateRunner {
 
-    private static Logger log = LogManager.getLogger(TimeoutDelegateRunner.class);
+    private static Logger log = LoggerFactory.getLogger(TimeoutDelegateRunner.class);
     private IDriver driver;
     private IClock clock;
     private Duration timeout;
@@ -32,10 +32,11 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
     /**
      * Constructor for {@link TimeoutDelegateRunner} class.
-     * @param successor the delegate runner.
-     * @param driver the web driver.
-     * @param clock the clock.
-     * @param timeout the duration time.
+     *
+     * @param successor      the delegate runner.
+     * @param driver         the web driver.
+     * @param clock          the clock.
+     * @param timeout        the duration time.
      * @param automationInfo The automation info.
      */
     public TimeoutDelegateRunner(IDelegateRunner successor, IDriver driver, IClock clock, Duration timeout, AutomationInfo automationInfo) {
@@ -93,7 +94,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
 
         // If we have a last caught exception use that one
         // as the main exception for logging
-        if (lastCaughtException != null){
+        if (lastCaughtException != null) {
             lastCaughtException.addSuppressed(ex);
             ex = lastCaughtException;
         }

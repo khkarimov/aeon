@@ -14,7 +14,7 @@
  * See the license for the specific language governing permissions and
  * limitations under the license.
  */
-package aeon.core.common.logging;
+package aeon.extensions.log4j2;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Layout;
@@ -340,7 +340,6 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
     /**
      * Possible font sizes.
-     *
      */
     public enum FontSize {
         SMALLER("smaller"), XXSMALL("xx-small"), XSMALL("x-small"), SMALL("small"), MEDIUM("medium"), LARGE("large"),
@@ -425,6 +424,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
         /**
          * Function returns a Builder with the provided title info as a string.
+         *
          * @param title a string representing a title.
          * @return the Builder with the new title.
          */
@@ -435,6 +435,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
         /**
          * Function returns a Builder with the provided contentType info as a string.
+         *
          * @param contentType a string representing the content type.
          * @return the Builder with the new content type.
          */
@@ -445,6 +446,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
         /**
          * Function returns a Builder with the provided title info as a string.
+         *
          * @param charset a Charset representing a set of chars.
          * @return the Builder with the new char set.
          */
@@ -455,6 +457,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
         /**
          * Function returns a Builder with the provided title info as a string.
+         *
          * @param fontSize a FontSize representing the font size.
          * @return the Builder with the new font size.
          */
@@ -465,6 +468,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
         /**
          * Function returns a Builder with the provided title info as a string.
+         *
          * @param fontName a string representing a fontName.
          * @return the Builder with the new fontName.
          */

@@ -107,6 +107,11 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
+    public Object executeAsyncScript(String script) {
+        return adapter.executeAsyncScript(script);
+    }
+
+    @Override
     public void clearElement(WebControl element) {
         adapter.clearElement(element);
     }

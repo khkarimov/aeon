@@ -5,8 +5,8 @@ import aeon.extensions.reporting.ReportingConfiguration;
 import aeon.extensions.reporting.ReportingPlugin;
 import aeon.extensions.reporting.ScenarioDetails;
 import aeon.extensions.reporting.services.SlackBotService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -25,7 +25,7 @@ public class SlackReport {
 
     private final SimpleDateFormat reportDateFormat = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
 
-    private static Logger log = LogManager.getLogger(SlackReport.class);
+    private static Logger log = LoggerFactory.getLogger(SlackReport.class);
 
     public SlackReport(ReportDetails reportDetails) {
         this.reportDetails = reportDetails;
@@ -115,6 +115,6 @@ public class SlackReport {
     }
 
     private boolean reportHasFailures() {
-        return(reportDetails.getNumberOfFailedTests() > 0);
+        return (reportDetails.getNumberOfFailedTests() > 0);
     }
 }
