@@ -6,9 +6,9 @@ import aeon.core.common.web.interfaces.IByWeb;
 /**
  * The class to model list groups.
  *
- * @param <T> the {@link ListGroupActions} class for this list group model.
+ * @param <T> the {@link ComponentList} class for this list group model.
  */
-public class ListContainer<T extends ListGroupActions> {
+public class ListContainer<T extends ComponentList> {
 
     public T rowBy;
 
@@ -17,7 +17,7 @@ public class ListContainer<T extends ListGroupActions> {
      *
      * @param automationInfo The AutomationInfo.
      * @param selector       IBy selector that will identify the element.
-     * @param rowBy          The {@link ListGroupActions} object to use for list group actions
+     * @param rowBy          The {@link ComponentList} object to use for list group actions
      */
     public ListContainer(AutomationInfo automationInfo, IByWeb selector, T rowBy) {
         this.rowBy = rowBy;
@@ -31,7 +31,7 @@ public class ListContainer<T extends ListGroupActions> {
      * @param automationInfo  The AutomationInfo.
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
-     * @param rowBy           The {@link ListGroupActions} object to use for list group actions
+     * @param rowBy           The {@link ComponentList} object to use for list group actions
      */
     public ListContainer(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T rowBy) {
         this.rowBy = rowBy;

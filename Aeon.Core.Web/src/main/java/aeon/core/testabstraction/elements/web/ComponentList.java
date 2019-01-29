@@ -11,15 +11,15 @@ import aeon.core.common.web.selectors.InlineJavaScript;
  * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
-public abstract class ListGroupActions<T extends ListGroupActions, K extends Component> extends RowActions<T, K> {
+public abstract class ComponentList<T extends ComponentList, K extends Component> extends RowActions<T, K> {
 
     /**
-     * Initializes a new instance of {@link ListGroupActions} class.
+     * Initializes a new instance of {@link ComponentList} class.
      *
-     * @param rowActionsClass  A sub class of {@link ListGroupActions}
+     * @param rowActionsClass  A sub class of {@link ComponentList}
      * @param rowElementsClass A sub class of {@link RowElements}
      */
-    public ListGroupActions(Class<T> rowActionsClass, Class<K> rowElementsClass) {
+    public ComponentList(Class<T> rowActionsClass, Class<K> rowElementsClass) {
         super(rowActionsClass, rowElementsClass);
     }
 

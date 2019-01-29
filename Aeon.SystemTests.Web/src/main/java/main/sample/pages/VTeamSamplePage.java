@@ -7,7 +7,7 @@ import aeon.core.testabstraction.models.Page;
 import main.sample.samplegrid.MyGrid;
 import main.sample.samplegrid.MyGridHeaders;
 import main.sample.samplelistgroup.MyListContainer;
-import main.sample.samplelistgroup.MyListGroupActions;
+import main.sample.samplelistgroup.MyComponentList;
 
 /**
  * Model of the sample HTML file for system tests.
@@ -95,6 +95,6 @@ public class VTeamSamplePage extends Page {
         myGrid = new MyGrid(info, gridSelector, new MyGridHeaders());
         divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));
         bodyTag = new Label(info, By.cssSelector("label[for='sample5']"));
-        myListGroup = new MyListContainer(info, By.cssSelector(".demo-list-three"), new MyListGroupActions());
+        myListGroup = new MyListContainer(info, By.cssSelector(".demo-list-three"), new MyComponentList());
     }
 }

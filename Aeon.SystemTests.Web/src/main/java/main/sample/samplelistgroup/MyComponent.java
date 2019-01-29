@@ -2,8 +2,8 @@ package main.sample.samplelistgroup;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.Label;
 import aeon.core.testabstraction.elements.web.Component;
+import aeon.core.testabstraction.elements.web.Label;
 
 /**
  * Models the elements of an item of the list group.
@@ -15,8 +15,8 @@ public class MyComponent extends Component {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
-     * @param selector The selector that identifies the item of the list group.
+     * @param info            The automation info object to use.
+     * @param selector        The selector that identifies the item of the list group.
      * @param switchMechanism The switchMechanism to use.
      */
     public MyComponent(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {

@@ -11,10 +11,9 @@ public abstract class Component extends RowElements {
     /**
      * Constructor for abstract class RowElements.
      *
-     * @param info The info for the constructor.
-     * @param selector The chosen element.
+     * @param info            The info for the constructor.
+     * @param selector        The chosen element.
      * @param switchMechanism The Iterable of IBy.
-     *
      */
     public Component(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
         super(info, selector, switchMechanism);

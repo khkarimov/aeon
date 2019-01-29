@@ -7,7 +7,7 @@ import aeon.core.testabstraction.elements.web.ListContainer;
 /**
  * Model for the sample list group.
  */
-public class MyListContainer extends ListContainer<MyListGroupActions> {
+public class MyListContainer extends ListContainer<MyComponentList> {
 
     /**
      * Constructor.
@@ -16,7 +16,7 @@ public class MyListContainer extends ListContainer<MyListGroupActions> {
      * @param selector       The selector that identifies the list group.
      * @param gridHeaders    The corresponding List Group Actions object.
      */
-    public MyListContainer(AutomationInfo automationInfo, IByWeb selector, MyListGroupActions gridHeaders) {
+    public MyListContainer(AutomationInfo automationInfo, IByWeb selector, MyComponentList gridHeaders) {
         super(automationInfo, selector, gridHeaders);
     }
 }
