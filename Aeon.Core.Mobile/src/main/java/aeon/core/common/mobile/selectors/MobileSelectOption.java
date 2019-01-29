@@ -5,7 +5,7 @@ package aeon.core.common.mobile.selectors;
  */
 public enum MobileSelectOption {
     /**
-     * Dropdown by visible text.
+     * Select by visible text.
      */
     Text
 }
