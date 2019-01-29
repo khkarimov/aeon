@@ -5,7 +5,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.testabstraction.elements.web.ListContainer;
 
 /**
- * Model for the sample list group.
+ * Model for the sample list container.
  */
 public class MyListContainers extends ListContainer<MyComponentList> {
 

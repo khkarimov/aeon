@@ -6,7 +6,7 @@ import aeon.core.testabstraction.elements.web.Label;
 import aeon.core.testabstraction.models.Component;
 
 /**
- * Models the elements of an item of the list group.
+ * Models the elements of an item of the list component.
  */
 public class MyComponent extends Component {
     public Label name;
