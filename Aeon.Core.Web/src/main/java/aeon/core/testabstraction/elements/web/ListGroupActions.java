@@ -11,7 +11,7 @@ import aeon.core.common.web.selectors.InlineJavaScript;
  * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
-public abstract class ListGroupActions<T extends ListGroupActions, K extends ListGroupElements> extends RowActions<T, K> {
+public abstract class ListGroupActions<T extends ListGroupActions, K extends Component> extends RowActions<T, K> {
 
     /**
      * Initializes a new instance of {@link ListGroupActions} class.

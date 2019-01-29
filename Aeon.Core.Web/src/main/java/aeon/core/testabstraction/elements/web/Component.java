@@ -6,7 +6,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 /**
  * Parent class for modeling a set of elements within one item of a list group.
  */
-public abstract class ListGroupElements extends RowElements {
+public abstract class Component extends RowElements {
 
     /**
      * Constructor for abstract class RowElements.
@@ -16,7 +16,7 @@ public abstract class ListGroupElements extends RowElements {
      * @param switchMechanism The Iterable of IBy.
      *
      */
-    public ListGroupElements(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Component(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
         super(info, selector, switchMechanism);
     }
 }

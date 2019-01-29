@@ -5,13 +5,13 @@ import aeon.core.testabstraction.elements.web.ListGroupActions;
 /**
  * Class for finding list group items based on values of list group item elements.
  */
-public class MyListGroupActions extends ListGroupActions<MyListGroupActions, MyListGroupElements> {
+public class MyListGroupActions extends ListGroupActions<MyListGroupActions, MyComponent> {
 
     /**
      * Constructor.
      */
     public MyListGroupActions() {
-        super(MyListGroupActions.class, MyListGroupElements.class);
+        super(MyListGroupActions.class, MyComponent.class);
 
         // The element that defines an item in the list group.
         this.rowSelector = "li";
