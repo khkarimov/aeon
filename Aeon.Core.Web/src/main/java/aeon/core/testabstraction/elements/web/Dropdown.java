@@ -9,7 +9,7 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Model class for select elements.
+ * Model class for dropdown elements.
  */
 public class Dropdown extends WebElement {
 
@@ -45,10 +45,10 @@ public class Dropdown extends WebElement {
     }
 
     /**
-     * Asserts that the select's optgroup has all options.
+     * Asserts that the dropdown's optgroup has all options.
      *
-     * @param options  The options that the select should have, either their values or texts.
-     * @param optgroup The label of the option group that will be searched instead of the entire select.
+     * @param options  The options that the dropdown should have, either their values or texts.
+     * @param optgroup The label of the option group that will be searched instead of the entire dropdown.
      * @param select   The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public void hasOptions(String[] options, String optgroup, WebSelectOption select) {
@@ -59,9 +59,9 @@ public class Dropdown extends WebElement {
     }
 
     /**
-     * Asserts that the select has all specified options.
+     * Asserts that the dropdown has all specified options.
      *
-     * @param options The options that the select should have, either their values or texts.
+     * @param options The options that the dropdown should have, either their values or texts.
      * @param select  The way the options will be searched
      */
     public void hasOptions(String[] options, WebSelectOption select) {
@@ -88,7 +88,7 @@ public class Dropdown extends WebElement {
     /**
      * Asserts that all options are in order.
      *
-     * @param options The options that the select should have, in the same descending order as they appear in the array.
+     * @param options The options that the dropdown should have, in the same descending order as they appear in the array.
      * @param select  The way the options will be searched
      */
     public void hasOptionsInOrder(String[] options, WebSelectOption select) {
@@ -101,8 +101,8 @@ public class Dropdown extends WebElement {
     /**
      * Asserts that there are no options of type WebSelectOption in optgroup.
      *
-     * @param options  The options that the select should not have, either their values or texts.
-     * @param optgroup The label of the option group that will be searched instead of the entire select.
+     * @param options  The options that the dropdown should not have, either their values or texts.
+     * @param optgroup The label of the option group that will be searched instead of the entire dropdown.
      * @param select   The way the options will be searched
      */
     public void doesNotHaveOptions(String[] options, String optgroup, WebSelectOption select) {
@@ -115,7 +115,7 @@ public class Dropdown extends WebElement {
     /**
      * Asserts that there are no options of type WebSelectOption.
      *
-     * @param options The options that the select should not have, either their values or texts.
+     * @param options The options that the dropdown should not have, either their values or texts.
      * @param select  The way the options will be searched
      */
     public void doesNotHaveOptions(String[] options, WebSelectOption select) {
@@ -153,8 +153,8 @@ public class Dropdown extends WebElement {
     /**
      * Asserts that all options are in order based on comparisonType specification.
      *
-     * @param comparisonType The way that all the options in the select element will be compared.
-     * @param optgroup       The optional option group that would be searched in isolation instead of the entire select.
+     * @param comparisonType The way that all the options in the dropdown element will be compared.
+     * @param optgroup       The optional option group that would be searched in isolation instead of the entire dropdown.
      */
     public void hasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
         info.getCommandExecutionFacade().execute(info,
@@ -166,7 +166,7 @@ public class Dropdown extends WebElement {
     /**
      * Asserts that all options are in order based on comparisonType specification.
      *
-     * @param comparisonType The way that all the options in the select element will be compared.
+     * @param comparisonType The way that all the options in the dropdown element will be compared.
      */
     public void hasAllOptionsInOrder(CompareType comparisonType) {
         info.getCommandExecutionFacade().execute(info,
