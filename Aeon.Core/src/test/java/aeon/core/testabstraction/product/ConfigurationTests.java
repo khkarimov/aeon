@@ -80,7 +80,11 @@ public class ConfigurationTests {
         // Act
         List<Field> keys = config.getConfigurationFields();
         for (Field field : keys) {
-            field.setAccessible(true);
+            if (field.isSynthetic()) {
+                keys.remove(field);
+            } else {
+                field.setAccessible(true);
+            }
         }
 
         // Assert
