@@ -4,7 +4,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
- * This class serves as a base for all grid row actions.
+ * This class serves as a base for all grid row components.
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.

@@ -5,7 +5,7 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.testabstraction.elements.web.RowElements;
 
 /**
- * Parent class for modeling a set of elements within one item of a list group.
+ * Parent class for modeling a set of components within one item of a list group.
  */
 public abstract class Component extends RowElements {
 
