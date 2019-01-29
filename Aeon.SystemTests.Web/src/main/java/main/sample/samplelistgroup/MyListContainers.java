@@ -2,12 +2,12 @@ package main.sample.samplelistgroup;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.ListContainer;
+import aeon.core.testabstraction.elements.web.ListContainers;
 
 /**
  * Model for the sample list group.
  */
-public class MyListContainer extends ListContainer<MyComponentList> {
+public class MyListContainers extends ListContainers<MyComponentList> {
 
     /**
      * Constructor.
@@ -16,7 +16,7 @@ public class MyListContainer extends ListContainer<MyComponentList> {
      * @param selector       The selector that identifies the list group.
      * @param gridHeaders    The corresponding List Group Actions object.
      */
-    public MyListContainer(AutomationInfo automationInfo, IByWeb selector, MyComponentList gridHeaders) {
+    public MyListContainers(AutomationInfo automationInfo, IByWeb selector, MyComponentList gridHeaders) {
         super(automationInfo, selector, gridHeaders);
     }
 }
