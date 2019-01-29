@@ -23,8 +23,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -53,6 +51,8 @@ class AeonWebDriverTests {
     private IWebCookie cookie;
     @Mock
     private List<IWebCookie> cookies;
+    @Mock
+    private Image image;
 
 
     @BeforeEach
@@ -469,40 +469,14 @@ class AeonWebDriverTests {
     void getScreenshot_verifyAdapterGetScreenshot() {
 
         // Arrange
-        Image expected = new Image() {
-            @Override
-            public int getWidth(ImageObserver observer) {
-                return 0;
-            }
-
-            @Override
-            public int getHeight(ImageObserver observer) {
-                return 0;
-            }
-
-            @Override
-            public ImageProducer getSource() {
-                return null;
-            }
-
-            @Override
-            public Graphics getGraphics() {
-                return null;
-            }
-
-            @Override
-            public Object getProperty(String name, ImageObserver observer) {
-                return null;
-            }
-        };
-        when(adapter.getScreenshot()).thenReturn(expected);
+        when(adapter.getScreenshot()).thenReturn(image);
 
         // Act
         Image result = aeonWebDriver.getScreenshot();
 
         // Assert
         verify(adapter, times(1)).getScreenshot();
-        assertEquals(expected, result);
+        assertEquals(image, result);
     }
 
     @Test
