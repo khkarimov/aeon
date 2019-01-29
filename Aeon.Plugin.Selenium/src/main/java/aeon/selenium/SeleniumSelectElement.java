@@ -9,25 +9,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Class for Selenium Select Element.
+ * Class for Selenium Dropdown Element.
  */
 public class SeleniumSelectElement extends WebControl {
     private Select underlyingSelectElement;
     private static Logger log = LoggerFactory.getLogger(SeleniumSelectElement.class);
 
     /**
-     * Constructor for Selenium Select Element.
+     * Constructor for Selenium Dropdown Element.
      *
-     * @param selectElement The underlying Select Element
+     * @param selectElement The underlying Dropdown Element
      */
     public SeleniumSelectElement(Select selectElement) {
         underlyingSelectElement = selectElement;
     }
 
     /**
-     * Gets the underlying Select Element.
+     * Gets the underlying Dropdown Element.
      *
-     * @return The underlying Select Element
+     * @return The underlying Dropdown Element
      */
     protected final Select getUnderlyingSelectElement() {
         return underlyingSelectElement;
@@ -137,7 +137,7 @@ public class SeleniumSelectElement extends WebControl {
     }
 
     /**
-     * Select all options that display text matching the argument for the select element.
+     * Dropdown all options that display text matching the argument for the select element.
      *
      * @param text The visible text to match against.
      */
@@ -147,7 +147,7 @@ public class SeleniumSelectElement extends WebControl {
     }
 
     /**
-     * Select all options that have a value matching the argument for the select element.
+     * Dropdown all options that have a value matching the argument for the select element.
      *
      * @param value The value to match against
      */

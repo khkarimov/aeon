@@ -94,10 +94,10 @@ public interface IWebAdapter extends IAdapter {
     Collection<WebControl> findElements(IBy findBy);
 
     /**
-     * Finds the first Select Element using the given mechanism.
+     * Finds the first Dropdown Element using the given mechanism.
      *
      * @param findBy The locating mechanism to use.
-     * @return The first matching Select Element on the current product.
+     * @return The first matching Dropdown Element on the current product.
      * @throws IllegalArgumentException                 If FindBy is null.
      * @throws NoSuchElementException                   If there is no such element.
      * @throws ScriptReturnValueNotHtmlElementException If the JavaScript did not return an HTML element.
@@ -390,7 +390,7 @@ public interface IWebAdapter extends IAdapter {
     void clearElement(WebControl element);
 
     /**
-     * Choose a Select Element by its Value.
+     * Choose a Dropdown Element by its Value.
      *
      * @param element The element to be chosen by value.
      * @param value   The value to search for.
@@ -398,7 +398,7 @@ public interface IWebAdapter extends IAdapter {
     void chooseSelectElementByValue(WebControl element, String value);
 
     /**
-     * Choose a Select Element by its Text.
+     * Choose a Dropdown Element by its Text.
      *
      * @param element The element to be chosen by value.
      * @param value   The value to search for.

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class SelectFileCommandTests {
+public class DropdownFileCommandTests {
 
     private SelectFileCommand selectFileCommand;
     private String path = "";
@@ -48,11 +48,11 @@ public class SelectFileCommandTests {
         selectFileCommand.commandDelegate(driver, control);
 
         //Assert
-        verify(driver,times(1)).selectFile(control, path);
+        verify(driver, times(1)).selectFile(control, path);
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> selectFileCommand.commandDelegate(null, null));
     }

@@ -462,7 +462,7 @@ public class SeleniumElement extends WebControl {
     }
 
     /**
-     * Select all options that display text matching the argument for the element.
+     * Dropdown all options that display text matching the argument for the element.
      *
      * @param text The visible text to match against.
      */
@@ -474,7 +474,7 @@ public class SeleniumElement extends WebControl {
     }
 
     /**
-     * Select all options that have a value matching the argument for the element.
+     * Dropdown all options that have a value matching the argument for the element.
      *
      * @param value The value to match against
      */

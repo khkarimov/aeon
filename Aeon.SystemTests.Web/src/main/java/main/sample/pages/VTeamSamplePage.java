@@ -31,14 +31,14 @@ public class VTeamSamplePage extends Page {
     public ListItem draggableHTML5Item;
     public ListItem draggedHTML5Item;
     public Link tryLink;
-    public Select dropDown;
+    public Dropdown dropDown;
     public Checkbox checkbox100;
     public WebElement divWindow;
     public Label bodyTag;
     public WebElement div;
     public Button popupButton;
-    public Select lexoDropDown;
-    public Select revLexoDropDown;
+    public Dropdown lexoDropDown;
+    public Dropdown revLexoDropDown;
     public Label dateSelector;
     public Label dateLabel;
     public Label reactionLabel;
@@ -68,7 +68,7 @@ public class VTeamSamplePage extends Page {
         alertTitleTextBox = new TextBox(info, By.cssSelector("input[id ='sample1']"));
         start = new Button(info, By.cssSelector("button[id='start']"));
         tryLink = new Link(info, By.cssSelector("a[id='tryLink']"));
-        dropDown = new Select(info, By.cssSelector("select[id='drop-down-list']"));
+        dropDown = new Dropdown(info, By.cssSelector("select[id='drop-down-list']"));
 
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
         draggableListItem = new ListItem(info, By.cssSelector("li[id='node1']"));
@@ -79,8 +79,8 @@ public class VTeamSamplePage extends Page {
         checkbox100 = new Checkbox(info, By.cssSelector("input[id='checkbox100']"));
         div = new WebElement(info, By.cssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
         popupButton = new Button(info, By.cssSelector("a[id='popup-button']"));
-        lexoDropDown = new Select(info, By.cssSelector("select[id='lexicographic-drop-down']"));
-        revLexoDropDown = new Select(info, By.cssSelector("select[id='lexicographic-drop-down-rev']"));
+        lexoDropDown = new Dropdown(info, By.cssSelector("select[id='lexicographic-drop-down']"));
+        revLexoDropDown = new Dropdown(info, By.cssSelector("select[id='lexicographic-drop-down-rev']"));
         dateSelector = new Label(info, By.cssSelector("#date-selector"));
         dateLabel = new Label(info, By.cssSelector("#date-text"));
         reactionLabel = new Label(info, By.cssSelector("#reaction-text"));
