@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -79,11 +80,12 @@ public class ConfigurationTests {
 
         // Act
         List<Field> keys = config.getConfigurationFields();
+        List<Field> nonSynthetic = new ArrayList<>();
+
         for (Field field : keys) {
-            if (field.isSynthetic()) {
-                keys.remove(field);
-            } else {
-                field.setAccessible(true);
+            if (!field.isSynthetic()) {
+                nonSynthetic.add(field);
+                nonSynthetic.get(nonSynthetic.size() - 1).setAccessible(true);
             }
         }
 
