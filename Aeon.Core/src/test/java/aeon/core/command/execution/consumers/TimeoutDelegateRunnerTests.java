@@ -39,13 +39,10 @@ class TimeoutDelegateRunnerTests {
     @Mock
     private Function<IDriver, Object> functionCommandDelegate;
 
-    private Duration duration;
-    private Clock clock;
-
     @BeforeEach
     void setUp() {
-        clock = new Clock();
-        duration = Duration.ofMillis(100);
+        Clock clock = new Clock();
+        Duration duration = Duration.ofMillis(100);
         timeoutDelegateRunner = new TimeoutDelegateRunner(successor, driver, clock, duration, automationInfo);
     }
 
