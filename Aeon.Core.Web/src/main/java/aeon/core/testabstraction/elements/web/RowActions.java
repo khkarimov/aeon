@@ -8,7 +8,7 @@ import aeon.core.common.web.interfaces.IByWeb;
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of WebElement. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
 public abstract class RowActions<T extends RowActions, K extends WebElement> {
@@ -23,28 +23,28 @@ public abstract class RowActions<T extends RowActions, K extends WebElement> {
     /**
      * Initializes a new instance of {@link RowActions} class.
      *
-     * @param rowActionsClass  A sub class of {@link RowActions}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param rowActionsClass A sub class of {@link RowActions}
+     * @param webElementClass A sub class of {@link WebElement}
      */
-    RowActions(Class<T> rowActionsClass, Class<K> rowElementsClass) {
-        this.rowElementsClass = rowElementsClass;
+    RowActions(Class<T> rowActionsClass, Class<K> webElementClass) {
+        this.rowElementsClass = webElementClass;
         this.rowActionsClass = rowActionsClass;
     }
 
     /**
      * Initializes a new instance of {@link RowActions} class.
      *
-     * @param automationInfo   The AutomationInfo.
-     * @param selector         IBy selector that will identify the element.
-     * @param switchMechanism  The switch mechanism for the web element.
-     * @param rowActionsClass  A sub class of {@link RowActions}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param automationInfo  The AutomationInfo.
+     * @param selector        IBy selector that will identify the element.
+     * @param switchMechanism The switch mechanism for the web element.
+     * @param rowActionsClass A sub class of {@link RowActions}
+     * @param webElementClass A sub class of {@link WebElement}
      */
-    public RowActions(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, Class<T> rowActionsClass, Class<K> rowElementsClass) {
+    public RowActions(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, Class<T> rowActionsClass, Class<K> webElementClass) {
         this.selector = selector;
         this.automationInfo = automationInfo;
         this.switchMechanism = switchMechanism;
-        this.rowElementsClass = rowElementsClass;
+        this.rowElementsClass = webElementClass;
         this.rowActionsClass = rowActionsClass;
     }
 

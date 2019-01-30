@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of WebElement. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
 @Deprecated
@@ -19,11 +19,11 @@ public abstract class ComponentTable<T extends ComponentTable, K extends WebElem
     /**
      * Initializes a new instance of {@link ComponentTable} class.
      *
-     * @param rowActionsClass  A sub class of {@link ComponentTable}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param rowActionsClass A sub class of {@link ComponentTable}
+     * @param webElementClass A sub class of {@link WebElement}
      */
-    public ComponentTable(Class<T> rowActionsClass, Class<K> rowElementsClass) {
-        super(rowActionsClass, rowElementsClass);
+    public ComponentTable(Class<T> rowActionsClass, Class<K> webElementClass) {
+        super(rowActionsClass, webElementClass);
     }
 
     /**
