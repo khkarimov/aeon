@@ -2,7 +2,6 @@ package aeon.core.command.execution.consumers;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
-import aeon.core.common.helpers.Clock;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,9 +40,8 @@ class TimeoutDelegateRunnerTests {
 
     @BeforeEach
     void setUp() {
-        Clock clock = new Clock();
         Duration duration = Duration.ofMillis(100);
-        timeoutDelegateRunner = new TimeoutDelegateRunner(successor, driver, clock, duration, automationInfo);
+        timeoutDelegateRunner = new TimeoutDelegateRunner(successor, driver, duration, automationInfo);
     }
 
     @Test

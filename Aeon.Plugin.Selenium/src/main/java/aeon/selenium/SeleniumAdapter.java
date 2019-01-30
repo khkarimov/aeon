@@ -3,10 +3,10 @@ package aeon.selenium;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
+import aeon.core.common.exceptions.*;
 import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
-import aeon.core.common.exceptions.*;
 import aeon.core.common.helpers.*;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.*;
@@ -18,9 +18,9 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
+import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -41,8 +41,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
@@ -1890,7 +1890,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Obtains a date from an elements attribute and compares it with an expected date. Has a
-     * Margin of error. The date must be in the ISO-8601 standard.
+     * margin of error. The date must be in the ISO-8601 standard.
      *
      * @param element       The element that posseses the date.
      * @param attributeName The name of the attribute that has the date.
