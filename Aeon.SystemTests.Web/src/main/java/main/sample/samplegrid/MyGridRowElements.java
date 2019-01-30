@@ -4,12 +4,12 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.Label;
-import aeon.core.testabstraction.elements.web.RowElements;
+import aeon.core.testabstraction.elements.web.WebElement;
 
 /**
  * Models the elements of a table row.
  */
-public class MyGridRowElements extends RowElements {
+public class MyGridRowElements extends WebElement {
     public Button checkBoxButton;
     public Label unitPrice;
 

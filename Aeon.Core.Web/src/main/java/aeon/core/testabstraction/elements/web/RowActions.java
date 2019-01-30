@@ -2,7 +2,6 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.framework.abstraction.drivers.IWebDriver;
 
 /**
  * This class serves as a base for all grid row actions.
@@ -12,7 +11,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
-public abstract class RowActions<T extends RowActions, K extends RowElements> {
+public abstract class RowActions<T extends RowActions, K extends WebElement> {
 
     IByWeb selector;
     AutomationInfo automationInfo;
@@ -24,7 +23,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     /**
      * Initializes a new instance of {@link RowActions} class.
      *
-     * @param rowActionsClass A sub class of {@link RowActions}
+     * @param rowActionsClass  A sub class of {@link RowActions}
      * @param rowElementsClass A sub class of {@link RowElements}
      */
     RowActions(Class<T> rowActionsClass, Class<K> rowElementsClass) {
@@ -35,10 +34,10 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     /**
      * Initializes a new instance of {@link RowActions} class.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
-     * @param switchMechanism The switch mechanism for the web element.
-     * @param rowActionsClass A sub class of {@link RowActions}
+     * @param automationInfo   The AutomationInfo.
+     * @param selector         IBy selector that will identify the element.
+     * @param switchMechanism  The switch mechanism for the web element.
+     * @param rowActionsClass  A sub class of {@link RowActions}
      * @param rowElementsClass A sub class of {@link RowElements}
      */
     public RowActions(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, Class<T> rowActionsClass, Class<K> rowElementsClass) {
@@ -52,11 +51,11 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
     /**
      * Sets the context. This method has to be called from the wrapping class after initialization.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo  The AutomationInfo.
+     * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public void setContext(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism){
+    public void setContext(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism) {
         this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
@@ -66,7 +65,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * Get the index of the referenced row that contains the row elements defined in the K class.
      *
      * @param index The index you are looking for.
-     *
      * @return Returns an instance of K.
      */
     public K index(int index) {
@@ -77,7 +75,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * Get a row by the index.
      *
      * @param index The index you are looking for.
-     *
      * @return Returns an instance of K.
      */
     protected K findRowByIndex(int index) {

@@ -12,7 +12,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
  *            an IBy as the second parameter.
  */
 @Deprecated
-public abstract class ComponentTable<T extends ComponentTable, K extends RowElements> extends RowActions<T, K> {
+public abstract class ComponentTable<T extends ComponentTable, K extends WebElement> extends RowActions<T, K> {
 
     protected String cellSelector = "td";
 

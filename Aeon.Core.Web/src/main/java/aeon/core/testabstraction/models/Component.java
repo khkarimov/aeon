@@ -2,12 +2,12 @@ package aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.RowElements;
+import aeon.core.testabstraction.elements.web.WebElement;
 
 /**
  * Parent class for modeling a set of components within one item of a list group.
  */
-public abstract class Component extends RowElements {
+public abstract class Component extends WebElement {
 
     /**
      * Constructor for abstract class RowElements.

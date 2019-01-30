@@ -17,11 +17,11 @@ public abstract class ComponentList<T extends ComponentList, K extends Component
     /**
      * Initializes a new instance of {@link ComponentList} class.
      *
-     * @param rowActionsClass  A sub class of {@link ComponentList}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param rowActionsClass A sub class of {@link ComponentList}
+     * @param webElementClass A sub class of {@link WebElement}
      */
-    public ComponentList(Class<T> rowActionsClass, Class<K> rowElementsClass) {
-        super(rowActionsClass, rowElementsClass);
+    public ComponentList(Class<T> rowActionsClass, Class<K> webElementClass) {
+        super(rowActionsClass, webElementClass);
     }
 
     /**
