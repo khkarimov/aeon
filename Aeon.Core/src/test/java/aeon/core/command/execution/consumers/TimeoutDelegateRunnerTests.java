@@ -39,44 +39,11 @@ class TimeoutDelegateRunnerTests {
     @Mock
     private Function<IDriver, Object> functionCommandDelegate;
 
-    private Duration duration;
-    private Clock clock;
-
     @BeforeEach
     void setUp() {
-        clock = new Clock();
-        duration = Duration.ofMillis(100);
+        Clock clock = new Clock();
+        Duration duration = Duration.ofMillis(100);
         timeoutDelegateRunner = new TimeoutDelegateRunner(successor, driver, clock, duration, automationInfo);
-    }
-
-    @Test
-    void execute_commandFunctionThrowsOutOfMemory_isCaught() {
-
-        // Arrange
-        doThrow(OutOfMemoryError.class).when(successor).execute(functionCommandDelegate);
-
-        // Act
-        Executable executable = () -> timeoutDelegateRunner.execute(functionCommandDelegate);
-
-        // Assert
-        assertThrows(OutOfMemoryError.class, executable);
-        verify(driver, times(0)).getScreenshot();
-        verify(automationInfo, times(0)).screenshotTaken(any());
-    }
-
-    @Test
-    void execute_commandConsumerThrowsOutOfMemory_isCaught() {
-
-        // Arrange
-        doThrow(OutOfMemoryError.class).when(successor).execute(consumerCommandDelegate);
-
-        //Act
-        Executable executable = () -> timeoutDelegateRunner.execute(consumerCommandDelegate);
-
-        //Assert
-        assertThrows(OutOfMemoryError.class, executable);
-        verify(driver, times(0)).getScreenshot();
-        verify(automationInfo, times(0)).screenshotTaken(any());
     }
 
     @Test

@@ -71,10 +71,6 @@ public class TimeoutDelegateRunner extends DelegateRunner {
                 Object returnValue = commandDelegateWrapper.get();
                 log.debug(String.format(Resources.getString("TimWtr_Success_Debug"), tries));
                 return returnValue;
-            } catch (OutOfMemoryError e) {
-                log.error(Resources.getString("TimWtr_OutOfMemoryException_Error"));
-                log.error(Resources.getString("StackTraceMessage") + e.getMessage(), e);
-                throw e;
             } catch (RuntimeException e) {
                 lastCaughtException = e;
                 log.debug(String.format(Resources.getString("TimWtr_Exception_Debug"), tries,
