@@ -3,8 +3,6 @@ package aeon.core.command.execution.consumers;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunnerFactory;
-import aeon.core.common.helpers.Clock;
-import aeon.core.common.helpers.IClock;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
 import java.time.Duration;
@@ -14,7 +12,6 @@ import java.time.Duration;
  */
 public class DelegateRunnerFactory implements IDelegateRunnerFactory {
 
-    private IClock clock;
     private Duration defaultTimeout;
     private boolean promptUserForContinueOnExceptionDecision;
     private Duration throttleFactor;
@@ -22,13 +19,11 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
     /**
      * Initializes a new instance of the {@link DelegateRunnerFactory} class.
      *
-     * @param clock                                    The clock.
      * @param defaultTimeout                           The timeout to wait for.
      * @param promptUserForContinueOnExceptionDecision Instructs the framework to show a popup when an unhandled exception occurs prompting the users to decide if the test should attempt to continue.
      * @param throttleFactor                           TimeSpan used to slow down test execution. This value will be used as a pause between test actions.
      */
-    public DelegateRunnerFactory(IClock clock, Duration defaultTimeout, boolean promptUserForContinueOnExceptionDecision, Duration throttleFactor) {
-        this.clock = clock;
+    public DelegateRunnerFactory(Duration defaultTimeout, boolean promptUserForContinueOnExceptionDecision, Duration throttleFactor) {
         this.defaultTimeout = defaultTimeout;
         this.promptUserForContinueOnExceptionDecision = promptUserForContinueOnExceptionDecision;
         this.throttleFactor = throttleFactor;
@@ -41,7 +36,6 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
      * @param defaultTimeout The default timeout.
      */
     public DelegateRunnerFactory(Duration throttleFactor, Duration defaultTimeout) {
-        this.clock = new Clock();
         this.throttleFactor = throttleFactor;
         this.defaultTimeout = defaultTimeout;
     }
@@ -57,8 +51,9 @@ public class DelegateRunnerFactory implements IDelegateRunnerFactory {
         IDriver driver = automationInfo.getDriver();
 
         CommandDelegateRunner commandDelegateRunner = new CommandDelegateRunner(driver);
-        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(commandDelegateRunner, driver, clock, defaultTimeout, automationInfo);
+        TimeoutDelegateRunner timeoutDelegateRunner = new TimeoutDelegateRunner(commandDelegateRunner, driver, defaultTimeout, automationInfo);
         ExceptionHandlingDelegateRunner exceptionHandlingDelegateRunner = new ExceptionHandlingDelegateRunner(timeoutDelegateRunner, new PromptExceptionHandlerFactory(promptUserForContinueOnExceptionDecision));
+
         return new ThrottledDelegateRunner(exceptionHandlingDelegateRunner, throttleFactor);
     }
 }
