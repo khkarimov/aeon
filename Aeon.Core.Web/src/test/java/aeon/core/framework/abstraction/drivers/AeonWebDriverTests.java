@@ -12,8 +12,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +25,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.List;
 
@@ -1145,13 +1145,13 @@ class AeonWebDriverTests {
     void datesApproximatelyEqual_verifyAdapterDatesApproximatelyEqual() {
 
         // Arrange
-        DateTime time = DateTime.now();
+        LocalDate date = LocalDate.now();
 
         // Act
-        aeonWebDriver.datesApproximatelyEqual(webControl, "Test", time, Period.ZERO);
+        aeonWebDriver.datesApproximatelyEqual(webControl, "Test", date, Period.ZERO);
 
         // Assert
-        verify(adapter, times(1)).datesApproximatelyEqual(webControl, "Test", time, Period.ZERO);
+        verify(adapter, times(1)).datesApproximatelyEqual(webControl, "Test", date, Period.ZERO);
     }
 
     @Test
