@@ -1,36 +1,28 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.web.BrowserType;
-import aeon.core.framework.abstraction.adapters.IWebAdapter;
-import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class WebConfigurationTests {
 
     private WebConfiguration webConfiguration;
-
-    @Mock
-    private IWebDriver driver;
-    @Mock
-    private IWebAdapter adapter;
 
     @BeforeEach
     void setUp() throws IOException, IllegalAccessException {
@@ -55,27 +47,21 @@ class WebConfigurationTests {
         // Arrange
 
         // Act
-        List<Field> keys = webConfiguration.getConfigurationFields();
-        List<Field> nonSynthetic = new ArrayList<>();
-
-        for (Field field : keys) {
-            if (!field.isSynthetic()) {
-                nonSynthetic.add(field);
-                nonSynthetic.get(nonSynthetic.size() - 1).setAccessible(true);
-            }
-        }
+        List<Field> keys = webConfiguration.getConfigurationFields().stream()
+                .filter(field -> !field.isSynthetic())
+                .collect(Collectors.toList());
 
         // Assert
-        assertEquals("aeon.timeout", nonSynthetic.get(0).get(webConfiguration));
-        assertEquals("aeon.throttle", nonSynthetic.get(1).get(webConfiguration));
-        assertEquals("aeon.implicit_reporting", nonSynthetic.get(2).get(webConfiguration));
-        assertEquals("aeon.wait_for_ajax_responses", nonSynthetic.get(3).get(webConfiguration));
-        assertEquals("aeon.browser", nonSynthetic.get(4).get(webConfiguration));
-        assertEquals("aeon.environment", nonSynthetic.get(5).get(webConfiguration));
-        assertEquals("aeon.protocol", nonSynthetic.get(6).get(webConfiguration));
-        assertEquals("aeon.timeout.ajax", nonSynthetic.get(7).get(webConfiguration));
-        assertEquals("aeon.browser.maximize", nonSynthetic.get(8).get(webConfiguration));
-        assertEquals("aeon.scroll_element_into_view", nonSynthetic.get(9).get(webConfiguration));
+        assertEquals("aeon.timeout", keys.get(0).get(webConfiguration));
+        assertEquals("aeon.throttle", keys.get(1).get(webConfiguration));
+        assertEquals("aeon.implicit_reporting", keys.get(2).get(webConfiguration));
+        assertEquals("aeon.wait_for_ajax_responses", keys.get(3).get(webConfiguration));
+        assertEquals("aeon.browser", keys.get(4).get(webConfiguration));
+        assertEquals("aeon.environment", keys.get(5).get(webConfiguration));
+        assertEquals("aeon.protocol", keys.get(6).get(webConfiguration));
+        assertEquals("aeon.timeout.ajax", keys.get(7).get(webConfiguration));
+        assertEquals("aeon.browser.maximize", keys.get(8).get(webConfiguration));
+        assertEquals("aeon.scroll_element_into_view", keys.get(9).get(webConfiguration));
     }
 
     @Test
@@ -96,17 +82,17 @@ class WebConfigurationTests {
     }
 
     @Test
-    void loadModuleSettings_throwsIOException() throws IOException {
+    void loadModuleSettings_throwsIOException() {
 
         // Arrange
+
         WebConfiguration spyConfig = org.mockito.Mockito.spy(webConfiguration);
-        doThrow(IOException.class).when(spyConfig).loadModuleSettings();
+        when(spyConfig.getAeonCoreInputStream()).thenReturn(null);
 
         // Act
         Executable executable = () -> spyConfig.loadModuleSettings();
 
         // Assert
         assertThrows(IOException.class, executable);
-
     }
 }
