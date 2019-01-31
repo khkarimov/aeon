@@ -2,7 +2,6 @@ package aeon.core.command.execution.consumers;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.consumers.interfaces.IDelegateRunner;
-import aeon.core.common.helpers.Clock;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,44 +38,10 @@ class TimeoutDelegateRunnerTests {
     @Mock
     private Function<IDriver, Object> functionCommandDelegate;
 
-    private Duration duration;
-    private Clock clock;
-
     @BeforeEach
     void setUp() {
-        clock = new Clock();
-        duration = Duration.ofMillis(100);
-        timeoutDelegateRunner = new TimeoutDelegateRunner(successor, driver, clock, duration, automationInfo);
-    }
-
-    @Test
-    void execute_commandFunctionThrowsOutOfMemory_isCaught() {
-
-        // Arrange
-        doThrow(OutOfMemoryError.class).when(successor).execute(functionCommandDelegate);
-
-        // Act
-        Executable executable = () -> timeoutDelegateRunner.execute(functionCommandDelegate);
-
-        // Assert
-        assertThrows(OutOfMemoryError.class, executable);
-        verify(driver, times(0)).getScreenshot();
-        verify(automationInfo, times(0)).screenshotTaken(any());
-    }
-
-    @Test
-    void execute_commandConsumerThrowsOutOfMemory_isCaught() {
-
-        // Arrange
-        doThrow(OutOfMemoryError.class).when(successor).execute(consumerCommandDelegate);
-
-        //Act
-        Executable executable = () -> timeoutDelegateRunner.execute(consumerCommandDelegate);
-
-        //Assert
-        assertThrows(OutOfMemoryError.class, executable);
-        verify(driver, times(0)).getScreenshot();
-        verify(automationInfo, times(0)).screenshotTaken(any());
+        Duration duration = Duration.ofMillis(100);
+        timeoutDelegateRunner = new TimeoutDelegateRunner(successor, driver, duration, automationInfo);
     }
 
     @Test

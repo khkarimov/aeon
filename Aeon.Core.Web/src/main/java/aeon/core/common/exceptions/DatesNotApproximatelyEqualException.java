@@ -1,9 +1,9 @@
 package aeon.core.common.exceptions;
 
 import aeon.core.common.Resources;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Locale;
 
 /**
@@ -13,11 +13,12 @@ public class DatesNotApproximatelyEqualException extends RuntimeException {
 
     /**
      * Initializes a new instance of the {@link DatesNotApproximatelyEqualException} class.
-     * @param expected the expected datetime.
-     * @param actual the actual datetime.
-     * @param delta the period.
+     *
+     * @param expected the expected date.
+     * @param actual   the actual date.
+     * @param delta    the allowed delta period.
      */
-    public DatesNotApproximatelyEqualException(DateTime expected, DateTime actual, Period delta) {
+    public DatesNotApproximatelyEqualException(LocalDate expected, LocalDate actual, Period delta) {
         super(String.format(Locale.getDefault(), Resources.getString("DatesNotApproximatelyEqualException_ctor_DefaultMessage"), expected.toString(), actual.toString(), delta.toString()));
     }
 }
