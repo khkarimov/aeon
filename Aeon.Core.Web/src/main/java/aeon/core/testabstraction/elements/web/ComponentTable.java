@@ -2,17 +2,18 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.core.testabstraction.models.Component;
 
 /**
  * This class serves as a base for all grid row components.
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of WebElement. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
 @Deprecated
-public abstract class ComponentTable<T extends ComponentTable, K extends WebElement> extends RowActions<T, K> {
+public abstract class ComponentTable<T extends ComponentTable, K extends Component> extends RowActions<T, K> {
 
     protected String cellSelector = "td";
 
@@ -20,10 +21,10 @@ public abstract class ComponentTable<T extends ComponentTable, K extends WebElem
      * Initializes a new instance of {@link ComponentTable} class.
      *
      * @param rowActionsClass A sub class of {@link ComponentTable}
-     * @param webElementClass A sub class of {@link WebElement}
+     * @param componentClass  A sub class of {@link Component}
      */
-    public ComponentTable(Class<T> rowActionsClass, Class<K> webElementClass) {
-        super(rowActionsClass, webElementClass);
+    public ComponentTable(Class<T> rowActionsClass, Class<K> componentClass) {
+        super(rowActionsClass, componentClass);
     }
 
     /**

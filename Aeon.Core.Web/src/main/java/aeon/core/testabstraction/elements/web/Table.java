@@ -7,6 +7,7 @@ import aeon.core.common.web.interfaces.IByWeb;
  * The class to model tables.
  *
  * @param <T> the {@link ComponentTable} class for this table model.
+ * @deprecated use ComponentLists instead
  */
 @Deprecated
 public abstract class Table<T extends ComponentTable> {

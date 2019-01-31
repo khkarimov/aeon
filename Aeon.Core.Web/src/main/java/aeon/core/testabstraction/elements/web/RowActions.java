@@ -2,16 +2,17 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.testabstraction.models.Component;
 
 /**
  * This class serves as a base for all grid row actions.
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of WebElement. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
-public abstract class RowActions<T extends RowActions, K extends WebElement> {
+public abstract class RowActions<T extends RowActions, K extends Component> {
 
     IByWeb selector;
     AutomationInfo automationInfo;
@@ -24,10 +25,10 @@ public abstract class RowActions<T extends RowActions, K extends WebElement> {
      * Initializes a new instance of {@link RowActions} class.
      *
      * @param rowActionsClass A sub class of {@link RowActions}
-     * @param webElementClass A sub class of {@link WebElement}
+     * @param componentClass  A sub class of {@link Component}
      */
-    RowActions(Class<T> rowActionsClass, Class<K> webElementClass) {
-        this.rowElementsClass = webElementClass;
+    RowActions(Class<T> rowActionsClass, Class<K> componentClass) {
+        this.rowElementsClass = componentClass;
         this.rowActionsClass = rowActionsClass;
     }
 
@@ -38,13 +39,13 @@ public abstract class RowActions<T extends RowActions, K extends WebElement> {
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      * @param rowActionsClass A sub class of {@link RowActions}
-     * @param webElementClass A sub class of {@link WebElement}
+     * @param componentClass  A sub class of {@link Component}
      */
-    public RowActions(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, Class<T> rowActionsClass, Class<K> webElementClass) {
+    public RowActions(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, Class<T> rowActionsClass, Class<K> componentClass) {
         this.selector = selector;
         this.automationInfo = automationInfo;
         this.switchMechanism = switchMechanism;
-        this.rowElementsClass = webElementClass;
+        this.rowElementsClass = componentClass;
         this.rowActionsClass = rowActionsClass;
     }
 
