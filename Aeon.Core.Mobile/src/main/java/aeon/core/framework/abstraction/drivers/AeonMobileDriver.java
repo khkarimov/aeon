@@ -6,7 +6,8 @@ import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IMobileAdapter;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.Configuration;
-import org.joda.time.DateTime;
+
+import java.time.LocalDate;
 
 /**
  * Mobile App framework adapter.
@@ -43,6 +44,7 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
 
     /**
      * Command to lock the mobile device.
+     *
      * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
     public void mobileLock(int seconds) {
@@ -78,7 +80,7 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
     }
 
     @Override
-    public void setDate(DateTime date) {
+    public void setDate(LocalDate date) {
         adapter.setDate(date);
     }
 
@@ -88,7 +90,7 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
     }
 
     @Override
-    public void acceptOrDismissPermissionDialog(boolean accept){
+    public void acceptOrDismissPermissionDialog(boolean accept) {
         adapter.acceptOrDismissPermissionDialog(accept);
     }
 
