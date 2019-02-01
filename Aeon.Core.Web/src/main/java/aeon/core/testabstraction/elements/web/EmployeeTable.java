@@ -5,26 +5,27 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 import aeon.core.testabstraction.models.Component;
 
 /**
- * This class serves as a base for all grid row components.
+ * This class serves as a base for all classes that define a component table.
  *
- * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <T> A sub class of EmployeeTable. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
+ * @deprecated please use {@link ComponentList} instead.
  */
 @Deprecated
-public abstract class ComponentTable<T extends ComponentTable, K extends Component> extends RowActions<T, K> {
+public abstract class EmployeeTable<T extends EmployeeTable, K extends Component> extends RowActions<T, K> {
 
     protected String cellSelector = "td";
 
     /**
-     * Initializes a new instance of {@link ComponentTable} class.
+     * Initializes a new instance of {@link EmployeeTable} class.
      *
-     * @param rowActionsClass A sub class of {@link ComponentTable}
-     * @param componentClass  A sub class of {@link Component}
+     * @param employeeTable  A sub class of {@link EmployeeTable}
+     * @param componentClass A sub class of {@link Component}
      */
-    public ComponentTable(Class<T> rowActionsClass, Class<K> componentClass) {
-        super(rowActionsClass, componentClass);
+    public EmployeeTable(Class<T> employeeTable, Class<K> componentClass) {
+        super(employeeTable, componentClass);
     }
 
     /**

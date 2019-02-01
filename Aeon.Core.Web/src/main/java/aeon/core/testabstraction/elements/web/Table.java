@@ -6,11 +6,11 @@ import aeon.core.common.web.interfaces.IByWeb;
 /**
  * The class to model tables.
  *
- * @param <T> the {@link ComponentTable} class for this table model.
- * @deprecated use ComponentLists instead
+ * @param <T> the {@link EmployeeTable} class for this table model.
+ * @deprecated use {@link ComponentList} instead
  */
 @Deprecated
-public abstract class Table<T extends ComponentTable> {
+public abstract class Table<T extends EmployeeTable> {
 
     public T rowBy;
 
@@ -19,10 +19,10 @@ public abstract class Table<T extends ComponentTable> {
      *
      * @param automationInfo The AutomationInfo.
      * @param selector       IBy selector that will identify the element.
-     * @param rowBy          The {@link ComponentTable} object to use for table actions
+     * @param employeeTable  The {@link EmployeeTable} object to use for table actions
      */
-    public Table(AutomationInfo automationInfo, IByWeb selector, T rowBy) {
-        this.rowBy = rowBy;
+    public Table(AutomationInfo automationInfo, IByWeb selector, T employeeTable) {
+        this.rowBy = employeeTable;
 
         this.rowBy.setContext(automationInfo, selector, null);
     }
@@ -33,10 +33,10 @@ public abstract class Table<T extends ComponentTable> {
      * @param automationInfo  The AutomationInfo.
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
-     * @param rowBy           The {@link ComponentTable} object to use for table actions
+     * @param employeeTable   The {@link EmployeeTable} object to use for table actions
      */
-    public Table(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T rowBy) {
-        this.rowBy = rowBy;
+    public Table(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T employeeTable) {
+        this.rowBy = employeeTable;
 
         this.rowBy.setContext(automationInfo, selector, switchMechanism);
     }

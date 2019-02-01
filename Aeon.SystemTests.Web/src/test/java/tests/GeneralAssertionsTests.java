@@ -7,7 +7,7 @@ import categories.UbuntuTests;
 import categories.WindowsTests;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.junit.*;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
 
@@ -29,14 +29,14 @@ public class GeneralAssertionsTests extends SampleBaseTest {
     }
 
     @Test
-    public void testNotExists(){
+    public void testNotExists() {
         product.startPage.nonExistentLabel.notExists();
         Assertions.assertThrows(ElementExistsException.class,
                 () -> product.startPage.start.notExists());
     }
 
     @Test
-    public void testExists(){
+    public void testExists() {
         product.startPage.start.exists();
         Assertions.assertThrows(NoSuchElementException.class,
                 () -> product.startPage.nonExistentLabel.exists());
@@ -86,7 +86,7 @@ public class GeneralAssertionsTests extends SampleBaseTest {
     }
 
     @Test
-    public void testIs_IsLike_IsNotLike_WithSelect(){
+    public void testIs_IsLike_IsNotLike_WithSelect() {
         product.startPage.lexoDropDown.is("apple");
         product.startPage.lexoDropDown.isLike("PPL");
         product.startPage.lexoDropDown.is("01", "value");
@@ -98,7 +98,7 @@ public class GeneralAssertionsTests extends SampleBaseTest {
     }
 
     @Test
-    public void testListGroups(){
-        product.startPage.myListGroup.rowBy.description("Need For Speed").getRow().name.is("Aaron Paul");
+    public void testListGroups() {
+        product.startPage.actorListContainer.rowBy.description("Need For Speed").getRow().name.is("Aaron Paul");
     }
 }

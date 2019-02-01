@@ -1,27 +1,27 @@
 package main.sample.samplegrid;
 
 import aeon.core.common.web.selectors.By;
-import aeon.core.testabstraction.elements.web.ComponentTable;
+import aeon.core.testabstraction.elements.web.EmployeeTable;
 
 /**
  * Class for finding table rows based on column values.
  */
-public class MyGridHeaders extends ComponentTable<MyGridHeaders, MyGridRowElements> {
+public class MaterialTable extends EmployeeTable<MaterialTable, Material> {
 
     /**
      * Constructor.
      */
-    public MyGridHeaders() {
-        super(MyGridHeaders.class, MyGridRowElements.class);
+    public MaterialTable() {
+        super(MaterialTable.class, Material.class);
     }
 
     /**
      * Find a row based on a certain value in the "Material" column of the table.
      *
      * @param value The value to look for in the "Material" column of the table.
-     * @return An instance of the {@link MyGridHeaders} to support chaining and filtering by multiple columns.
+     * @return An instance of the {@link MaterialTable} to support chaining and filtering by multiple columns.
      */
-    public MyGridHeaders material(String value) {
+    public MaterialTable material(String value) {
         return findRow(value, By.cssSelector("#grid-table-id th:contains(Material)"));
     }
 
@@ -29,9 +29,9 @@ public class MyGridHeaders extends ComponentTable<MyGridHeaders, MyGridRowElemen
      * Find a row based on a certain value in the "Quantity" column of the table.
      *
      * @param value The value to look for in the "Quantity" column of the table.
-     * @return An instance of the {@link MyGridHeaders} to support chaining and filtering by multiple columns.
+     * @return An instance of the {@link MaterialTable} to support chaining and filtering by multiple columns.
      */
-    public MyGridHeaders quantity(String value) {
+    public MaterialTable quantity(String value) {
         return findRow(value, By.cssSelector("#grid-table-id th:contains(Quantity)"));
     }
 
@@ -39,9 +39,9 @@ public class MyGridHeaders extends ComponentTable<MyGridHeaders, MyGridRowElemen
      * Find a row based on a certain value in the "Unit Price" column of the table.
      *
      * @param value The value to look for in the "Unit Price" column of the table.
-     * @return An instance of the {@link MyGridHeaders} to support chaining and filtering by multiple columns.
+     * @return An instance of the {@link MaterialTable} to support chaining and filtering by multiple columns.
      */
-    public MyGridHeaders unitPrice(String value) {
+    public MaterialTable unitPrice(String value) {
         return findRow(value, By.cssSelector("#grid-table-id th:contains(Unit price)"));
     }
 }

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class DropdownFileCommandTests {
+public class SelectFileCommandTests {
 
     private SelectFileCommand selectFileCommand;
     private String path = "";

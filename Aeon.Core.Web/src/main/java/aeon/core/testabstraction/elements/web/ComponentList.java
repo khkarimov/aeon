@@ -9,7 +9,7 @@ import aeon.core.testabstraction.models.Component;
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of WebElement. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
 public abstract class ComponentList<T extends ComponentList, K extends Component> extends RowActions<T, K> {
@@ -17,11 +17,11 @@ public abstract class ComponentList<T extends ComponentList, K extends Component
     /**
      * Initializes a new instance of {@link ComponentList} class.
      *
-     * @param rowActionsClass A sub class of {@link ComponentList}
-     * @param webElementClass A sub class of {@link WebElement}
+     * @param componentListClass A sub class of {@link ComponentList}
+     * @param componentClass     A sub class of {@link Component}
      */
-    public ComponentList(Class<T> rowActionsClass, Class<K> webElementClass) {
-        super(rowActionsClass, webElementClass);
+    public ComponentList(Class<T> componentListClass, Class<K> componentClass) {
+        super(componentListClass, componentClass);
     }
 
     /**

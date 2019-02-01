@@ -3,10 +3,10 @@ package aeon.selenium;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.exceptions.*;
 import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.*;
 import aeon.core.common.helpers.*;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.*;
@@ -20,9 +20,9 @@ import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -41,8 +41,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
@@ -1696,7 +1696,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Asserts that an element's attribute is equal to a given value. Moreover, if the
-     * attribute it either INNERHTML or VALUE, and the control is a Dropdown element, then
+     * attribute it either INNERHTML or VALUE, and the control is a Select element, then
      * the assertion will be evaluated against the selected option's text or value, respectively.
      *
      * @param element       The web element.
@@ -1705,7 +1705,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute     The attribute.
      */
     public void is(WebControl element, String expectedValue, ComparisonOption option, String attribute) {
-        // special check for Dropdown elements
+        // special check for Select elements
         // if the select element is checking value or innerhtml, check the selected option, otherwise check the element
         if (((SeleniumElement) element).getTagName().equalsIgnoreCase("SELECT") && (attribute.equalsIgnoreCase("INNERHTML") || attribute.equalsIgnoreCase("VALUE"))) {
             isWithSelect(element, expectedValue, attribute);
@@ -1724,7 +1724,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that a Dropdown element's attribute is equal to a given value.
+     * Asserts that a Select element's attribute is equal to a given value.
      *
      * @param element       The web element.
      * @param expectedValue The value the attribute should be.
@@ -1749,7 +1749,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Asserts that an element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
-     * Moreover, if the attribute it either INNERHTML or VALUE, and the control is a Dropdown element, then
+     * Moreover, if the attribute it either INNERHTML or VALUE, and the control is a Select element, then
      * the assertion will be evaluated against the selected option's text or value, respectively.
      *
      * @param element   The web element.
@@ -1758,7 +1758,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute The attribute.
      */
     public void isLike(WebControl element, String value, ComparisonOption option, String attribute) {
-        // special check for Dropdown elements
+        // special check for Select elements
         if (((SeleniumElement) element).getTagName().equalsIgnoreCase("SELECT") && (attribute.equalsIgnoreCase("INNERHTML") || attribute.equalsIgnoreCase("VALUE"))) {
             isLikeWithSelect(element, value, attribute);
             return;
@@ -1777,7 +1777,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that a Dropdown element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
+     * Asserts that a Select element's attribute is equal to a given value. Comparison made ignoring whitespace and case.
      *
      * @param element       The web element.
      * @param expectedValue The value the attribute should be.
@@ -1802,7 +1802,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Asserts that an element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
-     * Moreover, if the attribute it either INNERHTML or VALUE, and the control is a Dropdown element, then
+     * Moreover, if the attribute it either INNERHTML or VALUE, and the control is a Select element, then
      * the assertion will be evaluated against the selected option's text or value, respectively.
      *
      * @param element   The web element.
@@ -1828,7 +1828,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that a Dropdown element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
+     * Asserts that a Select element's attribute is not equal to a given value. Comparison made ignoring whitespace and case.
      *
      * @param element       The web element.
      * @param expectedValue The value the attribute should be.

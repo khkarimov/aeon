@@ -2,21 +2,21 @@ package main.sample.samplelistgroup;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.ListContainer;
+import aeon.core.testabstraction.elements.web.ActorList;
 
 /**
  * Model for the sample list container.
  */
-public class MyListContainers extends ListContainer<MyComponentList> {
+public class ActorListContainer extends ActorList<Actor> {
 
     /**
      * Constructor.
      *
      * @param automationInfo The automation info object to use.
      * @param selector       The selector that identifies the list group.
-     * @param gridHeaders    The corresponding List Group Actions object.
+     * @param actor          The corresponding Actor object.
      */
-    public MyListContainers(AutomationInfo automationInfo, IByWeb selector, MyComponentList gridHeaders) {
-        super(automationInfo, selector, gridHeaders);
+    public ActorListContainer(AutomationInfo automationInfo, IByWeb selector, Actor actor) {
+        super(automationInfo, selector, actor);
     }
 }

@@ -4,10 +4,10 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.*;
 import aeon.core.testabstraction.models.Page;
-import main.sample.samplegrid.MyGrid;
-import main.sample.samplegrid.MyGridHeaders;
-import main.sample.samplelistgroup.MyComponentList;
-import main.sample.samplelistgroup.MyListContainers;
+import main.sample.samplegrid.MaterialTable;
+import main.sample.samplegrid.MaterialTableContainer;
+import main.sample.samplelistgroup.Actor;
+import main.sample.samplelistgroup.ActorListContainer;
 
 /**
  * Model of the sample HTML file for system tests.
@@ -49,8 +49,8 @@ public class VTeamSamplePage extends Page {
     public Button smileyFace1;
     public Button smileyFace2;
     public Button smileyFace3;
-    public MyGrid myGrid;
-    public MyListContainers myListGroup;
+    public MaterialTableContainer materialTableContainer;
+    public ActorListContainer actorListContainer;
 
     /**
      * Constructor.
@@ -92,9 +92,9 @@ public class VTeamSamplePage extends Page {
         smileyFace2 = new Button(info, By.cssSelector(".call-2 > button:nth-child(1)"));
         smileyFace3 = new Button(info, By.cssSelector(".call-3 > button:nth-child(1)"));
 
-        myGrid = new MyGrid(info, gridSelector, new MyGridHeaders());
+        materialTableContainer = new MaterialTableContainer(info, gridSelector, new MaterialTable());
         divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));
         bodyTag = new Label(info, By.cssSelector("label[for='sample5']"));
-        myListGroup = new MyListContainers(info, By.cssSelector(".demo-list-three"), new MyComponentList());
+        actorListContainer = new ActorListContainer(info, By.cssSelector(".demo-list-three"), new Actor());
     }
 }

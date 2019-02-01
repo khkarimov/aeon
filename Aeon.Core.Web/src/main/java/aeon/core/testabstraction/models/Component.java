@@ -19,4 +19,14 @@ public abstract class Component extends WebElement {
     public Component(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
         super(info, selector, switchMechanism);
     }
+
+    /**
+     * Constructor for abstract class RowElements.
+     *
+     * @param info     The info for the constructor.
+     * @param selector The chosen element.
+     */
+    public Component(AutomationInfo info, IByWeb selector) {
+        super(info, selector, null);
+    }
 }
