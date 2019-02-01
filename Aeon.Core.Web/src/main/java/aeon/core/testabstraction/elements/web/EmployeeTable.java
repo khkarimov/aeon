@@ -2,34 +2,36 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.core.testabstraction.models.Component;
 
 /**
- * This class serves as a base for all grid row actions.
+ * This class serves as a base for all classes that define a component table.
  *
- * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <T> A sub class of EmployeeTable. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
+ * @deprecated please use {@link ComponentList} instead.
  */
-public abstract class TableActions<T extends TableActions, K extends TableElements> extends RowActions<T, K> {
+@Deprecated
+public abstract class EmployeeTable<T extends EmployeeTable, K extends Component> extends RowActions<T, K> {
 
     protected String cellSelector = "td";
 
     /**
-     * Initializes a new instance of {@link TableActions} class.
+     * Initializes a new instance of {@link EmployeeTable} class.
      *
-     * @param rowActionsClass A sub class of {@link TableActions}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param employeeTable  A sub class of {@link EmployeeTable}
+     * @param componentClass A sub class of {@link Component}
      */
-    public TableActions(Class<T> rowActionsClass, Class<K> rowElementsClass) {
-        super(rowActionsClass, rowElementsClass);
+    public EmployeeTable(Class<T> employeeTable, Class<K> componentClass) {
+        super(employeeTable, componentClass);
     }
 
     /**
      * Get the index of the referenced row that contains the row elements defined in the K class.
      *
      * @param index The index you are looking for.
-     *
      * @return Returns an instance of K.
      */
     public K index(int index) {
@@ -40,7 +42,6 @@ public abstract class TableActions<T extends TableActions, K extends TableElemen
      * Get a row by the index.
      *
      * @param index The index you are looking for.
-     *
      * @return Returns an instance of K.
      */
     protected K findRowByIndex(int index) {
@@ -52,9 +53,8 @@ public abstract class TableActions<T extends TableActions, K extends TableElemen
     /**
      * Get a row by the value and column header.
      *
-     * @param value The value you are looking for.
-     * @param columnHeader THe header of the column.
-     *
+     * @param value        The value you are looking for.
+     * @param columnHeader The header of the column.
      * @return Returns an instance of T.
      */
     protected T findRow(String value, IByWeb columnHeader) {

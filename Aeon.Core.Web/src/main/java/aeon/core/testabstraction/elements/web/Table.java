@@ -6,9 +6,11 @@ import aeon.core.common.web.interfaces.IByWeb;
 /**
  * The class to model tables.
  *
- * @param <T> the {@link TableActions} class for this table model.
+ * @param <T> the {@link EmployeeTable} class for this table model.
+ * @deprecated use {@link ComponentList} instead
  */
-public abstract class Table<T extends TableActions> {
+@Deprecated
+public abstract class Table<T extends EmployeeTable> {
 
     public T rowBy;
 
@@ -16,11 +18,11 @@ public abstract class Table<T extends TableActions> {
      * Creates a new instance of {@link Table}.
      *
      * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
-     * @param rowBy The {@link TableActions} object to use for table actions
+     * @param selector       IBy selector that will identify the element.
+     * @param employeeTable  The {@link EmployeeTable} object to use for table actions
      */
-    public Table(AutomationInfo automationInfo, IByWeb selector, T rowBy) {
-        this.rowBy = rowBy;
+    public Table(AutomationInfo automationInfo, IByWeb selector, T employeeTable) {
+        this.rowBy = employeeTable;
 
         this.rowBy.setContext(automationInfo, selector, null);
     }
@@ -28,13 +30,13 @@ public abstract class Table<T extends TableActions> {
     /**
      * Creates a new instance of {@link Table}.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo  The AutomationInfo.
+     * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
-     * @param rowBy The {@link TableActions} object to use for table actions
+     * @param employeeTable   The {@link EmployeeTable} object to use for table actions
      */
-    public Table(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T rowBy) {
-        this.rowBy = rowBy;
+    public Table(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T employeeTable) {
+        this.rowBy = employeeTable;
 
         this.rowBy.setContext(automationInfo, selector, switchMechanism);
     }

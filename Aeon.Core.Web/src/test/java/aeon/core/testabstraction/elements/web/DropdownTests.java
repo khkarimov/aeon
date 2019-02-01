@@ -24,10 +24,10 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class SelectTests {
+public class DropdownTests {
 
-    private Select select1;
-    private Select select2;
+    private Dropdown dropdown1;
+    private Dropdown dropdown2;
 
     private AutomationInfo info1;
     private AutomationInfo info2;
@@ -36,7 +36,7 @@ public class SelectTests {
     private String dummy = "dummy";
     private int dummyInt = 3;
     private CompareType compareType = CompareType.DescendingByText;
-    
+
     @Mock
     private IByWeb selector;
     @Mock
@@ -61,15 +61,15 @@ public class SelectTests {
         info1.setCommandExecutionFacade(commandExecutionFacade1);
         info2.setCommandExecutionFacade(commandExecutionFacade2);
 
-        select1 = new Select(info1, selector);
-        select2 = new Select(info2, selector, switchMechanism);
+        dropdown1 = new Dropdown(info1, selector);
+        dropdown2 = new Dropdown(info2, selector, switchMechanism);
     }
 
     @Test
     public void testHasOptions_ThreeParams_VerifyExecute() {
         //Tests each select object
-        select1.hasOptions(messages, dummy, webSelectOption);
-        select2.hasOptions(messages, dummy, webSelectOption);
+        dropdown1.hasOptions(messages, dummy, webSelectOption);
+        dropdown2.hasOptions(messages, dummy, webSelectOption);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasOptionsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasOptionsCommand.class));
@@ -78,8 +78,8 @@ public class SelectTests {
     @Test
     public void testHasOptions_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.hasOptions(messages, webSelectOption);
-        select2.hasOptions(messages, webSelectOption);
+        dropdown1.hasOptions(messages, webSelectOption);
+        dropdown2.hasOptions(messages, webSelectOption);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasOptionsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasOptionsCommand.class));
@@ -88,8 +88,8 @@ public class SelectTests {
     @Test
     public void testHasOptionsInOrder_ThreeParams_VerifyExecute() {
         //Tests each select object
-        select1.hasOptionsInOrder(messages, dummy, webSelectOption);
-        select2.hasOptionsInOrder(messages, dummy, webSelectOption);
+        dropdown1.hasOptionsInOrder(messages, dummy, webSelectOption);
+        dropdown2.hasOptionsInOrder(messages, dummy, webSelectOption);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasOptionsInOrderCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasOptionsInOrderCommand.class));
@@ -98,8 +98,8 @@ public class SelectTests {
     @Test
     public void testHasOptionsInOrder_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.hasOptionsInOrder(messages, webSelectOption);
-        select2.hasOptionsInOrder(messages, webSelectOption);
+        dropdown1.hasOptionsInOrder(messages, webSelectOption);
+        dropdown2.hasOptionsInOrder(messages, webSelectOption);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasOptionsInOrderCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasOptionsInOrderCommand.class));
@@ -108,8 +108,8 @@ public class SelectTests {
     @Test
     public void testDoesNotHaveOptions_ThreeParams_VerifyExecute() {
         //Tests each select object
-        select1.doesNotHaveOptions(messages, dummy, webSelectOption);
-        select2.doesNotHaveOptions(messages, dummy, webSelectOption);
+        dropdown1.doesNotHaveOptions(messages, dummy, webSelectOption);
+        dropdown2.doesNotHaveOptions(messages, dummy, webSelectOption);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(DoesNotHaveOptionsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(DoesNotHaveOptionsCommand.class));
@@ -118,8 +118,8 @@ public class SelectTests {
     @Test
     public void testDoesNotHaveOptions_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.doesNotHaveOptions(messages, webSelectOption);
-        select2.doesNotHaveOptions(messages, webSelectOption);
+        dropdown1.doesNotHaveOptions(messages, webSelectOption);
+        dropdown2.doesNotHaveOptions(messages, webSelectOption);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(DoesNotHaveOptionsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(DoesNotHaveOptionsCommand.class));
@@ -128,8 +128,8 @@ public class SelectTests {
     @Test
     public void testHasNumberOfOptions_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.hasNumberOfOptions(dummyInt, dummy);
-        select2.hasNumberOfOptions(dummyInt, dummy);
+        dropdown1.hasNumberOfOptions(dummyInt, dummy);
+        dropdown2.hasNumberOfOptions(dummyInt, dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasNumberOfOptionsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasNumberOfOptionsCommand.class));
@@ -138,8 +138,8 @@ public class SelectTests {
     @Test
     public void testHasNumberOfOptions_OneParam_VerifyExecute() {
         //Tests each select object
-        select1.hasNumberOfOptions(dummyInt);
-        select2.hasNumberOfOptions(dummyInt);
+        dropdown1.hasNumberOfOptions(dummyInt);
+        dropdown2.hasNumberOfOptions(dummyInt);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasNumberOfOptionsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasNumberOfOptionsCommand.class));
@@ -148,8 +148,8 @@ public class SelectTests {
     @Test
     public void testHasAllOptionsInOrder_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.hasAllOptionsInOrder(compareType, dummy);
-        select2.hasAllOptionsInOrder(compareType, dummy);
+        dropdown1.hasAllOptionsInOrder(compareType, dummy);
+        dropdown2.hasAllOptionsInOrder(compareType, dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasAllOptionsInOrderCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasAllOptionsInOrderCommand.class));
@@ -158,8 +158,8 @@ public class SelectTests {
     @Test
     public void testHasAllOptionsInOrder_OneParam_VerifyExecute() {
         //Tests each select object
-        select1.hasAllOptionsInOrder(compareType);
-        select2.hasAllOptionsInOrder(compareType);
+        dropdown1.hasAllOptionsInOrder(compareType);
+        dropdown2.hasAllOptionsInOrder(compareType);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(HasAllOptionsInOrderCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(HasAllOptionsInOrderCommand.class));
@@ -168,8 +168,8 @@ public class SelectTests {
     @Test
     public void testSet_VerifyExecute() {
         //Tests each select object
-        select1.set(webSelectOption, dummy);
-        select2.set(webSelectOption, dummy);
+        dropdown1.set(webSelectOption, dummy);
+        dropdown2.set(webSelectOption, dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(SetCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(SetCommand.class));
@@ -178,8 +178,8 @@ public class SelectTests {
     @Test
     public void testIsLike_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.isLike(dummy, dummy);
-        select2.isLike(dummy, dummy);
+        dropdown1.isLike(dummy, dummy);
+        dropdown2.isLike(dummy, dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(IsLikeCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(IsLikeCommand.class));
@@ -188,8 +188,8 @@ public class SelectTests {
     @Test
     public void testIsLike_OneParam_VerifyExecute() {
         //Tests each select object
-        select1.isLike(dummy);
-        select2.isLike(dummy);
+        dropdown1.isLike(dummy);
+        dropdown2.isLike(dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(IsLikeCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(IsLikeCommand.class));
@@ -198,8 +198,8 @@ public class SelectTests {
     @Test
     public void testIsNotLike_OneParam_VerifyExecute() {
         //Tests each select object
-        select1.isNotLike(dummy);
-        select2.isNotLike(dummy);
+        dropdown1.isNotLike(dummy);
+        dropdown2.isNotLike(dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(IsNotLikeCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(IsNotLikeCommand.class));
@@ -208,8 +208,8 @@ public class SelectTests {
     @Test
     public void testIsNotLike_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.isNotLike(dummy, dummy);
-        select2.isNotLike(dummy, dummy);
+        dropdown1.isNotLike(dummy, dummy);
+        dropdown2.isNotLike(dummy, dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(IsNotLikeCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(IsNotLikeCommand.class));
@@ -218,8 +218,8 @@ public class SelectTests {
     @Test
     public void testIs_OneParam_VerifyExecute() {
         //Tests each select object
-        select1.is(dummy);
-        select2.is(dummy);
+        dropdown1.is(dummy);
+        dropdown2.is(dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(IsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(IsCommand.class));
@@ -228,8 +228,8 @@ public class SelectTests {
     @Test
     public void testIs_TwoParams_VerifyExecute() {
         //Tests each select object
-        select1.is(dummy, dummy);
-        select2.is(dummy, dummy);
+        dropdown1.is(dummy, dummy);
+        dropdown2.is(dummy, dummy);
 
         verify(commandExecutionFacade1, times(1)).execute(eq(info1), any(IsCommand.class));
         verify(commandExecutionFacade2, times(1)).execute(eq(info2), any(IsCommand.class));

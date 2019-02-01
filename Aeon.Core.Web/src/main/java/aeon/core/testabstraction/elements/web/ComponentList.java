@@ -2,25 +2,26 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.InlineJavaScript;
+import aeon.core.testabstraction.models.Component;
 
 /**
  * This class serves as a base for all grid row actions.
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
-public abstract class ListGroupActions<T extends ListGroupActions, K extends ListGroupElements> extends RowActions<T, K> {
+public abstract class ComponentList<T extends ComponentList, K extends Component> extends RowActions<T, K> {
 
     /**
-     * Initializes a new instance of {@link ListGroupActions} class.
+     * Initializes a new instance of {@link ComponentList} class.
      *
-     * @param rowActionsClass  A sub class of {@link ListGroupActions}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param componentListClass A sub class of {@link ComponentList}
+     * @param componentClass     A sub class of {@link Component}
      */
-    public ListGroupActions(Class<T> rowActionsClass, Class<K> rowElementsClass) {
-        super(rowActionsClass, rowElementsClass);
+    public ComponentList(Class<T> componentListClass, Class<K> componentClass) {
+        super(componentListClass, componentClass);
     }
 
     /**

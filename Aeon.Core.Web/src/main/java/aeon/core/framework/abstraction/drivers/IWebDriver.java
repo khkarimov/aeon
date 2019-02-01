@@ -201,7 +201,7 @@ public interface IWebDriver extends IDriver {
     void refresh();
 
     /**
-     * Choose a Select Element by its Value.
+     * Choose a Dropdown Element by its Value.
      *
      * @param element The element to be chosen by value.
      * @param value   The value to search for.
@@ -209,7 +209,7 @@ public interface IWebDriver extends IDriver {
     void chooseSelectElementByValue(WebControl element, String value);
 
     /**
-     * Choose a Select Element by its Text.
+     * Choose a Dropdown Element by its Text.
      *
      * @param element The element to be chosen by value.
      * @param value   The value to search for.

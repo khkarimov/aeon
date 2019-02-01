@@ -100,6 +100,6 @@ public class GeneralAssertionsTests extends SampleBaseTest {
 
     @Test
     public void testListGroups() {
-        product.startPage.myListGroup.rowBy.description("Need For Speed").getRow().name.is("Aaron Paul");
+        product.startPage.actorListContainer.rowBy.description("Need For Speed").getRow().name.is("Aaron Paul");
     }
 }

@@ -37,14 +37,14 @@ public class BrowserWindowTests extends SampleBaseTest {
 
     @Test
     public void testGrids() {
-        product.startPage.myGrid.rowBy.index(2).checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().unitPrice.is("$2.35");
-        product.startPage.myGrid.rowBy.material("Acrylic").getRow().exists();
+        product.startPage.materialTableContainer.rowBy.index(2).checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Laminate").quantity("9").getRow().unitPrice.is("$2.35");
+        product.startPage.materialTableContainer.rowBy.material("Acrylic").getRow().exists();
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchElementsException.class));
-        product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }
 
     @Category({EdgeNotSupported.class})

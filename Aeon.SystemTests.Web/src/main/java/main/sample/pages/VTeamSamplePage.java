@@ -4,10 +4,10 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.*;
 import aeon.core.testabstraction.models.Page;
-import main.sample.samplegrid.MyGrid;
-import main.sample.samplegrid.MyGridHeaders;
-import main.sample.samplelistgroup.MyListGroup;
-import main.sample.samplelistgroup.MyListGroupActions;
+import main.sample.samplegrid.MaterialTable;
+import main.sample.samplegrid.MaterialTableContainer;
+import main.sample.samplelistgroup.Actor;
+import main.sample.samplelistgroup.ActorListContainer;
 
 /**
  * Model of the sample HTML file for system tests.
@@ -31,14 +31,14 @@ public class VTeamSamplePage extends Page {
     public ListItem draggableHTML5Item;
     public ListItem draggedHTML5Item;
     public Link tryLink;
-    public Select dropDown;
+    public Dropdown dropDown;
     public Checkbox checkbox100;
     public WebElement divWindow;
     public Label bodyTag;
     public WebElement div;
     public Button popupButton;
-    public Select lexoDropDown;
-    public Select revLexoDropDown;
+    public Dropdown lexoDropDown;
+    public Dropdown revLexoDropDown;
     public Label dateSelector;
     public Label dateLabel;
     public Label reactionLabel;
@@ -49,8 +49,8 @@ public class VTeamSamplePage extends Page {
     public Button smileyFace1;
     public Button smileyFace2;
     public Button smileyFace3;
-    public MyGrid myGrid;
-    public MyListGroup myListGroup;
+    public MaterialTableContainer materialTableContainer;
+    public ActorListContainer actorListContainer;
 
     /**
      * Constructor.
@@ -68,7 +68,7 @@ public class VTeamSamplePage extends Page {
         alertTitleTextBox = new TextBox(info, By.cssSelector("input[id ='sample1']"));
         start = new Button(info, By.cssSelector("button[id='start']"));
         tryLink = new Link(info, By.cssSelector("a[id='tryLink']"));
-        dropDown = new Select(info, By.cssSelector("select[id='drop-down-list']"));
+        dropDown = new Dropdown(info, By.cssSelector("select[id='drop-down-list']"));
 
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
         draggableListItem = new ListItem(info, By.cssSelector("li[id='node1']"));
@@ -79,8 +79,8 @@ public class VTeamSamplePage extends Page {
         checkbox100 = new Checkbox(info, By.cssSelector("input[id='checkbox100']"));
         div = new WebElement(info, By.cssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
         popupButton = new Button(info, By.cssSelector("a[id='popup-button']"));
-        lexoDropDown = new Select(info, By.cssSelector("select[id='lexicographic-drop-down']"));
-        revLexoDropDown = new Select(info, By.cssSelector("select[id='lexicographic-drop-down-rev']"));
+        lexoDropDown = new Dropdown(info, By.cssSelector("select[id='lexicographic-drop-down']"));
+        revLexoDropDown = new Dropdown(info, By.cssSelector("select[id='lexicographic-drop-down-rev']"));
         dateSelector = new Label(info, By.cssSelector("#date-selector"));
         dateLabel = new Label(info, By.cssSelector("#date-text"));
         reactionLabel = new Label(info, By.cssSelector("#reaction-text"));
@@ -92,9 +92,9 @@ public class VTeamSamplePage extends Page {
         smileyFace2 = new Button(info, By.cssSelector(".call-2 > button:nth-child(1)"));
         smileyFace3 = new Button(info, By.cssSelector(".call-3 > button:nth-child(1)"));
 
-        myGrid = new MyGrid(info, gridSelector, new MyGridHeaders());
+        materialTableContainer = new MaterialTableContainer(info, gridSelector, new MaterialTable());
         divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));
         bodyTag = new Label(info, By.cssSelector("label[for='sample5']"));
-        myListGroup = new MyListGroup(info, By.cssSelector(".demo-list-three"), new MyListGroupActions());
+        actorListContainer = new ActorListContainer(info, By.cssSelector(".demo-list-three"), new Actor());
     }
 }
