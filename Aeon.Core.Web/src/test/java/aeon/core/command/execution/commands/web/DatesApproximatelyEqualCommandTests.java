@@ -4,8 +4,6 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,16 +13,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static org.mockito.Mockito.verify;
+import java.time.LocalDate;
+import java.time.Period;
+
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class DatesApproximatelyEqualCommandTests {
     private DatesApproximatelyEqualCommand datesApproximatelyEqualCommand;
     private String attributeName = "attrName";
-    private DateTime expectedDate = new DateTime();
-    private Period acceptableDelta = new Period();
+    private LocalDate expectedDate = LocalDate.now();
+    private Period acceptableDelta = Period.of(2, 3, 2);
 
     @Mock
     private IByWeb selector;

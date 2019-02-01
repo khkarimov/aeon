@@ -5,11 +5,12 @@ import aeon.core.common.web.WebSelectOption;
 import categories.EdgeNotSupported;
 import categories.UbuntuTests;
 import categories.WindowsTests;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 @Category({WindowsTests.class, UbuntuTests.class})
 public class GeneralAssertionsTests extends SampleBaseTest {
@@ -78,11 +79,11 @@ public class GeneralAssertionsTests extends SampleBaseTest {
 
     @Test
     public void testDatesApproximatelyEquals() {
-        product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-31"), Period.days(0));
-        product.startPage.dateSelector.datesApproximatelyEqual("min", DateTime.parse("2016-01-06"), Period.days(5));
+        product.startPage.dateSelector.datesApproximatelyEqual("value", LocalDate.parse("2016-08-31"), Period.ofDays(0));
+        product.startPage.dateSelector.datesApproximatelyEqual("min", LocalDate.parse("2016-01-06"), Period.ofDays(6));
 
         Assertions.assertThrows(DatesNotApproximatelyEqualException.class,
-                () -> product.startPage.dateSelector.datesApproximatelyEqual("value", DateTime.parse("2016-08-08"), Period.days(5)));
+                () -> product.startPage.dateSelector.datesApproximatelyEqual("value", LocalDate.parse("2016-08-08"), Period.ofDays(5)));
     }
 
     @Test
