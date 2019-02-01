@@ -82,12 +82,11 @@ class WebConfigurationTests {
     }
 
     @Test
-    void loadModuleSettings_throwsIOException() {
+    void loadModuleSettings_throwsIOException() throws IOException {
 
         // Arrange
-
         WebConfiguration spyConfig = org.mockito.Mockito.spy(webConfiguration);
-        when(spyConfig.getAeonCoreInputStream()).thenReturn(null);
+        when(spyConfig.getAeonCoreInputStream()).thenThrow(IOException.class);
 
         // Act
         Executable executable = () -> spyConfig.loadModuleSettings();

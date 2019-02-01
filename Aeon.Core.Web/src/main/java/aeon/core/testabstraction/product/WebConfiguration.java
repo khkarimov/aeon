@@ -87,9 +87,6 @@ public class WebConfiguration extends Configuration {
     @Override
     protected void loadModuleSettings() throws IOException {
         try (InputStream in = getAeonCoreInputStream()) {
-            if (in == null) {
-                throw new IOException("No aeon.core.properties file was found.");
-            }
             properties.load(in);
         } catch (IOException e) {
             log.error("aeon.core.properties resource could not be read");
@@ -102,7 +99,7 @@ public class WebConfiguration extends Configuration {
      *
      * @return getResourceAsStream of "/aeon.core.properties" file
      */
-    InputStream getAeonCoreInputStream() {
+    InputStream getAeonCoreInputStream() throws IOException {
         return WebConfiguration.class.getResourceAsStream("/aeon.core.properties");
     }
 }
