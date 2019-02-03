@@ -29,7 +29,7 @@ public class SwitchToWindowByUrlCommandTests {
     }
 
     @Test
-    public void DriverNullThrowsException(){
+    public void DriverNullThrowsException() {
         //Arrange
         Exception illegalArgumentException;
 

@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -32,18 +31,20 @@ public class GoBackCommandTests {
     private Consumer<IDriver> action;
 
     @BeforeEach
-    public void setup(){goBackCommandObject = new GoBackCommand();}
+    public void setup() {
+        goBackCommandObject = new GoBackCommand();
+    }
 
 
     /**
      * Move back a single page in a browser's history
      * Usage:
-     *  Context.browser.goBack();
-     *
+     * Context.browser.goBack();
+     * <p>
      * If no previous pages, it does nothing
      */
     @Test
-    public void commandDelegateGoBackCommand(){
+    public void commandDelegateGoBackCommand() {
         //Arrange
 
         //Act

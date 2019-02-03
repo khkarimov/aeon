@@ -40,11 +40,11 @@ public class ResizeCommandTests {
         resizeCommand.driverDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).resize(dimensionSize);
+        verify(driver, times(1)).resize(dimensionSize);
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> resizeCommand.driverDelegate(null));
     }

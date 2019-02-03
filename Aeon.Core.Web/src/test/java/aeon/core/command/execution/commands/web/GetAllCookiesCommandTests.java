@@ -22,10 +22,12 @@ public class GetAllCookiesCommandTests {
     private IWebDriver driver;
 
     @BeforeEach
-    public void setup() { getAllCookiesCommand = new GetAllCookiesCommand(); }
+    public void setup() {
+        getAllCookiesCommand = new GetAllCookiesCommand();
+    }
 
     @Test
-    public void GetAllCookiesCommand(){
+    public void GetAllCookiesCommand() {
         // Act
         getAllCookiesCommand.commandDelegate(driver);
 

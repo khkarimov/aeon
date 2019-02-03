@@ -27,7 +27,7 @@ public class VerifyAlertNotExistsCommandTests {
     }
 
     @Test
-    public void commandDelegateVerifyAlertNotExistsCommand(){
+    public void commandDelegateVerifyAlertNotExistsCommand() {
         //Arrange
 
         //Act
@@ -38,7 +38,7 @@ public class VerifyAlertNotExistsCommandTests {
     }
 
     @Test
-    public void testDriverDelegateNullDriver(){
+    public void testDriverDelegateNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> verifyAlertNotExistsCommand.driverDelegate(null));
     }
