@@ -19,7 +19,7 @@ public class MyComponent extends Component {
      * @param selector        The selector that identifies the item of the list group.
      * @param switchMechanism The switchMechanism to use.
      */
-    public MyComponent(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public MyComponent(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         name = new Label(info, selector.toJQuery().find("span.list-group-name"));
         description = new Label(info, selector.toJQuery().find("span.mdl-list__item-text-body"));

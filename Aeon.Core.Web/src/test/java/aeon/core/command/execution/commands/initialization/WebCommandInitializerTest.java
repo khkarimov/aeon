@@ -32,14 +32,14 @@ public class WebCommandInitializerTest {
     private IWebDriver driver;
 
     @Mock
-    private IByWeb switchMechanism0;
+    private IByWeb switchMechanism;
 
     @Mock
     private IByWeb selector;
 
     @BeforeEach
     public void setup() {
-        webCommandInitializer = new WebCommandInitializer(finder, switchMechanism0, selector);
+        webCommandInitializer = new WebCommandInitializer(finder, selector, switchMechanism);
     }
 
     @Test

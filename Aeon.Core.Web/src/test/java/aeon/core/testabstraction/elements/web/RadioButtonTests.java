@@ -40,7 +40,7 @@ public class RadioButtonTests {
     private IByWeb selector;
 
     @Mock
-    private IByWeb switchMechanism0;
+    private IByWeb switchMechanism;
 
     @Mock
     private Configuration configuration;
@@ -62,7 +62,7 @@ public class RadioButtonTests {
 
         info2 = new AutomationInfo(configuration, driver, adapter);
         info2.setCommandExecutionFacade(commandExecutionFacade);
-        radioButton2 = new RadioButton(info2, selector, switchMechanism0);
+        radioButton2 = new RadioButton(info2, selector, switchMechanism);
     }
 
     @Test

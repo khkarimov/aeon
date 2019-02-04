@@ -6,8 +6,6 @@ import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.Link;
 import aeon.core.testabstraction.models.Page;
 
-import java.util.ArrayList;
-
 /**
  * The home page containing some menu items.
  */
@@ -26,7 +24,7 @@ public class HomePage extends Page {
      */
     public HomePage(AutomationInfo automationInfo) {
         viewPayStatement = new Link(automationInfo, By.cssSelector("a[id*='viewPayStatementLink']"));
-        menuButton = new Button(automationInfo, By.cssSelector("#menuButtonContainer > div.menuButton"), new ArrayList<>()); //passing in an empty ArrayList sets the frame to the default frame
+        menuButton = new Button(automationInfo, By.cssSelector("#menuButtonContainer > div.menuButton"), null); //passing in a null switchMechanism sets the frame to the default frame
         myTeam = new Button(automationInfo, By.cssSelector("[data-uitoggle=\"menu_my_team\"]"));
         myEmployees = new Button(automationInfo, By.cssSelector("[data-id=\"167\"]"));
         homeButton = new Button(automationInfo, By.cssSelector("#link_home > div:nth-child(1)"));

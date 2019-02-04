@@ -41,7 +41,7 @@ public class WebElementTests {
     private IByWeb selector;
 
     @Mock
-    private IByWeb switchMechanism0;
+    private IByWeb switchMechanism;
 
     @Mock
     private Configuration configuration;
@@ -72,7 +72,7 @@ public class WebElementTests {
 
         info2 = new AutomationInfo(configuration, driver, adapter);
         info2.setCommandExecutionFacade(commandExecutionFacade);
-        webElement2 = new FileDialogInput(info2, selector, switchMechanism0);
+        webElement2 = new FileDialogInput(info2, selector, switchMechanism);
     }
 
     @Test

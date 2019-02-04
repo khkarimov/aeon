@@ -36,7 +36,7 @@ public class CheckboxTests {
     @Mock
     private IByWeb selector;
     @Mock
-    private IByWeb switchMechanism0;
+    private IByWeb switchMechanism;
     @Mock
     private IDriver driver;
     @Mock
@@ -55,7 +55,7 @@ public class CheckboxTests {
         info.setCommandExecutionFacade(commandExecutionFacade);
 
         checkbox1 = new Checkbox(info, selector);
-        checkbox2 = new Checkbox(info, selector, switchMechanism0);
+        checkbox2 = new Checkbox(info, selector, switchMechanism);
     }
 
     @Test

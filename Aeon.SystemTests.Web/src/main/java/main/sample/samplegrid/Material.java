@@ -20,7 +20,7 @@ public class Material extends Component {
      * @param selector        The selector that identifies the row of the table.
      * @param switchMechanism The switchMechanism to use.
      */
-    public Material(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Material(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         checkBoxButton = new Button(info, selector.toJQuery().find("span.mdl-checkbox__ripple-container.mdl-js-ripple-effect.mdl-ripple--center"));
         unitPrice = new Label(info, selector.toJQuery().find("td:nth-child(4)"));

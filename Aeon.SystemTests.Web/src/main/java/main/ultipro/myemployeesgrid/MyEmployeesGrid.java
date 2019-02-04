@@ -17,7 +17,7 @@ public class MyEmployeesGrid extends Table<EmployeeTableContainer> {
      * @param switchMechanism  The switch mechanism for the web element.
      * @param employeesHeaders The corresponding Grid Headers object.
      */
-    public MyEmployeesGrid(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, EmployeeTableContainer employeesHeaders) {
-        super(automationInfo, selector, switchMechanism, employeesHeaders);
+    public MyEmployeesGrid(AutomationInfo automationInfo, IByWeb selector, EmployeeTableContainer employeesHeaders, IByWeb... switchMechanism) {
+        super(automationInfo, selector, employeesHeaders, switchMechanism);
     }
 }

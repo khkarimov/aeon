@@ -16,7 +16,7 @@ public class NativeSelect extends NativeAppElement {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
+     * @param info     The automation info object to use.
      * @param selector The selector that identifies this element.
      */
     public NativeSelect(AutomationInfo info, IByWeb selector) {
@@ -35,19 +35,19 @@ public class NativeSelect extends NativeAppElement {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
-     * @param selector The selector that identifies this element.
+     * @param info            The automation info object to use.
+     * @param selector        The selector that identifies this element.
      * @param switchMechanism The switchMechanism to use to find the element.
      */
-    public NativeSelect(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public NativeSelect(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
     }
 
     /**
      * Sets select option to value.
      *
-     * @param selectOption  Option to be set
-     * @param value         New Value
+     * @param selectOption Option to be set
+     * @param value        New Value
      */
     public void set(String selectOption, String value) {
         info.getCommandExecutionFacade().execute(info, new NativeClickCommand(
@@ -60,8 +60,8 @@ public class NativeSelect extends NativeAppElement {
     /**
      * Sets select option to value.
      *
-     * @param selectOption  Option to be set
-     * @param value         New Value
+     * @param selectOption Option to be set
+     * @param value        New Value
      */
     public void select(String selectOption, String value) {
         info.getCommandExecutionFacade().execute(info, new NativeSelectCommand(

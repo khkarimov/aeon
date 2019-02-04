@@ -40,7 +40,7 @@ public class DropdownTests {
     @Mock
     private IByWeb selector;
     @Mock
-    private IByWeb switchMechanism0;
+    private IByWeb switchMechanism;
     @Mock
     private IDriver driver;
     @Mock
@@ -62,7 +62,7 @@ public class DropdownTests {
         info2.setCommandExecutionFacade(commandExecutionFacade2);
 
         dropdown1 = new Dropdown(info1, selector);
-        dropdown2 = new Dropdown(info2, selector, switchMechanism0);
+        dropdown2 = new Dropdown(info2, selector, switchMechanism);
     }
 
     @Test
