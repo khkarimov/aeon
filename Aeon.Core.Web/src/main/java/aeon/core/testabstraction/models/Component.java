@@ -27,6 +27,6 @@ public abstract class Component extends WebElement {
      * @param selector The chosen element.
      */
     public Component(AutomationInfo info, IByWeb selector) {
-        super(info, selector, new IByWeb[0]);
+        super(info, selector, null);
     }
 }
