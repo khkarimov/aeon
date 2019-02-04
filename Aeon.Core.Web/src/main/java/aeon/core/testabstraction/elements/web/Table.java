@@ -32,10 +32,10 @@ public abstract class Table<T extends EmployeeTable> {
      *
      * @param automationInfo  The AutomationInfo.
      * @param selector        IBy selector that will identify the element.
-     * @param switchMechanism The switch mechanism for the web element.
      * @param employeeTable   The {@link EmployeeTable} object to use for table actions
+     * @param switchMechanism The switch mechanism for the web element.
      */
-    public Table(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T employeeTable) {
+    public Table(AutomationInfo automationInfo, IByWeb selector, T employeeTable, IByWeb... switchMechanism) {
         this.rowBy = employeeTable;
 
         this.rowBy.setContext(automationInfo, selector, switchMechanism);

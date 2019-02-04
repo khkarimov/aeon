@@ -16,7 +16,7 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
 
     IByWeb selector;
     AutomationInfo automationInfo;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
     protected String rowSelector = "tr";
@@ -37,16 +37,16 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
      *
      * @param automationInfo  The AutomationInfo.
      * @param selector        IBy selector that will identify the element.
-     * @param switchMechanism The switch mechanism for the web element.
      * @param rowActionsClass A sub class of {@link RowActions}
      * @param componentClass  A sub class of {@link Component}
+     * @param switchMechanism The switch mechanism for the web element.
      */
-    public RowActions(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, Class<T> rowActionsClass, Class<K> componentClass) {
+    public RowActions(AutomationInfo automationInfo, IByWeb selector, Class<T> rowActionsClass, Class<K> componentClass, IByWeb... switchMechanism) {
         this.selector = selector;
         this.automationInfo = automationInfo;
-        this.switchMechanism = switchMechanism;
         this.rowElementsClass = componentClass;
         this.rowActionsClass = rowActionsClass;
+        this.switchMechanism = switchMechanism;
     }
 
     /**
@@ -56,7 +56,7 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public void setContext(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public void setContext(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;

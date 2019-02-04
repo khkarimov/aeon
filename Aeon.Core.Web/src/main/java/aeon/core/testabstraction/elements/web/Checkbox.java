@@ -12,7 +12,7 @@ public class Checkbox extends WebElement {
 
     private AutomationInfo info;
     private IByWeb selector;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
 
     /**
      * Creates a new instance of {@link Button}.
@@ -33,7 +33,7 @@ public class Checkbox extends WebElement {
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism.
      */
-    public Checkbox(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Checkbox(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;

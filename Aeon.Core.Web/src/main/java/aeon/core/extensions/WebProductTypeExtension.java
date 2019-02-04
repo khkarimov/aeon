@@ -139,7 +139,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
         return params;
     }
 
-    private ICommandInitializer parseICommandInitializer(Iterable<IByWeb> switchMechanism) {
+    private ICommandInitializer parseICommandInitializer(IByWeb... switchMechanism) {
         return new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism);
     }
 }

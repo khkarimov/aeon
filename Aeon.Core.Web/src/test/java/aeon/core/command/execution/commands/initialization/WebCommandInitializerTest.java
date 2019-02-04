@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import java.util.Arrays;
 import java.util.function.Consumer;
 
 import static org.mockito.Mockito.times;
@@ -25,7 +24,6 @@ import static org.mockito.Mockito.verify;
 public class WebCommandInitializerTest {
 
     private WebCommandInitializer webCommandInitializer;
-    private Iterable<IByWeb> iterator;
 
     @Mock
     private IWebControlFinder finder;
@@ -34,12 +32,14 @@ public class WebCommandInitializerTest {
     private IWebDriver driver;
 
     @Mock
+    private IByWeb switchMechanism0;
+
+    @Mock
     private IByWeb selector;
 
     @BeforeEach
     public void setup() {
-        iterator = Arrays.asList(selector);
-        webCommandInitializer = new WebCommandInitializer(finder, iterator);
+        webCommandInitializer = new WebCommandInitializer(finder, switchMechanism0, selector);
     }
 
     @Test

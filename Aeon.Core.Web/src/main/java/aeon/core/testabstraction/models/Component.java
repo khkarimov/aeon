@@ -16,7 +16,7 @@ public abstract class Component extends WebElement {
      * @param selector        The chosen element.
      * @param switchMechanism The Iterable of IBy.
      */
-    public Component(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Component(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
     }
 

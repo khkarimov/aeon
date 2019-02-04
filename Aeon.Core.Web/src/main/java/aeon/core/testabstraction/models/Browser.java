@@ -11,7 +11,6 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -292,6 +291,7 @@ public class Browser {
 
     /**
      * Function verifies that the window does not exist given a title as a string parameter.
+     *
      * @param windowTitle the title, as a string, to the test.
      */
     public void verifyWindowDoesNotExistByTitle(String windowTitle) {
@@ -300,6 +300,7 @@ public class Browser {
 
     /**
      * Function verifies that the window does not exist given a url as a string parameter.
+     *
      * @param url the url, as a string, to test by the function.
      */
     public void verifyWindowDoesNotExistByUrl(String url) {
@@ -316,6 +317,6 @@ public class Browser {
                 info,
                 new ClickAllElementsCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new ArrayList<>())));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()))));
     }
 }

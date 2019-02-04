@@ -15,15 +15,15 @@ import java.util.function.Consumer;
 public class WebCommandInitializer implements ICommandInitializer {
 
     private IWebControlFinder finder;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
 
     /**
      * Initialize a new instance of the {@link WebCommandInitializer} class.
      *
-     * @param finder The {@link IWebControlFinder} for the command initializer.
+     * @param finder          The {@link IWebControlFinder} for the command initializer.
      * @param switchMechanism The switch mechanism for the command initializer.
      */
-    public WebCommandInitializer(IWebControlFinder finder, Iterable<IByWeb> switchMechanism) {
+    public WebCommandInitializer(IWebControlFinder finder, IByWeb... switchMechanism) {
         this.finder = finder;
         this.switchMechanism = switchMechanism;
     }
@@ -31,9 +31,8 @@ public class WebCommandInitializer implements ICommandInitializer {
     /**
      * Finds the web element and gives the reference to the Parameter Object.
      *
-     * @param driver The framework abstraction facade.
+     * @param driver   The framework abstraction facade.
      * @param selector The selector for the Element.
-     *
      * @return The {@link Control} of the found element.
      */
     public final Control findElement(IDriver driver, aeon.core.common.interfaces.IBy selector) {
