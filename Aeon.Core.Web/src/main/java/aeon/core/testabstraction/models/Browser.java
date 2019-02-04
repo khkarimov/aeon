@@ -317,6 +317,6 @@ public class Browser {
                 info,
                 new ClickAllElementsCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()))));
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new IByWeb[0])));
     }
 }

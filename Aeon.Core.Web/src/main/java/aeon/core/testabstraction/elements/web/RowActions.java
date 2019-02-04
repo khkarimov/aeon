@@ -105,7 +105,7 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
         Class[] cArgs = new Class[3];
         cArgs[0] = AutomationInfo.class;
         cArgs[1] = IByWeb.class;
-        cArgs[2] = Iterable.class;
+        cArgs[2] = IByWeb[].class;
 
         try {
             return (K) classToLoad.getDeclaredConstructor(cArgs).newInstance(automationInfo, updatedSelector, switchMechanism);
