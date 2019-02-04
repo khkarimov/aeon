@@ -14,7 +14,7 @@ public class MaterialTableContainer extends TableContainer<MaterialTable> {
      *
      * @param automationInfo The automation info object to use.
      * @param selector       The selector that identifies the table.
-     * @param materialTable  The corresponding TableContainer Actions object.
+     * @param materialTable  The corresponding MaterialTable object.
      */
     public MaterialTableContainer(AutomationInfo automationInfo, IByWeb selector, MaterialTable materialTable) {
         super(automationInfo, selector, materialTable);

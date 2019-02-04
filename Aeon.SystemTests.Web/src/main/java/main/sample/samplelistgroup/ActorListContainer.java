@@ -14,7 +14,7 @@ public class ActorListContainer extends ListContainer<ActorList> {
      *
      * @param automationInfo The automation info object to use.
      * @param selector       The selector that identifies the list group.
-     * @param actor          The corresponding ActorList object.
+     * @param actor          The corresponding Actor object.
      */
     public ActorListContainer(AutomationInfo automationInfo, IByWeb selector, ActorList actor) {
         super(automationInfo, selector, actor);

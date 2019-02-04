@@ -15,7 +15,7 @@ public class EmployeeTableContainer extends TableContainer<EmployeeTable> {
      * @param automationInfo  The automation info object to use.
      * @param selector        The selector that identifies the table.
      * @param switchMechanism The switch mechanism for the web element.
-     * @param employeeTable   The corresponding Grid Headers object.
+     * @param employeeTable   The corresponding EmployeeTable object.
      */
     public EmployeeTableContainer(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, EmployeeTable employeeTable) {
         super(automationInfo, selector, switchMechanism, employeeTable);
