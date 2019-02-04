@@ -6,7 +6,7 @@ import aeon.core.testabstraction.elements.web.*;
 import aeon.core.testabstraction.models.Page;
 import main.sample.samplegrid.MaterialTable;
 import main.sample.samplegrid.MaterialTableContainer;
-import main.sample.samplelistgroup.Actor;
+import main.sample.samplelistgroup.ActorList;
 import main.sample.samplelistgroup.ActorListContainer;
 
 /**
@@ -95,6 +95,6 @@ public class VTeamSamplePage extends Page {
         materialTableContainer = new MaterialTableContainer(info, gridSelector, new MaterialTable());
         divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));
         bodyTag = new Label(info, By.cssSelector("label[for='sample5']"));
-        actorListContainer = new ActorListContainer(info, By.cssSelector(".demo-list-three"), new Actor());
+        actorListContainer = new ActorListContainer(info, By.cssSelector(".demo-list-three"), new ActorList());
     }
 }
