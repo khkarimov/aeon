@@ -5,8 +5,8 @@ import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.TextBox;
 import aeon.core.testabstraction.models.Page;
+import main.ultipro.myemployeesgrid.EmployeeTable;
 import main.ultipro.myemployeesgrid.EmployeeTableContainer;
-import main.ultipro.myemployeesgrid.MyEmployeesGrid;
 
 
 /**
@@ -16,7 +16,7 @@ public class MyEmployeesPage extends Page {
 
     public Button addEmployeeButton;
     public TextBox employeeSearchBox;
-    public MyEmployeesGrid myGrid;
+    public EmployeeTableContainer myGrid;
     public Button searchButton;
 
     /**
@@ -25,9 +25,16 @@ public class MyEmployeesPage extends Page {
      * @param automationInfo The automation info object to use.
      */
     public MyEmployeesPage(AutomationInfo automationInfo) {
-        addEmployeeButton = new Button(automationInfo, By.cssSelector("#ctl00_btnAdd"), By.cssSelector("iframe[id*=ContentFrame]"));
-        employeeSearchBox = new TextBox(automationInfo, By.cssSelector("#GridView1_TextEntryFilterControlInputBox_0"), By.cssSelector("iframe[id*=ContentFrame]"));
-        myGrid = new MyEmployeesGrid(automationInfo, By.cssSelector("#ctl00_Content_GridView1"), new EmployeeTableContainer(), By.cssSelector("iframe[id*=ContentFrame]"));
-        searchButton = new Button(automationInfo, By.cssSelector("#GridView1_filterButton"), By.cssSelector("iframe[id*=ContentFrame]"));
+        addEmployeeButton = new Button(automationInfo, By.cssSelector("#ctl00_btnAdd"), getSwitchForContentFrame());
+        employeeSearchBox = new TextBox(automationInfo, By.cssSelector("#GridView1_TextEntryFilterControlInputBox_0"), getSwitchForContentFrame());
+        myGrid = new EmployeeTableContainer(automationInfo, By.cssSelector("#ctl00_Content_GridView1"), getSwitchForContentFrame(), new EmployeeTable());
+        searchButton = new Button(automationInfo, By.cssSelector("#GridView1_filterButton"), getSwitchForContentFrame());
+    }
+
+    //Since all the elements on this page are in the content frame
+    private ArrayList<IByWeb> getSwitchForContentFrame() {
+        ArrayList<IByWeb> switchMechanism = new ArrayList<>();
+        switchMechanism.add(By.cssSelector("iframe[id*=ContentFrame]"));
+        return switchMechanism;
     }
 }

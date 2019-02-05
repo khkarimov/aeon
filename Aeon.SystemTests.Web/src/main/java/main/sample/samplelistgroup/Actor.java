@@ -1,39 +1,27 @@
 package main.sample.samplelistgroup;
 
-import aeon.core.testabstraction.elements.web.ComponentList;
+import aeon.core.command.execution.AutomationInfo;
+import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.testabstraction.elements.web.Label;
+import aeon.core.testabstraction.models.Component;
 
 /**
- * Class for finding list group items based on values of list group item elements.
+ * Models the elements of an item of the list component.
  */
-public class Actor extends ComponentList<Actor, MyComponent> {
+public class Actor extends Component {
+    public Label name;
+    public Label description;
 
     /**
      * Constructor.
-     */
-    public Actor() {
-        super(Actor.class, MyComponent.class);
-
-        // The element that defines an item in the list group.
-        this.rowSelector = "li";
-    }
-
-    /**
-     * Find a list group item based on a certain value in the "Name" element.
      *
-     * @param value The value to look for in the "Name" element.
-     * @return An instance of the {@link Actor} to support chaining and filtering by multiple elements.
+     * @param info            The automation info object to use.
+     * @param selector        The selector that identifies the item of the list group.
+     * @param switchMechanism The switchMechanism to use.
      */
-    public Actor name(String value) {
-        return findRow(value, "span.list-group-name");
-    }
-
-    /**
-     * Find a list group item based on a certain value in the "Description" element.
-     *
-     * @param value The value to look for in the "Description" element.
-     * @return An instance of the {@link Actor} to support chaining and filtering by multiple elements.
-     */
-    public Actor description(String value) {
-        return findRow(value, "span.mdl-list__item-text-body");
+    public Actor(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+        super(info, selector, switchMechanism);
+        name = new Label(info, selector.toJQuery().find("span.list-group-name"));
+        description = new Label(info, selector.toJQuery().find("span.mdl-list__item-text-body"));
     }
 }
