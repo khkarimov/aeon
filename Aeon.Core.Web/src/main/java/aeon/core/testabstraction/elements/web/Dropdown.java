@@ -9,35 +9,35 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 
 /**
- * Model class for select elements.
+ * Model class for dropdown elements.
  */
-public class Select extends WebElement {
+public class Dropdown extends WebElement {
 
     private AutomationInfo info;
     private IByWeb selector;
     private Iterable<IByWeb> switchMechanism;
 
     /**
-     * Initializes a new instance of the {@link Select} class.
+     * Initializes a new instance of the {@link Dropdown} class.
      *
-     * @param info The AutomationInfo.
+     * @param info     The AutomationInfo.
      * @param selector IBy selector that will identify the element.
      */
-    public Select(AutomationInfo info, IByWeb selector) {
+    public Dropdown(AutomationInfo info, IByWeb selector) {
         super(info, selector);
         this.info = info;
         this.selector = selector;
     }
 
     /**
-     * Initializes a new instance of the {@link Select} class.
+     * Initializes a new instance of the {@link Dropdown} class.
      * with a switch mechanism.
      *
-     * @param info The AutomationInfo.
-     * @param selector IBY selector that will identify the element.
+     * @param info            The AutomationInfo.
+     * @param selector        IBY selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public Select(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Dropdown(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;
@@ -45,11 +45,11 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that the select's optgroup has all options.
+     * Asserts that the dropdown's optgroup has all options.
      *
-     * @param options   The options that the select should have, either their values or texts.
-     * @param optgroup  The label of the option group that will be searched instead of the entire select.
-     * @param select    The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
+     * @param options  The options that the dropdown should have, either their values or texts.
+     * @param optgroup The label of the option group that will be searched instead of the entire dropdown.
+     * @param select   The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public void hasOptions(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
@@ -59,10 +59,10 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts that the select has all specified options.
+     * Asserts that the dropdown has all specified options.
      *
-     * @param options   The options that the select should have, either their values or texts.
-     * @param select    The way the options will be searched
+     * @param options The options that the dropdown should have, either their values or texts.
+     * @param select  The way the options will be searched
      */
     public void hasOptions(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
@@ -74,9 +74,9 @@ public class Select extends WebElement {
     /**
      * Asserts that all options in optgroup are in order.
      *
-     * @param options     The options that the option group should have, in the same descending order as they appear in the array.
-     * @param optgroup    The label of the option group that will be searched.
-     * @param select      The way the options will be searched
+     * @param options  The options that the option group should have, in the same descending order as they appear in the array.
+     * @param optgroup The label of the option group that will be searched.
+     * @param select   The way the options will be searched
      */
     public void hasOptionsInOrder(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
@@ -88,8 +88,8 @@ public class Select extends WebElement {
     /**
      * Asserts that all options are in order.
      *
-     * @param options   The options that the select should have, in the same descending order as they appear in the array.
-     * @param select    The way the options will be searched
+     * @param options The options that the dropdown should have, in the same descending order as they appear in the array.
+     * @param select  The way the options will be searched
      */
     public void hasOptionsInOrder(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
@@ -101,9 +101,9 @@ public class Select extends WebElement {
     /**
      * Asserts that there are no options of type WebSelectOption in optgroup.
      *
-     * @param options   The options that the select should not have, either their values or texts.
-     * @param optgroup  The label of the option group that will be searched instead of the entire select.
-     * @param select    The way the options will be searched
+     * @param options  The options that the dropdown should not have, either their values or texts.
+     * @param optgroup The label of the option group that will be searched instead of the entire dropdown.
+     * @param select   The way the options will be searched
      */
     public void doesNotHaveOptions(String[] options, String optgroup, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
@@ -115,8 +115,8 @@ public class Select extends WebElement {
     /**
      * Asserts that there are no options of type WebSelectOption.
      *
-     * @param options   The options that the select should not have, either their values or texts.
-     * @param select    The way the options will be searched
+     * @param options The options that the dropdown should not have, either their values or texts.
+     * @param select  The way the options will be searched
      */
     public void doesNotHaveOptions(String[] options, WebSelectOption select) {
         info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
@@ -128,8 +128,8 @@ public class Select extends WebElement {
     /**
      * Asserts that there are optnumber number of options in optgroup.
      *
-     * @param optnumber    The number of options that the option group should have.
-     * @param optgroup     The visible text of the option group.
+     * @param optnumber The number of options that the option group should have.
+     * @param optgroup  The visible text of the option group.
      */
     public void hasNumberOfOptions(int optnumber, String optgroup) {
         info.getCommandExecutionFacade().execute(info, new HasNumberOfOptionsCommand(
@@ -153,8 +153,8 @@ public class Select extends WebElement {
     /**
      * Asserts that all options are in order based on comparisonType specification.
      *
-     * @param comparisonType        The way that all the options in the select element will be compared.
-     * @param optgroup              The optional option group that would be searched in isolation instead of the entire select.
+     * @param comparisonType The way that all the options in the dropdown element will be compared.
+     * @param optgroup       The optional option group that would be searched in isolation instead of the entire dropdown.
      */
     public void hasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
         info.getCommandExecutionFacade().execute(info,
@@ -166,7 +166,7 @@ public class Select extends WebElement {
     /**
      * Asserts that all options are in order based on comparisonType specification.
      *
-     * @param comparisonType The way that all the options in the select element will be compared.
+     * @param comparisonType The way that all the options in the dropdown element will be compared.
      */
     public void hasAllOptionsInOrder(CompareType comparisonType) {
         info.getCommandExecutionFacade().execute(info,
@@ -179,8 +179,8 @@ public class Select extends WebElement {
     /**
      * Sets select option to value.
      *
-     * @param selectOption  Option to be set
-     * @param value         New Value
+     * @param selectOption Option to be set
+     * @param value        New Value
      */
     public void set(WebSelectOption selectOption, String value) {
         info.getCommandExecutionFacade().execute(info, new SetCommand(
@@ -208,8 +208,8 @@ public class Select extends WebElement {
     /**
      * Compares value and default attribute and asserts that they are alike.
      *
-     * @param value              The value the attribute should have.
-     * @param attribute          The attribute to be compared.
+     * @param value     The value the attribute should have.
+     * @param attribute The attribute to be compared.
      */
     @Override
     public void isLike(String value, String attribute) {
@@ -239,8 +239,8 @@ public class Select extends WebElement {
     /**
      * Compares value and attribute and asserts that they are not alike.
      *
-     * @param value              The value the attribute should have
-     * @param attribute          The attribute to be compared.
+     * @param value     The value the attribute should have
+     * @param attribute The attribute to be compared.
      */
     @Override
     public void isNotLike(String value, String attribute) {
@@ -253,7 +253,7 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts the text of the Select element's selected option.
+     * Asserts the text of the Dropdown element's selected option.
      *
      * @param value The expected value of the selected option's text.
      */
@@ -268,8 +268,8 @@ public class Select extends WebElement {
     }
 
     /**
-     * Asserts the value of the Select element's attribute. However, if the attribute being
-     * checked is "VALUE" then Select element's selected option value will be checked.
+     * Asserts the value of the Dropdown element's attribute. However, if the attribute being
+     * checked is "VALUE" then Dropdown element's selected option value will be checked.
      *
      * @param value     The expected value of the attribute.
      * @param attribute The attribute to check.

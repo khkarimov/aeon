@@ -11,11 +11,11 @@ import aeon.core.common.web.WebSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
@@ -94,10 +94,10 @@ public interface IWebAdapter extends IAdapter {
     Collection<WebControl> findElements(IBy findBy);
 
     /**
-     * Finds the first Select Element using the given mechanism.
+     * Finds the first Dropdown Element using the given mechanism.
      *
      * @param findBy The locating mechanism to use.
-     * @return The first matching Select Element on the current product.
+     * @return The first matching Dropdown Element on the current product.
      * @throws IllegalArgumentException                 If FindBy is null.
      * @throws NoSuchElementException                   If there is no such element.
      * @throws ScriptReturnValueNotHtmlElementException If the JavaScript did not return an HTML element.
@@ -390,7 +390,7 @@ public interface IWebAdapter extends IAdapter {
     void clearElement(WebControl element);
 
     /**
-     * Choose a Select Element by its Value.
+     * Choose a Dropdown Element by its Value.
      *
      * @param element The element to be chosen by value.
      * @param value   The value to search for.
@@ -398,7 +398,7 @@ public interface IWebAdapter extends IAdapter {
     void chooseSelectElementByValue(WebControl element, String value);
 
     /**
-     * Choose a Select Element by its Text.
+     * Choose a Dropdown Element by its Text.
      *
      * @param element The element to be chosen by value.
      * @param value   The value to search for.
@@ -518,18 +518,18 @@ public interface IWebAdapter extends IAdapter {
     void notExists(WebControl element);
 
     /**
-     * Asserts that a select element posseses all of the elements passed to it. It can optionally be passed an option group that if non-null will be searched instead of the entire
+     * Asserts that a select element possesses all of the elements passed to it. It can optionally be passed an option group that if non-null will be searched instead of the entire
      * select tag. Options will be searched by either their value or their visible text.
      *
      * @param element  The select element.
-     * @param options  The options that the element should posses.
+     * @param options  The options that the element should possess.
      * @param optgroup The optional option group that which will be searched.
      * @param select   The method by which the options will be searched either by value or by text.
      */
     void elementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select);
 
     /**
-     * Asserts that a select element does not posses any of the options passed. Can optionally be passed an option group that if non-null will be searched instead of the entire
+     * Asserts that a select element does not possess any of the options passed. Can optionally be passed an option group that if non-null will be searched instead of the entire
      * select tag. Options will be searched for either by their value or their visible text.
      *
      * @param element  The select element.
@@ -621,7 +621,7 @@ public interface IWebAdapter extends IAdapter {
      * @param element   The web control whose children are to be searched.
      * @param messages  The strings to be compared to.
      * @param selector  The selectors that the children will be matched to.
-     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param option    Whether the children's visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
     void has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
@@ -633,29 +633,29 @@ public interface IWebAdapter extends IAdapter {
      * @param element   The web control whose children are to be searched.
      * @param messages  The strings to be compared to.
      * @param selector  The selectors that the children will be matched to.
-     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param option    Whether the children's visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
     void hasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
-     * Asserts that an elements children do not posses a text.
+     * Asserts that an elements children do not possess a text.
      *
      * @param element   The web element to be searched.
-     * @param messages  The text that the chilren should not posses.
+     * @param messages  The text that the children should not possess.
      * @param selector  The selector for the children to be searched.
-     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param option    Whether the children's visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
     void doesNotHave(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
-     * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
+     * Asserts that an elements children do not possess a text. Comparisons made ignoring case and whitespace.
      *
      * @param element   The web element to be searched.
-     * @param messages  The text that the chilren should not posses.
+     * @param messages  The text that the children should not possess.
      * @param selector  The selector for the children to be searched.
-     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param option    Whether the children's visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
     void doesNotHaveLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
@@ -737,13 +737,13 @@ public interface IWebAdapter extends IAdapter {
      * Obtains a date from an elements attribute and compares it with an expected date. has a
      * Margin of error. The date must be in the ISO-8601 standard.
      *
-     * @param element       The element that posseses the date.
+     * @param element       The element that possesses the date.
      * @param attributeName The name of the attribute that has the date.
-     * @param expected      The expected date that the attribute should posses.
-     * @param delta         The margin of error that the date can be within. Cannot posses any weeks, months or years due to
+     * @param expected      The expected date that the attribute should possess.
+     * @param delta         The margin of error that the date can be within. Cannot possess any weeks, months or years due to
      *                      them having variable lengths.
      */
-    void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta);
+    void datesApproximatelyEqual(WebControl element, String attributeName, LocalDate expected, Period delta);
 
     /**
      * Returns the enumerable BrowserType representing the current browser.
@@ -771,10 +771,10 @@ public interface IWebAdapter extends IAdapter {
     /**
      * Asserts a window with a given title does not exists. A globally unique identifier associated with the call.
      *
-     * @param windowTitile The title of the window to search for.
+     * @param windowTitle The title of the window to search for.
      * @return The title of the window
      */
-    String windowDoesNotExistByTitle(String windowTitile);
+    String windowDoesNotExistByTitle(String windowTitle);
 
     /**
      * Asserts a window with a given URL does not exists. A globally unique identifier associated with the call.

@@ -1,13 +1,16 @@
 package tests;
 
-import aeon.core.common.exceptions.*;
+import aeon.core.common.exceptions.NoSuchElementsException;
+import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
+import aeon.core.common.exceptions.ValuesAreNotEqualException;
 import aeon.core.common.web.BrowserSize;
 import categories.EdgeNotSupported;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-public class BrowserWindowTests extends SampleBaseTest{
+public class BrowserWindowTests extends SampleBaseTest {
 
     @Test
     public void testVerifyTitle() {
@@ -25,6 +28,7 @@ public class BrowserWindowTests extends SampleBaseTest{
         thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.verifyURL("http://www.espne.com/");
     }
+
     @Test
     public void testVerifyWindowDoesNotExistByUrlVerifyWindowDoesNotExistByTitle() {
         product.browser.verifyWindowDoesNotExistByTitle("fakeTitle");
@@ -32,15 +36,15 @@ public class BrowserWindowTests extends SampleBaseTest{
     }
 
     @Test
-    public void testGrids(){
-        product.startPage.myGrid.rowBy.index(2).checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
-        product.startPage.myGrid.rowBy.material("Laminate").quantity("9").getRow().unitPrice.is("$2.35");
-        product.startPage.myGrid.rowBy.material("Acrylic").getRow().exists();
+    public void testGrids() {
+        product.startPage.materialTableContainer.rowBy.index(2).checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Laminate").unitPrice("9").getRow().checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Laminate").quantity("9").getRow().checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Laminate").quantity("9").getRow().unitPrice.is("$2.35");
+        product.startPage.materialTableContainer.rowBy.material("Acrylic").getRow().exists();
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchElementsException.class));
-        product.startPage.myGrid.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
+        product.startPage.materialTableContainer.rowBy.material("Acrylic").quantity("9").getRow().checkBoxButton.click();
     }
 
     @Category({EdgeNotSupported.class})
@@ -48,15 +52,15 @@ public class BrowserWindowTests extends SampleBaseTest{
     public void testSwitchToMainWindow() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.verifyTitle("Google");
+        product.browser.switchToWindowByTitle("SonarQube");
+        product.browser.verifyTitle("SonarQube");
         product.browser.switchToMainWindow();
         product.browser.verifyTitle("Material Design Lite");
-        product.browser.switchToWindowByTitle("Google");
+        product.browser.switchToWindowByTitle("SonarQube");
         product.browser.close();
         product.browser.switchToMainWindow(true);
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
+        product.browser.switchToWindowByTitle("SonarQube");
 
         thrown.expect(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.switchToMainWindow(true);
@@ -67,8 +71,8 @@ public class BrowserWindowTests extends SampleBaseTest{
     public void testSwitchToWindowByTitle() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("Google");
-        product.browser.verifyTitle("Google");
+        product.browser.switchToWindowByTitle("SonarQube");
+        product.browser.verifyTitle("SonarQube");
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByTitle("Some Fake Title");
@@ -79,8 +83,8 @@ public class BrowserWindowTests extends SampleBaseTest{
     public void testSwitchToWindowByUrl() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByUrl("https://www.google.com");
-        product.browser.verifyTitle("Google");
+        product.browser.switchToWindowByUrl("https://sonar.ulti.io");
+        product.browser.verifyTitle("SonarQube");
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByUrl("www.fake.com");
@@ -100,4 +104,3 @@ public class BrowserWindowTests extends SampleBaseTest{
         product.browser.goForward();
     }
 }
- 

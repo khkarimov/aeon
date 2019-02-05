@@ -3,12 +3,12 @@ package aeon.core.common.helpers;
 import aeon.core.common.exceptions.ScriptExecutionException;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 /**
@@ -18,7 +18,6 @@ public class AjaxWaiter {
 
     private static Logger log = LoggerFactory.getLogger(AjaxWaiter.class);
     private IWebDriver webDriver;
-    private IClock clock;
     private Duration timeout;
 
     /**
@@ -30,7 +29,6 @@ public class AjaxWaiter {
      */
     public AjaxWaiter(IDriver driver, Duration timeout) {
         this.webDriver = (IWebDriver) driver;
-        this.clock = new Clock();
         this.timeout = timeout;
     }
 
@@ -75,7 +73,7 @@ public class AjaxWaiter {
      */
     public void waitForAsync() {
         long count;
-        DateTime end = clock.getUtcNow().withDurationAdded(timeout.toMillis(), 1);
+        LocalDateTime end = LocalDateTime.now().plus(timeout);
         do {
             try {
                 count = (long) webDriver.executeScript("return aeon.ajaxCounter;");
@@ -84,7 +82,7 @@ public class AjaxWaiter {
                 return;
             }
             Sleep.waitInternal();
-        } while (count != 0 && clock.getUtcNow().isBefore(end.toInstant()));
+        } while (count != 0 && LocalDateTime.now().isBefore(end));
     }
 
 

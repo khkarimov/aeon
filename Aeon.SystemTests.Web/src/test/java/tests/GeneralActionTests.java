@@ -7,16 +7,16 @@ import aeon.core.testabstraction.product.WebConfiguration;
 import categories.EdgeNotSupported;
 import categories.SafariNotSupported;
 import org.hamcrest.core.IsInstanceOf;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-public class GeneralActionTests extends SampleBaseTest{
+public class GeneralActionTests extends SampleBaseTest {
 
     @Category({EdgeNotSupported.class, SafariNotSupported.class})
     @Test
@@ -73,7 +73,7 @@ public class GeneralActionTests extends SampleBaseTest{
             private Date getNextYear() {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date(Long.parseLong("18000000")));
-                int yearsSinceEpoch = DateTime.now().getYear() - cal.get(Calendar.YEAR);
+                int yearsSinceEpoch = LocalDate.now().getYear() - cal.get(Calendar.YEAR);
                 cal.add(Calendar.YEAR, yearsSinceEpoch + 1);
                 return cal.getTime();
             }

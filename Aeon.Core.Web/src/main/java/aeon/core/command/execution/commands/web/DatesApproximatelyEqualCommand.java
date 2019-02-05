@@ -5,9 +5,9 @@ import aeon.core.common.Resources;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Locale;
 
 /**
@@ -17,7 +17,7 @@ import java.util.Locale;
 public class DatesApproximatelyEqualCommand extends WebControlCommand {
 
     private String attributeName;
-    private DateTime expectedDate;
+    private LocalDate expectedDate;
     private Period acceptableDelta;
 
     /**
@@ -29,12 +29,11 @@ public class DatesApproximatelyEqualCommand extends WebControlCommand {
      * @param expectedDate       The expected date.
      * @param acceptableDelta    The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
      */
-    public DatesApproximatelyEqualCommand(IByWeb selector, ICommandInitializer commandInitializer, String attributeName, DateTime expectedDate, Period acceptableDelta) {
+    public DatesApproximatelyEqualCommand(IByWeb selector, ICommandInitializer commandInitializer, String attributeName, LocalDate expectedDate, Period acceptableDelta) {
         super(String.format(Locale.getDefault(), Resources.getString("DatesApproximatelyEqualCommand_Info"), attributeName, selector, expectedDate, selector), selector, commandInitializer);
         this.attributeName = attributeName;
         this.expectedDate = expectedDate;
         this.acceptableDelta = acceptableDelta;
-        this.attributeName = attributeName;
     }
 
     /**

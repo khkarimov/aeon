@@ -86,11 +86,20 @@ public class WebConfiguration extends Configuration {
 
     @Override
     protected void loadModuleSettings() throws IOException {
-        try (InputStream in = WebConfiguration.class.getResourceAsStream("/aeon.core.properties")) {
+        try (InputStream in = getAeonCoreInputStream()) {
             properties.load(in);
         } catch (IOException e) {
             log.error("aeon.core.properties resource could not be read");
             throw e;
         }
+    }
+
+    /**
+     * Gets InputStream of aeon.core.properties.
+     *
+     * @return getResourceAsStream of "/aeon.core.properties" file
+     */
+    InputStream getAeonCoreInputStream() throws IOException {
+        return WebConfiguration.class.getResourceAsStream("/aeon.core.properties");
     }
 }
