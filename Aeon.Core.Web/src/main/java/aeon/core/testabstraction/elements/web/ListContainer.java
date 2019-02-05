@@ -33,7 +33,7 @@ public class ListContainer<T extends ComponentList> {
      * @param switchMechanism The switch mechanism for the web element.
      * @param rowBy           The {@link ComponentList} object to use for list container actions
      */
-    public ListContainer(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T rowBy) {
+    public ListContainer(AutomationInfo automationInfo, IByWeb selector, T rowBy, IByWeb... switchMechanism) {
         this.rowBy = rowBy;
 
         this.rowBy.setContext(automationInfo, selector, switchMechanism);

@@ -17,7 +17,7 @@ public class EmployeeTableContainer extends TableContainer<EmployeeTable> {
      * @param switchMechanism The switch mechanism for the web element.
      * @param employeeTable   The corresponding EmployeeTable object.
      */
-    public EmployeeTableContainer(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, EmployeeTable employeeTable) {
-        super(automationInfo, selector, switchMechanism, employeeTable);
+    public EmployeeTableContainer(AutomationInfo automationInfo, IByWeb selector, EmployeeTable employeeTable, IByWeb... switchMechanism) {
+        super(automationInfo, selector, employeeTable, switchMechanism);
     }
 }

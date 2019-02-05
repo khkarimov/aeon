@@ -35,7 +35,7 @@ public abstract class TableContainer<T extends Table> {
      * @param switchMechanism The switch mechanism for the web element.
      * @param employeeTable   The {@link Table} object to use for table actions
      */
-    public TableContainer(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T employeeTable) {
+    public TableContainer(AutomationInfo automationInfo, IByWeb selector, T employeeTable, IByWeb... switchMechanism) {
         this.rowBy = employeeTable;
 
         this.rowBy.setContext(automationInfo, selector, switchMechanism);
