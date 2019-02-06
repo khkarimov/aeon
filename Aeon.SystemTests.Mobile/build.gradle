@@ -1,3 +1,15 @@
+plugins {
+    id 'org.unbroken-dome.test-sets' version '2.1.1'
+}
+
+testSets {
+    systemTest
+}
+
+checkstyleSystemTest {
+    configFile = new File("$rootProject.projectDir/config/checkstyle-test-sources/checkstyle.xml")
+}
+
 compileTestJava.options.encoding = 'utf-8'
 
 artifactoryPublish.skip = true
@@ -12,7 +24,7 @@ dependencies {
     compile project(':Aeon.Core.Mobile')
 }
 
-test {
+systemTest {
     if (testConfiguration) {
         environment "AEON_CONFIG", "src/test/resources/" + testConfiguration + ".properties"
     }

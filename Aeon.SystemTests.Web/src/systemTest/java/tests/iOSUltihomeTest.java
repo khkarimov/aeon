@@ -10,7 +10,7 @@ import org.junit.experimental.categories.Category;
 import static aeon.core.testabstraction.product.Aeon.launch;
 
 @Category({IOSTests.class})
-public class IOSUltiHomeTest {
+public class IOSUltihomeTest {
     private static Sample product;
 
     @Before

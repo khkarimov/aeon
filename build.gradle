@@ -31,7 +31,7 @@ dependencies {
 }
 
 wrapper {
-    gradleVersion = '4.9'
+    gradleVersion = '4.10'
 }
 
 //Copy selenium plugin into SystemTests plugins folder
@@ -154,11 +154,11 @@ allprojects {
         }
     }
 
-    apply plugin: "com.jfrog.artifactory"
+    apply plugin: 'com.jfrog.artifactory'
     apply plugin: 'maven-publish'
     apply plugin: 'checkstyle'
     checkstyle {
-        toolVersion = "8.7"
+        toolVersion = '8.7'
     }
 
     checkstyleTest {
