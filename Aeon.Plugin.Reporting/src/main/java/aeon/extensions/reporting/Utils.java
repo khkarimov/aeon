@@ -30,7 +30,8 @@ public class Utils {
         try {
             ImageIO.write(image, "png", file);
         } catch (IOException e) {
-            throw new RuntimeException(String.format("Exception while saving '%s' image", file), e);
+            log.error("Error saving image");
+            return null;
         }
         return file;
     }
