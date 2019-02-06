@@ -1,23 +1,35 @@
 package aeon.extensions.reporting;
 
-import gui.ava.html.image.generator.HtmlImageGenerator;
+//import gui.ava.html.image.generator.HtmlImageGenerator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Utils {
 
     private static Logger log = LoggerFactory.getLogger(Utils.class);
 
-    public static File htmlToPngFile(String html, String filePath) {
+    public static File htmlToPngFile(String html, String filePath) throws Exception {
         log.trace("Converting HTML file to Png");
-        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+        //HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+        BufferedImage image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(800, 800);
+        Graphics graphics = image.createGraphics();
+        JEditorPane jep = new JEditorPane("text/html", html);
+        jep.setSize(800, 800);
+        jep.print(graphics);
         File file = new File(filePath);
         file.deleteOnExit();
         file.getParentFile().mkdirs();
-        imageGenerator.loadHtml(html);
-        imageGenerator.saveAsImage(file);
+        ImageIO.write(image, "png", file);
+        //imageGenerator.loadHtml(html);
+        //imageGenerator.saveAsImage(file);
 
         return file;
     }
