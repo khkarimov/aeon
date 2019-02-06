@@ -30,7 +30,7 @@ public class Utils {
         try {
             ImageIO.write(image, "png", file);
         } catch (IOException e) {
-            log.error("Error saving image");
+            log.error("Error saving image", e);
             return null;
         }
         return file;
