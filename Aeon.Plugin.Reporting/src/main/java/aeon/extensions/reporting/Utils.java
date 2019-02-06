@@ -1,7 +1,5 @@
 package aeon.extensions.reporting;
 
-//import gui.ava.html.image.generator.HtmlImageGenerator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
