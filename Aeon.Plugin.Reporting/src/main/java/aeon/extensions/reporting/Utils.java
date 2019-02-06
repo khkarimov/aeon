@@ -19,7 +19,6 @@ public class Utils {
 
     public static File htmlToPngFile(String html, String filePath) {
         log.trace("Converting HTML file to Png");
-        //HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
         BufferedImage image = GraphicsEnvironment.getLocalGraphicsEnvironment()
                 .getDefaultScreenDevice().getDefaultConfiguration()
                 .createCompatibleImage(800, 800);
@@ -30,8 +29,6 @@ public class Utils {
         File file = new File(filePath);
         file.deleteOnExit();
         file.getParentFile().mkdirs();
-        //imageGenerator.loadHtml(html);
-        //imageGenerator.saveAsImage(file);
         try {
             ImageIO.write(image, "png", file);
         } catch (IOException e) {
