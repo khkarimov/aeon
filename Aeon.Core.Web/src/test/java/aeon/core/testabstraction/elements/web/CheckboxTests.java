@@ -1,4 +1,4 @@
-package aeon.core.testabstraction.models.web;
+package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
