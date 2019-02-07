@@ -10,6 +10,7 @@ public class Tab extends WebElement {
 
     private AutomationInfo info;
     private IByWeb selector;
+    private Iterable<IByWeb> switchMechanism;
 
     /**
      * Creates a new instance of {@link Tab}.
