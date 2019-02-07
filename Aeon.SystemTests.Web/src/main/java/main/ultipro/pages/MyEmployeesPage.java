@@ -6,8 +6,8 @@ import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.elements.web.TextBox;
 import aeon.core.testabstraction.models.Page;
+import main.ultipro.myemployeesgrid.EmployeeTable;
 import main.ultipro.myemployeesgrid.EmployeeTableContainer;
-import main.ultipro.myemployeesgrid.MyEmployeesGrid;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class MyEmployeesPage extends Page {
 
     public Button addEmployeeButton;
     public TextBox employeeSearchBox;
-    public MyEmployeesGrid myGrid;
+    public EmployeeTableContainer myGrid;
     public Button searchButton;
 
     /**
@@ -30,7 +30,7 @@ public class MyEmployeesPage extends Page {
     public MyEmployeesPage(AutomationInfo automationInfo) {
         addEmployeeButton = new Button(automationInfo, By.cssSelector("#ctl00_btnAdd"), getSwitchForContentFrame());
         employeeSearchBox = new TextBox(automationInfo, By.cssSelector("#GridView1_TextEntryFilterControlInputBox_0"), getSwitchForContentFrame());
-        myGrid = new MyEmployeesGrid(automationInfo, By.cssSelector("#ctl00_Content_GridView1"), getSwitchForContentFrame(), new EmployeeTableContainer());
+        myGrid = new EmployeeTableContainer(automationInfo, By.cssSelector("#ctl00_Content_GridView1"), getSwitchForContentFrame(), new EmployeeTable());
         searchButton = new Button(automationInfo, By.cssSelector("#GridView1_filterButton"), getSwitchForContentFrame());
     }
 

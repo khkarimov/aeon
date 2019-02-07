@@ -1,6 +1,6 @@
 package aeon.platform.http.models;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 /**
  * Class to create a response body.
@@ -65,7 +65,11 @@ public class ResponseBody {
 
     @Override
     public String toString() {
-        JSONObject responseJson = new JSONObject(this);
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("sessionId", sessionId);
+        responseJson.put("success", success);
+        responseJson.put("data", data);
+        responseJson.put("failureMessage", failureMessage);
 
         return responseJson.toString();
     }
