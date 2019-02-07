@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class ComponentTests {
 
-    private class ComponentChild extends Component{
+    private class ComponentChild extends Component {
         public ComponentChild(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
             super(info, selector, switchMechanism);
         }
@@ -35,11 +35,11 @@ public class ComponentTests {
     private Component component;
 
     @Test
-    public void Component_callsSuper(){
+    public void Component_callsSuper() {
         // Arrange
 
         // Act
-        component = new ComponentChild(automationInfo,selector,switchMechanism);
+        component = new ComponentChild(automationInfo, selector, switchMechanism);
 
         // Assert
         assertTrue(component instanceof WebElement);
@@ -47,19 +47,14 @@ public class ComponentTests {
     }
 
     @Test
-    public void Component_nullSwitchMechanism_callsSuper(){
+    public void Component_nullSwitchMechanism_callsSuper() {
         // Arrange
 
         // Act
-        component = new ComponentChild(automationInfo,selector);
+        component = new ComponentChild(automationInfo, selector);
 
         // Assert
         assertTrue(component instanceof WebElement);
     }
-
-
-
-
-
-
+    
 }
