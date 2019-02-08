@@ -5,11 +5,16 @@ import aeon.extensions.reporting.ReportController;
 import aeon.extensions.reporting.ReportingConfiguration;
 import aeon.extensions.reporting.models.ReportDetails;
 import aeon.extensions.reporting.models.ScenarioDetails;
-import gui.ava.html.image.generator.HtmlImageGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Queue;
 
 /**
@@ -258,13 +263,22 @@ public class ImageReport {
 
     private File htmlToPngFile(String html, String filePath) {
         log.trace("Converting HTML file to Png");
-        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+        BufferedImage image = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice().getDefaultConfiguration()
+                .createCompatibleImage(800, 800);
+        Graphics graphics = image.createGraphics();
+        JEditorPane jep = new JEditorPane("text/html", html);
+        jep.setSize(800, 800);
+        jep.print(graphics);
         File file = new File(filePath);
         file.deleteOnExit();
         file.getParentFile().mkdirs();
-        imageGenerator.loadHtml(html);
-        imageGenerator.saveAsImage(file);
-
+        try {
+            ImageIO.write(image, "png", file);
+        } catch (IOException e) {
+            log.error("Error saving image", e);
+            return null;
+        }
         return file;
     }
 
