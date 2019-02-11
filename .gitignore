@@ -76,6 +76,7 @@ log/
 */plugins
 plugins/
 */lib
+!Aeon.SystemTests.Web/lib
 .DS_Store
 *~
 
