@@ -130,7 +130,7 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
      */
     private ScenarioDetails getCurrentScenarioBucket(boolean create) {
 
-        if (create) {
+        if (create || currentScenario == null) {
             this.currentScenario = new ScenarioDetails();
             this.currentScenario.setThreadId(Thread.currentThread().getId());
 
