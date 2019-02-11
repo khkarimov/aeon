@@ -21,8 +21,8 @@ public class SampleUltiHomePage extends Page {
      * @param info The automation info object to use.
      */
     public SampleUltiHomePage(AutomationInfo info) {
-        userField = new TextBox(info, By.cssSelector("#username"));
+        userField = new TextBox(info, By.cssSelector("#userName"));
         passField = new TextBox(info, By.cssSelector("#password"));
-        loginButton = new Button(info, By.cssSelector("body > div > div.ping-body-container > div > form > div.ping-buttons > a"));
+        loginButton = new Button(info, By.cssSelector("#login"));
     }
 }
