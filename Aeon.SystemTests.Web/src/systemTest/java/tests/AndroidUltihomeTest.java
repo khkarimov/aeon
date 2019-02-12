@@ -16,7 +16,7 @@ public class AndroidUltihomeTest {
     @Before
     public void beforeTests() {
         product = launch(Sample.class);
-        product.browser.goToUrl("https://ultihome.ultimatesoftware.com");
+        product.browser.goToUrl("https://my.ultimatesoftware.com/mobile");
     }
 
     @After
@@ -25,7 +25,7 @@ public class AndroidUltihomeTest {
     }
 
     @Test
-    public void ultihomeTest(){
+    public void ultihomeTest() {
         product.ultihome.userField.set("test username");
         product.ultihome.passField.set("test password");
         product.ultihome.loginButton.click();

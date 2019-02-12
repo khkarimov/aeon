@@ -34,11 +34,11 @@ public class RefreshCommandTests {
         refreshCommand.driverDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).refresh();
+        verify(driver, times(1)).refresh();
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> refreshCommand.driverDelegate(null));
     }

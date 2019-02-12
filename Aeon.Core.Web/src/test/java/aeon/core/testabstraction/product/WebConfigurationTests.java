@@ -5,22 +5,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class WebConfigurationTests {
+
+    @Mock
+    InputStream inputStream;
 
     private WebConfiguration webConfiguration;
 
@@ -76,8 +81,8 @@ class WebConfigurationTests {
         webConfiguration.loadModuleSettings();
 
         // Assert
-        assertEquals(true, webConfiguration.getBoolean("aeon.wait_for_ajax_responses", true));
-        assertEquals(false, webConfiguration.getBoolean("aeon.scroll_element_into_view", false));
+        assertTrue(webConfiguration.getBoolean("aeon.wait_for_ajax_responses", true));
+        assertFalse(webConfiguration.getBoolean("aeon.scroll_element_into_view", false));
         assertEquals("20", webConfiguration.getString("aeon.timeout.ajax", "20"));
     }
 
@@ -86,10 +91,11 @@ class WebConfigurationTests {
 
         // Arrange
         WebConfiguration spyConfig = org.mockito.Mockito.spy(webConfiguration);
-        when(spyConfig.getAeonCoreInputStream()).thenThrow(IOException.class);
+        when(spyConfig.getAeonCoreInputStream()).thenReturn(inputStream);
+        when(inputStream.read(any())).thenThrow(IOException.class);
 
         // Act
-        Executable executable = () -> spyConfig.loadModuleSettings();
+        Executable executable = spyConfig::loadModuleSettings;
 
         // Assert
         assertThrows(IOException.class, executable);

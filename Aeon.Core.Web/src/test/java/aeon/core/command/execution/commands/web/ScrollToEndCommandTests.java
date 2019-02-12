@@ -22,7 +22,9 @@ public class ScrollToEndCommandTests {
     private IWebDriver driver;
 
     @BeforeEach
-    public void setUp() { scrollToEndCommand = new ScrollToEndCommand(); }
+    public void setUp() {
+        scrollToEndCommand = new ScrollToEndCommand();
+    }
 
     @Test
     public void commandDelegateScrollToEndCommand() {
@@ -32,11 +34,11 @@ public class ScrollToEndCommandTests {
         scrollToEndCommand.driverDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).scrollToEnd();
+        verify(driver, times(1)).scrollToEnd();
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> scrollToEndCommand.driverDelegate(null));
     }

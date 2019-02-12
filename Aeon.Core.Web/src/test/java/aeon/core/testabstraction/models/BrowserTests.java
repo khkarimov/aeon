@@ -2,7 +2,6 @@ package aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
-import aeon.core.command.execution.commands.web.CloseCommand;
 import aeon.core.command.execution.commands.CommandWithReturn;
 import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.web.*;
@@ -170,7 +169,6 @@ public class BrowserTests {
     @Test
     public void sendKeysToAlert_ValidString_CallsExecuteWithCorrectKeys() {
         browserObject.sendKeysToAlert("Go Gators!");
-        //TODO: Verify whether the correct keys are passed along to SendKeysToAlert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(SendKeysToAlertCommand.class));
     }
 

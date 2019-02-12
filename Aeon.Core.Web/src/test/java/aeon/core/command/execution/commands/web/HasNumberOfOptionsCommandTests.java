@@ -30,7 +30,7 @@ public class HasNumberOfOptionsCommandTests {
     private WebControl control;
 
     @Test
-    public void HasAllOptionsInOrderCommandTestsInOrder(){
+    public void HasAllOptionsInOrderCommandTestsInOrder() {
         // Arrange
         String optGroup = "Test";
         HasNumberOfOptionsCommand hasNumberOfOptionsCommand = new HasNumberOfOptionsCommand(selector, initializer, number, optGroup);
@@ -43,7 +43,7 @@ public class HasNumberOfOptionsCommandTests {
     }
 
     @Test
-    public void HasAllOptionsInOrderCommandTestsInOrderSecondConstructor(){
+    public void HasAllOptionsInOrderCommandTestsInOrderSecondConstructor() {
         // Arrange
         HasNumberOfOptionsCommand hasNumberOfOptionsCommandSecond = new HasNumberOfOptionsCommand(selector, initializer, number);
 

@@ -15,18 +15,20 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class GetCookieCommandTests {
-    private  GetCookieCommand getCookieCommandObject;
+    private GetCookieCommand getCookieCommandObject;
     private String cookie;
 
     @Mock
     private IWebDriver driver;
 
     @BeforeEach
-    public void setup() { getCookieCommandObject = new GetCookieCommand(cookie); }
+    public void setup() {
+        getCookieCommandObject = new GetCookieCommand(cookie);
+    }
 
 
     @Test
-    public void commandDelegateGetCookieCommand(){
+    public void commandDelegateGetCookieCommand() {
         //Arrange
 
         // Act

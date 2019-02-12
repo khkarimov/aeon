@@ -10,13 +10,13 @@ import org.junit.experimental.categories.Category;
 import static aeon.core.testabstraction.product.Aeon.launch;
 
 @Category({IOSTests.class})
-public class iOSUltihomeTest {
+public class IOSUltihomeTests {
     private static Sample product;
 
     @Before
     public void beforeTests() {
         product = launch(Sample.class);
-        product.browser.goToUrl("http://ultihome.ultimatesoftware.com");
+        product.browser.goToUrl("https://my.ultimatesoftware.com/mobile");
     }
 
     @After
