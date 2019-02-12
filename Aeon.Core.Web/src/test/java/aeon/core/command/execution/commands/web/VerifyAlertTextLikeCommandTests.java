@@ -29,7 +29,7 @@ public class VerifyAlertTextLikeCommandTests {
     }
 
     @Test
-    public void commandDelegateAlertTextLikeCommandTrue(){
+    public void commandDelegateAlertTextLikeCommandTrue() {
         //Arrange
 
         //Act
@@ -40,7 +40,7 @@ public class VerifyAlertTextLikeCommandTests {
     }
 
     @Test
-    public void testDriverDelegateNullDriver(){
+    public void testDriverDelegateNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> verifyAlertTextLikeCommand.driverDelegate(null));
     }

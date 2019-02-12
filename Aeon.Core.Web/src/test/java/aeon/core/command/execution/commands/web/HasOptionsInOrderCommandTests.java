@@ -15,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -53,7 +51,7 @@ public class HasOptionsInOrderCommandTests {
     }
 
     @Test
-    public void hasOptionsCommandFirstConstructor(){
+    public void hasOptionsCommandFirstConstructor() {
         // Arrange
         HasOptionsInOrderCommand commandFirst = new HasOptionsInOrderCommand(selector, commandInitializer, options, WebSelectOption.Text);
 

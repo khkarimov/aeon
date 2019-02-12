@@ -62,6 +62,7 @@ public class BaseConfiguration implements IConfiguration {
      * @throws IOException Is thrown if a settings file could not be found or read.
      */
     protected void loadModuleSettings() throws IOException {
+        // Module settings can be added in child classes.
     }
 
     /**
@@ -71,7 +72,7 @@ public class BaseConfiguration implements IConfiguration {
      * @return InputStream of loaded properties.
      * @throws FileNotFoundException If issue finding config file.
      */
-    public InputStream getConfigurationProperties() throws FileNotFoundException {
+    private InputStream getConfigurationProperties() throws FileNotFoundException {
         String envValue = getEnvironmentValue("AEON_CONFIG");
         if (envValue == null) {
             return getDefaultConfigInputStream();
@@ -91,7 +92,7 @@ public class BaseConfiguration implements IConfiguration {
      * @return InputStream of config file.
      * @throws FileNotFoundException If issue finding config file.
      */
-    public InputStream getRelativeAeonConfigProperties(Path configPath) throws FileNotFoundException {
+    InputStream getRelativeAeonConfigProperties(Path configPath) throws FileNotFoundException {
         Path absolute = Paths.get(".").toAbsolutePath().getParent();
         configPath = Paths.get(absolute.toString(), configPath.toString());
         return new FileInputStream(configPath.toFile());
@@ -122,16 +123,23 @@ public class BaseConfiguration implements IConfiguration {
             }
         }
 
-        Enumeration e = properties.propertyNames();
+        Enumeration propertyNames = properties.propertyNames();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("These are the properties values currently in use for ");
         stringBuilder.append(getClass().getSimpleName());
         stringBuilder.append(":\n");
-        while (e.hasMoreElements()) {
-            String key = (String) e.nextElement();
-            stringBuilder.append(String.format("%1$s = %2$s%n", key, properties.getProperty(key)));
+        while (propertyNames.hasMoreElements()) {
+            String key = (String) propertyNames.nextElement();
+
+            if (key.contains("password") || key.contains("token")) {
+                stringBuilder.append(String.format("%1$s = *****%n", key));
+            } else {
+                stringBuilder.append(String.format("%1$s = %2$s%n", key, properties.getProperty(key)));
+            }
         }
-        log.info(stringBuilder.toString());
+
+        String propertyValues = stringBuilder.toString();
+        log.info(propertyValues);
     }
 
     /**
@@ -179,6 +187,7 @@ public class BaseConfiguration implements IConfiguration {
      * @throws IOException If inputs are incorrect.
      */
     protected void loadPluginSettings() throws IOException {
+        // Plugin settings can be added in child classes.
     }
 
     /**

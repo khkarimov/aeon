@@ -1,7 +1,7 @@
 package aeon.extensions.reporting.services;
 
+import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
-import aeon.extensions.reporting.ReportingPlugin;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -20,14 +20,34 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service for publishing reports via a Slack bot on Slack.
+ */
 public class SlackBotService {
 
     private static Logger log = LoggerFactory.getLogger(SlackBotService.class);
-    private static String slackChatUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_CHAT_URL, "");
-    private static String slackBotToken = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "");
-    private static String slackUploadUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, "");
+    private String slackChatUrl;
+    private String slackBotToken;
+    private String slackUploadUrl;
 
-    public static void publishNotificationToSlack(String channel, String message) {
+    /**
+     * Sets the Reporting plugin and Aeon configuration.
+     *
+     * @param configuration The Reporting plugin configuration object.
+     */
+    public void setConfiguration(IConfiguration configuration) {
+        this.slackChatUrl = configuration.getString(ReportingConfiguration.Keys.SLACK_CHAT_URL, "");
+        this.slackBotToken = configuration.getString(ReportingConfiguration.Keys.SLACK_BOT_TOKEN, "");
+        this.slackUploadUrl = configuration.getString(ReportingConfiguration.Keys.SLACK_UPLOAD_URL, "");
+    }
+
+    /**
+     * Sends a notification to the given channel.
+     *
+     * @param channel The channel to send the message to.
+     * @param message The message to send to the given channel.
+     */
+    public void publishNotificationToSlack(String channel, String message) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
 
             HttpPost httpPost = new HttpPost(slackChatUrl);
@@ -44,7 +64,13 @@ public class SlackBotService {
         }
     }
 
-    public static void uploadReportToSlack(File fileName, String channel) {
+    /**
+     * Uploads a report in the form of an image to the given Slack channel.
+     *
+     * @param fileName The name and path of the image to upload.
+     * @param channel  The channel to upload the image to.
+     */
+    public void uploadReportToSlack(File fileName, String channel) {
         try {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.addBinaryBody("file", fileName);
@@ -60,11 +86,11 @@ public class SlackBotService {
         }
     }
 
-    private static void executePost(HttpPost httpPost, HttpClient client) {
+    private void executePost(HttpPost httpPost, HttpClient client) {
         try {
             HttpResponse response = client.execute(httpPost);
             if (response.getStatusLine().getStatusCode() != 200) {
-                log.error("Couldn't post to Slack. Response status --> {}", Integer.toString(response.getStatusLine().getStatusCode()));
+                log.error("Couldn't post to Slack. Response status --> {}", response.getStatusLine().getStatusCode());
             }
         } catch (Exception e) {
             log.error("Failed to post to Slack.", e);

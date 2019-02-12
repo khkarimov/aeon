@@ -55,7 +55,7 @@ public class CommandDelegateRunnerTests {
         commandDelegateRunner.execute(consumer);
 
         //Assert
-        verify(consumer,times(1)).accept(driver);
+        verify(consumer, times(1)).accept(driver);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class CommandDelegateRunnerTests {
         commandDelegateRunner.execute(commandDelegate);
 
         //Assert
-        verify(commandDelegate,times(1)).apply(driver);
+        verify(commandDelegate, times(1)).apply(driver);
     }
 }

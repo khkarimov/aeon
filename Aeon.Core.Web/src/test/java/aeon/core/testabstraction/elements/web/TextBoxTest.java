@@ -17,9 +17,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -54,12 +54,12 @@ public class TextBoxTest {
 
     @Test
     public void setCallsExecuteWithAnyInput() {
-       //Act
-       textBox.set(null);  //do not care about the value param
+        //Act
+        textBox.set(null);  //do not care about the value param
 
-       //Assert
-       verify(commandExecutionFacade, times(1))
-               .execute(Mockito.eq(automationInfo), any(SetCommand.class));
+        //Assert
+        verify(commandExecutionFacade, times(1))
+                .execute(Mockito.eq(automationInfo), any(SetCommand.class));
     }
 
     @Test

@@ -35,11 +35,11 @@ public class SwitchToWindowByTitleCommandTests {
         switchToWindowByTitleCommand.commandDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).switchToWindowByTitle(title);
+        verify(driver, times(1)).switchToWindowByTitle(title);
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> switchToWindowByTitleCommand.commandDelegate(null));
     }

@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class DoesNotHaveOptionsTests {
+public class DoesNotHaveOptionsCommandTests {
 
     private WebSelectOption select = null;
     private String[] options = {};
@@ -32,7 +32,7 @@ public class DoesNotHaveOptionsTests {
     private WebControl control;
 
     @Test
-    public void commandDelegateExecutesDoesNotHaveOptions(){
+    public void commandDelegateExecutesDoesNotHaveOptions() {
         // Arrange
         DoesNotHaveOptionsCommand doesNotHaveOptionsCommand = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, select);
 
@@ -44,7 +44,7 @@ public class DoesNotHaveOptionsTests {
     }
 
     @Test
-    public void commandDelegateExecutesDoesNotHaveOptionsSecondConstructor(){
+    public void commandDelegateExecutesDoesNotHaveOptionsSecondConstructor() {
         // Arrange
         String optGroup = "Test";
         DoesNotHaveOptionsCommand doesNotHaveOptionsCommandSecond = new DoesNotHaveOptionsCommand(selector, commandInitializer, options, optGroup, select);

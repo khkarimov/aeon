@@ -15,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -41,12 +39,12 @@ public class SetDivValueByJavaScriptCommandTests {
     private Consumer<IDriver> consumer;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         setDivValueByJavaScriptCommandObject = new SetDivValueByJavaScriptCommand(selector, initializer, value);
     }
 
     @Test
-    public void commandDelegateExecutesSetDivValueByJavaScript(){
+    public void commandDelegateExecutesSetDivValueByJavaScript() {
         // Arrange
         when(initializer.setContext()).thenReturn(consumer);
         when(initializer.findElement(driver, selector)).thenReturn(control);

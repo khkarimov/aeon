@@ -29,7 +29,7 @@ public class VerifyAlertTextCommandTests {
     }
 
     @Test
-    public void driverDelegateVerifyAlertTextCommand(){
+    public void driverDelegateVerifyAlertTextCommand() {
         // Arrange
         // nothing to do
 
@@ -41,8 +41,8 @@ public class VerifyAlertTextCommandTests {
     }
 
     @Test
-    public void driverDelegateVerifyAlertTextCommandWithNullDriver(){
+    public void driverDelegateVerifyAlertTextCommandWithNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () ->verifyAlertTextCommandObject.driverDelegate(null));
+                () -> verifyAlertTextCommandObject.driverDelegate(null));
     }
 }

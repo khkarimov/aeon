@@ -22,10 +22,12 @@ public class GetAlertTextCommandTests {
     private IWebDriver driver;
 
     @BeforeEach
-    public void setup() {getAlertTextCommand = new GetAlertTextCommand();}
+    public void setup() {
+        getAlertTextCommand = new GetAlertTextCommand();
+    }
 
     @Test
-    public void commandDelegateGetAlertText(){
+    public void commandDelegateGetAlertText() {
 
         // Act
         getAlertTextCommand.commandDelegate(driver);

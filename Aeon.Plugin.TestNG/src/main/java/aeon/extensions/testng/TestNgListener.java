@@ -1,4 +1,4 @@
-package aeon.extensions.reporting;
+package aeon.extensions.testng;
 
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.AeonTestExecution;
@@ -6,7 +6,7 @@ import org.testng.*;
 
 /**
  * TestNG Listener for Aeon.
- *
+ * <p>
  * Calls aeon test execution methods for certain test events.
  */
 public class TestNgListener implements ITestListener, ISuiteListener {

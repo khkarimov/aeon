@@ -35,10 +35,12 @@ public class HasAllOptionsInOrderCommandTests {
     private WebControl control;
 
     @BeforeEach
-    public void setup(){ hasAllOptionsInOrderCommand = new HasAllOptionsInOrderCommand(selector, initializer, compare, optGroup); }
+    public void setup() {
+        hasAllOptionsInOrderCommand = new HasAllOptionsInOrderCommand(selector, initializer, compare, optGroup);
+    }
 
     @Test
-    public void HasAllOptionsInOrderCommandTestsInOrder(){
+    public void HasAllOptionsInOrderCommandTestsInOrder() {
         // Arrange
 
         // Act

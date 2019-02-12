@@ -1,12 +1,13 @@
 package main.sample.samplegrid;
 
 import aeon.core.common.web.selectors.By;
-import aeon.core.testabstraction.elements.web.EmployeeTable;
+import aeon.core.testabstraction.elements.web.Table;
+import aeon.core.testabstraction.elements.web.TableContainer;
 
 /**
  * Class for finding table rows based on column values.
  */
-public class MaterialTable extends EmployeeTable<MaterialTable, Material> {
+public class MaterialTable extends Table<MaterialTable, Material> {
 
     /**
      * Constructor.
