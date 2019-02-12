@@ -1,7 +1,7 @@
 package aeon.extensions.reporting.services;
 
+import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
-import aeon.extensions.reporting.ReportingPlugin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
@@ -21,20 +21,47 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Service for uploading reports to RocknRoly.
+ */
 public class RnrService {
 
-    private static String browser = ReportingPlugin.aeonConfiguration.getString("aeon.browser", "");
-    private static String environmentUrl = ReportingPlugin.aeonConfiguration.getString("aeon.environment", "");
+    private String browser;
+    private String environmentUrl;
 
-    private static String product = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.PRODUCT, "");
-    private static String team = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.TEAM, "");
-    private static String type = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.TYPE, "");
-    private static String branch = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.BRANCH, "");
-    private static String rnrUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
+    private String product;
+    private String team;
+    private String type;
+    private String branch;
+    private String rnrUrl;
 
     private static Logger log = LoggerFactory.getLogger(RnrService.class);
 
-    public static String uploadToRnr(String jsonFileName, String angularReportUrl, String correlationId) {
+    /**
+     * Sets the Reporting plugin and Aeon configuration.
+     *
+     * @param configuration     The Reporting plugin configuration object.
+     * @param aeonConfiguration The Aeon configuration object.
+     */
+    public void setConfiguration(IConfiguration configuration, IConfiguration aeonConfiguration) {
+        this.browser = aeonConfiguration.getString("aeon.browser", "");
+        this.environmentUrl = aeonConfiguration.getString("aeon.environment", "");
+        this.product = configuration.getString(ReportingConfiguration.Keys.PRODUCT, "");
+        this.team = configuration.getString(ReportingConfiguration.Keys.TEAM, "");
+        this.type = configuration.getString(ReportingConfiguration.Keys.TYPE, "");
+        this.branch = configuration.getString(ReportingConfiguration.Keys.BRANCH, "");
+        this.rnrUrl = configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
+    }
+
+    /**
+     * Uploads a report to RocknRoly.
+     *
+     * @param jsonFileName     The name of the JSON file of the report to upload.
+     * @param angularReportUrl The URL of the HTML report to link.
+     * @param correlationId    The correlation ID to use for the report.
+     * @return The RocknRoly URL of the uploaded report.
+     */
+    public String uploadToRnr(String jsonFileName, String angularReportUrl, String correlationId) {
 
         if (!allConfigFieldsAreSet()) {
             log.trace("Not all RnR properties are set, cancelling upload to RnR.");
@@ -54,21 +81,21 @@ public class RnrService {
 
         boolean success = executeRequest(client, post, fullRequestUrl);
 
-        String rnrResultUrl = rnrUrl + "/" + correlationId;
+        if (!success) {
+            return null;
+        }
 
-        log.info("RnR URL: " + rnrResultUrl);
-
-        return rnrResultUrl;
+        return rnrUrl + "/" + correlationId;
     }
 
-    private static boolean allConfigFieldsAreSet() {
+    private boolean allConfigFieldsAreSet() {
         return !(product.isEmpty()
                 || team.isEmpty()
                 || type.isEmpty()
                 || branch.isEmpty());
     }
 
-    private static HttpEntity buildRnrMultiPartEntity(String angularReportUrl, File resultsJsonFile, String correlationId) {
+    private HttpEntity buildRnrMultiPartEntity(String angularReportUrl, File resultsJsonFile, String correlationId) {
         Map<String, String> rnrMetaMap = buildRnrMetaMap(angularReportUrl);
         File rnrMetaFile = buildRnrMetaFile(rnrMetaMap);
 
@@ -80,13 +107,16 @@ public class RnrService {
         builder.addTextBody("correlationId", correlationId);
         builder.addBinaryBody("file", resultsJsonFile,
                 ContentType.APPLICATION_OCTET_STREAM, "results.js");
-        builder.addBinaryBody("metaFile", rnrMetaFile,
-                ContentType.APPLICATION_OCTET_STREAM, "meta.rnr");
+
+        if (rnrMetaFile != null) {
+            builder.addBinaryBody("metaFile", rnrMetaFile,
+                    ContentType.APPLICATION_OCTET_STREAM, "meta.rnr");
+        }
 
         return builder.build();
     }
 
-    private static Map<String, String> buildRnrMetaMap(String reportUrl) {
+    private Map<String, String> buildRnrMetaMap(String reportUrl) {
         Map<String, String> rnrMetaMap = new HashMap<>();
         rnrMetaMap.put("screenshots", reportUrl);
         rnrMetaMap.put("app", environmentUrl);
@@ -94,7 +124,7 @@ public class RnrService {
         return rnrMetaMap;
     }
 
-    private static File buildRnrMetaFile(Map<String, String> rnrMetaMap) {
+    private File buildRnrMetaFile(Map<String, String> rnrMetaMap) {
         try {
             String rnrMeta = new ObjectMapper().writeValueAsString(rnrMetaMap);
 
@@ -114,12 +144,12 @@ public class RnrService {
         }
     }
 
-    private static boolean executeRequest(HttpClient client, HttpPost post, String fullRequestUrl) {
+    private boolean executeRequest(HttpClient client, HttpPost post, String fullRequestUrl) {
         try {
             HttpResponse response = client.execute(post);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != HttpStatus.SC_ACCEPTED) {
-                log.error(String.format("Did not receive successful status code for RnR upload. Received: %d.", statusCode));
+                log.error("Did not receive successful status code for RnR upload. Received: {}.", statusCode);
                 return false;
             }
             return true;

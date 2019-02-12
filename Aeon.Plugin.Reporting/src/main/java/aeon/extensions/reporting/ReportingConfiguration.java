@@ -12,13 +12,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Configures selenium for different browsers and devices.
+ * Configures the Reporting plugin.
  */
 public class ReportingConfiguration extends PluginConfiguration {
 
-    private Logger log = LoggerFactory.getLogger(ReportingPlugin.class);
-
+    /**
+     * Configuration keys for the Reporting plugin.
+     */
     public static class Keys {
+
+        private Keys() {
+            // Hide the implicit public constructor.
+        }
+
         public static final String SLACK_CHAT_URL = "aeon.extensions.reporting.slack.chat.url";
         public static final String SLACK_UPLOAD_URL = "aeon.extensions.reporting.slack.upload.url";
         public static final String SLACK_BOT_TOKEN = "aeon.extensions.reporting.slack.bot.token";
@@ -52,6 +58,7 @@ public class ReportingConfiguration extends PluginConfiguration {
         try (InputStream in = ReportingConfiguration.class.getResourceAsStream("/reporting.properties")) {
             properties.load(in);
         } catch (IOException e) {
+            Logger log = LoggerFactory.getLogger(ReportingPlugin.class);
             log.error("reporting.properties resource could not be read");
             throw e;
         }

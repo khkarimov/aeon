@@ -15,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -25,19 +23,24 @@ public class MouseOutCommandTests {
 
     private MouseOutCommand mouseOutCommandObject;
 
-    @Mock private IByWeb selector;
-    @Mock private ICommandInitializer initializer;
-    @Mock private IWebDriver driver;
-    @Mock private WebControl control;
-    @Mock private Consumer<IDriver> action;
+    @Mock
+    private IByWeb selector;
+    @Mock
+    private ICommandInitializer initializer;
+    @Mock
+    private IWebDriver driver;
+    @Mock
+    private WebControl control;
+    @Mock
+    private Consumer<IDriver> action;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         mouseOutCommandObject = new MouseOutCommand(selector, initializer);
     }
 
     @Test
-    public void commandDelegateMouseOutCommand(){
+    public void commandDelegateMouseOutCommand() {
         //Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);

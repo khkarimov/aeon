@@ -1,0 +1,13 @@
+dependencies {
+    implementation project(':Aeon.Core')
+    implementation group: 'org.testng', name: 'testng', version: '6.14.3'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.testng'
+        }
+    }
+}

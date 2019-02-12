@@ -15,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -27,7 +25,7 @@ public class HasOptionsCommandTests {
     WebControl control;
     @Mock
     Consumer<IDriver> action;
-    private String [] options = {"test", "test1", "test2", "test3"};
+    private String[] options = {"test", "test1", "test2", "test3"};
     private String optGroup = "teststes";
     @Mock
     private IWebDriver driver;
@@ -53,7 +51,7 @@ public class HasOptionsCommandTests {
     }
 
     @Test
-    public void hasOptionsCommandFirstConstructor(){
+    public void hasOptionsCommandFirstConstructor() {
         // Arrange
         HasOptionsCommand commandFirst = new HasOptionsCommand(selector, commandInitializer, options, WebSelectOption.Text);
 

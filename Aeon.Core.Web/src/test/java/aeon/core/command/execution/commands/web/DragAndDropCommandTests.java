@@ -18,8 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class DragAndDropCommandTests
-{
+public class DragAndDropCommandTests {
     private DragAndDropCommand dragAndDropCommandObject;
 
     @Mock
@@ -38,19 +37,19 @@ public class DragAndDropCommandTests
     private WebControl control;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         dragAndDropCommandObject = new DragAndDropCommand(dropElement, targetElement, commandInitializer);
     }
 
     @Test
-    public void targetElementSetWhenObjectIsCreated(){
+    public void targetElementSetWhenObjectIsCreated() {
         // Assert
         Assertions.assertNotNull(dragAndDropCommandObject.targetElement);
         Assertions.assertEquals(dragAndDropCommandObject.targetElement, targetElement);
     }
 
     @Test
-    public void illegalArgumentThrownWhenDriverIsNull(){
+    public void illegalArgumentThrownWhenDriverIsNull() {
         // Arrange
         Exception illegalArgumentException;
 
@@ -63,7 +62,7 @@ public class DragAndDropCommandTests
     }
 
     @Test
-    public void illegalArgumentThrownWhenControlIsNull(){
+    public void illegalArgumentThrownWhenControlIsNull() {
         // Arrange
         Exception illegalArgumentException;
 

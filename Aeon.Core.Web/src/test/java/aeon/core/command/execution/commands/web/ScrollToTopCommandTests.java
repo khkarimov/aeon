@@ -27,7 +27,7 @@ public class ScrollToTopCommandTests {
     }
 
     @Test
-    public void commandDelegateScrollToTopCommand(){
+    public void commandDelegateScrollToTopCommand() {
         //Arrange
 
         //Act
@@ -38,7 +38,7 @@ public class ScrollToTopCommandTests {
     }
 
     @Test
-    public void testDriverDelegateNullDriver(){
+    public void testDriverDelegateNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> scrollToTopCommand.driverDelegate(null));
     }

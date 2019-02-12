@@ -6,7 +6,6 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -14,11 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.function.Consumer;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -39,7 +36,7 @@ public class IsCommandTests {
     private Consumer<IDriver> action;
 
     @Test
-    public void commandDelegateIsCommandWithRaw(){
+    public void commandDelegateIsCommandWithRaw() {
         // Arrange
         IsCommand isCommandObjectRaw = new IsCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
         when(initializer.setContext()).thenReturn(action);
@@ -54,7 +51,7 @@ public class IsCommandTests {
     }
 
     @Test
-    public void commandDelegateIsCommandWithText(){
+    public void commandDelegateIsCommandWithText() {
         // Arrange
         IsCommand isCommandObjectText = new IsCommand(selector, initializer, value, ComparisonOption.Text, attribute);
         when(initializer.setContext()).thenReturn(action);

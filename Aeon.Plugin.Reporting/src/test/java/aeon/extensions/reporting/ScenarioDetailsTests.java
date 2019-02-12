@@ -1,12 +1,15 @@
 package aeon.extensions.reporting;
 
-import org.junit.jupiter.api.Test;
-import org.testng.Assert;
+import aeon.extensions.reporting.models.HighLevelStep;
+import aeon.extensions.reporting.models.ScenarioDetails;
+import org.junit.Test;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class ScenarioDetailsTests {
 
@@ -19,7 +22,7 @@ public class ScenarioDetailsTests {
         scenario.setThreadId(200);
 
         // Assert
-        Assert.assertEquals(scenario.getThreadId(), 200);
+        assertEquals(scenario.getThreadId(), 200);
     }
 
     @Test
@@ -31,7 +34,7 @@ public class ScenarioDetailsTests {
         scenario.setTestName("scenarioName");
 
         // Assert
-        Assert.assertEquals(scenario.getTestName(), "scenarioName");
+        assertEquals(scenario.getTestName(), "scenarioName");
     }
 
     @Test
@@ -43,7 +46,7 @@ public class ScenarioDetailsTests {
         scenario.setStartTime(2000);
 
         // Assert
-        Assert.assertEquals(scenario.getStartTime(), 2000);
+        assertEquals(scenario.getStartTime(), 2000);
     }
 
     @Test
@@ -55,7 +58,7 @@ public class ScenarioDetailsTests {
         scenario.setEndTime(2000);
 
         // Assert
-        Assert.assertEquals(scenario.getEndTime(), 2000);
+        assertEquals(scenario.getEndTime(), 2000);
     }
 
     @Test
@@ -67,7 +70,7 @@ public class ScenarioDetailsTests {
         scenario.setStackTrace("line1\nline2");
 
         // Assert
-        Assert.assertEquals(scenario.getStackTrace(), "line1\nline2");
+        assertEquals(scenario.getStackTrace(), "line1\nline2");
     }
 
     @Test
@@ -103,19 +106,17 @@ public class ScenarioDetailsTests {
         List<HighLevelStep> resultSteps = scenario.getSteps();
 
         // Assert
-        Assert.assertEquals(expectedSteps.size(), resultSteps.size());
+        assertEquals(expectedSteps.size(), resultSteps.size());
         for (int i = 0; i < expectedSteps.size(); i++) {
             HighLevelStep expectedStep = expectedSteps.get(i);
             HighLevelStep resultStep = resultSteps.get(i);
 
-            Assert.assertEquals(expectedStep.getName(), resultStep.getName());
-            Assert.assertEquals(expectedStep.getSteps().size(), resultStep.getSteps().size());
+            assertEquals(expectedStep.getName(), resultStep.getName());
+            assertEquals(expectedStep.getSteps().size(), resultStep.getSteps().size());
             for (int j = 0; j < expectedStep.getSteps().size(); j++) {
-                Assert.assertEquals(expectedStep.getSteps().get(j), resultStep.getSteps().get(j));
+                assertEquals(expectedStep.getSteps().get(j), resultStep.getSteps().get(j));
             }
         }
-
-
     }
 
     @Test
@@ -128,7 +129,7 @@ public class ScenarioDetailsTests {
         scenario.setScreenshot(image);
 
         // Assert
-        Assert.assertEquals(scenario.getScreenshot(), image);
+        assertEquals(scenario.getScreenshot(), image);
     }
 
     @Test
@@ -140,7 +141,7 @@ public class ScenarioDetailsTests {
         scenario.setVideoUrl("videoUrl");
 
         // Assert
-        Assert.assertEquals(scenario.getVideoUrl(), "videoUrl");
+        assertEquals(scenario.getVideoUrl(), "videoUrl");
     }
 
     @Test
@@ -152,7 +153,7 @@ public class ScenarioDetailsTests {
         scenario.setStatus("FAILED");
 
         // Assert
-        Assert.assertEquals(scenario.getStatus(), "FAILED");
+        assertEquals(scenario.getStatus(), "FAILED");
     }
 
     @Test
@@ -164,7 +165,7 @@ public class ScenarioDetailsTests {
         scenario.setErrorMessage("out of bounds");
 
         // Assert
-        Assert.assertEquals(scenario.getErrorMessage(), "out of bounds");
+        assertEquals(scenario.getErrorMessage(), "out of bounds");
     }
 
     @Test
@@ -176,7 +177,7 @@ public class ScenarioDetailsTests {
         scenario.setErrorMessage("message with &, < and > characters");
 
         // Assert
-        Assert.assertEquals(scenario.getShortenedErrorMessage(200),
+        assertEquals(scenario.getShortenedErrorMessage(200),
                 "message with &amp;, &lt; and &gt; characters");
     }
 
@@ -189,7 +190,7 @@ public class ScenarioDetailsTests {
         scenario.setErrorMessage("message with &, < and > characters over the limit");
 
         // Assert
-        Assert.assertEquals(scenario.getShortenedErrorMessage(55),
+        assertEquals(scenario.getShortenedErrorMessage(55),
                 "message with &amp;, &lt; and &gt; characters over the l...");
     }
 
@@ -202,6 +203,6 @@ public class ScenarioDetailsTests {
         scenario.setClassName("moduleName");
 
         // Assert
-        Assert.assertEquals(scenario.getClassName(), "moduleName");
+        assertEquals(scenario.getClassName(), "moduleName");
     }
 }

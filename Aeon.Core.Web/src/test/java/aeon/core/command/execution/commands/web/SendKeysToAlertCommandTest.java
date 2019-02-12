@@ -28,7 +28,7 @@ public class SendKeysToAlertCommandTest {
     }
 
     @Test
-    public void commandDelegateSendKeysToAlertCommand(){
+    public void commandDelegateSendKeysToAlertCommand() {
         //Arrange
 
         //Act
@@ -39,7 +39,7 @@ public class SendKeysToAlertCommandTest {
     }
 
     @Test
-    public void testDriverDelegateNullDriver(){
+    public void testDriverDelegateNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> sendKeysToAlertCommand.driverDelegate(null));
     }
