@@ -1,10 +1,13 @@
 package aeon.extensions.reporting;
 
-import org.junit.jupiter.api.Test;
-import org.testng.Assert;
+import aeon.extensions.reporting.models.ReportDetails;
+import aeon.extensions.reporting.models.ScenarioDetails;
+import org.junit.Test;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import static org.junit.Assert.assertEquals;
 
 public class ReportDetailsTests {
 
@@ -13,7 +16,7 @@ public class ReportDetailsTests {
         ReportDetails reportDetails = new ReportDetails();
         reportDetails.setSuiteName("suiteName");
 
-        Assert.assertEquals(reportDetails.getSuiteName(), "suiteName");
+        assertEquals(reportDetails.getSuiteName(), "suiteName");
     }
 
     @Test
@@ -21,7 +24,7 @@ public class ReportDetailsTests {
         ReportDetails reportDetails = new ReportDetails();
         reportDetails.setStartTime(200);
 
-        Assert.assertEquals(reportDetails.getStartTime(), 200);
+        assertEquals(reportDetails.getStartTime(), 200);
     }
 
     @Test
@@ -29,7 +32,7 @@ public class ReportDetailsTests {
         ReportDetails reportDetails = new ReportDetails();
         reportDetails.setEndTime(200);
 
-        Assert.assertEquals(reportDetails.getEndTime(), 200);
+        assertEquals(reportDetails.getEndTime(), 200);
     }
 
     @Test
@@ -38,7 +41,7 @@ public class ReportDetailsTests {
         reportDetails.setStartTime(300);
         reportDetails.setEndTime(500);
 
-        Assert.assertEquals(reportDetails.getTotalTime(), 200);
+        assertEquals(reportDetails.getTotalTime(), 200);
     }
 
     @Test
@@ -46,7 +49,7 @@ public class ReportDetailsTests {
         ReportDetails reportDetails = new ReportDetails();
         reportDetails.setCorrelationId("correlationId");
 
-        Assert.assertEquals(reportDetails.getCorrelationId(), "correlationId");
+        assertEquals(reportDetails.getCorrelationId(), "correlationId");
     }
 
     @Test
@@ -65,9 +68,9 @@ public class ReportDetailsTests {
         scenarios.add(skippedScenario);
         reportDetails.setScenarios(scenarios);
 
-        Assert.assertEquals(reportDetails.getScenarios(), scenarios);
+        assertEquals(reportDetails.getScenarios(), scenarios);
 
-        Assert.assertEquals(reportDetails.getTotalNumberOfTests(), 3);
+        assertEquals(reportDetails.getTotalNumberOfTests(), 3);
     }
 
     @Test
@@ -92,10 +95,10 @@ public class ReportDetailsTests {
         scenarios.add(skippedScenario);
         reportDetails.setScenarios(scenarios);
 
-        Assert.assertEquals(reportDetails.getScenarios(), scenarios);
+        assertEquals(reportDetails.getScenarios(), scenarios);
 
-        Assert.assertEquals(reportDetails.getNumberOfPassedTests(), 3);
-        Assert.assertEquals(reportDetails.getTotalNumberOfTests(), 5);
+        assertEquals(reportDetails.getNumberOfPassedTests(), 3);
+        assertEquals(reportDetails.getTotalNumberOfTests(), 5);
     }
 
     @Test
@@ -120,10 +123,10 @@ public class ReportDetailsTests {
         scenarios.add(skippedScenario);
         reportDetails.setScenarios(scenarios);
 
-        Assert.assertEquals(reportDetails.getScenarios(), scenarios);
+        assertEquals(reportDetails.getScenarios(), scenarios);
 
-        Assert.assertEquals(reportDetails.getNumberOfFailedTests(), 3);
-        Assert.assertEquals(reportDetails.getTotalNumberOfTests(), 5);
+        assertEquals(reportDetails.getNumberOfFailedTests(), 3);
+        assertEquals(reportDetails.getTotalNumberOfTests(), 5);
     }
 
     @Test
@@ -148,9 +151,9 @@ public class ReportDetailsTests {
         scenarios.add(skippedScenario3);
         reportDetails.setScenarios(scenarios);
 
-        Assert.assertEquals(reportDetails.getScenarios(), scenarios);
+        assertEquals(reportDetails.getScenarios(), scenarios);
 
-        Assert.assertEquals(reportDetails.getNumberOfSkippedTests(), 3);
-        Assert.assertEquals(reportDetails.getTotalNumberOfTests(), 5);
+        assertEquals(reportDetails.getNumberOfSkippedTests(), 3);
+        assertEquals(reportDetails.getTotalNumberOfTests(), 5);
     }
 }

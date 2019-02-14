@@ -1,23 +1,64 @@
 package aeon.extensions.reporting.reports;
 
-import aeon.extensions.reporting.*;
+import aeon.core.common.interfaces.IConfiguration;
+import aeon.extensions.reporting.ReportController;
+import aeon.extensions.reporting.ReportingConfiguration;
+import aeon.extensions.reporting.models.ReportDetails;
+import aeon.extensions.reporting.models.ScenarioDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Queue;
 
+/**
+ * Creates a report as an image file from the test results.
+ */
 public class ImageReport {
 
     private ReportDetails reportDetails;
-    private boolean displayClassName = ReportingPlugin.configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
-    private int errorMessageCharLimit = (int) ReportingPlugin.configuration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
-    private String browser = ReportingPlugin.aeonConfiguration.getString("aeon.browser", "");
-    private String environmentUrl = ReportingPlugin.aeonConfiguration.getString("aeon.environment", "");
+    private boolean displayClassName;
+    private int errorMessageCharLimit;
+    private String browser;
+    private String environmentUrl;
 
-    public ImageReport(ReportDetails reportDetails) {
+    private static Logger log = LoggerFactory.getLogger(ImageReport.class);
+
+    /**
+     * Sets the Reporting plugin and Aeon configuration.
+     *
+     * @param configuration     The Reporting plugin configuration object.
+     * @param aeonConfiguration The Aeon configuration object.
+     */
+    void setConfiguration(IConfiguration configuration, IConfiguration aeonConfiguration) {
+        this.displayClassName = configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
+        this.errorMessageCharLimit = (int) configuration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
+        this.browser = aeonConfiguration.getString("aeon.browser", "");
+        this.environmentUrl = aeonConfiguration.getString("aeon.environment", "");
+    }
+
+    /**
+     * Sets the report details.
+     *
+     * @param reportDetails The report details.
+     */
+    void setReportDetails(ReportDetails reportDetails) {
         this.reportDetails = reportDetails;
     }
 
-    public File buildImageReport(String title) {
+    /**
+     * Creates the image report file.
+     *
+     * @param title The name to use for the file.
+     * @return The created image report file.
+     */
+    File buildImageReport(String title) {
         String htmlBody = "";
         htmlBody = htmlBody + this.getHead();
 
@@ -27,7 +68,7 @@ public class ImageReport {
         htmlBody = htmlBody + getBrokenTableSection();
         htmlBody = htmlBody + getPassTableSection();
 
-        return Utils.htmlToPngFile(htmlBody, Utils.getResourcesPath() + title + ".png");
+        return this.htmlToPngFile(htmlBody, this.getResourcesPath() + title + ".png");
     }
 
     private String createTable(String[] headers, String tableBody, String id) {
@@ -91,7 +132,7 @@ public class ImageReport {
                         + createColumn("" + reportDetails.getNumberOfFailedTests())
                         + createColumn("" + 0)
                         + createColumn("" + reportDetails.getNumberOfSkippedTests())
-                        + createColumn("" + Utils.getTime(reportDetails.getTotalTime())));
+                        + createColumn("" + ReportController.getTime(reportDetails.getTotalTime())));
     }
 
     private String getTableBodyForSuiteSummaryJUnit() {
@@ -100,7 +141,7 @@ public class ImageReport {
                         + createColumn("" + reportDetails.getNumberOfPassedTests())
                         + createColumn("" + reportDetails.getNumberOfFailedTests())
                         + createColumn("" + reportDetails.getNumberOfSkippedTests())
-                        + createColumn("" + Utils.getTime(reportDetails.getTotalTime())));
+                        + createColumn("" + ReportController.getTime(reportDetails.getTotalTime())));
     }
 
     private String getSuiteSummarySection() {
@@ -218,5 +259,33 @@ public class ImageReport {
         } else {
             return new String[]{"Test Name", "Status", "Error Message"};
         }
+    }
+
+    private File htmlToPngFile(String html, String filePath) {
+        log.trace("Converting HTML file to Png");
+        BufferedImage image = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice().getDefaultConfiguration()
+                .createCompatibleImage(800, 800);
+        Graphics graphics = image.createGraphics();
+        JEditorPane jep = new JEditorPane("text/html", html);
+        jep.setSize(800, 800);
+        jep.print(graphics);
+        File file = new File(filePath);
+        file.deleteOnExit();
+        file.getParentFile().mkdirs();
+        try {
+            ImageIO.write(image, "png", file);
+        } catch (IOException e) {
+            log.error("Error saving image", e);
+            return null;
+        }
+        return file;
+    }
+
+    private String getResourcesPath() {
+        String resourcePath;
+        resourcePath = System.getProperty("user.dir") + "/src/test/resources/";
+
+        return resourcePath;
     }
 }

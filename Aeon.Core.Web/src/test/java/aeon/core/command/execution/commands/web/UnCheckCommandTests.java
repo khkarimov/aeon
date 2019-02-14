@@ -15,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Test for unchecking on an element
@@ -45,7 +43,7 @@ public class UnCheckCommandTests {
     }
 
     @Test
-    public void commandDelegateUnCheckCommand(){
+    public void commandDelegateUnCheckCommand() {
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);

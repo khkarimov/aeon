@@ -33,14 +33,12 @@ public class NotExistsCommandTests {
     private NotExistsCommand command;
 
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         command = new NotExistsCommand(selector);
     }
 
     @Test
-    public void notExists_FindElementSuccessfulTry()
-    {
+    public void notExists_FindElementSuccessfulTry() {
         // Arrange
 
         // Act
@@ -52,8 +50,7 @@ public class NotExistsCommandTests {
     }
 
     @Test
-    public void notExists_FindElementCatch()
-    {
+    public void notExists_FindElementCatch() {
         // Arrange
         NoSuchElementException e = new NoSuchElementException(new Exception(), selector);
         when(driver.findElement(selector)).thenThrow(e);
@@ -63,13 +60,12 @@ public class NotExistsCommandTests {
         action.accept(driver);
 
         // Assert
-        verify(driver, times( 1)).findElement(selector);
-        verify(driver, times( 0)).notExists(control);
+        verify(driver, times(1)).findElement(selector);
+        verify(driver, times(0)).notExists(control);
     }
 
     @Test
-    public void notExists_CallsExecute()
-    {
+    public void notExists_CallsExecute() {
         // Arrange
         when(driver.findElement(selector)).thenReturn(control);
 

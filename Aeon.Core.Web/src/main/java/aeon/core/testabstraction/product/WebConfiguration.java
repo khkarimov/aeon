@@ -99,7 +99,7 @@ public class WebConfiguration extends Configuration {
      *
      * @return getResourceAsStream of "/aeon.core.properties" file
      */
-    InputStream getAeonCoreInputStream() throws IOException {
+    InputStream getAeonCoreInputStream() {
         return WebConfiguration.class.getResourceAsStream("/aeon.core.properties");
     }
 }
