@@ -10,7 +10,7 @@ public class Tab extends WebElement {
 
     private AutomationInfo info;
     private IByWeb selector;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
 
     /**
      * Creates a new instance of {@link Tab}.
@@ -31,7 +31,7 @@ public class Tab extends WebElement {
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism.
      */
-    public Tab(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Tab(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;

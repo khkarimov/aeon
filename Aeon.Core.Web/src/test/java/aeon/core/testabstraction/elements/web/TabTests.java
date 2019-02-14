@@ -22,29 +22,29 @@ public class TabTests {
     IByWeb selector;
 
     @Mock
-    Iterable<IByWeb> switchMechanism;
+    IByWeb switchMechanism;
 
     private Tab tab;
 
     @Test
-    public void Tab_callsSuper(){
+    public void Tab_callsSuper() {
 
         // Arrange
 
         // Act
-        tab = new Tab(automationInfo,selector,switchMechanism);
+        tab = new Tab(automationInfo, selector, switchMechanism);
 
         // Assert
         assertTrue(tab instanceof WebElement);
     }
 
     @Test
-    public void Tab_nullSwitchMechanism_callsSuper(){
+    public void Tab_nullSwitchMechanism_callsSuper() {
 
         // Arrange
 
         // Act
-        tab = new Tab(automationInfo,selector);
+        tab = new Tab(automationInfo, selector);
 
         // Assert
         assertTrue(tab instanceof WebElement);
