@@ -1,18 +1,18 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.AeonConfigKey;
 import aeon.core.common.BaseConfiguration;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
 /**
- * Base configuration class for aeon.
+ * Base configuration class for Aeon.
  * Loads the Properties table with the values from: Environment variables,
- * project test.properties files, and otherwise uses the default properties from aeon.
+ * project test.properties files, and otherwise uses the default properties from Aeon.
  */
 public class Configuration extends BaseConfiguration {
 
@@ -78,23 +78,30 @@ public class Configuration extends BaseConfiguration {
     }
 
     @Override
-    protected List<Field> getConfigurationFields() {
-        List<Field> keys = super.getConfigurationFields();
-        keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
+    protected List<AeonConfigKey> getConfigurationFields() {
+        List<AeonConfigKey> keys = super.getConfigurationFields();
+        keys.addAll(Arrays.asList(Keys.values()));
         return keys;
     }
 
     /**
-     * Static class for the Configuration keys.
+     * Enum for the Configuration keys.
      */
-    public static class Keys {
+    public enum Keys implements AeonConfigKey {
 
-        private Keys() {
-            // Static classes should not be instantiated
+        TIMEOUT("aeon.timeout"),
+        THROTTLE("aeon.throttle"),
+        REPORTING("aeon.implicit_reporting");
+
+        private String key;
+
+        Keys(String key) {
+            this.key = key;
         }
 
-        public static final String TIMEOUT = "aeon.timeout";
-        public static final String THROTTLE = "aeon.throttle";
-        public static final String REPORTING = "aeon.implicit_reporting";
+        @Override
+        public String getKey() {
+            return this.key;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package aeon.selenium;
 
+import aeon.core.common.AeonConfigKey;
 import aeon.core.common.helpers.OsCheck;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,60 +26,72 @@ public class SeleniumConfiguration extends WebConfiguration {
     /**
      * Keys relevant to the Selenium Configuration.
      */
-    public static class Keys {
+    public enum Keys implements AeonConfigKey {
 
-        public static final String LANGUAGE = "aeon.selenium.language";
-        public static final String MOVE_MOUSE_TO_ORIGIN = "aeon.selenium.move_mouse_to_origin";
-        public static final String USE_MOBILE_USER_AGENT = "aeon.selenium.use_mobile_user_agent";
-        public static final String PROXY_LOCATION = "aeon.selenium.proxy_location";
-        public static final String SELENIUM_GRID_URL = "aeon.selenium.grid.url";
-        public static final String ENSURE_CLEAN_ENVIRONMENT = "aeon.selenium.ensure_clean_environment";
-        public static final String CHROME_DIRECTORY = "aeon.selenium.chrome.driver";
-        public static final String IE_DIRECTORY = "aeon.selenium.ie.driver";
-        public static final String MARIONETTE_DIRECTORY = "aeon.selenium.firefox.driver";
-        public static final String OPERA_DIRECTORY = "aeon.selenium.opera.driver";
-        public static final String EDGE_DIRECTORY = "aeon.selenium.edge.driver";
-        public static final String CHROME_BINARY = "aeon.selenium.chrome.binary";
-        public static final String FIREFOX_BINARY = "aeon.selenium.firefox.binary";
-        public static final String OPERA_BINARY = "aeon.selenium.opera.binary";
-        public static final String CHROME_HEADLESS = "aeon.selenium.chrome.headless";
-        public static final String CHROME_MOBILE_EMULATION_DEVICE = "aeon.selenium.chrome.mobile.emulation.device";
-        public static final String IE_LOGGING_LEVEL = "aeon.selenium.ie.logging.level";
-        public static final String IE_LOGGING_PATH = "aeon.selenium.ie.logging.path";
-        public static final String LOGGING_BROWSER = "aeon.selenium.logging.type.browser";
-        public static final String LOGGING_CLIENT = "aeon.selenium.logging.type.client";
-        public static final String LOGGING_DRIVER = "aeon.selenium.logging.type.driver";
-        public static final String LOGGING_PERFORMANCE = "aeon.selenium.logging.type.performance";
-        public static final String LOGGING_SERVER = "aeon.selenium.logging.type.server";
-        public static final String LOGGING_DIRECTORY = "aeon.selenium.logging.directory";
-        public static final String BROWSER_MAXIMIZE_FALLBACK = "aeon.browser.maximize.fallback";
+        LANGUAGE("aeon.selenium.language"),
+        MOVE_MOUSE_TO_ORIGIN("aeon.selenium.move_mouse_to_origin"),
+        USE_MOBILE_USER_AGENT("aeon.selenium.use_mobile_user_agent"),
+        PROXY_LOCATION("aeon.selenium.proxy_location"),
+        SELENIUM_GRID_URL("aeon.selenium.grid.url"),
+        ENSURE_CLEAN_ENVIRONMENT("aeon.selenium.ensure_clean_environment"),
+        CHROME_DIRECTORY("aeon.selenium.chrome.driver"),
+        IE_DIRECTORY("aeon.selenium.ie.driver"),
+        MARIONETTE_DIRECTORY("aeon.selenium.firefox.driver"),
+        OPERA_DIRECTORY("aeon.selenium.opera.driver"),
+        EDGE_DIRECTORY("aeon.selenium.edge.driver"),
+        CHROME_BINARY("aeon.selenium.chrome.binary"),
+        FIREFOX_BINARY("aeon.selenium.firefox.binary"),
+        OPERA_BINARY("aeon.selenium.opera.binary"),
+        CHROME_HEADLESS("aeon.selenium.chrome.headless"),
+        CHROME_MOBILE_EMULATION_DEVICE("aeon.selenium.chrome.mobile.emulation.device"),
+        IE_LOGGING_LEVEL("aeon.selenium.ie.logging.level"),
+        IE_LOGGING_PATH("aeon.selenium.ie.logging.path"),
+        LOGGING_BROWSER("aeon.selenium.logging.type.browser"),
+        LOGGING_CLIENT("aeon.selenium.logging.type.client"),
+        LOGGING_DRIVER("aeon.selenium.logging.type.driver"),
+        LOGGING_PERFORMANCE("aeon.selenium.logging.type.performance"),
+        LOGGING_SERVER("aeon.selenium.logging.type.server"),
+        LOGGING_DIRECTORY("aeon.selenium.logging.directory"),
+        BROWSER_MAXIMIZE_FALLBACK("aeon.browser.maximize.fallback"),
 
         // Appium
-        public static final String APP = "aeon.selenium.appium.app";
-        public static final String DEVICE_NAME = "aeon.selenium.appium.device_name";
-        public static final String DEVICE_DESCRIPTION = "aeon.selenium.appium.device_description";
-        public static final String PLATFORM_VERSION = "aeon.selenium.appium.platform_version";
-        public static final String DRIVER_CONTEXT = "aeon.selenium.appium.driver_context";
-        public static final String WEBVIEW_TIMEOUT = "aeon.selenium.appium.webview.timeout";
-        public static final String CROSSWALK_PATCH = "aeon.selenium.appium.crosswalkpatch";
-        public static final String AUTOMATION_NAME = "aeon.selenium.appium.automation_name";
+        APP("aeon.selenium.appium.app"),
+        DEVICE_NAME("aeon.selenium.appium.device_name"),
+        DEVICE_DESCRIPTION("aeon.selenium.appium.device_description"),
+        PLATFORM_VERSION("aeon.selenium.appium.platform_version"),
+        DRIVER_CONTEXT("aeon.selenium.appium.driver_context"),
+        WEBVIEW_TIMEOUT("aeon.selenium.appium.webview.timeout"),
+        CROSSWALK_PATCH("aeon.selenium.appium.crosswalkpatch"),
+        AUTOMATION_NAME("aeon.selenium.appium.automation_name"),
 
         // Android
-        public static final String APP_PACKAGE = "aeon.selenium.android.app_package";
-        public static final String APP_ACTIVITY = "aeon.selenium.android.app_activity";
-        public static final String AVD_NAME = "aeon.selenium.android.avd_name";
+        APP_PACKAGE("aeon.selenium.android.app_package"),
+        APP_ACTIVITY("aeon.selenium.android.app_activity"),
+        AVD_NAME("aeon.selenium.android.avd_name"),
 
         //IOS
-        public static final String BUNDLE_ID = "aeon.selenium.ios.bundle_id";
-        public static final String WDA_PORT = "aeon.selenium.ios.wda_port";
-        public static final String UDID = "aeon.selenium.ios.udid";
+        BUNDLE_ID("aeon.selenium.ios.bundle_id"),
+        WDA_PORT("aeon.selenium.ios.wda_port"),
+        UDID("aeon.selenium.ios.udid");
+
+
+        private final String key;
+
+        Keys(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String getKey() {
+            return this.key;
+        }
     }
 
     @Override
-    protected List<Field> getConfigurationFields() {
-        List<Field> keys = new ArrayList<>();
+    protected List<AeonConfigKey> getConfigurationFields() {
+        List<AeonConfigKey> keys = new ArrayList<>();
         keys.addAll(super.getConfigurationFields());
-        keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.class.getDeclaredFields()));
+        keys.addAll(Arrays.asList(SeleniumConfiguration.Keys.values()));
         return keys;
     }
 
@@ -118,23 +130,23 @@ public class SeleniumConfiguration extends WebConfiguration {
 
     private void setBrowserDirectories() {
         String output = System.getProperty("user.dir");
-        properties.setProperty(Keys.IE_DIRECTORY, output + "/lib/windows/IEDriverServer.exe");
-        properties.setProperty(Keys.EDGE_DIRECTORY, output + "/lib/windows/MicrosoftWebDriver.exe");
+        properties.setProperty(Keys.IE_DIRECTORY.getKey(), output + "/lib/windows/IEDriverServer.exe");
+        properties.setProperty(Keys.EDGE_DIRECTORY.getKey(), output + "/lib/windows/MicrosoftWebDriver.exe");
         switch (OsCheck.getOperatingSystemType()) {
             case Windows:
-                properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/windows/geckodriver.exe");
-                properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/windows/chromedriver.exe");
-                properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/windows/operadriver.exe");
+                properties.setProperty(Keys.MARIONETTE_DIRECTORY.getKey(), output + "/lib/windows/geckodriver.exe");
+                properties.setProperty(Keys.CHROME_DIRECTORY.getKey(), output + "/lib/windows/chromedriver.exe");
+                properties.setProperty(Keys.OPERA_DIRECTORY.getKey(), output + "/lib/windows/operadriver.exe");
                 break;
             case MacOS:
-                properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/macos/geckodriver");
-                properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/macos/chromedriver");
-                properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/macos/operadriver");
+                properties.setProperty(Keys.MARIONETTE_DIRECTORY.getKey(), output + "/lib/macos/geckodriver");
+                properties.setProperty(Keys.CHROME_DIRECTORY.getKey(), output + "/lib/macos/chromedriver");
+                properties.setProperty(Keys.OPERA_DIRECTORY.getKey(), output + "/lib/macos/operadriver");
                 break;
             case Linux:
-                properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/linux/geckodriver");
-                properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/linux/chromedriver");
-                properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/linux/operadriver");
+                properties.setProperty(Keys.MARIONETTE_DIRECTORY.getKey(), output + "/lib/linux/geckodriver");
+                properties.setProperty(Keys.CHROME_DIRECTORY.getKey(), output + "/lib/linux/chromedriver");
+                properties.setProperty(Keys.OPERA_DIRECTORY.getKey(), output + "/lib/linux/operadriver");
                 break;
             default:
                 throw new IllegalStateException("Unsupported Operating System");

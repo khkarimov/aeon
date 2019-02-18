@@ -101,7 +101,6 @@ public class BaseConfiguration implements IConfiguration {
      */
     private void setProperties() {
         List<AeonConfigKey> keys = getConfigurationFields();
-        keys.addAll(Arrays.asList(Keys.values()));
         for (AeonConfigKey key : keys) {
             String keyValue = key.getKey();
             String environmentValue = getEnvironmentValue(keyValue.replace('.', '_'));
@@ -163,12 +162,12 @@ public class BaseConfiguration implements IConfiguration {
 
 
     /**
-     * Get a empty list contain fields.
+     * Get a list containing fields.
      *
      * @return List containing fields
      */
     protected List<AeonConfigKey> getConfigurationFields() {
-        return new ArrayList<>(Arrays.asList(Keys.values()));
+        return new ArrayList<>();
     }
 
     /**
@@ -184,11 +183,11 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Set boolean for a key and value pair.
      *
-     * @param key   A key from {@link Keys}.
+     * @param key   A key from {@link AeonConfigKey}.
      * @param value True or false.
      */
-    public void setBoolean(String key, boolean value) {
-        set(key, Boolean.toString(value));
+    public void setBoolean(AeonConfigKey key, boolean value) {
+        set(key.getKey(), Boolean.toString(value));
     }
 
     /**
@@ -197,8 +196,8 @@ public class BaseConfiguration implements IConfiguration {
      * @param key   the string of the key.
      * @param value the string value to set it to.
      */
-    public void setString(String key, String value) {
-        set(key, value);
+    public void setString(AeonConfigKey key, String value) {
+        set(key.getKey(), value);
     }
 
     /**
@@ -207,14 +206,14 @@ public class BaseConfiguration implements IConfiguration {
      * @param key   the string of the key to be set.
      * @param value the value to set.
      */
-    public void setDouble(String key, double value) {
-        set(key, Double.toString(value));
+    public void setDouble(AeonConfigKey key, double value) {
+        set(key.getKey(), Double.toString(value));
     }
 
     /**
      * Set the properties for the {@link Properties} command.
      *
-     * @param key   A key from {@link Keys}
+     * @param key   A key from {@link AeonConfigKey}
      * @param value True or false.
      */
     private void set(String key, String value) {
@@ -224,42 +223,31 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Get the boolean value of a key and value pair.
      *
-     * @param key          A key from {@link Keys}.
+     * @param key          A key from {@link AeonConfigKey}.
      * @param defaultValue True or false.
      * @return True or False representation of key and value pair.
      */
-    public boolean getBoolean(String key, boolean defaultValue) {
-        return Boolean.valueOf(get(key, Boolean.toString(defaultValue)));
+    public boolean getBoolean(AeonConfigKey key, boolean defaultValue) {
+        return Boolean.valueOf(get(key.getKey(), Boolean.toString(defaultValue)));
     }
 
     /**
      * Get the double value of a key and value pair.
      *
-     * @param key          A key from {@link Keys}.
+     * @param key          A key from {@link AeonConfigKey}.
      * @param defaultValue True or false.
      * @return Double representation of key and value pair.
      */
-    public double getDouble(String key, double defaultValue) {
-        return Double.parseDouble(get(key, Double.toString(defaultValue)));
+    public double getDouble(AeonConfigKey key, double defaultValue) {
+        return Double.parseDouble(get(key.getKey(), Double.toString(defaultValue)));
     }
 
     /**
      * Get the string value of a key and value pair.
      *
-     * @param key          A key from {@link Keys}.
+     * @param key          A key from {@link AeonConfigKey}.
      * @param defaultValue True or false.
      * @return String representation of key and value pair.
-     */
-    public String getString(String key, String defaultValue) {
-        return (get(key, defaultValue));
-    }
-
-    /**
-     * adasdasdas.
-     *
-     * @param key          asdasd
-     * @param defaultValue asda
-     * @return asda
      */
     public String getString(AeonConfigKey key, String defaultValue) {
         return get(key.getKey(), defaultValue);
@@ -285,41 +273,5 @@ public class BaseConfiguration implements IConfiguration {
         List<String> configurationKeys = new ArrayList<>(properties.stringPropertyNames());
         Collections.sort(configurationKeys);
         return configurationKeys;
-    }
-
-    /**
-     * Static class for the Configuration keys.
-     */
-    //public static class Keys {
-    //}
-
-    /**
-     * sdfsdfer.
-     */
-    public enum Keys implements AeonConfigKey {
-
-        TEST("asdsad"),
-        TEST2("ASdasd");
-
-        private final String key;
-
-        Keys(String key) {
-            this.key = key;
-        }
-
-        @Override
-        public String getKey() {
-            return this.key;
-        }
-    }
-
-    interface AeonConfigKey {
-
-        /**
-         * asdasdas.
-         *
-         * @return asd.
-         */
-        String getKey();
     }
 }

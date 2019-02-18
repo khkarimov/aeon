@@ -1,5 +1,6 @@
 package aeon.selenium.appium;
 
+import aeon.core.common.AeonConfigKey;
 import aeon.core.framework.abstraction.drivers.AeonMobileDriver;
 import aeon.selenium.SeleniumConfiguration;
 import org.slf4j.Logger;
@@ -7,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,21 +19,18 @@ public class AppiumConfiguration extends SeleniumConfiguration {
 
     private Logger log = LoggerFactory.getLogger(AppiumConfiguration.class);
 
-    static class Keys {
-    }
-
     @Override
-    protected List<Field> getConfigurationFields() {
-        List<Field> keys = new ArrayList<>();
+    protected List<AeonConfigKey> getConfigurationFields() {
+        List<AeonConfigKey> keys = new ArrayList<>();
         keys.addAll(super.getConfigurationFields());
-        keys.addAll(Arrays.asList(AppiumConfiguration.Keys.class.getDeclaredFields()));
+        keys.addAll(Arrays.asList(AppiumConfiguration.Keys.values()));
         return keys;
     }
 
     /**
      * Constructor for the Appium Configuration.  Configures that Aeon web driver and selenium adapter.
      */
-    public AppiumConfiguration() {
+    AppiumConfiguration() {
         super(AeonMobileDriver.class, AppiumAdapter.class);
     }
 
