@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .status {
@@ -28,8 +29,9 @@
 
         /* stack traces */
         pre {
-            margin:0;
+            margin: 0;
         }
+
         .stack.highlight {
             background-color: yellow;
         }
@@ -49,7 +51,9 @@
 <div ng-cloak layout="column">
     <md-toolbar ng-class="{'md-warn': results.counts.failed}">
         <div class="md-toolbar-tools">
-            <h2 flex md-truncate>Results <small ng-if="results.timer.duration"> - executed in {{ results.timer.duration / 1000 }} seconds</small></h2>
+            <h2 flex md-truncate>Results
+                <small ng-if="results.timer.duration"> - executed in {{ results.timer.duration / 1000 }} seconds</small>
+            </h2>
             <h6>
                 <span ng-if="results.counts.passed">Passed: {{ results.counts.passed }}</span>
                 <br ng-if="results.counts.passed"/>
@@ -126,7 +130,9 @@
                     <div flex>
                         <p>{{failure.message}}</p>
                         <small>
-                            <pre class="stack" ng-class="{'highlight': (results.options.highlightSuspectLine && line === failure.suspectLine) }" ng-repeat="line in failure.stack.split('\n') track by $index">{{line}}</pre>
+                            <pre class="stack"
+                                 ng-class="{'highlight': (results.options.highlightSuspectLine && line === failure.suspectLine) }"
+                                 ng-repeat="line in failure.stack.split('\n') track by $index">{{line}}</pre>
                         </small>
                     </div>
                 </div>
@@ -149,8 +155,10 @@
                 </div>
 
                 <!-- console logs -->
-                <md-subheader ng-if="activeItem.browserLogs.length !== 0">Console Logs</md-subheader>
-                <div class="console-logs" ng-class="log.level" flex layout="row" layout-padding ng-repeat="log in activeItem.browserLogs">
+                <md-subheader ng-if="activeItem.browserLogs && activeItem.browserLogs.length !== 0">Console Logs
+                </md-subheader>
+                <div class="console-logs" ng-class="log.level" flex layout="row" layout-padding
+                     ng-repeat="log in activeItem.browserLogs">
                     <div style="width: 75px;">
                         <strong>{{ log.level }}</strong>
                     </div>
@@ -195,7 +203,7 @@
             'failed': 'md-warn'
         };
 
-        $scope.results = RESULTS.reduce(function(combined, result) {
+        $scope.results = RESULTS.reduce(function (combined, result) {
 
             combined.options = combined.options || result.options;
             combined.timer = combined.timer || result.timer;
@@ -203,7 +211,7 @@
             combined.sequence = combined.sequence.concat(result.sequence);
 
             // sum the counts
-            Object.keys(result.counts).forEach(function(key) {
+            Object.keys(result.counts).forEach(function (key) {
                 combined.counts[key] = (combined.counts[key] || 0) + result.counts[key];
             });
 

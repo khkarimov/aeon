@@ -1,7 +1,7 @@
 package aeon.extensions.reporting.services;
 
+import aeon.core.common.interfaces.IConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
-import aeon.extensions.reporting.ReportingPlugin;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
@@ -20,16 +20,38 @@ import java.io.IOException;
 
 import static org.apache.http.HttpHeaders.USER_AGENT;
 
+/**
+ * Service for uploading files to Artifactory.
+ */
 public class ArtifactoryService {
 
-    private static String artifactoryUrl = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
-    private static String artifactoryPath = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
-    private static String username = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
-    private static String password = ReportingPlugin.configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
+    private String artifactoryUrl;
+    private String artifactoryPath;
+    private String username;
+    private String password;
 
     private static Logger log = LoggerFactory.getLogger(ArtifactoryService.class);
 
-    public static String uploadToArtifactory(String filePathName) {
+    /**
+     * Sets the Reporting plugin configuration.
+     *
+     * @param configuration The Reporting plugin configuration object.
+     */
+    public void setConfiguration(IConfiguration configuration) {
+
+        artifactoryUrl = configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_URL, "");
+        artifactoryPath = configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PATH, "");
+        username = configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_USERNAME, "");
+        password = configuration.getString(ReportingConfiguration.Keys.ARTIFACTORY_PASSWORD, "");
+    }
+
+    /**
+     * Uploads a file to artifactory.
+     *
+     * @param filePathName File path of the file to upload
+     * @return The target URL for the uploaded file.
+     */
+    public String uploadToArtifactory(String filePathName) {
 
         if (!allConfigFieldsAreSet()) {
             log.info("Not all artifactory properties set, cancelling file upload.");
@@ -53,18 +75,18 @@ public class ArtifactoryService {
         return fullRequestUrl;
     }
 
-    private static boolean allConfigFieldsAreSet() {
+    private boolean allConfigFieldsAreSet() {
         return !(artifactoryUrl.isEmpty()
                 || artifactoryPath.isEmpty()
                 || username.isEmpty()
                 || password.isEmpty());
     }
 
-    private static String getFullRequestUrl(String fileName) {
+    private String getFullRequestUrl(String fileName) {
         return artifactoryUrl + "/" + artifactoryPath + "/" + fileName;
     }
 
-    private static CredentialsProvider getCredentials(String username, String password) {
+    private CredentialsProvider getCredentials(String username, String password) {
         CredentialsProvider provider = new BasicCredentialsProvider();
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
         provider.setCredentials(AuthScope.ANY, credentials);
@@ -72,14 +94,14 @@ public class ArtifactoryService {
         return provider;
     }
 
-    private static HttpClient buildHttpClient() {
+    private HttpClient buildHttpClient() {
         CredentialsProvider provider = getCredentials(username, password);
         return HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(provider)
                 .build();
     }
 
-    private static HttpPut buildHttpPut(String fullRequestUrl, FileEntity fileEntity) {
+    private HttpPut buildHttpPut(String fullRequestUrl, FileEntity fileEntity) {
         HttpPut put = new HttpPut(fullRequestUrl);
         put.setHeader("User-Agent", USER_AGENT);
         put.setHeader("Content-type", "text/html");
@@ -87,13 +109,14 @@ public class ArtifactoryService {
         return put;
     }
 
-    private static boolean executeRequest(HttpClient client, HttpPut put) {
+    private boolean executeRequest(HttpClient client, HttpPut put) {
         try {
             HttpResponse response = client.execute(put);
             int statusCode = response.getStatusLine().getStatusCode();
 
             if (statusCode != HttpStatus.SC_CREATED) {
-                log.error(String.format("Did not receive successful status code for artifactory upload. Received: %d", statusCode));
+                log.error("Did not receive successful status code for artifactory upload. Received: {}.", statusCode);
+
                 return false;
             }
             return true;

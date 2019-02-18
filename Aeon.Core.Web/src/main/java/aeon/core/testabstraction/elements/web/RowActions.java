@@ -2,21 +2,21 @@ package aeon.core.testabstraction.elements.web;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.core.testabstraction.models.Component;
 
 /**
  * This class serves as a base for all grid row actions.
  *
  * @param <T> A sub class of RowActions. T must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
- * @param <K> A sub class of RowElements. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
  *            an IBy as the second parameter.
  */
-public abstract class RowActions<T extends RowActions, K extends RowElements> {
+public abstract class RowActions<T extends RowActions, K extends Component> {
 
     IByWeb selector;
     AutomationInfo automationInfo;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
     protected String rowSelector = "tr";
@@ -25,38 +25,38 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * Initializes a new instance of {@link RowActions} class.
      *
      * @param rowActionsClass A sub class of {@link RowActions}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param componentClass  A sub class of {@link Component}
      */
-    RowActions(Class<T> rowActionsClass, Class<K> rowElementsClass) {
-        this.rowElementsClass = rowElementsClass;
+    RowActions(Class<T> rowActionsClass, Class<K> componentClass) {
+        this.rowElementsClass = componentClass;
         this.rowActionsClass = rowActionsClass;
     }
 
     /**
      * Initializes a new instance of {@link RowActions} class.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
-     * @param switchMechanism The switch mechanism for the web element.
+     * @param automationInfo  The AutomationInfo.
+     * @param selector        IBy selector that will identify the element.
      * @param rowActionsClass A sub class of {@link RowActions}
-     * @param rowElementsClass A sub class of {@link RowElements}
+     * @param componentClass  A sub class of {@link Component}
+     * @param switchMechanism The switch mechanism for the web element.
      */
-    public RowActions(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, Class<T> rowActionsClass, Class<K> rowElementsClass) {
+    public RowActions(AutomationInfo automationInfo, IByWeb selector, Class<T> rowActionsClass, Class<K> componentClass, IByWeb... switchMechanism) {
         this.selector = selector;
         this.automationInfo = automationInfo;
-        this.switchMechanism = switchMechanism;
-        this.rowElementsClass = rowElementsClass;
+        this.rowElementsClass = componentClass;
         this.rowActionsClass = rowActionsClass;
+        this.switchMechanism = switchMechanism;
     }
 
     /**
      * Sets the context. This method has to be called from the wrapping class after initialization.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo  The AutomationInfo.
+     * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public void setContext(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism){
+    public void setContext(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
@@ -66,7 +66,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * Get the index of the referenced row that contains the row elements defined in the K class.
      *
      * @param index The index you are looking for.
-     *
      * @return Returns an instance of K.
      */
     public K index(int index) {
@@ -77,7 +76,6 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
      * Get a row by the index.
      *
      * @param index The index you are looking for.
-     *
      * @return Returns an instance of K.
      */
     protected K findRowByIndex(int index) {
@@ -107,7 +105,7 @@ public abstract class RowActions<T extends RowActions, K extends RowElements> {
         Class[] cArgs = new Class[3];
         cArgs[0] = AutomationInfo.class;
         cArgs[1] = IByWeb.class;
-        cArgs[2] = Iterable.class;
+        cArgs[2] = IByWeb[].class;
 
         try {
             return (K) classToLoad.getDeclaredConstructor(cArgs).newInstance(automationInfo, updatedSelector, switchMechanism);

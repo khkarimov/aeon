@@ -199,7 +199,8 @@ public class PCFRunnerServiceTests {
         assertEquals("aeon-runner-" + runnerId, manifest.getName());
         assertEquals("dockerImage", manifest.getDocker().getImage());
         assertEquals(ApplicationHealthCheck.HTTP, manifest.getHealthCheckType());
-        assertEquals("api/admin/healthcheck", manifest.getHealthCheckHttpEndpoint());
+        assertEquals("/api/admin/healthcheck", manifest.getHealthCheckHttpEndpoint());
+        assertEquals(2048, (int) manifest.getDisk());
         verify(this.deploymentTimeRepository, times(0)).insert(any(DeploymentTime.class));
         verify(this.notificationService, times(0)).notify(any(), anyString(), any());
         verify(this.runnerRepository, times(0)).save(any());

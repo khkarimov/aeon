@@ -10,12 +10,12 @@ public class ListItem extends WebElement {
 
     private AutomationInfo info;
     private IByWeb selector;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
 
     /**
      * Initializes a new instance of {@link ListItem} class.
      *
-     * @param info The AutomationInfo.
+     * @param info     The AutomationInfo.
      * @param selector IBy selector that will identify the element
      */
     public ListItem(AutomationInfo info, IByWeb selector) {
@@ -27,11 +27,11 @@ public class ListItem extends WebElement {
     /**
      * Initializes a new instance of {@link ListItem} class.
      *
-     * @param info The AutomationInfo.
-     * @param selector IBy selector that will identify the element
+     * @param info            The AutomationInfo.
+     * @param selector        IBy selector that will identify the element
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public ListItem(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public ListItem(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;

@@ -2,22 +2,24 @@ package aeon.core.command.execution.commands.mobile;
 
 import aeon.core.common.Resources;
 import aeon.core.framework.abstraction.drivers.IMobileDriver;
-import org.joda.time.DateTime;
+
+import java.time.LocalDate;
 
 /**
- * Sets the mobile device's orientation to portrait.
+ * Sets a date on the native date picker.
  */
 public class NativeSetDateCommand extends MobileCommand {
-    private final DateTime date;
+
+    private final LocalDate date;
 
     /**
      * Initializes a new instance of the {@link NativeSetDateCommand} class.
      *
-     * @param dateTime Date the date picker should be set to.
+     * @param date Date the date picker should be set to.
      */
-    public NativeSetDateCommand(String dateTime) {
+    public NativeSetDateCommand(String date) {
         super(Resources.getString("NativeSetDateCommand_Info"));
-        this.date = DateTime.parse(dateTime);
+        this.date = LocalDate.parse(date);
     }
 
     /**

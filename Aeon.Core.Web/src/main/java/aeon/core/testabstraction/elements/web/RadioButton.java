@@ -12,12 +12,12 @@ public class RadioButton extends WebElement {
 
     private AutomationInfo info;
     private IByWeb selector;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
 
     /**
      * Initializes a new instance of the {@link RadioButton} class.
      *
-     * @param info The AutomationInfo.
+     * @param info     The AutomationInfo.
      * @param selector IBy selector that will identify the element
      */
     public RadioButton(AutomationInfo info, IByWeb selector) {
@@ -27,12 +27,13 @@ public class RadioButton extends WebElement {
     }
 
     /**
-     *  Initializes a new instance of the {@link RadioButton} class with a switch mechanism.
-     * @param info The AutomationInfo.
-     * @param selector IBY selector that will identify the element.
+     * Initializes a new instance of the {@link RadioButton} class with a switch mechanism.
+     *
+     * @param info            The AutomationInfo.
+     * @param selector        IBY selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public RadioButton(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public RadioButton(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;

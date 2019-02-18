@@ -48,11 +48,11 @@ public class SelectFileCommandTests {
         selectFileCommand.commandDelegate(driver, control);
 
         //Assert
-        verify(driver,times(1)).selectFile(control, path);
+        verify(driver, times(1)).selectFile(control, path);
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> selectFileCommand.commandDelegate(null, null));
     }

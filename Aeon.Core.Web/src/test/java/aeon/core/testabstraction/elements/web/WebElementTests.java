@@ -7,8 +7,6 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.Configuration;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +15,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -40,7 +41,7 @@ public class WebElementTests {
     private IByWeb selector;
 
     @Mock
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb switchMechanism;
 
     @Mock
     private Configuration configuration;
@@ -54,9 +55,9 @@ public class WebElementTests {
     @Mock
     private ICommandExecutionFacade commandExecutionFacade;
 
-    private DateTime dateTime = new DateTime();
+    private LocalDate dateTime = LocalDate.now();
 
-    private Period period = new Period();
+    private Period period = Period.of(1, 1, 1);
 
     private String dummy = "dummy";
 
@@ -64,7 +65,7 @@ public class WebElementTests {
 
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         info1 = new AutomationInfo(configuration, driver, adapter);
         info1.setCommandExecutionFacade(commandExecutionFacade);
         webElement1 = new FileDialogInput(info1, selector);

@@ -60,7 +60,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
             log.trace("Could not find public static method 'createInstance' on " +
                     "the extension class. Falling back to using parameter-less constructor.");
 
-            return super.create(extensionClass);
+            return createInstanceUsingFallbackStrategy(extensionClass);
         }
 
         try {
@@ -69,7 +69,23 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
             log.trace("Could not invoke public static method 'createInstance' on " +
                     "the extension class. Falling back to using parameter-less constructor.");
 
-            return super.create(extensionClass);
+            return createInstanceUsingFallbackStrategy(extensionClass);
         }
+    }
+
+    private Object createInstanceUsingFallbackStrategy(Class<?> extensionClass) {
+        try {
+            extensionClass.getConstructor();
+        } catch (NoSuchMethodException noSuchMethodException) {
+            String message = String.format("Could not successfully invoke public static " +
+                    "method 'createInstance' on the extension %s and there is also " +
+                    "no parameter-less constructor present", extensionClass);
+
+            log.error(message);
+
+            throw new IllegalStateException(message);
+        }
+
+        return super.create(extensionClass);
     }
 }

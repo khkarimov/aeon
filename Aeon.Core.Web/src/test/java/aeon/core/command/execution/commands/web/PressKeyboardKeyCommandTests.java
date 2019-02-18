@@ -16,9 +16,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -40,8 +38,8 @@ public class PressKeyboardKeyCommandTests {
     private KeyboardKey key;
 
     @ParameterizedTest
-    @EnumSource(value = KeyboardKey.class, names = {"UP","TAB","SHIFT","END","DOWN","INSERT","DELETE","ESCAPE"})
-    public void commandDelegatePressKeyboardKeyCommand(KeyboardKey key){
+    @EnumSource(value = KeyboardKey.class, names = {"UP", "TAB", "SHIFT", "END", "DOWN", "INSERT", "DELETE", "ESCAPE"})
+    public void commandDelegatePressKeyboardKeyCommand(KeyboardKey key) {
         //Arrange
         this.key = key;
         pressKeyboardKeyCommandObject = new PressKeyboardKeyCommand(selector, initializer, this.key);

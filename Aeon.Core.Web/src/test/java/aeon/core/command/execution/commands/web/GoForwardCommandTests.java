@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -44,8 +43,8 @@ public class GoForwardCommandTests {
     /**
      * Move forward a single entry in the browser's history.
      * Usage:
-     *       Context.browser.goForward();
-     *
+     * Context.browser.goForward();
+     * <p>
      * Does nothing if we are on the latest page viewed.
      */
     @Test

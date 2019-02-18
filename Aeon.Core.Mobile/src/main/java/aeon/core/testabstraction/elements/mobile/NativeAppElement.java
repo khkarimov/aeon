@@ -12,7 +12,7 @@ public class NativeAppElement extends WebElement {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
+     * @param info     The automation info object to use.
      * @param selector The selector that identifies this element.
      */
     public NativeAppElement(AutomationInfo info, IByWeb selector) {
@@ -31,11 +31,11 @@ public class NativeAppElement extends WebElement {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
-     * @param selector The selector that identifies this element.
+     * @param info            The automation info object to use.
+     * @param selector        The selector that identifies this element.
      * @param switchMechanism The switchMechanism to use to find the element.
      */
-    public NativeAppElement(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public NativeAppElement(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
     }
 }

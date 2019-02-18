@@ -5,7 +5,6 @@ import aeon.core.common.ComparisonOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +22,7 @@ public class HasLikeCommandTests {
 
     private HasLikeCommand hasLikeCommand;
 
-    private String [] messages = {"test", "test1", "test2", "test3"};
+    private String[] messages = {"test", "test1", "test2", "test3"};
     private String childSelector = "Child";
     private String attribute = "attribute";
 
@@ -37,10 +36,12 @@ public class HasLikeCommandTests {
     private WebControl control;
 
     @BeforeEach
-    public void setup(){ hasLikeCommand = new HasLikeCommand(selector, initializer, messages, childSelector, ComparisonOption.Text, attribute); }
+    public void setup() {
+        hasLikeCommand = new HasLikeCommand(selector, initializer, messages, childSelector, ComparisonOption.Text, attribute);
+    }
 
     @Test
-    public void HasAllOptionsInOrderCommandTestsInOrder(){
+    public void HasAllOptionsInOrderCommandTestsInOrder() {
         // Arrange
 
         // Act

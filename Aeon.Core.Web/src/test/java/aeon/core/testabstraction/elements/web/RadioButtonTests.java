@@ -40,7 +40,7 @@ public class RadioButtonTests {
     private IByWeb selector;
 
     @Mock
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb switchMechanism;
 
     @Mock
     private Configuration configuration;
@@ -55,7 +55,7 @@ public class RadioButtonTests {
     private ICommandExecutionFacade commandExecutionFacade;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         info1 = new AutomationInfo(configuration, driver, adapter);
         info1.setCommandExecutionFacade(commandExecutionFacade);
         radioButton1 = new RadioButton(info1, selector);

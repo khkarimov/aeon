@@ -16,12 +16,12 @@ public class TextBox extends WebElement {
 
     private AutomationInfo info;
     private IByWeb selector;
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb[] switchMechanism;
 
     /**
      * Initialize a new instance of {@link TextBox} class.
      *
-     * @param info The AutomationInfo.
+     * @param info     The AutomationInfo.
      * @param selector IBy selector that will identify the element
      */
     public TextBox(AutomationInfo info, IByWeb selector) {
@@ -31,12 +31,13 @@ public class TextBox extends WebElement {
     }
 
     /**
-     *  Initializes a new instance of the {@link TextBox} class with a switch mechanism.
-     * @param info The AutomationInfo.
-     * @param selector IBY selector that will identify the element.
+     * Initializes a new instance of the {@link TextBox} class with a switch mechanism.
+     *
+     * @param info            The AutomationInfo.
+     * @param selector        IBY selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public TextBox(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public TextBox(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;

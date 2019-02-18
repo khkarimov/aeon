@@ -10,7 +10,7 @@ import aeon.platform.http.threads.ThreadFactory;
 import aeon.platform.session.ISession;
 import com.codahale.metrics.annotation.Timed;
 import org.bson.types.ObjectId;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

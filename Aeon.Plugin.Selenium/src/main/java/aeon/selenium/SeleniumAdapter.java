@@ -18,8 +18,6 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -41,6 +39,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +58,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private final URL seleniumHubUrl;
     protected WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
+    private IJavaScriptFlowExecutor asyncJavaScriptExecutor;
     private boolean moveMouseToOrigin;
     protected BrowserType browserType;
     private static Logger log = LoggerFactory.getLogger(SeleniumAdapter.class);
@@ -69,19 +70,21 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Constructor for Selenium Adapter.
      *
-     * @param seleniumWebDriver     The driver for the adapter.
-     * @param javaScriptExecutor    The javaScript executor for the adapter.
-     * @param moveMouseToOrigin     A boolean indicating whether or not the mouse will return to the origin
-     *                              (top left corner of the browser window) before executing every action.
-     * @param browserType           The browser type for the adapter.
-     * @param fallbackBrowserSize   The size the browser will be maximized to.
-     * @param isRemote              Whether we are testing remotely or locally.
-     * @param seleniumHubUrl        The used Selenium hub URL.
-     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
-     * @param loggingPreferences    Preferences which contain which Selenium log types to enable
+     * @param seleniumWebDriver       The driver for the adapter.
+     * @param javaScriptExecutor      The javaScript executor for the adapter.
+     * @param asyncJavaScriptExecutor The asynchronous javaScript executor for the adapter.
+     * @param moveMouseToOrigin       A boolean indicating whether or not the mouse will return to the origin
+     *                                (top left corner of the browser window) before executing every action.
+     * @param browserType             The browser type for the adapter.
+     * @param fallbackBrowserSize     The size the browser will be maximized to.
+     * @param isRemote                Whether we are testing remotely or locally.
+     * @param seleniumHubUrl          The used Selenium hub URL.
+     * @param seleniumLogsDirectory   The path to the directory for Selenium Logs
+     * @param loggingPreferences      Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
+        this.asyncJavaScriptExecutor = asyncJavaScriptExecutor;
         this.webDriver = seleniumWebDriver;
         this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
@@ -745,6 +748,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
+     * Executes asynchronous JavaScript.
+     *
+     * @param script Script to execute.
+     * @param args   Args to pass to JavaScriptExecutor.
+     * @return An object returned from the script executed.
+     */
+    public final Object executeAsyncScript(String script, Object... args) {
+        try {
+            return asyncJavaScriptExecutor.getExecutor()
+                    .apply(new SeleniumScriptExecutor(webDriver), script, Arrays.asList(args));
+        } catch (RuntimeException e) {
+            throw new ScriptExecutionException(script, e);
+        }
+    }
+
+    /**
      * Accesses the history of the browser to execute the back function.
      */
     public final void back() {
@@ -780,10 +799,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     /**
      * Maximizes the browser window.
      * <p>
-     * Workaround implemented for chromiun browsers running in MacOS due to maximize default behaviour
+     * Workaround implemented for Chromium browsers running in MacOS due to maximize default behaviour
      * only expanding vertically. More information can be found at:
      * https://bugs.chromium.org/p/chromedriver/issues/detail?id=985
-     * Also problems with maximize in chrome 60:
+     * Also problems with maximize in Chrome 60:
      * https://bugs.chromium.org/p/chromedriver/issues/detail?id=1901
      */
     public void maximize() {
@@ -1232,7 +1251,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element  The select element which should contain the options.
      * @param options  The options.
      * @param optgroup The optional option group.
-     * @param select   The method by which the options are identifed, either their value or their visible text.
+     * @param select   The method by which the options are identified, either their value or their visible text.
      */
     public void elementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
         if (!((SeleniumElement) element).getTagName().equals("select")) {
@@ -1337,12 +1356,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that a select has all the specified elements in that order. Can optionally specify which optiongroup the elements are a part of.
+     * Asserts that a select has all the specified elements in that order. Can optionally specify which option group the elements are a part of.
      *
      * @param element  The select element to search.
      * @param options  The options the element should have in the same order.
      * @param optgroup The option group the options should be a part of.
-     * @param select   The method by which the options are identifed, either their value, or their visible text.
+     * @param select   The method by which the options are identified, either their value, or their visible text.
      */
     public void elementHasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select) {
         if (!((SeleniumElement) element).getTagName().equals("select")) {
@@ -1408,7 +1427,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @param element  The select element to be searched.
      * @param compare  The method by which the options will be compared.
-     * @param optGroup An optional option group which would be searched in isolation instad of all the options under select.
+     * @param optGroup An optional option group which would be searched in isolation instead of all the options under select.
      */
     public void hasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup) {
         if (optGroup != null) {
@@ -1497,7 +1516,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element   The web control whose children are to be searched.
      * @param messages  The strings to be compared to.
      * @param selector  The selectors that the children will be matched to.
-     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param option    Whether the children's visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
     public void has(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
@@ -1533,7 +1552,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element   The web control whose children are to be searched.
      * @param messages  The strings to be compared to.
      * @param selector  The selectors that the children will be matched to.
-     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param option    Whether the children's visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
     public void hasLike(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
@@ -1566,10 +1585,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that an elements children do not posses a text.
+     * Asserts that an elements children do not possess a text.
      *
      * @param element   The web element to be searched.
-     * @param messages  The text that the chilren should not posses.
+     * @param messages  The text that the children should not possess.
      * @param selector  The selector for the children to be searched.
      * @param option    The comparison option to be compared.
      * @param attribute The string attribute to get.
@@ -1601,10 +1620,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     /**
-     * Asserts that an elements children do not posses a text. Comparisons made ignoring case and whitespace.
+     * Asserts that an elements children do not possess a text. Comparisons made ignoring case and whitespace.
      *
      * @param element   The web element to be searched.
-     * @param messages  The text that the chilren should not posses.
+     * @param messages  The text that the children should not possess.
      * @param selector  The selector for the children to be searched.
      * @param option    The comparison option to be compared.
      * @param attribute The string attribute to get.
@@ -1642,7 +1661,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element   The web control whose children are to be searched.
      * @param messages  The strings to be compared to.
      * @param selector  The selectors that the children will be matched to.
-     * @param option    Whether the childrens visible text will be searched or an attribute.
+     * @param option    Whether the children's visible text will be searched or an attribute.
      * @param attribute The attribute that will be searched.
      */
     public void hasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute) {
@@ -1871,19 +1890,19 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     /**
      * Obtains a date from an elements attribute and compares it with an expected date. Has a
-     * Margin of error. The date must be in the ISO-8601 standard.
+     * margin of error. The date must be in the ISO-8601 standard.
      *
-     * @param element       The element that posseses the date.
+     * @param element       The element that possesses the date.
      * @param attributeName The name of the attribute that has the date.
-     * @param expectedDate  The expected date that the attribute should posses.
-     * @param delta         The margin of error that the date can be within. Cannot posses any weeks, months or years due to
+     * @param expectedDate  The expected date that the attribute should possess.
+     * @param delta         The margin of error that the date can be within. Cannot possess any weeks, months or years due to
      *                      them having variable lengths.
      */
     @Override
-    public void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expectedDate, Period delta) {
+    public void datesApproximatelyEqual(WebControl element, String attributeName, LocalDate expectedDate, Period delta) {
         String actualString = ((SeleniumElement) element).getAttribute(attributeName);
         try {
-            DateTime actualDate = DateTime.parse(actualString);
+            LocalDate actualDate = LocalDate.parse(actualString);
             if (!approximatelyEquals(actualDate, expectedDate, delta)) {
                 throw new DatesNotApproximatelyEqualException(expectedDate, actualDate, delta);
             }

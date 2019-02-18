@@ -1,41 +1,78 @@
 package aeon.core.testabstraction.elements.web;
 
-import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.interfaces.IByWeb;
+import aeon.core.framework.abstraction.drivers.IWebDriver;
+import aeon.core.testabstraction.models.Component;
 
 /**
- * The class to model tables.
+ * This class serves as a base for all classes that define a component table.
  *
- * @param <T> the {@link TableActions} class for this table model.
+ * @param <T> A sub class of Table. T must have a constructor that accepts an AutomationInfo object as the first parameter and
+ *            an IBy as the second parameter.
+ * @param <K> A sub class of Component. K must have a constructor that accepts an AutomationInfo object as the first parameter and
+ *            an IBy as the second parameter.
+ * @deprecated Please use {@link ComponentList} instead.
  */
-public abstract class Table<T extends TableActions> {
+@Deprecated
+public abstract class Table<T extends Table, K extends Component> extends RowActions<T, K> {
 
-    public T rowBy;
+    protected String cellSelector = "td";
 
     /**
-     * Creates a new instance of {@link Table}.
+     * Initializes a new instance of {@link Table} class.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
-     * @param rowBy The {@link TableActions} object to use for table actions
+     * @param tableClass  A sub class of {@link Table}
+     * @param componentClass A sub class of {@link Component}
      */
-    public Table(AutomationInfo automationInfo, IByWeb selector, T rowBy) {
-        this.rowBy = rowBy;
-
-        this.rowBy.setContext(automationInfo, selector, null);
+    public Table(Class<T> tableClass, Class<K> componentClass) {
+        super(tableClass, componentClass);
     }
 
     /**
-     * Creates a new instance of {@link Table}.
+     * Get the index of the referenced row that contains the row elements defined in the K class.
      *
-     * @param automationInfo The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
-     * @param switchMechanism The switch mechanism for the web element.
-     * @param rowBy The {@link TableActions} object to use for table actions
+     * @param index The index you are looking for.
+     * @return Returns an instance of K.
      */
-    public Table(AutomationInfo automationInfo, IByWeb selector, Iterable<IByWeb> switchMechanism, T rowBy) {
-        this.rowBy = rowBy;
+    public K index(int index) {
+        return findRowByIndex(index);
+    }
 
-        this.rowBy.setContext(automationInfo, selector, switchMechanism);
+    /**
+     * Get a row by the index.
+     *
+     * @param index The index you are looking for.
+     * @return Returns an instance of K.
+     */
+    protected K findRowByIndex(int index) {
+        IByWeb updatedSelector = selector.toJQuery().find(String.format("%1$s:nth-child(%2$d)", rowSelector, index));
+
+        return newInstanceOfK(updatedSelector);
+    }
+
+    /**
+     * Get a row by the value and column header.
+     *
+     * @param value        The value you are looking for.
+     * @param columnHeader The header of the column.
+     * @return Returns an instance of T.
+     */
+    protected T findRow(String value, IByWeb columnHeader) {
+        IByWeb updatedSelector = selector.toJQuery()
+                .find(String.format("%1$s:nth-child(%2$s)", cellSelector, getColumnIndex(columnHeader)))
+                .filter(String.format("%1$s:contains(%2$s)", cellSelector, value))
+                .parents(String.format("%1$s", rowSelector));
+
+        return newInstanceOfT(updatedSelector);
+    }
+
+    /**
+     * Gets the column index based on the selector.
+     *
+     * @param columnSelector Selector for the column.
+     * @return the column index
+     */
+    private long getColumnIndex(IByWeb columnSelector) {
+        return (long) ((IWebDriver) automationInfo.getDriver()).executeScript(String.format("var a=%1$s.index();return a;", columnSelector.toJQuery())) + 1;
     }
 }
