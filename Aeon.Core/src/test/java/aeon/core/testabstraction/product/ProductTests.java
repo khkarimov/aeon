@@ -1,6 +1,7 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.command.execution.AutomationInfo;
+import aeon.core.common.AeonConfigKey;
 import aeon.core.common.Capability;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
@@ -44,7 +45,7 @@ public class ProductTests {
 
     private Product spyproduct;
 
-    private String key = null;
+    private AeonConfigKey key = Configuration.Keys.TIMEOUT;
 
     @BeforeEach
     public void setUp() {
@@ -178,10 +179,10 @@ public class ProductTests {
 
         // Arrange
         product.setConfiguration(configuration);
-        when(configuration.getString(key, key)).thenReturn("Test Passed");
+        when(configuration.getString(key, "")).thenReturn("Test Passed");
 
         // Act
-        String call = product.getConfig(key, key);
+        String call = product.getConfig(key, "");
 
         // Assert
         assertEquals(call, "Test Passed");

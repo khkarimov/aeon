@@ -1,6 +1,7 @@
 package tests;
 
 import aeon.core.common.web.BrowserType;
+import aeon.selenium.SeleniumConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class UltiProAppTests {
         ultiProApp = launch(UltiProApp.class);
 
         // iOS does not support app cache cleaning
-        String appPath = ultiProApp.getConfig("aeon.selenium.appium.app", "");
+        String appPath = ultiProApp.getConfig(SeleniumConfiguration.Keys.APP, "");
         if (ultiProApp.browser.getBrowserType() == BrowserType.IOSHybridApp && appPath.isEmpty()) {
             try {
                 ultiProApp.iOSIdentitySignInPage.doneButton.click();

@@ -22,6 +22,7 @@ clean.doFirst {
 
 dependencies {
     compile project(':Aeon.Core.Mobile')
+    compile project(':Aeon.Plugin.Selenium')
 }
 
 systemTest {

@@ -1,5 +1,6 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.AeonConfigKey;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -62,14 +61,14 @@ public class ConfigurationTests {
 
         // Arrange
         Properties p = new Properties();
-        p.put("test", "Default");
-        p.setProperty("test", "Success");
+        p.put(Configuration.Keys.TIMEOUT, "Default");
+        p.setProperty(Configuration.Keys.TIMEOUT.getKey(), "Success");
 
         // Act
         config.setProperties(p);
 
         // Assert
-        String actual = config.getString("test", "Default");
+        String actual = config.getString(Configuration.Keys.TIMEOUT, "Default");
         assertEquals("Success", actual);
     }
 
@@ -79,19 +78,11 @@ public class ConfigurationTests {
         // Arrange
 
         // Act
-        List<Field> keys = config.getConfigurationFields();
-        List<Field> nonSynthetic = new ArrayList<>();
-
-        for (Field field : keys) {
-            if (!field.isSynthetic()) {
-                nonSynthetic.add(field);
-                nonSynthetic.get(nonSynthetic.size() - 1).setAccessible(true);
-            }
-        }
+        List<AeonConfigKey> keys = config.getConfigurationFields();
 
         // Assert
-        assertEquals("aeon.timeout", nonSynthetic.get(0).get(config));
-        assertEquals("aeon.throttle", nonSynthetic.get(1).get(config));
-        assertEquals("aeon.implicit_reporting", nonSynthetic.get(2).get(config));
+        assertEquals("aeon.timeout", keys.get(0).getKey());
+        assertEquals("aeon.throttle", keys.get(1).getKey());
+        assertEquals("aeon.implicit_reporting", keys.get(2).getKey());
     }
 }

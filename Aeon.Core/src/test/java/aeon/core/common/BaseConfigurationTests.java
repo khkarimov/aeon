@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -53,7 +52,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testInvalidTestPropertiesFile() throws IOException, IllegalAccessException {
+    public void testInvalidTestPropertiesFile() throws IOException {
         // Arrange
         when(spyConfig.getDefaultConfigInputStream()).thenReturn(null);
         when(properties.propertyNames()).thenReturn(enumerationList);
@@ -68,7 +67,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testValidTestPropertiesFile() throws IOException, IllegalAccessException {
+    public void testValidTestPropertiesFile() throws IOException {
         // Arrange
         when(spyConfig.getDefaultConfigInputStream()).thenReturn(inputStream);
         when(properties.propertyNames()).thenReturn(enumerationList);
@@ -82,7 +81,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testThrowsException() throws IllegalAccessException, IOException {
+    public void testThrowsException() {
         // Arrange
         String errorMessage = "No aeon.properties file was found.";
         when(spyConfig.getAeonInputStream()).thenReturn(null);
@@ -97,7 +96,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testAeonConfigNotDefined() throws IOException, IllegalAccessException {
+    public void testAeonConfigNotDefined() throws IOException {
         // Arrange
         when(spyConfig.getEnvironmentValue("AEON_CONFIG")).thenReturn(null);
 
@@ -119,7 +118,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testValidAbsoluteAeonConfigDefinition() throws IOException, IllegalAccessException {
+    public void testValidAbsoluteAeonConfigDefinition() throws IOException {
         // Arrange
         Path relativePath = Paths.get(".").toAbsolutePath().getParent();
         Path absolutePath = Paths.get(relativePath + "/src/main/resources/aeon.properties").toAbsolutePath();
@@ -134,9 +133,8 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testKeys() throws IOException, IllegalAccessException {
-        List<Field> fieldList = Arrays.stream(Configuration.Keys.class.getDeclaredFields())
-                .filter(field -> !field.isSynthetic())
+    public void testKeys() throws IOException {
+        List<AeonConfigKey> fieldList = Arrays.stream(Configuration.Keys.values())
                 .collect(Collectors.toList());
 
         // Arrange
@@ -146,8 +144,8 @@ public class BaseConfigurationTests {
         spyConfig.loadConfiguration();
 
         // Assert
-        Assertions.assertTrue(fieldList.get(0).isAccessible());
-        Assertions.assertTrue(fieldList.get(1).isAccessible());
+        Assertions.assertNotNull(fieldList.get(0));
+        Assertions.assertNotNull(fieldList.get(1));
     }
 
     @Test
@@ -156,8 +154,7 @@ public class BaseConfigurationTests {
         // Arrange
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
         when(spyConfig.getEnvironmentValue("aeon.throttle")).thenReturn("testEnv2");
-        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.class.getDeclaredFields())
-                .filter(field -> !field.isSynthetic())
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.values())
                 .collect(Collectors.toList()));
         when(properties.propertyNames()).thenReturn(enumerationList);
 
@@ -178,8 +175,7 @@ public class BaseConfigurationTests {
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
         when(spyConfig.getEnvironmentValue("aeon.throttle")).thenReturn("testEnv2");
         when(spyConfig.getEnvironmentValue("aeon_throttle")).thenReturn("testEnv3");
-        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.class.getDeclaredFields())
-                .filter(field -> !field.isSynthetic())
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.values())
                 .collect(Collectors.toList()));
         when(properties.propertyNames()).thenReturn(enumerationList);
 
@@ -201,8 +197,7 @@ public class BaseConfigurationTests {
         // Arrange
         when(spyConfig.getEnvironmentValue("aeon.timeout")).thenReturn("testEnv");
         when(spyConfig.getEnvironmentValue("aeon_throttle")).thenReturn("testEnv3");
-        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.class.getDeclaredFields())
-                .filter(field -> !field.isSynthetic())
+        when(spyConfig.getConfigurationFields()).thenReturn(Arrays.stream(Configuration.Keys.values())
                 .collect(Collectors.toList()));
         when(properties.propertyNames()).thenReturn(enumerationList);
 
@@ -219,7 +214,7 @@ public class BaseConfigurationTests {
     }
 
     @Test
-    public void testEnumeration() throws IOException, IllegalAccessException {
+    public void testEnumeration() throws IOException {
         // Arrange
 
         // Act
@@ -232,9 +227,9 @@ public class BaseConfigurationTests {
     @Test
     public void testSetBoolean() {
         // Arrange
-        config.setBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", true);
+        config.setBoolean(Configuration.Keys.TIMEOUT, true);
         // Act
-        String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "false");
+        String testVar = config.getString(Configuration.Keys.TIMEOUT, "false");
         // Assert
         Assertions.assertEquals("true", testVar);
     }
@@ -242,9 +237,9 @@ public class BaseConfigurationTests {
     @Test
     public void testSetString() {
         // Arrange
-        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "true");
+        config.setString(Configuration.Keys.TIMEOUT, "true");
         // Act
-        Boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", false);
+        Boolean testVar = config.getBoolean(Configuration.Keys.TIMEOUT, false);
         // Assert
         Assertions.assertEquals(true, testVar);
     }
@@ -252,9 +247,9 @@ public class BaseConfigurationTests {
     @Test
     public void testSetDouble() {
         // Arrange
-        config.setDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 6.7);
+        config.setDouble(Configuration.Keys.TIMEOUT, 6.7);
         // Act
-        String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "4.58");
+        String testVar = config.getString(Configuration.Keys.TIMEOUT, "4.58");
         // Assert
         Assertions.assertEquals("6.7", testVar);
     }
@@ -262,9 +257,9 @@ public class BaseConfigurationTests {
     @Test
     public void testGetBoolean() {
         // Arrange
-        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "true");
+        config.setString(Configuration.Keys.TIMEOUT, "true");
         // Act
-        boolean testVar = config.getBoolean("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", false);
+        boolean testVar = config.getBoolean(Configuration.Keys.TIMEOUT, false);
         // Assert
         Assertions.assertEquals(true, testVar, "Not returning a boolean value");
     }
@@ -272,9 +267,9 @@ public class BaseConfigurationTests {
     @Test
     public void testGetDouble() {
         // Arrange
-        config.setString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "4.50");
+        config.setString(Configuration.Keys.TIMEOUT, "4.50");
         // Act
-        double testVar = config.getDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 1.58);
+        double testVar = config.getDouble(Configuration.Keys.TIMEOUT, 1.58);
         // Assert
         Assertions.assertEquals(4.5, testVar);
     }
@@ -282,9 +277,9 @@ public class BaseConfigurationTests {
     @Test
     public void testGetString() {
         // Arrange
-        config.setDouble("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", 6.7);
+        config.setDouble(Configuration.Keys.TIMEOUT, 6.7);
         // Act
-        String testVar = config.getString("Configuration.Keys.WAIT_FOR_AJAX_RESPONSES", "5.67");
+        String testVar = config.getString(Configuration.Keys.TIMEOUT, "5.67");
         // Assert
         Assertions.assertEquals("6.7", testVar, "Not returning correct string value");
     }

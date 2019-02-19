@@ -1,5 +1,6 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.AeonConfigKey;
 import aeon.core.common.web.BrowserType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,8 @@ import org.mockito.quality.Strictness;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -52,38 +52,36 @@ class WebConfigurationTests {
         // Arrange
 
         // Act
-        List<Field> keys = webConfiguration.getConfigurationFields().stream()
-                .filter(field -> !field.isSynthetic())
-                .collect(Collectors.toList());
+        List<AeonConfigKey> keys = new ArrayList<>(webConfiguration.getConfigurationFields());
 
         // Assert
-        assertEquals("aeon.timeout", keys.get(0).get(webConfiguration));
-        assertEquals("aeon.throttle", keys.get(1).get(webConfiguration));
-        assertEquals("aeon.implicit_reporting", keys.get(2).get(webConfiguration));
-        assertEquals("aeon.wait_for_ajax_responses", keys.get(3).get(webConfiguration));
-        assertEquals("aeon.browser", keys.get(4).get(webConfiguration));
-        assertEquals("aeon.environment", keys.get(5).get(webConfiguration));
-        assertEquals("aeon.protocol", keys.get(6).get(webConfiguration));
-        assertEquals("aeon.timeout.ajax", keys.get(7).get(webConfiguration));
-        assertEquals("aeon.browser.maximize", keys.get(8).get(webConfiguration));
-        assertEquals("aeon.scroll_element_into_view", keys.get(9).get(webConfiguration));
+        assertEquals("aeon.timeout", keys.get(0).getKey());
+        assertEquals("aeon.throttle", keys.get(1).getKey());
+        assertEquals("aeon.implicit_reporting", keys.get(2).getKey());
+        assertEquals("aeon.wait_for_ajax_responses", keys.get(3).getKey());
+        assertEquals("aeon.browser", keys.get(4).getKey());
+        assertEquals("aeon.environment", keys.get(5).getKey());
+        assertEquals("aeon.protocol", keys.get(6).getKey());
+        assertEquals("aeon.timeout.ajax", keys.get(7).getKey());
+        assertEquals("aeon.browser.maximize", keys.get(8).getKey());
+        assertEquals("aeon.scroll_element_into_view", keys.get(9).getKey());
     }
 
     @Test
     void loadModuleSettings_completesSuccessfully() throws IOException {
 
         // Arrange
-        webConfiguration.setBoolean("aeon.wait_for_ajax_responses", false);
-        webConfiguration.setBoolean("aeon.scroll_element_into_view", true);
-        webConfiguration.setString("aeon.timeout.ajax", "0");
+        webConfiguration.setBoolean(WebConfiguration.Keys.WAIT_FOR_AJAX_RESPONSES, false);
+        webConfiguration.setBoolean(WebConfiguration.Keys.SCROLL_ELEMENT_INTO_VIEW, true);
+        webConfiguration.setString(WebConfiguration.Keys.AJAX_TIMEOUT, "0");
 
         // Act
         webConfiguration.loadModuleSettings();
 
         // Assert
-        assertTrue(webConfiguration.getBoolean("aeon.wait_for_ajax_responses", true));
-        assertFalse(webConfiguration.getBoolean("aeon.scroll_element_into_view", false));
-        assertEquals("20", webConfiguration.getString("aeon.timeout.ajax", "20"));
+        assertTrue(webConfiguration.getBoolean(WebConfiguration.Keys.WAIT_FOR_AJAX_RESPONSES, true));
+        assertFalse(webConfiguration.getBoolean(WebConfiguration.Keys.SCROLL_ELEMENT_INTO_VIEW, false));
+        assertEquals("20", webConfiguration.getString(WebConfiguration.Keys.AJAX_TIMEOUT, "20"));
     }
 
     @Test
