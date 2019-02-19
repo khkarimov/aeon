@@ -1,6 +1,7 @@
 package aeon.extensions.reporting.services;
 
 import aeon.core.common.interfaces.IConfiguration;
+import aeon.core.testabstraction.product.WebConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,8 +45,8 @@ public class RnrService {
      * @param aeonConfiguration The Aeon configuration object.
      */
     public void setConfiguration(IConfiguration configuration, IConfiguration aeonConfiguration) {
-        this.browser = aeonConfiguration.getString("aeon.browser", "");
-        this.environmentUrl = aeonConfiguration.getString("aeon.environment", "");
+        this.browser = aeonConfiguration.getString(WebConfiguration.Keys.BROWSER, "");
+        this.environmentUrl = aeonConfiguration.getString(WebConfiguration.Keys.ENVIRONMENT, "");
         this.product = configuration.getString(ReportingConfiguration.Keys.PRODUCT, "");
         this.team = configuration.getString(ReportingConfiguration.Keys.TEAM, "");
         this.type = configuration.getString(ReportingConfiguration.Keys.TYPE, "");

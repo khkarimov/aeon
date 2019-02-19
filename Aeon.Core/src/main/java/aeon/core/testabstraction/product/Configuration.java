@@ -20,6 +20,27 @@ public class Configuration extends BaseConfiguration {
     private Class adapter;
 
     /**
+     * Enum for the Configuration keys.
+     */
+    public enum Keys implements AeonConfigKey {
+
+        TIMEOUT("aeon.timeout"),
+        THROTTLE("aeon.throttle"),
+        REPORTING("aeon.implicit_reporting");
+
+        private String key;
+
+        Keys(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String getKey() {
+            return this.key;
+        }
+    }
+
+    /**
      * Initializes a new instance of the {@link Configuration} class.
      *
      * @param driver  AeonWebDriver.class.
@@ -82,26 +103,5 @@ public class Configuration extends BaseConfiguration {
         List<AeonConfigKey> keys = super.getConfigurationFields();
         keys.addAll(Arrays.asList(Keys.values()));
         return keys;
-    }
-
-    /**
-     * Enum for the Configuration keys.
-     */
-    public enum Keys implements AeonConfigKey {
-
-        TIMEOUT("aeon.timeout"),
-        THROTTLE("aeon.throttle"),
-        REPORTING("aeon.implicit_reporting");
-
-        private String key;
-
-        Keys(String key) {
-            this.key = key;
-        }
-
-        @Override
-        public String getKey() {
-            return this.key;
-        }
     }
 }

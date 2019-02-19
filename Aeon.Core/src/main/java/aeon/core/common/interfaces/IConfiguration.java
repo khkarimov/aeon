@@ -1,7 +1,6 @@
 package aeon.core.common.interfaces;
 
 import aeon.core.common.AeonConfigKey;
-import aeon.core.common.BaseConfiguration;
 
 import java.io.IOException;
 
@@ -13,7 +12,7 @@ public interface IConfiguration {
     /**
      * Get the boolean value of a key and value pair.
      *
-     * @param key          A key from {@link BaseConfiguration.Keys} or any other configuration key.
+     * @param key          A key from {@link AeonConfigKey} or any other configuration key.
      * @param defaultValue True or false.
      * @return True or False representation of key and value pair.
      */
@@ -22,7 +21,7 @@ public interface IConfiguration {
     /**
      * Get the double value of a key and value pair.
      *
-     * @param key          A key from {@link BaseConfiguration.Keys} or any other configuration key.
+     * @param key          A key from {@link AeonConfigKey} or any other configuration key.
      * @param defaultValue True or false.
      * @return Double representation of key and value pair.
      */
@@ -31,7 +30,7 @@ public interface IConfiguration {
     /**
      * Get the string value of a key and value pair.
      *
-     * @param key          A key from {@link BaseConfiguration.Keys} or any other configuration key.
+     * @param key          A key from {@link AeonConfigKey} or any other configuration key.
      * @param defaultValue True or false.
      * @return String representation of key and value pair.
      */
@@ -43,5 +42,5 @@ public interface IConfiguration {
      * @throws IOException            If properties are not defined.
      * @throws IllegalAccessException If issue obtaining keys.
      */
-    public void loadConfiguration() throws IOException, IllegalAccessException;
+    void loadConfiguration() throws IOException, IllegalAccessException;
 }

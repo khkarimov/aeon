@@ -191,13 +191,43 @@ public class BaseConfiguration implements IConfiguration {
     }
 
     /**
+     * Set boolean for a key and value pair.
+     *
+     * @param key   A key string.
+     * @param value True or false.
+     */
+    public void setBoolean(String key, boolean value) {
+        set(key, Boolean.toString(value));
+    }
+
+    /**
+     * Sets a key to a specific value.
+     *
+     * @param key   the key.
+     * @param value the string value to set it to.
+     */
+    public void setString(AeonConfigKey key, String value) {
+        set(key.getKey(), value);
+    }
+
+    /**
      * Sets a key to a specific value.
      *
      * @param key   the string of the key.
      * @param value the string value to set it to.
      */
-    public void setString(AeonConfigKey key, String value) {
-        set(key.getKey(), value);
+    public void setString(String key, String value) {
+        set(key, value);
+    }
+
+    /**
+     * Sets the double given a string key and a double value.
+     *
+     * @param key   the key to be set.
+     * @param value the value to set.
+     */
+    public void setDouble(AeonConfigKey key, double value) {
+        set(key.getKey(), Double.toString(value));
     }
 
     /**
@@ -206,8 +236,8 @@ public class BaseConfiguration implements IConfiguration {
      * @param key   the string of the key to be set.
      * @param value the value to set.
      */
-    public void setDouble(AeonConfigKey key, double value) {
-        set(key.getKey(), Double.toString(value));
+    public void setDouble(String key, double value) {
+        set(key, Double.toString(value));
     }
 
     /**
@@ -232,6 +262,17 @@ public class BaseConfiguration implements IConfiguration {
     }
 
     /**
+     * Get the boolean value of a key and value pair.
+     *
+     * @param key          A key value string.
+     * @param defaultValue True or false.
+     * @return True or False representation of key and value pair.
+     */
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return Boolean.valueOf(get(key, Boolean.toString(defaultValue)));
+    }
+
+    /**
      * Get the double value of a key and value pair.
      *
      * @param key          A key from {@link AeonConfigKey}.
@@ -243,6 +284,17 @@ public class BaseConfiguration implements IConfiguration {
     }
 
     /**
+     * Get the double value of a key and value pair.
+     *
+     * @param key          A key value string.
+     * @param defaultValue True or false.
+     * @return Double representation of key and value pair.
+     */
+    public double getDouble(String key, double defaultValue) {
+        return Double.parseDouble(get(key, Double.toString(defaultValue)));
+    }
+
+    /**
      * Get the string value of a key and value pair.
      *
      * @param key          A key from {@link AeonConfigKey}.
@@ -251,6 +303,17 @@ public class BaseConfiguration implements IConfiguration {
      */
     public String getString(AeonConfigKey key, String defaultValue) {
         return get(key.getKey(), defaultValue);
+    }
+
+    /**
+     * Get the string value of a key and value pair.
+     *
+     * @param key          A key value string.
+     * @param defaultValue True or false.
+     * @return String representation of key and value pair.
+     */
+    public String getString(String key, String defaultValue) {
+        return get(key, defaultValue);
     }
 
     /**
