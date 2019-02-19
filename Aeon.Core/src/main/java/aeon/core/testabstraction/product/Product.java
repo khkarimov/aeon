@@ -141,6 +141,17 @@ public abstract class Product {
     }
 
     /**
+     * Returns a boolean based on a key and a defaultValue of the configuration.
+     *
+     * @param key          The key value string to be compared.
+     * @param defaultValue The default boolean to be compared.
+     * @return the truth of the comparison.
+     */
+    public boolean getConfig(String key, boolean defaultValue) {
+        return configuration.getBoolean(key, defaultValue);
+    }
+
+    /**
      * Returns a string based on a key and a defaultValue of the configuration.
      *
      * @param key          The key to be compared.
@@ -152,6 +163,17 @@ public abstract class Product {
     }
 
     /**
+     * Returns a string based on a key and a defaultValue of the configuration.
+     *
+     * @param key          The key value string to be compared.
+     * @param defaultValue The default string to be compared.
+     * @return the string of the configuration.
+     */
+    public String getConfig(String key, String defaultValue) {
+        return configuration.getString(key, defaultValue);
+    }
+
+    /**
      * Returns a double based on a key and a defaultValue of the configuration.
      *
      * @param key          The key to be compared.
@@ -159,6 +181,17 @@ public abstract class Product {
      * @return the double of the configuration.
      */
     public double getConfig(AeonConfigKey key, double defaultValue) {
+        return configuration.getDouble(key, defaultValue);
+    }
+
+    /**
+     * Returns a double based on a key and a defaultValue of the configuration.
+     *
+     * @param key          The key value string to be compared.
+     * @param defaultValue The default string to be compared.
+     * @return the double of the configuration.
+     */
+    public double getConfig(String key, double defaultValue) {
         return configuration.getDouble(key, defaultValue);
     }
 }

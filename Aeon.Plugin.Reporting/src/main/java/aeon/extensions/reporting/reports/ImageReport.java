@@ -1,7 +1,6 @@
 package aeon.extensions.reporting.reports;
 
 import aeon.core.common.interfaces.IConfiguration;
-import aeon.core.testabstraction.product.WebConfiguration;
 import aeon.extensions.reporting.ReportController;
 import aeon.extensions.reporting.ReportingConfiguration;
 import aeon.extensions.reporting.models.ReportDetails;
@@ -40,8 +39,8 @@ public class ImageReport {
     void setConfiguration(IConfiguration configuration, IConfiguration aeonConfiguration) {
         this.displayClassName = configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
         this.errorMessageCharLimit = (int) configuration.getDouble(ReportingConfiguration.Keys.ERROR_MESSAGE_CHARACTER_LIMIT, 300);
-        this.browser = aeonConfiguration.getString(WebConfiguration.Keys.BROWSER, "");
-        this.environmentUrl = aeonConfiguration.getString(WebConfiguration.Keys.ENVIRONMENT, "");
+        this.browser = aeonConfiguration.getString("aeon.browser", "");
+        this.environmentUrl = aeonConfiguration.getString("aeon.environment", "");
     }
 
     /**

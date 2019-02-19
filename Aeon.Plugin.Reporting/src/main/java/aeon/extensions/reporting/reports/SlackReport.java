@@ -1,7 +1,6 @@
 package aeon.extensions.reporting.reports;
 
 import aeon.core.common.interfaces.IConfiguration;
-import aeon.core.testabstraction.product.WebConfiguration;
 import aeon.extensions.reporting.ReportingConfiguration;
 import aeon.extensions.reporting.models.ReportDetails;
 import aeon.extensions.reporting.models.ScenarioDetails;
@@ -58,7 +57,7 @@ public class SlackReport {
 
         this.slackChannel1 = configuration.getString(ReportingConfiguration.Keys.CHANNEL_1, "");
         this.slackChannel2 = configuration.getString(ReportingConfiguration.Keys.CHANNEL_2, "");
-        this.environment = aeonConfiguration.getString(WebConfiguration.Keys.ENVIRONMENT, "");
+        this.environment = aeonConfiguration.getString("aeon.environment", "");
     }
 
     /**

@@ -7,7 +7,7 @@ configurations {
 }
 
 dependencies {
-    compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Core')
 
     pluginImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.6'
     pluginImplementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.6'
