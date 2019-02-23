@@ -39,7 +39,7 @@ public class HasCommandTests {
 
     @BeforeEach
     public void setUp() {
-        command = new HasCommand(selector, commandInitializer, messages, str, ComparisonOption.Raw, atr);
+        command = new HasCommand(selector, commandInitializer, messages, str, ComparisonOption.RAW, atr);
     }
 
     @Test
@@ -53,6 +53,6 @@ public class HasCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).has(control, messages, str, ComparisonOption.Raw, atr);
+        verify(driver, times(1)).has(control, messages, str, ComparisonOption.RAW, atr);
     }
 }

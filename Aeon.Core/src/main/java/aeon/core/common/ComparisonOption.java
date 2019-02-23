@@ -7,10 +7,10 @@ public enum ComparisonOption {
     /**
      * Used to get raw version.
      */
-    Raw,
+    RAW,
 
     /**
      * Used to get text/html version.
      */
-    Text
+    TEXT
 }

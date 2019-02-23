@@ -31,11 +31,11 @@ public class DropdownTests {
 
     private AutomationInfo info1;
     private AutomationInfo info2;
-    private WebSelectOption webSelectOption = WebSelectOption.Text;
+    private WebSelectOption webSelectOption = WebSelectOption.TEXT;
     private String[] messages = {"test", "message"};
     private String dummy = "dummy";
     private int dummyInt = 3;
-    private CompareType compareType = CompareType.DescendingByText;
+    private CompareType compareType = CompareType.DESCENDING_BY_TEXT;
 
     @Mock
     private IByWeb selector;

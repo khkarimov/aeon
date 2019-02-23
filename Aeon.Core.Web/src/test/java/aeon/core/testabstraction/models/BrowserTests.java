@@ -83,13 +83,13 @@ public class BrowserTests {
     public void getBrowserType_CallsExecute() {
 
         // Arrange
-        when(configuration.getBrowserType()).thenReturn(BrowserType.Chrome);
+        when(configuration.getBrowserType()).thenReturn(BrowserType.CHROME);
 
         // Act
         BrowserType result = browserObject.getBrowserType();
 
         // Assert
-        Assertions.assertEquals(result, BrowserType.Chrome);
+        Assertions.assertEquals(result, BrowserType.CHROME);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class BrowserTests {
 
     @Test
     public void resize_CallsExecute() {
-        browserObject.resize(BrowserSize.Maximized);
+        browserObject.resize(BrowserSize.MAXIMIZED);
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(ResizeCommand.class));
     }
 

@@ -233,41 +233,41 @@ public class ByJQuery implements IByWeb, IByJQuery {
     @Override
     public final String toString(JQueryStringType type) {
         switch (type) {
-            case AsSubchain:
+            case AS_SUBCHAIN:
                 return toString().replaceFirst("\\$\\(", "find(");
-            case BlurElement:
+            case BLUR_ELEMENT:
                 return String.format("var a=%1$s;if(a.length>0){a[0].focus();a[0].blur();}", toString());
-            case ClickInvisibleElement:
+            case CLICK_INVISIBLE_ELEMENT:
                 return String.format("var a=%1$s;if(a.length>0){a.first().mousedown();a.first().mouseup();a[0].click()}return a.length;", toString());
-            case FireChangeEvent:
+            case FIRE_CHANGE_EVENT:
                 return String.format("var a=%1$s;if(a.length>0)a.change();return a.length;", toString());
-            case JustTheJQuerySelector:
+            case JUST_THE_JQUERY_SELECTOR:
                 return toString();
-            case MouseOut:
+            case MOUSE_OUT:
                 return String.format("var a=%1$s;if(a.length>0)a.mouseout();return a.length;", toString());
-            case MouseOver:
+            case MOUSE_OVER:
                 return String.format("var a=%1$s;if(a.length>0)a.mouseover();return a.length;", toString());
-            case ReturnElementArray:
+            case RETURN_ELEMENT_ARRAY:
                 return String.format("return $.makeArray(%1$s);", toString());
-            case ScrollElementIntoView:
+            case SCROLL_ELEMENT_INTO_VIEW:
                 return String.format("var a=%1$s;if(a.length>0)a[0].scrollIntoView(false);return a.length;", toString());
-            case SetElementText:
+            case SET_ELEMENT_TEXT:
                 return String.format("var a=%1$s;if(a.length>0)a.val(%%1$s);return a.length;", toString());
-            case SetBodyText:
+            case SET_BODY_TEXT:
                 return String.format("var a=%1$s;if(a.length>0)a.text(%%1$s);return a.length;", toString());
-            case SetDivText:
+            case SET_DIV_TEXT:
                 return String.format("var a=%1$s;if(a.length>0)a.html(%%1$s);return a.length;", toString());
-            case ShowElement:
+            case SHOW_ELEMENT:
                 return String.format("var a=%1$s;if(a.length>0)a.show();return a.length;", toString());
-            case SetMaskedInputText:
+            case SET_MASKED_INPUT_TEXT:
                 return String.format("var a=%1$s;if(a.length>0)a.val(%%1$s).blur();return a.length;", toString());
-            case HasNumberOfOptions:
+            case HAS_NUMBER_OF_OPTIONS:
                 return String.format("var a=%1$s;return a.length>0?a.children().length:-1;", toString());
-            case GetClientRects:
+            case GET_CLIENT_RECTS:
                 return String.format("var rects = %1$s[0].getClientRects(); var arr = [rects.length, rects[0].bottom, rects[0].left, rects[0].right, rects[0].top]; return arr;", toString());
-            case ShowContextMenu:
+            case SHOW_CONTEXT_MENU:
                 return String.format("var a=%1$s;if(a.length>0)a.trigger({type:'mousedown', which: 3});return a.length;", toString());
-            case FireDoubleClick:
+            case FIRE_DOUBLE_CLICK:
                 return String.format("%1s.dblclick()", toString());
             default:
                 throw new UnsupportedOperationException();

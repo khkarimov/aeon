@@ -201,7 +201,7 @@ public class Dropdown extends WebElement {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Text,
+                ComparisonOption.TEXT,
                 "INNERHTML"));
     }
 
@@ -217,7 +217,7 @@ public class Dropdown extends WebElement {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Raw,
+                ComparisonOption.RAW,
                 attribute));
     }
 
@@ -232,7 +232,7 @@ public class Dropdown extends WebElement {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Text,
+                ComparisonOption.TEXT,
                 "INNERHTML"));
     }
 
@@ -248,7 +248,7 @@ public class Dropdown extends WebElement {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Raw,
+                ComparisonOption.RAW,
                 attribute));
     }
 
@@ -263,7 +263,7 @@ public class Dropdown extends WebElement {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Text,
+                ComparisonOption.TEXT,
                 "INNERHTML"));
     }
 
@@ -280,7 +280,7 @@ public class Dropdown extends WebElement {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Raw,
+                ComparisonOption.RAW,
                 attribute));
     }
 }

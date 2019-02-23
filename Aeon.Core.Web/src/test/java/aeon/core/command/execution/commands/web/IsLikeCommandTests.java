@@ -38,7 +38,7 @@ public class IsLikeCommandTests {
     @Test
     public void commandDelegateIsLikeCommandWithRaw() {
         // Arrange
-        IsLikeCommand isLikeCommandObjectRaw = new IsLikeCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
+        IsLikeCommand isLikeCommandObjectRaw = new IsLikeCommand(selector, initializer, value, ComparisonOption.RAW, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -47,13 +47,13 @@ public class IsLikeCommandTests {
         actionRaw.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isLike(control, value, ComparisonOption.Raw, attribute);
+        verify(driver, times(1)).isLike(control, value, ComparisonOption.RAW, attribute);
     }
 
     @Test
     public void commandDelegateIsLikeCommandWithText() {
         // Arrange
-        IsLikeCommand isLikeCommandObjectText = new IsLikeCommand(selector, initializer, value, ComparisonOption.Text, attribute);
+        IsLikeCommand isLikeCommandObjectText = new IsLikeCommand(selector, initializer, value, ComparisonOption.TEXT, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -62,6 +62,6 @@ public class IsLikeCommandTests {
         actionText.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isLike(control, value, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).isLike(control, value, ComparisonOption.TEXT, attribute);
     }
 }

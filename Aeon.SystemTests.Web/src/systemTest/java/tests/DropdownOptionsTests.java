@@ -22,11 +22,11 @@ public class DropdownOptionsTests extends SampleBaseTest {
 
         //Act
         product.startPage.dropDown.click();
-        product.startPage.dropDown.hasOptions(validOptionValues, null, WebSelectOption.Value);
+        product.startPage.dropDown.hasOptions(validOptionValues, null, WebSelectOption.VALUE);
 
         //Assert
         thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.startPage.dropDown.hasOptions(invalidOptionValues, null, WebSelectOption.Value);
+        product.startPage.dropDown.hasOptions(invalidOptionValues, null, WebSelectOption.VALUE);
     }
 
     @Test
@@ -38,27 +38,27 @@ public class DropdownOptionsTests extends SampleBaseTest {
 
         //Act
         product.startPage.dropDown.click();
-        product.startPage.dropDown.doesNotHaveOptions(invalidOptionValues, null, WebSelectOption.Value);
+        product.startPage.dropDown.doesNotHaveOptions(invalidOptionValues, null, WebSelectOption.VALUE);
 
         //Assert
         thrown.expect(IsInstanceOf.instanceOf(ElementHasOptionException.class));
-        product.startPage.dropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.Value);
+        product.startPage.dropDown.doesNotHaveOptions(validOptionValues, null, WebSelectOption.VALUE);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Ascending() {
-        product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
+        product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.ASCENDING_BY_VALUE);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByValue);
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.ASCENDING_BY_VALUE);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByValue_Descending() {
-        product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
+        product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DESCENDING_BY_VALUE);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByValue);
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DESCENDING_BY_VALUE);
     }
 
     @Test
@@ -68,11 +68,11 @@ public class DropdownOptionsTests extends SampleBaseTest {
         String[] invalidoptions = {"1", "2", "3", "40", "5"};
 
         //Act
-        product.startPage.dropDown.hasOptionsInOrder(validoptions, WebSelectOption.Value);
+        product.startPage.dropDown.hasOptionsInOrder(validoptions, WebSelectOption.VALUE);
 
         //Assert
         thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.Value);
+        product.startPage.dropDown.hasOptionsInOrder(invalidoptions, WebSelectOption.VALUE);
     }
 
     @Test

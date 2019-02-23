@@ -7,97 +7,97 @@ public enum JQueryStringType {
     /**
      * Just the raw jquery selector.
      */
-    JustTheJQuerySelector,
+    JUST_THE_JQUERY_SELECTOR,
 
     /**
      * Converts the first "$(" into "find(".
      */
-    AsSubchain,
+    AS_SUBCHAIN,
 
     /**
      * JavaScript code for blurring an element.
      */
-    BlurElement,
+    BLUR_ELEMENT,
 
     /**
      * JavaScript code for clicking an invisible element.
      */
-    ClickInvisibleElement,
+    CLICK_INVISIBLE_ELEMENT,
 
     /**
      * JavaScript code for firing a change event on an element.
      */
-    FireChangeEvent,
+    FIRE_CHANGE_EVENT,
 
     /**
      * JavaScript code for leaving an element.
      */
-    MouseOut,
+    MOUSE_OUT,
 
     /**
      * JavaScript code for hovering on an element.
      */
-    MouseOver,
+    MOUSE_OVER,
 
     /**
      * Returns the jquery formatted within $.makeArray().
      */
-    ReturnElementArray,
+    RETURN_ELEMENT_ARRAY,
 
     /**
      * JavaScript code for setting an element's text.
      */
-    SetElementText,
+    SET_ELEMENT_TEXT,
 
     /**
      * JavaScript code for setting a body's text.
      */
-    SetBodyText,
+    SET_BODY_TEXT,
 
     /**
      * JavaScript code for setting a div's text.
      */
-    SetDivText,
+    SET_DIV_TEXT,
 
     /**
      * JavaScript code for scrolling an element into view.
      */
-    ScrollElementIntoView,
+    SCROLL_ELEMENT_INTO_VIEW,
 
     /**
      * JavaScript code for showing an element.
      */
-    ShowElement,
+    SHOW_ELEMENT,
 
     /**
      * JavaScript code for setting text in an element.
      */
-    SetMaskedInputText,
+    SET_MASKED_INPUT_TEXT,
 
     /**
      * JavaScript code getting the amount of children in an ul or ol element .
      */
-    HasNumberOfOptions,
+    HAS_NUMBER_OF_OPTIONS,
 
     /**
      * JavaScript code getting the client rects of an element.
      */
-    GetClientRects,
+    GET_CLIENT_RECTS,
 
     /**
      * JavaScript code getting the options of a select element.
      */
-    GetOptions,
+    GET_OPTIONS,
 
     /**
      * JavaScript code for bringing up the context menu (right click menu).
      */
-    ShowContextMenu,
+    SHOW_CONTEXT_MENU,
 
     /**
      * JavaScript code to fire double click event on an element.
      */
-    FireDoubleClick;
+    FIRE_DOUBLE_CLICK;
 
     /**
      * Returns a JQuery String Type based on an input value.

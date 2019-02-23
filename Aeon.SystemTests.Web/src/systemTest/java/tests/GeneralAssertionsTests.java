@@ -92,7 +92,7 @@ public class GeneralAssertionsTests extends SampleBaseTest {
         product.startPage.lexoDropDown.isLike("PPL");
         product.startPage.lexoDropDown.is("01", "value");
         product.startPage.lexoDropDown.isNotLike("appple");
-        product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
+        product.startPage.lexoDropDown.set(WebSelectOption.TEXT, "zebra");
 
         Assertions.assertThrows(ValuesAreNotEqualException.class,
                 () -> product.startPage.lexoDropDown.is("ZEBRA"));

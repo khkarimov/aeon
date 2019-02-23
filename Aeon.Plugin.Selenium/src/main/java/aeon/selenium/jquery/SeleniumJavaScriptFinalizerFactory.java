@@ -13,7 +13,7 @@ public class SeleniumJavaScriptFinalizerFactory implements IJavaScriptFinalizerF
     public final IJavaScriptFinalizer createInstance(JavaScriptFinalizerOptions options) {
         IJavaScriptFinalizer jQueryRegexPluginRegistration = new JQueryRegexPluginRegistration(new JavaScriptMinimizer());
 
-        return options == JavaScriptFinalizerOptions.IncludeJQueryInjection ?
+        return options == JavaScriptFinalizerOptions.INCLUDE_JQUERY_INJECTION ?
                 new InjectJQueryScripter(jQueryRegexPluginRegistration) : jQueryRegexPluginRegistration;
     }
 }

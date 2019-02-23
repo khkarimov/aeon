@@ -30,11 +30,11 @@ public final class ClientEnvironmentManager {
         verifyScreenResolution();
 
         switch (browserType) {
-            case InternetExplorer:
+            case INTERNET_EXPLORER:
                 // TODO(DionnyS): JAVA_CONVERSION
                 // ConfigureInternetExplorerSettings(browserAcceptedLanguageCodes);
                 break;
-            case Firefox:
+            case FIREFOX:
                 enforceDPI();
                 break;
         }
@@ -42,17 +42,17 @@ public final class ClientEnvironmentManager {
 
     private static void ensureCleanEnvironment(BrowserType browserType) {
         switch (browserType) {
-            case InternetExplorer:
+            case INTERNET_EXPLORER:
                 log.info("Killing Internet Explorer related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
                 // KillProcesses(new String[]{"iexplore", "IEDriverServer"});
                 break;
-            case Firefox:
+            case FIREFOX:
                 log.info("Killing Firefox related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
                 // KillProcesses(new String[]{"firefox"});
                 break;
-            case Chrome:
+            case CHROME:
                 log.info("Killing Chrome related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
                 // KillProcesses(new String[]{"chrome", "chromedriver"});
@@ -61,7 +61,7 @@ public final class ClientEnvironmentManager {
     }
 
     private static void enforceDPI() {
-        if (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows) {
+        if (OsCheck.getOperatingSystemType() == OsCheck.OSType.WINDOWS) {
             int pixelPerInch = java.awt.Toolkit.getDefaultToolkit().getScreenResolution();
             log.info("Checking DPI setting are set to 100%");
             if (pixelPerInch / 96f != 1.00) {

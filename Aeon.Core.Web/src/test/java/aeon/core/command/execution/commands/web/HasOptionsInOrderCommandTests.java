@@ -38,7 +38,7 @@ public class HasOptionsInOrderCommandTests {
     @Test
     public void commandDelegateHasOptionsCommand() {
         // Arrange
-        HasOptionsInOrderCommand command = new HasOptionsInOrderCommand(selector, commandInitializer, options, optGroup, WebSelectOption.Text);
+        HasOptionsInOrderCommand command = new HasOptionsInOrderCommand(selector, commandInitializer, options, optGroup, WebSelectOption.TEXT);
         when(commandInitializer.setContext()).thenReturn(action);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
@@ -47,18 +47,18 @@ public class HasOptionsInOrderCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).hasOptionsInOrder(control, options, optGroup, WebSelectOption.Text);
+        verify(driver, times(1)).hasOptionsInOrder(control, options, optGroup, WebSelectOption.TEXT);
     }
 
     @Test
     public void hasOptionsCommandFirstConstructor() {
         // Arrange
-        HasOptionsInOrderCommand commandFirst = new HasOptionsInOrderCommand(selector, commandInitializer, options, WebSelectOption.Text);
+        HasOptionsInOrderCommand commandFirst = new HasOptionsInOrderCommand(selector, commandInitializer, options, WebSelectOption.TEXT);
 
         // Act
         commandFirst.commandDelegate(driver, control);
 
         // Assert
-        verify(driver, times(1)).hasOptionsInOrder(control, options, null, WebSelectOption.Text);
+        verify(driver, times(1)).hasOptionsInOrder(control, options, null, WebSelectOption.TEXT);
     }
 }

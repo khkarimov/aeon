@@ -22,7 +22,7 @@ public class HasAllOptionsInOrderCommandTests {
 
     private HasAllOptionsInOrderCommand hasAllOptionsInOrderCommand;
 
-    private CompareType compare = CompareType.AscendingByText;
+    private CompareType compare = CompareType.ASCENDING_BY_TEXT;
     private String optGroup = "Test";
 
     @Mock
