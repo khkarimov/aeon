@@ -83,13 +83,13 @@ public class BrowserTests {
     public void getBrowserType_CallsExecute() {
 
         // Arrange
-        when(configuration.getBrowserType()).thenReturn(BrowserType.CHROME);
+        when(configuration.getBrowserType()).thenReturn(BrowserType.Chrome);
 
         // Act
         BrowserType result = browserObject.getBrowserType();
 
         // Assert
-        Assertions.assertEquals(result, BrowserType.CHROME);
+        Assertions.assertEquals(result, BrowserType.Chrome);
     }
 
     @Test

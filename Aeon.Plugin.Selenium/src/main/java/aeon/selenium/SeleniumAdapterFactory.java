@@ -114,7 +114,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected void prepare(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
-        configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "CHROME")));
+        configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome")));
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
@@ -166,7 +166,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         setLoggingConfiguration();
 
         switch (browserType) {
-            case FIREFOX:
+            case Firefox:
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -183,7 +183,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
                 break;
 
-            case CHROME:
+            case Chrome:
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -199,7 +199,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case INTERNET_EXPLORER:
+            case InternetExplorer:
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -235,7 +235,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case EDGE:
+            case Edge:
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -250,7 +250,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case SAFARI:
+            case Safari:
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -267,21 +267,21 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case IOS_SAFARI:
+            case IOSSafari:
                 DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
                 driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
-            case ANDROID_CHROME:
+            case AndroidChrome:
                 capabilities = (DesiredCapabilities) getCapabilities();
                 driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
-            case IOS_HYBRID_APP:
+            case IOSHybridApp:
                 if (finalSeleniumHubUrl == null) {
                     throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
@@ -292,7 +292,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 trySetContext();
                 break;
 
-            case ANDROID_HYBRID_APP:
+            case AndroidHybridApp:
                 if (finalSeleniumHubUrl == null) {
                     throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
@@ -304,7 +304,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 break;
 
-            case OPERA:
+            case Opera:
                 driver = getDriver(() -> {
                     System.setProperty(OperaDriverService.OPERA_DRIVER_VERBOSE_LOG_PROPERTY, "true");
                     if (isRemote) {
@@ -439,13 +439,13 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         MutableCapabilities desiredCapabilities;
 
         switch (browserType) {
-            case FIREFOX:
+            case Firefox:
                 desiredCapabilities = DesiredCapabilities.firefox();
                 desiredCapabilities.setCapability("marionette", true);
                 desiredCapabilities.setCapability("firefox_profile", getFirefoxProfile());
                 break;
 
-            case CHROME:
+            case Chrome:
                 desiredCapabilities = DesiredCapabilities.chrome();
                 setLoggingCapabilities(desiredCapabilities);
 
@@ -460,24 +460,24 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 break;
 
-            case INTERNET_EXPLORER:
+            case InternetExplorer:
                 desiredCapabilities = DesiredCapabilities.internetExplorer();
                 break;
 
-            case EDGE:
+            case Edge:
                 desiredCapabilities = DesiredCapabilities.edge();
                 break;
 
-            case SAFARI:
+            case Safari:
                 desiredCapabilities = DesiredCapabilities.safari();
                 break;
 
-            case OPERA:
+            case Opera:
                 desiredCapabilities = getOperaOptions();
                 setLoggingCapabilities(desiredCapabilities);
                 break;
 
-            case IOS_SAFARI:
+            case IOSSafari:
                 desiredCapabilities = new DesiredCapabilities();
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
@@ -494,7 +494,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
                 break;
 
-            case ANDROID_CHROME:
+            case AndroidChrome:
                 desiredCapabilities = new DesiredCapabilities();
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
@@ -509,7 +509,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 desiredCapabilities.setCapability("deviceName", deviceName);
                 break;
 
-            case IOS_HYBRID_APP:
+            case IOSHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
 
                 desiredCapabilities.setCapability("platformName", "iOS");
@@ -544,7 +544,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 break;
 
-            case ANDROID_HYBRID_APP:
+            case AndroidHybridApp:
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Appium

@@ -30,11 +30,11 @@ public final class ClientEnvironmentManager {
         verifyScreenResolution();
 
         switch (browserType) {
-            case INTERNET_EXPLORER:
+            case InternetExplorer:
                 // TODO(DionnyS): JAVA_CONVERSION
                 // ConfigureInternetExplorerSettings(browserAcceptedLanguageCodes);
                 break;
-            case FIREFOX:
+            case Firefox:
                 enforceDPI();
                 break;
         }
@@ -42,20 +42,20 @@ public final class ClientEnvironmentManager {
 
     private static void ensureCleanEnvironment(BrowserType browserType) {
         switch (browserType) {
-            case INTERNET_EXPLORER:
-                log.info("Killing INTERNET_EXPLORER related processes.");
+            case InternetExplorer:
+                log.info("Killing Internet Explorer related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"Internet_Explorer", "IEDriverServer"});
+                // KillProcesses(new String[]{"iexplore", "IEDriverServer"});
                 break;
-            case FIREFOX:
-                log.info("Killing FIREFOX related processes.");
+            case Firefox:
+                log.info("Killing Firefox related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"FIREFOX"});
+                // KillProcesses(new String[]{"firefox"});
                 break;
-            case CHROME:
-                log.info("Killing CHROME related processes.");
+            case Chrome:
+                log.info("Killing Chrome related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"CHROME", "chromedriver"});
+                // KillProcesses(new String[]{"chrome", "chromedriver"});
                 break;
         }
     }

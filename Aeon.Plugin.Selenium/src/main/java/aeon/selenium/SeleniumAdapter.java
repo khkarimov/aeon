@@ -127,7 +127,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
         String domain = cookie.getDomain();
-        if (browserType == BrowserType.FIREFOX && cookie.getDomain().charAt(0) == '.') {
+        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.') {
             domain = domain.substring(1);
         }
 
@@ -208,7 +208,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // TODO(FrankS) : needed for bug in gecko driver. https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
         String domain = cookie.getDomain();
-        if (browserType == BrowserType.FIREFOX && cookie.getDomain().charAt(0) == '.') {
+        if (browserType == BrowserType.Firefox && cookie.getDomain().charAt(0) == '.') {
             domain = domain.substring(1);
         }
 
@@ -560,12 +560,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         log.trace("WebDriver.quit();");
 
         if (isRemote && (
-                browserType == BrowserType.CHROME
-                        || browserType == BrowserType.EDGE
-                        || browserType == BrowserType.FIREFOX
-                        || browserType == BrowserType.OPERA
-                        || browserType == BrowserType.SAFARI
-                        || browserType == BrowserType.INTERNET_EXPLORER
+                browserType == BrowserType.Chrome
+                        || browserType == BrowserType.Edge
+                        || browserType == BrowserType.Firefox
+                        || browserType == BrowserType.Opera
+                        || browserType == BrowserType.Safari
+                        || browserType == BrowserType.InternetExplorer
         )) {
 
             String sessionId = ((RemoteWebDriver) webDriver).getSessionId().toString();
@@ -808,15 +808,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void maximize() {
         try {
             log.trace("Webdriver.Manage().Window.maximize();");
-            if (isRemote && (browserType.equals(BrowserType.CHROME) ||
-                    browserType.equals(BrowserType.FIREFOX) ||
-                    browserType.equals(BrowserType.OPERA))) {
+            if (isRemote && (browserType.equals(BrowserType.Chrome) ||
+                    browserType.equals(BrowserType.Firefox) ||
+                    browserType.equals(BrowserType.Opera))) {
                 java.awt.Dimension dimension = BrowserSizeMap.map(fallbackBrowserSize);
                 log.trace("Setting manual size  for remote test on chrome, firefox, or opera.");
                 webDriver.manage().window().setPosition(new Point(0, 0));
                 webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
-            } else if (!isRemote && osIsMacOrLinux() && (browserType.equals(BrowserType.OPERA) ||
-                    browserType.equals(BrowserType.CHROME))) {
+            } else if (!isRemote && osIsMacOrLinux() && (browserType.equals(BrowserType.Opera) ||
+                    browserType.equals(BrowserType.Chrome))) {
                 int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
                 int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
                 Point position = new Point(0, 0);
@@ -943,7 +943,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             builder.clickAndHold(draggable).perform();
             Sleep.wait(250);
 
-            if (browserType == BrowserType.FIREFOX) {
+            if (browserType == BrowserType.Firefox) {
                 scrollElementIntoView(targetElement);
             }
 
@@ -971,7 +971,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
         log.trace("new Actions(IWebDriver).ContextClick(IWebElement);");
 
-        if (browserType == BrowserType.FIREFOX || browserType == BrowserType.INTERNET_EXPLORER) {
+        if (browserType == BrowserType.Firefox || browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(element);
         }
         (new Actions(webDriver)).contextClick(
@@ -1000,12 +1000,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         if (webDriver == null) {
             throw new IllegalStateException("The driver is null.");
         }
-        if (this.browserType == BrowserType.FIREFOX) {
+        if (this.browserType == BrowserType.Firefox) {
             doubleClickByJavaScript(element);
             return;
         }
 
-        if (this.browserType == BrowserType.INTERNET_EXPLORER) {
+        if (this.browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(element);
         }
         log.trace("new Actions(IWebDriver).doubleClick(IWebElement);");
@@ -1135,7 +1135,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         Actions action = new Actions(webDriver);
 
         // click.
-        if (browserType == BrowserType.FIREFOX || browserType == BrowserType.INTERNET_EXPLORER) {
+        if (browserType == BrowserType.Firefox || browserType == BrowserType.InternetExplorer) {
             scrollElementIntoView(seleniumElement);
         }
 
@@ -2027,7 +2027,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void selectFile(WebControl control, String path) {
-        if (!isRemote && browserType.equals(BrowserType.INTERNET_EXPLORER)) {
+        if (!isRemote && browserType.equals(BrowserType.InternetExplorer)) {
 
             WebElement underlyingWebElement = ((SeleniumElement) control).getUnderlyingWebElement();
             Point webElementLocation = underlyingWebElement.getLocation();

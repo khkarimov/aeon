@@ -32,11 +32,11 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
     @Override
     public void mobileLock() {
         switch (getBrowserType()) {
-            case ANDROID_HYBRID_APP:
+            case AndroidHybridApp:
                 adapter.mobileLock();
                 break;
 
-            case IOS_HYBRID_APP:
+            case IOSHybridApp:
                 adapter.mobileLock(0);
                 break;
         }
@@ -49,11 +49,11 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
      */
     public void mobileLock(int seconds) {
         switch (getBrowserType()) {
-            case ANDROID_HYBRID_APP:
+            case AndroidHybridApp:
                 adapter.mobileLock();
                 break;
 
-            case IOS_HYBRID_APP:
+            case IOSHybridApp:
                 adapter.mobileLock(seconds);
                 break;
         }

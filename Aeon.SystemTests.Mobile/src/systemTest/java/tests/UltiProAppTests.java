@@ -18,7 +18,7 @@ public class UltiProAppTests {
 
         // iOS does not support app cache cleaning
         String appPath = ultiProApp.getConfig("aeon.selenium.appium.app", "");
-        if (ultiProApp.browser.getBrowserType() == BrowserType.IOS_HYBRID_APP && appPath.isEmpty()) {
+        if (ultiProApp.browser.getBrowserType() == BrowserType.IOSHybridApp && appPath.isEmpty()) {
             try {
                 ultiProApp.iOSIdentitySignInPage.doneButton.click();
                 ultiProApp.loginPage.clearAccessCodeButton.click();

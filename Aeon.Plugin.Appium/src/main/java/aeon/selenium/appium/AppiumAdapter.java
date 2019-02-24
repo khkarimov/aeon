@@ -65,7 +65,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         super(seleniumWebDriver, javaScriptExecutor, asyncJavaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
 
-        if (browserType == BrowserType.ANDROID_HYBRID_APP || browserType == BrowserType.IOS_HYBRID_APP) {
+        if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
             context = getMobileWebDriver().getContext();
         }
 
@@ -117,10 +117,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void mobileLock(int seconds) {
         switch (browserType) {
-            case ANDROID_HYBRID_APP:
+            case AndroidHybridApp:
                 ((AndroidDriver) getMobileWebDriver()).lockDevice();
                 break;
-            case IOS_HYBRID_APP:
+            case IOSHybridApp:
                 ((IOSDriver) getMobileWebDriver()).lockDevice(Duration.ofSeconds(seconds));
                 break;
             default:
@@ -174,7 +174,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void closeApp() {
-        if (browserType == BrowserType.ANDROID_HYBRID_APP) {
+        if (browserType == BrowserType.AndroidHybridApp) {
             log.trace("ANDROID: Pressing home button");
             ((AndroidDriver) getMobileWebDriver()).pressKeyCode(AndroidKeyCode.HOME);
         } else {
@@ -476,7 +476,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void setDate(LocalDate date) {
 
-        if (browserType == BrowserType.ANDROID_HYBRID_APP) {
+        if (browserType == BrowserType.AndroidHybridApp) {
             switchToNativeAppContext();
             setMonthOnAndroidDatePicker(date);
             WebControl label = findElement(ByMobile.accessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))), false);
@@ -498,7 +498,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void mobileSelect(MobileSelectOption selectOption, String value) {
-        if (browserType == BrowserType.ANDROID_HYBRID_APP) {
+        if (browserType == BrowserType.AndroidHybridApp) {
             switchToNativeAppContext();
             IByMobile selector = ByMobile.xpath(String.format("//android.widget.CheckedTextView[@text='%s']", value));
             click(findElement(selector, false), false);
@@ -528,9 +528,9 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void acceptAlert() {
         switch (browserType) {
-            case ANDROID_HYBRID_APP:
+            case AndroidHybridApp:
                 // Break intentionally omitted
-            case IOS_HYBRID_APP:
+            case IOSHybridApp:
                 switchToNativeAppContext();
                 try {
                     super.acceptAlert();
@@ -546,9 +546,9 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void dismissAlert() {
         switch (browserType) {
-            case ANDROID_HYBRID_APP:
+            case AndroidHybridApp:
                 // Break intentionally omitted
-            case IOS_HYBRID_APP:
+            case IOSHybridApp:
                 switchToNativeAppContext();
                 try {
                     super.dismissAlert();
@@ -564,14 +564,14 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void acceptOrDismissPermissionDialog(boolean accept) {
         if (accept) {
-            if (browserType == BrowserType.ANDROID_HYBRID_APP) {
+            if (browserType == BrowserType.AndroidHybridApp) {
                 SeleniumElement element = (SeleniumElement) findElement(ByMobile.id("com.android.packageinstaller:id/permission_allow_button"));
                 element.click(false);
             } else {
                 acceptAlert();
             }
         } else {
-            if (browserType == BrowserType.ANDROID_HYBRID_APP) {
+            if (browserType == BrowserType.AndroidHybridApp) {
                 SeleniumElement element = (SeleniumElement) findElement(ByMobile.id("com.android.packageinstaller:id/permission_deny_button"));
                 element.click(false);
             } else {
@@ -716,10 +716,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public final void quit() {
         log.trace("AppiumWebDriver.quit();");
-        if (browserType != BrowserType.ANDROID_CHROME
-                && browserType != BrowserType.IOS_SAFARI
-                && browserType != BrowserType.ANDROID_HYBRID_APP
-                && browserType != BrowserType.IOS_HYBRID_APP) {
+        if (browserType != BrowserType.AndroidChrome
+                && browserType != BrowserType.IOSSafari
+                && browserType != BrowserType.AndroidHybridApp
+                && browserType != BrowserType.IOSHybridApp) {
             super.quit();
 
             return;
@@ -772,7 +772,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             switchToWebViewContext();
             windowWidth = windowSize.getWidth();
             windowHeight = windowSize.getHeight();
-            if (browserType == BrowserType.ANDROID_HYBRID_APP && mobileDeviceResolutions.containsKey(windowWidth)
+            if (browserType == BrowserType.AndroidHybridApp && mobileDeviceResolutions.containsKey(windowWidth)
                     && (windowHeight - mobileDeviceResolutions.get(windowWidth)) < 300) {
                 windowHeight = mobileDeviceResolutions.get(windowWidth);
             }

@@ -1158,14 +1158,14 @@ class AeonWebDriverTests {
     void getBrowserType_verifyAdapterGetBrowserType() {
 
         // Arrange
-        when(adapter.getBrowserType()).thenReturn(BrowserType.CHROME);
+        when(adapter.getBrowserType()).thenReturn(BrowserType.Chrome);
 
         // Act
         BrowserType result = aeonWebDriver.getBrowserType();
 
         // Assert
         verify(adapter, times(1)).getBrowserType();
-        assertEquals(BrowserType.CHROME, result);
+        assertEquals(BrowserType.Chrome, result);
     }
 
     @Test

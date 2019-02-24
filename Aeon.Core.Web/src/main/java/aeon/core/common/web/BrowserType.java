@@ -7,51 +7,51 @@ public enum BrowserType {
     /**
      * Microsoft Internet Explorer.
      */
-    INTERNET_EXPLORER,
+    InternetExplorer,
     /**
      * Microsoft Edge.
      */
-    EDGE,
+    Edge,
 
     /**
      * Google Chrome.
      */
-    CHROME,
+    Chrome,
 
     /**
      * Mozilla Firefox.
      */
-    FIREFOX,
+    Firefox,
 
     /**
      * Safari.
      */
-    SAFARI,
+    Safari,
 
     /**
      * Opera.
      */
-    OPERA,
+    Opera,
 
     // Mobile Browsers
     /**
      * iOS Safari.
      */
-    IOS_SAFARI,
+    IOSSafari,
 
     /**
      * Android Chrome.
      */
-    ANDROID_CHROME,
+    AndroidChrome,
 
     //Apps
     /**
      * iOS app.
      */
-    IOS_HYBRID_APP,
+    IOSHybridApp,
 
     /**
      * Android app.
      */
-    ANDROID_HYBRID_APP
+    AndroidHybridApp
 }
