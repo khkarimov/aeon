@@ -114,7 +114,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected void prepare(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
-        configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome")));
+        configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "CHROME")));
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
@@ -127,9 +127,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
         try {
-            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
+            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FULL_HD"));
         } catch (IllegalArgumentException e) {
-            log.warn("Illegal browser size selected. Set to default value: 'FullHD'");
+            log.warn("Illegal browser size selected. Set to default value: 'FULL_HD'");
             fallbackBrowserSize = BrowserSize.FULL_HD;
         }
 

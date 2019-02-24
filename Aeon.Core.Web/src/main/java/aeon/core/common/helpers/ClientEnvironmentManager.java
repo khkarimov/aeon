@@ -43,19 +43,19 @@ public final class ClientEnvironmentManager {
     private static void ensureCleanEnvironment(BrowserType browserType) {
         switch (browserType) {
             case INTERNET_EXPLORER:
-                log.info("Killing Internet Explorer related processes.");
+                log.info("Killing INTERNET_EXPLORER related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"iexplore", "IEDriverServer"});
+                // KillProcesses(new String[]{"Internet_Explorer", "IEDriverServer"});
                 break;
             case FIREFOX:
-                log.info("Killing Firefox related processes.");
+                log.info("Killing FIREFOX related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"firefox"});
+                // KillProcesses(new String[]{"FIREFOX"});
                 break;
             case CHROME:
-                log.info("Killing Chrome related processes.");
+                log.info("Killing CHROME related processes.");
                 // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"chrome", "chromedriver"});
+                // KillProcesses(new String[]{"CHROME", "chromedriver"});
                 break;
         }
     }
