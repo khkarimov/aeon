@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 public class ResizeCommandTests {
     private ResizeCommand resizeCommand;
     private Dimension dimensionSize;
-    private String browserSize = "Maximized";
+    private String browserSize = "MAXIMIZED";
 
     @Mock
     private IWebDriver driver;
