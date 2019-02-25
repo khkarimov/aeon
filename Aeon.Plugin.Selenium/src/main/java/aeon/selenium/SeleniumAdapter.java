@@ -2084,7 +2084,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     private boolean osIsMacOrLinux() {
-        return OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MACOS)
+        return OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MAC_OS)
                 || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.LINUX);
     }
 }

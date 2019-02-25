@@ -126,7 +126,7 @@ public class SeleniumConfiguration extends WebConfiguration {
                 properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/windows/chromedriver.exe");
                 properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/windows/operadriver.exe");
                 break;
-            case MACOS:
+            case MAC_OS:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY, output + "/lib/macos/geckodriver");
                 properties.setProperty(Keys.CHROME_DIRECTORY, output + "/lib/macos/chromedriver");
                 properties.setProperty(Keys.OPERA_DIRECTORY, output + "/lib/macos/operadriver");
