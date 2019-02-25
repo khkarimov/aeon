@@ -69,7 +69,7 @@ public class Process {
             case LINUX:
                 command = new String[]{"pkill", "-9", name};
                 break;
-            case MAC_OS:
+            case MACOS:
                 command = null; // need to look into killing a process with Mac_OS
                 break;
             case OTHER:
