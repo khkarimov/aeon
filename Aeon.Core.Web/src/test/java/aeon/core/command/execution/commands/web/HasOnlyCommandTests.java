@@ -37,7 +37,7 @@ public class HasOnlyCommandTests {
 
     @BeforeEach
     public void setup() {
-        hasOnlyCommand = new HasOnlyCommand(selector, initializer, messages, childSelector, ComparisonOption.Text, attribute);
+        hasOnlyCommand = new HasOnlyCommand(selector, initializer, messages, childSelector, ComparisonOption.TEXT, attribute);
     }
 
     @Test
@@ -48,6 +48,6 @@ public class HasOnlyCommandTests {
         hasOnlyCommand.commandDelegate(driver, control);
 
         // Verify
-        verify(driver, times(1)).hasOnly(control, messages, childSelector, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).hasOnly(control, messages, childSelector, ComparisonOption.TEXT, attribute);
     }
 }

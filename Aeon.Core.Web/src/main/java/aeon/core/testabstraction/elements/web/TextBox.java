@@ -54,7 +54,7 @@ public class TextBox extends WebElement {
                 new SetCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
-                        WebSelectOption.Text,
+                        WebSelectOption.TEXT,
                         value));
     }
 

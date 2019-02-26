@@ -127,10 +127,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(SeleniumConfiguration.Keys.DRIVER_CONTEXT, "");
         try {
-            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
+            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FULL_HD"));
         } catch (IllegalArgumentException e) {
-            log.warn("Illegal browser size selected. Set to default value: 'FullHD'");
-            fallbackBrowserSize = BrowserSize.FullHD;
+            log.warn("Illegal browser size selected. Set to default value: 'FULL_HD'");
+            fallbackBrowserSize = BrowserSize.FULL_HD;
         }
 
         seleniumHubUrl = null;
@@ -642,7 +642,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         log.info("firefox binary options: " + binaryPath);
 
-        if (!isRemote && OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows) {
+        if (!isRemote && OsCheck.getOperatingSystemType() == OsCheck.OSType.WINDOWS) {
             // Workaround for Windows Firefox problem:
             // https://github.com/mozilla/geckodriver/issues/1068
             firefoxOptions.addPreference("browser.tabs.remote.autostart", false);
@@ -656,7 +656,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private InternetExplorerOptions getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
-        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
+        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.WINDOWS) {
             throw new UnsupportedPlatformException();
         }
 
@@ -682,7 +682,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private EdgeOptions getEdgeOptions(String proxyLocation) {
-        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
+        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.WINDOWS) {
             throw new UnsupportedPlatformException();
         }
 

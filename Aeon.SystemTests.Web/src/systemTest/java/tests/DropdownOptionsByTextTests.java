@@ -21,11 +21,11 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
 
         //Act
         product.startPage.dropDown.click();
-        product.startPage.dropDown.hasOptions(validOptionTexts, null, WebSelectOption.Text);
+        product.startPage.dropDown.hasOptions(validOptionTexts, null, WebSelectOption.TEXT);
 
         //Assert
         thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.startPage.dropDown.hasOptions(invalidOptions, null, WebSelectOption.Text);
+        product.startPage.dropDown.hasOptions(invalidOptions, null, WebSelectOption.TEXT);
     }
 
     @Test
@@ -37,19 +37,19 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
 
         //Act
         product.startPage.dropDown.click();
-        product.startPage.dropDown.doesNotHaveOptions(invalidOptionTexts, null, WebSelectOption.Text);
+        product.startPage.dropDown.doesNotHaveOptions(invalidOptionTexts, null, WebSelectOption.TEXT);
 
         //Assert
         thrown.expect(IsInstanceOf.instanceOf(ElementHasOptionException.class));
-        product.startPage.dropDown.doesNotHaveOptions(validOptionTexts, null, WebSelectOption.Text);
+        product.startPage.dropDown.doesNotHaveOptions(validOptionTexts, null, WebSelectOption.TEXT);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByText_Ascending(){
-        product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
+        product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.ASCENDING_BY_TEXT);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.AscendingByText);
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.ASCENDING_BY_TEXT);
     }
 
     @Test
@@ -59,18 +59,18 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
         String[] invalidOptions = {"option1", "option4", "option2"};
 
         //Act
-        product.startPage.dropDown.hasOptionsInOrder(validOptions, WebSelectOption.Text);
+        product.startPage.dropDown.hasOptionsInOrder(validOptions, WebSelectOption.TEXT);
 
         //Assert
         thrown.expect(IsInstanceOf.instanceOf(ElementDoesNotHaveOptionException.class));
-        product.startPage.dropDown.hasOptionsInOrder(invalidOptions, WebSelectOption.Text);
+        product.startPage.dropDown.hasOptionsInOrder(invalidOptions, WebSelectOption.TEXT);
     }
 
     @Test
     public void testHasAllOptionsInOrder_ByText_Descending(){
-        product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
+        product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DESCENDING_BY_TEXT);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
-        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DescendingByText);
+        product.startPage.dropDown.hasAllOptionsInOrder(CompareType.DESCENDING_BY_TEXT);
     }
 }

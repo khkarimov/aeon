@@ -658,10 +658,10 @@ class AeonWebDriverTests {
         String[] options = new String[1];
 
         // Act
-        aeonWebDriver.hasOptions(webControl, options, "Test", WebSelectOption.Value);
+        aeonWebDriver.hasOptions(webControl, options, "Test", WebSelectOption.VALUE);
 
         // Assert
-        verify(adapter, times(1)).elementHasOptions(webControl, options, "Test", WebSelectOption.Value);
+        verify(adapter, times(1)).elementHasOptions(webControl, options, "Test", WebSelectOption.VALUE);
     }
 
     @Test
@@ -671,10 +671,10 @@ class AeonWebDriverTests {
         String[] options = new String[1];
 
         // Act
-        aeonWebDriver.doesNotHaveOptions(webControl, options, "Test", WebSelectOption.Value);
+        aeonWebDriver.doesNotHaveOptions(webControl, options, "Test", WebSelectOption.VALUE);
 
         // Assert
-        verify(adapter, times(1)).elementDoesNotHaveOptions(webControl, options, "Test", WebSelectOption.Value);
+        verify(adapter, times(1)).elementDoesNotHaveOptions(webControl, options, "Test", WebSelectOption.VALUE);
     }
 
     @Test
@@ -767,10 +767,10 @@ class AeonWebDriverTests {
         // Arrange
 
         // Act
-        aeonWebDriver.set(webControl, WebSelectOption.Value, "Test");
+        aeonWebDriver.set(webControl, WebSelectOption.VALUE, "Test");
 
         // Assert
-        verify(adapter, times(1)).set(webControl, WebSelectOption.Value, "Test");
+        verify(adapter, times(1)).set(webControl, WebSelectOption.VALUE, "Test");
     }
 
     @Test
@@ -816,10 +816,10 @@ class AeonWebDriverTests {
         String[] options = new String[1];
 
         // Act
-        aeonWebDriver.hasOptionsInOrder(webControl, options, "Test", WebSelectOption.Value);
+        aeonWebDriver.hasOptionsInOrder(webControl, options, "Test", WebSelectOption.VALUE);
 
         // Assert
-        verify(adapter, times(1)).elementHasOptionsInOrder(webControl, options, "Test", WebSelectOption.Value);
+        verify(adapter, times(1)).elementHasOptionsInOrder(webControl, options, "Test", WebSelectOption.VALUE);
     }
 
     @Test
@@ -840,10 +840,10 @@ class AeonWebDriverTests {
         // Arrange
 
         // Act
-        aeonWebDriver.hasAllOptionsInOrder(webControl, CompareType.AscendingByText, "Test");
+        aeonWebDriver.hasAllOptionsInOrder(webControl, CompareType.ASCENDING_BY_TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).hasAllOptionsInOrder(webControl, CompareType.AscendingByText, "Test");
+        verify(adapter, times(1)).hasAllOptionsInOrder(webControl, CompareType.ASCENDING_BY_TEXT, "Test");
     }
 
     @Test
@@ -950,10 +950,10 @@ class AeonWebDriverTests {
         String[] messages = new String[1];
 
         // Act
-        aeonWebDriver.has(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.has(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).has(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).has(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test
@@ -963,10 +963,10 @@ class AeonWebDriverTests {
         String[] messages = new String[1];
 
         // Act
-        aeonWebDriver.hasLike(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.hasLike(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).hasLike(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).hasLike(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test
@@ -976,10 +976,10 @@ class AeonWebDriverTests {
         String[] messages = new String[1];
 
         // Act
-        aeonWebDriver.doesNotHave(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.doesNotHave(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).doesNotHave(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).doesNotHave(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test
@@ -989,10 +989,10 @@ class AeonWebDriverTests {
         String[] messages = new String[1];
 
         // Act
-        aeonWebDriver.doesNotHaveLike(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.doesNotHaveLike(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).doesNotHaveLike(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).doesNotHaveLike(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test
@@ -1002,10 +1002,10 @@ class AeonWebDriverTests {
         String[] messages = new String[1];
 
         // Act
-        aeonWebDriver.hasOnly(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.hasOnly(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).hasOnly(webControl, messages, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).hasOnly(webControl, messages, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test
@@ -1014,10 +1014,10 @@ class AeonWebDriverTests {
         // Arrange
 
         // Act
-        aeonWebDriver.is(webControl, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.is(webControl, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).is(webControl, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).is(webControl, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test
@@ -1026,10 +1026,10 @@ class AeonWebDriverTests {
         // Arrange
 
         // Act
-        aeonWebDriver.isLike(webControl, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.isLike(webControl, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).isLike(webControl, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).isLike(webControl, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test
@@ -1174,10 +1174,10 @@ class AeonWebDriverTests {
         // Arrange
 
         // Act
-        aeonWebDriver.isNotLike(webControl, "Test", ComparisonOption.Text, "Test");
+        aeonWebDriver.isNotLike(webControl, "Test", ComparisonOption.TEXT, "Test");
 
         // Assert
-        verify(adapter, times(1)).isNotLike(webControl, "Test", ComparisonOption.Text, "Test");
+        verify(adapter, times(1)).isNotLike(webControl, "Test", ComparisonOption.TEXT, "Test");
     }
 
     @Test

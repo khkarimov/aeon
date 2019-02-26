@@ -63,16 +63,16 @@ public class Process {
         OsCheck.OSType osType = OsCheck.getOperatingSystemType();
         String[] command;
         switch (osType) {
-            case Windows:
+            case WINDOWS:
                 command = new String[]{"taskkill", "/F", "/IM", name};
                 break;
-            case Linux:
+            case LINUX:
                 command = new String[]{"pkill", "-9", name};
                 break;
-            case MacOS:
+            case MAC_OS:
                 command = null; // need to look into killing a process with MacOS
                 break;
-            case Other:
+            case OTHER:
                 command = null;
                 break;
             default:

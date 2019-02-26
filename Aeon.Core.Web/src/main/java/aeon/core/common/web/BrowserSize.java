@@ -7,40 +7,40 @@ public enum BrowserSize {
     /**
      * Default value.
      */
-    Maximized,
+    MAXIMIZED,
 
     /**
      * Mobile [Portrait]: 320x480.
      */
-    MobilePortrait,
+    MOBILE_PORTRAIT,
 
     /**
      * Mobile [Landscape]: 480x320.
      */
-    MobileLandscape,
+    MOBILE_LANDSCAPE,
 
     /**
      * Mobile [Portrait]: 600x800.
      */
-    SmallTabletPortrait,
+    SMALL_TABLET_PORTRAIT,
 
     /**
      * Mobile [Portrait]: 800x600.
      */
-    SmallTabletLandscape,
+    SMALL_TABLET_LANDSCAPE,
 
     /**
      * Mobile [Portrait]: 768x1024.
      */
-    TabletPortrait,
+    TABLET_PORTRAIT,
 
     /**
      * Mobile [Portrait]: 1024x768.
      */
-    TabletLandscape,
+    TABLET_LANDSCAPE,
 
     /**
      * Desktop [Full HD]: 1920x1080.
      */
-    FullHD
+    FULL_HD
 }

@@ -45,20 +45,20 @@ public class SeleniumCheckInjectJQueryExecutor extends JavaScriptFlowExecutor {
                 boolean hasJQuery = (boolean) (executor.executeScript("if(window.jquery)return true;return false;"));
                 if (hasJQuery) {
                     if (executeAsync) {
-                        return executor.executeAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).prepare(script), args);
+                        return executor.executeAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.NONE).prepare(script), args);
                     } else {
-                        return executor.executeScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).prepare(script), args);
+                        return executor.executeScript(getFinalizer().apply(JavaScriptFinalizerOptions.NONE).prepare(script), args);
                     }
                 }
 
                 executor.setTimeout(timeout);
-                return executor.executeAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.IncludeJQueryInjection).prepare(script), args);
+                return executor.executeAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.INCLUDE_JQUERY_INJECTION).prepare(script), args);
             }
 
             if (executeAsync) {
-                return executor.executeAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).prepare(script), args);
+                return executor.executeAsyncScript(getFinalizer().apply(JavaScriptFinalizerOptions.NONE).prepare(script), args);
             } else {
-                return executor.executeScript(getFinalizer().apply(JavaScriptFinalizerOptions.None).prepare(script), args);
+                return executor.executeScript(getFinalizer().apply(JavaScriptFinalizerOptions.NONE).prepare(script), args);
             }
         };
     }

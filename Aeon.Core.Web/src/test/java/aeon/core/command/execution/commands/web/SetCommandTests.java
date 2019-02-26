@@ -44,7 +44,7 @@ public class SetCommandTests {
 
     @BeforeEach
     public void setUp() {
-        setCommandObject = new SetCommand(selector, initializer, WebSelectOption.Text, value);
+        setCommandObject = new SetCommand(selector, initializer, WebSelectOption.TEXT, value);
     }
 
     @Test
@@ -71,6 +71,6 @@ public class SetCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).set(control, WebSelectOption.Text, value);
+        verify(driver, times(1)).set(control, WebSelectOption.TEXT, value);
     }
 }

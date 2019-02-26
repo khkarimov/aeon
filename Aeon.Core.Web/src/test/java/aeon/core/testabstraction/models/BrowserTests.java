@@ -150,7 +150,7 @@ public class BrowserTests {
 
     @Test
     public void resize_CallsExecute() {
-        browserObject.resize(BrowserSize.Maximized);
+        browserObject.resize(BrowserSize.MAXIMIZED);
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(ResizeCommand.class));
     }
 

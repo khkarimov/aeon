@@ -13,7 +13,7 @@ public final class Sleep {
     private static Logger log = LoggerFactory.getLogger(Sleep.class);
 
     // Time is in milliseconds.
-    private static final int TimeForInternal = 70;
+    private static final int TIME_FOR_INTERNAL = 70;
 
     /**
      * Waits. May be used between Internal calls.
@@ -21,7 +21,7 @@ public final class Sleep {
      */
     public static void waitInternal() {
         try {
-            Thread.sleep(TimeForInternal);
+            Thread.sleep(TIME_FOR_INTERNAL);
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
 

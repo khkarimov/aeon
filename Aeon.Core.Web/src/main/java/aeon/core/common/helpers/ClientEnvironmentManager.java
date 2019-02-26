@@ -61,7 +61,7 @@ public final class ClientEnvironmentManager {
     }
 
     private static void enforceDPI() {
-        if (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows) {
+        if (OsCheck.getOperatingSystemType() == OsCheck.OSType.WINDOWS) {
             int pixelPerInch = java.awt.Toolkit.getDefaultToolkit().getScreenResolution();
             log.info("Checking DPI setting are set to 100%");
             if (pixelPerInch / 96f != 1.00) {

@@ -42,7 +42,7 @@ public class DoesNotHaveLikeCommandTests {
     @BeforeEach
     public void setup() {
 
-        doesNotHaveLikeCommand = new DoesNotHaveLikeCommand(selector, initializer, messages, childSelector, ComparisonOption.Text, attribute);
+        doesNotHaveLikeCommand = new DoesNotHaveLikeCommand(selector, initializer, messages, childSelector, ComparisonOption.TEXT, attribute);
     }
 
     @Test
@@ -56,6 +56,6 @@ public class DoesNotHaveLikeCommandTests {
         action.accept(driver);
 
         // Verify
-        verify(driver, times(1)).doesNotHaveLike(control, messages, childSelector, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).doesNotHaveLike(control, messages, childSelector, ComparisonOption.TEXT, attribute);
     }
 }

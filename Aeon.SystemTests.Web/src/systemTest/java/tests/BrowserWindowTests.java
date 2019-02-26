@@ -93,9 +93,9 @@ public class BrowserWindowTests extends SampleBaseTest {
     @Category({EdgeNotSupported.class})
     @Test
     public void testWindowResizing_GoBack_GoForward_ScrollToEnd_ScrollToTop() {
-        product.browser.resize(BrowserSize.TabletLandscape);
-        product.browser.resize(BrowserSize.SmallTabletLandscape);
-        product.browser.resize(BrowserSize.MobileLandscape);
+        product.browser.resize(BrowserSize.TABLET_LANDSCAPE);
+        product.browser.resize(BrowserSize.SMALL_TABLET_LANDSCAPE);
+        product.browser.resize(BrowserSize.MOBILE_LANDSCAPE);
         product.browser.maximize();
         product.browser.goToUrl("https://ci.mia.ucloud.int");
         product.browser.scrollToEnd();

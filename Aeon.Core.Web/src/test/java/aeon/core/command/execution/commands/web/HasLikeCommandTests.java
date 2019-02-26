@@ -37,7 +37,7 @@ public class HasLikeCommandTests {
 
     @BeforeEach
     public void setup() {
-        hasLikeCommand = new HasLikeCommand(selector, initializer, messages, childSelector, ComparisonOption.Text, attribute);
+        hasLikeCommand = new HasLikeCommand(selector, initializer, messages, childSelector, ComparisonOption.TEXT, attribute);
     }
 
     @Test
@@ -48,6 +48,6 @@ public class HasLikeCommandTests {
         hasLikeCommand.commandDelegate(driver, control);
 
         // Verify
-        verify(driver, times(1)).hasLike(control, messages, childSelector, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).hasLike(control, messages, childSelector, ComparisonOption.TEXT, attribute);
     }
 }

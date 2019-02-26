@@ -133,17 +133,17 @@ public class SeleniumConfiguration extends WebConfiguration {
         properties.setProperty(Keys.IE_DIRECTORY.getKey(), output + "/lib/windows/IEDriverServer.exe");
         properties.setProperty(Keys.EDGE_DIRECTORY.getKey(), output + "/lib/windows/MicrosoftWebDriver.exe");
         switch (OsCheck.getOperatingSystemType()) {
-            case Windows:
+            case WINDOWS:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY.getKey(), output + "/lib/windows/geckodriver.exe");
                 properties.setProperty(Keys.CHROME_DIRECTORY.getKey(), output + "/lib/windows/chromedriver.exe");
                 properties.setProperty(Keys.OPERA_DIRECTORY.getKey(), output + "/lib/windows/operadriver.exe");
                 break;
-            case MacOS:
+            case MAC_OS:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY.getKey(), output + "/lib/macos/geckodriver");
                 properties.setProperty(Keys.CHROME_DIRECTORY.getKey(), output + "/lib/macos/chromedriver");
                 properties.setProperty(Keys.OPERA_DIRECTORY.getKey(), output + "/lib/macos/operadriver");
                 break;
-            case Linux:
+            case LINUX:
                 properties.setProperty(Keys.MARIONETTE_DIRECTORY.getKey(), output + "/lib/linux/geckodriver");
                 properties.setProperty(Keys.CHROME_DIRECTORY.getKey(), output + "/lib/linux/chromedriver");
                 properties.setProperty(Keys.OPERA_DIRECTORY.getKey(), output + "/lib/linux/operadriver");

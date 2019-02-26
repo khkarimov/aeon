@@ -21,9 +21,9 @@ public class SetTests extends SampleBaseTest{
 
     @Test
     public void testSet_WithSelect() {
-        product.startPage.lexoDropDown.set(WebSelectOption.Value, "10");
-        product.startPage.lexoDropDown.set(WebSelectOption.Text, "dog");
-        product.startPage.lexoDropDown.set(WebSelectOption.Text, "zebra");
+        product.startPage.lexoDropDown.set(WebSelectOption.VALUE, "10");
+        product.startPage.lexoDropDown.set(WebSelectOption.TEXT, "dog");
+        product.startPage.lexoDropDown.set(WebSelectOption.TEXT, "zebra");
     }
 
     @Test

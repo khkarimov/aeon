@@ -38,7 +38,7 @@ public class IsCommandTests {
     @Test
     public void commandDelegateIsCommandWithRaw() {
         // Arrange
-        IsCommand isCommandObjectRaw = new IsCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
+        IsCommand isCommandObjectRaw = new IsCommand(selector, initializer, value, ComparisonOption.RAW, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -47,13 +47,13 @@ public class IsCommandTests {
         actionRaw.accept(driver);
 
         // Assert
-        verify(driver, times(1)).is(control, value, ComparisonOption.Raw, attribute);
+        verify(driver, times(1)).is(control, value, ComparisonOption.RAW, attribute);
     }
 
     @Test
     public void commandDelegateIsCommandWithText() {
         // Arrange
-        IsCommand isCommandObjectText = new IsCommand(selector, initializer, value, ComparisonOption.Text, attribute);
+        IsCommand isCommandObjectText = new IsCommand(selector, initializer, value, ComparisonOption.TEXT, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -62,6 +62,6 @@ public class IsCommandTests {
         actionText.accept(driver);
 
         // Assert
-        verify(driver, times(1)).is(control, value, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).is(control, value, ComparisonOption.TEXT, attribute);
     }
 }
