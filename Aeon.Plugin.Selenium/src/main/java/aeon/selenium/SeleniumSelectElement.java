@@ -1,9 +1,9 @@
 package aeon.selenium;
 
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,10 +13,11 @@ import java.util.stream.Collectors;
  */
 public class SeleniumSelectElement extends WebControl {
     private Select underlyingSelectElement;
-    private static Logger log = LogManager.getLogger(SeleniumSelectElement.class);
+    private static Logger log = LoggerFactory.getLogger(SeleniumSelectElement.class);
 
     /**
      * Constructor for Selenium Select Element.
+     *
      * @param selectElement The underlying Select Element
      */
     public SeleniumSelectElement(Select selectElement) {
@@ -25,6 +26,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Gets the underlying Select Element.
+     *
      * @return The underlying Select Element
      */
     protected final Select getUnderlyingSelectElement() {
@@ -33,6 +35,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Indicates whether the select element supports selecting multiple options at the same time.
+     *
      * @return A boolean indicating whether the select element supports selecting multiple options at the same time.
      */
     public final boolean isMultiple() {
@@ -42,6 +45,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Gets all selected options belonging to a select element.
+     *
      * @return A list of the selected options belonging to a select element
      */
     public final List<WebControl> getAllSelectedOptions() {
@@ -53,6 +57,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Gets the selected option for the select element.
+     *
      * @return The selected option for the select element.
      */
     public final WebControl getSelectedOption() {
@@ -62,15 +67,17 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Gets the selected option text for the select element.
+     *
      * @return The selected option text for the select element.
      */
-    public final String getSelectedOptionText(){
+    public final String getSelectedOptionText() {
         log.trace("SelectElement.get_SelectedOptionText();");
         return getUnderlyingSelectElement().getFirstSelectedOption().getText();
     }
 
     /**
      * Gets all options belonging to the select element.
+     *
      * @return A list of all options belonging to a select element.
      */
     public final List<WebControl> getOptions() {
@@ -90,6 +97,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Deselect the option of the select element at the given index.
+     *
      * @param index The index of the option to deselect.
      */
     public final void deselectByIndex(int index) {
@@ -100,6 +108,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Deselect all options that display text matching the argument for the select element.
+     *
      * @param text The visible text to match against
      */
     public final void deselectByText(String text) {
@@ -109,6 +118,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Deselect all options that have a value matching the argument for the select element.
+     *
      * @param value The value to match against
      */
     public final void deselectByValue(String value) {
@@ -118,6 +128,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Deselect the option at the given index for the select element.
+     *
      * @param index The option at this index will be deselected.
      */
     public final void selectByIndex(int index) {
@@ -127,6 +138,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Select all options that display text matching the argument for the select element.
+     *
      * @param text The visible text to match against.
      */
     public final void selectByText(String text) {
@@ -136,6 +148,7 @@ public class SeleniumSelectElement extends WebControl {
 
     /**
      * Select all options that have a value matching the argument for the select element.
+     *
      * @param value The value to match against
      */
     public final void selectByValue(String value) {

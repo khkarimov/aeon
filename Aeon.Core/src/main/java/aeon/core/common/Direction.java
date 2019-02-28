@@ -7,20 +7,20 @@ public enum Direction {
     /**
      * Left direction.
      */
-    Left,
+    LEFT,
 
     /**
      * Right direction.
      */
-    Right,
+    RIGHT,
 
     /**
      * Before something.
      */
-    Before,
+    BEFORE,
 
     /**
      * After something.
      */
-    After
+    AFTER
 }

@@ -22,7 +22,7 @@ public class HasAllOptionsInOrderCommandTests {
 
     private HasAllOptionsInOrderCommand hasAllOptionsInOrderCommand;
 
-    private CompareType compare = CompareType.AscendingByText;
+    private CompareType compare = CompareType.ASCENDING_BY_TEXT;
     private String optGroup = "Test";
 
     @Mock
@@ -35,10 +35,12 @@ public class HasAllOptionsInOrderCommandTests {
     private WebControl control;
 
     @BeforeEach
-    public void setup(){ hasAllOptionsInOrderCommand = new HasAllOptionsInOrderCommand(selector, initializer, compare, optGroup); }
+    public void setup() {
+        hasAllOptionsInOrderCommand = new HasAllOptionsInOrderCommand(selector, initializer, compare, optGroup);
+    }
 
     @Test
-    public void HasAllOptionsInOrderCommandTestsInOrder(){
+    public void HasAllOptionsInOrderCommandTestsInOrder() {
         // Arrange
 
         // Act

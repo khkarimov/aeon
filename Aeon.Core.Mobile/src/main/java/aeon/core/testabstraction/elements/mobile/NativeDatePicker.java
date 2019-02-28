@@ -16,7 +16,7 @@ public class NativeDatePicker extends NativeAppElement {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
+     * @param info     The automation info object to use.
      * @param selector The selector that identifies this element.
      */
     public NativeDatePicker(AutomationInfo info, IByWeb selector) {
@@ -35,11 +35,11 @@ public class NativeDatePicker extends NativeAppElement {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
-     * @param selector The selector that identifies this element.
+     * @param info            The automation info object to use.
+     * @param selector        The selector that identifies this element.
      * @param switchMechanism The switchMechanism to use to find the element.
      */
-    public NativeDatePicker(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public NativeDatePicker(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
     }
 

@@ -16,13 +16,13 @@ import com.perfecto.reportium.model.PerfectoExecutionContext;
 import com.perfecto.reportium.test.TestContext;
 import com.perfecto.reportium.test.result.TestResultFactory;
 import io.appium.java_client.android.AndroidDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.pf4j.Extension;
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class PerfectoPlugin extends Plugin {
     @Extension
     public static class PerfectoTestExecutionExtension implements ITestExecutionExtension {
 
-        static Logger log = LogManager.getLogger(PerfectoTestExecutionExtension.class);
+        static Logger log = LoggerFactory.getLogger(PerfectoTestExecutionExtension.class);
 
         private ReportiumClient reportiumClient;
 
@@ -142,7 +142,7 @@ public class PerfectoPlugin extends Plugin {
     @Extension
     public static class PerfectoSeleniumExtension implements ISeleniumExtension {
 
-        static Logger log = LogManager.getLogger(PerfectoSeleniumExtension.class);
+        static Logger log = LoggerFactory.getLogger(PerfectoSeleniumExtension.class);
 
         IConfiguration configuration;
 

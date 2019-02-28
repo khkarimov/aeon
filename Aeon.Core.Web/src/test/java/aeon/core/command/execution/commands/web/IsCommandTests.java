@@ -6,7 +6,6 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -14,11 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.function.Consumer;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -39,9 +36,9 @@ public class IsCommandTests {
     private Consumer<IDriver> action;
 
     @Test
-    public void commandDelegateIsCommandWithRaw(){
+    public void commandDelegateIsCommandWithRaw() {
         // Arrange
-        IsCommand isCommandObjectRaw = new IsCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
+        IsCommand isCommandObjectRaw = new IsCommand(selector, initializer, value, ComparisonOption.RAW, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -50,13 +47,13 @@ public class IsCommandTests {
         actionRaw.accept(driver);
 
         // Assert
-        verify(driver, times(1)).is(control, value, ComparisonOption.Raw, attribute);
+        verify(driver, times(1)).is(control, value, ComparisonOption.RAW, attribute);
     }
 
     @Test
-    public void commandDelegateIsCommandWithText(){
+    public void commandDelegateIsCommandWithText() {
         // Arrange
-        IsCommand isCommandObjectText = new IsCommand(selector, initializer, value, ComparisonOption.Text, attribute);
+        IsCommand isCommandObjectText = new IsCommand(selector, initializer, value, ComparisonOption.TEXT, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -65,6 +62,6 @@ public class IsCommandTests {
         actionText.accept(driver);
 
         // Assert
-        verify(driver, times(1)).is(control, value, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).is(control, value, ComparisonOption.TEXT, attribute);
     }
 }

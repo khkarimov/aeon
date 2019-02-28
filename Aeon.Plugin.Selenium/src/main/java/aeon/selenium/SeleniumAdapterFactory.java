@@ -21,8 +21,6 @@ import aeon.selenium.extensions.ISeleniumExtension;
 import aeon.selenium.jquery.JavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import aeon.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -46,6 +44,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,13 +69,14 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     private static final String MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
-    private static Logger log = LogManager.getLogger(SeleniumAdapterFactory.class);
+    private static Logger log = LoggerFactory.getLogger(SeleniumAdapterFactory.class);
     protected BrowserType browserType;
     private String browserAcceptedLanguageCodes;
     private boolean useMobileUserAgent;
     private String proxyLocation;
     protected WebDriver driver;
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
+    protected JavaScriptFlowExecutor asyncJavaScriptFlowExecutor;
     protected boolean moveMouseToOrigin;
     protected boolean isRemote;
     protected URL seleniumHubUrl;
@@ -92,7 +93,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -111,10 +112,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
 
         try {
-            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FullHD"));
+            fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FULL_HD"));
         } catch (IllegalArgumentException e) {
-            log.warn("Illegal browser size selected.  Set to default value: 'FullHD'");
-            fallbackBrowserSize = BrowserSize.FullHD;
+            log.warn("Illegal browser size selected. Set to default value: 'FULL_HD'");
+            fallbackBrowserSize = BrowserSize.FULL_HD;
         }
 
         seleniumHubUrl = null;
@@ -126,12 +127,15 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 }
                 seleniumHubUrl = new URL(hubUrlString);
             } catch (MalformedURLException e) {
-                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
+                log.error("MalformedURLException for the selenium grid URL.", e);
+
                 throw new AeonLaunchException(e);
             }
         }
 
         javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5));
+        asyncJavaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5), true);
+
         moveMouseToOrigin = configuration.getBoolean(SeleniumConfiguration.Keys.MOVE_MOUSE_TO_ORIGIN, true);
         String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.CHROME_DIRECTORY, null);
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
@@ -308,7 +312,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             try {
                 return createDriver.get();
             } catch (Exception e) {
-                log.trace("Web driver instantiation failed: " + e.getMessage(), e);
+                log.trace("Web driver instantiation failed: {}" + e.getMessage(), e);
 
                 if (i < numberOfRetries - 1) {
                     Sleep.wait(1000);
@@ -471,7 +475,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         log.info("firefox binary options: " + binaryPath);
 
-        if (!isRemote && OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows) {
+        if (!isRemote && OsCheck.getOperatingSystemType() == OsCheck.OSType.WINDOWS) {
             // Workaround for Windows Firefox problem:
             // https://github.com/mozilla/geckodriver/issues/1068
             firefoxOptions.addPreference("browser.tabs.remote.autostart", false);
@@ -485,7 +489,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private InternetExplorerOptions getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
-        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
+        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.WINDOWS) {
             throw new UnsupportedPlatformException();
         }
 
@@ -511,7 +515,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private EdgeOptions getEdgeOptions(String proxyLocation) {
-        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.Windows) {
+        if (OsCheck.getOperatingSystemType() != OsCheck.OSType.WINDOWS) {
             throw new UnsupportedPlatformException();
         }
 

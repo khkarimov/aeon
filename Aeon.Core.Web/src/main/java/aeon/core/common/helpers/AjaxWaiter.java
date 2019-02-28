@@ -3,12 +3,12 @@ package aeon.core.common.helpers;
 import aeon.core.common.exceptions.ScriptExecutionException;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 /**
@@ -16,25 +16,25 @@ import java.util.stream.Collectors;
  */
 public class AjaxWaiter {
 
-    private static Logger log = LogManager.getLogger(AjaxWaiter.class);
+    private static Logger log = LoggerFactory.getLogger(AjaxWaiter.class);
     private IWebDriver webDriver;
-    private IClock clock;
     private Duration timeout;
 
     /**
      * Constructor for an AjaxWaiter.
-     * @param driver The specified driver that receives ajax responses.
+     *
+     * @param driver  The specified driver that receives ajax responses.
      * @param timeout The amount of time, in milliseconds, that the driver will wait before processing
      *                an ajax response.
      */
     public AjaxWaiter(IDriver driver, Duration timeout) {
         this.webDriver = (IWebDriver) driver;
-        this.clock = new Clock();
         this.timeout = timeout;
     }
 
     /**
      * Gets the web driver.
+     *
      * @return The web driver being used is returned.
      */
     public IWebDriver getWebDriver() {
@@ -43,6 +43,7 @@ public class AjaxWaiter {
 
     /**
      * Sets the web driver.
+     *
      * @param webDriver The web driver that is set.
      */
     public void setWebDriver(IWebDriver webDriver) {
@@ -51,6 +52,7 @@ public class AjaxWaiter {
 
     /**
      * Gets the timeout value of the ajax waiter.
+     *
      * @return The timeout value, in milliseconds.
      */
     public long getTimeout() {
@@ -59,6 +61,7 @@ public class AjaxWaiter {
 
     /**
      * Sets the timeout value of the ajax waiter.
+     *
      * @param millis The timeout value, in milliseconds, that the ajax waiter is set to have.
      */
     public void setTimeout(long millis) {
@@ -70,7 +73,7 @@ public class AjaxWaiter {
      */
     public void waitForAsync() {
         long count;
-        DateTime end = clock.getUtcNow().withDurationAdded(timeout.toMillis(), 1);
+        LocalDateTime end = LocalDateTime.now().plus(timeout);
         do {
             try {
                 count = (long) webDriver.executeScript("return aeon.ajaxCounter;");
@@ -79,7 +82,7 @@ public class AjaxWaiter {
                 return;
             }
             Sleep.waitInternal();
-        } while (count != 0 && clock.getUtcNow().isBefore(end.toInstant()));
+        } while (count != 0 && LocalDateTime.now().isBefore(end));
     }
 
 
@@ -105,6 +108,7 @@ public class AjaxWaiter {
 
     /**
      * Gets the Ajax Waiter as as string/.
+     *
      * @return the content of the buffered reader as a string.
      */
     public String getAjaxWaiterJS() {

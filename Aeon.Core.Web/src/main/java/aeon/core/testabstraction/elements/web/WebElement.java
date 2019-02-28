@@ -8,8 +8,9 @@ import aeon.core.common.KeyboardKey;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.Element;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  * The class for webpage elements modeling.
@@ -18,13 +19,13 @@ public class WebElement extends Element {
 
     protected IByWeb selector;
     protected AutomationInfo info;
-    protected Iterable<IByWeb> switchMechanism;
+    protected IByWeb[] switchMechanism;
 
     /**
      * Initializes a new instance of the {@link WebElement} class.
      *
-     * @param info      The automation information.
-     * @param selector  IBy selector that will identify the element.
+     * @param info     The automation information.
+     * @param selector IBy selector that will identify the element.
      */
     public WebElement(AutomationInfo info, IByWeb selector) {
         super(selector);
@@ -46,11 +47,11 @@ public class WebElement extends Element {
      * Initializes a new instance of the {@link WebElement} class
      * with a switch mechanism.
      *
-     * @param info The AutomationInfo.
-     * @param selector IBY selector that will indentify the element.
+     * @param info            The AutomationInfo.
+     * @param selector        IBY selector that will indentify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public WebElement(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public WebElement(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         this(info, selector);
         this.switchMechanism = switchMechanism;
     }
@@ -114,9 +115,9 @@ public class WebElement extends Element {
 
     /**
      * Executes the drag and drop command.
-     * @deprecated use dragAndDrop(WebElement) instead.
      *
      * @param dropTarget The element to be dropped at.
+     * @deprecated use dragAndDrop(WebElement) instead.
      */
     @Deprecated
     public void dragAndDrop(String dropTarget) {
@@ -137,6 +138,7 @@ public class WebElement extends Element {
                 dropTarget.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
+
     /**
      * Executes the enabled command.
      */
@@ -164,7 +166,7 @@ public class WebElement extends Element {
 
     /**
      * Executes the right click command.
-      */
+     */
     public void rightClick() {
         info.getCommandExecutionFacade().execute(info, new RightClickCommand(
                 selector,
@@ -199,14 +201,14 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Text,
+                ComparisonOption.TEXT,
                 "INNERHTML"));
     }
 
     /**
      * Asserts the value of the web element's attribute.
      *
-     * @param value The expected value of the attribute.
+     * @param value     The expected value of the attribute.
      * @param attribute The attribute to be compared.
      */
     public void is(String value, String attribute) {
@@ -214,7 +216,7 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Raw,
+                ComparisonOption.RAW,
                 attribute));
     }
 
@@ -228,14 +230,14 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Text,
+                ComparisonOption.TEXT,
                 "INNERHTML"));
     }
 
     /**
      * Asserts the value of the web element's attribute is like a given value.
      *
-     * @param value The value the attribute should be like.
+     * @param value     The value the attribute should be like.
      * @param attribute The attribute to be compared.
      */
     public void isLike(String value, String attribute) {
@@ -243,7 +245,7 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Raw,
+                ComparisonOption.RAW,
                 attribute));
     }
 
@@ -257,14 +259,14 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Text,
+                ComparisonOption.TEXT,
                 "INNERHTML"));
     }
 
     /**
      * Asserts the value of a web element's value is not like a given value.
      *
-     * @param value The value the attribute should not be like.
+     * @param value     The value the attribute should not be like.
      * @param attribute The attribute to be compared.
      */
     public void isNotLike(String value, String attribute) {
@@ -272,152 +274,152 @@ public class WebElement extends Element {
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
-                ComparisonOption.Raw,
+                ComparisonOption.RAW,
                 attribute));
     }
 
     /**
      * Asserts that a web element's children that match a given selector posses certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
     public void has(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
                 new HasCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
     /**
      * Asserts that a web element's children that match a given selector posses certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
-     * @param attribute The attribute of the children to compare with the messages.
+     * @param attribute     The attribute of the children to compare with the messages.
      */
     public void has(String[] messages, String childSelector, String attribute) {
         info.getCommandExecutionFacade().execute(info,
                 new HasCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
                 ));
     }
 
     /**
      * Asserts that an elements children that match a selector possess values like the given values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
     public void hasLike(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
                 new HasLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
     /**
      * Asserts that an elements children that match a selector possess values like the given values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
-     * @param attribute The attribute of the children to compare with messages.
+     * @param attribute     The attribute of the children to compare with messages.
      */
     public void hasLike(String[] messages, String childSelector, String attribute) {
         info.getCommandExecutionFacade().execute(info,
                 new HasLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
                 ));
     }
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
     public void doesNotHave(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
-     * @param attribute The attribute of the children to compare with messages.
+     * @param attribute     The attribute of the children to compare with messages.
      */
     public void doesNotHave(String[] messages, String childSelector, String attribute) {
         info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
                 ));
     }
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
     public void doesNotHaveLike(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
     /**
      * Asserts that an elements children that match a given selector do not have certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
-     * @param attribute The attribute of the children to compare with messages.
+     * @param attribute     The attribute of the children to compare with messages.
      */
     public void doesNotHaveLike(String[] messages, String childSelector, String attribute) {
         info.getCommandExecutionFacade().execute(info,
                 new DoesNotHaveLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
                 ));
     }
 
     /**
      * Asserts that an elements children that match a selector only posses certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
      */
     public void hasOnly(String[] messages, String childSelector) {
         info.getCommandExecutionFacade().execute(info,
                 new HasOnlyCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Text, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
     /**
      * Asserts that an elements children that match a selector only posses certain values.
      *
-     * @param messages The strings to be matched.
+     * @param messages      The strings to be matched.
      * @param childSelector The selector that the children are matched to.
-     * @param attribute The attribute of the children to compare with messages.
+     * @param attribute     The attribute of the children to compare with messages.
      */
     public void hasOnly(String[] messages, String childSelector, String attribute) {
         info.getCommandExecutionFacade().execute(info,
                 new HasOnlyCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.Raw, attribute
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
                 ));
     }
 
@@ -437,7 +439,7 @@ public class WebElement extends Element {
      * Executes the setting of a body value by javascript.
      *
      * @param value The body value to be set to.
-      */
+     */
     public void setBodyValueByJavaScript(String value) {
         info.getCommandExecutionFacade().execute(info, new SetBodyValueByJavaScriptCommand(
                 selector,
@@ -479,16 +481,26 @@ public class WebElement extends Element {
      * Checks that the date contained in an element attribute is approximately equal to an expected date within a certain margin of error.
      * The provided Period cannot contain any weeks or years or months since these vary in length.
      *
-     * @param attributeName The name of the attribute that has the date.
-     * @param expectedDate The expected date.
+     * @param attributeName   The name of the attribute that has the date.
+     * @param expectedDate    The expected date.
      * @param acceptableDelta The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
      */
-    public void datesApproximatelyEqual(String attributeName, DateTime expectedDate, Period acceptableDelta) {
+    public void datesApproximatelyEqual(String attributeName, LocalDate expectedDate, Period acceptableDelta) {
         info.getCommandExecutionFacade().execute(info, new DatesApproximatelyEqualCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 attributeName, expectedDate, acceptableDelta
         ));
+    }
+
+    /**
+     * Checks that the date contained in an element attribute is equal to an expected date.
+     *
+     * @param attributeName The name of the attribute that has the date.
+     * @param expectedDate  The expected date.
+     */
+    public void datesEqual(String attributeName, LocalDate expectedDate) {
+        datesApproximatelyEqual(attributeName, expectedDate, Period.ZERO);
     }
 
     /**

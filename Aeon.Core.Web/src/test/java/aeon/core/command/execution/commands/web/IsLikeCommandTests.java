@@ -6,7 +6,6 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -16,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -39,9 +36,9 @@ public class IsLikeCommandTests {
     private Consumer<IDriver> action;
 
     @Test
-    public void commandDelegateIsLikeCommandWithRaw(){
+    public void commandDelegateIsLikeCommandWithRaw() {
         // Arrange
-        IsLikeCommand isLikeCommandObjectRaw = new IsLikeCommand(selector, initializer, value, ComparisonOption.Raw, attribute);
+        IsLikeCommand isLikeCommandObjectRaw = new IsLikeCommand(selector, initializer, value, ComparisonOption.RAW, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -50,13 +47,13 @@ public class IsLikeCommandTests {
         actionRaw.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isLike(control, value, ComparisonOption.Raw, attribute);
+        verify(driver, times(1)).isLike(control, value, ComparisonOption.RAW, attribute);
     }
 
     @Test
-    public void commandDelegateIsLikeCommandWithText(){
+    public void commandDelegateIsLikeCommandWithText() {
         // Arrange
-        IsLikeCommand isLikeCommandObjectText = new IsLikeCommand(selector, initializer, value, ComparisonOption.Text, attribute);
+        IsLikeCommand isLikeCommandObjectText = new IsLikeCommand(selector, initializer, value, ComparisonOption.TEXT, attribute);
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);
 
@@ -65,6 +62,6 @@ public class IsLikeCommandTests {
         actionText.accept(driver);
 
         // Assert
-        verify(driver, times(1)).isLike(control, value, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).isLike(control, value, ComparisonOption.TEXT, attribute);
     }
 }

@@ -22,7 +22,7 @@ public class HasOnlyCommandTests {
 
     private HasOnlyCommand hasOnlyCommand;
 
-    private String [] messages = {"test", "test1", "test2", "test3"};
+    private String[] messages = {"test", "test1", "test2", "test3"};
     private String childSelector = "Child";
     private String attribute = "attribute";
 
@@ -36,16 +36,18 @@ public class HasOnlyCommandTests {
     private WebControl control;
 
     @BeforeEach
-    public void setup(){ hasOnlyCommand = new HasOnlyCommand(selector, initializer, messages, childSelector, ComparisonOption.Text, attribute); }
+    public void setup() {
+        hasOnlyCommand = new HasOnlyCommand(selector, initializer, messages, childSelector, ComparisonOption.TEXT, attribute);
+    }
 
     @Test
-    public void HasAllOptionsInOrderCommandTestsInOrder(){
+    public void HasAllOptionsInOrderCommandTestsInOrder() {
         // Arrange
 
         // Act
         hasOnlyCommand.commandDelegate(driver, control);
 
         // Verify
-        verify(driver, times(1)).hasOnly(control, messages, childSelector, ComparisonOption.Text, attribute);
+        verify(driver, times(1)).hasOnly(control, messages, childSelector, ComparisonOption.TEXT, attribute);
     }
 }

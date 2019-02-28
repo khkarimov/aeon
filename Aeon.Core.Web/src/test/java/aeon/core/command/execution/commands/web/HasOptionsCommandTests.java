@@ -15,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -27,7 +25,7 @@ public class HasOptionsCommandTests {
     WebControl control;
     @Mock
     Consumer<IDriver> action;
-    private String [] options = {"test", "test1", "test2", "test3"};
+    private String[] options = {"test", "test1", "test2", "test3"};
     private String optGroup = "teststes";
     @Mock
     private IWebDriver driver;
@@ -40,7 +38,7 @@ public class HasOptionsCommandTests {
     @Test
     public void commandDelegateHasOptionsCommand() {
         // Arrange
-        HasOptionsCommand command = new HasOptionsCommand(selector, commandInitializer, options, optGroup, WebSelectOption.Text);
+        HasOptionsCommand command = new HasOptionsCommand(selector, commandInitializer, options, optGroup, WebSelectOption.TEXT);
         when(commandInitializer.setContext()).thenReturn(action);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
@@ -49,18 +47,18 @@ public class HasOptionsCommandTests {
         action.accept(driver);
 
         // Assert
-        verify(driver, times(1)).hasOptions(control, options, optGroup, WebSelectOption.Text);
+        verify(driver, times(1)).hasOptions(control, options, optGroup, WebSelectOption.TEXT);
     }
 
     @Test
-    public void hasOptionsCommandFirstConstructor(){
+    public void hasOptionsCommandFirstConstructor() {
         // Arrange
-        HasOptionsCommand commandFirst = new HasOptionsCommand(selector, commandInitializer, options, WebSelectOption.Text);
+        HasOptionsCommand commandFirst = new HasOptionsCommand(selector, commandInitializer, options, WebSelectOption.TEXT);
 
         // Act
         commandFirst.commandDelegate(driver, control);
 
         // Assert
-        verify(driver, times(1)).hasOptions(control, options, null, WebSelectOption.Text);
+        verify(driver, times(1)).hasOptions(control, options, null, WebSelectOption.TEXT);
     }
 }

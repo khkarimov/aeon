@@ -1,5 +1,6 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.AeonConfigKey;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.util.List;
+import java.util.Properties;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +22,6 @@ public class ConfigurationTests {
 
     @Mock
     private IDriver driver;
-
     @Mock
     private IAdapter adapter;
 
@@ -30,31 +33,56 @@ public class ConfigurationTests {
     }
 
     @Test
-    public void testGetDriver() {
-        // Assert
-        assertEquals(config.getDriver(), driver.getClass());
-    }
+    public void getDriverSetDriver_happyPath_returnsDriverClass() {
 
-    @Test
-    public void testSetDriver(){
+        // Arrange
+
         // Act
         config.setDriver(IDriver.class);
+
         // Assert
         assertEquals(config.getDriver(), IDriver.class);
     }
 
     @Test
-    public void testGetAdapter() {
-        // Assert
-        assertEquals(config.getAdapter(), adapter.getClass());
-    }
+    public void getAdapterSetAdapter_happyPath_returnsAdapterClass() {
 
-    @Test
-    public void testSetAdapter() {
+        // Arrange
+
         // Act
         config.setAdapter(IAdapter.class);
+
         // Assert
         assertEquals(config.getAdapter(), IAdapter.class);
     }
 
+    @Test
+    public void setProperties_happyPath_propertiesChanged() {
+
+        // Arrange
+        Properties p = new Properties();
+        p.put(Configuration.Keys.TIMEOUT, "Default");
+        p.setProperty(Configuration.Keys.TIMEOUT.getKey(), "Success");
+
+        // Act
+        config.setProperties(p);
+
+        // Assert
+        String actual = config.getString(Configuration.Keys.TIMEOUT, "Default");
+        assertEquals("Success", actual);
+    }
+
+    @Test
+    public void getConfigurationFields_happyPath_returnsConfigurationFields() throws IllegalAccessException {
+
+        // Arrange
+
+        // Act
+        List<AeonConfigKey> keys = config.getConfigurationFields();
+
+        // Assert
+        assertEquals("aeon.timeout", keys.get(0).getKey());
+        assertEquals("aeon.throttle", keys.get(1).getKey());
+        assertEquals("aeon.implicit_reporting", keys.get(2).getKey());
+    }
 }

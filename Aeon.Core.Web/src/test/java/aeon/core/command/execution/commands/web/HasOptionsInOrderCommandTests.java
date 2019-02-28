@@ -15,9 +15,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -40,7 +38,7 @@ public class HasOptionsInOrderCommandTests {
     @Test
     public void commandDelegateHasOptionsCommand() {
         // Arrange
-        HasOptionsInOrderCommand command = new HasOptionsInOrderCommand(selector, commandInitializer, options, optGroup, WebSelectOption.Text);
+        HasOptionsInOrderCommand command = new HasOptionsInOrderCommand(selector, commandInitializer, options, optGroup, WebSelectOption.TEXT);
         when(commandInitializer.setContext()).thenReturn(action);
         when(commandInitializer.findElement(driver, selector)).thenReturn(control);
 
@@ -49,18 +47,18 @@ public class HasOptionsInOrderCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).hasOptionsInOrder(control, options, optGroup, WebSelectOption.Text);
+        verify(driver, times(1)).hasOptionsInOrder(control, options, optGroup, WebSelectOption.TEXT);
     }
 
     @Test
-    public void hasOptionsCommandFirstConstructor(){
+    public void hasOptionsCommandFirstConstructor() {
         // Arrange
-        HasOptionsInOrderCommand commandFirst = new HasOptionsInOrderCommand(selector, commandInitializer, options, WebSelectOption.Text);
+        HasOptionsInOrderCommand commandFirst = new HasOptionsInOrderCommand(selector, commandInitializer, options, WebSelectOption.TEXT);
 
         // Act
         commandFirst.commandDelegate(driver, control);
 
         // Assert
-        verify(driver, times(1)).hasOptionsInOrder(control, options, null, WebSelectOption.Text);
+        verify(driver, times(1)).hasOptionsInOrder(control, options, null, WebSelectOption.TEXT);
     }
 }

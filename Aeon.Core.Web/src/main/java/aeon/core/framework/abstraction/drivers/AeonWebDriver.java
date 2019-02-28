@@ -13,13 +13,13 @@ import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.core.testabstraction.product.WebConfiguration;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 
 import java.awt.*;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 
 /**
@@ -104,6 +104,11 @@ public class AeonWebDriver implements IWebDriver {
     @Override
     public Object executeScript(String script) {
         return adapter.executeScript(script);
+    }
+
+    @Override
+    public Object executeAsyncScript(String script) {
+        return adapter.executeAsyncScript(script);
     }
 
     @Override
@@ -467,7 +472,7 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
-    public void datesApproximatelyEqual(WebControl element, String attributeName, DateTime expected, Period delta) {
+    public void datesApproximatelyEqual(WebControl element, String attributeName, LocalDate expected, Period delta) {
         adapter.datesApproximatelyEqual(element, attributeName, expected, delta);
     }
 

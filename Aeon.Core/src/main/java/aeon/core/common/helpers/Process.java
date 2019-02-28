@@ -1,7 +1,7 @@
 package aeon.core.common.helpers;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Process {
 
-    private static Logger log = LogManager.getLogger(Process.class);
+    private static Logger log = LoggerFactory.getLogger(Process.class);
 
     /**
      * Private constructor to prevent instantiation.
@@ -27,6 +27,7 @@ public class Process {
 
     /**
      * Returns as a string list the windows processes by name given a string as input.
+     *
      * @param name the input string to match to the windows process.
      * @return a list of strings of matching windows processes.
      */
@@ -40,8 +41,8 @@ public class Process {
             BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
-                String processName = line.substring(0, line.indexOf(",")).replace("\"", "");
-                if (processName.toLowerCase().equals(name.toLowerCase())) {
+                String processName = line.substring(0, line.indexOf(',')).replace("\"", "");
+                if (processName.equalsIgnoreCase(name)) {
                     output.add(processName);
                 }
             }
@@ -50,27 +51,28 @@ public class Process {
             log.error("Error retrieving processes", e);
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     /**
      * Function kills a specific process with a given name as input.
+     *
      * @param name the name of the process to kill.
      */
     public static void killProcessByName(String name) {
         OsCheck.OSType osType = OsCheck.getOperatingSystemType();
         String[] command;
         switch (osType) {
-            case Windows:
+            case WINDOWS:
                 command = new String[]{"taskkill", "/F", "/IM", name};
                 break;
-            case Linux:
+            case LINUX:
                 command = new String[]{"pkill", "-9", name};
                 break;
-            case MacOS:
+            case MAC_OS:
                 command = null; // need to look into killing a process with MacOS
                 break;
-            case Other:
+            case OTHER:
                 command = null;
                 break;
             default:

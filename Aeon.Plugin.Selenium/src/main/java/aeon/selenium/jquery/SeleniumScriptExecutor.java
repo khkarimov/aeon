@@ -1,10 +1,10 @@
 package aeon.selenium.jquery;
 
 import aeon.core.common.helpers.ConvertHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SeleniumScriptExecutor implements IScriptExecutor {
     private WebDriver remoteWebDriver;
-    private static Logger log = LogManager.getLogger(SeleniumScriptExecutor.class);
+    private static Logger log = LoggerFactory.getLogger(SeleniumScriptExecutor.class);
 
     /**
      * Constructor to set the selenium script executor's web driver.
@@ -26,7 +26,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
     }
 
     /**
-     *Function to get the remote web driver.
+     * Function to get the remote web driver.
      *
      * @return The remote web driver.
      */
@@ -44,7 +44,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
      * @param timeToWait A {@link Duration} structure defining the amount of time to wait.
      */
     public final void setTimeout(Duration timeToWait) {
-        log.trace(String.format("WebDriver.Manage().Timeouts().SetScriptTimeout(%1$s);", timeToWait));
+        log.trace("WebDriver.Manage().Timeouts().SetScriptTimeout({});", timeToWait);
         getRemoteWebDriver().manage().timeouts().setScriptTimeout(timeToWait.getSeconds(), TimeUnit.SECONDS);
     }
 
@@ -53,14 +53,14 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
      *
      * @param script The JavaScript code to execute.
      * @param args   The arguments to the script.
-     * @return       The object to be returned.
+     * @return The object to be returned.
      */
     public final Object executeScript(String script, Object... args) {
-        log.trace(String.format("WebDriver.executeScript(\"%1$s\");", script));
+        log.trace("WebDriver.executeScript(\"{}\");", script);
         Object returnValue = ((JavascriptExecutor) getRemoteWebDriver()).executeScript(script, args);
 
         if (returnValue != null) {
-            log.trace(String.format("WebDriver.executeScript() returned %1$s", ConvertHelper.scriptReturnValueToReadableString(returnValue)));
+            log.trace("WebDriver.executeScript() returned {}", ConvertHelper.scriptReturnValueToReadableString(returnValue));
         }
 
         return returnValue;
@@ -71,15 +71,15 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
      *
      * @param script The JavaScript code to execute.
      * @param args   The arguments to the script.
-     * @return       The object to be returned.
+     * @return The object to be returned.
      */
     public final Object executeAsyncScript(String script, Object... args) {
-        log.trace(String.format("WebDriver.executeAsyncScript(\"%1$s\");", script));
+        log.trace("WebDriver.executeAsyncScript(\"{}\");", script);
 
         Object returnValue = ((JavascriptExecutor) remoteWebDriver).executeAsyncScript(script, args);
 
         if (returnValue != null) {
-            log.trace(String.format("WebDriver.executeAsyncScript() returned %1$s", ConvertHelper.scriptReturnValueToReadableString(returnValue)));
+            log.trace("WebDriver.executeAsyncScript() returned {}", ConvertHelper.scriptReturnValueToReadableString(returnValue));
         }
 
         return returnValue;

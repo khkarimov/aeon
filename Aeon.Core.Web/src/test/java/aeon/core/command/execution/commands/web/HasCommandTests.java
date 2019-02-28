@@ -16,9 +16,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -41,7 +39,7 @@ public class HasCommandTests {
 
     @BeforeEach
     public void setUp() {
-        command = new HasCommand(selector, commandInitializer, messages, str, ComparisonOption.Raw, atr);
+        command = new HasCommand(selector, commandInitializer, messages, str, ComparisonOption.RAW, atr);
     }
 
     @Test
@@ -55,6 +53,6 @@ public class HasCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).has(control, messages, str, ComparisonOption.Raw, atr);
+        verify(driver, times(1)).has(control, messages, str, ComparisonOption.RAW, atr);
     }
 }

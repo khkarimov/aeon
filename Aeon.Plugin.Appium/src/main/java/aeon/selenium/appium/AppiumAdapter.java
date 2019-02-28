@@ -25,15 +25,16 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.offset.PointOption;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -41,7 +42,7 @@ import java.util.*;
  */
 public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
-    private static Logger log = LogManager.getLogger(AppiumAdapter.class);
+    private static Logger log = LoggerFactory.getLogger(AppiumAdapter.class);
 
     private String context;
 
@@ -50,19 +51,20 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     /**
      * Constructor for Selenium Adapter.
      *
-     * @param seleniumWebDriver     The driver for the adapter.
-     * @param javaScriptExecutor    The javaScript executor for the adapter.
-     * @param moveMouseToOrigin     A boolean indicating whether or not the mouse will return to the origin
-     *                              (top left corner of the browser window) before executing every action.
-     * @param browserType           The browser type for the adapter.
-     * @param browserSize           The screen resolution for the machine
-     * @param isRemote              Whether we are testing remotely or locally.
-     * @param seleniumHubUrl        The used Selenium hub URL.
-     * @param seleniumLogsDirectory The path to the directory for Selenium Logs
-     * @param loggingPreferences    Preferences which contain which Selenium log types to enable
+     * @param seleniumWebDriver       The driver for the adapter.
+     * @param javaScriptExecutor      The javaScript executor for the adapter.
+     * @param asyncJavaScriptExecutor The asynchronous javaScript executor for the adapter.
+     * @param moveMouseToOrigin       A boolean indicating whether or not the mouse will return to the origin
+     *                                (top left corner of the browser window) before executing every action.
+     * @param browserType             The browser type for the adapter.
+     * @param browserSize             The screen resolution for the machine
+     * @param isRemote                Whether we are testing remotely or locally.
+     * @param seleniumHubUrl          The used Selenium hub URL.
+     * @param seleniumLogsDirectory   The path to the directory for Selenium Logs
+     * @param loggingPreferences      Preferences which contain which Selenium log types to enable
      */
-    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
-        super(seleniumWebDriver, javaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+        super(seleniumWebDriver, javaScriptExecutor, asyncJavaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
 
         if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
             context = getMobileWebDriver().getContext();
@@ -449,9 +451,9 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         return -1;
     }
 
-    private void setMonthOnAndroidDatePicker(DateTime date) {
+    private void setMonthOnAndroidDatePicker(LocalDate date) {
         int currentMonth = getMonthNumberOnAndroidDatePicker();
-        int desiredMonth = date.getMonthOfYear();
+        int desiredMonth = date.getMonthValue();
         WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
         if (date.getYear() != Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText())) {
             setYearOnAndroidDatePicker(date.getYear());
@@ -464,7 +466,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 WebControl previousMonth = findElement(ByMobile.accessibilityId("Previous month"), false);
                 click(previousMonth, false);
             }
-        } else if (currentMonth < desiredMonth) {
+        } else {
             for (int i = 0; i < desiredMonth - currentMonth; i++) {
                 WebControl nextMonth = findElement(ByMobile.accessibilityId("Next month"), false);
                 click(nextMonth, false);
@@ -473,12 +475,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     }
 
     @Override
-    public void setDate(DateTime date) {
+    public void setDate(LocalDate date) {
 
         if (browserType == BrowserType.AndroidHybridApp) {
             switchToNativeAppContext();
             setMonthOnAndroidDatePicker(date);
-            WebControl label = findElement(ByMobile.accessibilityId(date.toString("dd MMMM yyyy")), false);
+            WebControl label = findElement(ByMobile.accessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))), false);
             click(label, false);
             WebControl label1 = findElement(ByMobile.id("android:id/button1"), false);
             click(label1, false);
@@ -486,11 +488,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         } else {
             switchToNativeAppContext();
             WebControl month = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
-            ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.toString("MMMM"));
+            ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
             WebControl day = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[2]"), false);
-            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.toString("d"));
+            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("d")));
             WebControl year = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[3]"), false);
-            ((SeleniumElement) year).getUnderlyingWebElement().sendKeys(date.toString("yyyy"));
+            ((SeleniumElement) year).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("yyyy")));
             switchToWebViewContext();
         }
     }
@@ -728,12 +730,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             try {
                 getMobileWebDriver().closeApp();
             } catch (Exception e) {
-                log.trace(e);
+                log.trace("Failed to close app.", e);
             } finally {
                 getMobileWebDriver().close();
             }
         } catch (Exception e) {
-            log.trace(e);
+            log.trace("Failed to close.", e);
         } finally {
             getMobileWebDriver().quit();
         }

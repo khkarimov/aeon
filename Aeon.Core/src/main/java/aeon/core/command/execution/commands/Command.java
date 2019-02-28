@@ -5,8 +5,8 @@ import aeon.core.command.execution.commands.interfaces.ICommand;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.testabstraction.product.AeonTestExecution;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  */
 public abstract class Command implements ICommand<Consumer<IDriver>> {
 
-    private static Logger log = LogManager.getLogger(Command.class);
+    private static Logger log = LoggerFactory.getLogger(Command.class);
     private ICommandInitializer commandInitializer;
 
     /**
@@ -34,9 +34,6 @@ public abstract class Command implements ICommand<Consumer<IDriver>> {
      * @param initializer The command initializer.
      */
     protected Command(String message, ICommandInitializer initializer) {
-        if (log == null) {
-            throw new IllegalArgumentException("log");
-        }
 
         this.commandInitializer = initializer;
 

@@ -16,9 +16,12 @@ dependencies {
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Core.Web')
     compile project(':Aeon.Plugin.Appium')
+    compile project(':Aeon.Plugin.JUnit5')
+    compile project(':Aeon.Plugin.Log4J2')
     compile project(':Aeon.Plugin.Perfecto')
     compile project(':Aeon.Plugin.Reporting')
     compile project(':Aeon.Plugin.Selenium')
+    compile project(':Aeon.Plugin.TestNG')
     compile project(':Aeon.SystemTests.Web')
     compile project(':Aeon.SystemTests.Mobile')
     compile project(':Aeon.Platform')
@@ -28,7 +31,7 @@ dependencies {
 }
 
 wrapper {
-    gradleVersion = '4.9'
+    gradleVersion = '4.10'
 }
 
 //Copy selenium plugin into SystemTests plugins folder
@@ -136,7 +139,7 @@ assemble.finalizedBy(CopyDriversPlatformPython)
 
 allprojects {
     group 'aeon'
-    version '1.15.0'
+    version '1.18.0'
 
     apply plugin: 'java'
     apply plugin: 'jacoco'
@@ -151,11 +154,15 @@ allprojects {
         }
     }
 
-    apply plugin: "com.jfrog.artifactory"
+    apply plugin: 'com.jfrog.artifactory'
     apply plugin: 'maven-publish'
     apply plugin: 'checkstyle'
     checkstyle {
-        toolVersion = "8.7"
+        toolVersion = '8.7'
+    }
+
+    checkstyleTest {
+        configFile = new File("$rootProject.projectDir/config/checkstyle-test-sources/checkstyle.xml")
     }
 
     dependencies {

@@ -1,16 +1,15 @@
 package aeon.core.testabstraction.product;
 
+import aeon.core.common.AeonConfigKey;
 import aeon.core.common.web.BrowserType;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,31 +18,42 @@ import java.util.List;
  */
 public class WebConfiguration extends Configuration {
 
-    private Logger log = LogManager.getLogger(WebConfiguration.class);
+    private Logger log = LoggerFactory.getLogger(WebConfiguration.class);
 
     private BrowserType browserType;
 
     /**
      * Configuration keys for settings specific to web products.
      */
-    public static class Keys {
+    public enum Keys implements AeonConfigKey {
 
-        public static final String WAIT_FOR_AJAX_RESPONSES = "aeon.wait_for_ajax_responses";
-        public static final String BROWSER = "aeon.browser";
-        public static final String ENVIRONMENT = "aeon.environment";
-        public static final String PROTOCOL = "aeon.protocol";
-        public static final String AJAX_TIMEOUT = "aeon.timeout.ajax";
-        public static final String MAXIMIZE_BROWSER = "aeon.browser.maximize";
-        public static final String SCROLL_ELEMENT_INTO_VIEW = "aeon.scroll_element_into_view";
+        WAIT_FOR_AJAX_RESPONSES("aeon.wait_for_ajax_responses"),
+        BROWSER("aeon.browser"),
+        ENVIRONMENT("aeon.environment"),
+        PROTOCOL("aeon.protocol"),
+        AJAX_TIMEOUT("aeon.timeout.ajax"),
+        MAXIMIZE_BROWSER("aeon.browser.maximize"),
+        SCROLL_ELEMENT_INTO_VIEW("aeon.scroll_element_into_view");
+
+        private String key;
+
+        Keys(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String getKey() {
+            return this.key;
+        }
     }
 
     /**
      * Initializes a new instance of the {@link Configuration} class.
      *
-     * @param driver AeonWebDriver.class.
+     * @param driver  AeonWebDriver.class.
      * @param adapter IWebAdapter.class.
-     * @param <D> AeonWebDriver.class.
-     * @param <A> IWebAdapter.class.
+     * @param <D>     AeonWebDriver.class.
+     * @param <A>     IWebAdapter.class.
      */
     public <D extends IWebDriver, A extends IWebAdapter> WebConfiguration(Class<D> driver, Class<A> adapter) {
         super(driver, adapter);
@@ -69,15 +79,16 @@ public class WebConfiguration extends Configuration {
 
 
     @Override
-    protected List<Field> getConfigurationFields() {
-        List<Field> keys = super.getConfigurationFields();
-        keys.addAll(Arrays.asList(WebConfiguration.Keys.class.getDeclaredFields()));
+    protected List<AeonConfigKey> getConfigurationFields() {
+        List<AeonConfigKey> keys = super.getConfigurationFields();
+        keys.addAll(Arrays.asList(WebConfiguration.Keys.values()));
         return keys;
     }
 
     /**
      * Constructor for the Appium Configuration.  Configures that Aeon web driver and selenium adapter.
-     * @throws IOException Exception thrown if there is an IO violation when accessing test or propertion.
+     *
+     * @throws IOException            Exception thrown if there is an IO violation when accessing test or propertion.
      * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
     public WebConfiguration() throws IOException, IllegalAccessException {
@@ -86,11 +97,20 @@ public class WebConfiguration extends Configuration {
 
     @Override
     protected void loadModuleSettings() throws IOException {
-        try (InputStream in = WebConfiguration.class.getResourceAsStream("/aeon.core.properties")) {
+        try (InputStream in = getAeonCoreInputStream()) {
             properties.load(in);
         } catch (IOException e) {
             log.error("aeon.core.properties resource could not be read");
             throw e;
         }
+    }
+
+    /**
+     * Gets InputStream of aeon.core.properties.
+     *
+     * @return getResourceAsStream of "/aeon.core.properties" file
+     */
+    InputStream getAeonCoreInputStream() {
+        return WebConfiguration.class.getResourceAsStream("/aeon.core.properties");
     }
 }

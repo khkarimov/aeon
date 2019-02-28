@@ -1,14 +1,13 @@
 package aeon.core.common;
 
 import aeon.core.common.interfaces.IConfiguration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -20,16 +19,15 @@ import java.util.*;
  */
 public class BaseConfiguration implements IConfiguration {
 
-    static Logger log = LogManager.getLogger(BaseConfiguration.class);
+    static Logger log = LoggerFactory.getLogger(BaseConfiguration.class);
     protected Properties properties = new Properties();
 
     /**
      * Loads configuration from properties files.
      *
-     * @throws IOException            If properties are not defined.
-     * @throws IllegalAccessException If issue obtaining keys.
+     * @throws IOException If properties are not defined.
      */
-    public void loadConfiguration() throws IOException, IllegalAccessException {
+    public void loadConfiguration() throws IOException {
         try (
                 InputStream inAeon = getAeonInputStream();
                 InputStream inConfig = getConfigurationProperties()
@@ -62,6 +60,7 @@ public class BaseConfiguration implements IConfiguration {
      * @throws IOException Is thrown if a settings file could not be found or read.
      */
     protected void loadModuleSettings() throws IOException {
+        // Module settings can be added in child classes.
     }
 
     /**
@@ -71,7 +70,7 @@ public class BaseConfiguration implements IConfiguration {
      * @return InputStream of loaded properties.
      * @throws FileNotFoundException If issue finding config file.
      */
-    public InputStream getConfigurationProperties() throws FileNotFoundException {
+    private InputStream getConfigurationProperties() throws FileNotFoundException {
         String envValue = getEnvironmentValue("AEON_CONFIG");
         if (envValue == null) {
             return getDefaultConfigInputStream();
@@ -91,7 +90,7 @@ public class BaseConfiguration implements IConfiguration {
      * @return InputStream of config file.
      * @throws FileNotFoundException If issue finding config file.
      */
-    public InputStream getRelativeAeonConfigProperties(Path configPath) throws FileNotFoundException {
+    InputStream getRelativeAeonConfigProperties(Path configPath) throws FileNotFoundException {
         Path absolute = Paths.get(".").toAbsolutePath().getParent();
         configPath = Paths.get(absolute.toString(), configPath.toString());
         return new FileInputStream(configPath.toFile());
@@ -99,19 +98,11 @@ public class BaseConfiguration implements IConfiguration {
 
     /**
      * Loads properties from environment variables, overriding settings from properties files.
-     *
-     * @throws IllegalAccessException If issue obtaining keys.
      */
-    private void setProperties() throws IllegalAccessException {
-        List<Field> keys = getConfigurationFields();
-        keys.addAll(Arrays.asList(Keys.class.getDeclaredFields()));
-        for (Field key : keys) {
-            if (key.isSynthetic()) {
-                continue;
-            }
-
-            key.setAccessible(true);
-            String keyValue = key.get(null).toString();
+    private void setProperties() {
+        List<AeonConfigKey> keys = getConfigurationFields();
+        for (AeonConfigKey key : keys) {
+            String keyValue = key.getKey();
             String environmentValue = getEnvironmentValue(keyValue.replace('.', '_'));
             if (environmentValue != null) {
                 properties.setProperty(keyValue, environmentValue);
@@ -122,16 +113,23 @@ public class BaseConfiguration implements IConfiguration {
             }
         }
 
-        Enumeration e = properties.propertyNames();
+        Enumeration propertyNames = properties.propertyNames();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("These are the properties values currently in use for ");
         stringBuilder.append(getClass().getSimpleName());
         stringBuilder.append(":\n");
-        while (e.hasMoreElements()) {
-            String key = (String) e.nextElement();
-            stringBuilder.append(String.format("%1$s = %2$s%n", key, properties.getProperty(key)));
+        while (propertyNames.hasMoreElements()) {
+            String key = (String) propertyNames.nextElement();
+
+            if (key.contains("password") || key.contains("token")) {
+                stringBuilder.append(String.format("%1$s = *****%n", key));
+            } else {
+                stringBuilder.append(String.format("%1$s = %2$s%n", key, properties.getProperty(key)));
+            }
         }
-        log.info(stringBuilder.toString());
+
+        String propertyValues = stringBuilder.toString();
+        log.info(propertyValues);
     }
 
     /**
@@ -164,12 +162,12 @@ public class BaseConfiguration implements IConfiguration {
 
 
     /**
-     * Get a empty list contain fields.
+     * Get a list containing fields.
      *
      * @return List containing fields
      */
-    protected List<Field> getConfigurationFields() {
-        return new ArrayList<>(Arrays.asList(Keys.class.getDeclaredFields()));
+    protected List<AeonConfigKey> getConfigurationFields() {
+        return new ArrayList<>();
     }
 
     /**
@@ -179,16 +177,37 @@ public class BaseConfiguration implements IConfiguration {
      * @throws IOException If inputs are incorrect.
      */
     protected void loadPluginSettings() throws IOException {
+        // Plugin settings can be added in child classes.
     }
 
     /**
      * Set boolean for a key and value pair.
      *
-     * @param key   A key from {@link Keys}.
+     * @param key   A key from {@link AeonConfigKey}.
+     * @param value True or false.
+     */
+    public void setBoolean(AeonConfigKey key, boolean value) {
+        set(key.getKey(), Boolean.toString(value));
+    }
+
+    /**
+     * Set boolean for a key and value pair.
+     *
+     * @param key   A key string.
      * @param value True or false.
      */
     public void setBoolean(String key, boolean value) {
         set(key, Boolean.toString(value));
+    }
+
+    /**
+     * Sets a key to a specific value.
+     *
+     * @param key   the key.
+     * @param value the string value to set it to.
+     */
+    public void setString(AeonConfigKey key, String value) {
+        set(key.getKey(), value);
     }
 
     /**
@@ -204,6 +223,16 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Sets the double given a string key and a double value.
      *
+     * @param key   the key to be set.
+     * @param value the value to set.
+     */
+    public void setDouble(AeonConfigKey key, double value) {
+        set(key.getKey(), Double.toString(value));
+    }
+
+    /**
+     * Sets the double given a string key and a double value.
+     *
      * @param key   the string of the key to be set.
      * @param value the value to set.
      */
@@ -214,7 +243,7 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Set the properties for the {@link Properties} command.
      *
-     * @param key   A key from {@link Keys}
+     * @param key   A key from {@link AeonConfigKey}
      * @param value True or false.
      */
     private void set(String key, String value) {
@@ -224,7 +253,18 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Get the boolean value of a key and value pair.
      *
-     * @param key          A key from {@link Keys}.
+     * @param key          A key from {@link AeonConfigKey}.
+     * @param defaultValue True or false.
+     * @return True or False representation of key and value pair.
+     */
+    public boolean getBoolean(AeonConfigKey key, boolean defaultValue) {
+        return Boolean.valueOf(get(key.getKey(), Boolean.toString(defaultValue)));
+    }
+
+    /**
+     * Get the boolean value of a key and value pair.
+     *
+     * @param key          A key value string.
      * @param defaultValue True or false.
      * @return True or False representation of key and value pair.
      */
@@ -235,7 +275,18 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Get the double value of a key and value pair.
      *
-     * @param key          A key from {@link Keys}.
+     * @param key          A key from {@link AeonConfigKey}.
+     * @param defaultValue True or false.
+     * @return Double representation of key and value pair.
+     */
+    public double getDouble(AeonConfigKey key, double defaultValue) {
+        return Double.parseDouble(get(key.getKey(), Double.toString(defaultValue)));
+    }
+
+    /**
+     * Get the double value of a key and value pair.
+     *
+     * @param key          A key value string.
      * @param defaultValue True or false.
      * @return Double representation of key and value pair.
      */
@@ -246,12 +297,23 @@ public class BaseConfiguration implements IConfiguration {
     /**
      * Get the string value of a key and value pair.
      *
-     * @param key          A key from {@link Keys}.
+     * @param key          A key from {@link AeonConfigKey}.
+     * @param defaultValue True or false.
+     * @return String representation of key and value pair.
+     */
+    public String getString(AeonConfigKey key, String defaultValue) {
+        return get(key.getKey(), defaultValue);
+    }
+
+    /**
+     * Get the string value of a key and value pair.
+     *
+     * @param key          A key value string.
      * @param defaultValue True or false.
      * @return String representation of key and value pair.
      */
     public String getString(String key, String defaultValue) {
-        return (get(key, defaultValue));
+        return get(key, defaultValue);
     }
 
     /**
@@ -274,11 +336,5 @@ public class BaseConfiguration implements IConfiguration {
         List<String> configurationKeys = new ArrayList<>(properties.stringPropertyNames());
         Collections.sort(configurationKeys);
         return configurationKeys;
-    }
-
-    /**
-     * Static class for the Configuration keys.
-     */
-    public static class Keys {
     }
 }

@@ -17,9 +17,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -46,12 +44,11 @@ public class SetCommandTests {
 
     @BeforeEach
     public void setUp() {
-        setCommandObject = new SetCommand(selector, initializer, WebSelectOption.Text, value);
+        setCommandObject = new SetCommand(selector, initializer, WebSelectOption.TEXT, value);
     }
 
     @Test
-    public void commandDelegateDriverNullThrowsException()
-    {
+    public void commandDelegateDriverNullThrowsException() {
         //Arrange
         Exception illegalArgumentException;
 
@@ -64,8 +61,7 @@ public class SetCommandTests {
     }
 
     @Test
-    public void commandDelegateSetCommand()
-    {
+    public void commandDelegateSetCommand() {
         //Arrange
         when(initializer.setContext()).thenReturn(driverConsumer);
         when(initializer.findElement(driver, selector)).thenReturn(control);
@@ -75,6 +71,6 @@ public class SetCommandTests {
         action.accept(driver);
 
         //Assert
-        verify(driver, times(1)).set(control, WebSelectOption.Text, value);
+        verify(driver, times(1)).set(control, WebSelectOption.TEXT, value);
     }
 }

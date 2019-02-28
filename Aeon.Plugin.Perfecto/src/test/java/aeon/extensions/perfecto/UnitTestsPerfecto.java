@@ -4,7 +4,6 @@ import aeon.core.testabstraction.product.Configuration;
 import aeon.selenium.SeleniumConfiguration;
 import aeon.selenium.appium.AppiumConfiguration;
 import io.appium.java_client.android.AndroidDriver;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
 
 import static org.mockito.Mockito.*;
 

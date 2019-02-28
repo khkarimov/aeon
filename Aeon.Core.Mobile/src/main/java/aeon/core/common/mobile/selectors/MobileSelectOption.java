@@ -7,5 +7,5 @@ public enum MobileSelectOption {
     /**
      * Select by visible text.
      */
-    Text
+    TEXT
 }

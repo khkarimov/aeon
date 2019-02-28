@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 public class ResizeCommandTests {
     private ResizeCommand resizeCommand;
     private Dimension dimensionSize;
-    private String browserSize = "Maximized";
+    private String browserSize = "MAXIMIZED";
 
     @Mock
     private IWebDriver driver;
@@ -40,11 +40,11 @@ public class ResizeCommandTests {
         resizeCommand.driverDelegate(driver);
 
         //Assert
-        verify(driver,times(1)).resize(dimensionSize);
+        verify(driver, times(1)).resize(dimensionSize);
     }
 
     @Test
-    public void driverNullThrowsException(){
+    public void driverNullThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> resizeCommand.driverDelegate(null));
     }

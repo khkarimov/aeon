@@ -16,9 +16,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -42,12 +40,12 @@ public class SetTextValueByJavaScriptCommandTests {
     private Consumer<IDriver> consumer;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         setTextByJavaScriptCommandObject = new SetTextByJavaScriptCommand(selector, initializer, value);
     }
 
     @Test
-    public void illegalArguementThrownWhenDriverIsNull(){
+    public void illegalArguementThrownWhenDriverIsNull() {
         // Arrange
         Exception illegalArgumentException;
 
@@ -60,7 +58,7 @@ public class SetTextValueByJavaScriptCommandTests {
     }
 
     @Test
-    public void commandDelegateExecutesSetDivValueByJavaScript(){
+    public void commandDelegateExecutesSetDivValueByJavaScript() {
         // Arrange
         when(initializer.setContext()).thenReturn(consumer);
         when(initializer.findElement(driver, selector)).thenReturn(control);

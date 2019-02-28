@@ -18,12 +18,12 @@ import aeon.selenium.extensions.ISeleniumExtension;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,7 +45,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     private String driverContext;
     private String appPackage;
     protected URL seleniumHubUrl;
-    private static Logger log = LogManager.getLogger(AppiumAdapterFactory.class);
+    private static Logger log = LoggerFactory.getLogger(SeleniumAdapterFactory.class);
 
     /**
      * Factory method that creates an Appium adapter for Aeon.Core.Mobile.
@@ -53,10 +53,10 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
      * @param configuration The configuration of the adapter.
      * @return The created Appium adapter is returned.
      */
-    private IAdapter create(AppiumConfiguration configuration) {
+    public IAdapter create(AppiumConfiguration configuration) {
         prepare(configuration);
 
-        return new AppiumAdapter(driver, javaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new AppiumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**

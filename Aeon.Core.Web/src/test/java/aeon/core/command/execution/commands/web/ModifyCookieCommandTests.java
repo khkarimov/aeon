@@ -28,7 +28,7 @@ public class ModifyCookieCommandTests {
     }
 
     @Test
-    public void commandDelegateModifyCookieCommand(){
+    public void commandDelegateModifyCookieCommand() {
         //Arrange
 
         //Act

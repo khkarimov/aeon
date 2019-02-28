@@ -1,8 +1,8 @@
 package aeon.core.extensions;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.pf4j.DefaultExtensionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,7 +18,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
 
     private Map<String, Map<String, Object>> cache = new HashMap<>();
 
-    private static Logger log = LogManager.getLogger(AeonExtensionFactory.class);
+    private static Logger log = LoggerFactory.getLogger(AeonExtensionFactory.class);
 
     AeonExtensionFactory(ISessionIdProvider sessionIdProvider) {
         this.sessionIdProvider = sessionIdProvider;
@@ -26,7 +26,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
 
     @Override
     public Object create(Class<?> extensionClass) {
-        log.trace("Creating Aeon extension for class " + extensionClass.getName());
+        log.trace("Creating Aeon extension for class {}", extensionClass.getName());
         String currentSessionId = sessionIdProvider.getCurrentSessionId();
         String extensionClassName = extensionClass.getName();
 
@@ -60,7 +60,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
             log.trace("Could not find public static method 'createInstance' on " +
                     "the extension class. Falling back to using parameter-less constructor.");
 
-            return super.create(extensionClass);
+            return createInstanceUsingFallbackStrategy(extensionClass);
         }
 
         try {
@@ -69,7 +69,23 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
             log.trace("Could not invoke public static method 'createInstance' on " +
                     "the extension class. Falling back to using parameter-less constructor.");
 
-            return super.create(extensionClass);
+            return createInstanceUsingFallbackStrategy(extensionClass);
         }
+    }
+
+    private Object createInstanceUsingFallbackStrategy(Class<?> extensionClass) {
+        try {
+            extensionClass.getConstructor();
+        } catch (NoSuchMethodException noSuchMethodException) {
+            String message = String.format("Could not successfully invoke public static " +
+                    "method 'createInstance' on the extension %s and there is also " +
+                    "no parameter-less constructor present", extensionClass);
+
+            log.error(message);
+
+            throw new IllegalStateException(message);
+        }
+
+        return super.create(extensionClass);
     }
 }

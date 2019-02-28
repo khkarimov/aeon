@@ -104,7 +104,7 @@ public class SendKeysHelper {
     public static void sendEnterKey() throws AWTException {
         Robot robot = new Robot();
         switch (OS_TYPE) {
-            case Windows:
+            case WINDOWS:
                 robot.keyPress(KeyEvent.VK_ENTER);
         }
     }

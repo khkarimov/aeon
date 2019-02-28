@@ -3,7 +3,8 @@ package aeon.core.framework.abstraction.drivers;
 import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
-import org.joda.time.DateTime;
+
+import java.time.LocalDate;
 
 /**
  * The framework adapter interface.
@@ -40,9 +41,9 @@ public interface IMobileDriver extends IWebDriver {
     /**
      * Sets the GPS location on a mobile device.
      *
-     * @param latitude The GPS latitude.
+     * @param latitude  The GPS latitude.
      * @param longitude The GPS longitude.
-     * @param altitude The GPS altitude.
+     * @param altitude  The GPS altitude.
      */
     void mobileSetGeoLocation(double latitude, double longitude, double altitude);
 
@@ -51,13 +52,13 @@ public interface IMobileDriver extends IWebDriver {
      *
      * @param date The date to set.
      */
-    void setDate(DateTime date);
+    void setDate(LocalDate date);
 
     /**
      * Selects an option from a native select box.
      *
      * @param selectOption Type based on which an option should be selected.
-     * @param value The value to select.
+     * @param value        The value to select.
      */
     void mobileSelect(MobileSelectOption selectOption, String value);
 
@@ -86,7 +87,7 @@ public interface IMobileDriver extends IWebDriver {
      * Swipe screen horizontally or vertically.
      *
      * @param horizontally Whether to swipe horizontally or vertically.
-     * @param leftOrDown Whether to swipe left (when horizontally is true) or down (when horizontally is false).
+     * @param leftOrDown   Whether to swipe left (when horizontally is true) or down (when horizontally is false).
      */
     void swipe(boolean horizontally, boolean leftOrDown);
 

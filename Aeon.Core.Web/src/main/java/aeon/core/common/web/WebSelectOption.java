@@ -7,10 +7,10 @@ public enum WebSelectOption {
     /**
      * Select by the value attribute.
      */
-    Value,
+    VALUE,
 
     /**
      * Select by innerHTML.
      */
-    Text
+    TEXT
 }

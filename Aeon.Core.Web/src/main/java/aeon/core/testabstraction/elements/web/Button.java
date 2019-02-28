@@ -30,7 +30,7 @@ public class Button extends WebElement {
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism.
      */
-    public Button(AutomationInfo info, IByWeb selector, Iterable<IByWeb> switchMechanism) {
+    public Button(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
         super(info, selector, switchMechanism);
         this.info = info;
         this.selector = selector;

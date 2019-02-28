@@ -27,7 +27,7 @@ public class MaximizeCommandTests {
     }
 
     @Test
-    public void commandDelegateMaximizeCommand(){
+    public void commandDelegateMaximizeCommand() {
         //Arrange
 
         //Act
@@ -38,7 +38,7 @@ public class MaximizeCommandTests {
     }
 
     @Test
-    public void testDriverDelegateNullDriver(){
+    public void testDriverDelegateNullDriver() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> maximizeCommand.driverDelegate(null));
     }

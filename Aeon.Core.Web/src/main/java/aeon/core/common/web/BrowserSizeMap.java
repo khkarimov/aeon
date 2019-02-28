@@ -12,25 +12,25 @@ public final class BrowserSizeMap {
     private static final HashMap<Dimension, BrowserSize> sizes = new HashMap<>();
 
     static {
-        browserSizes.put(BrowserSize.Maximized, new Dimension(0, 0));
-        browserSizes.put(BrowserSize.MobilePortrait, new Dimension(320, 480));
-        browserSizes.put(BrowserSize.MobileLandscape, new Dimension(480, 320));
-        browserSizes.put(BrowserSize.SmallTabletPortrait, new Dimension(600, 800));
-        browserSizes.put(BrowserSize.SmallTabletLandscape, new Dimension(800, 600));
-        browserSizes.put(BrowserSize.TabletPortrait, new Dimension(768, 1024));
-        browserSizes.put(BrowserSize.TabletLandscape, new Dimension(1024, 768));
-        browserSizes.put(BrowserSize.FullHD, new Dimension(1920, 1080));
+        browserSizes.put(BrowserSize.MAXIMIZED, new Dimension(0, 0));
+        browserSizes.put(BrowserSize.MOBILE_PORTRAIT, new Dimension(320, 480));
+        browserSizes.put(BrowserSize.MOBILE_LANDSCAPE, new Dimension(480, 320));
+        browserSizes.put(BrowserSize.SMALL_TABLET_PORTRAIT, new Dimension(600, 800));
+        browserSizes.put(BrowserSize.SMALL_TABLET_LANDSCAPE, new Dimension(800, 600));
+        browserSizes.put(BrowserSize.TABLET_PORTRAIT, new Dimension(768, 1024));
+        browserSizes.put(BrowserSize.TABLET_LANDSCAPE, new Dimension(1024, 768));
+        browserSizes.put(BrowserSize.FULL_HD, new Dimension(1920, 1080));
     }
 
     static {
-        sizes.put(new Dimension(0, 0), BrowserSize.Maximized);
-        sizes.put(new Dimension(320, 480), BrowserSize.MobilePortrait);
-        sizes.put(new Dimension(480, 320), BrowserSize.MobileLandscape);
-        sizes.put(new Dimension(600, 800), BrowserSize.SmallTabletPortrait);
-        sizes.put(new Dimension(800, 600), BrowserSize.SmallTabletLandscape);
-        sizes.put(new Dimension(768, 1024), BrowserSize.TabletPortrait);
-        sizes.put(new Dimension(1024, 768), BrowserSize.TabletLandscape);
-        sizes.put(new Dimension(1920, 1080), BrowserSize.FullHD);
+        sizes.put(new Dimension(0, 0), BrowserSize.MAXIMIZED);
+        sizes.put(new Dimension(320, 480), BrowserSize.MOBILE_PORTRAIT);
+        sizes.put(new Dimension(480, 320), BrowserSize.MOBILE_LANDSCAPE);
+        sizes.put(new Dimension(600, 800), BrowserSize.SMALL_TABLET_PORTRAIT);
+        sizes.put(new Dimension(800, 600), BrowserSize.SMALL_TABLET_LANDSCAPE);
+        sizes.put(new Dimension(768, 1024), BrowserSize.TABLET_PORTRAIT);
+        sizes.put(new Dimension(1024, 768), BrowserSize.TABLET_LANDSCAPE);
+        sizes.put(new Dimension(1920, 1080), BrowserSize.FULL_HD);
     }
 
     /**

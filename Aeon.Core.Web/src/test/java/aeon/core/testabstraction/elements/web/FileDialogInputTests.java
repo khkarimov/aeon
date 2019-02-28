@@ -39,7 +39,7 @@ public class FileDialogInputTests {
     private IByWeb selector;
 
     @Mock
-    private Iterable<IByWeb> switchMechanism;
+    private IByWeb switchMechanism;
 
     @Mock
     private Configuration configuration;
