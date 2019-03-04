@@ -52,15 +52,15 @@ public class BrowserWindowTests extends SampleBaseTest {
     public void testSwitchToMainWindow() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("SonarQube");
-        product.browser.verifyTitle("SonarQube");
+        product.browser.switchToWindowByTitle("Bing");
+        product.browser.verifyTitle("Bing");
         product.browser.switchToMainWindow();
         product.browser.verifyTitle("Material Design Lite");
-        product.browser.switchToWindowByTitle("SonarQube");
+        product.browser.switchToWindowByTitle("Bing");
         product.browser.close();
         product.browser.switchToMainWindow(true);
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("SonarQube");
+        product.browser.switchToWindowByTitle("Bing");
 
         thrown.expect(IsInstanceOf.instanceOf(NotAllPopupWindowsClosedException.class));
         product.browser.switchToMainWindow(true);
@@ -71,8 +71,8 @@ public class BrowserWindowTests extends SampleBaseTest {
     public void testSwitchToWindowByTitle() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByTitle("SonarQube");
-        product.browser.verifyTitle("SonarQube");
+        product.browser.switchToWindowByTitle("Bing");
+        product.browser.verifyTitle("Bing");
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByTitle("Some Fake Title");
@@ -97,7 +97,7 @@ public class BrowserWindowTests extends SampleBaseTest {
         product.browser.resize(BrowserSize.SMALL_TABLET_LANDSCAPE);
         product.browser.resize(BrowserSize.MOBILE_LANDSCAPE);
         product.browser.maximize();
-        product.browser.goToUrl("https://ci.mia.ucloud.int");
+        product.browser.goToUrl("http://www.yahoo.com");
         product.browser.scrollToEnd();
         product.browser.scrollToTop();
         product.browser.goBack();
