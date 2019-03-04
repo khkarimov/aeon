@@ -22,8 +22,8 @@ public class BrowserWindowTests extends SampleBaseTest {
 
     @Test
     public void testVerifyURL() {
-        product.browser.goToUrl("https://ci.mia.ucloud.int/login.html");
-        product.browser.verifyURL("https://ci.mia.ucloud.int/login.html");
+        product.browser.goToUrl("https://www.bing.com/");
+        product.browser.verifyURL("https://www.bing.com/");
 
         thrown.expect(IsInstanceOf.instanceOf(ValuesAreNotEqualException.class));
         product.browser.verifyURL("http://www.espne.com/");
@@ -83,8 +83,8 @@ public class BrowserWindowTests extends SampleBaseTest {
     public void testSwitchToWindowByUrl() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByUrl("https://sonar.ulti.io");
-        product.browser.verifyTitle("SonarQube");
+        product.browser.switchToWindowByUrl("http://google.com");
+        product.browser.verifyTitle("Google");
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByUrl("www.fake.com");
@@ -97,7 +97,7 @@ public class BrowserWindowTests extends SampleBaseTest {
         product.browser.resize(BrowserSize.SMALL_TABLET_LANDSCAPE);
         product.browser.resize(BrowserSize.MOBILE_LANDSCAPE);
         product.browser.maximize();
-        product.browser.goToUrl("https://ci.mia.ucloud.int");
+        product.browser.goToUrl("http://google.com");
         product.browser.scrollToEnd();
         product.browser.scrollToTop();
         product.browser.goBack();
