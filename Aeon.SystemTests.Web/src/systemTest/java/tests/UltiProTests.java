@@ -16,7 +16,7 @@ public class UltiProTests {
     @Before
     public void beforeTests() {
         ultiPro = launch(UltiPro.class);
-        ultiPro.browser.goToUrl("http://legendsmkweb.mia.ucloud.int");
+        ultiPro.browser.goToUrl("https://legendsmkweb.mia.ucloud.int");
     }
 
     @After

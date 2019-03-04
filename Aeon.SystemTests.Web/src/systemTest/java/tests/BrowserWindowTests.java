@@ -83,8 +83,8 @@ public class BrowserWindowTests extends SampleBaseTest {
     public void testSwitchToWindowByUrl() {
         product.browser.verifyTitle("Material Design Lite");
         product.startPage.popupButton.click();
-        product.browser.switchToWindowByUrl("http://google.com");
-        product.browser.verifyTitle("Google");
+        product.browser.switchToWindowByUrl("https://www.bing.com");
+        product.browser.verifyTitle("Bing");
 
         thrown.expect(IsInstanceOf.instanceOf(NoSuchWindowException.class));
         product.browser.switchToWindowByUrl("www.fake.com");
@@ -97,7 +97,7 @@ public class BrowserWindowTests extends SampleBaseTest {
         product.browser.resize(BrowserSize.SMALL_TABLET_LANDSCAPE);
         product.browser.resize(BrowserSize.MOBILE_LANDSCAPE);
         product.browser.maximize();
-        product.browser.goToUrl("http://google.com");
+        product.browser.goToUrl("https://ci.mia.ucloud.int");
         product.browser.scrollToEnd();
         product.browser.scrollToTop();
         product.browser.goBack();
