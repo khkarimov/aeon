@@ -40,6 +40,7 @@ public class NotExistsCommandTests {
     @Test
     public void notExists_FindElementSuccessfulTry() {
         // Arrange
+        when(driver.findElement(selector)).thenReturn(control);
 
         // Act
         Consumer<IDriver> action = command.getCommandDelegate();
