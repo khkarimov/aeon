@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class ElementIsEnabledException extends RuntimeException implements Serializable {
 
     /**
-     * Initializes a new instance of the {@link ElementNotEnabledException} class.
+     * Initializes a new instance of the {@link ElementIsEnabledException} class.
      *
      * @param by The selector of the element that is not enabled.
      */
