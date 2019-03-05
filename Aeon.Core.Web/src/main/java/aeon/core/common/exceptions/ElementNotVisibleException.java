@@ -12,13 +12,6 @@ public class ElementNotVisibleException extends RuntimeException implements Seri
 
     /**
      * Initializes a new instance of the {@link ElementNotVisibleException} class.
-     */
-    public ElementNotVisibleException() {
-        super(Resources.getString("ElementNotVisibleException_ctor_DefaultMessage"));
-    }
-
-    /**
-     * Initializes a new instance of the {@link ElementNotVisibleException} class.
      *
      * @param by The selector of the element that is not visible.
      */

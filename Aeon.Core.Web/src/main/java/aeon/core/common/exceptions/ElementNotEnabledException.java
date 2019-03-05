@@ -12,13 +12,6 @@ public class ElementNotEnabledException extends RuntimeException implements Seri
 
     /**
      * Initializes a new instance of the {@link ElementNotEnabledException} class.
-     */
-    public ElementNotEnabledException() {
-        super(Resources.getString("ElementNotEnabledException_ctor_DefaultMessage"));
-    }
-
-    /**
-     * Initializes a new instance of the {@link ElementNotEnabledException} class.
      *
      * @param by The selector of the element that is not enabled.
      */

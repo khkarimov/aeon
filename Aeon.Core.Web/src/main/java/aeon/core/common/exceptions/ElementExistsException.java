@@ -12,13 +12,6 @@ public class ElementExistsException extends RuntimeException implements Serializ
 
     /**
      * Initializes a new instance of the {@link ElementExistsException} class.
-     */
-    public ElementExistsException() {
-        super(Resources.getString("ElementExistsException_ctor_DefaultMessage"));
-    }
-
-    /**
-     * Initializes a new instance of the {@link ElementExistsException} class.
      *
      * @param by The selector of the element that exists.
      */
