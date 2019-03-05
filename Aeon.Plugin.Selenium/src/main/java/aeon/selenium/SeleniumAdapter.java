@@ -3,10 +3,10 @@ package aeon.selenium;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.exceptions.*;
 import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.*;
 import aeon.core.common.helpers.*;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.*;
@@ -18,9 +18,9 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
-import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -41,8 +41,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
@@ -1050,7 +1050,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
-        click(element, moveMouseToOrigin);
+        try {
+            click(element, moveMouseToOrigin);
+        } catch (org.openqa.selenium.ElementNotVisibleException e) {
+            throw new ElementNotVisibleException(element.getSelector());
+        }
         //}
     }
 
@@ -1178,7 +1182,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void isElementDisabled(WebControl element) {
         if (((SeleniumElement) element).enabled()) {
-            throw new ElementIsEnabledException();
+            throw new ElementIsEnabledException(element.getSelector());
         }
     }
 
@@ -1188,9 +1192,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The web element to check.
      */
     public void isElementEnabled(WebControl element) {
-        boolean enabled = ((SeleniumElement) element).enabled();
-        if (!enabled) {
-            throw new ElementNotEnabledException();
+        if (!((SeleniumElement) element).enabled()) {
+            throw new ElementNotEnabledException(element.getSelector());
         }
     }
 
@@ -1209,8 +1212,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The web element.
      */
     public void notExists(WebControl element) {
-        //IF execution reachd here then element exists.
-        throw new ElementExistsException();
+        //IF execution reached here then element exists.
+        throw new ElementExistsException(element.getSelector());
     }
 
     private void hasOptions(SeleniumElement element, String[] options, WebSelectOption select) {
@@ -1494,7 +1497,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void visible(WebControl element) {
         if (!((SeleniumElement) element).displayed()) {
-            throw new ElementNotVisibleException();
+            throw new ElementNotVisibleException(element.getSelector());
         }
     }
 
@@ -1505,7 +1508,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void notVisible(WebControl element) {
         if (((SeleniumElement) element).displayed()) {
-            throw new ElementIsVisibleException();
+            throw new ElementIsVisibleException(element.getSelector());
         }
     }
 

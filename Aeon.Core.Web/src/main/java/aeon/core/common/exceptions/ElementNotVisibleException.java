@@ -1,6 +1,7 @@
 package aeon.core.common.exceptions;
 
 import aeon.core.common.Resources;
+import aeon.core.common.web.interfaces.IByWeb;
 
 import java.io.Serializable;
 
@@ -14,5 +15,14 @@ public class ElementNotVisibleException extends RuntimeException implements Seri
      */
     public ElementNotVisibleException() {
         super(Resources.getString("ElementNotVisibleException_ctor_DefaultMessage"));
+    }
+
+    /**
+     * Initializes a new instance of the {@link ElementNotVisibleException} class.
+     *
+     * @param by The selector of the element that is not visible.
+     */
+    public ElementNotVisibleException(IByWeb by) {
+        super(String.format(Resources.getString("ElementNotVisibleException_ctor_SpecificMessage"), by.toString()));
     }
 }

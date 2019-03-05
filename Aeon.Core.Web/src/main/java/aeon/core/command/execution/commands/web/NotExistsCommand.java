@@ -38,6 +38,7 @@ public class NotExistsCommand extends Command {
         WebControl control;
         try {
             control = ((IWebDriver) driver).findElement(selector);
+            control.setSelector(selector);
         } catch (NoSuchElementException | NoSuchElementsException e) {
             //If element does not exist it should catch the exception and return successfully
             return;
