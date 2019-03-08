@@ -25,10 +25,10 @@ public class GeneralActionTests extends SampleBaseTest {
             return;
         }
 
-        product.browser.goToUrl("http://yahoo.com");
+        product.browser.goToUrl("http://ci.mia.ucloud.int");
         IWebCookie cookie = new IWebCookie() {
             String name = "CookieName";
-            String domain = ".yahoo.com";
+            String domain = ".ci.mia.ucloud.int";
             String value = "CookieValue";
             Date expiration = getNextYear();
             String path = "/";
