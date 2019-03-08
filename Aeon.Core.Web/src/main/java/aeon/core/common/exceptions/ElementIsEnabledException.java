@@ -1,6 +1,7 @@
 package aeon.core.common.exceptions;
 
 import aeon.core.common.Resources;
+import aeon.core.common.web.interfaces.IByWeb;
 
 import java.io.Serializable;
 
@@ -11,8 +12,10 @@ public class ElementIsEnabledException extends RuntimeException implements Seria
 
     /**
      * Initializes a new instance of the {@link ElementIsEnabledException} class.
+     *
+     * @param by The selector of the element that is not enabled.
      */
-    public ElementIsEnabledException() {
-        super(Resources.getString("ElementIsEnabledException_ctor_DefaultMessage"));
+    public ElementIsEnabledException(IByWeb by) {
+        super(String.format(Resources.getString("ElementIsEnabledException_ctor_SpecificMessage"), by.toString()));
     }
 }

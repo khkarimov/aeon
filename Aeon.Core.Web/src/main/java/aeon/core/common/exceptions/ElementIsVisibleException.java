@@ -1,6 +1,7 @@
 package aeon.core.common.exceptions;
 
 import aeon.core.common.Resources;
+import aeon.core.common.web.interfaces.IByWeb;
 
 import java.io.Serializable;
 
@@ -11,8 +12,10 @@ public class ElementIsVisibleException extends RuntimeException implements Seria
 
     /**
      * Initializes a new instance of the {@link ElementIsVisibleException} class.
+     *
+     * @param by The selector of the element that is visible.
      */
-    public ElementIsVisibleException() {
-        super(Resources.getString("ElementIsVisibleException_ctor_DefaultMessage"));
+    public ElementIsVisibleException(IByWeb by) {
+        super(String.format(Resources.getString("ElementIsVisibleException_ctor_SpecificMessage"), by.toString()));
     }
 }

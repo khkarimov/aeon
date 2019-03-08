@@ -1,6 +1,7 @@
 package aeon.core.common.exceptions;
 
 import aeon.core.common.Resources;
+import aeon.core.common.web.interfaces.IByWeb;
 
 import java.io.Serializable;
 
@@ -11,8 +12,10 @@ public class ElementExistsException extends RuntimeException implements Serializ
 
     /**
      * Initializes a new instance of the {@link ElementExistsException} class.
+     *
+     * @param by The selector of the element that exists.
      */
-    public ElementExistsException() {
-        super(Resources.getString("ElementExistsException_ctor_DefaultMessage"));
+    public ElementExistsException(IByWeb by) {
+        super(String.format(Resources.getString("ElementExistsException_ctor_SpecificMessage"), by.toString()));
     }
 }
