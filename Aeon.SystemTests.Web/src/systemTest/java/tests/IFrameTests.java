@@ -1,7 +1,7 @@
 package tests;
 
 import aeon.core.testabstraction.product.WebConfiguration;
-import main.sample.wikiSample;
+import main.iframe.IFrameWikiSample;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,11 +12,11 @@ import static aeon.core.testabstraction.product.Aeon.launch;
  * This test file was created to show Aeon working on a UltiPro environment and to test the switch mechanism.
  */
 public class IFrameTests {
-    private static wikiSample product;
+    private static IFrameWikiSample product;
 
     @Before
     public void beforeTests() {
-        product = launch(wikiSample.class);
+        product = launch(IFrameWikiSample.class);
         String environment = product.getConfig(WebConfiguration.Keys.ENVIRONMENT,
                 "/" + System.getProperty("user.dir").replace('\\', '/') + "/Test-Sample-Context/iFrame_clean.html");
         String protocol = product.getConfig(WebConfiguration.Keys.PROTOCOL, "file");
