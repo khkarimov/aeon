@@ -20,6 +20,8 @@ dependencies {
     compile project(':Aeon.Plugin.Log4J2')
     compile project(':Aeon.Plugin.Perfecto')
     compile project(':Aeon.Plugin.Reporting')
+    compile project(':Aeon.Plugin.SauceLabs')
+    compile project(':Aeon.Plugin.TestMago')
     compile project(':Aeon.Plugin.Selenium')
     compile project(':Aeon.Plugin.TestNG')
     compile project(':Aeon.SystemTests.Web')

@@ -1,0 +1,31 @@
+def baseProjectName = 'Aeon.Plugin.TestMago'
+def baseProjectDescription = 'Aeon TestMago Plugin'
+def base = baseProjectName
+
+dependencies {
+    compile project(':Aeon.Plugin.Selenium')
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'aeon.extensions.testmago',
+                'Plugin-Version': version,
+                'Plugin-Class': 'aeon.extensions.testmago.TestMagoPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.testmago'
+        }
+    }
+}

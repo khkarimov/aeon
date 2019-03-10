@@ -20,8 +20,10 @@
             <option value="$PROJECT_DIR$/Aeon.Plugin.Log4J2" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Perfecto" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Reporting" />
+            <option value="$PROJECT_DIR$/Aeon.Plugin.SauceLabs" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Selenium" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.TestNG" />
+            <option value="$PROJECT_DIR$/Aeon.Plugin.TestMago" />
             <option value="$PROJECT_DIR$/Aeon.SystemTests.Mobile" />
             <option value="$PROJECT_DIR$/Aeon.SystemTests.Web" />
           </set>
