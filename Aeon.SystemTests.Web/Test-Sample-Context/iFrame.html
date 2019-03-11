@@ -7,7 +7,7 @@
         <script>
                 function popUp() {
                     //http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-                    var isEdge = true
+                    var isEdge = !(/*@cc_on!@*/false || !!document.documentMode) && !!window.StyleMedia;
                     if (isEdge) {
                         var x = window.open('index.html', 'Material Design Lite', 'width:500');
                         x.location.href = "https://www.bing.com";
