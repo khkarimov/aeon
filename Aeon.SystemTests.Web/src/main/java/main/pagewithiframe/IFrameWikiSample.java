@@ -1,17 +1,17 @@
-package main.iframe;
+package main.pagewithiframe;
 
 import aeon.core.testabstraction.product.WebProduct;
-import main.iframe.pages.IFramePage;
+import main.pagewithiframe.pages.PageWithIFrame;
 
 /**
  * Sample web product.
  */
 public class IFrameWikiSample extends WebProduct {
-    public IFramePage iFramePage;
+    public PageWithIFrame pageWithIFrame;
 
     @Override
     protected void afterLaunch() {
         super.afterLaunch();
-        iFramePage = new IFramePage(getAutomationInfo());
+        pageWithIFrame = new PageWithIFrame(getAutomationInfo());
     }
 }
