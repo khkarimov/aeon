@@ -1,4 +1,4 @@
-package main.iframewithnestediframe.pages;
+package main.pagewithiframeandnestediframe.innerpages;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
@@ -9,11 +9,10 @@ import aeon.core.testabstraction.product.WebProduct;
 /**
  * Wikipedia's main page within an iFrame.
  */
-public class IFrameWithNestedIFrame extends WebProduct {
+public class InnerIFramePage extends WebProduct {
     public TextBox wikiSearchTextBox;
     public Button searchButton;
     public Button wikiLogo;
-    public Button popupButton;
 
     /**
      * Constructor.
@@ -21,10 +20,9 @@ public class IFrameWithNestedIFrame extends WebProduct {
      * @param automationInfo The automation info object to use.
      */
 
-    public IFrameWithNestedIFrame(AutomationInfo automationInfo) {
+    public InnerIFramePage(AutomationInfo automationInfo) {
         wikiSearchTextBox = new TextBox(automationInfo, By.cssSelector("#searchInput"), By.cssSelector("iframe[id*=TopContentFrame]"), By.cssSelector("iframe[id*=ContentFrame]"));
         searchButton = new Button(automationInfo, By.cssSelector("#searchButton"), By.cssSelector("iframe[id*=TopContentFrame]"), By.cssSelector("iframe[id*=ContentFrame]"));
         wikiLogo = new Button(automationInfo, By.cssSelector(".mw-wiki-logo"), By.cssSelector("iframe[id*=TopContentFrame]"), By.cssSelector("iframe[id*=ContentFrame]"));
-        popupButton = new Button(automationInfo, By.cssSelector("#popup-button"), By.cssSelector("iframe[id*=ContentFrame]"));
     }
 }
