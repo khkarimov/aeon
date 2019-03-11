@@ -12,6 +12,7 @@ import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.testabstraction.product.Aeon;
@@ -70,10 +71,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private static final String MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
     private SeleniumConfiguration configuration;
     private static Logger log = LoggerFactory.getLogger(SeleniumAdapterFactory.class);
-    protected BrowserType browserType;
+    protected IBrowserType browserType;
     private String browserAcceptedLanguageCodes;
     private boolean useMobileUserAgent;
     private String proxyLocation;
+    private String deviceName;
+    private String platformVersion;
     protected WebDriver driver;
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected JavaScriptFlowExecutor asyncJavaScriptFlowExecutor;
@@ -110,6 +113,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
         boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
+        deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
+        platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
 
         try {
             fallbackBrowserSize = BrowserSize.valueOf(configuration.getString(SeleniumConfiguration.Keys.BROWSER_MAXIMIZE_FALLBACK, "FULL_HD"));
@@ -136,7 +141,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5));
         asyncJavaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5), true);
 
-        moveMouseToOrigin = configuration.getBoolean(SeleniumConfiguration.Keys.MOVE_MOUSE_TO_ORIGIN, true);
         String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.CHROME_DIRECTORY, null);
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
@@ -150,8 +154,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         setLoggingConfiguration();
 
-        switch (browserType) {
-            case Firefox:
+        switch (browserType.getKey()) {
+            case "Firefox":
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -168,7 +172,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
                 break;
 
-            case Chrome:
+            case "Chrome":
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -184,7 +188,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case InternetExplorer:
+            case "InternetExplorer":
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -220,7 +224,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case Edge:
+            case "Edge":
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -235,7 +239,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case Safari:
+            case "Safari":
                 driver = getDriver(() -> {
                     if (isRemote) {
                         driver = new RemoteWebDriver(finalSeleniumHubUrl, getCapabilities());
@@ -252,7 +256,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case Opera:
+            case "Opera":
                 driver = getDriver(() -> {
                     System.setProperty(OperaDriverService.OPERA_DRIVER_VERBOSE_LOG_PROPERTY, "true");
                     if (isRemote) {
@@ -274,25 +278,19 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 });
                 break;
 
-            case IOSSafari:
+            case "IOSSafari":
                 DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
                 driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
 
-            case AndroidChrome:
+            case "AndroidChrome":
                 capabilities = (DesiredCapabilities) getCapabilities();
                 driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
                 break;
-
-            case IOSHybridApp:
-                return;
-
-            case AndroidHybridApp:
-                return;
 
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
@@ -383,14 +381,14 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private Capabilities getCapabilities() {
         MutableCapabilities desiredCapabilities;
 
-        switch (browserType) {
-            case Firefox:
+        switch (browserType.getKey()) {
+            case "Firefox":
                 desiredCapabilities = DesiredCapabilities.firefox();
                 desiredCapabilities.setCapability("marionette", true);
                 desiredCapabilities.setCapability("firefox_profile", getFirefoxProfile());
                 break;
 
-            case Chrome:
+            case "Chrome":
                 desiredCapabilities = DesiredCapabilities.chrome();
                 setLoggingCapabilities(desiredCapabilities);
 
@@ -405,21 +403,54 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
                 break;
 
-            case InternetExplorer:
+            case "InternetExplorer":
                 desiredCapabilities = DesiredCapabilities.internetExplorer();
                 break;
 
-            case Edge:
+            case "Edge":
                 desiredCapabilities = DesiredCapabilities.edge();
                 break;
 
-            case Safari:
+            case "Safari":
                 desiredCapabilities = DesiredCapabilities.safari();
                 break;
 
-            case Opera:
+            case "Opera":
                 desiredCapabilities = getOperaOptions();
                 setLoggingCapabilities(desiredCapabilities);
+                break;
+
+            case "IOSSafari":
+                desiredCapabilities = new DesiredCapabilities();
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+//                if (!description.isEmpty()) {
+//                    desiredCapabilities.setCapability("description");
+//                }
+
+                desiredCapabilities.setCapability("platformName", "iOS");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "mobileSafari");
+//                desiredCapabilities.setCapability("automationName", configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, ""));
+                desiredCapabilities.setCapability("deviceName", deviceName);
+                desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
+                break;
+
+            case "AndroidChrome":
+                desiredCapabilities = new DesiredCapabilities();
+                if (!deviceName.isEmpty()) {
+                    desiredCapabilities.setCapability("deviceName", deviceName);
+                }
+//                if (!description.isEmpty()) {
+//                    desiredCapabilities.setCapability("description", description);
+//                }
+
+                desiredCapabilities.setCapability("platformName", "Android");
+                desiredCapabilities.setCapability("platformVersion", platformVersion);
+                desiredCapabilities.setCapability("browserName", "Chrome");
+                desiredCapabilities.setCapability("deviceName", deviceName);
+                desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
                 break;
 
             default:

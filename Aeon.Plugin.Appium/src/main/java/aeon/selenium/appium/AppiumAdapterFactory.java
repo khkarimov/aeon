@@ -6,7 +6,9 @@ import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
+import aeon.core.common.mobile.AppType;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
@@ -26,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +48,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     private String driverContext;
     private String appPackage;
     protected URL seleniumHubUrl;
-    private static Logger log = LoggerFactory.getLogger(SeleniumAdapterFactory.class);
+    private static Logger log = LoggerFactory.getLogger(AppiumAdapterFactory.class);
 
     /**
      * Factory method that creates an Appium adapter for Aeon.Core.Mobile.
@@ -64,42 +67,39 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
      *
      * @param configuration The configuration of the adapter.
      */
-    protected void prepare(SeleniumConfiguration configuration) {
+    protected void prepare(AppiumConfiguration configuration) {
+        // super.prepare(configuration);
 
-        // TODO(nicolettec): change AppiumConfig to SeleniumConfig and override, needs to check the super's prepare method
-
-        super.prepare(configuration);
-
-        this.configuration = (AppiumConfiguration) configuration;
-        configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "")));
+        this.configuration = configuration;
+        configuration.setBrowserType(AppType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "")));
         this.browserType = configuration.getBrowserType();
 
-        description = configuration.getString(AppiumConfiguration.Keys.DEVICE_DESCRIPTION, "");
+//        description = configuration.getString(AppiumConfiguration.Keys.DEVICE_DESCRIPTION, "");
         platformVersion = configuration.getString(AppiumConfiguration.Keys.PLATFORM_VERSION, "");
         app = configuration.getString(AppiumConfiguration.Keys.APP, "");
         appPackage = configuration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(AppiumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(AppiumConfiguration.Keys.DRIVER_CONTEXT, "");
 //
-//        seleniumHubUrl = null;
-//
-//        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
-//        if (StringUtils.isNotBlank(hubUrlString)) {
-//            try {
-//                if (!hubUrlString.endsWith("/wd/hub")) {
-//                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
-//                }
-//                seleniumHubUrl = new URL(hubUrlString);
-//            } catch (MalformedURLException e) {
-//                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-//                throw new AeonLaunchException(e);
-//            }
-//        }
+        seleniumHubUrl = null;
+
+        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        if (StringUtils.isNotBlank(hubUrlString)) {
+            try {
+                if (!hubUrlString.endsWith("/wd/hub")) {
+                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
+                }
+                seleniumHubUrl = new URL(hubUrlString);
+            } catch (MalformedURLException e) {
+                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
+                throw new AeonLaunchException(e);
+            }
+        }
 
         URL finalSeleniumHubUrl = seleniumHubUrl;
 
-        switch (browserType) {
-            case IOSHybridApp:
+        switch (browserType.getKey()) {
+            case "IOSHybridApp":
                 if (finalSeleniumHubUrl == null) {
                     throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
@@ -110,7 +110,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                 trySetContext();
                 break;
 
-            case AndroidHybridApp:
+            case "AndroidHybridApp":
                 if (finalSeleniumHubUrl == null) {
                     throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
@@ -206,41 +206,8 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     private Capabilities getCapabilities() {
         MutableCapabilities desiredCapabilities;
 
-        switch (browserType) {
-
-            case IOSSafari:
-                desiredCapabilities = new DesiredCapabilities();
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
-                }
-
-                desiredCapabilities.setCapability("platformName", "iOS");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "mobileSafari");
-                desiredCapabilities.setCapability("automationName", configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, ""));
-                desiredCapabilities.setCapability("deviceName", deviceName);
-                desiredCapabilities.setCapability("udid", configuration.getString(AppiumConfiguration.Keys.UDID, ""));
-                break;
-
-            case AndroidChrome:
-                desiredCapabilities = new DesiredCapabilities();
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
-                }
-
-                desiredCapabilities.setCapability("platformName", "Android");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
-                desiredCapabilities.setCapability("browserName", "Chrome");
-                desiredCapabilities.setCapability("deviceName", deviceName);
-                break;
-
-            case IOSHybridApp:
+        switch (browserType.getKey()) {
+            case "IOSHybridApp":
                 desiredCapabilities = new DesiredCapabilities();
 
                 desiredCapabilities.setCapability("platformName", "iOS");
@@ -250,9 +217,9 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
                 }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
-                }
+//                if (!description.isEmpty()) {
+//                    desiredCapabilities.setCapability("description", description);
+//                }
                 if (!app.isEmpty()) {
                     desiredCapabilities.setCapability("app", app);
                 }
@@ -275,7 +242,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
 
                 break;
 
-            case AndroidHybridApp:
+            case "AndroidHybridApp":
                 desiredCapabilities = new DesiredCapabilities();
 
                 // Appium

@@ -2,6 +2,7 @@ package aeon.core.testabstraction.product;
 
 import aeon.core.common.AeonConfigKey;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -20,7 +21,7 @@ public class WebConfiguration extends Configuration {
 
     private Logger log = LoggerFactory.getLogger(WebConfiguration.class);
 
-    private BrowserType browserType;
+    private IBrowserType browserType;
 
     /**
      * Configuration keys for settings specific to web products.
@@ -64,16 +65,16 @@ public class WebConfiguration extends Configuration {
      *
      * @return The {@link BrowserType} for the the configuration.
      */
-    public BrowserType getBrowserType() {
+    public IBrowserType getBrowserType() {
         return browserType;
     }
 
     /**
      * Set the type of browser.
      *
-     * @param browserType The {@link BrowserType} for the configuration.
+     * @param browserType The {@link IBrowserType} for the configuration.
      */
-    public void setBrowserType(BrowserType browserType) {
+    public void setBrowserType(IBrowserType browserType) {
         this.browserType = browserType;
     }
 

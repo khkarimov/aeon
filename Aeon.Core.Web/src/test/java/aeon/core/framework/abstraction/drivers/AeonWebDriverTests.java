@@ -6,6 +6,7 @@ import aeon.core.common.KeyboardKey;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
@@ -1158,14 +1159,14 @@ class AeonWebDriverTests {
     void getBrowserType_verifyAdapterGetBrowserType() {
 
         // Arrange
-        when(adapter.getBrowserType()).thenReturn(BrowserType.Chrome);
+        when(adapter.getBrowserType()).thenReturn(BrowserType.CHROME);
 
         // Act
-        BrowserType result = aeonWebDriver.getBrowserType();
+        IBrowserType result = aeonWebDriver.getBrowserType();
 
         // Assert
         verify(adapter, times(1)).getBrowserType();
-        assertEquals(BrowserType.Chrome, result);
+        assertEquals(BrowserType.CHROME, result);
     }
 
     @Test

@@ -4,6 +4,7 @@ import aeon.core.common.exceptions.BrowserTypeNotRecognizedException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchElementsException;
 import aeon.core.common.interfaces.IBy;
+import aeon.core.common.mobile.AppType;
 import aeon.core.common.mobile.interfaces.IByMobile;
 import aeon.core.common.mobile.interfaces.IByMobileXPath;
 import aeon.core.common.mobile.selectors.ByMobile;
@@ -12,6 +13,7 @@ import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.WebSelectOption;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IMobileAdapter;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -63,10 +65,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
      * @param seleniumLogsDirectory   The path to the directory for Selenium Logs
      * @param loggingPreferences      Preferences which contain which Selenium log types to enable
      */
-    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, BrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+    public AppiumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, IBrowserType browserType, BrowserSize browserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         super(seleniumWebDriver, javaScriptExecutor, asyncJavaScriptExecutor, moveMouseToOrigin, browserType, browserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
 
-        if (browserType == BrowserType.AndroidHybridApp || browserType == BrowserType.IOSHybridApp) {
+        if (browserType == AppType.ANDROID_HYBRID_APP || browserType == AppType.IOS_HYBRID_APP) {
             context = getMobileWebDriver().getContext();
         }
 
@@ -117,11 +119,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void mobileLock(int seconds) {
-        switch (browserType) {
-            case AndroidHybridApp:
+        switch (browserType.getKey()) {
+            case "AndroidHybridApp":
                 ((AndroidDriver) getMobileWebDriver()).lockDevice();
                 break;
-            case IOSHybridApp:
+            case "IOSHybridApp":
                 ((IOSDriver) getMobileWebDriver()).lockDevice(Duration.ofSeconds(seconds));
                 break;
             default:
@@ -173,10 +175,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void closeApp() {
-        if (browserType == BrowserType.AndroidHybridApp) {
+        if (browserType == AppType.ANDROID_HYBRID_APP) {
             log.trace("ANDROID: Pressing home button");
             ((AndroidDriver) getMobileWebDriver()).pressKeyCode(AndroidKeyCode.HOME);
-        } else if (browserType == BrowserType.IOSHybridApp) {
+        } else if (browserType == AppType.IOS_HYBRID_APP) {
             throw new RuntimeException("Automated pressing of home button currently not supported on IOS");
         } else {
             throw new BrowserTypeNotRecognizedException();
@@ -477,7 +479,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void setDate(LocalDate date) {
 
-        if (browserType == BrowserType.AndroidHybridApp) {
+        if (browserType == AppType.ANDROID_HYBRID_APP) {
             switchToNativeAppContext();
             setMonthOnAndroidDatePicker(date);
             WebControl label = findElement(ByMobile.accessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))), false);
@@ -499,7 +501,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void mobileSelect(MobileSelectOption selectOption, String value) {
-        if (browserType == BrowserType.AndroidHybridApp) {
+        if (browserType == AppType.ANDROID_HYBRID_APP) {
             switchToNativeAppContext();
             IByMobile selector = ByMobile.xpath(String.format("//android.widget.CheckedTextView[@text='%s']", value));
             click(findElement(selector, false), false);
@@ -528,10 +530,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void acceptAlert() {
-        switch (browserType) {
-            case AndroidHybridApp:
+        switch (browserType.getKey()) {
+            case "AndroidHybridApp":
                 // Break intentionally omitted
-            case IOSHybridApp:
+            case "IOSHybridApp":
                 switchToNativeAppContext();
                 try {
                     super.acceptAlert();
@@ -546,10 +548,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     @Override
     public void dismissAlert() {
-        switch (browserType) {
-            case AndroidHybridApp:
+        switch (browserType.getKey()) {
+            case "AndroidHybridApp":
                 // Break intentionally omitted
-            case IOSHybridApp:
+            case "IOSHybridApp":
                 switchToNativeAppContext();
                 try {
                     super.dismissAlert();
@@ -565,14 +567,14 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void acceptOrDismissPermissionDialog(boolean accept) {
         if (accept) {
-            if (browserType == BrowserType.AndroidHybridApp) {
+            if (browserType == AppType.ANDROID_HYBRID_APP) {
                 SeleniumElement element = (SeleniumElement) findElement(ByMobile.id("com.android.packageinstaller:id/permission_allow_button"));
                 element.click(false);
             } else {
                 acceptAlert();
             }
         } else {
-            if (browserType == BrowserType.AndroidHybridApp) {
+            if (browserType == AppType.ANDROID_HYBRID_APP) {
                 SeleniumElement element = (SeleniumElement) findElement(ByMobile.id("com.android.packageinstaller:id/permission_deny_button"));
                 element.click(false);
             } else {
@@ -717,10 +719,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public final void quit() {
         log.trace("AppiumWebDriver.quit();");
-        if (browserType != BrowserType.AndroidChrome
-                && browserType != BrowserType.IOSSafari
-                && browserType != BrowserType.AndroidHybridApp
-                && browserType != BrowserType.IOSHybridApp) {
+        if (browserType != BrowserType.ANDROID_CHROME
+                && browserType != BrowserType.IOS_SAFARI
+                && browserType != AppType.ANDROID_HYBRID_APP
+                && browserType != AppType.IOS_HYBRID_APP) {
             super.quit();
 
             return;
@@ -773,7 +775,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             switchToWebViewContext();
             windowWidth = windowSize.getWidth();
             windowHeight = windowSize.getHeight();
-            if (browserType == BrowserType.AndroidHybridApp && mobileDeviceResolutions.containsKey(windowWidth)
+            if (browserType == AppType.ANDROID_HYBRID_APP && mobileDeviceResolutions.containsKey(windowWidth)
                     && (windowHeight - mobileDeviceResolutions.get(windowWidth)) < 300) {
                 windowHeight = mobileDeviceResolutions.get(windowWidth);
             }

@@ -31,12 +31,12 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
 
     @Override
     public void mobileLock() {
-        switch (getBrowserType()) {
-            case AndroidHybridApp:
+        switch (getBrowserType().getKey()) {
+            case "AndroidHybridApp":
                 adapter.mobileLock();
                 break;
 
-            case IOSHybridApp:
+            case "IOSHybridApp":
                 adapter.mobileLock(0);
                 break;
         }
@@ -48,12 +48,12 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
      * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
     public void mobileLock(int seconds) {
-        switch (getBrowserType()) {
-            case AndroidHybridApp:
+        switch (getBrowserType().getKey()) {
+            case "AndroidHybridApp":
                 adapter.mobileLock();
                 break;
 
-            case IOSHybridApp:
+            case "IOSHybridApp":
                 adapter.mobileLock(seconds);
                 break;
         }

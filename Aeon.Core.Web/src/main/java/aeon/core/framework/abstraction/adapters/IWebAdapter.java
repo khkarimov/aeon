@@ -5,9 +5,9 @@ import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
 import aeon.core.common.exceptions.*;
 import aeon.core.common.interfaces.IBy;
-import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.ClientRects;
 import aeon.core.common.web.WebSelectOption;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.controls.web.WebControl;
@@ -750,7 +750,7 @@ public interface IWebAdapter extends IAdapter {
      *
      * @return Returns the BrowserType associated with this browser.
      */
-    BrowserType getBrowserType();
+    IBrowserType getBrowserType();
 
     /**
      * Gets the bounding rectangle for an element.

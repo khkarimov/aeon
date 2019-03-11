@@ -6,6 +6,7 @@ import aeon.core.command.execution.commands.initialization.WebCommandInitializer
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.testabstraction.product.Configuration;
@@ -83,7 +84,7 @@ public class Browser {
      *
      * @return The BrowserType for the current browser.
      */
-    public BrowserType getBrowserType() {
+    public IBrowserType getBrowserType() {
         return ((WebConfiguration) info.getConfiguration()).getBrowserType();
     }
 

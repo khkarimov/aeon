@@ -40,10 +40,10 @@ class WebConfigurationTests {
         // Arrange
 
         // Act
-        webConfiguration.setBrowserType(BrowserType.Chrome);
+        webConfiguration.setBrowserType(BrowserType.CHROME);
 
         // Assert
-        assertEquals(BrowserType.Chrome, webConfiguration.getBrowserType());
+        assertEquals(BrowserType.CHROME, webConfiguration.getBrowserType());
     }
 
     @Test

@@ -166,6 +166,7 @@ public class PerfectoPlugin extends Plugin {
             String perfectoToken = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
             boolean perfectoAutoInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT, false);
             boolean perfectoSensorInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
+            String perfectoDeviceDescription = this.configuration.getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
 
             // Set credentials
             setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
@@ -173,6 +174,10 @@ public class PerfectoPlugin extends Plugin {
             // Set instrumentation
             capabilities.setCapability("autoInstrument", perfectoAutoInstrument);
             capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
+
+            if (!perfectoDeviceDescription.isEmpty()) {
+                capabilities.setCapability("deviceDescription", perfectoDeviceDescription);
+            }
         }
 
         @Override
