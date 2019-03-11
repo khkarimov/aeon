@@ -21,9 +21,6 @@ public class IFramePage extends WebProduct {
      * @param automationInfo The automation info object to use.
      */
 
-    //Useful information:
-    //When selecting by cssSelector, the # means it is looking for an id
-    //The . means it is looking for a class
     public IFramePage(AutomationInfo automationInfo) {
         wikiSearchTextBox = new TextBox(automationInfo, By.cssSelector("#searchInput"), By.cssSelector("iframe[id*=ContentFrame]"));
         searchButton = new Button(automationInfo, By.cssSelector("#searchButton"), By.cssSelector("iframe[id*=ContentFrame]"));
