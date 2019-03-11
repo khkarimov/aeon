@@ -1,7 +1,7 @@
 package main.pagewithiframeandnestediframe;
 
 import aeon.core.testabstraction.product.WebProduct;
-import main.pagewithiframeandnestediframe.inneriframe.innerpages.InnerIFramePage;
+import main.pagewithiframeandnestediframe.innerpages.InnerIFramePage;
 import main.pagewithiframeandnestediframe.outerpages.PageWithIFrameAndNestedIFrame;
 
 /**

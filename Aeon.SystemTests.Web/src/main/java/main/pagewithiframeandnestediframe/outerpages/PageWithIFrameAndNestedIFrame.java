@@ -4,7 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.web.selectors.By;
 import aeon.core.testabstraction.elements.web.Button;
 import aeon.core.testabstraction.product.WebProduct;
-import main.pagewithiframeandnestediframe.inneriframe.innerpages.InnerIFramePage;
+import main.pagewithiframeandnestediframe.innerpages.InnerIFramePage;
 
 /**
  * Wikipedia's main page within an iFrame.
