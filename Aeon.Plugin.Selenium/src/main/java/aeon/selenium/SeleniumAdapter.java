@@ -1050,7 +1050,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
-        click(element, moveMouseToOrigin);
+        try {
+            click(element, moveMouseToOrigin);
+        } catch (org.openqa.selenium.ElementNotVisibleException e) {
+            throw new ElementNotVisibleException(element.getSelector());
+        }
         //}
     }
 
@@ -1178,7 +1182,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     @Override
     public void isElementDisabled(WebControl element) {
         if (((SeleniumElement) element).enabled()) {
-            throw new ElementIsEnabledException();
+            throw new ElementIsEnabledException(element.getSelector());
         }
     }
 
@@ -1188,9 +1192,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The web element to check.
      */
     public void isElementEnabled(WebControl element) {
-        boolean enabled = ((SeleniumElement) element).enabled();
-        if (!enabled) {
-            throw new ElementNotEnabledException();
+        if (!((SeleniumElement) element).enabled()) {
+            throw new ElementNotEnabledException(element.getSelector());
         }
     }
 
@@ -1209,8 +1212,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The web element.
      */
     public void notExists(WebControl element) {
-        //IF execution reachd here then element exists.
-        throw new ElementExistsException();
+        //IF execution reached here then element exists.
+        throw new ElementExistsException(element.getSelector());
     }
 
     private void hasOptions(SeleniumElement element, String[] options, WebSelectOption select) {
@@ -1494,7 +1497,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void visible(WebControl element) {
         if (!((SeleniumElement) element).displayed()) {
-            throw new ElementNotVisibleException();
+            throw new ElementNotVisibleException(element.getSelector());
         }
     }
 
@@ -1505,7 +1508,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void notVisible(WebControl element) {
         if (((SeleniumElement) element).displayed()) {
-            throw new ElementIsVisibleException();
+            throw new ElementIsVisibleException(element.getSelector());
         }
     }
 
@@ -2088,4 +2091,3 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 || OsCheck.getOperatingSystemType().equals(OsCheck.OSType.LINUX);
     }
 }
-
