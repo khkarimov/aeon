@@ -8,32 +8,32 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class ListItem extends WebElement {
 
-    private AutomationInfo info;
+    private AutomationInfo automationInfo;
     private IByWeb selector;
     private IByWeb[] switchMechanism;
 
     /**
      * Initializes a new instance of {@link ListItem} class.
      *
-     * @param info     The AutomationInfo.
-     * @param selector IBy selector that will identify the element
+     * @param automationInfo The automation info.
+     * @param selector       IBy selector that will identify the element.
      */
-    public ListItem(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
-        this.info = info;
+    public ListItem(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
+        this.automationInfo = automationInfo;
         this.selector = selector;
     }
 
     /**
      * Initializes a new instance of {@link ListItem} class.
      *
-     * @param info            The AutomationInfo.
-     * @param selector        IBy selector that will identify the element
+     * @param automationInfo  The automation info.
+     * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public ListItem(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
-        this.info = info;
+    public ListItem(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
+        this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
     }

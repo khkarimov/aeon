@@ -13,19 +13,19 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class Dropdown extends WebElement {
 
-    private AutomationInfo info;
+    private AutomationInfo automationInfo;
     private IByWeb selector;
     private IByWeb[] switchMechanism;
 
     /**
      * Initializes a new instance of the {@link Dropdown} class.
      *
-     * @param info     The AutomationInfo.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo The automation info.
+     * @param selector       IBy selector that will identify the element.
      */
-    public Dropdown(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
-        this.info = info;
+    public Dropdown(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
+        this.automationInfo = automationInfo;
         this.selector = selector;
     }
 
@@ -33,13 +33,13 @@ public class Dropdown extends WebElement {
      * Initializes a new instance of the {@link Dropdown} class.
      * with a switch mechanism.
      *
-     * @param info            The AutomationInfo.
+     * @param automationInfo  The automation info.
      * @param selector        IBY selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public Dropdown(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
-        this.info = info;
+    public Dropdown(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
+        this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
     }
@@ -52,7 +52,7 @@ public class Dropdown extends WebElement {
      * @param select   The way the options will be searched, either WebSelectOption.Text or WebSelectOption.Value.
      */
     public void hasOptions(String[] options, String optgroup, WebSelectOption select) {
-        info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HasOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
@@ -65,7 +65,7 @@ public class Dropdown extends WebElement {
      * @param select  The way the options will be searched
      */
     public void hasOptions(String[] options, WebSelectOption select) {
-        info.getCommandExecutionFacade().execute(info, new HasOptionsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HasOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
@@ -79,7 +79,7 @@ public class Dropdown extends WebElement {
      * @param select   The way the options will be searched
      */
     public void hasOptionsInOrder(String[] options, String optgroup, WebSelectOption select) {
-        info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HasOptionsInOrderCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
@@ -92,7 +92,7 @@ public class Dropdown extends WebElement {
      * @param select  The way the options will be searched
      */
     public void hasOptionsInOrder(String[] options, WebSelectOption select) {
-        info.getCommandExecutionFacade().execute(info, new HasOptionsInOrderCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HasOptionsInOrderCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
@@ -106,7 +106,7 @@ public class Dropdown extends WebElement {
      * @param select   The way the options will be searched
      */
     public void doesNotHaveOptions(String[] options, String optgroup, WebSelectOption select) {
-        info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DoesNotHaveOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, optgroup, select
         ));
@@ -119,7 +119,7 @@ public class Dropdown extends WebElement {
      * @param select  The way the options will be searched
      */
     public void doesNotHaveOptions(String[] options, WebSelectOption select) {
-        info.getCommandExecutionFacade().execute(info, new DoesNotHaveOptionsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DoesNotHaveOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), options, select
         ));
@@ -132,7 +132,7 @@ public class Dropdown extends WebElement {
      * @param optgroup  The visible text of the option group.
      */
     public void hasNumberOfOptions(int optnumber, String optgroup) {
-        info.getCommandExecutionFacade().execute(info, new HasNumberOfOptionsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HasNumberOfOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), optnumber, optgroup
         ));
@@ -144,7 +144,7 @@ public class Dropdown extends WebElement {
      * @param optnumber Number of options to check for
      */
     public void hasNumberOfOptions(int optnumber) {
-        info.getCommandExecutionFacade().execute(info, new HasNumberOfOptionsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HasNumberOfOptionsCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), optnumber
         ));
@@ -157,7 +157,7 @@ public class Dropdown extends WebElement {
      * @param optgroup       The optional option group that would be searched in isolation instead of the entire dropdown.
      */
     public void hasAllOptionsInOrder(CompareType comparisonType, String optgroup) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasAllOptionsInOrderCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), comparisonType, optgroup));
@@ -169,7 +169,7 @@ public class Dropdown extends WebElement {
      * @param comparisonType The way that all the options in the dropdown element will be compared.
      */
     public void hasAllOptionsInOrder(CompareType comparisonType) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasAllOptionsInOrderCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), comparisonType, null
@@ -183,7 +183,7 @@ public class Dropdown extends WebElement {
      * @param value        New Value
      */
     public void set(WebSelectOption selectOption, String value) {
-        info.getCommandExecutionFacade().execute(info, new SetCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SetCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 selectOption,
@@ -197,7 +197,7 @@ public class Dropdown extends WebElement {
      */
     @Override
     public void isLike(String value) {
-        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -213,7 +213,7 @@ public class Dropdown extends WebElement {
      */
     @Override
     public void isLike(String value, String attribute) {
-        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -228,7 +228,7 @@ public class Dropdown extends WebElement {
      */
     @Override
     public void isNotLike(String value) {
-        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -244,7 +244,7 @@ public class Dropdown extends WebElement {
      */
     @Override
     public void isNotLike(String value, String attribute) {
-        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -259,7 +259,7 @@ public class Dropdown extends WebElement {
      */
     @Override
     public void is(String value) {
-        info.getCommandExecutionFacade().execute(info, new IsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -276,7 +276,7 @@ public class Dropdown extends WebElement {
      */
     @Override
     public void is(String value, String attribute) {
-        info.getCommandExecutionFacade().execute(info, new IsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
