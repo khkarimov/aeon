@@ -1,4 +1,4 @@
 /**
- * Contains controllers, models, and factories to interact with browsers.
+ * Main package for Aeon Platform.
  */
 package aeon.platform;
