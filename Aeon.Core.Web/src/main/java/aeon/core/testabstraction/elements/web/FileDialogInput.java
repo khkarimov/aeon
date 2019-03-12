@@ -13,34 +13,25 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class FileDialogInput extends WebElement {
 
-    private AutomationInfo info;
-    private IByWeb selector;
-    private IByWeb[] switchMechanism;
-
     /**
      * Creates a new instance of {@link Button}.
      *
-     * @param info     The automation info.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo The automation info.
+     * @param selector       IBy selector that will identify the element.
      */
-    public FileDialogInput(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
-        this.info = info;
-        this.selector = selector;
+    public FileDialogInput(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
     }
 
     /**
      * Creates a new instance of {@link Button}.
      *
-     * @param info            The automation info.
+     * @param automationInfo  The automation info.
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism.
      */
-    public FileDialogInput(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
-        this.info = info;
-        this.selector = selector;
-        this.switchMechanism = switchMechanism;
+    public FileDialogInput(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
     }
 
     /**
@@ -49,7 +40,7 @@ public class FileDialogInput extends WebElement {
      * @param path The path to the file to be selected.
      */
     public void selectFile(String path) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new SelectFileCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),

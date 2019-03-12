@@ -18,41 +18,31 @@ import java.time.Period;
 public class WebElement extends Element {
 
     protected IByWeb selector;
-    protected AutomationInfo info;
+    protected AutomationInfo automationInfo;
     protected IByWeb[] switchMechanism;
 
     /**
      * Initializes a new instance of the {@link WebElement} class.
      *
-     * @param info     The automation information.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo The automation information.
+     * @param selector       IBy selector that will identify the element.
      */
-    public WebElement(AutomationInfo info, IByWeb selector) {
+    public WebElement(AutomationInfo automationInfo, IByWeb selector) {
         super(selector);
         this.selector = selector;
-        this.info = info;
-    }
-
-    /**
-     * Initializes a new instance of the {@link WebElement} class
-     * with {@link AutomationInfo} set to null.
-     *
-     * @param selector IBy selector that will identify the element.
-     */
-    public WebElement(IByWeb selector) {
-        this(null, selector);
+        this.automationInfo = automationInfo;
     }
 
     /**
      * Initializes a new instance of the {@link WebElement} class
      * with a switch mechanism.
      *
-     * @param info            The AutomationInfo.
+     * @param automationInfo  The AutomationInfo.
      * @param selector        IBY selector that will indentify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public WebElement(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        this(info, selector);
+    public WebElement(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        this(automationInfo, selector);
         this.switchMechanism = switchMechanism;
     }
 
@@ -60,7 +50,7 @@ public class WebElement extends Element {
      * Executes the blur command.
      */
     public void blur() {
-        info.getCommandExecutionFacade().execute(info, new BlurCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new BlurCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -71,7 +61,7 @@ public class WebElement extends Element {
      * @param duration The duration in milliseconds.
      */
     public void clickAndHold(int duration) {
-        info.getCommandExecutionFacade().execute(info, new ClickAndHoldCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ClickAndHoldCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 duration));
@@ -81,7 +71,7 @@ public class WebElement extends Element {
      * Executes the click command.
      */
     public void click() {
-        info.getCommandExecutionFacade().execute(info, new ClickCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -90,7 +80,7 @@ public class WebElement extends Element {
      * Executes the click all elements command.
      */
     public void clickAllElements() {
-        info.getCommandExecutionFacade().execute(info, new ClickAllElementsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ClickAllElementsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -99,7 +89,7 @@ public class WebElement extends Element {
      * Executes the double click command.
      */
     public void doubleClick() {
-        info.getCommandExecutionFacade().execute(info, new DoubleClickCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DoubleClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -108,7 +98,7 @@ public class WebElement extends Element {
      * Executes the Disabled command.
      */
     public void isDisabled() {
-        info.getCommandExecutionFacade().execute(info, new DisabledCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DisabledCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -121,7 +111,7 @@ public class WebElement extends Element {
      */
     @Deprecated
     public void dragAndDrop(String dropTarget) {
-        info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DragAndDropCommand(
                 selector,
                 By.cssSelector(dropTarget),
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
@@ -133,7 +123,7 @@ public class WebElement extends Element {
      * @param dropTarget The element to be dropped at.
      */
     public void dragAndDrop(WebElement dropTarget) {
-        info.getCommandExecutionFacade().execute(info, new DragAndDropCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DragAndDropCommand(
                 selector,
                 dropTarget.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
@@ -143,7 +133,7 @@ public class WebElement extends Element {
      * Executes the enabled command.
      */
     public void isEnabled() {
-        info.getCommandExecutionFacade().execute(info, new EnabledCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new EnabledCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -152,7 +142,7 @@ public class WebElement extends Element {
      * Asserts if a web element exists.
      */
     public void exists() {
-        info.getCommandExecutionFacade().execute(info, new ExistsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ExistsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -161,14 +151,14 @@ public class WebElement extends Element {
      * Asserts if a web element does not exist.
      */
     public void notExists() {
-        info.getCommandExecutionFacade().execute(info, new NotExistsCommand(selector));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new NotExistsCommand(selector));
     }
 
     /**
      * Executes the right click command.
      */
     public void rightClick() {
-        info.getCommandExecutionFacade().execute(info, new RightClickCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new RightClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -177,7 +167,7 @@ public class WebElement extends Element {
      * Executes the mouse out command.
      */
     public void mouseOut() {
-        info.getCommandExecutionFacade().execute(info, new MouseOutCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new MouseOutCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -186,7 +176,7 @@ public class WebElement extends Element {
      * Executes the mouse over command.
      */
     public void mouseOver() {
-        info.getCommandExecutionFacade().execute(info, new MouseOverCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new MouseOverCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -197,7 +187,7 @@ public class WebElement extends Element {
      * @param value The expected value of the web element's text.
      */
     public void is(String value) {
-        info.getCommandExecutionFacade().execute(info, new IsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -212,7 +202,7 @@ public class WebElement extends Element {
      * @param attribute The attribute to be compared.
      */
     public void is(String value, String attribute) {
-        info.getCommandExecutionFacade().execute(info, new IsCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -226,7 +216,7 @@ public class WebElement extends Element {
      * @param value The value the text should be like.
      */
     public void isLike(String value) {
-        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -241,7 +231,7 @@ public class WebElement extends Element {
      * @param attribute The attribute to be compared.
      */
     public void isLike(String value, String attribute) {
-        info.getCommandExecutionFacade().execute(info, new IsLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -255,7 +245,7 @@ public class WebElement extends Element {
      * @param value The value the text should not be like.
      */
     public void isNotLike(String value) {
-        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -270,7 +260,7 @@ public class WebElement extends Element {
      * @param attribute The attribute to be compared.
      */
     public void isNotLike(String value, String attribute) {
-        info.getCommandExecutionFacade().execute(info, new IsNotLikeCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new IsNotLikeCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
@@ -285,7 +275,7 @@ public class WebElement extends Element {
      * @param childSelector The selector that the children are matched to.
      */
     public void has(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
@@ -300,7 +290,7 @@ public class WebElement extends Element {
      * @param attribute     The attribute of the children to compare with the messages.
      */
     public void has(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
@@ -314,7 +304,7 @@ public class WebElement extends Element {
      * @param childSelector The selector that the children are matched to.
      */
     public void hasLike(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
@@ -329,7 +319,7 @@ public class WebElement extends Element {
      * @param attribute     The attribute of the children to compare with messages.
      */
     public void hasLike(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
@@ -343,7 +333,7 @@ public class WebElement extends Element {
      * @param childSelector The selector that the children are matched to.
      */
     public void doesNotHave(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
@@ -358,7 +348,7 @@ public class WebElement extends Element {
      * @param attribute     The attribute of the children to compare with messages.
      */
     public void doesNotHave(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
@@ -372,7 +362,7 @@ public class WebElement extends Element {
      * @param childSelector The selector that the children are matched to.
      */
     public void doesNotHaveLike(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
@@ -387,7 +377,7 @@ public class WebElement extends Element {
      * @param attribute     The attribute of the children to compare with messages.
      */
     public void doesNotHaveLike(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveLikeCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
@@ -401,7 +391,7 @@ public class WebElement extends Element {
      * @param childSelector The selector that the children are matched to.
      */
     public void hasOnly(String[] messages, String childSelector) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasOnlyCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
@@ -416,7 +406,7 @@ public class WebElement extends Element {
      * @param attribute     The attribute of the children to compare with messages.
      */
     public void hasOnly(String[] messages, String childSelector, String attribute) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasOnlyCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.RAW, attribute
@@ -429,7 +419,7 @@ public class WebElement extends Element {
      * @param value The new value to be set on the div.
      */
     public void setDivValueByJavaScript(String value) {
-        info.getCommandExecutionFacade().execute(info, new SetDivValueByJavaScriptCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SetDivValueByJavaScriptCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
@@ -441,7 +431,7 @@ public class WebElement extends Element {
      * @param value The body value to be set to.
      */
     public void setBodyValueByJavaScript(String value) {
-        info.getCommandExecutionFacade().execute(info, new SetBodyValueByJavaScriptCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SetBodyValueByJavaScriptCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
@@ -453,7 +443,7 @@ public class WebElement extends Element {
      * @param value The text value to be set.
      */
     public void setTextByJavaScript(String value) {
-        info.getCommandExecutionFacade().execute(info, new SetTextByJavaScriptCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SetTextByJavaScriptCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value));
@@ -463,7 +453,7 @@ public class WebElement extends Element {
      * Executes visible command when a web element is visible.
      */
     public void visible() {
-        info.getCommandExecutionFacade().execute(info, new VisibleCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new VisibleCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -472,7 +462,7 @@ public class WebElement extends Element {
      * Executes the not visible command.
      */
     public void notVisible() {
-        info.getCommandExecutionFacade().execute(info, new NotVisibleCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new NotVisibleCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -486,7 +476,7 @@ public class WebElement extends Element {
      * @param acceptableDelta The acceptable margin of error, cannot contain Weeks, Months or Years since these vary in length.
      */
     public void datesApproximatelyEqual(String attributeName, LocalDate expectedDate, Period acceptableDelta) {
-        info.getCommandExecutionFacade().execute(info, new DatesApproximatelyEqualCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DatesApproximatelyEqualCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 attributeName, expectedDate, acceptableDelta
@@ -509,7 +499,7 @@ public class WebElement extends Element {
      * @param key The key to be pressed.
      */
     public void pressKeyboardKey(KeyboardKey key) {
-        info.getCommandExecutionFacade().execute(info, new PressKeyboardKeyCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new PressKeyboardKeyCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 key));

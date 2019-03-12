@@ -16,31 +16,22 @@ public class NativeDatePicker extends NativeAppElement {
     /**
      * Constructor.
      *
-     * @param info     The automation info object to use.
-     * @param selector The selector that identifies this element.
+     * @param automationInfo The automation info object to use.
+     * @param selector       The selector that identifies this element.
      */
-    public NativeDatePicker(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
+    public NativeDatePicker(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
     }
 
     /**
      * Constructor.
      *
-     * @param selector The selector that identifies this element.
-     */
-    public NativeDatePicker(IByWeb selector) {
-        super(selector);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param info            The automation info object to use.
+     * @param automationInfo  The automation info object to use.
      * @param selector        The selector that identifies this element.
      * @param switchMechanism The switchMechanism to use to find the element.
      */
-    public NativeDatePicker(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
+    public NativeDatePicker(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
     }
 
     /**
@@ -49,10 +40,10 @@ public class NativeDatePicker extends NativeAppElement {
      * @param dateTime Date to which the date picker should be set.
      */
     public void setDate(String dateTime) {
-        info.getCommandExecutionFacade().execute(info, new NativeClickCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new NativeClickCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
 
-        info.getCommandExecutionFacade().execute(info, new NativeSetDateCommand(dateTime));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new NativeSetDateCommand(dateTime));
     }
 }

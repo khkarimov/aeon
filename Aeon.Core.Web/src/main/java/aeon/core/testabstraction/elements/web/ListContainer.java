@@ -22,7 +22,7 @@ public class ListContainer<T extends ComponentList> {
     public ListContainer(AutomationInfo automationInfo, IByWeb selector, T rowBy) {
         this.rowBy = rowBy;
 
-        this.rowBy.setContext(automationInfo, selector, null);
+        this.rowBy.setContext(automationInfo, selector, (IByWeb[]) null);
     }
 
     /**

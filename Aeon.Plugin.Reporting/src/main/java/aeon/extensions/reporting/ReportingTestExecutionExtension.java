@@ -33,8 +33,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Extension
 public class ReportingTestExecutionExtension implements ITestExecutionExtension {
 
-    private IConfiguration aeonConfiguration;
-    private IConfiguration configuration;
+    private static IConfiguration aeonConfiguration;
+    private static IConfiguration configuration;
     private ScenarioDetails currentScenario;
 
     private ArtifactoryService artifactoryService;
@@ -50,7 +50,7 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
             ReportController reportController,
             ArtifactoryService artifactoryService
     ) {
-        this.configuration = configuration;
+        ReportingTestExecutionExtension.configuration = configuration;
         this.reportController = reportController;
         this.artifactoryService = artifactoryService;
 
@@ -246,6 +246,9 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
         reportDetails.setEndTime(time);
         reportDetails.setScenarios(finishedScenarios);
 
+        this.reportController.setConfiguration(
+                ReportingTestExecutionExtension.configuration,
+                ReportingTestExecutionExtension.aeonConfiguration);
         this.reportController.writeReportsAndUpload(reportDetails);
     }
 
@@ -293,24 +296,26 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
 
     private void initializeConfiguration() {
         try {
-            this.configuration.loadConfiguration();
+            ReportingTestExecutionExtension.configuration.loadConfiguration();
         } catch (IllegalAccessException | IOException e) {
             log.warn("Could not load plugin configuration.");
         }
     }
 
     private void initializeConfiguration(Configuration aeonConfiguration) {
-        if (this.aeonConfiguration == null) {
+        if (ReportingTestExecutionExtension.aeonConfiguration == null) {
             try {
-                configuration.loadConfiguration();
+                ReportingTestExecutionExtension.configuration.loadConfiguration();
             } catch (IllegalAccessException | IOException e) {
                 log.warn("Could not load plugin configuration, using Aeon configuration.");
 
-                configuration = aeonConfiguration;
+                ReportingTestExecutionExtension.configuration = aeonConfiguration;
             }
-            this.aeonConfiguration = aeonConfiguration;
+            ReportingTestExecutionExtension.aeonConfiguration = aeonConfiguration;
 
-            this.reportController.setConfiguration(this.configuration, this.aeonConfiguration);
+            this.reportController.setConfiguration(
+                    ReportingTestExecutionExtension.configuration,
+                    ReportingTestExecutionExtension.aeonConfiguration);
         }
     }
 }

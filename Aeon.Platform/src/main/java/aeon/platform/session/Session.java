@@ -22,8 +22,9 @@ public class Session implements ISession {
 
     /**
      * Constructs a Session.
-     * @param supplier Product type extension supplier
-     * @param automationInfo Automation info
+     *
+     * @param supplier               Product type extension supplier
+     * @param automationInfo         Automation info
      * @param commandExecutionFacade Command execution facade
      */
     public Session(AutomationInfo automationInfo, ICommandExecutionFacade commandExecutionFacade, Supplier<List<IProductTypeExtension>> supplier) {

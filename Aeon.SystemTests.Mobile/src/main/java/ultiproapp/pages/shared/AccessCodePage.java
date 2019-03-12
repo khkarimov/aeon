@@ -23,14 +23,14 @@ public class AccessCodePage extends Page {
     /**
      * Constructs an access code page.
      *
-     * @param info Automation info
+     * @param automationInfo Automation info
      */
-    public AccessCodePage(AutomationInfo info) {
-        accessCodeInputField = new TextBox(info, By.cssSelector("ion-input[data-automation=\"access-code-input\"]"));
-        continueLabel = new Label(info, By.cssSelector("[data-automation=\"continue-button\"] span"));
-        continueButton = new Button(info, By.cssSelector("[data-automation=\"continue-button\"]"));
-        invalidCodeLabel = new Label(info, By.cssSelector("div.item-message p"));
-        whatIsACompanyAccessCode = new Link(info, By.cssSelector("ion-button[data-automation=\"what-is-company-access-code-button\"]"));
-        supportLink = new Link(info, By.cssSelector("ion-button[data-automation=\"support-button\"]"));
+    public AccessCodePage(AutomationInfo automationInfo) {
+        accessCodeInputField = new TextBox(automationInfo, By.cssSelector("ion-input[data-automation=\"access-code-input\"]"));
+        continueLabel = new Label(automationInfo, By.cssSelector("[data-automation=\"continue-button\"] span"));
+        continueButton = new Button(automationInfo, By.cssSelector("[data-automation=\"continue-button\"]"));
+        invalidCodeLabel = new Label(automationInfo, By.cssSelector("div.item-message p"));
+        whatIsACompanyAccessCode = new Link(automationInfo, By.cssSelector("ion-button[data-automation=\"what-is-company-access-code-button\"]"));
+        supportLink = new Link(automationInfo, By.cssSelector(".login-graphic-footer ion-button[data-automation=\"support-button\"]"));
     }
 }

@@ -17,7 +17,7 @@ public class PersonalPage extends Page {
      *
      * @param automationInfo The automation info object to use.
      */
-    public PersonalPage(AutomationInfo automationInfo){
+    public PersonalPage(AutomationInfo automationInfo) {
         // Controls
         addressLine = new TextBox(automationInfo, By.cssSelector("#ctl00_Content_NewHirePersonalFV_txbAddressLine1"));
     }

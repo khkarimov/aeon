@@ -8,34 +8,25 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class Link extends WebElement {
 
-    private AutomationInfo info;
-    private IByWeb selector;
-    private IByWeb[] switchMechanism;
-
     /**
      * Initializes a new instance of {@link Link} class.
      *
-     * @param info     The AutomationInfo.
-     * @param selector IBy selector that will identify the element
+     * @param automationInfo The automation info.
+     * @param selector       IBy selector that will identify the element.
      */
-    public Link(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
-        this.info = info;
-        this.selector = selector;
+    public Link(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
     }
 
     /**
      * Initializes a new instance of {@link Link} class.
      *
-     * @param info            The AutomationInfo.
-     * @param selector        IBy selector that will identify the element
+     * @param automationInfo  The automation info.
+     * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public Link(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
-        this.info = info;
-        this.selector = selector;
-        this.switchMechanism = switchMechanism;
+    public Link(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
     }
 
     /**

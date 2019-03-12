@@ -19,10 +19,10 @@ public class UltiProApp extends MobileProduct {
     @Override
     protected void afterLaunch() {
         super.afterLaunch();
-        AutomationInfo info = getAutomationInfo();
+        AutomationInfo automationInfo = getAutomationInfo();
 
-        accessCodePage = new AccessCodePage(info);
-        loginPage = new LoginPage(info);
-        iOSIdentitySignInPage = new IOSIdentitySignInPage(info);
+        accessCodePage = new AccessCodePage(automationInfo);
+        loginPage = new LoginPage(automationInfo);
+        iOSIdentitySignInPage = new IOSIdentitySignInPage(automationInfo);
     }
 }
