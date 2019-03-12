@@ -55,46 +55,46 @@ public class VTeamSamplePage extends Page {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
+     * @param automationInfo The automation info object to use.
      */
-    public VTeamSamplePage(AutomationInfo info) {
-        disabledButton = new Button(info, By.cssSelector("button[id='disabled-button']"));
-        heatLogoImage = new Image(info, By.cssSelector("img[src='HeatLogo.jpg']"));
-        ultimateLogoImage = new Image(info, By.cssSelector("img[id='dragtarget']"));
-        ultimateLogoImageDoubleClick = new Image(info, By.cssSelector("img[id='dbl-click-image']"));
-        testCheckbox = new Checkbox(info, By.cssSelector("input[id='checkbox']"));
-        testFileDialogInput = new FileDialogInput(info, By.cssSelector("input[id='file-dialog']"));
-        openAlertButton = new Button(info, By.cssSelector("button[id='alertDialog']"));
-        alertTitleTextBox = new TextBox(info, By.cssSelector("input[id ='sample1']"));
-        start = new Button(info, By.cssSelector("button[id='start']"));
-        tryLink = new Link(info, By.cssSelector("a[id='tryLink']"));
-        dropDown = new Dropdown(info, By.cssSelector("select[id='drop-down-list']"));
+    public VTeamSamplePage(AutomationInfo automationInfo) {
+        disabledButton = new Button(automationInfo, By.cssSelector("button[id='disabled-button']"));
+        heatLogoImage = new Image(automationInfo, By.cssSelector("img[src='HeatLogo.jpg']"));
+        ultimateLogoImage = new Image(automationInfo, By.cssSelector("img[id='dragtarget']"));
+        ultimateLogoImageDoubleClick = new Image(automationInfo, By.cssSelector("img[id='dbl-click-image']"));
+        testCheckbox = new Checkbox(automationInfo, By.cssSelector("input[id='checkbox']"));
+        testFileDialogInput = new FileDialogInput(automationInfo, By.cssSelector("input[id='file-dialog']"));
+        openAlertButton = new Button(automationInfo, By.cssSelector("button[id='alertDialog']"));
+        alertTitleTextBox = new TextBox(automationInfo, By.cssSelector("input[id ='sample1']"));
+        start = new Button(automationInfo, By.cssSelector("button[id='start']"));
+        tryLink = new Link(automationInfo, By.cssSelector("a[id='tryLink']"));
+        dropDown = new Dropdown(automationInfo, By.cssSelector("select[id='drop-down-list']"));
 
         //SR - this is not part of our sample site but I'm using it to test the drag and drop command
-        draggableListItem = new ListItem(info, By.cssSelector("li[id='node1']"));
-        draggedListItem = new ListItem(info, By.cssSelector("ul[id='box2'] li[id='node1']"));
-        draggableHTML5Item = new ListItem(info, By.cssSelector("[id='drag1']"));
-        draggedHTML5Item = new ListItem(info, By.cssSelector("[id='div2'] [id='drag1']"));
+        draggableListItem = new ListItem(automationInfo, By.cssSelector("li[id='node1']"));
+        draggedListItem = new ListItem(automationInfo, By.cssSelector("ul[id='box2'] li[id='node1']"));
+        draggableHTML5Item = new ListItem(automationInfo, By.cssSelector("[id='drag1']"));
+        draggedHTML5Item = new ListItem(automationInfo, By.cssSelector("[id='div2'] [id='drag1']"));
 
-        checkbox100 = new Checkbox(info, By.cssSelector("input[id='checkbox100']"));
-        div = new WebElement(info, By.cssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
-        popupButton = new Button(info, By.cssSelector("a[id='popup-button']"));
-        lexoDropDown = new Dropdown(info, By.cssSelector("select[id='lexicographic-drop-down']"));
-        revLexoDropDown = new Dropdown(info, By.cssSelector("select[id='lexicographic-drop-down-rev']"));
-        dateSelector = new Label(info, By.cssSelector("#date-selector"));
-        dateLabel = new Label(info, By.cssSelector("#date-text"));
-        reactionLabel = new Label(info, By.cssSelector("#reaction-text"));
-        invisibleButton = new Button(info, By.cssSelector("#invisible-button"));
-        nonExistentLabel = new Label(info, By.cssSelector("fakeSelector"));
-        formTextBox = new TextBox(info, By.cssSelector("#sample1"));
-        nextRadioButton = new RadioButton(info, By.cssSelector("#next-radio-button"));
-        smileyFace1 = new Button(info, By.cssSelector(".call-1 > button:nth-child(1)"));
-        smileyFace2 = new Button(info, By.cssSelector(".call-2 > button:nth-child(1)"));
-        smileyFace3 = new Button(info, By.cssSelector(".call-3 > button:nth-child(1)"));
+        checkbox100 = new Checkbox(automationInfo, By.cssSelector("input[id='checkbox100']"));
+        div = new WebElement(automationInfo, By.cssSelector("div.demo-container:nth-child(1) > div:nth-child(2)"));
+        popupButton = new Button(automationInfo, By.cssSelector("a[id='popup-button']"));
+        lexoDropDown = new Dropdown(automationInfo, By.cssSelector("select[id='lexicographic-drop-down']"));
+        revLexoDropDown = new Dropdown(automationInfo, By.cssSelector("select[id='lexicographic-drop-down-rev']"));
+        dateSelector = new Label(automationInfo, By.cssSelector("#date-selector"));
+        dateLabel = new Label(automationInfo, By.cssSelector("#date-text"));
+        reactionLabel = new Label(automationInfo, By.cssSelector("#reaction-text"));
+        invisibleButton = new Button(automationInfo, By.cssSelector("#invisible-button"));
+        nonExistentLabel = new Label(automationInfo, By.cssSelector("fakeSelector"));
+        formTextBox = new TextBox(automationInfo, By.cssSelector("#sample1"));
+        nextRadioButton = new RadioButton(automationInfo, By.cssSelector("#next-radio-button"));
+        smileyFace1 = new Button(automationInfo, By.cssSelector(".call-1 > button:nth-child(1)"));
+        smileyFace2 = new Button(automationInfo, By.cssSelector(".call-2 > button:nth-child(1)"));
+        smileyFace3 = new Button(automationInfo, By.cssSelector(".call-3 > button:nth-child(1)"));
 
-        materialTableContainer = new MaterialTableContainer(info, gridSelector, new MaterialTable());
-        divWindow = new WebElement(info, By.cssSelector("div[id='drop-div']"));
-        bodyTag = new Label(info, By.cssSelector("label[for='sample5']"));
-        actorListContainer = new ActorListContainer(info, By.cssSelector(".demo-list-three"), new ActorList());
+        materialTableContainer = new MaterialTableContainer(automationInfo, gridSelector, new MaterialTable());
+        divWindow = new WebElement(automationInfo, By.cssSelector("div[id='drop-div']"));
+        bodyTag = new Label(automationInfo, By.cssSelector("label[for='sample5']"));
+        actorListContainer = new ActorListContainer(automationInfo, By.cssSelector(".demo-list-three"), new ActorList());
     }
 }

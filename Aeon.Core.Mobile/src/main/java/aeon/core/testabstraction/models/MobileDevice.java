@@ -9,64 +9,65 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class MobileDevice extends Browser {
 
-    private AutomationInfo info;
+    private AutomationInfo automationInfo;
 
     /**
      * The constructor for the Browser given an AutomationInfo object.
      *
-     * @param info sets the info of the newly made Browser.
+     * @param automationInfo sets the automationInfo of the newly made Browser.
      */
-    public MobileDevice(AutomationInfo info) {
-        super(info);
+    public MobileDevice(AutomationInfo automationInfo) {
+        super(automationInfo);
 
-        this.info = info;
+        this.automationInfo = automationInfo;
     }
 
     /**
      * Hides the keyboard on a mobile device.
      */
     public void hideKeyboard() {
-        info.getCommandExecutionFacade().execute(info, new HideKeyboardCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HideKeyboardCommand());
     }
 
     /**
      * Sets the mobile device orientation to landscape mode.
      */
     public void setLandscape() {
-        info.getCommandExecutionFacade().execute(info, new SetLandscapeCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SetLandscapeCommand());
     }
 
     /**
      * Sets the mobile device orientation to portrait mode.
      */
     public void setPortrait() {
-        info.getCommandExecutionFacade().execute(info, new SetPortraitCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SetPortraitCommand());
     }
 
     /**
      * Sets the GPS location on a mobile device.
      *
-     * @param latitude The GPS latitude.
+     * @param latitude  The GPS latitude.
      * @param longitude The GPS longitude.
-     * @param altitude The GPS altitude.
+     * @param altitude  The GPS altitude.
      */
     public void setGeoLocation(double latitude, double longitude, double altitude) {
-        info.getCommandExecutionFacade().execute(info, new SetGeoLocationCommand(latitude, longitude, altitude));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SetGeoLocationCommand(latitude, longitude, altitude));
     }
 
     /**
      * Locks and immediately unlocks a mobile device.
      */
     public void lock() {
-        info.getCommandExecutionFacade().execute(info, new LockCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new LockCommand());
     }
 
     /**
      * Locks and immediately unlocks a mobile device.
+     *
      * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
-    public void lock(int seconds){
-        info.getCommandExecutionFacade().execute(info, new LockCommand(seconds));
+    public void lock(int seconds) {
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new LockCommand(seconds));
     }
 
     /**
@@ -97,7 +98,7 @@ public class MobileDevice extends Browser {
         handlePermissionDialog(false);
     }
 
-    private void handlePermissionDialogIfPresent(boolean accept){
+    private void handlePermissionDialogIfPresent(boolean accept) {
         try {
             handlePermissionDialog(accept);
         } catch (RuntimeException e) {
@@ -106,8 +107,8 @@ public class MobileDevice extends Browser {
         }
     }
 
-    private void handlePermissionDialog(boolean accept){
-        info.getCommandExecutionFacade().execute(info, new AcceptOrDenyPermissionDialogIfPresentCommand(accept));
+    private void handlePermissionDialog(boolean accept) {
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new AcceptOrDenyPermissionDialogIfPresentCommand(accept));
     }
 
     /**
@@ -117,7 +118,7 @@ public class MobileDevice extends Browser {
      * @deprecated This might be replaced with an implicit switching logic. Please use with caution.
      */
     public void switchToWebView(IByWeb selector) {
-        info.getCommandExecutionFacade().execute(info, new SwitchToWebViewCommand(selector));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwitchToWebViewCommand(selector));
     }
 
     /**
@@ -126,35 +127,35 @@ public class MobileDevice extends Browser {
      * @deprecated This might be replaced with an implicit switching logic. Please use with caution.
      */
     public void switchToMainWebView() {
-        info.getCommandExecutionFacade().execute(info, new SwitchToWebViewCommand(null));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwitchToWebViewCommand(null));
     }
 
     /**
      * Swipe screen to the left.
      */
     public void swipeLeft() {
-        info.getCommandExecutionFacade().execute(info, new SwipeCommand(true, true));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwipeCommand(true, true));
     }
 
     /**
      * Swipe screen to the right.
      */
     public void swipeRight() {
-        info.getCommandExecutionFacade().execute(info, new SwipeCommand(true, false));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwipeCommand(true, false));
     }
 
     /**
      * Swipe screen to the right.
      */
     public void swipeDown() {
-        info.getCommandExecutionFacade().execute(info, new SwipeCommand(false, true));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwipeCommand(false, true));
     }
 
     /**
      * Swipe screen up.
      */
     public void swipeUp() {
-        info.getCommandExecutionFacade().execute(info, new SwipeCommand(false, false));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwipeCommand(false, false));
     }
 
     /**
@@ -163,7 +164,7 @@ public class MobileDevice extends Browser {
      * @param expectedBanner The expected app that triggered the notification.
      */
     public void recentNotificationIs(String expectedBanner) {
-        info.getCommandExecutionFacade().execute(info, new CheckRecentNotificationCommand(expectedBanner));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new CheckRecentNotificationCommand(expectedBanner));
     }
 
     /**
@@ -172,7 +173,7 @@ public class MobileDevice extends Browser {
      * @param expectedDescription The expected description from the most recent notification.
      */
     public void recentNotificationDescriptionIs(String expectedDescription) {
-        info.getCommandExecutionFacade().execute(info, new CheckNotificationDescriptionCommand(expectedDescription));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new CheckNotificationDescriptionCommand(expectedDescription));
     }
 
     /**
@@ -180,6 +181,6 @@ public class MobileDevice extends Browser {
      * in the state that it was exited (app state will not be reset).
      */
     public void closeApp() {
-        info.getCommandExecutionFacade().execute(info, new CloseAppCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new CloseAppCommand());
     }
 }

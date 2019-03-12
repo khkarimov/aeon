@@ -10,32 +10,32 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class Checkbox extends WebElement {
 
-    private AutomationInfo info;
+    private AutomationInfo automationInfo;
     private IByWeb selector;
     private IByWeb[] switchMechanism;
 
     /**
      * Creates a new instance of {@link Button}.
      *
-     * @param info     The automation info.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo The automation info.
+     * @param selector       IBy selector that will identify the element.
      */
-    public Checkbox(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
-        this.info = info;
+    public Checkbox(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
+        this.automationInfo = automationInfo;
         this.selector = selector;
     }
 
     /**
      * Creates a new instance of {@link Button}.
      *
-     * @param info            The automation info.
+     * @param automationInfo  The automation info.
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism.
      */
-    public Checkbox(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
-        this.info = info;
+    public Checkbox(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
+        this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
     }
@@ -44,7 +44,7 @@ public class Checkbox extends WebElement {
      * Checks this checkbox.
      */
     public void check() {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new CheckCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
@@ -54,7 +54,7 @@ public class Checkbox extends WebElement {
      * Unchecks this checkbox.
      */
     public void uncheck() {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new UnCheckCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
@@ -64,7 +64,7 @@ public class Checkbox extends WebElement {
      * Asserts if the checkbox is selected.
      */
     public void selected() {
-        info.getCommandExecutionFacade().execute(info, new SelectedCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SelectedCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }
@@ -74,7 +74,7 @@ public class Checkbox extends WebElement {
      * Asserts if the checkbox is not selected.
      */
     public void notSelected() {
-        info.getCommandExecutionFacade().execute(info, new NotSelectedCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new NotSelectedCommand(
                 selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)));
     }

@@ -20,25 +20,25 @@ public class FileDialogInput extends WebElement {
     /**
      * Creates a new instance of {@link Button}.
      *
-     * @param info     The automation info.
-     * @param selector IBy selector that will identify the element.
+     * @param automationInfo The automation info.
+     * @param selector       IBy selector that will identify the element.
      */
-    public FileDialogInput(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
-        this.info = info;
+    public FileDialogInput(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
+        this.info = automationInfo;
         this.selector = selector;
     }
 
     /**
      * Creates a new instance of {@link Button}.
      *
-     * @param info            The automation info.
+     * @param automationInfo  The automation info.
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism.
      */
-    public FileDialogInput(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
-        this.info = info;
+    public FileDialogInput(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
+        this.info = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
     }

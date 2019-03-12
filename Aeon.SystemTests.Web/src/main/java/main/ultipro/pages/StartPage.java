@@ -21,7 +21,7 @@ public class StartPage extends Page {
      *
      * @param automationInfo The automation info object to use.
      */
-    StartPage(AutomationInfo automationInfo){
+    StartPage(AutomationInfo automationInfo) {
         //Controls
         ssnTextBox = new TextBox(automationInfo, By.cssSelector("#ctl00_Content_StartFV_txbSSN"));
         confirmSSNTextBox = new TextBox(automationInfo, By.cssSelector("#ctl00_Content_StartFV_txbSSNConfirmed"));
