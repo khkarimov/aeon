@@ -14,10 +14,6 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class TextBox extends WebElement {
 
-    private AutomationInfo automationInfo;
-    private IByWeb selector;
-    private IByWeb[] switchMechanism;
-
     /**
      * Initialize a new instance of {@link TextBox} class.
      *
@@ -26,8 +22,6 @@ public class TextBox extends WebElement {
      */
     public TextBox(AutomationInfo automationInfo, IByWeb selector) {
         super(automationInfo, selector);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
     }
 
     /**
@@ -39,9 +33,6 @@ public class TextBox extends WebElement {
      */
     public TextBox(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         super(automationInfo, selector, switchMechanism);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
-        this.switchMechanism = switchMechanism;
     }
 
     /**

@@ -10,10 +10,6 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class RadioButton extends WebElement {
 
-    private AutomationInfo automationInfo;
-    private IByWeb selector;
-    private IByWeb[] switchMechanism;
-
     /**
      * Initializes a new instance of the {@link RadioButton} class.
      *
@@ -22,8 +18,6 @@ public class RadioButton extends WebElement {
      */
     public RadioButton(AutomationInfo automationInfo, IByWeb selector) {
         super(automationInfo, selector);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
     }
 
     /**
@@ -35,9 +29,6 @@ public class RadioButton extends WebElement {
      */
     public RadioButton(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         super(automationInfo, selector, switchMechanism);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
-        this.switchMechanism = switchMechanism;
     }
 
     /**

@@ -8,10 +8,6 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class Tab extends WebElement {
 
-    private AutomationInfo automationInfo;
-    private IByWeb selector;
-    private IByWeb[] switchMechanism;
-
     /**
      * Creates a new instance of {@link Tab}.
      *
@@ -20,8 +16,6 @@ public class Tab extends WebElement {
      */
     public Tab(AutomationInfo automationInfo, IByWeb selector) {
         super(automationInfo, selector);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
     }
 
     /**
@@ -33,7 +27,5 @@ public class Tab extends WebElement {
      */
     public Tab(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         super(automationInfo, selector, switchMechanism);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
     }
 }

@@ -8,10 +8,6 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class ListItem extends WebElement {
 
-    private AutomationInfo automationInfo;
-    private IByWeb selector;
-    private IByWeb[] switchMechanism;
-
     /**
      * Initializes a new instance of {@link ListItem} class.
      *
@@ -20,8 +16,6 @@ public class ListItem extends WebElement {
      */
     public ListItem(AutomationInfo automationInfo, IByWeb selector) {
         super(automationInfo, selector);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
     }
 
     /**
@@ -33,8 +27,5 @@ public class ListItem extends WebElement {
      */
     public ListItem(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         super(automationInfo, selector, switchMechanism);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
-        this.switchMechanism = switchMechanism;
     }
 }

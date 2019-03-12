@@ -8,9 +8,6 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class Button extends WebElement {
 
-    private AutomationInfo automationInfo;
-    private IByWeb selector;
-
     /**
      * Creates a new instance of {@link Button}.
      *
@@ -19,8 +16,6 @@ public class Button extends WebElement {
      */
     public Button(AutomationInfo automationInfo, IByWeb selector) {
         super(automationInfo, selector);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
     }
 
     /**
@@ -32,7 +27,5 @@ public class Button extends WebElement {
      */
     public Button(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         super(automationInfo, selector, switchMechanism);
-        this.automationInfo = automationInfo;
-        this.selector = selector;
     }
 }
