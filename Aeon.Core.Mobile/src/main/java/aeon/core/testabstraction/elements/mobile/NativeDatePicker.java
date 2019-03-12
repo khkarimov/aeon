@@ -26,15 +26,6 @@ public class NativeDatePicker extends NativeAppElement {
     /**
      * Constructor.
      *
-     * @param selector The selector that identifies this element.
-     */
-    public NativeDatePicker(IByWeb selector) {
-        super(selector);
-    }
-
-    /**
-     * Constructor.
-     *
      * @param automationInfo  The automation info object to use.
      * @param selector        The selector that identifies this element.
      * @param switchMechanism The switchMechanism to use to find the element.

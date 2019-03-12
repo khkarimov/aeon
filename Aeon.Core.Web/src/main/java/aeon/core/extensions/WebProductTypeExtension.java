@@ -122,7 +122,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
                     break;
                 case "aeon.core.command.execution.commands.initialization.ICommandInitializer":
                     // switchMechanism is always null
-                    params[i] = parseICommandInitializer(null);
+                    params[i] = parseICommandInitializer((IByWeb[]) null);
                     j--;
                     break;
                 case "aeon.core.common.web.WebSelectOption":

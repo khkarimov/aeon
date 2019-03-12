@@ -35,16 +35,6 @@ public class WebElement extends Element {
 
     /**
      * Initializes a new instance of the {@link WebElement} class
-     * with {@link AutomationInfo} set to null.
-     *
-     * @param selector IBy selector that will identify the element.
-     */
-    public WebElement(IByWeb selector) {
-        this(null, selector);
-    }
-
-    /**
-     * Initializes a new instance of the {@link WebElement} class
      * with a switch mechanism.
      *
      * @param automationInfo  The AutomationInfo.
