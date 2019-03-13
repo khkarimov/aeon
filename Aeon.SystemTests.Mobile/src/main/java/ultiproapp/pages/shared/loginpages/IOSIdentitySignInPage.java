@@ -19,14 +19,14 @@ public class IOSIdentitySignInPage extends Page {
     /**
      * Constructs an iOS Identity Sign-in Page.
      *
-     * @param info Automation info
+     * @param automationInfo Automation info
      */
-    public IOSIdentitySignInPage(AutomationInfo info) {
+    public IOSIdentitySignInPage(AutomationInfo automationInfo) {
 
-        doneButton = new Button(info, ByMobile.accessibilityId("Done"));
-        usernameField = new TextBox(info, ByMobile.accessibilityId("Username"));
-        passwordField = new TextBox(info, ByMobile.accessibilityId("Password"));
-        signInButton = new Button(info, ByMobile.xpath("//XCUIElementTypeApplication/" +
+        doneButton = new Button(automationInfo, ByMobile.accessibilityId("Done"));
+        usernameField = new TextBox(automationInfo, ByMobile.accessibilityId("Username"));
+        passwordField = new TextBox(automationInfo, ByMobile.accessibilityId("Password"));
+        signInButton = new Button(automationInfo, ByMobile.xpath("//XCUIElementTypeApplication/" +
                 "XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/" +
                 "XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/" +
                 "XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/" +

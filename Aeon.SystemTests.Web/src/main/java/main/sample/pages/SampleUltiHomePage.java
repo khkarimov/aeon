@@ -18,11 +18,11 @@ public class SampleUltiHomePage extends Page {
     /**
      * Constructor.
      *
-     * @param info The automation info object to use.
+     * @param automationInfo The automation info object to use.
      */
-    public SampleUltiHomePage(AutomationInfo info) {
-        userField = new TextBox(info, By.cssSelector("#userName"));
-        passField = new TextBox(info, By.cssSelector("#password"));
-        loginButton = new Button(info, By.cssSelector("#login"));
+    public SampleUltiHomePage(AutomationInfo automationInfo) {
+        userField = new TextBox(automationInfo, By.cssSelector("#userName"));
+        passField = new TextBox(automationInfo, By.cssSelector("#password"));
+        loginButton = new Button(automationInfo, By.cssSelector("#login"));
     }
 }

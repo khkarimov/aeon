@@ -18,23 +18,23 @@ import java.util.Collection;
  */
 public class Browser {
 
-    private AutomationInfo info;
+    private AutomationInfo automationInfo;
     private String mainWindowHandle;
 
     /**
      * The constructor for the Browser given an AutomationInfo object.
      *
-     * @param info sets the info of the newly made Browser.
+     * @param automationInfo sets the automation info of the newly made Browser.
      */
-    public Browser(AutomationInfo info) {
-        this.info = info;
+    public Browser(AutomationInfo automationInfo) {
+        this.automationInfo = automationInfo;
     }
 
     /**
      * Function to accept an incoming alert.
      */
     public void acceptAlert() {
-        info.getCommandExecutionFacade().execute(info, new AcceptAlertCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new AcceptAlertCommand());
     }
 
     /**
@@ -43,14 +43,14 @@ public class Browser {
      * @param cookie The cookie to be added.
      */
     public void addCookie(IWebCookie cookie) {
-        info.getCommandExecutionFacade().execute(info, new AddCookieCommand(cookie));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new AddCookieCommand(cookie));
     }
 
     /**
      * Deletes all the cookies.
      */
     public void deleteAllCookies() {
-        info.getCommandExecutionFacade().execute(info, new DeleteAllCookiesCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DeleteAllCookiesCommand());
     }
 
     /**
@@ -59,14 +59,14 @@ public class Browser {
      * @param cookie The name of the cookie to be deleted.
      */
     public void deleteCookie(String cookie) {
-        info.getCommandExecutionFacade().execute(info, new DeleteCookieCommand(cookie));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DeleteCookieCommand(cookie));
     }
 
     /**
      * Dismisses an alert on a page.
      */
     public void dismissAlert() {
-        info.getCommandExecutionFacade().execute(info, new DismissAlertCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DismissAlertCommand());
     }
 
     /**
@@ -75,7 +75,7 @@ public class Browser {
      * @return A collection of all the cookies in the browser.
      */
     public Collection<IWebCookie> getAllCookies() {
-        return (Collection<IWebCookie>) info.getCommandExecutionFacade().execute(info, new GetAllCookiesCommand());
+        return (Collection<IWebCookie>) automationInfo.getCommandExecutionFacade().execute(automationInfo, new GetAllCookiesCommand());
     }
 
     /**
@@ -84,7 +84,7 @@ public class Browser {
      * @return The BrowserType for the current browser.
      */
     public BrowserType getBrowserType() {
-        return ((WebConfiguration) info.getConfiguration()).getBrowserType();
+        return ((WebConfiguration) automationInfo.getConfiguration()).getBrowserType();
     }
 
     /**
@@ -93,7 +93,7 @@ public class Browser {
      * @return The description of the alert dialog box.
      */
     public String getAlertText() {
-        return (String) info.getCommandExecutionFacade().execute(info, new GetAlertTextCommand());
+        return (String) automationInfo.getCommandExecutionFacade().execute(automationInfo, new GetAlertTextCommand());
     }
 
     /**
@@ -103,21 +103,21 @@ public class Browser {
      * @return The specified cookie.
      */
     public IWebCookie getCookie(String name) {
-        return (IWebCookie) info.getCommandExecutionFacade().execute(info, new GetCookieCommand(name));
+        return (IWebCookie) automationInfo.getCommandExecutionFacade().execute(automationInfo, new GetCookieCommand(name));
     }
 
     /**
      * Access the history of the browser to execute the Back function.
      */
     public void goBack() {
-        info.getCommandExecutionFacade().execute(info, new GoBackCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new GoBackCommand());
     }
 
     /**
      * Access the history of the browser to execute the Forward function.
      */
     public void goForward() {
-        info.getCommandExecutionFacade().execute(info, new GoForwardCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new GoForwardCommand());
     }
 
     /**
@@ -126,14 +126,14 @@ public class Browser {
      * @param url The URL the navigate to.
      */
     public void goToUrl(String url) {
-        mainWindowHandle = (String) info.getCommandExecutionFacade().execute(info, new GoToUrlCommand(url));
+        mainWindowHandle = (String) automationInfo.getCommandExecutionFacade().execute(automationInfo, new GoToUrlCommand(url));
     }
 
     /**
      * Maximizes the browser window.
      */
     public void maximize() {
-        info.getCommandExecutionFacade().execute(info, new MaximizeCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new MaximizeCommand());
     }
 
     /**
@@ -143,25 +143,25 @@ public class Browser {
      * @param value The value of the cookie.
      */
     public void modifyCookie(String name, String value) {
-        info.getCommandExecutionFacade().execute(info, new ModifyCookieCommand(name, value));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ModifyCookieCommand(name, value));
     }
 
     /**
      * Closes and terminates the active instances of the browser and WebDriver.
      */
     public void quit() {
-        if (info.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)) {
-            info.testSucceeded();
+        if (automationInfo.getConfiguration().getBoolean(Configuration.Keys.REPORTING, true)) {
+            automationInfo.testSucceeded();
         }
 
-        info.getCommandExecutionFacade().execute(info, new QuitCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new QuitCommand());
     }
 
     /**
      * Closes the currently focused browser window.
      */
     public void close() {
-        info.getCommandExecutionFacade().execute(info, new CloseCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new CloseCommand());
     }
 
 
@@ -169,7 +169,7 @@ public class Browser {
      * Refreshes the current window in the browser.
      */
     public void refresh() {
-        info.getCommandExecutionFacade().execute(info, new RefreshCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new RefreshCommand());
     }
 
     /**
@@ -178,21 +178,21 @@ public class Browser {
      * @param size The new size of the browser window based off the enumerable BrowserSize.
      */
     public void resize(BrowserSize size) {
-        info.getCommandExecutionFacade().execute(info, new ResizeCommand(size.toString()));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ResizeCommand(size.toString()));
     }
 
     /**
      * Scrolls to the top of the current page.
      */
     public void scrollToTop() {
-        info.getCommandExecutionFacade().execute(info, new ScrollToTopCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ScrollToTopCommand());
     }
 
     /**
      * Scrolls to the bottom of the current page.
      */
     public void scrollToEnd() {
-        info.getCommandExecutionFacade().execute(info, new ScrollToEndCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ScrollToEndCommand());
     }
 
     /**
@@ -201,7 +201,7 @@ public class Browser {
      * @param keys The values to send to the alert.
      */
     public void sendKeysToAlert(String keys) {
-        info.getCommandExecutionFacade().execute(info, new SendKeysToAlertCommand(keys));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SendKeysToAlertCommand(keys));
     }
 
     /**
@@ -217,7 +217,7 @@ public class Browser {
      * @param waitForAllPopupsToClose Boolean switch to wait for all popup windows to be closed before switching,
      */
     public void switchToMainWindow(Boolean waitForAllPopupsToClose) {
-        info.getCommandExecutionFacade().execute(info, new SwitchToMainWindowCommand(mainWindowHandle, waitForAllPopupsToClose));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwitchToMainWindowCommand(mainWindowHandle, waitForAllPopupsToClose));
     }
 
     /**
@@ -226,7 +226,7 @@ public class Browser {
      * @param title The title of the window to switch to
      */
     public void switchToWindowByTitle(String title) {
-        info.getCommandExecutionFacade().execute(info, new SwitchToWindowByTitleCommand(title));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwitchToWindowByTitleCommand(title));
     }
 
     /**
@@ -235,21 +235,21 @@ public class Browser {
      * @param url The URL of the window to switch to.
      */
     public void switchToWindowByUrl(String url) {
-        info.getCommandExecutionFacade().execute(info, new SwitchToWindowByUrlCommand(url));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwitchToWindowByUrlCommand(url));
     }
 
     /**
      * Asserts that an alert is not present on the current page.
      */
     public void verifyAlertExists() {
-        info.getCommandExecutionFacade().execute(info, new VerifyAlertExistsCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new VerifyAlertExistsCommand());
     }
 
     /**
      * Asserts that an alert is present on the current page.
      */
     public void verifyAlertNotExists() {
-        info.getCommandExecutionFacade().execute(info, new VerifyAlertNotExistsCommand());
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new VerifyAlertNotExistsCommand());
     }
 
     /**
@@ -258,7 +258,7 @@ public class Browser {
      * @param comparingText The expected description on the alert.
      */
     public void verifyAlertText(String comparingText) {
-        info.getCommandExecutionFacade().execute(info, new VerifyAlertTextCommand(comparingText));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new VerifyAlertTextCommand(comparingText));
     }
 
     /**
@@ -268,7 +268,7 @@ public class Browser {
      * @param caseSensitive Determine caseSensitive comparison
      */
     public void verifyAlertTextLike(String comparingText, boolean caseSensitive) {
-        info.getCommandExecutionFacade().execute(info, new VerifyAlertTextLikeCommand(comparingText, caseSensitive));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new VerifyAlertTextLikeCommand(comparingText, caseSensitive));
     }
 
     /**
@@ -277,7 +277,7 @@ public class Browser {
      * @param comparingTitle the title, as a string, to verify.
      */
     public void verifyTitle(String comparingTitle) {
-        info.getCommandExecutionFacade().execute(info, new VerifyTitleCommand(comparingTitle));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new VerifyTitleCommand(comparingTitle));
     }
 
     /**
@@ -286,7 +286,7 @@ public class Browser {
      * @param comparingURL the url, as a string, to compare.
      */
     public void verifyURL(String comparingURL) {
-        info.getCommandExecutionFacade().execute(info, new VerifyUrlCommand(comparingURL));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new VerifyUrlCommand(comparingURL));
     }
 
     /**
@@ -295,7 +295,7 @@ public class Browser {
      * @param windowTitle the title, as a string, to the test.
      */
     public void verifyWindowDoesNotExistByTitle(String windowTitle) {
-        info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByTitleCommand(windowTitle));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new WindowDoesNotExistByTitleCommand(windowTitle));
     }
 
     /**
@@ -304,7 +304,7 @@ public class Browser {
      * @param url the url, as a string, to test by the function.
      */
     public void verifyWindowDoesNotExistByUrl(String url) {
-        info.getCommandExecutionFacade().execute(info, new WindowDoesNotExistByUrlCommand(url));
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new WindowDoesNotExistByUrlCommand(url));
     }
 
     /**
@@ -313,8 +313,8 @@ public class Browser {
      * @param selector the selector for the element.
      */
     public void clickAllElementsCommand(IByWeb selector) {
-        info.getCommandExecutionFacade().execute(
-                info,
+        automationInfo.getCommandExecutionFacade().execute(
+                automationInfo,
                 new ClickAllElementsCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), new IByWeb[0])));

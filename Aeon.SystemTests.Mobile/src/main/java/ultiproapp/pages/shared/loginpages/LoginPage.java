@@ -24,14 +24,14 @@ public class LoginPage extends Page {
     /**
      * Constructs a Login Page.
      *
-     * @param info Automation info
+     * @param automationInfo Automation info
      */
-    public LoginPage(AutomationInfo info) {
-        usernameInputField = new TextBox(info, By.cssSelector("input[aria-labelledby=\"lbl-3\"]"));
-        passwordInputField = new TextBox(info, By.cssSelector("input[aria-labelledby=\"lbl-4\"]"));
-        signInButton = new Button(info, By.cssSelector("ion-button[data-automation=\"sign-in-button\"]"));
-        companyAccessCodeLabel = new Label(info, By.cssSelector(".login-graphic-footer .company-access-code"));
-        clearAccessCodeButton = new Button(info, By.cssSelector(".login-graphic-footer [data-automation=\"access-code-clear-icon\"]"));
-        supportLink = new Link(info, By.cssSelector(".login-graphic-footer button[class*=\"btn-support\"]"));
+    public LoginPage(AutomationInfo automationInfo) {
+        usernameInputField = new TextBox(automationInfo, By.cssSelector("input[aria-labelledby=\"lbl-3\"]"));
+        passwordInputField = new TextBox(automationInfo, By.cssSelector("input[aria-labelledby=\"lbl-4\"]"));
+        signInButton = new Button(automationInfo, By.cssSelector("ion-button[data-automation=\"sign-in-button\"]"));
+        companyAccessCodeLabel = new Label(automationInfo, By.cssSelector(".login-graphic-footer .company-access-code"));
+        clearAccessCodeButton = new Button(automationInfo, By.cssSelector(".login-graphic-footer [data-automation=\"access-code-clear-icon\"]"));
+        supportLink = new Link(automationInfo, By.cssSelector(".login-graphic-footer button[class*=\"btn-support\"]"));
     }
 }

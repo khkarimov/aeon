@@ -21,7 +21,7 @@ public class NewHireWizard extends Page {
      *
      * @param automationInfo The automation info object to use.
      */
-    public NewHireWizard(AutomationInfo automationInfo){
+    public NewHireWizard(AutomationInfo automationInfo) {
         // Pages
         personalPage = new PersonalPage(automationInfo);
         startPage = new StartPage(automationInfo);

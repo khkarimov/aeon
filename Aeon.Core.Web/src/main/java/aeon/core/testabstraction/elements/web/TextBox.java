@@ -14,34 +14,25 @@ import aeon.core.common.web.interfaces.IByWeb;
  */
 public class TextBox extends WebElement {
 
-    private AutomationInfo info;
-    private IByWeb selector;
-    private IByWeb[] switchMechanism;
-
     /**
      * Initialize a new instance of {@link TextBox} class.
      *
-     * @param info     The AutomationInfo.
-     * @param selector IBy selector that will identify the element
+     * @param automationInfo The automation info.
+     * @param selector       IBy selector that will identify the element.
      */
-    public TextBox(AutomationInfo info, IByWeb selector) {
-        super(info, selector);
-        this.info = info;
-        this.selector = selector;
+    public TextBox(AutomationInfo automationInfo, IByWeb selector) {
+        super(automationInfo, selector);
     }
 
     /**
      * Initializes a new instance of the {@link TextBox} class with a switch mechanism.
      *
-     * @param info            The AutomationInfo.
-     * @param selector        IBY selector that will identify the element.
+     * @param automationInfo  The automation info.
+     * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public TextBox(AutomationInfo info, IByWeb selector, IByWeb... switchMechanism) {
-        super(info, selector, switchMechanism);
-        this.info = info;
-        this.selector = selector;
-        this.switchMechanism = switchMechanism;
+    public TextBox(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+        super(automationInfo, selector, switchMechanism);
     }
 
     /**
@@ -50,7 +41,7 @@ public class TextBox extends WebElement {
      * @param value The new value to be set on the field.
      */
     public void set(String value) {
-        info.getCommandExecutionFacade().execute(info,
+        automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new SetCommand(
                         selector,
                         new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
@@ -62,7 +53,7 @@ public class TextBox extends WebElement {
      * Executes the clear command.
      */
     public void clear() {
-        info.getCommandExecutionFacade().execute(info, new ClearCommand(
+        automationInfo.getCommandExecutionFacade().execute(automationInfo, new ClearCommand(
                 this.selector,
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism)
         ));

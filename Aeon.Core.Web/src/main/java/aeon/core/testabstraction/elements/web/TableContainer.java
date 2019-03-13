@@ -24,7 +24,7 @@ public abstract class TableContainer<T extends Table> {
     public TableContainer(AutomationInfo automationInfo, IByWeb selector, T employeeTable) {
         this.rowBy = employeeTable;
 
-        this.rowBy.setContext(automationInfo, selector, null);
+        this.rowBy.setContext(automationInfo, selector, (IByWeb[]) null);
     }
 
     /**
