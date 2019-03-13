@@ -5,7 +5,7 @@ import aeon.core.common.interfaces.IBy;
 /**
  * The class for elements modeling.
  */
-public class Element extends ElementAssertions {
+public class Element {
 
     private IBy selector;
 

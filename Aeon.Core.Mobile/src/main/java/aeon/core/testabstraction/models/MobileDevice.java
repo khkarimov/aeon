@@ -102,7 +102,6 @@ public class MobileDevice extends Browser {
         try {
             handlePermissionDialog(accept);
         } catch (RuntimeException e) {
-            // TODO(PatrickA): Use more specific exception
             // Intentionally ignore missing dialog
         }
     }
