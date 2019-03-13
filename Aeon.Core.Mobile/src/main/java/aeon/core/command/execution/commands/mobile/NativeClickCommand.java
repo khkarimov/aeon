@@ -14,7 +14,7 @@ public class NativeClickCommand extends MobileWebControlCommand {
     /**
      * Clicks on an elements via coordinates.
      *
-     * @param selector The selector of the element to click on.
+     * @param selector              The selector of the element to click on.
      * @param webCommandInitializer The web command initializer to use.
      */
     public NativeClickCommand(IByWeb selector, WebCommandInitializer webCommandInitializer) {
@@ -23,9 +23,6 @@ public class NativeClickCommand extends MobileWebControlCommand {
 
     @Override
     protected void commandDelegate(IMobileDriver driver, WebControl control) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
         driver.mobileClick(control);
     }
 }

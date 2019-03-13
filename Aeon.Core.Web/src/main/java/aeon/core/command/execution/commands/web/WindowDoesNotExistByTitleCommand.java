@@ -26,9 +26,6 @@ public class WindowDoesNotExistByTitleCommand extends CommandWithReturn {
 
     @Override
     protected Object commandDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
         return ((IWebDriver) driver).windowDoesNotExistByTitle(windowTitle);
     }
 }

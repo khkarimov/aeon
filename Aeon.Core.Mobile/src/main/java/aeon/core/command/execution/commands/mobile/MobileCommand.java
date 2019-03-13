@@ -32,9 +32,6 @@ public abstract class MobileCommand extends Command {
      */
     @Override
     protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("Driver");
-        }
         driverDelegate((IMobileDriver) driver);
     }
 }

@@ -22,10 +22,6 @@ public class QuitCommand extends Command {
      */
     @Override
     protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
         driver.quit();
     }
 }

@@ -34,9 +34,6 @@ public class SwitchToWindowByTitleCommand extends CommandWithReturn {
      */
     @Override
     public Object commandDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
         return ((IWebDriver) driver).switchToWindowByTitle(title);
     }
 }
