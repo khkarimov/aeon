@@ -1,6 +1,6 @@
 package aeon.selenium.jquery;
 
-import aeon.core.common.helpers.QuadFunction;
+import aeon.selenium.QuadFunction;
 
 import java.time.Duration;
 

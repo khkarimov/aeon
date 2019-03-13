@@ -1057,15 +1057,15 @@ class AeonWebDriverTests {
     }
 
     @Test
-    void notVisible_verifyAdapterNotSelected() {
+    void notVisible_verifyAdapterNotVisible() {
 
         // Arrange
 
         // Act
-        aeonWebDriver.notSelected(webControl);
+        aeonWebDriver.notVisible(webControl);
 
         // Assert
-        verify(adapter, times(1)).notSelected(webControl);
+        verify(adapter, times(1)).notVisible(webControl);
     }
 
     @Test
