@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,11 +34,5 @@ public class RefreshCommandTests {
 
         //Assert
         verify(driver, times(1)).refresh();
-    }
-
-    @Test
-    public void driverNullThrowsException() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> refreshCommand.driverDelegate(null));
     }
 }

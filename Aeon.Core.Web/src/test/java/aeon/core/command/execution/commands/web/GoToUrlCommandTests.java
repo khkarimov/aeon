@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,11 +42,5 @@ public class GoToUrlCommandTests {
 
         //Assert
         verify(driver, times(1)).goToUrl(url);
-    }
-
-    @Test
-    public void testCommandDelegateNullDriver() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> goToUrlCommand.commandDelegate(null));
     }
 }

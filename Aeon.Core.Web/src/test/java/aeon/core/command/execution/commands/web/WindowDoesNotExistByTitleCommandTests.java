@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,19 +27,6 @@ public class WindowDoesNotExistByTitleCommandTests {
     @BeforeEach
     public void setup() {
         windowDoesNotExistByTitleCommand = new WindowDoesNotExistByTitleCommand(windowTitle);
-    }
-
-    @Test
-    public void IllegalArgumentExceptionDriverNull() {
-        // Arrange
-        Exception illegalArgumentException;
-
-        // Act
-        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> windowDoesNotExistByTitleCommand.commandDelegate(null));
-
-        // Assert
-        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
     @Test

@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,11 +37,5 @@ public class GetScreenshotCommandTests {
 
         //Assert
         verify(driver, times(1)).getScreenshot();
-    }
-
-    @Test
-    public void testCommandDelegateNullDriver() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> getScreenshotCommand.commandDelegate(null));
     }
 }

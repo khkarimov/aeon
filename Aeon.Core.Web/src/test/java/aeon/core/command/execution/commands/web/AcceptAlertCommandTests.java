@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,11 +34,5 @@ public class AcceptAlertCommandTests {
 
         //Assert
         verify(driver, times(1)).acceptAlert();
-    }
-
-    @Test
-    public void testDriverDelegateNullDriver() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> acceptAlertCommand.driverDelegate(null));
     }
 }
