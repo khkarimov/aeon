@@ -1,6 +1,7 @@
 package aeon.selenium.appium;
 
 import aeon.core.common.AeonConfigKey;
+import aeon.core.common.mobile.AppType;
 import aeon.core.framework.abstraction.drivers.AeonMobileDriver;
 import aeon.selenium.SeleniumConfiguration;
 import org.slf4j.Logger;
@@ -76,6 +77,15 @@ public class AppiumConfiguration extends SeleniumConfiguration {
         } catch (IOException e) {
             log.error("appium.properties resource could not be read");
             throw e;
+        }
+    }
+
+    @Override
+    public void setBrowserType(String browserType) {
+        try {
+            this.browserType = AppType.valueOf(browserType);
+        } catch (IllegalArgumentException e) {
+            super.setBrowserType(browserType);
         }
     }
 }

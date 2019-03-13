@@ -86,6 +86,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
     protected BrowserSize fallbackBrowserSize;
+    protected URL finalSeleniumHubUrl;
 
     /**
      * Factory method that creates a Selenium adapter for Aeon.core.
@@ -111,7 +112,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
-        boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
         proxyLocation = configuration.getString(SeleniumConfiguration.Keys.PROXY_LOCATION, "");
         deviceName = configuration.getString(SeleniumConfiguration.Keys.DEVICE_NAME, "");
         platformVersion = configuration.getString(SeleniumConfiguration.Keys.PLATFORM_VERSION, "");
@@ -141,6 +141,19 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         javaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5));
         asyncJavaScriptFlowExecutor = new SeleniumCheckInjectJQueryExecutor(new SeleniumJavaScriptFinalizerFactory(), Duration.ofSeconds(5), true);
 
+        isRemote = seleniumHubUrl != null;
+        finalSeleniumHubUrl = seleniumHubUrl;
+
+        prepareBrowser();
+
+        //Let plugins know that the product was successfully launched
+        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
+        for (ISeleniumExtension extension : extensions) {
+            extension.onAfterLaunch(configuration, driver);
+        }
+    }
+
+    protected void prepareBrowser() {
         String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.CHROME_DIRECTORY, null);
         String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
         String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
@@ -148,9 +161,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String operaDirectory = configuration.getString(SeleniumConfiguration.Keys.OPERA_DIRECTORY, null);
         String safariDirectory = "/usr/bin/safaridriver";
         long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-
-        isRemote = seleniumHubUrl != null;
-        URL finalSeleniumHubUrl = seleniumHubUrl;
 
         setLoggingConfiguration();
 
@@ -208,7 +218,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                                 loggingLevel = "DEBUG";
                         }
                         String finalLoggingLevel = loggingLevel;
-                        InternetExplorerOptions ieOptions = getInternetExplorerOptions(ensureCleanEnvironment, proxyLocation);
+                        InternetExplorerOptions ieOptions = getInternetExplorerOptions(
+                                configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true),
+                                proxyLocation);
                         System.setProperty("webdriver.ie.driver", ieDirectory);
                         if (StringUtils.isBlank(loggingPath)) {
                             driver = new InternetExplorerDriver(ieOptions);
@@ -295,11 +307,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             default:
                 throw new ConfigurationException("BrowserType", "configuration",
                         String.format("%1$s is not a supported browser", browserType));
-        }
-        //Let plugins know that the product was successfully launched
-        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
-        for (ISeleniumExtension extension : extensions) {
-            extension.onAfterLaunch(configuration, driver);
         }
     }
 

@@ -6,16 +6,11 @@ import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
-import aeon.core.common.mobile.AppType;
-import aeon.core.common.web.BrowserType;
-import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
-import aeon.core.testabstraction.product.WebConfiguration;
 import aeon.selenium.LegacyChromeOptions;
 import aeon.selenium.SeleniumAdapterFactory;
-import aeon.selenium.SeleniumConfiguration;
 import aeon.selenium.extensions.ISeleniumExtension;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -28,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
@@ -70,9 +64,24 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     protected void prepare(AppiumConfiguration configuration) {
         // super.prepare(configuration);
 
-        this.configuration = configuration;
-        configuration.setBrowserType(AppType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "")));
-        this.browserType = configuration.getBrowserType();
+//        this.configuration = configuration;
+//
+//        boolean valueExists = false;
+//
+//        for (AppType type : AppType.values()) {
+//            if (type.getKey().equals(configuration.getString(WebConfiguration.Keys.BROWSER, ""))) {
+//                valueExists = true;
+//            }
+//        }
+//
+//        if (!valueExists) {
+//            super.prepare(configuration);
+//            return;
+//        }
+
+//        configuration.setBrowserType(configuration.getString(WebConfiguration.Keys.BROWSER, ""));
+//        configuration.setBrowserType(AppType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "")));
+//        this.browserType = configuration.getBrowserType();
 
 //        description = configuration.getString(AppiumConfiguration.Keys.DEVICE_DESCRIPTION, "");
         platformVersion = configuration.getString(AppiumConfiguration.Keys.PLATFORM_VERSION, "");
@@ -80,24 +89,34 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         appPackage = configuration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(AppiumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(AppiumConfiguration.Keys.DRIVER_CONTEXT, "");
+
+//        seleniumHubUrl = null;
+
+//        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+//        if (StringUtils.isNotBlank(hubUrlString)) {
+//            try {
+//                if (!hubUrlString.endsWith("/wd/hub")) {
+//                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
+//                }
+//                seleniumHubUrl = new URL(hubUrlString);
+//            } catch (MalformedURLException e) {
+//                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
+//                throw new AeonLaunchException(e);
+//            }
+//        }
+
+//        URL finalSeleniumHubUrl = seleniumHubUrl;
 //
-        seleniumHubUrl = null;
+//        //Let plugins know that the product was successfully launched
+//        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
+//        for (ISeleniumExtension extension : extensions) {
+//            extension.onAfterLaunch(configuration, driver);
+//        }
+        super.prepare(configuration);
+    }
 
-        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
-        if (StringUtils.isNotBlank(hubUrlString)) {
-            try {
-                if (!hubUrlString.endsWith("/wd/hub")) {
-                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
-                }
-                seleniumHubUrl = new URL(hubUrlString);
-            } catch (MalformedURLException e) {
-                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-                throw new AeonLaunchException(e);
-            }
-        }
-
-        URL finalSeleniumHubUrl = seleniumHubUrl;
-
+    @Override
+    protected void prepareBrowser() {
         switch (browserType.getKey()) {
             case "IOSHybridApp":
                 if (finalSeleniumHubUrl == null) {
@@ -123,14 +142,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                 break;
 
             default:
-                throw new ConfigurationException("BrowserType", "configuration",
-                        String.format("%1$s is not a supported browser", browserType));
-        }
-
-        //Let plugins know that the product was successfully launched
-        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
-        for (ISeleniumExtension extension : extensions) {
-            extension.onAfterLaunch(configuration, driver);
+                super.prepareBrowser();
         }
     }
 

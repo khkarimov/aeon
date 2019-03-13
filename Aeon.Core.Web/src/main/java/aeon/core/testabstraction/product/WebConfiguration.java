@@ -1,6 +1,7 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.AeonConfigKey;
+import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
@@ -21,7 +22,7 @@ public class WebConfiguration extends Configuration {
 
     private Logger log = LoggerFactory.getLogger(WebConfiguration.class);
 
-    private IBrowserType browserType;
+    protected IBrowserType browserType;
 
     /**
      * Configuration keys for settings specific to web products.
@@ -78,6 +79,19 @@ public class WebConfiguration extends Configuration {
         this.browserType = browserType;
     }
 
+    /**
+     * Set the type of browser.
+     *
+     * @param browserType The {@link IBrowserType} for the configuration.
+     */
+    public void setBrowserType(String browserType) {
+        try {
+            this.browserType = BrowserType.valueOf(browserType);
+        } catch (IllegalArgumentException e) {
+            throw new ConfigurationException("BrowserType", "configuration",
+                    String.format("%1$s is not a supported browser", browserType));
+        }
+    }
 
     @Override
     protected List<AeonConfigKey> getConfigurationFields() {
