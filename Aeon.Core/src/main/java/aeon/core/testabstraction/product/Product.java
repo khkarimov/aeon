@@ -22,15 +22,6 @@ public abstract class Product {
     }
 
     /**
-     * Constructor for Product using automationInfo.
-     *
-     * @param automationInfo The automationInfo to be added.
-     */
-    protected Product(AutomationInfo automationInfo) {
-        this.automationInfo = automationInfo;
-    }
-
-    /**
      * Gets the capability type from a Capability enum.
      *
      * @return A capability enum.
