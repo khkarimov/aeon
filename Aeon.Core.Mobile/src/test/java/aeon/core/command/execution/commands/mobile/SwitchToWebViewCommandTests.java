@@ -1,6 +1,5 @@
 package aeon.core.command.execution.commands.mobile;
 
-
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.drivers.IMobileDriver;
 import org.junit.jupiter.api.Test;
