@@ -16,7 +16,6 @@ import static org.mockito.Mockito.verify;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class NativeSelectCommandTests {
 
-
     private NativeSelectCommand command;
 
     @Mock
