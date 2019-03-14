@@ -15,9 +15,9 @@ import org.mockito.quality.Strictness;
 
 import java.util.function.Consumer;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -42,6 +42,28 @@ public class LockCommandTests {
     }
 
     @Test
+    public void firstConstructor_IsBeingInstantiated_ShouldBeDefinedAndNotNull() {
+        //Arrange
+        command = new LockCommand();
+
+        //Act
+
+        //Assert
+        assertNotNull(command);
+    }
+
+    @Test
+    public void secondConstructor_IsBeingInstantiated_ShouldBeDefinedAndNotNull() {
+        //Arrange
+        command = new LockCommand(1);
+
+        //Act
+
+        //Assert
+        assertNotNull(command);
+    }
+
+    @Test
     public void notVisibleCommand_CallsExecute() {
         //Arrange
 
@@ -51,5 +73,44 @@ public class LockCommandTests {
 
         //Assert
         verify(driver, times(1)).mobileLock();
+    }
+
+    @Test
+    public void driverDelegate_ZeroSecondsViaFirstConstructor_DriverShouldLockMobileNoParameters() {
+        //Arrange
+
+        //Act
+        command.driverDelegate(driver);
+
+        //Assert
+        verify(driver, times(1)).mobileLock();
+    }
+
+    @Test
+    public void driverDelegate_ZeroSecondsViaSecondConstructor_DriverShouldLockMobileNoParameters() {
+        //Arrange
+        int lockTimeSeconds = 0;
+        command = new LockCommand(lockTimeSeconds);
+
+        //Act
+        command.driverDelegate(driver);
+
+        //Assert
+        verify(driver, times(1)).mobileLock();
+        verify(driver, times(0)).mobileLock(lockTimeSeconds);
+    }
+
+    @Test
+    public void driverDelegate_TwoSecondLockTime_DriverShouldLockMobileForLockTime() {
+        //Arrange
+        int lockTimeSeconds = 2;
+        command = new LockCommand(lockTimeSeconds);
+
+        //Act
+        command.driverDelegate(driver);
+
+        //Assert
+        verify(driver, times(1)).mobileLock(lockTimeSeconds);
+        verify(driver, times(0)).mobileLock();
     }
 }

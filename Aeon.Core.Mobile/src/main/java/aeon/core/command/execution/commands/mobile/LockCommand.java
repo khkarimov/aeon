@@ -20,6 +20,7 @@ public class LockCommand extends MobileCommand {
 
     /**
      * Initializes a new instance of the {@link LockCommand} class.
+     *
      * @param seconds Number of seconds the mobile device screen is locked for.
      */
     public LockCommand(int seconds) {
