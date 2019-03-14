@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.mobile;
 
 import aeon.core.framework.abstraction.drivers.IMobileDriver;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,19 +19,27 @@ class CheckNotificationDescriptionCommandTest {
 
     private CheckNotificationDescriptionCommand checkNotificationDescriptionCommand;
 
-    @BeforeEach
-    public void setUp() {
-        this.checkNotificationDescriptionCommand = new CheckNotificationDescriptionCommand("description");
-    }
-
     @Test
     public void driverDelegate_happyPath_callsRecentNotifcationDescriptionIs() {
         // Arrange
 
         // Act
+        this.checkNotificationDescriptionCommand = new CheckNotificationDescriptionCommand("description");
         checkNotificationDescriptionCommand.driverDelegate(iMobileDriverMock);
 
         // Assert
         verify(iMobileDriverMock, times(1)).recentNotificationDescriptionIs("description");
+    }
+
+    @Test
+    public void driverDelegate_nullDescription_recentNotiicationDescriptionIsNull() {
+        // Arrange
+
+        // Act
+        this.checkNotificationDescriptionCommand = new CheckNotificationDescriptionCommand(null);
+        checkNotificationDescriptionCommand.driverDelegate(iMobileDriverMock);
+
+        // Assert
+        verify(iMobileDriverMock, times(1)).recentNotificationDescriptionIs(null);
     }
 }
