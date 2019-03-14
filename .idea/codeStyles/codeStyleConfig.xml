@@ -1,5 +1,6 @@
 <component name="ProjectCodeStyleConfiguration">
   <state>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
+    <option name="PREFERRED_PROJECT_CODE_STYLE" value="PROJECT_RELATIVE:$PRJ_DIR$/checkstyle.xml:Aeon style rules" />
   </state>
 </component>
