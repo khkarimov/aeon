@@ -85,12 +85,15 @@ public class WebConfiguration extends Configuration {
      * @param browserType The {@link IBrowserType} for the configuration.
      */
     public void setBrowserType(String browserType) {
-        try {
-            this.browserType = BrowserType.valueOf(browserType);
-        } catch (IllegalArgumentException e) {
-            throw new ConfigurationException("BrowserType", "configuration",
-                    String.format("%1$s is not a supported browser", browserType));
+        for (BrowserType browser : BrowserType.values()) {
+            if (browser.getKey().equals(browserType)) {
+                this.browserType = BrowserType.valueOf(browserType);
+                return;
+            }
         }
+
+        throw new ConfigurationException("BrowserType", "configuration",
+                String.format("%1$s is not a supported browser", browserType));
     }
 
     @Override

@@ -60,7 +60,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     protected WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
     private IJavaScriptFlowExecutor asyncJavaScriptExecutor;
-    private boolean moveMouseToOrigin;
     protected IBrowserType browserType;
     private static Logger log = LoggerFactory.getLogger(SeleniumAdapter.class);
     private boolean isRemote;
@@ -74,8 +73,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param seleniumWebDriver       The driver for the adapter.
      * @param javaScriptExecutor      The javaScript executor for the adapter.
      * @param asyncJavaScriptExecutor The asynchronous javaScript executor for the adapter.
-     * @param moveMouseToOrigin       A boolean indicating whether or not the mouse will return to the origin
-     *                                (top left corner of the browser window) before executing every action.
      * @param browserType             The browser type for the adapter.
      * @param fallbackBrowserSize     The size the browser will be maximized to.
      * @param isRemote                Whether we are testing remotely or locally.
@@ -83,11 +80,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param seleniumLogsDirectory   The path to the directory for Selenium Logs
      * @param loggingPreferences      Preferences which contain which Selenium log types to enable
      */
-    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, boolean moveMouseToOrigin, IBrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
+    public SeleniumAdapter(WebDriver seleniumWebDriver, IJavaScriptFlowExecutor javaScriptExecutor, IJavaScriptFlowExecutor asyncJavaScriptExecutor, IBrowserType browserType, BrowserSize fallbackBrowserSize, boolean isRemote, URL seleniumHubUrl, String seleniumLogsDirectory, LoggingPreferences loggingPreferences) {
         this.javaScriptExecutor = javaScriptExecutor;
         this.asyncJavaScriptExecutor = asyncJavaScriptExecutor;
         this.webDriver = seleniumWebDriver;
-        this.moveMouseToOrigin = moveMouseToOrigin;
         this.browserType = browserType;
         this.isRemote = isRemote;
         this.seleniumHubUrl = seleniumHubUrl;
@@ -1052,7 +1048,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             wrappedClick(element, new ArrayList<>(list));
         } else {*/
         try {
-            click(element, moveMouseToOrigin);
+            click(element);
         } catch (org.openqa.selenium.ElementNotVisibleException e) {
             throw new ElementNotVisibleException(element.getSelector());
         }

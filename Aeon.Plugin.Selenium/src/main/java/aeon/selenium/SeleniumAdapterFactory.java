@@ -11,7 +11,6 @@ import aeon.core.common.helpers.Process;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserSize;
-import aeon.core.common.web.BrowserType;
 import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
@@ -80,7 +79,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected WebDriver driver;
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected JavaScriptFlowExecutor asyncJavaScriptFlowExecutor;
-    protected boolean moveMouseToOrigin;
     protected boolean isRemote;
     protected URL seleniumHubUrl;
     protected String seleniumLogsDirectory;
@@ -97,7 +95,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private IAdapter create(SeleniumConfiguration configuration) {
         prepare(configuration);
 
-        return new SeleniumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new SeleniumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -108,7 +106,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected void prepare(SeleniumConfiguration configuration) {
         //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
-        configuration.setBrowserType(BrowserType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome")));
+        configuration.setBrowserType(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome"));
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
@@ -432,14 +430,10 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
                 }
-//                if (!description.isEmpty()) {
-//                    desiredCapabilities.setCapability("description");
-//                }
 
                 desiredCapabilities.setCapability("platformName", "iOS");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
                 desiredCapabilities.setCapability("browserName", "mobileSafari");
-//                desiredCapabilities.setCapability("automationName", configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, ""));
                 desiredCapabilities.setCapability("deviceName", deviceName);
                 desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
                 break;
@@ -449,9 +443,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
                 }
-//                if (!description.isEmpty()) {
-//                    desiredCapabilities.setCapability("description", description);
-//                }
 
                 desiredCapabilities.setCapability("platformName", "Android");
                 desiredCapabilities.setCapability("platformVersion", platformVersion);
@@ -594,15 +585,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         setLoggingCapabilities(chromeOptions);
-
-//        // DS - This is some ugly stuff. Couldn't find a better way...
-//        chromeOptions.setExperimentalOption("pref", new HashMap<String, Object>() {{
-//            put("profile.content_settings.pattern_pairs.*,*.multiple-automatic-downloads", 1);
-//        }} );
-
-        /*chromeOptionsMap.put("excludedSwitches", new ArrayList<String>() {{
-            add("test-type");
-        }});*/
 
         return chromeOptions;
     }

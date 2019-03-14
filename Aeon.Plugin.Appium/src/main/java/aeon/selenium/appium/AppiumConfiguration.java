@@ -22,6 +22,7 @@ public class AppiumConfiguration extends SeleniumConfiguration {
      * Keys relevant to the Appium Configuration.
      */
     public enum Keys implements AeonConfigKey {
+
         APP("aeon.appium.app"),
         DEVICE_NAME("aeon.appium.device_name"),
         PLATFORM_VERSION("aeon.appium.platform_version"),
@@ -82,10 +83,13 @@ public class AppiumConfiguration extends SeleniumConfiguration {
 
     @Override
     public void setBrowserType(String browserType) {
-        try {
-            this.browserType = AppType.valueOf(browserType);
-        } catch (IllegalArgumentException e) {
-            super.setBrowserType(browserType);
+        for (AppType app : AppType.values()) {
+            if (app.getKey().equals(browserType)) {
+                this.browserType = app;
+                return;
+            }
         }
+
+        super.setBrowserType(browserType);
     }
 }

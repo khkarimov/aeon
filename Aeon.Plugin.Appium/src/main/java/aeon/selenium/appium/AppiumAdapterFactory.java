@@ -37,7 +37,6 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     private AppiumConfiguration configuration;
     private String app;
     private String deviceName;
-    private String description;
     private String platformVersion;
     private String driverContext;
     private String appPackage;
@@ -53,7 +52,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     public IAdapter create(AppiumConfiguration configuration) {
         prepare(configuration);
 
-        return new AppiumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, moveMouseToOrigin, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
+        return new AppiumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
 
     /**
@@ -62,56 +61,14 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
      * @param configuration The configuration of the adapter.
      */
     protected void prepare(AppiumConfiguration configuration) {
-        // super.prepare(configuration);
+        this.configuration = configuration;
 
-//        this.configuration = configuration;
-//
-//        boolean valueExists = false;
-//
-//        for (AppType type : AppType.values()) {
-//            if (type.getKey().equals(configuration.getString(WebConfiguration.Keys.BROWSER, ""))) {
-//                valueExists = true;
-//            }
-//        }
-//
-//        if (!valueExists) {
-//            super.prepare(configuration);
-//            return;
-//        }
-
-//        configuration.setBrowserType(configuration.getString(WebConfiguration.Keys.BROWSER, ""));
-//        configuration.setBrowserType(AppType.valueOf(configuration.getString(WebConfiguration.Keys.BROWSER, "")));
-//        this.browserType = configuration.getBrowserType();
-
-//        description = configuration.getString(AppiumConfiguration.Keys.DEVICE_DESCRIPTION, "");
         platformVersion = configuration.getString(AppiumConfiguration.Keys.PLATFORM_VERSION, "");
         app = configuration.getString(AppiumConfiguration.Keys.APP, "");
         appPackage = configuration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "");
         deviceName = configuration.getString(AppiumConfiguration.Keys.DEVICE_NAME, "");
         driverContext = configuration.getString(AppiumConfiguration.Keys.DRIVER_CONTEXT, "");
 
-//        seleniumHubUrl = null;
-
-//        String hubUrlString = configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
-//        if (StringUtils.isNotBlank(hubUrlString)) {
-//            try {
-//                if (!hubUrlString.endsWith("/wd/hub")) {
-//                    throw (new MalformedURLException("This is not a valid Selenium hub URL. It should end with \"/wd/hub\""));
-//                }
-//                seleniumHubUrl = new URL(hubUrlString);
-//            } catch (MalformedURLException e) {
-//                log.error("MalformedURLException for the selenium grid URL " + e.getMessage());
-//                throw new AeonLaunchException(e);
-//            }
-//        }
-
-//        URL finalSeleniumHubUrl = seleniumHubUrl;
-//
-//        //Let plugins know that the product was successfully launched
-//        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
-//        for (ISeleniumExtension extension : extensions) {
-//            extension.onAfterLaunch(configuration, driver);
-//        }
         super.prepare(configuration);
     }
 
@@ -229,9 +186,6 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
                 }
-//                if (!description.isEmpty()) {
-//                    desiredCapabilities.setCapability("description", description);
-//                }
                 if (!app.isEmpty()) {
                     desiredCapabilities.setCapability("app", app);
                 }
@@ -260,9 +214,6 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                 // Appium
                 if (!deviceName.isEmpty()) {
                     desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!description.isEmpty()) {
-                    desiredCapabilities.setCapability("description", description);
                 }
 
                 desiredCapabilities.setCapability("platformName", "Android");
