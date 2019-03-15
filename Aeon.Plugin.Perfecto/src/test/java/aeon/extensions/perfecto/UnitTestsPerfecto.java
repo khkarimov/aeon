@@ -2,7 +2,6 @@ package aeon.extensions.perfecto;
 
 import aeon.core.testabstraction.product.Configuration;
 import aeon.selenium.SeleniumConfiguration;
-import aeon.selenium.appium.AppiumConfiguration;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -126,7 +125,7 @@ public class UnitTestsPerfecto {
     public void test_onAfterLaunch_OK() {
         //Arrange
         when(spyAeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(true);
-        when(spyAeonConfiguration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "")).thenReturn("test_appPackage");
+        when(spyAeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("test_appPackage");
         aDriver = mock(AndroidDriver.class);
 
         //Act
@@ -140,7 +139,7 @@ public class UnitTestsPerfecto {
     public void test_onAfterLaunch_NotCleanEnvironment() {
         //Arrange
         when(spyAeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(false);
-        when(spyAeonConfiguration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "")).thenReturn("test_appPackage");
+        when(spyAeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("test_appPackage");
         aDriver = mock(AndroidDriver.class);
 
         //Act
@@ -154,7 +153,7 @@ public class UnitTestsPerfecto {
     public void test_onAfterLaunch_NoAppPackage() {
         //Arrange
         when(spyAeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(true);
-        when(spyAeonConfiguration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "")).thenReturn("");
+        when(spyAeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("");
         aDriver = mock(AndroidDriver.class);
 
         //Act
