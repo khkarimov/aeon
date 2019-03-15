@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -315,20 +314,8 @@ public class SeleniumElement extends WebControl {
     /**
      * Clicks this element.
      * Uniquely identify the web element.
-     *
-     * @param moveMouseToOrigin The move Mouse To Origin.
      */
-    public final void click(boolean moveMouseToOrigin) {
-        // TODO(DionnyS): Ensure this works in a grid instance
-        if (moveMouseToOrigin) {
-            try {
-                Robot robot = new Robot();
-                robot.mouseMove(0, 0);
-            } catch (AWTException e) {
-                log.error("Error moving mouse to origin", e);
-            }
-        }
-
+    public final void click() {
         log.trace("WebElement.click();");
 
         underlyingWebElement.click();

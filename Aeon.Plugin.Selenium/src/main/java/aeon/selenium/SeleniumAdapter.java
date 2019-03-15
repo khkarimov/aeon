@@ -3,10 +3,10 @@ package aeon.selenium;
 import aeon.core.common.CompareType;
 import aeon.core.common.ComparisonOption;
 import aeon.core.common.KeyboardKey;
-import aeon.core.common.exceptions.*;
 import aeon.core.common.exceptions.ElementNotVisibleException;
 import aeon.core.common.exceptions.NoSuchElementException;
 import aeon.core.common.exceptions.NoSuchWindowException;
+import aeon.core.common.exceptions.*;
 import aeon.core.common.helpers.*;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.common.web.*;
@@ -19,9 +19,9 @@ import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.testabstraction.product.AeonTestExecution;
 import aeon.selenium.jquery.IJavaScriptFlowExecutor;
 import aeon.selenium.jquery.SeleniumScriptExecutor;
-import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -42,8 +42,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
@@ -841,16 +841,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         webDriver.manage().window().setSize(new Dimension(size.width, size.height));
     }
 
-    /**
-     * Clicks on a web control.
-     *
-     * @param element           The element to click on.
-     * @param moveMouseToOrigin Whether to move the mouse to the top left corner before clicking or not.
-     */
-    protected void click(WebControl element, boolean moveMouseToOrigin) {
-        ((SeleniumElement) element).click(moveMouseToOrigin);
-    }
-
     @Override
     public void scrollElementIntoView(WebControl element) {
         scrollElementIntoView(element.getSelector());
@@ -1030,29 +1020,11 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The element to perform the click on.
      */
     public void click(WebControl element) {
-        // TODO(patricka) Check whether the wrapped click is still necessary.
-        // check if wrapped (Might affect three browsers)
-        /*String script = String.format(
-                "var rects = %1$s[0].getClientRects(); return rects.length;", element.getSelector().toJQuery());
-
-        long rectsLength = (long) executeScript(script);
-
-        if (rectsLength > 1) {
-            script = String.format(
-                    "var rects = %1$s[0].getClientRects(); var arr = [rects[0].left, rects[0].top, rects[0].right, rects[0].bottom]; return arr;",
-                    element.getSelector().toJQuery());
-
-            Collection<Object> list = (Collection<Object>) executeScript(script);
-
-            // (abstract/virtual)<--(depends on whether the class is to be made abstract or not) method to define the way the wrapping should be handled per browser
-            wrappedClick(element, new ArrayList<>(list));
-        } else {*/
         try {
-            click(element);
+            ((SeleniumElement) element).click();
         } catch (org.openqa.selenium.ElementNotVisibleException e) {
             throw new ElementNotVisibleException(element.getSelector());
         }
-        //}
     }
 
     // Linked to selenium issue https://code.google.com/p/selenium/issues/detail?id=6702 and https://code.google.com/p/selenium/issues/detail?id=4618

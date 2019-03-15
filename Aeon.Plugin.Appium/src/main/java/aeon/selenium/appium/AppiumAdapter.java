@@ -399,7 +399,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 }
             } catch (NoSuchElementException err) {
                 WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
-                click(yearLabel, false);
+                click(yearLabel);
             }
         }
         return false;
@@ -436,7 +436,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     private void setYearOnAndroidDatePicker(int desiredYear) {
         WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
-        click(yearLabel, false);
+        click(yearLabel);
         int currentYear = Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText());
         swipeAndCheckForYear(currentYear, desiredYear);
     }
@@ -464,12 +464,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         if (currentMonth > desiredMonth) {
             for (int i = 0; i < currentMonth - desiredMonth; i++) {
                 WebControl previousMonth = findElement(ByMobile.accessibilityId("Previous month"), false);
-                click(previousMonth, false);
+                click(previousMonth);
             }
         } else {
             for (int i = 0; i < desiredMonth - currentMonth; i++) {
                 WebControl nextMonth = findElement(ByMobile.accessibilityId("Next month"), false);
-                click(nextMonth, false);
+                click(nextMonth);
             }
         }
     }
@@ -481,9 +481,9 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             switchToNativeAppContext();
             setMonthOnAndroidDatePicker(date);
             WebControl label = findElement(ByMobile.accessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))), false);
-            click(label, false);
+            click(label);
             WebControl label1 = findElement(ByMobile.id("android:id/button1"), false);
-            click(label1, false);
+            click(label1);
             switchToWebViewContext();
         } else {
             switchToNativeAppContext();
@@ -502,13 +502,13 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         if (browserType == AppType.ANDROID_HYBRID_APP) {
             switchToNativeAppContext();
             IByMobile selector = ByMobile.xpath(String.format("//android.widget.CheckedTextView[@text='%s']", value));
-            click(findElement(selector, false), false);
+            click(findElement(selector, false));
             switchToWebViewContext();
         } else {
             switchToNativeAppContext();
             WebControl element = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
             ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(value);
-            click(findElement(ByMobile.accessibilityId("Done"), false), false);
+            click(findElement(ByMobile.accessibilityId("Done"), false));
             switchToWebViewContext();
         }
     }
@@ -567,14 +567,14 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         if (accept) {
             if (browserType == AppType.ANDROID_HYBRID_APP) {
                 SeleniumElement element = (SeleniumElement) findElement(ByMobile.id("com.android.packageinstaller:id/permission_allow_button"));
-                element.click(false);
+                element.click();
             } else {
                 acceptAlert();
             }
         } else {
             if (browserType == AppType.ANDROID_HYBRID_APP) {
                 SeleniumElement element = (SeleniumElement) findElement(ByMobile.id("com.android.packageinstaller:id/permission_deny_button"));
-                element.click(false);
+                element.click();
             } else {
                 dismissAlert();
             }
@@ -692,7 +692,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     public final void click(WebControl element) {
         if (element.getSelector() instanceof IByMobile) {
             switchToNativeAppContext();
-            click(element, false);
+            super.click(element);
             switchToWebViewContext();
 
             return;
