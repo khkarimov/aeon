@@ -86,7 +86,7 @@ public class WebConfiguration extends Configuration {
      */
     public void setBrowserType(String browserType) {
         for (BrowserType browser : BrowserType.values()) {
-            if (browser.getKey().equals(browserType)) {
+            if (browser.getKey().equalsIgnoreCase(browserType)) {
                 this.browserType = browser;
                 return;
             }

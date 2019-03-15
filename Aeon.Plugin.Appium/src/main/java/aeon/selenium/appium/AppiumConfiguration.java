@@ -84,7 +84,7 @@ public class AppiumConfiguration extends SeleniumConfiguration {
     @Override
     public void setBrowserType(String browserType) {
         for (AppType app : AppType.values()) {
-            if (app.getKey().equals(browserType)) {
+            if (app.getKey().equalsIgnoreCase(browserType)) {
                 this.browserType = app;
                 return;
             }
