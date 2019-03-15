@@ -155,154 +155,36 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      * Prepares browser for testing.
      */
     protected void prepareBrowser() {
-        String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.CHROME_DIRECTORY, null);
-        String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
-        String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
-        String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
-        String operaDirectory = configuration.getString(SeleniumConfiguration.Keys.OPERA_DIRECTORY, null);
-        String safariDirectory = "/usr/bin/safaridriver";
-        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
-
         setLoggingConfiguration();
 
         switch (browserType.getKey()) {
             case "Firefox":
-                driver = getDriver(() -> {
-                    if (isRemote) {
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getFirefoxCapabilities());
-                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                    } else {
-                        System.setProperty("webdriver.gecko.driver", marionetteDirectory);
-
-                        FirefoxOptions firefoxOptions = getFirefoxOptions();
-                        driver = new FirefoxDriver(firefoxOptions);
-                    }
-
-                    return driver;
-                });
-                driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
+                launchFirefox();
                 break;
 
             case "Chrome":
-                driver = getDriver(() -> {
-                    if (isRemote) {
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getChromeCapabilities());
-                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                    } else {
-                        ChromeOptions chromeOptions = getChromeOptions();
-                        setProxySettings(chromeOptions, proxyLocation);
-                        System.setProperty("webdriver.chrome.driver", chromeDirectory);
-                        driver = new ChromeDriver(chromeOptions);
-                    }
-
-                    return driver;
-                });
+                launchChrome();
                 break;
 
             case "InternetExplorer":
-                driver = getDriver(() -> {
-                    if (isRemote) {
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getInternetExplorerCapabilities());
-                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                    } else {
-                        String loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "C:/iedriverserver.log");
-                        String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG").toUpperCase();
-                        switch (loggingLevel) {
-                            case "FATAL":
-                            case "INFO":
-                            case "ERROR":
-                            case "DEBUG":
-                            case "TRACE":
-                            case "WARN":
-                                break;
-                            default:
-                                loggingLevel = "DEBUG";
-                        }
-                        String finalLoggingLevel = loggingLevel;
-                        InternetExplorerOptions ieOptions = getInternetExplorerOptions(
-                                configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true),
-                                proxyLocation);
-                        System.setProperty("webdriver.ie.driver", ieDirectory);
-                        if (StringUtils.isBlank(loggingPath)) {
-                            driver = new InternetExplorerDriver(ieOptions);
-                        } else {
-                            InternetExplorerDriverService.Builder service = new InternetExplorerDriverService.Builder();
-                            service = service.withLogLevel(InternetExplorerDriverLogLevel.valueOf(finalLoggingLevel));
-                            service = service.withLogFile(new File(loggingPath));
-                            driver = new InternetExplorerDriver(service.build(), ieOptions);
-                        }
-                    }
-
-                    return driver;
-                });
+                launchInternetExplorer();
                 break;
 
             case "Edge":
-                driver = getDriver(() -> {
-                    if (isRemote) {
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getEdgeCapabilities());
-                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                    } else {
-                        driver = new EdgeDriver(
-                                new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
-                                getEdgeOptions(proxyLocation));
-                    }
-
-                    return driver;
-                });
+                launchEdge();
                 break;
 
             case "Safari":
-                driver = getDriver(() -> {
-                    if (isRemote) {
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getSafariCapabilities());
-                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                    } else {
-                        SafariOptions safariOptions = new SafariOptions();
-                        setProxySettings(safariOptions, proxyLocation);
-                        System.setProperty("webdriver.safari.driver", safariDirectory);
-                        driver = new SafariDriver(safariOptions);
-
-                    }
-
-                    return driver;
-                });
+                launchSafari();
                 break;
 
             case "Opera":
-                driver = getDriver(() -> {
-                    System.setProperty(OperaDriverService.OPERA_DRIVER_VERBOSE_LOG_PROPERTY, "true");
-                    if (isRemote) {
-                        String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
-                        if (StringUtils.isBlank(operaBinaryPath)) {
-                            throw new IllegalArgumentException(SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
-                        }
-
-                        driver = new RemoteWebDriver(finalSeleniumHubUrl, getOperaCapabilities());
-                        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-                    } else {
-                        OperaOptions operaOptions = getOperaOptions();
-                        setProxySettings(operaOptions, proxyLocation);
-                        System.setProperty(OperaDriverService.OPERA_DRIVER_EXE_PROPERTY, operaDirectory);
-                        driver = new OperaDriver(operaOptions);
-                    }
-
-                    return driver;
-                });
+                launchOpera();
                 break;
 
             case "IOSSafari":
-                DesiredCapabilities capabilities = (DesiredCapabilities) getIOSSafariCapabilities();
-                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-                break;
-
             case "AndroidChrome":
-                capabilities = (DesiredCapabilities) getAndroidChromeCapabilities();
-                driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+                launchMobileBrowser(browserType.getKey());
                 break;
 
             default:
@@ -394,6 +276,26 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
     }
 
+    private void launchFirefox() {
+        String marionetteDirectory = configuration.getString(SeleniumConfiguration.Keys.MARIONETTE_DIRECTORY, null);
+        long timeout = (long) configuration.getDouble(Configuration.Keys.TIMEOUT, 10);
+
+        driver = getDriver(() -> {
+            if (isRemote) {
+                driver = new RemoteWebDriver(finalSeleniumHubUrl, getFirefoxCapabilities());
+                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+            } else {
+                System.setProperty("webdriver.gecko.driver", marionetteDirectory);
+
+                FirefoxOptions firefoxOptions = getFirefoxOptions();
+                driver = new FirefoxDriver(firefoxOptions);
+            }
+
+            return driver;
+        });
+        driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
+    }
+
     private Capabilities getFirefoxCapabilities() {
         MutableCapabilities desiredCapabilities = DesiredCapabilities.firefox();
         desiredCapabilities.setCapability("marionette", true);
@@ -401,6 +303,24 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
+    }
+
+    private void launchChrome() {
+        String chromeDirectory = configuration.getString(SeleniumConfiguration.Keys.CHROME_DIRECTORY, null);
+
+        driver = getDriver(() -> {
+            if (isRemote) {
+                driver = new RemoteWebDriver(finalSeleniumHubUrl, getChromeCapabilities());
+                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+            } else {
+                ChromeOptions chromeOptions = getChromeOptions();
+                setProxySettings(chromeOptions, proxyLocation);
+                System.setProperty("webdriver.chrome.driver", chromeDirectory);
+                driver = new ChromeDriver(chromeOptions);
+            }
+
+            return driver;
+        });
     }
 
     private Capabilities getChromeCapabilities() {
@@ -420,6 +340,46 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
+    private void launchInternetExplorer() {
+        String ieDirectory = configuration.getString(SeleniumConfiguration.Keys.IE_DIRECTORY, null);
+
+        driver = getDriver(() -> {
+            if (isRemote) {
+                driver = new RemoteWebDriver(finalSeleniumHubUrl, getInternetExplorerCapabilities());
+                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+            } else {
+                String loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "C:/iedriverserver.log");
+                String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG").toUpperCase();
+                switch (loggingLevel) {
+                    case "FATAL":
+                    case "INFO":
+                    case "ERROR":
+                    case "DEBUG":
+                    case "TRACE":
+                    case "WARN":
+                        break;
+                    default:
+                        loggingLevel = "DEBUG";
+                }
+                String finalLoggingLevel = loggingLevel;
+                InternetExplorerOptions ieOptions = getInternetExplorerOptions(
+                        configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true),
+                        proxyLocation);
+                System.setProperty("webdriver.ie.driver", ieDirectory);
+                if (StringUtils.isBlank(loggingPath)) {
+                    driver = new InternetExplorerDriver(ieOptions);
+                } else {
+                    InternetExplorerDriverService.Builder service = new InternetExplorerDriverService.Builder();
+                    service = service.withLogLevel(InternetExplorerDriverLogLevel.valueOf(finalLoggingLevel));
+                    service = service.withLogFile(new File(loggingPath));
+                    driver = new InternetExplorerDriver(service.build(), ieOptions);
+                }
+            }
+
+            return driver;
+        });
+    }
+
     private Capabilities getInternetExplorerCapabilities() {
         MutableCapabilities desiredCapabilities;
 
@@ -429,11 +389,47 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
+    private void launchEdge() {
+        String edgeDirectory = configuration.getString(SeleniumConfiguration.Keys.EDGE_DIRECTORY, null);
+
+        driver = getDriver(() -> {
+            if (isRemote) {
+                driver = new RemoteWebDriver(finalSeleniumHubUrl, getEdgeCapabilities());
+                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+            } else {
+                driver = new EdgeDriver(
+                        new EdgeDriverService.Builder().usingDriverExecutable(new File(edgeDirectory)).build(),
+                        getEdgeOptions(proxyLocation));
+            }
+
+            return driver;
+        });
+    }
+
     private Capabilities getEdgeCapabilities() {
         MutableCapabilities desiredCapabilities = DesiredCapabilities.edge();
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
+    }
+
+    private void launchSafari() {
+        String safariDirectory = "/usr/bin/safaridriver";
+
+        driver = getDriver(() -> {
+            if (isRemote) {
+                driver = new RemoteWebDriver(finalSeleniumHubUrl, getSafariCapabilities());
+                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+            } else {
+                SafariOptions safariOptions = new SafariOptions();
+                setProxySettings(safariOptions, proxyLocation);
+                System.setProperty("webdriver.safari.driver", safariDirectory);
+                driver = new SafariDriver(safariOptions);
+
+            }
+
+            return driver;
+        });
     }
 
     private Capabilities getSafariCapabilities() {
@@ -443,12 +439,49 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         return desiredCapabilities;
     }
 
+    private void launchOpera() {
+        String operaDirectory = configuration.getString(SeleniumConfiguration.Keys.OPERA_DIRECTORY, null);
+
+        driver = getDriver(() -> {
+            System.setProperty(OperaDriverService.OPERA_DRIVER_VERBOSE_LOG_PROPERTY, "true");
+            if (isRemote) {
+                String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
+                if (StringUtils.isBlank(operaBinaryPath)) {
+                    throw new IllegalArgumentException(SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
+                }
+
+                driver = new RemoteWebDriver(finalSeleniumHubUrl, getOperaCapabilities());
+                ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+            } else {
+                OperaOptions operaOptions = getOperaOptions();
+                setProxySettings(operaOptions, proxyLocation);
+                System.setProperty(OperaDriverService.OPERA_DRIVER_EXE_PROPERTY, operaDirectory);
+                driver = new OperaDriver(operaOptions);
+            }
+
+            return driver;
+        });
+    }
+
     private Capabilities getOperaCapabilities() {
         MutableCapabilities desiredCapabilities = getOperaOptions();
         setLoggingCapabilities(desiredCapabilities);
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
+    }
+
+    private void launchMobileBrowser(String browserType) {
+        DesiredCapabilities capabilities;
+
+        if (browserType.equals("IOSSafari")) {
+            capabilities = (DesiredCapabilities) getIOSSafariCapabilities();
+        } else {
+            capabilities = (DesiredCapabilities) getAndroidChromeCapabilities();
+        }
+        driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
     }
 
     private Capabilities getIOSSafariCapabilities() {
@@ -480,12 +513,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
         addPluginCapabilities(desiredCapabilities);
 
-        return desiredCapabilities;
-    }
-
-    private DesiredCapabilities getMarionetteCapabilities() {
-        DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
-        desiredCapabilities.setCapability("marionette", true);
         return desiredCapabilities;
     }
 
@@ -534,6 +561,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         firefoxOptions.merge(firefoxCapabilities);
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.FATAL);
         return firefoxOptions;
+    }
+
+    private DesiredCapabilities getMarionetteCapabilities() {
+        DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+        desiredCapabilities.setCapability("marionette", true);
+        return desiredCapabilities;
     }
 
     private InternetExplorerOptions getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
