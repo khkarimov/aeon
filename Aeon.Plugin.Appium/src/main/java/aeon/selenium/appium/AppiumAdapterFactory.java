@@ -2,7 +2,6 @@ package aeon.selenium.appium;
 
 import aeon.core.common.Capability;
 import aeon.core.common.exceptions.AeonLaunchException;
-import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
@@ -80,7 +79,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                     throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
 
-                DesiredCapabilities capabilities = (DesiredCapabilities) getCapabilities();
+                DesiredCapabilities capabilities = (DesiredCapabilities) getIOSHybridAppCapabilities();
                 driver = getDriver(() -> new IOSDriver(finalSeleniumHubUrl, capabilities));
 
                 trySetContext();
@@ -91,7 +90,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
                     throw new AeonLaunchException("You have to provide a Selenium Grid or Appium URL when launching a mobile app");
                 }
 
-                capabilities = (DesiredCapabilities) getCapabilities();
+                capabilities = (DesiredCapabilities) getAndroidHybridAppCapabilities();
                 driver = getDriver(() -> new AndroidDriver(finalSeleniumHubUrl, capabilities));
 
                 trySetContext();
@@ -172,93 +171,90 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         }
     }
 
-    private Capabilities getCapabilities() {
-        MutableCapabilities desiredCapabilities;
-
-        switch (browserType.getKey()) {
-            case "IOSHybridApp":
-                desiredCapabilities = new DesiredCapabilities();
-
-                desiredCapabilities.setCapability("platformName", "iOS");
-                desiredCapabilities.setCapability("platformVersion", platformVersion);
-
-                // Appium
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-                if (!app.isEmpty()) {
-                    desiredCapabilities.setCapability("app", app);
-                }
-
-                String automationName = configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, "Appium");
-                if (!StringUtils.isNotBlank(automationName)) {
-                    desiredCapabilities.setCapability("automationName", automationName);
-                }
-
-                // IOS Specific
-                desiredCapabilities.setCapability("bundleId", configuration.getString(AppiumConfiguration.Keys.BUNDLE_ID, ""));
-                String udid = configuration.getString(AppiumConfiguration.Keys.UDID, "");
-                if (!udid.isEmpty()) {
-                    desiredCapabilities.setCapability("udid", udid);
-                }
-                String webDriverAgentPort = configuration.getString(AppiumConfiguration.Keys.WDA_PORT, "");
-                if (!webDriverAgentPort.isEmpty()) {
-                    desiredCapabilities.setCapability("wdaLocalPort", webDriverAgentPort);
-                }
-
-                break;
-
-            case "AndroidHybridApp":
-                desiredCapabilities = new DesiredCapabilities();
-
-                // Appium
-                if (!deviceName.isEmpty()) {
-                    desiredCapabilities.setCapability("deviceName", deviceName);
-                }
-
-                desiredCapabilities.setCapability("platformName", "Android");
-
-                if (!platformVersion.isEmpty()) {
-                    desiredCapabilities.setCapability("platformVersion", platformVersion);
-                }
-
-                // Android Specific
-                String avdName = configuration.getString(AppiumConfiguration.Keys.AVD_NAME, "");
-                if (!avdName.isEmpty()) {
-                    desiredCapabilities.setCapability("avd", avdName);
-                }
-                if (!appPackage.isEmpty()) {
-                    desiredCapabilities.setCapability("appPackage", appPackage);
-                    String appActivity = configuration.getString(AppiumConfiguration.Keys.APP_ACTIVITY, "");
-                    if (!appActivity.isEmpty()) {
-                        desiredCapabilities.setCapability("appActivity", appActivity);
-                    }
-                }
-                if (!app.isEmpty()) {
-                    desiredCapabilities.setCapability("app", app);
-                }
-
-                //Enables webview support for Crosswalk/Cordova applications
-                boolean crossWalkPatch = configuration.getBoolean(AppiumConfiguration.Keys.CROSSWALK_PATCH, false);
-                if (crossWalkPatch && !appPackage.isEmpty()) {
-                    String androidDeviceSocket = appPackage + "_devtools_remote";
-                    desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
-                    LegacyChromeOptions chromeOptions = new LegacyChromeOptions();
-                    chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
-                    desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                }
-
-                break;
-
-            default:
-                throw new ConfigurationException("BrowserType", "configuration", String.format("%1$s is not a supported browser", browserType));
-        }
-
+    private void addPluginCapabilities(MutableCapabilities desiredCapabilities) {
         //add capabilities from other plugins
         List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
         for (ISeleniumExtension extension : extensions) {
             extension.onGenerateCapabilities(configuration, desiredCapabilities);
         }
+    }
+
+    private Capabilities getIOSHybridAppCapabilities() {
+        MutableCapabilities desiredCapabilities = new DesiredCapabilities();
+
+        desiredCapabilities.setCapability("platformName", "iOS");
+        desiredCapabilities.setCapability("platformVersion", platformVersion);
+
+        // Appium
+        if (!deviceName.isEmpty()) {
+            desiredCapabilities.setCapability("deviceName", deviceName);
+        }
+        if (!app.isEmpty()) {
+            desiredCapabilities.setCapability("app", app);
+        }
+
+        String automationName = configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, "Appium");
+        if (!StringUtils.isNotBlank(automationName)) {
+            desiredCapabilities.setCapability("automationName", automationName);
+        }
+
+        // IOS Specific
+        desiredCapabilities.setCapability("bundleId", configuration.getString(AppiumConfiguration.Keys.BUNDLE_ID, ""));
+        String udid = configuration.getString(AppiumConfiguration.Keys.UDID, "");
+        if (!udid.isEmpty()) {
+            desiredCapabilities.setCapability("udid", udid);
+        }
+        String webDriverAgentPort = configuration.getString(AppiumConfiguration.Keys.WDA_PORT, "");
+        if (!webDriverAgentPort.isEmpty()) {
+            desiredCapabilities.setCapability("wdaLocalPort", webDriverAgentPort);
+        }
+
+        addPluginCapabilities(desiredCapabilities);
+
+        return desiredCapabilities;
+    }
+
+    private Capabilities getAndroidHybridAppCapabilities() {
+        MutableCapabilities desiredCapabilities = new DesiredCapabilities();
+
+        // Appium
+        if (!deviceName.isEmpty()) {
+            desiredCapabilities.setCapability("deviceName", deviceName);
+        }
+
+        desiredCapabilities.setCapability("platformName", "Android");
+
+        if (!platformVersion.isEmpty()) {
+            desiredCapabilities.setCapability("platformVersion", platformVersion);
+        }
+
+        // Android Specific
+        String avdName = configuration.getString(AppiumConfiguration.Keys.AVD_NAME, "");
+        if (!avdName.isEmpty()) {
+            desiredCapabilities.setCapability("avd", avdName);
+        }
+        if (!appPackage.isEmpty()) {
+            desiredCapabilities.setCapability("appPackage", appPackage);
+            String appActivity = configuration.getString(AppiumConfiguration.Keys.APP_ACTIVITY, "");
+            if (!appActivity.isEmpty()) {
+                desiredCapabilities.setCapability("appActivity", appActivity);
+            }
+        }
+        if (!app.isEmpty()) {
+            desiredCapabilities.setCapability("app", app);
+        }
+
+        //Enables webview support for Crosswalk/Cordova applications
+        boolean crossWalkPatch = configuration.getBoolean(AppiumConfiguration.Keys.CROSSWALK_PATCH, false);
+        if (crossWalkPatch && !appPackage.isEmpty()) {
+            String androidDeviceSocket = appPackage + "_devtools_remote";
+            desiredCapabilities.setCapability("androidDeviceSocket", androidDeviceSocket);
+            LegacyChromeOptions chromeOptions = new LegacyChromeOptions();
+            chromeOptions.setExperimentalOption("androidDeviceSocket", androidDeviceSocket);
+            desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        }
+
+        addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
     }
