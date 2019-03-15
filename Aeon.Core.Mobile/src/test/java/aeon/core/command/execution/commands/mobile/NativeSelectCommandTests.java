@@ -22,7 +22,7 @@ public class NativeSelectCommandTests {
     private IMobileDriver mockDriver;
 
     @Test
-    void driverDelegate_HappyPath() {
+    void driverDelegate_HappyPath_InvokesDriverMethod() {
 
         //Arrange
         String option = "TEXT";
