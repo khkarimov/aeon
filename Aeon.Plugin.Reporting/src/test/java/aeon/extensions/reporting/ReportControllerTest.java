@@ -35,7 +35,7 @@ public class ReportControllerTest {
     ReportDetails reportDetails;
 
     @Test
-    public void givenValidConfiguration_WhenSetConfigurationTest_ThenConfigurationsSet() {
+    public void setConfiguration_whenCalled_configurationsSet() {
         // Arrange
 
         // Act
@@ -50,7 +50,7 @@ public class ReportControllerTest {
     }
 
     @Test
-    public void givenValidConfiguration_WhenwriteReportsAndUploadTest_ThenArtifactoryDoesUpload() {
+    public void writeReportsAndUpload_calledWithReportDetails_uploadsToArtifactory() {
         // Arrange
         when(htmlReport.createAngularReportFile()).thenReturn("Test123Path");
         when(reportDetails.getCorrelationId()).thenReturn("TestCorrelationId");
@@ -66,7 +66,7 @@ public class ReportControllerTest {
     }
 
     @Test
-    public void givenEmptyRnRURL_WhenwriteReportsAndUploadTest_ThenRnRDoesNotUpload() {
+    public void writeReportsAndUpload_calledWithoutRnRUrl_doesNotUpload() {
         // Arrange
         when(htmlReport.createAngularReportFile()).thenReturn("Test123Path");
         when(reportDetails.getCorrelationId()).thenReturn("TestCorrelationId");
@@ -81,7 +81,7 @@ public class ReportControllerTest {
     }
 
     @Test
-    public void givenNonEmptyRnRURL_WhenwriteReportsAndUploadTest_ThenRnRDoesUploadWithCorrectValues() {
+    public void writeReportsAndUpload_calledWithReportDetails_uploadsToRnR() {
         // Arrange
         when(htmlReport.createAngularReportFile()).thenReturn("Test123Path");
         when(htmlReport.createJsonReportFile()).thenReturn("JsonReportTestFile");
@@ -98,7 +98,7 @@ public class ReportControllerTest {
     }
 
     @Test
-    public void givenNonEmptyRnRURL_WhenwriteReportsAndUploadTest_ThenSlackReportsWithCorrectValues() {
+    public void writeReportsAndUpload_calledWithReportDetails_thenSlackMessageSent() {
         // Arrange
         when(htmlReport.createAngularReportFile()).thenReturn("Test123Path");
         when(htmlReport.createJsonReportFile()).thenReturn("JsonReportTestFile");
