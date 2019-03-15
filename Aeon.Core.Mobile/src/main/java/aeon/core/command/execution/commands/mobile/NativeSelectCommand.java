@@ -25,7 +25,9 @@ public class NativeSelectCommand extends MobileCommand {
     }
 
     /**
-     * @return selectOption
+     * Getter for MobileSelectOption.
+     *
+     * @return The selectOption property {@link MobileSelectOption}.
      */
     public MobileSelectOption getSelectOption() {
 
@@ -33,7 +35,9 @@ public class NativeSelectCommand extends MobileCommand {
     }
 
     /**
-     * @return value
+     * Getter for Value.
+     *
+     * @return The value property.
      */
     public String getValue() {
 
