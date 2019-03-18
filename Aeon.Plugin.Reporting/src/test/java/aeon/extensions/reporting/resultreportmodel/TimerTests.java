@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class TimerTests {
 
     @Test
-    public void durationFieldTest() {
+    public void setDuration_whenCalled_setsDurationField() {
         // Arrange
         Timer timer = new Timer();
         long duration = 52323;
@@ -20,7 +20,7 @@ public class TimerTests {
     }
 
     @Test
-    public void durationField_acceptsLongMaxTest() {
+    public void setDuration_whenCalledWithMaxLong_setsDurationField() {
         // Arrange
         Timer timer = new Timer();
 
