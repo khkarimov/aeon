@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-class NativeSetDateCommandTest {
+class NativeSetDateCommandTests {
     @Mock
     IMobileDriver iMobileDriverMock;
 
