@@ -75,15 +75,6 @@ public class WebConfiguration extends Configuration {
      *
      * @param browserType The {@link IBrowserType} for the configuration.
      */
-    public void setBrowserType(IBrowserType browserType) {
-        this.browserType = browserType;
-    }
-
-    /**
-     * Set the type of browser.
-     *
-     * @param browserType The {@link IBrowserType} for the configuration.
-     */
     public void setBrowserType(String browserType) {
         for (BrowserType browser : BrowserType.values()) {
             if (browser.getKey().equalsIgnoreCase(browserType)) {
@@ -105,11 +96,8 @@ public class WebConfiguration extends Configuration {
 
     /**
      * Constructor for the Appium Configuration.  Configures that Aeon web driver and selenium adapter.
-     *
-     * @throws IOException            Exception thrown if there is an IO violation when accessing test or propertion.
-     * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
-    public WebConfiguration() throws IOException, IllegalAccessException {
+    public WebConfiguration() {
         super(AeonWebDriver.class, IWebAdapter.class);
     }
 
