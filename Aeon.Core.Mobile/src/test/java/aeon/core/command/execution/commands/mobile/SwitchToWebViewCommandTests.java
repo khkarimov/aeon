@@ -1,6 +1,6 @@
 package aeon.core.command.execution.commands.mobile;
 
-import aeon.core.common.mobile.selectors.MobileSelectOption;
+import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.drivers.IMobileDriver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,25 +14,26 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class NativeSelectCommandTests {
-
-    private NativeSelectCommand command;
+public class SwitchToWebViewCommandTests {
 
     @Mock
-    private IMobileDriver mockDriver;
+    IByWeb mockSelector;
+
+    @Mock
+    IMobileDriver mockDriver;
+
+    private SwitchToWebViewCommand command;
 
     @Test
     void driverDelegate_HappyPath_InvokesDriverMethod() {
 
         //Arrange
-        String option = "TEXT";
-        String value = "value";
-        command = new NativeSelectCommand(option, value);
+        command = new SwitchToWebViewCommand(mockSelector);
 
         //Act
         command.driverDelegate(mockDriver);
 
         //Assert
-        verify(mockDriver, times(1)).mobileSelect(MobileSelectOption.valueOf(option), value);
+        verify(mockDriver, times(1)).switchToWebView(mockSelector);
     }
 }
