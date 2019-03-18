@@ -29,6 +29,15 @@ public class WebCommandInitializer implements ICommandInitializer {
     }
 
     /**
+     * Getter for IByWeb[].
+     *
+     * @return The switchMechanism property {@link IByWeb}.
+     */
+    public IByWeb[] getSwitchMechanism() {
+        return switchMechanism;
+    }
+
+    /**
      * Finds the web element and gives the reference to the Parameter Object.
      *
      * @param driver   The framework abstraction facade.
