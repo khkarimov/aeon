@@ -93,10 +93,10 @@ public class TestMagoExtension implements ITestExecutionExtension, ISeleniumExte
         }
 
         // Set variables
-        String username = this.configuration.getString(TestMagoConfiguration.Keys.SAUCEL_LABS_USERNAME, "");
-        String accessKey = this.configuration.getString(TestMagoConfiguration.Keys.SAUCE_LABS_ACCESS_KEY, "");
-        String apiKey = this.configuration.getString(TestMagoConfiguration.Keys.SAUCE_LABS_API_KEY, "");
-        String appId = this.configuration.getString(TestMagoConfiguration.Keys.SAUCE_LABS_APP_ID, "");
+        String username = this.configuration.getString(TestMagoConfiguration.Keys.TESTMAGO_USERNAME, "");
+        String accessKey = this.configuration.getString(TestMagoConfiguration.Keys.TESTMAGO_ACCESS_KEY, "");
+        String apiKey = this.configuration.getString(TestMagoConfiguration.Keys.TESTMAGO_API_KEY, "");
+        String appId = this.configuration.getString(TestMagoConfiguration.Keys.TESTMAGO_APP_ID, "");
 
         // Set credentials
         if (!username.isEmpty()) {

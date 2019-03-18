@@ -17,10 +17,10 @@ public class TestMagoConfiguration extends PluginConfiguration {
      * Keys relevant to the Perfecto Configuration.
      */
     public static class Keys {
-        public static final String SAUCEL_LABS_USERNAME = "aeon.extensions.testmago.username";
-        public static final String SAUCE_LABS_ACCESS_KEY = "aeon.extensions.testmago.accesskey";
-        public static final String SAUCE_LABS_API_KEY = "aeon.extensions.testmago.api.key";
-        public static final String SAUCE_LABS_APP_ID = "aeon.extensions.testmago.app.id";
+        public static final String TESTMAGO_USERNAME = "aeon.extensions.testmago.username";
+        public static final String TESTMAGO_ACCESS_KEY = "aeon.extensions.testmago.accesskey";
+        public static final String TESTMAGO_API_KEY = "aeon.extensions.testmago.api.key";
+        public static final String TESTMAGO_APP_ID = "aeon.extensions.testmago.app.id";
 
     }
 
