@@ -1,7 +1,9 @@
 package aeon.extensions.reporting.resultreportmodel;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CountsTest {
 
@@ -9,13 +11,12 @@ class CountsTest {
 
     @BeforeEach
     public void setUp() {
-        counts =  new Counts();
+        counts = new Counts();
     }
 
     @Test
     void getPassed_noDataStored_returnsZero() {
         //Arrange
-        //We do not have data
 
         //Act
         int data = counts.getPassed();
@@ -39,7 +40,6 @@ class CountsTest {
     @Test
     void getFailed_noDataStored_returnsZero() {
         //Arrange
-        //We do not have data
 
         //Act
         int data = counts.getFailed();
@@ -63,7 +63,6 @@ class CountsTest {
     @Test
     void getDisabled_noDataStored_returnsZero() {
         //Arrange
-        //We do not have data
 
         //Act
         int data = counts.getDisabled();
