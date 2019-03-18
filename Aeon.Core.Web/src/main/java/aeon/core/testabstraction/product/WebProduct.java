@@ -55,8 +55,6 @@ public class WebProduct extends Product {
         boolean maximizeBrowser = configuration.getBoolean(WebConfiguration.Keys.MAXIMIZE_BROWSER, true);
         if (maximizeBrowser
                 && !browserType.equals(BrowserType.ANDROID_CHROME)
-                && !browserType.equals(BrowserType.IOS_SAFARI)
-                && !browserType.equals(BrowserType.ANDROID_CHROME)
                 && !browserType.equals(BrowserType.IOS_SAFARI)) {
             browser.maximize();
         }

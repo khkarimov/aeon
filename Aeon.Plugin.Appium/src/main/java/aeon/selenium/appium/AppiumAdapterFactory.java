@@ -6,11 +6,9 @@ import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.framework.abstraction.adapters.IAdapter;
-import aeon.core.testabstraction.product.Aeon;
 import aeon.core.testabstraction.product.Configuration;
 import aeon.selenium.LegacyChromeOptions;
 import aeon.selenium.SeleniumAdapterFactory;
-import aeon.selenium.extensions.ISeleniumExtension;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -23,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -255,14 +252,6 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
             ((AppiumDriver) driver).context(driverContext);
         } else {
             switchToWebView();
-        }
-    }
-
-    private void addPluginCapabilities(MutableCapabilities desiredCapabilities) {
-        //add capabilities from other plugins
-        List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
-        for (ISeleniumExtension extension : extensions) {
-            extension.onGenerateCapabilities(configuration, desiredCapabilities);
         }
     }
 

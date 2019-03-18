@@ -23,7 +23,6 @@ public class PerfectoConfiguration extends PluginConfiguration {
         PERFECTO_TOKEN("aeon.extensions.perfecto.token"),
         PERFECTO_AUTOINSTRUMENT("aeon.extensions.perfecto.instrumentation.auto"),
         PERFECTO_SENSORINSTRUMENT("aeon.extensions.perfecto.instrumentation.sensor"),
-        CLEANUP("aeon.extensions.perfecto.cleanup"),
         DEVICE_DESCRIPTION("aeon.extensions.perfecto.device_description");
 
         private String key;

@@ -125,7 +125,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 ((IOSDriver) getMobileWebDriver()).lockDevice(Duration.ofSeconds(seconds));
                 break;
             default:
-                throw new BrowserTypeNotRecognizedException();
+                throw new UnsupportedCommandException();
         }
     }
 

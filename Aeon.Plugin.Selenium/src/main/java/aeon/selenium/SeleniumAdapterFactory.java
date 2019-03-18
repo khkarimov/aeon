@@ -268,7 +268,12 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
     }
 
-    private void addPluginCapabilities(MutableCapabilities desiredCapabilities) {
+    /**
+     * Adds capabilities from plugins being used.
+     *
+     * @param desiredCapabilities Capabilities
+     */
+    protected void addPluginCapabilities(MutableCapabilities desiredCapabilities) {
         //add capabilities from other plugins
         List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
         for (ISeleniumExtension extension : extensions) {
