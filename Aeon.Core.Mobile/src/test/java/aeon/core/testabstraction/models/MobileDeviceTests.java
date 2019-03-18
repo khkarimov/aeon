@@ -1,8 +1,9 @@
-package aeon.core.command.execution.commands.mobile;
+package aeon.core.testabstraction.models;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
-import aeon.core.testabstraction.models.MobileDevice;
+import aeon.core.command.execution.commands.mobile.*;
+import aeon.core.common.web.interfaces.IByWeb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,9 @@ public class MobileDeviceTests {
 
     @Mock
     private ICommandExecutionFacade executionFacade;
+
+    @Mock
+    private IByWeb selectorMock;
 
     @BeforeEach()
     void beforeEach() {
@@ -109,6 +113,28 @@ public class MobileDeviceTests {
     }
 
     @Test
+    void acceptPermissionDialogIfPresent_called_dispatchAcceptOrDenyPermissionDialogIfPresentCommand() {
+        // Arrange
+
+        // Act
+        mobileDevice.acceptPermissionDialogIfPresent();
+
+        // Assert
+        verify(executionFacade, times(1)).execute(any(AutomationInfo.class), any(AcceptOrDenyPermissionDialogIfPresentCommand.class));
+    }
+
+    @Test
+    void dismissPermissionDialogIfPresent_called_dispatchAcceptOrDenyPermissionDialogIfPresentCommand() {
+        // Arrange
+
+        // Act
+        mobileDevice.dismissPermissionDialogIfPresent();
+
+        // Assert
+        verify(executionFacade, times(1)).execute(any(AutomationInfo.class), any(AcceptOrDenyPermissionDialogIfPresentCommand.class));
+    }
+
+    @Test
     void acceptPermissionDialog_called_dispatchAcceptOrDenyPermissionDialogIfPresentCommand() {
         // Arrange
 
@@ -124,10 +150,21 @@ public class MobileDeviceTests {
         // Arrange
 
         // Act
-        mobileDevice.acceptPermissionDialog();
+        mobileDevice.dismissPermissionDialog();
 
         // Assert
         verify(executionFacade, times(1)).execute(any(AutomationInfo.class), any(AcceptOrDenyPermissionDialogIfPresentCommand.class));
+    }
+
+    @Test
+    void switchToWebView_called_dispatchSwitchToWebViewCommand() {
+        // Arrange
+
+        // Act
+        mobileDevice.switchToWebView(selectorMock);
+
+        // Assert
+        verify(executionFacade, times(1)).execute(any(AutomationInfo.class), any(SwitchToWebViewCommand.class));
     }
 
     @Test
