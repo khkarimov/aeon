@@ -83,4 +83,5 @@ plugins/
 \.idea/emacs\.xml
 
 .idea/sonarlint/
+.idea/sonarlint-state.xml
 .idea/artifacts/
