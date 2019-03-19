@@ -103,7 +103,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      * @param configuration The configuration of the adapter.
      */
     protected void prepare(SeleniumConfiguration configuration) {
-        //ClientEnvironmentManager.manageEnvironment(BROWSER_TYPE, browserAcceptedLanguageCodes, ENSURE_CLEAN_ENVIRONMENT);
         this.configuration = configuration;
         configuration.setBrowserType(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome"));
         this.browserType = configuration.getBrowserType();
