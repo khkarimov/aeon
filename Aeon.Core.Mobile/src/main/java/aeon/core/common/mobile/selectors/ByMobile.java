@@ -1,7 +1,6 @@
 package aeon.core.common.mobile.selectors;
 
-import aeon.core.common.exceptions.NativeSelectorCommandException;
-import aeon.core.common.exceptions.NativeSelectorConversionException;
+import aeon.core.common.exceptions.NativeSelectorException;
 import aeon.core.common.mobile.interfaces.IByMobile;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.ByJQuery;
@@ -18,7 +17,7 @@ public class ByMobile implements IByMobile {
      *
      * @param selector The CSS selector.
      */
-    private ByMobile(String selector) {
+    ByMobile(String selector) {
         this.selector = selector;
     }
 
@@ -54,7 +53,7 @@ public class ByMobile implements IByMobile {
 
     @Override
     public IByWeb find(IByWeb selector) {
-        throw new NativeSelectorCommandException("Native selector cannot use 'find'.");
+        throw new NativeSelectorException("Native selector cannot use 'find'.");
     }
 
     /**
@@ -72,7 +71,7 @@ public class ByMobile implements IByMobile {
      * @return A {@link ByJQuery} object.
      */
     public final ByJQuery toJQuery() {
-        throw new NativeSelectorConversionException("Cannot convert native selector to jQuery selector.");
+        throw new NativeSelectorException("Cannot convert native selector to jQuery selector.");
     }
 
     /**

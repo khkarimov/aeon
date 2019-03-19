@@ -7,23 +7,18 @@ import aeon.core.common.web.selectors.ByJQuery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import static org.junit.Assert.assertEquals;
 
-@ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class ByMobileIdTests {
-    private ByMobileId command;
+public class ByMobileTests {
+
+    private ByMobile command;
 
     private String mySelector = "My Selector";
 
     @BeforeEach
     public void setup() {
-        command = new ByMobileId(mySelector);
+        command = new ByMobile(mySelector);
     }
 
 
