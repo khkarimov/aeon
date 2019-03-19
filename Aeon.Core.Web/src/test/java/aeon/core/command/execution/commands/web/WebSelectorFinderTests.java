@@ -29,19 +29,6 @@ public class WebSelectorFinderTests {
     }
 
     @Test
-    public void DriverNullThrowsException() {
-        // Arrange
-        Exception illegalArgumentException;
-
-        // Act
-        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> webSelectorFinder.findSelector(null, selector));
-
-        // Assert
-        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
-    }
-
-    @Test
     public void WebSelectorFinderFindSelector() {
 
         // Act

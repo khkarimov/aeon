@@ -1,13 +1,15 @@
 package aeon.selenium.jquery;
 
-import aeon.core.common.helpers.ConvertHelper;
+import aeon.core.framework.abstraction.controls.web.WebControl;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * Class that handle selenium script execution.
@@ -60,7 +62,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         Object returnValue = ((JavascriptExecutor) getRemoteWebDriver()).executeScript(script, args);
 
         if (returnValue != null) {
-            log.trace("WebDriver.executeScript() returned {}", ConvertHelper.scriptReturnValueToReadableString(returnValue));
+            log.trace("WebDriver.executeScript() returned {}", scriptReturnValueToReadableString(returnValue));
         }
 
         return returnValue;
@@ -79,9 +81,39 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         Object returnValue = ((JavascriptExecutor) remoteWebDriver).executeAsyncScript(script, args);
 
         if (returnValue != null) {
-            log.trace("WebDriver.executeAsyncScript() returned {}", ConvertHelper.scriptReturnValueToReadableString(returnValue));
+            log.trace("WebDriver.executeAsyncScript() returned {}", scriptReturnValueToReadableString(returnValue));
         }
 
         return returnValue;
+    }
+
+    /**
+     * Function that returns the object value to a readable string.
+     *
+     * @param value the input object.
+     * @return the readable string.
+     */
+    private String scriptReturnValueToReadableString(Object value) {
+        if (value == null) {
+            return "";
+        }
+
+        if (value instanceof Collection<?> && ((Collection<?>) value).size() > 0) {
+            try {
+                Collection<WebControl> elements = (Collection<WebControl>) value;
+
+                return String.format(
+                        "%1$s: [\"%2$s\"]",
+                        value.getClass(),
+                        String.join("\", \"", elements.stream()
+                                .map(x -> x.getSelector().toString())
+                                .collect(Collectors.toList())
+                        ));
+            } catch (Exception e) {
+                return value.toString();
+            }
+        }
+
+        return value.toString();
     }
 }

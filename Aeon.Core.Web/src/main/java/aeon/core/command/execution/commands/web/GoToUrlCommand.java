@@ -12,10 +12,10 @@ import java.util.Locale;
 /**
  * Navigate the currently focused browser to the URL provided.
  * Usage:
- *       Context.Browser.goToUrl("url String")
- *       Context.Browser.goToUrl("url String", setMainWindowBoolean)
- *       Context.Browser.goToUrl({@link java.net.URI})
- *       Context.Browser.goToUrl({@link java.net.URI}, setMainWindowBoolean)
+ * Context.Browser.goToUrl("url String")
+ * Context.Browser.goToUrl("url String", setMainWindowBoolean)
+ * Context.Browser.goToUrl({@link java.net.URI})
+ * Context.Browser.goToUrl({@link java.net.URI}, setMainWindowBoolean)
  */
 public class GoToUrlCommand extends CommandWithReturn {
 
@@ -39,10 +39,6 @@ public class GoToUrlCommand extends CommandWithReturn {
      */
     @Override
     protected Object commandDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
         return ((IWebDriver) driver).goToUrl(url);
     }
 }

@@ -2,7 +2,6 @@ package aeon.core.extensions;
 
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.command.execution.ICommandExecutionFacade;
-import aeon.core.command.execution.WebCommandExecutionFacade;
 import aeon.core.common.interfaces.IBy;
 import aeon.core.testabstraction.product.Configuration;
 import org.junit.Assert;
@@ -35,9 +34,6 @@ public class WebProductTypeExtensionTests {
     @Mock
     private Configuration configuration;
 
-    @Mock
-    private WebCommandExecutionFacade commandExecutionFacade;
-
     private Map<String, String> selectorMap;
 
     @Before
@@ -45,18 +41,6 @@ public class WebProductTypeExtensionTests {
         this.webProductTypeExtension = new WebProductTypeExtension();
         this.selectorMap = new HashMap();
         this.selectorMap.put("value", "some value");
-    }
-
-    @Test
-    public void createCommandExecutionFacade_automationInfo_getsConfiguration() {
-        //Arrange
-        when(automationInfo.getConfiguration()).thenReturn(configuration);
-
-        //Act
-        webProductTypeExtension.createCommandExecutionFacade(automationInfo);
-
-        //Assert
-        verify(automationInfo, times(1)).getConfiguration();
     }
 
     @Test
@@ -68,8 +52,8 @@ public class WebProductTypeExtensionTests {
         ICommandExecutionFacade resultCommandExecutionFacade = webProductTypeExtension.createCommandExecutionFacade(automationInfo);
 
         //Assert
-        ICommandExecutionFacade currentCommandExecutionFacade = automationInfo.getCommandExecutionFacade();
-        Assert.assertEquals(resultCommandExecutionFacade, currentCommandExecutionFacade);
+        verify(automationInfo, times(1)).getConfiguration();
+        Assert.assertNotNull(resultCommandExecutionFacade);
     }
 
     @Test

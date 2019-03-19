@@ -24,9 +24,6 @@ public class AcceptAlertCommand extends Command {
      */
     @Override
     protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("Driver");
-        }
         ((IWebDriver) driver).acceptAlert();
     }
 }

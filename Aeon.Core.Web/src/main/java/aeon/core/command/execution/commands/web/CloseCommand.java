@@ -26,10 +26,6 @@ public class CloseCommand extends Command {
      */
     @Override
     protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
         ((IWebDriver) driver).close();
     }
 }

@@ -30,9 +30,6 @@ public class SelectFileCommand extends WebControlCommand {
 
     @Override
     protected void commandDelegate(IWebDriver driver, WebControl control) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
         driver.selectFile(control, path);
     }
 }

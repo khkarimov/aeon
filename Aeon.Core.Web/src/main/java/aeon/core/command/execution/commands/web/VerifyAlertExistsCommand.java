@@ -8,7 +8,7 @@ import aeon.core.framework.abstraction.drivers.IWebDriver;
 /**
  * Asserts/Checks whether an alert exists. If your code makes an alert popup and you want to check whether it is the case this method will assert so.
  * Usage:
- *       Context.browser.verifyAlertExists();
+ * Context.browser.verifyAlertExists();
  */
 
 public class VerifyAlertExistsCommand extends Command {
@@ -24,9 +24,6 @@ public class VerifyAlertExistsCommand extends Command {
 
     @Override
     protected void driverDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
         ((IWebDriver) driver).verifyAlertExists();
     }
 }

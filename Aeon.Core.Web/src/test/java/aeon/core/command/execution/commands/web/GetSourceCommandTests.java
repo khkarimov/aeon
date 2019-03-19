@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,11 +35,5 @@ public class GetSourceCommandTests {
 
         //Assert
         verify(driver, times(1)).getSource();
-    }
-
-    @Test
-    public void testCommandDelegateNullDriver() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> getSourceCommand.commandDelegate(null));
     }
 }

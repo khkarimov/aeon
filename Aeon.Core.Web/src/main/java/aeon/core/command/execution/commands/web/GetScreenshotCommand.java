@@ -26,10 +26,6 @@ public class GetScreenshotCommand extends CommandWithReturn {
 
     @Override
     protected Object commandDelegate(IDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             ImageIO.write((BufferedImage) driver.getScreenshot(), "png", baos);

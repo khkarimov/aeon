@@ -1,7 +1,6 @@
 package aeon.core.common.exceptions;
 
 import aeon.core.common.Resources;
-import aeon.core.common.helpers.TimeUtils;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -18,12 +17,12 @@ public class TimeoutExpiredException extends RuntimeException implements Seriali
      * Initializes a new instance of the {@link TimeoutExpiredException} class.
      *
      * @param operation string to specify the operation.
-     * @param timeout the duration before timeout.
+     * @param timeout   the duration before timeout.
      */
     public TimeoutExpiredException(String operation, Duration timeout) {
         super(String.format(
                 Resources.getString("TimeoutExpiredException_ctor_DefaultMessage"),
-                TimeUtils.toReadableString(timeout), operation), null);
+                toReadableString(timeout), operation), null);
 
         this.operation = operation;
         this.timeout = timeout;
@@ -45,5 +44,22 @@ public class TimeoutExpiredException extends RuntimeException implements Seriali
      */
     public Duration getTimeout() {
         return timeout;
+    }
+
+    /**
+     * Translates a Duration to a readable string.
+     *
+     * @param duration the input Duration to be translated.
+     * @return the new readable string of duration.
+     */
+    private static String toReadableString(Duration duration) {
+
+        if (duration.toMinutes() == 0) {
+            return String.format("0:%s", duration.getSeconds());
+        }
+
+        return String.format("%s:%s",
+                duration.toMinutes(),
+                duration.getSeconds() % duration.toMinutes() * 60);
     }
 }

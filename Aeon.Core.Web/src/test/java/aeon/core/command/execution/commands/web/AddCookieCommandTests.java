@@ -3,7 +3,6 @@ package aeon.core.command.execution.commands.web;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,19 +41,5 @@ public class AddCookieCommandTests {
 
         // Assert
         verify(driver, times(1)).addCookie(cookie);
-    }
-
-    @Test
-    public void testDriverDelegateNullDriver() {
-        // Arrange
-        Exception illegalArgumentException;
-        Consumer<IDriver> action = cookieCommand.getCommandDelegate();
-
-        // Act
-        //Assert
-        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> action.accept(null));
-        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
-        verify(driver, times(0)).addCookie(cookie);
     }
 }
