@@ -9,7 +9,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * Models the UltiHome login page.
  */
-public class SampleUltiHomePage implements Page {
+public class SampleUltiHomePage extends Page {
 
     public TextBox userField;
     public TextBox passField;

@@ -12,7 +12,7 @@ import main.sample.samplelistgroup.ActorListContainer;
 /**
  * Model of the sample HTML file for system tests.
  */
-public class VTeamSamplePage implements Page {
+public class VTeamSamplePage extends Page {
 
     // Grid selector
     private final By gridSelector = By.cssSelector("#grid-table-id");

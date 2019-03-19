@@ -1,8 +1,8 @@
 package aeon.core.testabstraction.models;
 
 /**
- * Interface for pages.
+ * Base page model for pages.
  */
-public interface Page {
+public class Page {
 
 }

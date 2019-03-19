@@ -10,7 +10,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * The home page containing some menu items.
  */
-public class HomePage implements Page {
+public class HomePage extends Page {
 
     public Link viewPayStatement;
     public Button menuButton;

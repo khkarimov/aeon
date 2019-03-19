@@ -8,7 +8,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * Start page of the New Hire Wizard.
  */
-public class StartPage implements Page {
+public class StartPage extends Page {
 
     public TextBox ssnTextBox;
     public TextBox confirmSSNTextBox;

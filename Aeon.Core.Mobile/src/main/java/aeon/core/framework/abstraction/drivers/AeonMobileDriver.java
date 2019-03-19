@@ -1,5 +1,6 @@
 package aeon.core.framework.abstraction.drivers;
 
+import aeon.core.common.exceptions.WebUsingMobileCommandException;
 import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
@@ -32,12 +33,15 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
 
     @Override
     public void mobileLock() {
-        String s = getBrowserType().getKey();
-
-        if ("AndroidHybridApp".equals(s)) {
-            adapter.mobileLock();
-        } else if ("IOSHybridApp".equals(s)) {
-            adapter.mobileLock(0);
+        switch (getBrowserType().getKey()) {
+            case "AndroidHybridApp":
+                adapter.mobileLock();
+                break;
+            case "IOSHybridApp":
+                adapter.mobileLock(0);
+                break;
+            default:
+                throw new WebUsingMobileCommandException(getBrowserType().getKey());
         }
     }
 
@@ -47,12 +51,15 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
      * @param seconds The number of seconds that the device should remain locked (iOS only).
      */
     public void mobileLock(int seconds) {
-        String s = getBrowserType().getKey();
-
-        if ("AndroidHybridApp".equals(s)) {
-            adapter.mobileLock();
-        } else if ("IOSHybridApp".equals(s)) {
-            adapter.mobileLock(seconds);
+        switch (getBrowserType().getKey()) {
+            case "AndroidHybridApp":
+                adapter.mobileLock();
+                break;
+            case "IOSHybridApp":
+                adapter.mobileLock(seconds);
+                break;
+            default:
+                throw new WebUsingMobileCommandException(getBrowserType().getKey());
         }
     }
 
