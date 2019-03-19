@@ -33,6 +33,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Extension
 public class ReportingTestExecutionExtension implements ITestExecutionExtension {
 
+    private static final Object lock = new Object();
     private static IConfiguration aeonConfiguration;
     private static IConfiguration configuration;
     private ScenarioDetails currentScenario;
@@ -46,11 +47,9 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
     private static Logger log = LoggerFactory.getLogger(ReportingTestExecutionExtension.class);
 
     private ReportingTestExecutionExtension(
-            IConfiguration configuration,
             ReportController reportController,
             ArtifactoryService artifactoryService
     ) {
-        ReportingTestExecutionExtension.configuration = configuration;
         this.reportController = reportController;
         this.artifactoryService = artifactoryService;
 
@@ -64,9 +63,9 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
      */
     public static Object createInstance() {
         ArtifactoryService artifactoryService = new ArtifactoryService();
+        ReportingTestExecutionExtension.configuration = new ReportingConfiguration();
 
         return new ReportingTestExecutionExtension(
-                new ReportingConfiguration(),
                 new ReportController(
                         new HtmlReport(),
                         new SlackReport(
@@ -82,8 +81,6 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
     public void onBeforeStart(String correlationId, String suiteName) {
         // Don't check that reportDetails is null, as it should be re-initialized with this message
         initializeReport(suiteName);
-
-        initializeConfiguration();
 
         reportDetails.setCorrelationId(correlationId);
     }
@@ -303,19 +300,14 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
     }
 
     private void initializeConfiguration(Configuration aeonConfiguration) {
-        if (ReportingTestExecutionExtension.aeonConfiguration == null) {
-            try {
-                ReportingTestExecutionExtension.configuration.loadConfiguration();
-            } catch (IllegalAccessException | IOException e) {
-                log.warn("Could not load plugin configuration, using Aeon configuration.");
+        synchronized (lock) {
+            if (ReportingTestExecutionExtension.aeonConfiguration == null) {
+                ReportingTestExecutionExtension.aeonConfiguration = aeonConfiguration;
 
-                ReportingTestExecutionExtension.configuration = aeonConfiguration;
+                this.reportController.setConfiguration(
+                        ReportingTestExecutionExtension.configuration,
+                        ReportingTestExecutionExtension.aeonConfiguration);
             }
-            ReportingTestExecutionExtension.aeonConfiguration = aeonConfiguration;
-
-            this.reportController.setConfiguration(
-                    ReportingTestExecutionExtension.configuration,
-                    ReportingTestExecutionExtension.aeonConfiguration);
         }
     }
 }
