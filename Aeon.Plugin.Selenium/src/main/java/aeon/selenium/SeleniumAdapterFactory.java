@@ -2,12 +2,11 @@ package aeon.selenium;
 
 
 import aeon.core.common.Capability;
-import aeon.core.common.Resources;
 import aeon.core.common.exceptions.AeonLaunchException;
 import aeon.core.common.exceptions.ConfigurationException;
+import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.exceptions.UnsupportedPlatformException;
 import aeon.core.common.helpers.OsCheck;
-import aeon.core.common.helpers.Process;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserSize;
@@ -193,9 +192,16 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
     }
 
-    private WebDriver getDriver(Supplier<WebDriver> createDriver) {
+    /**
+     * Gets the driver.
+     *
+     * @param createDriver Supplier of web driver
+     * @return Web driver
+     */
+    protected WebDriver getDriver(Supplier<WebDriver> createDriver) {
         int i = 0;
         int numberOfRetries = 30;
+
         while (true) {
             try {
                 return createDriver.get();
@@ -207,7 +213,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     log.trace("Retrying");
                     i++;
                 } else {
-                    throw e;
+                    throw new UnableToCreateDriverException(e.getMessage());
                 }
             }
         }
@@ -579,11 +585,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             throw new UnsupportedPlatformException();
         }
 
-        List<String> processes = Process.getWindowsProcessesByName("iexplore");
-        if (processes != null && !processes.isEmpty()) {
-            log.info(Resources.getString("InternetExplorerIsAlreadyRunning_Info"));
-        }
-
         InternetExplorerOptions ieOptions = new InternetExplorerOptions();
 
         ieOptions.setCapability(CapabilityType.HAS_NATIVE_EVENTS, true);
@@ -603,11 +604,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private EdgeOptions getEdgeOptions(String proxyLocation) {
         if (OsCheck.getOperatingSystemType() != OsCheck.OSType.WINDOWS) {
             throw new UnsupportedPlatformException();
-        }
-
-        List<String> processes = Process.getWindowsProcessesByName("MicrosoftEdge");
-        if (processes != null && !processes.isEmpty()) {
-            log.info(Resources.getString("MicrosoftEdgeIsAlreadyRunning_Info"));
         }
 
         EdgeOptions edgeOptions = new EdgeOptions();

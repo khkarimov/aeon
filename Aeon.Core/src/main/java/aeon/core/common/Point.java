@@ -5,8 +5,8 @@ package aeon.core.common;
  */
 public class Point {
 
-    public int x;
-    public int y;
+    private int x;
+    private int y;
 
     /**
      * Constructor for a new point.

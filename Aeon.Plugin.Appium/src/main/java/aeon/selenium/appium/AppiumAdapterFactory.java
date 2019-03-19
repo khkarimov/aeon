@@ -186,25 +186,25 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         return desiredCapabilities;
     }
 
-    private WebDriver getDriver(Supplier<WebDriver> createDriver) {
-        int i = 0;
-        int numberOfRetries = 30;
-        while (true) {
-            try {
-                return createDriver.get();
-            } catch (Exception e) {
-                log.trace("Web driver instantiation failed: " + e.getMessage(), e);
-
-                if (i < numberOfRetries - 1) {
-                    Sleep.wait(1000);
-                    log.trace("Retrying");
-                    i++;
-                } else {
-                    throw new UnableToCreateDriverException(e.getMessage());
-                }
-            }
-        }
-    }
+//    private WebDriver getDriver(Supplier<WebDriver> createDriver) {
+//        int i = 0;
+//        int numberOfRetries = 30;
+//        while (true) {
+//            try {
+//                return createDriver.get();
+//            } catch (Exception e) {
+//                log.trace("Web driver instantiation failed: " + e.getMessage(), e);
+//
+//                if (i < numberOfRetries - 1) {
+//                    Sleep.wait(1000);
+//                    log.trace("Retrying");
+//                    i++;
+//                } else {
+//                    throw new UnableToCreateDriverException(e.getMessage());
+//                }
+//            }
+//        }
+//    }
 
     private void trySetContext() {
         double currentTime = System.currentTimeMillis();
