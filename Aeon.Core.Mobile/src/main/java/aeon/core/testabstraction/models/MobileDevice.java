@@ -116,6 +116,7 @@ public class MobileDevice extends Browser {
      * @param selector The element to look for.
      * @deprecated This might be replaced with an implicit switching logic. Please use with caution.
      */
+    @Deprecated
     public void switchToWebView(IByWeb selector) {
         automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwitchToWebViewCommand(selector));
     }
@@ -125,6 +126,7 @@ public class MobileDevice extends Browser {
      *
      * @deprecated This might be replaced with an implicit switching logic. Please use with caution.
      */
+    @Deprecated
     public void switchToMainWebView() {
         automationInfo.getCommandExecutionFacade().execute(automationInfo, new SwitchToWebViewCommand(null));
     }

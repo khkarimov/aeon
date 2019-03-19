@@ -8,7 +8,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * The New Hire Wizard page.
  */
-public class NewHireWizard extends Page {
+public class NewHireWizard implements Page {
 
     public PersonalPage personalPage;
     public StartPage startPage;

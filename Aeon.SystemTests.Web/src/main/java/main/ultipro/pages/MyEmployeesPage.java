@@ -12,7 +12,7 @@ import main.ultipro.myemployeesgrid.EmployeeTableContainer;
 /**
  * The page for managing employees.
  */
-public class MyEmployeesPage extends Page {
+public class MyEmployeesPage implements Page {
 
     public Button addEmployeeButton;
     public TextBox employeeSearchBox;

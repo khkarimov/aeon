@@ -29,34 +29,26 @@ public final class ClientEnvironmentManager {
 
         verifyScreenResolution();
 
-        switch (browserType) {
-            case INTERNET_EXPLORER:
-                // TODO(DionnyS): JAVA_CONVERSION
-                // ConfigureInternetExplorerSettings(browserAcceptedLanguageCodes);
-                break;
-            case FIREFOX:
-                enforceDPI();
-                break;
+        if (browserType == BrowserType.INTERNET_EXPLORER) {// TODO(DionnyS): JAVA_CONVERSION
+            // ConfigureInternetExplorerSettings(browserAcceptedLanguageCodes);
+        } else if (browserType == BrowserType.FIREFOX) {
+            enforceDPI();
         }
     }
 
     private static void ensureCleanEnvironment(BrowserType browserType) {
-        switch (browserType) {
-            case INTERNET_EXPLORER:
-                log.info("Killing Internet Explorer related processes.");
-                // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"iexplore", "IEDriverServer"});
-                break;
-            case FIREFOX:
-                log.info("Killing Firefox related processes.");
-                // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"firefox"});
-                break;
-            case CHROME:
-                log.info("Killing Chrome related processes.");
-                // TODO(DionnyS): JAVA_CONVERSION
-                // KillProcesses(new String[]{"chrome", "chromedriver"});
-                break;
+        if (browserType == BrowserType.INTERNET_EXPLORER) {
+            log.info("Killing Internet Explorer related processes.");
+            // TODO(DionnyS): JAVA_CONVERSION
+            // KillProcesses(new String[]{"iexplore", "IEDriverServer"});
+        } else if (browserType == BrowserType.FIREFOX) {
+            log.info("Killing Firefox related processes.");
+            // TODO(DionnyS): JAVA_CONVERSION
+            // KillProcesses(new String[]{"firefox"});
+        } else if (browserType == BrowserType.CHROME) {
+            log.info("Killing Chrome related processes.");
+            // TODO(DionnyS): JAVA_CONVERSION
+            // KillProcesses(new String[]{"chrome", "chromedriver"});
         }
     }
 

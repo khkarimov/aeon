@@ -10,9 +10,6 @@ import java.util.Locale;
  */
 public class ScriptReturnValueNotHtmlElementException extends RuntimeException implements Serializable {
 
-    private Object returnValue;
-    private String script;
-
     /**
      * Initializes a new instance of the {@link ScriptReturnValueNotHtmlElementException} class.
      *
@@ -21,8 +18,6 @@ public class ScriptReturnValueNotHtmlElementException extends RuntimeException i
      */
     public ScriptReturnValueNotHtmlElementException(Object returnValue, String script) {
         super(String.format(Locale.getDefault(), Resources.getString("ScriptReturnValueNotHTMLElementException_ctor_DefaultMessage"), returnValue, script));
-        this.returnValue = returnValue;
-        this.script = script;
     }
 
     /**
@@ -34,39 +29,5 @@ public class ScriptReturnValueNotHtmlElementException extends RuntimeException i
      */
     public ScriptReturnValueNotHtmlElementException(Object returnValue, String script, Exception innerException) {
         super(String.format(Locale.getDefault(), Resources.getString("ScriptReturnValueNotHTMLElementException_ctor_DefaultMessage"), returnValue, script), innerException);
-        this.returnValue = returnValue;
-        this.script = script;
-    }
-
-    /**
-     * Gets the return value.
-     * @return the current return value.
-     */
-    public Object getReturnValue() {
-        return returnValue;
-    }
-
-    /**
-     * Function that sets the return value.
-     * @param returnValue to set to the current returnValue
-     */
-    public void setReturnValue(Object returnValue) {
-        this.returnValue = returnValue;
-    }
-
-    /**
-     * Gets the script.
-     * @return the script.
-     */
-    public String getScript() {
-        return script;
-    }
-
-    /**
-     * Function that sets the script to the given input.
-     * @param script the input to be set.
-     */
-    public void setScript(String script) {
-        this.script = script;
     }
 }

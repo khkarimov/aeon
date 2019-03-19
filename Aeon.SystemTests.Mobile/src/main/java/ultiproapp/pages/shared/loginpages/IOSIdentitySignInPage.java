@@ -9,7 +9,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * iOS Identity Sign-in Page.
  */
-public class IOSIdentitySignInPage extends Page {
+public class IOSIdentitySignInPage implements Page {
 
     public Button doneButton;
     public TextBox usernameField;

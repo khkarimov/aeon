@@ -11,7 +11,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * Access Code Page.
  */
-public class AccessCodePage extends Page {
+public class AccessCodePage implements Page {
 
     public TextBox accessCodeInputField;
     public Label continueLabel;

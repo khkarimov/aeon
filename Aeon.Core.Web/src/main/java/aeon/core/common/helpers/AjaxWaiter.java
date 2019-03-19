@@ -1,6 +1,7 @@
 package aeon.core.common.helpers;
 
 import aeon.core.common.exceptions.ScriptExecutionException;
+import aeon.core.common.exceptions.UnableToGetAjaxWaiterException;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
 import org.slf4j.Logger;
@@ -85,11 +86,6 @@ public class AjaxWaiter {
         } while (count != 0 && LocalDateTime.now().isBefore(end));
     }
 
-
-    /*ajaxJsonpElementTimeout defines a timeout for JSONP request on the HTML page.
-    / This is set to be less than the timeout so that page interactions can be executed.
-     */
-
     /**
      * Injects JS into the webDriver.
      */
@@ -98,16 +94,19 @@ public class AjaxWaiter {
             String injectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeonAjaxWaiter');document.body.appendChild(a);";
             webDriver.executeScript(injectScriptTag);
+
+            // ajaxJsonpElementTimeout defines a timeout for JSONP request on the HTML page.
+            // This is set to be less than the timeout so that page interactions can be executed.
             webDriver.executeScript("aeon.ajaxJsonpElementTimeout = " + (timeout.toMillis() - 2000));
             log.info("Injected JS");
         } catch (ScriptExecutionException e) {
             log.error("Could not inject JS");
-            throw new RuntimeException(e);
+            throw e;
         }
     }
 
     /**
-     * Gets the Ajax Waiter as as string/.
+     * Gets the Ajax Waiter as a string.
      *
      * @return the content of the buffered reader as a string.
      */
@@ -116,10 +115,10 @@ public class AjaxWaiter {
             return new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
         } catch (FileNotFoundException e) {
             log.error("File not found on path");
-            throw new RuntimeException(e);
+            throw new UnableToGetAjaxWaiterException(e.getMessage());
         } catch (IOException e) {
             log.error("Problem reading from file");
-            throw new RuntimeException(e);
+            throw new UnableToGetAjaxWaiterException(e.getMessage());
         }
     }
 }

@@ -20,9 +20,8 @@ public interface ICommandInitializer {
     /**
      * Finds a Control element using an IDriver.
      *
-     * @param driver The framework abstraction facade.
+     * @param driver   The framework abstraction facade.
      * @param selector The selector for the Element.
-     *
      * @return The {@link Control} of the found element
      */
     Control findElement(IDriver driver, IBy selector);

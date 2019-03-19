@@ -11,7 +11,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * The login page.
  */
-public class LoginPage extends Page {
+public class LoginPage implements Page {
 
     public TextBox userNameTextBox;
     public TextBox passwordTextBox;

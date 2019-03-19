@@ -8,7 +8,7 @@ import aeon.core.testabstraction.models.Page;
 /**
  * The page containing the address of the currently logged in employee.
  */
-public class PersonalPage extends Page {
+public class PersonalPage implements Page {
 
     public TextBox addressLine;
 
