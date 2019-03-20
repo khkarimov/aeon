@@ -4,6 +4,7 @@ import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.Capability;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.extensions.WebProductTypeExtension;
 import aeon.core.testabstraction.models.Browser;
 import org.slf4j.Logger;
@@ -43,7 +44,7 @@ public class WebProduct extends Product {
     protected void afterLaunch() {
         super.afterLaunch();
 
-        BrowserType browserType = ((WebConfiguration) configuration).getBrowserType();
+        IBrowserType browserType = ((WebConfiguration) configuration).getBrowserType();
         log.info("Product successfully launched with {}", browserType);
 
         // Set WebCommandExecutionFacade
@@ -53,10 +54,11 @@ public class WebProduct extends Product {
         browser = new Browser(getAutomationInfo());
         boolean maximizeBrowser = configuration.getBoolean(WebConfiguration.Keys.MAXIMIZE_BROWSER, true);
         if (maximizeBrowser
-                && !browserType.equals(BrowserType.AndroidChrome)
-                && !browserType.equals(BrowserType.IOSSafari)
-                && !browserType.equals(BrowserType.AndroidHybridApp)
-                && !browserType.equals(BrowserType.IOSHybridApp)) {
+                && (browserType == BrowserType.CHROME
+                || browserType == BrowserType.FIREFOX
+                || browserType == BrowserType.OPERA
+                || browserType == BrowserType.INTERNET_EXPLORER
+                || browserType == BrowserType.EDGE)) {
             browser.maximize();
         }
 

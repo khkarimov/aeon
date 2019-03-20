@@ -1,7 +1,9 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.AeonConfigKey;
+import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.web.BrowserType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,24 +32,35 @@ class WebConfigurationTests {
     private WebConfiguration webConfiguration;
 
     @BeforeEach
-    void setUp() throws IOException, IllegalAccessException {
+    void setUp() {
         webConfiguration = new WebConfiguration();
     }
 
     @Test
-    void getAndSetBrowserType_returnsBrowserType() {
+    void setBrowserType_validBrowser_returnsBrowserType() {
 
         // Arrange
 
         // Act
-        webConfiguration.setBrowserType(BrowserType.Chrome);
+        webConfiguration.setBrowserType("Chrome");
 
         // Assert
-        assertEquals(BrowserType.Chrome, webConfiguration.getBrowserType());
+        assertEquals(BrowserType.CHROME, webConfiguration.getBrowserType());
     }
 
     @Test
-    void getConfigurationFields_returnsKeys() throws IllegalAccessException {
+    void setBrowserType_invalidBrowser_throwsConfigurationException() {
+
+        // Arrange
+
+        // Act
+
+        // Assert
+        Assertions.assertThrows(ConfigurationException.class, () -> webConfiguration.setBrowserType("Invalid Browser"));
+    }
+
+    @Test
+    void getConfigurationFields_returnsKeys() {
 
         // Arrange
 

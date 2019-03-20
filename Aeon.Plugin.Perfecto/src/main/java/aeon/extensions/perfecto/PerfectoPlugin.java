@@ -165,6 +165,7 @@ public class PerfectoPlugin extends Plugin {
             String perfectoToken = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
             boolean perfectoAutoInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT, false);
             boolean perfectoSensorInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
+            String perfectoDeviceDescription = this.configuration.getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "genesis");
 
             // Set credentials
             setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
@@ -172,12 +173,16 @@ public class PerfectoPlugin extends Plugin {
             // Set instrumentation
             capabilities.setCapability("autoInstrument", perfectoAutoInstrument);
             capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
+
+            if (!perfectoDeviceDescription.isEmpty()) {
+                capabilities.setCapability("description", perfectoDeviceDescription);
+            }
         }
 
         @Override
         public void onAfterLaunch(Configuration configuration, WebDriver driver) {
             boolean ensureCleanEnvironment = configuration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
-            String appPackage = configuration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "");
+            String appPackage = configuration.getString("aeon.appium.android.app_package", "");
 
             // Only if AndroidHybridApp
             // Cleans the app data for a fresh new session.

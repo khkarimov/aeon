@@ -55,7 +55,7 @@ public class AutomationInfo {
      *
      * @return the {@link ICommandExecutionFacade }
      */
-    public final ICommandExecutionFacade getCommandExecutionFacade() {
+    public ICommandExecutionFacade getCommandExecutionFacade() {
         return commandExecutionFacade;
     }
 
