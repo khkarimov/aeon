@@ -18,7 +18,6 @@ public class PageWithIFrameAndNestedIFrame extends WebProduct {
      *
      * @param automationInfo Grabs the automation information to help initialize the object.
      */
-
     public PageWithIFrameAndNestedIFrame(AutomationInfo automationInfo) {
         popupButton = new Button(automationInfo, By.cssSelector("#popup-button"), By.cssSelector("iframe[id*=ContentFrame]"));
     }

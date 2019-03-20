@@ -4,7 +4,6 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,11 +48,5 @@ public class SelectFileCommandTests {
 
         //Assert
         verify(driver, times(1)).selectFile(control, path);
-    }
-
-    @Test
-    public void driverNullThrowsException() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> selectFileCommand.commandDelegate(null, null));
     }
 }

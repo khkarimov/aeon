@@ -20,7 +20,6 @@ public class PageWithIFrame extends WebProduct {
      *
      * @param automationInfo The automation info object to use.
      */
-
     public PageWithIFrame(AutomationInfo automationInfo) {
         wikiSearchTextBox = new TextBox(automationInfo, By.cssSelector("#searchInput"), By.cssSelector("iframe[id*=ContentFrame]"));
         searchButton = new Button(automationInfo, By.cssSelector("#searchButton"), By.cssSelector("iframe[id*=ContentFrame]"));

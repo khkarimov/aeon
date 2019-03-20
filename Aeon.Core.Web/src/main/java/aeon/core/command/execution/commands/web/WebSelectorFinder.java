@@ -17,10 +17,6 @@ public class WebSelectorFinder implements IWebSelectorFinder {
      * @return The narrowed down selector.
      */
     public IByWeb findSelector(IWebDriver driver, IByWeb selector) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
         return selector;
     }
 }

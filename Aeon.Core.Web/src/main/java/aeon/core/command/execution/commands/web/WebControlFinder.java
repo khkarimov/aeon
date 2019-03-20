@@ -38,10 +38,6 @@ public class WebControlFinder implements IWebControlFinder {
      * @return the web control object.
      */
     public final WebControl findElement(IWebDriver driver, IByWeb selector) {
-        if (driver == null) {
-            throw new IllegalArgumentException("driver");
-        }
-
         WebControl control = driver.findElement(selectorFinder.findSelector(driver, selector));
         control.setSelector(selector);
         return control;

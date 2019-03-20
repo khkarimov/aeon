@@ -5,7 +5,6 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,19 +41,6 @@ public class SetTextValueByJavaScriptCommandTests {
     @BeforeEach
     public void setup() {
         setTextByJavaScriptCommandObject = new SetTextByJavaScriptCommand(selector, initializer, value);
-    }
-
-    @Test
-    public void illegalArguementThrownWhenDriverIsNull() {
-        // Arrange
-        Exception illegalArgumentException;
-
-        // Act
-        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> setTextByJavaScriptCommandObject.commandDelegate(null, control));
-
-        // Assert
-        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package aeon.selenium.appium;
 
 import aeon.core.common.AeonConfigKey;
+import aeon.core.common.mobile.AppType;
 import aeon.core.framework.abstraction.drivers.AeonMobileDriver;
 import aeon.selenium.SeleniumConfiguration;
 import org.slf4j.Logger;
@@ -16,6 +17,41 @@ import java.util.List;
  * Configures selenium for different browsers and devices.
  */
 public class AppiumConfiguration extends SeleniumConfiguration {
+
+    /**
+     * Keys relevant to the Appium Configuration.
+     */
+    public enum Keys implements AeonConfigKey {
+
+        APP("aeon.appium.app"),
+        DEVICE_NAME("aeon.appium.device_name"),
+        PLATFORM_VERSION("aeon.appium.platform_version"),
+        DRIVER_CONTEXT("aeon.appium.driver_context"),
+        WEBVIEW_TIMEOUT("aeon.appium.webview.timeout"),
+        CROSSWALK_PATCH("aeon.appium.crosswalkpatch"),
+        AUTOMATION_NAME("aeon.appium.automation_name"),
+
+        // Android
+        APP_PACKAGE("aeon.appium.android.app_package"),
+        APP_ACTIVITY("aeon.appium.android.app_activity"),
+        AVD_NAME("aeon.appium.android.avd_name"),
+
+        //IOS
+        BUNDLE_ID("aeon.appium.ios.bundle_id"),
+        WDA_PORT("aeon.appium.ios.wda_port"),
+        UDID("aeon.appium.udid");
+
+        private final String key;
+
+        Keys(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String getKey() {
+            return this.key;
+        }
+    }
 
     private Logger log = LoggerFactory.getLogger(AppiumConfiguration.class);
 
@@ -43,5 +79,17 @@ public class AppiumConfiguration extends SeleniumConfiguration {
             log.error("appium.properties resource could not be read");
             throw e;
         }
+    }
+
+    @Override
+    public void setBrowserType(String browserType) {
+        for (AppType app : AppType.values()) {
+            if (app.getKey().equalsIgnoreCase(browserType)) {
+                this.browserType = app;
+                return;
+            }
+        }
+
+        super.setBrowserType(browserType);
     }
 }

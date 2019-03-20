@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands;
 
 import aeon.core.framework.abstraction.drivers.IDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,16 +35,4 @@ public class QuitCommandTests {
         //Assert
         verify(driver, times(1)).quit();
     }
-
-    @Test
-    public void driverDelegate_nullDriver_throwsException() {
-        //Arrange
-
-        //Act
-
-        //Assert
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> quitCommand.driverDelegate(null));
-    }
-
 }

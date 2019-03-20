@@ -1,57 +1,31 @@
 package aeon.core.common.web;
 
+import aeon.core.common.web.interfaces.IBrowserType;
+
 /**
  * The browser on which to automate tests.
  */
-public enum BrowserType {
-    /**
-     * Microsoft Internet Explorer.
-     */
-    InternetExplorer,
-    /**
-     * Microsoft Edge.
-     */
-    Edge,
+public enum BrowserType implements IBrowserType {
 
-    /**
-     * Google Chrome.
-     */
-    Chrome,
-
-    /**
-     * Mozilla Firefox.
-     */
-    Firefox,
-
-    /**
-     * Safari.
-     */
-    Safari,
-
-    /**
-     * Opera.
-     */
-    Opera,
+    INTERNET_EXPLORER("InternetExplorer"),
+    EDGE("Edge"),
+    CHROME("Chrome"),
+    FIREFOX("Firefox"),
+    SAFARI("Safari"),
+    OPERA("Opera"),
 
     // Mobile Browsers
-    /**
-     * iOS Safari.
-     */
-    IOSSafari,
+    IOS_SAFARI("IOSSafari"),
+    ANDROID_CHROME("AndroidChrome");
 
-    /**
-     * Android Chrome.
-     */
-    AndroidChrome,
+    private final String key;
 
-    //Apps
-    /**
-     * iOS app.
-     */
-    IOSHybridApp,
+    BrowserType(String key) {
+        this.key = key;
+    }
 
-    /**
-     * Android app.
-     */
-    AndroidHybridApp
+    @Override
+    public String getKey() {
+        return key;
+    }
 }

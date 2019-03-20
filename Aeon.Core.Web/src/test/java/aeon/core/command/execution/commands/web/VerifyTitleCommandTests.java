@@ -1,7 +1,6 @@
 package aeon.core.command.execution.commands.web;
 
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,11 +36,5 @@ public class VerifyTitleCommandTests {
 
         //Assert
         verify(driver, times(1)).verifyTitle(comparingText);
-    }
-
-    @Test
-    public void driverNullThrowsException() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> verifyTitleCommand.driverDelegate(null));
     }
 }

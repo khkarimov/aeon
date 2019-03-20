@@ -1,7 +1,5 @@
-package aeon.extensions.reporting;
+package aeon.extensions.reporting.models;
 
-import aeon.extensions.reporting.models.HighLevelStep;
-import aeon.extensions.reporting.models.ScenarioDetails;
 import org.junit.Test;
 
 import java.awt.*;

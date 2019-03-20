@@ -1,7 +1,9 @@
 package aeon.core.testabstraction.product;
 
 import aeon.core.common.AeonConfigKey;
+import aeon.core.common.exceptions.ConfigurationException;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.framework.abstraction.adapters.IWebAdapter;
 import aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
@@ -20,7 +22,7 @@ public class WebConfiguration extends Configuration {
 
     private Logger log = LoggerFactory.getLogger(WebConfiguration.class);
 
-    private BrowserType browserType;
+    protected IBrowserType browserType;
 
     /**
      * Configuration keys for settings specific to web products.
@@ -64,19 +66,26 @@ public class WebConfiguration extends Configuration {
      *
      * @return The {@link BrowserType} for the the configuration.
      */
-    public BrowserType getBrowserType() {
+    public IBrowserType getBrowserType() {
         return browserType;
     }
 
     /**
      * Set the type of browser.
      *
-     * @param browserType The {@link BrowserType} for the configuration.
+     * @param browserType The {@link IBrowserType} for the configuration.
      */
-    public void setBrowserType(BrowserType browserType) {
-        this.browserType = browserType;
-    }
+    public void setBrowserType(String browserType) {
+        for (BrowserType browser : BrowserType.values()) {
+            if (browser.getKey().equalsIgnoreCase(browserType)) {
+                this.browserType = browser;
+                return;
+            }
+        }
 
+        throw new ConfigurationException("BrowserType", "configuration",
+                String.format("%1$s is not a supported browser", browserType));
+    }
 
     @Override
     protected List<AeonConfigKey> getConfigurationFields() {
@@ -87,11 +96,8 @@ public class WebConfiguration extends Configuration {
 
     /**
      * Constructor for the Appium Configuration.  Configures that Aeon web driver and selenium adapter.
-     *
-     * @throws IOException            Exception thrown if there is an IO violation when accessing test or propertion.
-     * @throws IllegalAccessException Exception thrown when illegal access is requested.
      */
-    public WebConfiguration() throws IOException, IllegalAccessException {
+    public WebConfiguration() {
         super(AeonWebDriver.class, IWebAdapter.class);
     }
 

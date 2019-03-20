@@ -45,18 +45,6 @@ public class WebControlFinderTests {
     }
 
     @Test
-    public void throwIllegalArgumentExceptionIfSetDriverIsNull() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> webControlFinderSet.findElement(null, selector));
-    }
-
-    @Test
-    public void throwIllegalArgumentExceptionIfDefaultDriverIsNull() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> webControlFinderDefault.findElement(null, selector));
-    }
-
-    @Test
     public void verify_webControl_Default_After_Calling_findElement() {
         // Arrange
         when(driver.findElement(selector)).thenReturn(control);

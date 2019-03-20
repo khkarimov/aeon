@@ -3,6 +3,7 @@ package aeon.core.testabstraction.product;
 import aeon.core.command.execution.AutomationInfo;
 import aeon.core.common.AeonConfigKey;
 import aeon.core.common.Capability;
+import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +41,9 @@ public class ProductTests {
 
     @Mock
     private IAdapterExtension plugin;
+
+    @Mock
+    private IAdapter adapter;
 
     private Product product;
 
@@ -202,5 +206,63 @@ public class ProductTests {
 
         // Assert
         assertEquals(testValue, testSuccess);
+    }
+
+    @Test
+    public void switchDriver_onCall_callsAutomationSetAdapter() {
+
+        // Arrange
+        product.automationInfo = automationInfo;
+
+        // Act
+        product.switchDriver(adapter);
+
+        // Assert
+        verify(automationInfo, times(1)).setAdapter(adapter);
+    }
+
+    @Test
+    public void getConfig_onCallWithBooleanDefaultValue_callsConfigurationGetBoolean() {
+
+        // Arrange
+        product.configuration = configuration;
+        String key = "key";
+        boolean value = false;
+
+        // Act
+        product.getConfig(key, value);
+
+        // Assert
+        verify(configuration, times(1)).getBoolean(key, value);
+    }
+
+    @Test
+    public void getConfig_onCallWithStringDefaultValue_callsConfigurationGetString() {
+
+        // Arrange
+        product.configuration = configuration;
+        String key = "key";
+        String value = "val";
+
+        // Act
+        product.getConfig(key, value);
+
+        // Assert
+        verify(configuration, times(1)).getString(key, value);
+    }
+
+    @Test
+    public void getConfig_onCallWithDoubleDefaultValue_callsConfigurationGetDouble() {
+
+        // Arrange
+        product.configuration = configuration;
+        String key = "key";
+        double value = 123456789;
+
+        // Act
+        product.getConfig(key, value);
+
+        // Assert
+        verify(configuration, times(1)).getDouble(key, value);
     }
 }

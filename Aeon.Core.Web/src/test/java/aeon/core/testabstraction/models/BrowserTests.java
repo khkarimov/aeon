@@ -7,6 +7,7 @@ import aeon.core.command.execution.commands.QuitCommand;
 import aeon.core.command.execution.commands.web.*;
 import aeon.core.common.web.BrowserSize;
 import aeon.core.common.web.BrowserType;
+import aeon.core.common.web.interfaces.IBrowserType;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.framework.abstraction.controls.web.IWebCookie;
@@ -83,13 +84,13 @@ public class BrowserTests {
     public void getBrowserType_CallsExecute() {
 
         // Arrange
-        when(configuration.getBrowserType()).thenReturn(BrowserType.Chrome);
+        when(configuration.getBrowserType()).thenReturn(BrowserType.CHROME);
 
         // Act
-        BrowserType result = browserObject.getBrowserType();
+        IBrowserType result = browserObject.getBrowserType();
 
         // Assert
-        Assertions.assertEquals(result, BrowserType.Chrome);
+        Assertions.assertEquals(result, BrowserType.CHROME);
     }
 
     @Test

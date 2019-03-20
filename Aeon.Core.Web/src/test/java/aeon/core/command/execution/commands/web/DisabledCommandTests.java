@@ -4,7 +4,6 @@ import aeon.core.command.execution.commands.initialization.ICommandInitializer;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,32 +33,6 @@ public class DisabledCommandTests {
     @BeforeEach
     public void setup() {
         disabledCommandObject = new DisabledCommand(selector, initializer);
-    }
-
-    @Test
-    public void DriverNullThrowsException() {
-        // Arrange
-        Exception illegalArgumentException;
-
-        // Act
-        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> disabledCommandObject.commandDelegate(null, control));
-
-        // Assert
-        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
-    }
-
-    @Test
-    public void ControlNullThrowsException() {
-        // Arrange
-        Exception illegalArgumentException;
-
-        // Act
-        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> disabledCommandObject.commandDelegate(driver, null));
-
-        // Assert
-        Assertions.assertEquals("control", illegalArgumentException.getMessage());
     }
 
     @Test

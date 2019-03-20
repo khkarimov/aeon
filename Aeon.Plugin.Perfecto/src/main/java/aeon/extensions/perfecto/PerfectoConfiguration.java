@@ -18,11 +18,12 @@ public class PerfectoConfiguration extends PluginConfiguration {
      */
     public enum Keys implements AeonConfigKey {
 
-        PERFECTO_USER("aeon.selenium.perfecto.user"),
-        PERFECTO_PASS("aeon.selenium.perfecto.pass"),
-        PERFECTO_TOKEN("aeon.selenium.perfecto.token"),
-        PERFECTO_AUTOINSTRUMENT("aeon.selenium.perfecto.instrumentation.auto"),
-        PERFECTO_SENSORINSTRUMENT("aeon.selenium.perfecto.instrumentation.sensor");
+        PERFECTO_USER("aeon.extensions.perfecto.username"),
+        PERFECTO_PASS("aeon.extensions.perfecto.password"),
+        PERFECTO_TOKEN("aeon.extensions.perfecto.token"),
+        PERFECTO_AUTOINSTRUMENT("aeon.extensions.perfecto.instrumentation.auto"),
+        PERFECTO_SENSORINSTRUMENT("aeon.extensions.perfecto.instrumentation.sensor"),
+        DEVICE_DESCRIPTION("aeon.extensions.perfecto.device_description");
 
         private String key;
 

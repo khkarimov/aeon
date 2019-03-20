@@ -125,7 +125,7 @@ public class UnitTestsPerfecto {
     public void test_onAfterLaunch_OK() {
         //Arrange
         when(spyAeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(true);
-        when(spyAeonConfiguration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "")).thenReturn("test_appPackage");
+        when(spyAeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("test_appPackage");
         aDriver = mock(AndroidDriver.class);
 
         //Act
@@ -139,7 +139,7 @@ public class UnitTestsPerfecto {
     public void test_onAfterLaunch_NotCleanEnvironment() {
         //Arrange
         when(spyAeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(false);
-        when(spyAeonConfiguration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "")).thenReturn("test_appPackage");
+        when(spyAeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("test_appPackage");
         aDriver = mock(AndroidDriver.class);
 
         //Act
@@ -153,7 +153,7 @@ public class UnitTestsPerfecto {
     public void test_onAfterLaunch_NoAppPackage() {
         //Arrange
         when(spyAeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(true);
-        when(spyAeonConfiguration.getString(SeleniumConfiguration.Keys.APP_PACKAGE, "")).thenReturn("");
+        when(spyAeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("");
         aDriver = mock(AndroidDriver.class);
 
         //Act

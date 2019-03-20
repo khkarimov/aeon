@@ -6,7 +6,6 @@ import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.controls.web.WebControl;
 import aeon.core.framework.abstraction.drivers.IDriver;
 import aeon.core.framework.abstraction.drivers.IWebDriver;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,19 +44,6 @@ public class SetCommandTests {
     @BeforeEach
     public void setUp() {
         setCommandObject = new SetCommand(selector, initializer, WebSelectOption.TEXT, value);
-    }
-
-    @Test
-    public void commandDelegateDriverNullThrowsException() {
-        //Arrange
-        Exception illegalArgumentException;
-
-        //Act
-        illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> setCommandObject.commandDelegate(null, control));
-
-        //Assert
-        Assertions.assertEquals("driver", illegalArgumentException.getMessage());
     }
 
     @Test
