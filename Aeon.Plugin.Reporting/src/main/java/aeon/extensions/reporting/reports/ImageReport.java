@@ -263,9 +263,7 @@ public class ImageReport {
 
     private File htmlToPngFile(String html, String filePath) {
         log.trace("Converting HTML file to Png");
-        BufferedImage image = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                .getDefaultScreenDevice().getDefaultConfiguration()
-                .createCompatibleImage(800, 800);
+        BufferedImage image = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.createGraphics();
         JEditorPane jep = new JEditorPane("text/html", html);
         jep.setSize(800, 800);
