@@ -1,16 +1,16 @@
 package tests;
 
-import aeon.core.common.exceptions.NoAlertException;
-import aeon.core.common.exceptions.ValuesAreNotAlikeException;
-import aeon.core.common.exceptions.ValuesAreNotEqualException;
 import categories.SafariNotSupported;
+import com.ultimatesoftware.aeon.core.common.exceptions.NoAlertException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ValuesAreNotAlikeException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ValuesAreNotEqualException;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AlertsTests extends SampleBaseTest{
+public class AlertsTests extends SampleBaseTest {
 
     @Test
     public void testAcceptAlert_VerifyAlertExists_VerifyAlertNotExists() {

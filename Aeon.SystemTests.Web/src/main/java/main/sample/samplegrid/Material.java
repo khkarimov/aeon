@@ -1,10 +1,10 @@
 package main.sample.samplegrid;
 
-import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.Button;
-import aeon.core.testabstraction.elements.web.Label;
-import aeon.core.testabstraction.models.Component;
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.Button;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.Label;
+import com.ultimatesoftware.aeon.core.testabstraction.models.Component;
 
 /**
  * Models the elements of a table row.

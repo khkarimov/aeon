@@ -1,6 +1,6 @@
 package main.pagewithiframe;
 
-import aeon.core.testabstraction.product.WebProduct;
+import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
 import main.pagewithiframe.pages.PageWithIFrame;
 
 /**

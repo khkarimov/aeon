@@ -1,9 +1,9 @@
 package main.sample.pages;
 
-import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.selectors.By;
-import aeon.core.testabstraction.elements.web.*;
-import aeon.core.testabstraction.models.Page;
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.web.selectors.By;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.*;
+import com.ultimatesoftware.aeon.core.testabstraction.models.Page;
 import main.sample.samplegrid.MaterialTable;
 import main.sample.samplegrid.MaterialTableContainer;
 import main.sample.samplelistgroup.ActorList;

@@ -1,6 +1,6 @@
 package tests;
 
-import aeon.core.common.web.WebSelectOption;
+import com.ultimatesoftware.aeon.core.common.web.WebSelectOption;
 import org.junit.Test;
 
 public class SetTests extends SampleBaseTest{

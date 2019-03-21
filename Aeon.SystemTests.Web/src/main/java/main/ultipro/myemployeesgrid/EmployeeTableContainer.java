@@ -1,8 +1,8 @@
 package main.ultipro.myemployeesgrid;
 
-import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.TableContainer;
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.TableContainer;
 
 /**
  * Model for the employees grid.

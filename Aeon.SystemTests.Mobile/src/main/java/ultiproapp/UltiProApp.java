@@ -1,7 +1,7 @@
 package ultiproapp;
 
-import aeon.core.command.execution.AutomationInfo;
-import aeon.core.testabstraction.product.MobileProduct;
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.testabstraction.product.MobileProduct;
 import ultiproapp.pages.shared.AccessCodePage;
 import ultiproapp.pages.shared.loginpages.IOSIdentitySignInPage;
 import ultiproapp.pages.shared.loginpages.LoginPage;

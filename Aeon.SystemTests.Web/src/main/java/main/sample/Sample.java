@@ -1,6 +1,6 @@
 package main.sample;
 
-import aeon.core.testabstraction.product.WebProduct;
+import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
 import main.sample.pages.SampleUltiHomePage;
 import main.sample.pages.VTeamSamplePage;
 import main.ultipro.pages.HomePage;

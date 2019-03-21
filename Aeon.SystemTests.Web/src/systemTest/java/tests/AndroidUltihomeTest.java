@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static aeon.core.testabstraction.product.Aeon.launch;
+import static com.ultimatesoftware.aeon.core.testabstraction.product.Aeon.launch;
 
 @Category({AndroidTests.class})
 public class AndroidUltihomeTest {
