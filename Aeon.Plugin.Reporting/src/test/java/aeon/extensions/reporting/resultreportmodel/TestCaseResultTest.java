@@ -8,8 +8,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 class TestCaseResultTest {
 
@@ -22,7 +22,7 @@ class TestCaseResultTest {
     private HighLevelStep hlsMock;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         testCaseResult = new TestCaseResult();
         MockitoAnnotations.initMocks(this);
     }
@@ -33,6 +33,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getStatus();
+
         //Assert
         assertEquals(null, data);
     }
@@ -42,8 +43,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult status";
         testCaseResult.setStatus(message);
+
         //Act
         String data = testCaseResult.getStatus();
+
         //Assert
         assertEquals(message, data);
     }
@@ -54,6 +57,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getPrefix();
+
         //Assert
         assertEquals(null, data);
     }
@@ -63,8 +67,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult prefix";
         testCaseResult.setPrefix(message);
+
         //Act
         String data = testCaseResult.getPrefix();
+
         //Assert
         assertEquals(message, data);
     }
@@ -75,6 +81,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getDescription();
+
         //Assert
         assertEquals(null, data);
     }
@@ -84,8 +91,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult description";
         testCaseResult.setDescription(message);
+
         //Act
         String data = testCaseResult.getDescription();
+
         //Assert
         assertEquals(message, data);
     }
@@ -96,6 +105,7 @@ class TestCaseResultTest {
 
         //Act
         List<FailedExpectation> actual = testCaseResult.getFailedExpectations();
+
         //Assert
         assertEquals(Collections.emptyList(), actual);
     }
@@ -124,9 +134,9 @@ class TestCaseResultTest {
         List<FailedExpectation> actual = testCaseResult.getFailedExpectations();
 
         //Assert
-        for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i).getMessage(), actual.get(i).getMessage());
-        }
+        assertEquals(expected.get(0).getMessage(), actual.get(0).getMessage());
+        assertEquals(expected.get(1).getMessage(), actual.get(1).getMessage());
+        assertEquals(expected.get(2).getMessage(), actual.get(2).getMessage());
     }
 
     @Test
@@ -140,9 +150,9 @@ class TestCaseResultTest {
         List<FailedExpectation> actual = testCaseResult.getFailedExpectations();
 
         //Assert
-        for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i).getStack(), actual.get(i).getStack());
-        }
+        assertEquals(expected.get(0).getStack(), actual.get(0).getStack());
+        assertEquals(expected.get(1).getStack(), actual.get(1).getStack());
+        assertEquals(expected.get(2).getStack(), actual.get(2).getStack());
     }
 
     @Test
@@ -164,7 +174,6 @@ class TestCaseResultTest {
         Map<String, Object> map = new HashMap<>();
         map.put("foo", "bar");
         expected.add(map);
-
         testCaseResult.setBrowserLogs(expected);
 
         //Act
@@ -180,6 +189,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getStarted();
+
         //Assert
         assertEquals(null, data);
     }
@@ -189,8 +199,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult Started";
         testCaseResult.setStarted(message);
+
         //Act
         String data = testCaseResult.getStarted();
+
         //Assert
         assertEquals(message, data);
     }
@@ -201,6 +213,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getStopped();
+
         //Assert
         assertEquals(null, data);
     }
@@ -210,8 +223,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult Stopped";
         testCaseResult.setStopped(message);
+
         //Act
         String data = testCaseResult.getStopped();
+
         //Assert
         assertEquals(message, data);
     }
@@ -222,6 +237,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getDuration();
+
         //Assert
         assertEquals(null, data);
     }
@@ -231,8 +247,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult Duration";
         testCaseResult.setDuration(message);
+
         //Act
         String data = testCaseResult.getDuration();
+
         //Assert
         assertEquals(message, data);
     }
@@ -243,6 +261,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getScreenshotPath();
+
         //Assert
         assertEquals(null, data);
     }
@@ -252,8 +271,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult ScreenshotPath";
         testCaseResult.setScreenshotPath(message);
+
         //Act
         String data = testCaseResult.getScreenshotPath();
+
         //Assert
         assertEquals(message, data);
     }
@@ -264,6 +285,7 @@ class TestCaseResultTest {
 
         //Act
         String data = testCaseResult.getVideoUrl();
+
         //Assert
         assertEquals(null, data);
     }
@@ -273,8 +295,10 @@ class TestCaseResultTest {
         //Arrange
         String message = "Testing TestCaseResult VideoUrl";
         testCaseResult.setVideoUrl(message);
+
         //Act
         String data = testCaseResult.getVideoUrl();
+
         //Assert
         assertEquals(message, data);
     }
@@ -285,6 +309,7 @@ class TestCaseResultTest {
 
         //Act
         List<HighLevelStep> actual = testCaseResult.getSteps();
+
         //Assert
         assertEquals(null, actual);
     }
@@ -300,9 +325,9 @@ class TestCaseResultTest {
         List<HighLevelStep> actual = testCaseResult.getSteps();
 
         //Assert
-        for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i).getName(), actual.get(i).getName());
-        }
+        assertEquals(expected.get(0).getName(), actual.get(0).getName());
+        assertEquals(expected.get(1).getName(), actual.get(1).getName());
+        assertEquals(expected.get(2).getName(), actual.get(2).getName());
     }
 
     @Test
@@ -316,8 +341,8 @@ class TestCaseResultTest {
         List<HighLevelStep> actual = testCaseResult.getSteps();
 
         //Assert
-        for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i).getSteps(), actual.get(i).getSteps());
-        }
+        assertEquals(expected.get(0).getSteps(), actual.get(0).getSteps());
+        assertEquals(expected.get(1).getSteps(), actual.get(1).getSteps());
+        assertEquals(expected.get(2).getSteps(), actual.get(2).getSteps());
     }
 }
