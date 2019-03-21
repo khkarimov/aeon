@@ -1,13 +1,12 @@
 package tests;
 
-import aeon.core.common.mobile.AppType;
-import aeon.core.common.web.BrowserType;
+import com.ultimatesoftware.aeon.core.common.mobile.AppType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ultiproapp.UltiProApp;
 
-import static aeon.core.testabstraction.product.Aeon.launch;
+import static com.ultimatesoftware.aeon.core.testabstraction.product.Aeon.launch;
 
 public class UltiProAppTests {
 

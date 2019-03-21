@@ -1,12 +1,12 @@
 package tests;
 
-import aeon.core.common.CompareType;
-import aeon.core.common.exceptions.ElementDoesNotHaveNumberOfOptionsException;
-import aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
-import aeon.core.common.exceptions.ElementHasOptionException;
-import aeon.core.common.exceptions.ElementsNotInOrderException;
-import aeon.core.common.web.WebSelectOption;
 import categories.SafariNotSupported;
+import com.ultimatesoftware.aeon.core.common.CompareType;
+import com.ultimatesoftware.aeon.core.common.exceptions.ElementDoesNotHaveNumberOfOptionsException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ElementHasOptionException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ElementsNotInOrderException;
+import com.ultimatesoftware.aeon.core.common.web.WebSelectOption;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

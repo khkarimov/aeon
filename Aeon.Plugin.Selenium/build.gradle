@@ -36,7 +36,7 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'SeleniumAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.selenium.SeleniumPlugin'
     }
 
     from configurations.pluginImplementation.collect {
@@ -55,7 +55,7 @@ task fatJar(type: Jar) {
                 'Implementation-Version': version,
                 'Plugin-Id': 'SeleniumAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.selenium.SeleniumPlugin'
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.selenium.SeleniumPlugin'
     }
 
     from configurations.compile.collect {

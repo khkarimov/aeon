@@ -1,7 +1,7 @@
 package main.ultipro.myemployeesgrid;
 
-import aeon.core.common.web.selectors.By;
-import aeon.core.testabstraction.elements.web.Table;
+import com.ultimatesoftware.aeon.core.common.web.selectors.By;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.Table;
 
 /**
  * Class for finding rows based on certain column values.

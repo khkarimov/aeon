@@ -1,9 +1,9 @@
 package tests;
 
-import aeon.core.testabstraction.product.Aeon;
-import aeon.core.testabstraction.product.WebConfiguration;
 import categories.UbuntuTests;
 import categories.WindowsTests;
+import com.ultimatesoftware.aeon.core.testabstraction.product.Aeon;
+import com.ultimatesoftware.aeon.core.testabstraction.product.WebConfiguration;
 import main.sample.Sample;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
@@ -12,8 +12,8 @@ import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
-import static aeon.core.testabstraction.product.Aeon.launch;
-import static aeon.core.testabstraction.product.AeonTestExecution.*;
+import static com.ultimatesoftware.aeon.core.testabstraction.product.Aeon.launch;
+import static com.ultimatesoftware.aeon.core.testabstraction.product.AeonTestExecution.*;
 
 @Category({WindowsTests.class, UbuntuTests.class})
 public class SampleBaseTest {

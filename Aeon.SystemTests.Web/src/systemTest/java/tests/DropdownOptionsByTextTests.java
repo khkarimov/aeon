@@ -1,11 +1,11 @@
 package tests;
 
-import aeon.core.common.CompareType;
-import aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
-import aeon.core.common.exceptions.ElementHasOptionException;
-import aeon.core.common.exceptions.ElementsNotInOrderException;
-import aeon.core.common.web.WebSelectOption;
 import categories.SafariNotSupported;
+import com.ultimatesoftware.aeon.core.common.CompareType;
+import com.ultimatesoftware.aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ElementHasOptionException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ElementsNotInOrderException;
+import com.ultimatesoftware.aeon.core.common.web.WebSelectOption;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -45,7 +45,7 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
     }
 
     @Test
-    public void testHasAllOptionsInOrder_ByText_Ascending(){
+    public void testHasAllOptionsInOrder_ByText_Ascending() {
         product.startPage.lexoDropDown.hasAllOptionsInOrder(CompareType.ASCENDING_BY_TEXT);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));
@@ -67,7 +67,7 @@ public class DropdownOptionsByTextTests extends SampleBaseTest {
     }
 
     @Test
-    public void testHasAllOptionsInOrder_ByText_Descending(){
+    public void testHasAllOptionsInOrder_ByText_Descending() {
         product.startPage.revLexoDropDown.hasAllOptionsInOrder(CompareType.DESCENDING_BY_TEXT);
 
         thrown.expect(IsInstanceOf.instanceOf(ElementsNotInOrderException.class));

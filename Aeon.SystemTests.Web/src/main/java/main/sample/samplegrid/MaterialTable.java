@@ -1,8 +1,7 @@
 package main.sample.samplegrid;
 
-import aeon.core.common.web.selectors.By;
-import aeon.core.testabstraction.elements.web.Table;
-import aeon.core.testabstraction.elements.web.TableContainer;
+import com.ultimatesoftware.aeon.core.common.web.selectors.By;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.Table;
 
 /**
  * Class for finding table rows based on column values.

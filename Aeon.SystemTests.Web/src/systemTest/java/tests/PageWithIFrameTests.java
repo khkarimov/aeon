@@ -1,12 +1,12 @@
 package tests;
 
-import aeon.core.testabstraction.product.WebConfiguration;
+import com.ultimatesoftware.aeon.core.testabstraction.product.WebConfiguration;
 import main.pagewithiframe.IFrameWikiSample;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static aeon.core.testabstraction.product.Aeon.launch;
+import static com.ultimatesoftware.aeon.core.testabstraction.product.Aeon.launch;
 
 /**
  * This test file was created to show Aeon working with iFrames on webpages to test the switch mechanism.

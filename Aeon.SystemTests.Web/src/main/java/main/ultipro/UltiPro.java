@@ -1,6 +1,6 @@
 package main.ultipro;
 
-import aeon.core.testabstraction.product.WebProduct;
+import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
 import main.ultipro.pages.HomePage;
 import main.ultipro.pages.LoginPage;
 import main.ultipro.pages.MyEmployeesPage;

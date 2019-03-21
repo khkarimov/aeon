@@ -1,11 +1,11 @@
 package tests;
 
-import aeon.core.common.exceptions.NoSuchElementsException;
-import aeon.core.common.exceptions.NoSuchWindowException;
-import aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
-import aeon.core.common.exceptions.ValuesAreNotEqualException;
-import aeon.core.common.web.BrowserSize;
 import categories.EdgeNotSupported;
+import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchElementsException;
+import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchWindowException;
+import com.ultimatesoftware.aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
+import com.ultimatesoftware.aeon.core.common.exceptions.ValuesAreNotEqualException;
+import com.ultimatesoftware.aeon.core.common.web.BrowserSize;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

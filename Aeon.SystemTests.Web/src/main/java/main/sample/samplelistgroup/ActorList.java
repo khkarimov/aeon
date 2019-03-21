@@ -1,6 +1,6 @@
 package main.sample.samplelistgroup;
 
-import aeon.core.testabstraction.elements.web.ComponentList;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.ComponentList;
 
 /**
  * Class for finding list group items based on values of list group item elements.

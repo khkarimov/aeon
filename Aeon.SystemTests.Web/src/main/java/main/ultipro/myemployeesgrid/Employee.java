@@ -1,9 +1,9 @@
 package main.ultipro.myemployeesgrid;
 
-import aeon.core.command.execution.AutomationInfo;
-import aeon.core.common.web.interfaces.IByWeb;
-import aeon.core.testabstraction.elements.web.Link;
-import aeon.core.testabstraction.models.Component;
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
+import com.ultimatesoftware.aeon.core.testabstraction.elements.web.Link;
+import com.ultimatesoftware.aeon.core.testabstraction.models.Component;
 
 /**
  * Class for modeling the elements of a row in the employees grid.

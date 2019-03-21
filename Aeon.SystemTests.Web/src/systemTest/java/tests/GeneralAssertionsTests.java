@@ -1,10 +1,10 @@
 package tests;
 
-import aeon.core.common.exceptions.*;
-import aeon.core.common.web.WebSelectOption;
 import categories.EdgeNotSupported;
 import categories.UbuntuTests;
 import categories.WindowsTests;
+import com.ultimatesoftware.aeon.core.common.exceptions.*;
+import com.ultimatesoftware.aeon.core.common.web.WebSelectOption;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
