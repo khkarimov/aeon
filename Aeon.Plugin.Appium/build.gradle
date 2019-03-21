@@ -22,7 +22,7 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'AppiumAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.selenium.appium.AppiumPlugin',
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.appium.AppiumPlugin',
                 'Plugin-Dependencies': 'SeleniumAeon'
     }
 }
@@ -38,7 +38,7 @@ task fatJar(type: Jar) {
                 'Implementation-Version': version,
                 'Plugin-Id': 'AppiumAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.selenium.appium.AppiumPlugin'
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.appium.AppiumPlugin'
     }
 
     from configurations.compile.collect {

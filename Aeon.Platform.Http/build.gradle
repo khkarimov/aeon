@@ -6,7 +6,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '4.0.2'
 }
 
-mainClassName = 'aeon.platform.http.AeonApp'
+mainClassName = 'com.ultimatesoftware.aeon.platform.http.AeonApp'
 
 shadowJar {
     mergeServiceFiles()

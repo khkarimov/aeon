@@ -7,7 +7,7 @@ def baseProjectName = 'Aeon.Platform.Python'
 def baseProjectDescription = 'Aeon Platform Python Module'
 def base = baseProjectName
 
-mainClassName = 'aeon.platform.python.AeonApp'
+mainClassName = 'com.ultimatesoftware.aeon.platform.python.AeonApp'
 
 dependencies {
     compile project(':Aeon.Platform')

@@ -26,7 +26,7 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'ReportingAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.extensions.reporting.ReportingPlugin'
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.reporting.ReportingPlugin'
     }
 
     from configurations.pluginImplementation.collect { it.isDirectory() ? it : zipTree(it) }
@@ -43,7 +43,7 @@ task fatJar(type: Jar) {
                 'Implementation-Version': version,
                 'Plugin-Id': 'ReportingAeon',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.extensions.reporting.ReportingPlugin'
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.reporting.ReportingPlugin'
     }
 
     from configurations.compile.collect {

@@ -6,10 +6,10 @@ plugins {
     id 'org.springframework.boot' version '2.0.5.RELEASE'
 }
 
-mainClassName = 'aeon.cloud.AeonCloud'
+mainClassName = 'com.ultimatesoftware.aeon.cloud.AeonCloud'
 
 bootJar {
-    mainClassName = 'aeon.cloud.AeonCloud'
+    mainClassName = 'com.ultimatesoftware.aeon.cloud.AeonCloud'
     version = null
 }
 
