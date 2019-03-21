@@ -14,13 +14,4 @@ public abstract class JavaScriptFinalizer implements IJavaScriptFinalizer {
     protected JavaScriptFinalizer(IJavaScriptFinalizer successor) {
         this.successor = successor;
     }
-
-    /**
-     * Specifies the particular preparation formatting.
-     *
-     * @param javaScript The JavaScript code to format.
-     * @return Formatted JavaScript code.
-     * @throws IllegalArgumentException If {@code javaScript} is null.
-     */
-    public abstract String prepare(String javaScript);
 }

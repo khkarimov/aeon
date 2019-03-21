@@ -1,7 +1,5 @@
 package aeon.selenium.jquery;
 
-import aeon.selenium.QuadFunction;
-
 import java.util.function.Function;
 
 /**
@@ -34,13 +32,6 @@ public abstract class JavaScriptFlowExecutor implements IJavaScriptFlowExecutor 
      * @return The new option instance.
      */
     public final Function<JavaScriptFinalizerOptions, IJavaScriptFinalizer> getFinalizer() {
-        return (options) -> getFinalizerFactory().createInstance(options);
+        return options -> getFinalizerFactory().createInstance(options);
     }
-
-    /**
-     * Abstract function to get the executor.
-     *
-     * @return Returns the executor for the script.
-     */
-    public abstract QuadFunction<IScriptExecutor, String, Iterable<Object>, Object> getExecutor();
 }

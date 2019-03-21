@@ -1,11 +1,12 @@
 package aeon.core.common.mobile.selectors;
 
+import aeon.core.common.exceptions.NativeSelectorException;
 import aeon.core.common.mobile.interfaces.IByMobile;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.common.web.selectors.ByJQuery;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -39,7 +40,7 @@ public class ByMobileIdTests {
     }
 
     @Test
-    public void useMobileSelector_whenGettingSelector_returnsCorrectId(){
+    public void useMobileSelector_whenGettingSelector_returnsCorrectId() {
         //Arrange
 
         //Act
@@ -50,7 +51,7 @@ public class ByMobileIdTests {
     }
 
     @Test
-    public void useMobileSelector_whenGettingToString_returnsCorrectId(){
+    public void useMobileSelector_whenGettingToString_returnsCorrectId() {
         //Arrange
 
         //Act
@@ -62,21 +63,21 @@ public class ByMobileIdTests {
 
 
     @Test
-    public void useMobileSelector_whenUsingAnIByWebSelector_throwsException(){
+    public void useMobileSelector_whenUsingAnIByWebSelector_throwsException() {
         //Arrange
         IByWeb myFindSelector = new ByJQuery("#my-jquery-selector");
 
         //Act and Assert
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        Assertions.assertThrows(NativeSelectorException.class, () -> {
             command.find(myFindSelector);
         });
     }
 
     @Test
-    public void useMobileSelector_whenRetrievingJquerySelector_throwsException(){
+    public void useMobileSelector_whenRetrievingJquerySelector_throwsException() {
 
         //Act and Assert
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        Assertions.assertThrows(NativeSelectorException.class, () -> {
             command.toJQuery();
         });
     }

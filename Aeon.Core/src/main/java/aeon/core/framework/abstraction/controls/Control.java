@@ -1,8 +1,8 @@
 package aeon.core.framework.abstraction.controls;
 
 /**
- * Base class for all controls.
+ * Interface for all controls.
  */
-public class Control {
+public interface Control {
 
 }

@@ -1,5 +1,6 @@
 package aeon.core.framework.abstraction.drivers;
 
+import aeon.core.common.exceptions.WebUsingMobileCommandException;
 import aeon.core.common.mobile.selectors.MobileSelectOption;
 import aeon.core.common.web.interfaces.IByWeb;
 import aeon.core.framework.abstraction.adapters.IAdapter;
@@ -20,6 +21,7 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
      * Initializes a new instance of the AeonWebDriver class.
      */
     public AeonMobileDriver() {
+        // Empty
     }
 
     @Override
@@ -35,10 +37,11 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
             case "AndroidHybridApp":
                 adapter.mobileLock();
                 break;
-
             case "IOSHybridApp":
                 adapter.mobileLock(0);
                 break;
+            default:
+                throw new WebUsingMobileCommandException(getBrowserType().getKey());
         }
     }
 
@@ -52,10 +55,11 @@ public class AeonMobileDriver extends AeonWebDriver implements IMobileDriver {
             case "AndroidHybridApp":
                 adapter.mobileLock();
                 break;
-
             case "IOSHybridApp":
                 adapter.mobileLock(seconds);
                 break;
+            default:
+                throw new WebUsingMobileCommandException(getBrowserType().getKey());
         }
     }
 

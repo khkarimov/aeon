@@ -10,8 +10,6 @@ import java.util.Locale;
  */
 public class ScriptExecutionException extends RuntimeException implements Serializable {
 
-    private String script;
-
     /**
      * Initializes a new instance of the {@link ScriptExecutionException} class.
      *
@@ -20,22 +18,5 @@ public class ScriptExecutionException extends RuntimeException implements Serial
      */
     public ScriptExecutionException(String script, RuntimeException innerException) {
         super(String.format(Locale.getDefault(), Resources.getString("ScriptExecutionException_ctor_DefaultMessage"), script), innerException);
-        this.script = script;
-    }
-
-    /**
-     * Gets the current script.
-     * @return the current script.
-     */
-    public String getScript() {
-        return script;
-    }
-
-    /**
-     * Sets the script to a string input.
-     * @param script the script to be set.
-     */
-    public void setScript(String script) {
-        this.script = script;
     }
 }

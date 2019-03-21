@@ -2,7 +2,6 @@ package aeon.selenium.appium;
 
 import aeon.core.common.Capability;
 import aeon.core.common.exceptions.AeonLaunchException;
-import aeon.core.common.exceptions.UnableToCreateDriverException;
 import aeon.core.common.helpers.Sleep;
 import aeon.core.common.helpers.StringUtils;
 import aeon.core.framework.abstraction.adapters.IAdapter;
@@ -12,7 +11,10 @@ import aeon.selenium.SeleniumAdapterFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.pf4j.Extension;
@@ -22,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Set;
-import java.util.function.Supplier;
 
 /**
  * The driver factory for Web.
@@ -184,26 +185,6 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
-    }
-
-    private WebDriver getDriver(Supplier<WebDriver> createDriver) {
-        int i = 0;
-        int numberOfRetries = 30;
-        while (true) {
-            try {
-                return createDriver.get();
-            } catch (Exception e) {
-                log.trace("Web driver instantiation failed: " + e.getMessage(), e);
-
-                if (i < numberOfRetries - 1) {
-                    Sleep.wait(1000);
-                    log.trace("Retrying");
-                    i++;
-                } else {
-                    throw new UnableToCreateDriverException(e.getMessage());
-                }
-            }
-        }
     }
 
     private void trySetContext() {

@@ -1,6 +1,7 @@
 package aeon.core.common.web;
 
-import java.awt.Dimension;
+import java.awt.*;
+import java.util.EnumMap;
 import java.util.HashMap;
 
 /**
@@ -8,7 +9,7 @@ import java.util.HashMap;
  */
 public final class BrowserSizeMap {
 
-    private static final HashMap<BrowserSize, Dimension> browserSizes = new HashMap<>();
+    private static final EnumMap<BrowserSize, Dimension> browserSizes = new EnumMap<>(BrowserSize.class);
     private static final HashMap<Dimension, BrowserSize> sizes = new HashMap<>();
 
     static {
@@ -34,7 +35,8 @@ public final class BrowserSizeMap {
     }
 
     /**
-     *  Boolean function that returns a truth value if the size is in the instance's sizes.
+     * Boolean function that returns a truth value if the size is in the instance's sizes.
+     *
      * @param size size input to test.
      * @return true or false if the size if contained in the current browser size.
      */
@@ -43,7 +45,8 @@ public final class BrowserSizeMap {
     }
 
     /**
-     *  Boolean function that returns a value based on the BrowserSize.
+     * Boolean function that returns a value based on the BrowserSize.
+     *
      * @param browserSize browser size input to test.
      * @return true or false if the size if contained in the current browser size.
      */
@@ -53,6 +56,7 @@ public final class BrowserSizeMap {
 
     /**
      * Given a Size, the function returns the sizes of the browser map.
+     *
      * @param size the input size to get.
      * @return the BrowserSize of the map.
      */
@@ -62,6 +66,7 @@ public final class BrowserSizeMap {
 
     /**
      * Function takes a Browser Size and returns the {@link Dimension} of a browser.
+     *
      * @param browserSize the input browserSize.
      * @return the Size of the input.
      */
@@ -71,6 +76,7 @@ public final class BrowserSizeMap {
 
     /**
      * Function takes a Browser Size and returns the {@link Dimension} of a browser.
+     *
      * @param browserSize the input browserSize.
      * @return the Size of the input.
      */
