@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.EditorKit;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -263,11 +264,17 @@ public class ImageReport {
 
     private File htmlToPngFile(String html, String filePath) {
         log.trace("Converting HTML file to Png");
-        BufferedImage image = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        Graphics graphics = image.createGraphics();
-        JEditorPane jep = new JEditorPane("text/html", html);
+        JEditorPane jep = new JEditorPane();
         jep.setSize(800, 800);
-        jep.print(graphics);
+        EditorKit kit = jep.getEditorKit();
+        jep.setEditorKitForContentType("text/html; charset=UTF-8", kit);
+        jep.setContentType("text/html; charset=UTF-8");
+        jep.setText(html);
+        Dimension prefsize = jep.getPreferredSize();
+        BufferedImage image = new BufferedImage(prefsize.width, jep.getPreferredSize().height, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = image.getGraphics();
+        jep.setSize(prefsize);
+        jep.paint(graphics);
         File file = new File(filePath);
         file.deleteOnExit();
         file.getParentFile().mkdirs();
