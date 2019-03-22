@@ -4,6 +4,7 @@ import aeon.core.common.interfaces.IConfiguration;
 import aeon.core.extensions.ITestExecutionExtension;
 import aeon.core.framework.abstraction.adapters.IAdapter;
 import aeon.core.testabstraction.product.Configuration;
+import aeon.selenium.SeleniumConfiguration;
 import aeon.selenium.extensions.ISeleniumExtension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
@@ -97,6 +98,7 @@ public class TestMagoExtension implements ITestExecutionExtension, ISeleniumExte
         String accessKey = this.configuration.getString(TestMagoConfiguration.Keys.TESTMAGO_ACCESS_KEY, "");
         String apiKey = this.configuration.getString(TestMagoConfiguration.Keys.TESTMAGO_API_KEY, "");
         String appId = this.configuration.getString(TestMagoConfiguration.Keys.TESTMAGO_APP_ID, "");
+        String udid = this.configuration.getString(SeleniumConfiguration.Keys.UDID, "");
 
         // Set credentials
         if (!username.isEmpty()) {
@@ -114,6 +116,12 @@ public class TestMagoExtension implements ITestExecutionExtension, ISeleniumExte
         if (!appId.isEmpty()) {
             capabilities.setCapability("testobject_api_id", appId);
         }
+
+        if (!udid.isEmpty()) {
+            capabilities.setCapability("udid", udid);
+        }
+
+        //capabilities.setCapability("headspin.capture", "false");
     }
 
     @Override
