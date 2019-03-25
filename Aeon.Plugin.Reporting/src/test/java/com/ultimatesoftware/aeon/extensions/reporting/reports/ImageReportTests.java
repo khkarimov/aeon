@@ -17,8 +17,8 @@ import static org.mockito.Mockito.*;
 
 
 public class ImageReportTests {
-    //TODO: add assertions to tests or refactor tests
-    
+    //TODO(GavrilRT): add assertions to tests or refactor tests
+
     private ImageReport imageReport;
 
     @BeforeEach
@@ -31,7 +31,7 @@ public class ImageReportTests {
 
         // Arrange
         IConfiguration configurationMock = mock(IConfiguration.class);
-        when(configurationMock.getBoolean(any(ReportingConfiguration.Keys.DISPLAY_CLASSNAME.getClass()),anyBoolean())).thenReturn(true);
+        when(configurationMock.getBoolean(any(ReportingConfiguration.Keys.DISPLAY_CLASSNAME.getClass()), anyBoolean())).thenReturn(true);
         boolean fieldValue = false;
 
         // Act
@@ -40,7 +40,7 @@ public class ImageReportTests {
             Field displayClassName = ImageReport.class.getDeclaredField("displayClassName");
             displayClassName.setAccessible(true);
             fieldValue = (boolean) displayClassName.get(imageReport);
-        } catch (Exception e ){
+        } catch (Exception e) {
             System.out.println(e);
             fail();
         }
