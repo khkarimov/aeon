@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
-
 public class ImageReportTests {
     //TODO(GavrilRT): add assertions to tests or refactor tests
 
