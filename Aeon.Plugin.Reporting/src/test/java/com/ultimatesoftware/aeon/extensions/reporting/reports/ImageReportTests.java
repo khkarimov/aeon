@@ -18,8 +18,7 @@ import static org.mockito.Mockito.*;
 
 public class ImageReportTests {
     //TODO: add assertions to tests or refactor tests
-
-
+    
     private ImageReport imageReport;
 
     @BeforeEach
@@ -48,7 +47,6 @@ public class ImageReportTests {
 
         // Assert
         assertTrue(fieldValue);
-
 
     }
 
@@ -98,6 +96,5 @@ public class ImageReportTests {
         // Assert
 
     }
-
 
 }
