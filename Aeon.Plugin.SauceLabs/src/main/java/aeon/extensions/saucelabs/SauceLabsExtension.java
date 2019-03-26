@@ -97,6 +97,7 @@ public class SauceLabsExtension implements ITestExecutionExtension, ISeleniumExt
         String accessKey = this.configuration.getString(SauceLabsConfiguration.Keys.SAUCE_LABS_ACCESS_KEY, "");
         String apiKey = this.configuration.getString(SauceLabsConfiguration.Keys.SAUCE_LABS_API_KEY, "");
         String appId = this.configuration.getString(SauceLabsConfiguration.Keys.SAUCE_LABS_APP_ID, "");
+        String appiumVersion = this.configuration.getString(SauceLabsConfiguration.Keys.SAUCE_LABS_APPIUM_VERSION, "");
 
         // Set credentials
         if (!username.isEmpty()) {
@@ -115,7 +116,9 @@ public class SauceLabsExtension implements ITestExecutionExtension, ISeleniumExt
             capabilities.setCapability("testobject_api_id", appId);
         }
 
-        capabilities.setCapability("appiumVersion", "1.9.1");
+        if (!appiumVersion.isEmpty()) {
+            capabilities.setCapability("appiumVersion", appiumVersion);
+        }
 
         capabilities.setCapability("deviceOrientation", "portrait");
     }

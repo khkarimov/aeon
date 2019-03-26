@@ -21,6 +21,7 @@ public class SauceLabsConfiguration extends PluginConfiguration {
         public static final String SAUCE_LABS_ACCESS_KEY = "aeon.extensions.saucelabs.accesskey";
         public static final String SAUCE_LABS_API_KEY = "aeon.extensions.saucelabs.api.key";
         public static final String SAUCE_LABS_APP_ID = "aeon.extensions.saucelabs.app.id";
+        public static final String SAUCE_LABS_APPIUM_VERSION = "aeon.extensions.saucelabs.appium.version";
 
     }
 
