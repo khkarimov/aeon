@@ -31,7 +31,7 @@ Log configurations are specified within `log4j2.xml`. Within the Aeon project, t
 configuration element name, thus, a configuration with your custom appender and layout might look like this:
 
 ```xml
-<Configuration packages="aeon.core.common.logging">
+<Configuration packages="com.ultimatesoftware.aeon.core.common.logging">
    <Appenders>
        <CustomFileAppender name="CustomFileAppender" anotherAttribute="...">
            <CustomLayout/>

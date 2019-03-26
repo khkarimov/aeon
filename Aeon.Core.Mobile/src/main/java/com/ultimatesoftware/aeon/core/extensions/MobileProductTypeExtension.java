@@ -16,7 +16,7 @@ public class MobileProductTypeExtension extends WebProductTypeExtension {
      * Construct Mobile product type extension.
      */
     public MobileProductTypeExtension() {
-        this.commandPackage = "aeon.core.command.execution.commands.mobile.";
+        this.commandPackage = "com.ultimatesoftware.aeon.core.command.execution.commands.mobile.";
     }
 
     @Override

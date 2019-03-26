@@ -27,7 +27,7 @@ import java.util.Map;
 @Extension
 public class WebProductTypeExtension implements IProductTypeExtension {
 
-    String commandPackage = "aeon.core.command.execution.commands.web.";
+    String commandPackage = "com.ultimatesoftware.aeon.core.command.execution.commands.web.";
 
     @Override
     public WebCommandExecutionFacade createCommandExecutionFacade(AutomationInfo automationInfo) {
@@ -113,19 +113,19 @@ public class WebProductTypeExtension implements IProductTypeExtension {
 
         for (Class p : parameters) {
             switch (p.getName()) {
-                case "IByWeb":
+                case "com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb":
                     if (Map.class.isAssignableFrom(args.get(i).getClass())) {
                         params[i] = createSelector((Map) args.get(j));
                     } else {
                         return null;
                     }
                     break;
-                case "ICommandInitializer":
+                case "com.ultimatesoftware.aeon.core.command.execution.commands.initialization.ICommandInitializer":
                     // switchMechanism is always null
                     params[i] = parseICommandInitializer((IByWeb[]) null);
                     j--;
                     break;
-                case "WebSelectOption":
+                case "com.ultimatesoftware.aeon.core.common.web.WebSelectOption":
                     params[i] = WebSelectOption.valueOf((String) args.get(j));
                     break;
                 default:

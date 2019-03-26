@@ -5,6 +5,7 @@ import com.ultimatesoftware.aeon.core.common.ComparisonOption;
 import com.ultimatesoftware.aeon.core.common.KeyboardKey;
 import com.ultimatesoftware.aeon.core.common.exceptions.*;
 import com.ultimatesoftware.aeon.core.common.exceptions.ElementNotVisibleException;
+import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchCookieException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchElementException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchWindowException;
 import com.ultimatesoftware.aeon.core.common.helpers.*;
@@ -177,7 +178,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         log.trace("WebDriver.get_Cookie();");
         Cookie cookie = getWebDriver().manage().getCookieNamed(name);
         if (cookie == null) {
-            throw new com.ultimatesoftware.aeon.core.common.exceptions.NoSuchCookieException(name);
+            throw new NoSuchCookieException(name);
         }
 
         IWebCookie result = new SeleniumCookie(cookie);
@@ -197,7 +198,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
         // check if cookie actually exists.
         if (cookie == null) {
-            throw new com.ultimatesoftware.aeon.core.common.exceptions.NoSuchCookieException(name);
+            throw new NoSuchCookieException(name);
         }
 
         // Delete old cookie, then add a new one with the new value.
@@ -383,7 +384,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A ReadOnlyCollection of IWebElementAdapter.
      */
     public final Collection<WebControl> findElements(IBy findBy) {
-        com.ultimatesoftware.aeon.core.common.web.selectors.By by = (com.ultimatesoftware.aeon.core.common.web.selectors.By) ((findBy instanceof com.ultimatesoftware.aeon.core.common.web.selectors.By) ? findBy : null);
+        com.ultimatesoftware.aeon.core.common.web.selectors.By by =
+                (com.ultimatesoftware.aeon.core.common.web.selectors.By)
+                        ((findBy instanceof com.ultimatesoftware.aeon.core.common.web.selectors.By) ? findBy : null);
+
         if (by != null) {
             Collection<WebControl> collection;
             log.trace("WebDriver.findElements(by.cssSelector({}));", by);
