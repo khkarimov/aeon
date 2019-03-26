@@ -19,3 +19,12 @@ clean.doFirst {
 repositories {
     jcenter()
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.platform'
+        }
+    }
+}

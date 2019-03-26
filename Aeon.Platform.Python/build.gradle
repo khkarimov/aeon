@@ -4,7 +4,7 @@ plugins {
 }
 
 def baseProjectName = 'Aeon.Platform.Python'
-def baseProjectDescription = 'Aeon Platform Python Module'
+def baseProjectDescription = 'Aeon Python Platform'
 def base = baseProjectName
 
 mainClassName = 'com.ultimatesoftware.aeon.platform.python.AeonApp'
@@ -25,11 +25,10 @@ repositories {
     jcenter()
 }
 
-task fatJar(type: Jar) {
-    group 'build'
+jar {
     version = version
     baseName = base
-    archiveName = base + '-all-' + version + '.jar'
+    archiveName = base + '-' + version + '.jar'
 
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
@@ -43,5 +42,13 @@ task fatJar(type: Jar) {
     from('src/main/resources') {
         include 'META-INF/extensions.idx'
     }
-    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.platform.python'
+        }
+    }
 }
