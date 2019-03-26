@@ -3,7 +3,7 @@
 This guide describes how to create custom appenders and layouts with Log4j2. This is done through the use of 
 [Appenders](https://logging.apache.org/log4j/2.0/manual/appenders.html) and 
 [Layouts](https://logging.apache.org/log4j/2.x/manual/layouts.html). Within the Aeon project, files which serve these 
-purposes can be found within the directory `Aeon.Core/src/aeon/core/common/logging`. 
+purposes can be found within the directory `Aeon.Plugin.Log4J2/src/main/java/com/ultimatesoftware/aeon/extensions/log4j2`.
 
 ## Custom Appender and Layout
 
@@ -31,16 +31,40 @@ Log configurations are specified within `log4j2.xml`. Within the Aeon project, t
 configuration element name, thus, a configuration with your custom appender and layout might look like this:
 
 ```xml
-<Configuration packages="com.ultimatesoftware.aeon.core.common.logging">
-   <Appenders>
-       <CustomFileAppender name="CustomFileAppender" anotherAttribute="...">
-           <CustomLayout/>
-       </CustomFileAppender>
-   </Appenders>
-   <Loggers>
-       <Root>
-           <AppenderRef ref="CustomFileAppender"/>
-       </Root>
-   </Loggers>
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.ultimatesoftware.aeon.core.common.logging">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFile" filename="log/AeonLog.log"
+                     filepattern="${logPath}/%d{yyyyMMddHHmmss}-AeonLog.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <File name="File" filename="log/AeonLog.html">
+            <AeonHtmlLayout/>
+        </File>
+        <PIdFileAppender name="PIdFileAppender" fileName="log/AeonLog.html">
+            <AeonHtmlLayout/>
+        </PIdFileAppender>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.ultimatesoftware.aeon" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="PIdFileAppender"/>
+            <AppenderRef ref="File" level="error"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="PIdFileAppender"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
 </Configuration>
 ```
