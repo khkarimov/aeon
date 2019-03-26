@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" packages="aeon.core.common.logging">
+<Configuration status="WARN" packages="com.ultimatesoftware.aeon.core.common.logging">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n"/>
@@ -20,7 +20,7 @@
         </PIdFileAppender>
     </Appenders>
     <Loggers>
-        <Logger name="aeon" level="info" additivity="false">
+        <Logger name="com.ultimatesoftware.aeon" level="info" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="PIdFileAppender"/>
