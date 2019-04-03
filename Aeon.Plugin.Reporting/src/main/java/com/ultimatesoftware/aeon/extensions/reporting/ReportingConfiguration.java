@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,23 +20,8 @@ public class ReportingConfiguration extends PluginConfiguration {
      */
     public enum Keys implements AeonConfigKey {
 
-        SLACK_CHAT_URL("aeon.extensions.reporting.slack.chat.url"),
-        SLACK_UPLOAD_URL("aeon.extensions.reporting.slack.upload.url"),
-        SLACK_BOT_TOKEN("aeon.extensions.reporting.slack.bot.token"),
-        CHANNEL_1("aeon.extensions.reporting.slack.channel.1"),
-        CHANNEL_2("aeon.extensions.reporting.slack.channel.2"),
         DISPLAY_CLASSNAME("aeon.extensions.reporting.display_class_name"),
-        ERROR_MESSAGE_CHARACTER_LIMIT("aeon.extensions.reporting.error_message_character_limit"),
-        REPORTS_DIRECTORY("aeon.extensions.reporting.directory"),
-        ARTIFACTORY_PATH("aeon.extensions.reporting.artifactory.path"),
-        ARTIFACTORY_USERNAME("aeon.extensions.reporting.artifactory.username"),
-        ARTIFACTORY_PASSWORD("aeon.extensions.reporting.artifactory.password"),
-        ARTIFACTORY_URL("aeon.extensions.reporting.artifactory.url"),
-        RNR_URL("aeon.extensions.reporting.rnr.url"),
-        PRODUCT("aeon.extensions.reporting.metadata.product"),
-        TEAM("aeon.extensions.reporting.metadata.team"),
-        TYPE("aeon.extensions.reporting.metadata.type"),
-        BRANCH("aeon.extensions.reporting.metadata.branch");
+        REPORTS_DIRECTORY("aeon.extensions.reporting.directory");
 
         private String key;
 
@@ -53,10 +37,7 @@ public class ReportingConfiguration extends PluginConfiguration {
 
     @Override
     protected List<AeonConfigKey> getConfigurationFields() {
-        List<AeonConfigKey> keys = new ArrayList<>();
-        keys.addAll(super.getConfigurationFields());
-        keys.addAll(Arrays.asList(ReportingConfiguration.Keys.values()));
-        return keys;
+        return Arrays.asList(ReportingConfiguration.Keys.values());
     }
 
     @Override

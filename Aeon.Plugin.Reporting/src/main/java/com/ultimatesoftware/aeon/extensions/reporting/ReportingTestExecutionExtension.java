@@ -2,58 +2,49 @@ package com.ultimatesoftware.aeon.extensions.reporting;
 
 import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
 import com.ultimatesoftware.aeon.core.extensions.ITestExecutionExtension;
+import com.ultimatesoftware.aeon.core.extensions.IUploadListenerExtension;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
-import com.ultimatesoftware.aeon.extensions.reporting.models.ReportDetails;
-import com.ultimatesoftware.aeon.extensions.reporting.models.ScenarioDetails;
-import com.ultimatesoftware.aeon.extensions.reporting.reports.HtmlReport;
-import com.ultimatesoftware.aeon.extensions.reporting.reports.ImageReport;
-import com.ultimatesoftware.aeon.extensions.reporting.reports.SlackReport;
-import com.ultimatesoftware.aeon.extensions.reporting.services.ArtifactoryService;
-import com.ultimatesoftware.aeon.extensions.reporting.services.RnrService;
-import com.ultimatesoftware.aeon.extensions.reporting.services.SlackBotService;
+import com.ultimatesoftware.aeon.extensions.reporting.models.Report;
+import com.ultimatesoftware.aeon.extensions.reporting.models.TestCase;
 import org.pf4j.Extension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * Test execution extension for sending test details to Slack, Artifactory and RocknRoly.
+ * Test execution extension for creating a report.
  */
 @Extension
-public class ReportingTestExecutionExtension implements ITestExecutionExtension {
+public class ReportingTestExecutionExtension implements ITestExecutionExtension, IUploadListenerExtension {
 
-    private static final Object lock = new Object();
-    private static IConfiguration aeonConfiguration;
-    private static IConfiguration configuration;
-    private ScenarioDetails currentScenario;
+    private IConfiguration configuration;
+    private TestCase currentTestCase;
 
-    private ArtifactoryService artifactoryService;
     private ReportController reportController;
 
-    private static ReportDetails reportDetails = null;
-    private static Queue<ScenarioDetails> finishedScenarios = new ConcurrentLinkedQueue<>();
+    private static Report report = null;
+    private static Queue<TestCase> finishedTestCases = new ConcurrentLinkedQueue<>();
 
     private static Logger log = LoggerFactory.getLogger(ReportingTestExecutionExtension.class);
+    private final SimpleDateFormat uploadDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-    private ReportingTestExecutionExtension(
+    ReportingTestExecutionExtension(
             ReportController reportController,
-            ArtifactoryService artifactoryService
-    ) {
+            IConfiguration configuration) {
         this.reportController = reportController;
-        this.artifactoryService = artifactoryService;
-
-        initializeConfiguration();
+        this.configuration = configuration;
     }
 
     /**
@@ -62,18 +53,19 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
      * @return An instance of this extension.
      */
     public static Object createInstance() {
-        ArtifactoryService artifactoryService = new ArtifactoryService();
-        ReportingTestExecutionExtension.configuration = new ReportingConfiguration();
+
+        IConfiguration configuration = new ReportingConfiguration();
+
+        try {
+            configuration.loadConfiguration();
+        } catch (IllegalAccessException | IOException e) {
+            log.warn("Could not load plugin configuration.");
+        }
 
         return new ReportingTestExecutionExtension(
                 new ReportController(
-                        new HtmlReport(),
-                        new SlackReport(
-                                new ImageReport(),
-                                new SlackBotService()),
-                        artifactoryService,
-                        new RnrService()),
-                artifactoryService
+                        new HtmlReport(configuration)),
+                configuration
         );
     }
 
@@ -82,87 +74,88 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
         // Don't check that reportDetails is null, as it should be re-initialized with this message
         initializeReport(suiteName);
 
-        reportDetails.setCorrelationId(correlationId);
+        report.setCorrelationId(correlationId);
     }
 
     @Override
     public void onStartUp(Configuration aeonConfiguration, String correlationId) {
         // Only initialize if it wasn't already
-        if (reportDetails == null) {
+        if (report == null) {
             initializeReport(null);
         }
 
-        this.initializeConfiguration(aeonConfiguration);
-
-        reportDetails.setCorrelationId(correlationId);
+        report.setCorrelationId(correlationId);
     }
 
     @Override
     public void onBeforeLaunch(Configuration configuration) {
-        this.initializeConfiguration(configuration);
+        // Nothing to do
     }
 
     @Override
     public void onAfterLaunch(Configuration configuration, IAdapter adapter) {
-        this.initializeConfiguration(configuration);
+        // Nothing to do
     }
 
     /**
-     * Returns the scenario details of the currently active thread
+     * Returns the test case details of the currently active thread
      * creating the object if it doesn't exist.
      *
-     * @return The scenario details object of the current thread.
+     * @return The test case details object of the current thread.
      */
-    private ScenarioDetails getCurrentScenarioBucket() {
-        return getCurrentScenarioBucket(false);
+    private TestCase getCurrentTestCaseBucket() {
+        return getCurrentTestCaseBucket(false);
     }
 
     /**
-     * Returns the scenario details of the currently active thread
+     * Returns the test case details of the currently active thread
      * creating the object if it doesn't exist and `create` is false.
      *
      * @param create Set to true if a new object should be created
      *               replacing the old one for the current thread.
-     * @return The scenario details object of the current thread.
+     * @return The test case details object of the current thread.
      */
-    private ScenarioDetails getCurrentScenarioBucket(boolean create) {
+    private TestCase getCurrentTestCaseBucket(boolean create) {
 
-        if (create || currentScenario == null) {
-            this.currentScenario = new ScenarioDetails();
-            this.currentScenario.setThreadId(Thread.currentThread().getId());
+        if (create || this.currentTestCase == null) {
+            this.currentTestCase = new TestCase();
+            this.currentTestCase.setThreadId(Thread.currentThread().getId());
 
-            return this.currentScenario;
+            return this.currentTestCase;
         }
 
-        return this.currentScenario;
+        return this.currentTestCase;
     }
 
     @Override
     public void onBeforeTest(String name, String... tags) {
 
-        ScenarioDetails scenario = getCurrentScenarioBucket(true);
+        TestCase testCase = getCurrentTestCaseBucket(true);
 
         boolean displayClassName = configuration.getBoolean(ReportingConfiguration.Keys.DISPLAY_CLASSNAME, true);
 
         // Determines whether the testName should include the full suite/class or not
         if (displayClassName && name.lastIndexOf('.') > -1) {
             int classNameIndex = name.lastIndexOf('.');
-            scenario.setClassName(name.substring(0, classNameIndex));
-            scenario.setTestName(name.substring(classNameIndex + 1));
+            testCase.setPrefix(name.substring(0, classNameIndex));
+            testCase.setDescription(name.substring(classNameIndex + 1));
         } else {
-            scenario.setTestName(name);
+            testCase.setDescription(name);
         }
-        scenario.setStartTime(System.currentTimeMillis());
+
+        long time = System.currentTimeMillis();
+        testCase.setStartTime(time);
+        testCase.setStarted(uploadDateFormat.format(new Date(time)));
     }
 
     @Override
     public void onSucceededTest() {
-        ScenarioDetails scenario = getCurrentScenarioBucket();
+        TestCase testCase = getCurrentTestCaseBucket();
 
-        scenario.setEndTime(new Date().getTime());
-        scenario.setStatus("PASSED");
+        recordEndTime(testCase);
+        testCase.setStatus("passed");
 
-        finishedScenarios.add(scenario);
+        finishedTestCases.add(testCase);
     }
 
     @Override
@@ -172,42 +165,48 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
         // Treat it as if it just started and ended
         onBeforeTest(name, tags);
 
-        ScenarioDetails scenario = getCurrentScenarioBucket();
+        TestCase testCase = getCurrentTestCaseBucket();
 
-        scenario.setEndTime(new Date().getTime());
-        scenario.setStatus("SKIPPED");
+        recordEndTime(testCase);
+        testCase.setStatus("disabled");
 
-        finishedScenarios.add(scenario);
+        finishedTestCases.add(testCase);
+    }
+
+    private void recordEndTime(TestCase testCase) {
+        long time = System.currentTimeMillis();
+        testCase.setStopped(uploadDateFormat.format(new Date(time)));
+        testCase.setDuration(ReportingPlugin.getTime(time - testCase.getStartTime()));
     }
 
     @Override
     public void onFailedTest(String reason, Throwable e) {
 
-        ScenarioDetails scenario = getCurrentScenarioBucket();
-
-        scenario.setErrorMessage(reason);
+        TestCase testCase = getCurrentTestCaseBucket();
 
         if (e != null) {
             final StringWriter sw = new StringWriter();
             final PrintWriter pw = new PrintWriter(sw, true);
             e.printStackTrace(pw);
-            scenario.setStackTrace(sw.getBuffer().toString());
+            testCase.setError(reason, sw.getBuffer().toString());
+        } else {
+            testCase.setError(reason, null);
         }
 
-        scenario.setEndTime(new Date().getTime());
-        scenario.setStatus("FAILED");
+        recordEndTime(testCase);
+        testCase.setStatus("failed");
 
-        finishedScenarios.add(scenario);
+        finishedTestCases.add(testCase);
     }
 
     @Override
     public void onBeforeStep(String message) {
 
-        ScenarioDetails currentScenarioDetails = getCurrentScenarioBucket();
+        TestCase testCase = getCurrentTestCaseBucket();
 
         // Only add steps if the test is not marked as completed yet.
-        if (currentScenarioDetails.getStatus().equals("")) {
-            currentScenarioDetails.addHighLevelStep(message);
+        if (testCase.getStatus().equals("")) {
+            testCase.addHighLevelStep(message);
         }
     }
 
@@ -215,21 +214,18 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
     public void onExecutionEvent(String eventName, Object payload) {
         switch (eventName) {
             case "screenshotTaken":
-                getCurrentScenarioBucket().setScreenshot((Image) payload);
+                handleScreenshotTaken((java.awt.Image) payload);
                 break;
             case "commandInitialized":
-                ScenarioDetails currentScenarioDetails = getCurrentScenarioBucket();
+                TestCase testCase = getCurrentTestCaseBucket();
 
                 // Only add steps if the test is not marked as completed yet.
-                if (currentScenarioDetails.getStatus().equals("")) {
-                    currentScenarioDetails.addStep((String) payload);
+                if (testCase.getStatus().equals("")) {
+                    testCase.addStep((String) payload);
                 }
                 break;
-            case "videoDownloaded":
-                handleVideoDownloadedEvent((String) payload);
-                break;
             case "browserLogsCollected":
-                handleBrowserLogsCollectedEvent((java.util.List<Map<String, Object>>) payload);
+                handleBrowserLogsCollectedEvent((List<Map<String, Object>>) payload);
                 break;
             default:
                 // Skip unknown events.
@@ -240,73 +236,65 @@ public class ReportingTestExecutionExtension implements ITestExecutionExtension 
     public void onDone() {
         long time = System.currentTimeMillis();
 
-        reportDetails.setEndTime(time);
-        reportDetails.setScenarios(finishedScenarios);
+        report.getTimer().setEndTime(time);
+        report.setSequence(new ArrayList<>(finishedTestCases));
 
-        this.reportController.setConfiguration(
-                ReportingTestExecutionExtension.configuration,
-                ReportingTestExecutionExtension.aeonConfiguration);
-        this.reportController.writeReportsAndUpload(reportDetails);
+        this.reportController.writeReportsAndUpload(report);
     }
 
     private void handleBrowserLogsCollectedEvent(List<Map<String, Object>> payload) {
 
         if (payload != null) {
-            getCurrentScenarioBucket().setBrowserLogs(payload);
-            for (ScenarioDetails scenario : finishedScenarios) {
-                if (scenario.getBrowserLogs() == null
-                        && scenario.getThreadId() == Thread.currentThread().getId()) {
-                    scenario.setBrowserLogs(payload);
+            getCurrentTestCaseBucket().setBrowserLogs(payload);
+            for (TestCase testCase : finishedTestCases) {
+                if (testCase.getBrowserLogs() == null
+                        && testCase.getThreadId() == Thread.currentThread().getId()) {
+                    testCase.setBrowserLogs(payload);
                 }
             }
         }
     }
 
-    private void handleVideoDownloadedEvent(String payload) {
-        String videoUrl = this.artifactoryService.uploadToArtifactory(payload);
+    private void handleScreenshotTaken(java.awt.Image screenshot) {
+        if (screenshot == null) {
+            return;
+        }
 
-        if (videoUrl != null) {
-
-            log.info("Video uploaded: {}", videoUrl);
-
-            getCurrentScenarioBucket().setVideoUrl(videoUrl);
-            for (ScenarioDetails scenario : finishedScenarios) {
-                if (scenario.getVideoUrl().isEmpty()
-                        && scenario.getThreadId() == Thread.currentThread().getId()) {
-                    scenario.setVideoUrl(videoUrl);
-                }
-            }
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write((BufferedImage) screenshot, "png", stream);
+            String data = DatatypeConverter.printBase64Binary(stream.toByteArray());
+            getCurrentTestCaseBucket().setScreenshotPath("data:image/png;base64," + data);
+            stream.close();
+        } catch (IOException e) {
+            log.warn("Could not write screenshot", e);
         }
     }
 
     private static void initializeReport(String suiteName) {
-        finishedScenarios = new ConcurrentLinkedQueue<>();
+        finishedTestCases = new ConcurrentLinkedQueue<>();
 
-        reportDetails = new ReportDetails();
+        report = new Report();
         long startTime = System.currentTimeMillis();
-        reportDetails.setStartTime(startTime);
-        reportDetails.setSuiteName(suiteName);
+        report.getTimer().setStartTime(startTime);
+        report.setName(suiteName);
         String startTimeFormatted = new SimpleDateFormat("d MMM yyyy HH:mm:ss")
                 .format(new Date(startTime));
         log.info("Start Time {}", startTimeFormatted);
     }
 
-    private void initializeConfiguration() {
-        try {
-            ReportingTestExecutionExtension.configuration.loadConfiguration();
-        } catch (IllegalAccessException | IOException e) {
-            log.warn("Could not load plugin configuration.");
+    @Override
+    public void onUploadSucceeded(String url, String type, String label) {
+
+        if (url == null || !type.equalsIgnoreCase("video")) {
+            return;
         }
-    }
 
-    private void initializeConfiguration(Configuration aeonConfiguration) {
-        synchronized (lock) {
-            if (ReportingTestExecutionExtension.aeonConfiguration == null) {
-                ReportingTestExecutionExtension.aeonConfiguration = aeonConfiguration;
-
-                this.reportController.setConfiguration(
-                        ReportingTestExecutionExtension.configuration,
-                        ReportingTestExecutionExtension.aeonConfiguration);
+        getCurrentTestCaseBucket().setVideoUrl(url);
+        for (TestCase testCase : finishedTestCases) {
+            if (testCase.getVideoUrl().isEmpty()
+                    && testCase.getThreadId() == Thread.currentThread().getId()) {
+                testCase.setVideoUrl(url);
             }
         }
     }

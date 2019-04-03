@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class ClickCommandTests {
+class ClickCommandTests {
 
     private ClickCommand clickCommandObject;
 
@@ -35,12 +35,12 @@ public class ClickCommandTests {
     private Consumer<IDriver> action;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         clickCommandObject = new ClickCommand(selector, initializer);
     }
 
     @Test
-    public void commandDelegateClickCommand() {
+    void commandDelegateClickCommand() {
         // Arrange
         when(initializer.setContext()).thenReturn(action);
         when(initializer.findElement(driver, selector)).thenReturn(control);

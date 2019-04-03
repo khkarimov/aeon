@@ -1,0 +1,63 @@
+def baseProjectName = 'Aeon.Plugin.Slack'
+def baseProjectDescription = 'Aeon Slack Plugin'
+def base = baseProjectName
+
+configurations {
+    pluginImplementation
+}
+
+dependencies {
+    compile project(':Aeon.Plugin.Reporting')
+
+    pluginImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.6'
+    pluginImplementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.6'
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'SlackAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.slack.SlackPlugin',
+                'Plugin-Dependencies': 'ReportingAeon'
+    }
+
+    from configurations.pluginImplementation.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'SlackAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.slack.SlackPlugin',
+                'Plugin-Dependencies': 'ReportingAeon'
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.slack'
+        }
+    }
+}

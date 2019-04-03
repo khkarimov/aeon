@@ -16,11 +16,15 @@ dependencies {
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Core.Web')
     compile project(':Aeon.Plugin.Appium')
+    compile project(':Aeon.Plugin.Artifactory')
     compile project(':Aeon.Plugin.JUnit5')
     compile project(':Aeon.Plugin.Log4J2')
+    compile project(':Aeon.Plugin.Metrics')
     compile project(':Aeon.Plugin.Perfecto')
     compile project(':Aeon.Plugin.Reporting')
+    compile project(':Aeon.Plugin.RnR')
     compile project(':Aeon.Plugin.Selenium')
+    compile project(':Aeon.Plugin.Slack')
     compile project(':Aeon.Plugin.TestNG')
     compile project(':Aeon.SystemTests.Web')
     compile project(':Aeon.SystemTests.Mobile')
@@ -204,7 +208,7 @@ subprojects {
         contextUrl = 'https://artifactory.mia.ulti.io/artifactory/'
         publish {
             repository {
-                repoKey = 'genesis-maven-prod' // The Artifactory repository key to publish to
+                repoKey = "${artifactory_repository}" // The Artifactory repository key to publish to
                 username = "${artifactory_username}" // The publisher user name
                 password = "${artifactory_password}" // The publisher password
             }

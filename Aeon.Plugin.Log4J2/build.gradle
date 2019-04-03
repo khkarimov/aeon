@@ -1,5 +1,26 @@
+def baseProjectName = 'Aeon.Plugin.Log4J2'
+def base = baseProjectName
+
+configurations {
+    pluginImplementation
+}
+
 dependencies {
-    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.1'
+    pluginImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.1'
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
 }
 
 publishing {
