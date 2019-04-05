@@ -2,15 +2,17 @@ package com.ultimatesoftware.aeon.extensions.perfecto;
 
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
 import com.ultimatesoftware.aeon.core.extensions.PluginConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Configure perfecto for different browsers and devices.
+ * Configures Perfecto for different browsers and devices.
  */
-
 public class PerfectoConfiguration extends PluginConfiguration {
 
     /**
@@ -39,9 +41,18 @@ public class PerfectoConfiguration extends PluginConfiguration {
 
     @Override
     protected List<AeonConfigKey> getConfigurationFields() {
-        List<AeonConfigKey> keys = new ArrayList<>();
-        keys.addAll(super.getConfigurationFields());
-        keys.addAll(Arrays.asList(PerfectoConfiguration.Keys.values()));
-        return keys;
+        return Arrays.asList(PerfectoConfiguration.Keys.values());
+    }
+
+    @Override
+    public void loadPluginSettings() throws IOException {
+        super.loadPluginSettings();
+        try (InputStream in = PerfectoConfiguration.class.getResourceAsStream("/perfecto.properties")) {
+            properties.load(in);
+        } catch (IOException e) {
+            Logger log = LoggerFactory.getLogger(PerfectoConfiguration.class);
+            log.error("perfecto.properties resource could not be read");
+            throw e;
+        }
     }
 }

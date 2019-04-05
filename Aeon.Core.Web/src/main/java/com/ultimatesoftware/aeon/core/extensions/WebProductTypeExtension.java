@@ -48,11 +48,6 @@ public class WebProductTypeExtension implements IProductTypeExtension {
 
     @Override
     public IBy createSelector(Map<String, String> selector) {
-        return this.createSelector(null, selector);
-    }
-
-    private IByWeb createSelector(IByWeb parent, Map<String, String> selector) {
-
         String value = selector.get("value");
         String type = selector.get("type");
 
@@ -62,54 +57,16 @@ public class WebProductTypeExtension implements IProductTypeExtension {
 
         switch (type.toLowerCase()) {
             case "css":
-                if (parent != null) {
-                    return parent.find(By.cssSelector(value));
-                }
                 return By.cssSelector(value);
             case "data":
-                if (parent != null) {
-                    return parent.find(By.dataAutomationAttribute(value));
-                }
                 return By.dataAutomationAttribute(value);
             case "da":
-                if (parent != null) {
-                    return parent.find(By.da(value));
-                }
                 return By.da(value);
             case "jquery":
-                if (parent != null) {
-                    return parent.find(By.jQuery(value));
-                }
                 return By.jQuery(value);
-            case "jqueryParents":
-                if (parent == null) {
-                    return null;
-                }
-                return parent.toJQuery().parents(value);
-            case "jQueryFilter":
-                if (parent == null) {
-                    return null;
-                }
-                return parent.toJQuery().filter(value);
             default:
                 return null;
         }
-    }
-
-    /**
-     * Creates a By selector by parsing a list of types and values.
-     *
-     * @param selectors A list of types and values.
-     * @return By
-     */
-    private IBy createSelector(Map<String, String>[] selectors) {
-
-        IByWeb selector = null;
-        for (Map<String, String> selectorMap : selectors) {
-            selector = this.createSelector(selector, selectorMap);
-        }
-
-        return selector;
     }
 
     @Override
@@ -156,15 +113,11 @@ public class WebProductTypeExtension implements IProductTypeExtension {
 
         for (Class p : parameters) {
             switch (p.getName()) {
-                case "aeon.core.common.web.interfaces.IByWeb":
-                    if (Map[].class.isAssignableFrom(args.get(i).getClass())) {
-                        params[i] = createSelector((Map[]) args.get(j));
+                case "com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb":
+                    if (Map.class.isAssignableFrom(args.get(i).getClass())) {
+                        params[i] = createSelector((Map) args.get(j));
                     } else {
-                        if (Map.class.isAssignableFrom(args.get(i).getClass())) {
-                            params[i] = createSelector((Map) args.get(j));
-                        } else {
-                            return null;
-                        }
+                        return null;
                     }
                     break;
                 case "com.ultimatesoftware.aeon.core.command.execution.commands.initialization.ICommandInitializer":

@@ -1,4 +1,4 @@
-package aeon.extensions.saucelabs;
+package com.ultimatesoftware.aeon.extensions.saucelabs;
 
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;

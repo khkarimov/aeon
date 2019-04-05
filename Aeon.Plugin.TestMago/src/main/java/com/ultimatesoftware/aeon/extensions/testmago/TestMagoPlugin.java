@@ -1,4 +1,4 @@
-package aeon.extensions.testmago;
+package com.ultimatesoftware.aeon.extensions.testmago;
 
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;

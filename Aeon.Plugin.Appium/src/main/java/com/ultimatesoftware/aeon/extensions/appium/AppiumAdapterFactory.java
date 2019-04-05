@@ -156,6 +156,11 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
             desiredCapabilities.setCapability("platformVersion", platformVersion);
         }
 
+        String udid = configuration.getString(AppiumConfiguration.Keys.UDID, "");
+        if (!udid.isEmpty()) {
+            desiredCapabilities.setCapability("udid", udid);
+        }
+
         // Android Specific
         String avdName = configuration.getString(AppiumConfiguration.Keys.AVD_NAME, "");
         if (!avdName.isEmpty()) {

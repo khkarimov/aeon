@@ -141,7 +141,7 @@ assemble.finalizedBy(CopyDriversPlatformPython)
 
 allprojects {
     group 'aeon'
-    version '1.19.1'
+    version '1.20.0'
 
     apply plugin: 'java'
     apply plugin: 'jacoco'
