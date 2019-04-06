@@ -17,13 +17,22 @@ public abstract class WebControlCommand extends Command {
     /**
      * Initializes a new instance of the {@link WebControlCommand} class.
      *
-     * @param message The message to log.
-     * @param selector The selector for finding elements.
+     * @param message     The message to log.
+     * @param selector    The selector for finding elements.
      * @param initializer The command initializer.
      */
     protected WebControlCommand(String message, IByWeb selector, ICommandInitializer initializer) {
         super(message, initializer);
         this.selector = selector;
+    }
+
+    /**
+     * Returns the selector.
+     *
+     * @return The selector of this web control command.
+     */
+    public IByWeb getSelector() {
+        return this.selector;
     }
 
     /**
@@ -45,7 +54,7 @@ public abstract class WebControlCommand extends Command {
     /**
      * The method which provides the logic for the command.
      *
-     * @param driver The framework abstraction facade.
+     * @param driver  The framework abstraction facade.
      * @param control The control for the command.
      */
     protected abstract void commandDelegate(IWebDriver driver, WebControl control);

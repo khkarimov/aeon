@@ -51,6 +51,35 @@ public class WebProductTypeExtension implements IProductTypeExtension {
         return this.createSelector(null, selector);
     }
 
+    @Override
+    public Object createCommand(String commandString, List<Object> args) {
+        Class<?> commandClass;
+
+        try {
+            commandClass = Class.forName(commandPackage + commandString);
+        } catch (Exception e) {
+            return null;
+        }
+
+        Constructor[] constructors = commandClass.getConstructors();
+        Class[] parameters = constructors[0].getParameterTypes();
+        Constructor commandConstructor;
+
+        try {
+            commandConstructor = commandClass.getConstructor(parameters);
+        } catch (Exception e) {
+            return null;
+        }
+
+        Object[] params = getParameters(args, parameters);
+
+        try {
+            return commandConstructor.newInstance(params);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private IByWeb createSelector(IByWeb parent, Map<String, String> selector) {
 
         String value = selector.get("value");
@@ -81,12 +110,12 @@ public class WebProductTypeExtension implements IProductTypeExtension {
                     return parent.find(By.jQuery(value));
                 }
                 return By.jQuery(value);
-            case "jqueryParents":
+            case "jqueryparents":
                 if (parent == null) {
                     return null;
                 }
                 return parent.toJQuery().parents(value);
-            case "jQueryFilter":
+            case "jqueryfilter":
                 if (parent == null) {
                     return null;
                 }
@@ -112,36 +141,6 @@ public class WebProductTypeExtension implements IProductTypeExtension {
         return selector;
     }
 
-    @Override
-    public Object createCommand(String commandString, List<Object> args) {
-        Class<?> commandClass;
-
-        try {
-            commandClass = Class.forName(commandPackage + commandString);
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        Constructor[] constructors = commandClass.getConstructors();
-        Class[] parameters = constructors[0].getParameterTypes();
-        Constructor commandConstructor;
-
-        try {
-            commandConstructor = commandClass.getConstructor(parameters);
-        } catch (Exception e) {
-            return null;
-        }
-
-        Object[] params = getParameters(args, parameters);
-
-        try {
-            return commandConstructor.newInstance(params);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     private Object[] getParameters(List<Object> args, Class[] parameters) {
         Object[] params = new Object[0];
 
@@ -157,8 +156,8 @@ public class WebProductTypeExtension implements IProductTypeExtension {
         for (Class p : parameters) {
             switch (p.getName()) {
                 case "com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb":
-                    if (Map.class.isAssignableFrom(args.get(i).getClass())) {
-                        params[i] = createSelector((Map) args.get(j));
+                    if (Map[].class.isAssignableFrom(args.get(i).getClass())) {
+                        params[i] = createSelector((Map[]) args.get(j));
                     } else {
                         if (Map.class.isAssignableFrom(args.get(i).getClass())) {
                             params[i] = createSelector((Map) args.get(j));
