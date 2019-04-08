@@ -79,7 +79,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected JavaScriptFlowExecutor asyncJavaScriptFlowExecutor;
     protected boolean isRemote;
-    private URL seleniumHubUrl;
+    protected URL seleniumHubUrl;
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
     protected BrowserSize fallbackBrowserSize;

@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Set;
 
 /**
@@ -32,12 +31,7 @@ import java.util.Set;
 public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
 
     private AppiumConfiguration configuration;
-    private String app;
-    private String deviceName;
-    private String platformVersion;
     private String driverContext;
-    private String appPackage;
-    protected URL seleniumHubUrl;
     private static Logger log = LoggerFactory.getLogger(AppiumAdapterFactory.class);
 
     /**
@@ -46,8 +40,8 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
      * @param configuration The configuration of the adapter.
      * @return The created Appium adapter is returned.
      */
-    public IAdapter create(AppiumConfiguration configuration) {
-        prepare(configuration);
+    private IAdapter create(AppiumConfiguration configuration) {
+        this.prepare(configuration);
 
         return new AppiumAdapter(driver, javaScriptFlowExecutor, asyncJavaScriptFlowExecutor, browserType, fallbackBrowserSize, isRemote, seleniumHubUrl, seleniumLogsDirectory, loggingPreferences);
     }
@@ -57,14 +51,10 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
      *
      * @param configuration The configuration of the adapter.
      */
-    protected void prepare(AppiumConfiguration configuration) {
+    private void prepare(AppiumConfiguration configuration) {
         this.configuration = configuration;
 
-        platformVersion = configuration.getString(AppiumConfiguration.Keys.PLATFORM_VERSION, "");
-        app = configuration.getString(AppiumConfiguration.Keys.APP, "");
-        appPackage = configuration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "");
-        deviceName = configuration.getString(AppiumConfiguration.Keys.DEVICE_NAME, "");
-        driverContext = configuration.getString(AppiumConfiguration.Keys.DRIVER_CONTEXT, "");
+        this.driverContext = configuration.getString(AppiumConfiguration.Keys.DRIVER_CONTEXT, "");
 
         super.prepare(configuration);
     }
@@ -97,30 +87,11 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     }
 
     private Capabilities getIOSHybridAppCapabilities() {
-        MutableCapabilities desiredCapabilities = new DesiredCapabilities();
 
-        desiredCapabilities.setCapability("platformName", "iOS");
-        desiredCapabilities.setCapability("platformVersion", platformVersion);
-
-        // Appium
-        if (!deviceName.isEmpty()) {
-            desiredCapabilities.setCapability("deviceName", deviceName);
-        }
-        if (!app.isEmpty()) {
-            desiredCapabilities.setCapability("app", app);
-        }
-
-        String automationName = configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, "Appium");
-        if (!StringUtils.isNotBlank(automationName)) {
-            desiredCapabilities.setCapability("automationName", automationName);
-        }
+        MutableCapabilities desiredCapabilities = getAppCapabilities("iOS");
 
         // IOS Specific
         desiredCapabilities.setCapability("bundleId", configuration.getString(AppiumConfiguration.Keys.BUNDLE_ID, ""));
-        String udid = configuration.getString(AppiumConfiguration.Keys.UDID, "");
-        if (!udid.isEmpty()) {
-            desiredCapabilities.setCapability("udid", udid);
-        }
         String webDriverAgentPort = configuration.getString(AppiumConfiguration.Keys.WDA_PORT, "");
         if (!webDriverAgentPort.isEmpty()) {
             desiredCapabilities.setCapability("wdaLocalPort", webDriverAgentPort);
@@ -143,38 +114,22 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     }
 
     private Capabilities getAndroidHybridAppCapabilities() {
-        MutableCapabilities desiredCapabilities = new DesiredCapabilities();
 
-        // Appium
-        if (!deviceName.isEmpty()) {
-            desiredCapabilities.setCapability("deviceName", deviceName);
-        }
-
-        desiredCapabilities.setCapability("platformName", "Android");
-
-        if (!platformVersion.isEmpty()) {
-            desiredCapabilities.setCapability("platformVersion", platformVersion);
-        }
-
-        String udid = configuration.getString(AppiumConfiguration.Keys.UDID, "");
-        if (!udid.isEmpty()) {
-            desiredCapabilities.setCapability("udid", udid);
-        }
+        MutableCapabilities desiredCapabilities = getAppCapabilities("Android");
 
         // Android Specific
         String avdName = configuration.getString(AppiumConfiguration.Keys.AVD_NAME, "");
         if (!avdName.isEmpty()) {
             desiredCapabilities.setCapability("avd", avdName);
         }
+
+        String appPackage = configuration.getString(AppiumConfiguration.Keys.APP_PACKAGE, "");
         if (!appPackage.isEmpty()) {
             desiredCapabilities.setCapability("appPackage", appPackage);
             String appActivity = configuration.getString(AppiumConfiguration.Keys.APP_ACTIVITY, "");
             if (!appActivity.isEmpty()) {
                 desiredCapabilities.setCapability("appActivity", appActivity);
             }
-        }
-        if (!app.isEmpty()) {
-            desiredCapabilities.setCapability("app", app);
         }
 
         //Enables webview support for Crosswalk/Cordova applications
@@ -188,6 +143,38 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         }
 
         addPluginCapabilities(desiredCapabilities);
+
+        return desiredCapabilities;
+    }
+
+    private MutableCapabilities getAppCapabilities(String platformName) {
+        MutableCapabilities desiredCapabilities = new DesiredCapabilities();
+
+        desiredCapabilities.setCapability("platformName", platformName);
+        String platformVersion = configuration.getString(AppiumConfiguration.Keys.PLATFORM_VERSION, "");
+        if (!platformVersion.isEmpty()) {
+            desiredCapabilities.setCapability("platformVersion", platformVersion);
+        }
+
+        String deviceName = configuration.getString(AppiumConfiguration.Keys.DEVICE_NAME, "");
+        if (!deviceName.isEmpty()) {
+            desiredCapabilities.setCapability("deviceName", deviceName);
+        }
+
+        String udId = configuration.getString(AppiumConfiguration.Keys.UDID, "");
+        if (!udId.isEmpty()) {
+            desiredCapabilities.setCapability("udid", udId);
+        }
+
+        String automationName = configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, "Appium");
+        if (!StringUtils.isNotBlank(automationName)) {
+            desiredCapabilities.setCapability("automationName", automationName);
+        }
+
+        String app = configuration.getString(AppiumConfiguration.Keys.APP, "");
+        if (!app.isEmpty()) {
+            desiredCapabilities.setCapability("app", app);
+        }
 
         return desiredCapabilities;
     }
@@ -247,7 +234,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     }
 
     @Override
-    public Configuration getConfiguration() throws IOException, IllegalAccessException {
+    public Configuration getConfiguration() throws IOException {
         Configuration appiumConfiguration = new AppiumConfiguration();
         appiumConfiguration.loadConfiguration();
         return appiumConfiguration;
