@@ -79,7 +79,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     protected JavaScriptFlowExecutor javaScriptFlowExecutor;
     protected JavaScriptFlowExecutor asyncJavaScriptFlowExecutor;
     protected boolean isRemote;
-    protected URL seleniumHubUrl;
+    private URL seleniumHubUrl;
     protected String seleniumLogsDirectory;
     protected LoggingPreferences loggingPreferences;
     protected BrowserSize fallbackBrowserSize;
@@ -279,11 +279,13 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      * @param desiredCapabilities Capabilities
      */
     protected void addPluginCapabilities(MutableCapabilities desiredCapabilities) {
-        //add capabilities from other plugins
+
         List<ISeleniumExtension> extensions = Aeon.getExtensions(ISeleniumExtension.class);
         for (ISeleniumExtension extension : extensions) {
             extension.onGenerateCapabilities(configuration, desiredCapabilities);
         }
+
+        log.info("{}", desiredCapabilities);
     }
 
     private void launchFirefox() {
@@ -307,7 +309,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private Capabilities getFirefoxCapabilities() {
-        MutableCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+        MutableCapabilities desiredCapabilities = new FirefoxOptions();
         desiredCapabilities.setCapability("marionette", true);
         desiredCapabilities.setCapability("firefox_profile", getFirefoxProfile());
         addPluginCapabilities(desiredCapabilities);
@@ -334,7 +336,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private Capabilities getChromeCapabilities() {
-        MutableCapabilities desiredCapabilities = DesiredCapabilities.chrome();
+        MutableCapabilities desiredCapabilities = new ChromeOptions();
         setLoggingCapabilities(desiredCapabilities);
 
         String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
@@ -417,7 +419,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private Capabilities getEdgeCapabilities() {
-        MutableCapabilities desiredCapabilities = DesiredCapabilities.edge();
+        MutableCapabilities desiredCapabilities = new EdgeOptions();
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
@@ -443,7 +445,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     private Capabilities getSafariCapabilities() {
-        MutableCapabilities desiredCapabilities = DesiredCapabilities.safari();
+        MutableCapabilities desiredCapabilities = new SafariOptions();
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
@@ -566,17 +568,17 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             firefoxOptions.addPreference("browser.tabs.remote.autostart", false);
         }
 
-        DesiredCapabilities firefoxCapabilities = getMarionetteCapabilities();
+        FirefoxOptions firefoxCapabilities = getMarionetteCapabilities();
         setProxySettings(firefoxOptions, proxyLocation);
         firefoxOptions.merge(firefoxCapabilities);
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.FATAL);
         return firefoxOptions;
     }
 
-    private DesiredCapabilities getMarionetteCapabilities() {
-        DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
-        desiredCapabilities.setCapability("marionette", true);
-        return desiredCapabilities;
+    private FirefoxOptions getMarionetteCapabilities() {
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setCapability("marionette", true);
+        return firefoxOptions;
     }
 
     private InternetExplorerOptions getInternetExplorerOptions(boolean ensureCleanSession, String proxyLocation) {
