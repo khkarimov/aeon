@@ -45,7 +45,7 @@ public class WebProduct extends Product {
         super.afterLaunch();
 
         IBrowserType browserType = ((WebConfiguration) configuration).getBrowserType();
-        log.info("Product successfully launched with {}", browserType);
+        log.info("Product successfully launched with {}", browserType.getKey());
 
         // Set WebCommandExecutionFacade
         new WebProductTypeExtension().createCommandExecutionFacade(this.automationInfo);
