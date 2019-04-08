@@ -90,7 +90,7 @@ public class BrowserTests {
         IBrowserType result = browserObject.getBrowserType();
 
         // Assert
-        Assertions.assertEquals(result, BrowserType.CHROME);
+        Assertions.assertEquals(BrowserType.CHROME, result);
     }
 
     @Test

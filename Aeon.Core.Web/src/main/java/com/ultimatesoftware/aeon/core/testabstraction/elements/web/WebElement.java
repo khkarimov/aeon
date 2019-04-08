@@ -20,6 +20,7 @@ public class WebElement extends Element {
     protected IByWeb selector;
     protected AutomationInfo automationInfo;
     protected IByWeb[] switchMechanism;
+    private final String innerhtml = "innerhtml";
 
     /**
      * Initializes a new instance of the {@link WebElement} class.
@@ -192,7 +193,7 @@ public class WebElement extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                "INNERHTML"));
+                innerhtml));
     }
 
     /**
@@ -221,7 +222,7 @@ public class WebElement extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                "INNERHTML"));
+                innerhtml));
     }
 
     /**
@@ -250,7 +251,7 @@ public class WebElement extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                "INNERHTML"));
+                innerhtml));
     }
 
     /**
@@ -278,7 +279,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
                 ));
     }
 
@@ -307,7 +308,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
                 ));
     }
 
@@ -336,7 +337,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
                 ));
     }
 
@@ -365,7 +366,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
                 ));
     }
 
@@ -394,7 +395,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasOnlyCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
                 ));
     }
 

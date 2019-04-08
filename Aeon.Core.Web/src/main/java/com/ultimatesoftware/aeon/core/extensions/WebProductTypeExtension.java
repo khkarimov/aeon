@@ -117,7 +117,7 @@ public class WebProductTypeExtension implements IProductTypeExtension {
                     if (Map.class.isAssignableFrom(args.get(i).getClass())) {
                         params[i] = createSelector((Map) args.get(j));
                     } else {
-                        return null;
+                        return new Object[0];
                     }
                     break;
                 case "ICommandInitializer":

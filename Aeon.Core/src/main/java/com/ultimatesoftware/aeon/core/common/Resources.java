@@ -14,6 +14,13 @@ public class Resources {
     }
 
     /**
+     * Default constructor to prevent Java from adding an implicit public constructor.
+     */
+    private Resources(){
+        throw new IllegalStateException("Illegal instantiation of Resources!");
+    }
+
+    /**
      * Gets the string if the bundle contains the input key.
      * @param key the input string.
      * @return the string of the bundle at the key.
@@ -22,9 +29,7 @@ public class Resources {
         if (bundle.containsKey(key)) {
             return bundle.getString(key);
         } else {
-            return key; //"No message in MessagesBundle in Aeon.Core.Resources";
+            return key;
         }
-        //return bundle.getString(key);
-        //return key;
     }
 }

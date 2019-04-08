@@ -8,13 +8,25 @@ import com.ultimatesoftware.aeon.core.common.exceptions.ContainsWhiteSpaceExcept
 public class StringUtils {
 
     /**
+     * A constant variable for using "value" multilple times.
+     */
+    private final String value = "value";
+
+    /**
+     * Default constructor to prevent Java from adding an implicit public constructor.
+     */
+    private StringUtils(){
+        throw new IllegalStateException("Illegal instantiation of StringUtils!");
+    }
+
+    /**
      * Function returns a string that is a quoted and escaped version of the original string.
      * @param value the input string to escape and quote.
      * @return the new string that has been escaped and quoted.
      */
     public static String toQuotedAndEscapedString(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
 
         // Note that the below has been optimized for performance (e.g., no regular expressions).
@@ -75,7 +87,7 @@ public class StringUtils {
      */
     public static String normalizeSpacing(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
         StringBuilder stringBuilder = new StringBuilder(value.length());
         stringBuilder.setLength(0);
@@ -120,7 +132,7 @@ public class StringUtils {
      */
     public static String minimizeWhiteSpace(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
         StringBuilder stringBuilder = new StringBuilder(value.length());
         stringBuilder.setLength(0);
@@ -151,7 +163,7 @@ public class StringUtils {
      */
     public static boolean is(String value, String expectedValue) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
         if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");
@@ -183,7 +195,7 @@ public class StringUtils {
      */
     public static boolean like(String value, String expectedValue, boolean caseSensitive) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
         if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");
@@ -230,7 +242,7 @@ public class StringUtils {
      */
     public static boolean containsWord(String value, String word) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
         if (word == null) {
             throw new IllegalArgumentException("word");
@@ -247,7 +259,7 @@ public class StringUtils {
      */
     public static String assertNoWhiteSpace(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
         if (value.contains(" ")) {
             throw new ContainsWhiteSpaceException(value);
@@ -264,7 +276,7 @@ public class StringUtils {
      */
     public static String remove(String value, Object... values) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(value);
         }
         if (values == null) {
             return value;

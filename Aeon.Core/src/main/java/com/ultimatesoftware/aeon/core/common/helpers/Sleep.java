@@ -16,6 +16,13 @@ public final class Sleep {
     private static final int TIME_FOR_INTERNAL = 70;
 
     /**
+     * Default constructor to prevent Java from adding an implicit public constructor.
+     */
+    private Sleep(){
+        throw new IllegalStateException("Illegal instantiation of Sleep!");
+    }
+
+    /**
      * Waits. May be used between Internal calls.
      * Default for Internal time is 70.
      */

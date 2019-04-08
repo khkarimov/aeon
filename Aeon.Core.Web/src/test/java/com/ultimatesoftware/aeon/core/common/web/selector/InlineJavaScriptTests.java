@@ -23,7 +23,7 @@ public class InlineJavaScriptTests {
         String result = inlineJavaScript.getInlineJavaScript();
 
         // Assert
-        assertEquals(result, "String");
+        assertEquals("String", result);
 
     }
 
@@ -35,7 +35,7 @@ public class InlineJavaScriptTests {
         String result = inlineJavaScript.toString();
 
         // Assert
-        assertEquals(result, "String");
+        assertEquals("String", result);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class InlineJavaScriptTests {
         String result = inlineJavaScript.toString();
 
         // Assert
-        assertEquals(result, "");
+        assertEquals("", result);
     }
 
     @Test

@@ -59,7 +59,7 @@ public final class Parameter {
      */
     @Override
     public boolean equals(Object obj) {
-        return obj != null && obj instanceof Parameter && equals((Parameter) obj);
+        return obj instanceof Parameter && equals((Parameter) obj);
     }
 
     /**

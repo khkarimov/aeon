@@ -34,6 +34,7 @@ public class AeonWebDriver implements IWebDriver {
      * Initializes a new instance of the AeonWebDriver class.
      */
     public AeonWebDriver() {
+        //Do nothing since we want to override the below configure method to set the values.
     }
 
     @Override

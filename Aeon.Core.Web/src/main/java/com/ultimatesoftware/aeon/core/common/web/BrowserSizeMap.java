@@ -35,6 +35,13 @@ public final class BrowserSizeMap {
     }
 
     /**
+     * Default constructor to prevent Java from adding an implicit public constructor.
+     */
+    private BrowserSizeMap(){
+        throw new IllegalStateException("Illegal instantiation of BrowserSizeMap!");
+    }
+
+    /**
      * Boolean function that returns a truth value if the size is in the instance's sizes.
      *
      * @param size size input to test.

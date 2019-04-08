@@ -30,6 +30,7 @@ public abstract class ComponentList<T extends ComponentList, K extends Component
      * @param index The index you are looking for.
      * @return Returns an instance of K.
      */
+    @Override
     public K index(int index) {
         return findRowByIndex(index);
     }
@@ -40,6 +41,7 @@ public abstract class ComponentList<T extends ComponentList, K extends Component
      * @param index The index you are looking for.
      * @return Returns an instance of K.
      */
+    @Override
     protected K findRowByIndex(int index) {
         IByWeb updatedSelector = selector.toJQuery().find(String.format("%1$s:nth-child(%2$d)", rowSelector, index));
 
