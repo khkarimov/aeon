@@ -4,7 +4,6 @@ def base = baseProjectName
 
 dependencies {
     compile project(':Aeon.Plugin.Selenium')
-    compile 'org.testobject:testobject-appium-java-api:0.2.7'
 }
 
 jar {

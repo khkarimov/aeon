@@ -142,6 +142,8 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
             desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         }
 
+        desiredCapabilities.setCapability("nativeWebScreenshot", true);
+
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
@@ -167,7 +169,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         }
 
         String automationName = configuration.getString(AppiumConfiguration.Keys.AUTOMATION_NAME, "Appium");
-        if (!StringUtils.isNotBlank(automationName)) {
+        if (!automationName.isEmpty()) {
             desiredCapabilities.setCapability("automationName", automationName);
         }
 

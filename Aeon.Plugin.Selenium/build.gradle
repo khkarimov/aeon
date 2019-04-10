@@ -8,7 +8,6 @@ configurations {
 
 ext {
     seleniumVersion = '3.141.59'
-    appiumVersion = '6.1.0'
 }
 
 dependencies {
@@ -16,12 +15,12 @@ dependencies {
 
     // Drivers
     pluginImplementation "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
-    pluginImplementation "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
     pluginImplementation "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
     pluginImplementation "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-opera-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-safari-driver:$seleniumVersion"
     pluginImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
-
-    pluginImplementation "io.appium:java-client:$appiumVersion"
 
     configurations.compile.extendsFrom(configurations.pluginImplementation)
 }

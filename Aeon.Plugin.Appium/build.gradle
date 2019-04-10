@@ -3,13 +3,16 @@ def baseProjectDescription = 'Aeon Appium Plugin'
 def base = baseProjectName
 
 configurations {
-    aeon
-    compile.extendsFrom(aeon)
+    pluginImplementation
 }
 
 dependencies {
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Plugin.Selenium')
+
+    pluginImplementation "io.appium:java-client:7.0.0"
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
 }
 
 jar {
@@ -24,6 +27,10 @@ jar {
                 'Plugin-Version': version,
                 'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.appium.AppiumPlugin',
                 'Plugin-Dependencies': 'SeleniumAeon'
+    }
+
+    from configurations.pluginImplementation.collect {
+        it.isDirectory() ? it : zipTree(it)
     }
 }
 

@@ -212,7 +212,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                     log.trace("Retrying");
                     i++;
                 } else {
-                    throw new UnableToCreateDriverException(e.getMessage());
+                    throw new UnableToCreateDriverException(e);
                 }
             }
         }
