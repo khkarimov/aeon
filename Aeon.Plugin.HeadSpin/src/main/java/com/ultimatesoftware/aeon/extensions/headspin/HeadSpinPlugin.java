@@ -1,4 +1,4 @@
-package com.ultimatesoftware.aeon.extensions.testmago;
+package com.ultimatesoftware.aeon.extensions.headspin;
 
 import org.pf4j.Plugin;
 import org.pf4j.PluginWrapper;
@@ -6,7 +6,7 @@ import org.pf4j.PluginWrapper;
 /**
  * Plugin class for Perfecto Plugin.
  */
-public class TestMagoPlugin extends Plugin {
+public class HeadSpinPlugin extends Plugin {
 
     /**
      * Constructor to be used by plugin manager for plugin instantiation.
@@ -15,7 +15,7 @@ public class TestMagoPlugin extends Plugin {
      *
      * @param wrapper The plugin wrapper to be set.
      */
-    public TestMagoPlugin(PluginWrapper wrapper) {
+    public HeadSpinPlugin(PluginWrapper wrapper) {
         super(wrapper);
     }
 }

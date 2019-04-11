@@ -1,4 +1,4 @@
-package com.ultimatesoftware.aeon.extensions.testmago;
+package com.ultimatesoftware.aeon.extensions.headspin;
 
 import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-class TestMagoExtensionTests {
+class HeadSpinExtensionTests {
 
     @Mock
     private IConfiguration configuration;
@@ -37,12 +37,12 @@ class TestMagoExtensionTests {
 
     private MutableCapabilities mutableCapabilities = new MutableCapabilities();
 
-    private TestMagoExtension testMagoExtension;
+    private HeadSpinExtension testMagoExtension;
 
     @BeforeEach
     void setUp() {
-        this.testMagoExtension = new TestMagoExtension(this.configuration);
-        TestMagoExtension.log = this.log;
+        this.testMagoExtension = new HeadSpinExtension(this.configuration);
+        HeadSpinExtension.log = this.log;
     }
 
     @Test
@@ -51,10 +51,10 @@ class TestMagoExtensionTests {
         // Arrange
 
         // Act
-        Object extension = TestMagoExtension.createInstance();
+        Object extension = HeadSpinExtension.createInstance();
 
         // Assert
-        assertEquals(TestMagoExtension.class, extension.getClass());
+        assertEquals(HeadSpinExtension.class, extension.getClass());
     }
 
     @Test
@@ -93,7 +93,7 @@ class TestMagoExtensionTests {
         // Arrange
         doReturn(true)
                 .when(this.configuration)
-                .getBoolean(TestMagoConfiguration.Keys.CAPTURE, false);
+                .getBoolean(HeadSpinConfiguration.Keys.CAPTURE, false);
         doReturn("")
                 .when(this.configuration)
                 .getString(SeleniumConfiguration.Keys.UDID, "");
@@ -111,7 +111,7 @@ class TestMagoExtensionTests {
         // Arrange
         doReturn(false)
                 .when(this.configuration)
-                .getBoolean(TestMagoConfiguration.Keys.CAPTURE, false);
+                .getBoolean(HeadSpinConfiguration.Keys.CAPTURE, false);
         doReturn("")
                 .when(this.configuration)
                 .getString(SeleniumConfiguration.Keys.UDID, "");

@@ -1,5 +1,5 @@
-def baseProjectName = 'Aeon.Plugin.TestMago'
-def baseProjectDescription = 'Aeon TestMago Plugin'
+def baseProjectName = 'Aeon.Plugin.HeadSpin'
+def baseProjectDescription = 'Aeon HeadSpin Plugin'
 def base = baseProjectName
 
 dependencies {
@@ -14,9 +14,9 @@ jar {
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
                 'Implementation-Version': version,
-                'Plugin-Id': 'aeon.extensions.testmago',
+                'Plugin-Id': 'aeon.extensions.headspin',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.extensions.testmago.TestMagoPlugin',
+                'Plugin-Class': 'aeon.extensions.headspin.HeadSpinPlugin',
                 'Plugin-Dependencies': 'SeleniumAeon'
     }
 }
@@ -25,7 +25,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId 'aeon.extensions.testmago'
+            artifactId 'aeon.extensions.headspin'
         }
     }
 }

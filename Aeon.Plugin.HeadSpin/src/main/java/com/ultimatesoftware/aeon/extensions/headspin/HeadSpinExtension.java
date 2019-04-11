@@ -1,4 +1,4 @@
-package com.ultimatesoftware.aeon.extensions.testmago;
+package com.ultimatesoftware.aeon.extensions.headspin;
 
 import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
@@ -16,13 +16,13 @@ import java.io.IOException;
  * Selenium extensions for using Aeon with TestMago.
  */
 @Extension
-public class TestMagoExtension implements ISeleniumExtension {
+public class HeadSpinExtension implements ISeleniumExtension {
 
     private IConfiguration configuration;
 
-    static Logger log = LoggerFactory.getLogger(TestMagoExtension.class);
+    static Logger log = LoggerFactory.getLogger(HeadSpinExtension.class);
 
-    TestMagoExtension(IConfiguration configuration) {
+    HeadSpinExtension(IConfiguration configuration) {
         this.configuration = configuration;
     }
 
@@ -33,7 +33,7 @@ public class TestMagoExtension implements ISeleniumExtension {
      */
     public static Object createInstance() {
 
-        IConfiguration configuration = new TestMagoConfiguration();
+        IConfiguration configuration = new HeadSpinConfiguration();
 
         try {
             configuration.loadConfiguration();
@@ -41,13 +41,13 @@ public class TestMagoExtension implements ISeleniumExtension {
             log.warn("Could not load plugin configuration.");
         }
 
-        return new TestMagoExtension(configuration);
+        return new HeadSpinExtension(configuration);
     }
 
     @Override
     public void onGenerateCapabilities(Configuration configuration, MutableCapabilities capabilities) {
         String udid = this.configuration.getString(SeleniumConfiguration.Keys.UDID, "");
-        boolean capture = this.configuration.getBoolean(TestMagoConfiguration.Keys.CAPTURE, false);
+        boolean capture = this.configuration.getBoolean(HeadSpinConfiguration.Keys.CAPTURE, false);
         if (!udid.isEmpty()) {
             capabilities.setCapability("udid", udid);
         }

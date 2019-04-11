@@ -1,4 +1,4 @@
-package com.ultimatesoftware.aeon.extensions.testmago;
+package com.ultimatesoftware.aeon.extensions.headspin;
 
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
 import com.ultimatesoftware.aeon.core.extensions.PluginConfiguration;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Provides TestMago specific settings.
  */
-public class TestMagoConfiguration extends PluginConfiguration {
+public class HeadSpinConfiguration extends PluginConfiguration {
 
     /**
      * Keys relevant to the TestMago Configuration.
@@ -35,17 +35,17 @@ public class TestMagoConfiguration extends PluginConfiguration {
 
     @Override
     protected List<AeonConfigKey> getConfigurationFields() {
-        return Arrays.asList(TestMagoConfiguration.Keys.values());
+        return Arrays.asList(HeadSpinConfiguration.Keys.values());
     }
 
     @Override
     public void loadPluginSettings() throws IOException {
         super.loadPluginSettings();
-        try (InputStream in = TestMagoConfiguration.class.getResourceAsStream("/testmago.properties")) {
+        try (InputStream in = HeadSpinConfiguration.class.getResourceAsStream("/headspin.properties")) {
             properties.load(in);
         } catch (IOException e) {
-            Logger log = LoggerFactory.getLogger(TestMagoConfiguration.class);
-            log.error("testmago.properties resource could not be read");
+            Logger log = LoggerFactory.getLogger(HeadSpinConfiguration.class);
+            log.error("headspin.properties resource could not be read");
             throw e;
         }
     }
