@@ -3,7 +3,6 @@ package com.ultimatesoftware.aeon.extensions.headspin;
 import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
 import com.ultimatesoftware.aeon.extensions.selenium.SeleniumConfiguration;
-import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,7 +30,7 @@ class HeadSpinExtensionTests {
     private Configuration aeonConfiguration;
 
     @Mock
-    private AndroidDriver androidDriver;
+    private RemoteWebDriver webDriver;
 
     @Mock
     private Logger log;
@@ -129,10 +129,10 @@ class HeadSpinExtensionTests {
         // Arrange
 
         // Act
-        this.testMagoExtension.onAfterLaunch(this.aeonConfiguration, this.androidDriver);
+        this.testMagoExtension.onAfterLaunch(this.aeonConfiguration, this.webDriver);
 
         // Assert
         verifyZeroInteractions(this.aeonConfiguration);
-        verifyZeroInteractions(this.androidDriver);
+        verifyZeroInteractions(this.webDriver);
     }
 }

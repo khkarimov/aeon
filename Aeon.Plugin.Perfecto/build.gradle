@@ -19,7 +19,7 @@ ext {
 dependencies {
     testCompile "org.mockito:mockito-core:2.7.22"
 
-    compile project(':Aeon.Plugin.Selenium')
+    compile project(':Aeon.Plugin.Appium')
 
     pluginImplementation "com.perfecto.reporting-sdk:reportium-java:$reportiumSdkVersion"
 
