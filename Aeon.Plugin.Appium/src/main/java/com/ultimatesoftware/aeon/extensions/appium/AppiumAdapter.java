@@ -137,38 +137,40 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void swipe(boolean horizontally, boolean leftOrDown) {
         switchToNativeAppContext();
-        Dimension screenSize = getMobileWebDriver().manage().window().getSize();
 
-        int width = screenSize.getWidth();
-        int height = screenSize.getHeight();
+        try {
+            Dimension screenSize = getMobileWebDriver().manage().window().getSize();
 
-        log.trace("Screen size: " + width + ", " + height);
+            int width = screenSize.getWidth();
+            int height = screenSize.getHeight();
 
-        int startX = (int) (width * 0.78);
-        int startY = height / 2;
-        if (!leftOrDown) {
-            startX = (int) (width * 0.22);
-        }
+            log.trace("Screen size: " + width + ", " + height);
 
-        if (!horizontally) {
-            startX = width / 2;
-            startY = (int) (height * 0.25);
-
+            int startX = (int) (width * 0.78);
+            int startY = height / 2;
             if (!leftOrDown) {
-                startY = (int) (height * 0.75);
+                startX = (int) (width * 0.22);
             }
+
+            if (!horizontally) {
+                startX = width / 2;
+                startY = (int) (height * 0.25);
+
+                if (!leftOrDown) {
+                    startY = (int) (height * 0.75);
+                }
+            }
+
+            log.trace("Swipe start point: " + startX + ", " + startY);
+
+            TouchAction action = new TouchAction(getMobileWebDriver());
+            action.press(PointOption.point(startX, startY))
+                    .moveTo(PointOption.point(width - startX * 2, height - startY * 2))
+                    .release()
+                    .perform();
+        } finally {
+            switchToWebViewContext();
         }
-
-        log.trace("Swipe start point: " + startX + ", " + startY);
-
-        TouchAction action = new TouchAction(getMobileWebDriver());
-        action.press(PointOption.point(startX, startY))
-                .moveTo(PointOption.point(width - startX * 2, height - startY * 2))
-                .release()
-                .perform();
-
-        switchToWebViewContext();
-
     }
 
     @Override
@@ -477,38 +479,42 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void setDate(LocalDate date) {
 
-        if (browserType == AppType.ANDROID_HYBRID_APP) {
-            switchToNativeAppContext();
-            setMonthOnAndroidDatePicker(date);
-            WebControl label = findElement(ByMobile.accessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))), false);
-            click(label);
-            WebControl label1 = findElement(ByMobile.id("android:id/button1"), false);
-            click(label1);
-            switchToWebViewContext();
-        } else {
-            switchToNativeAppContext();
-            WebControl month = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
-            ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
-            WebControl day = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[2]"), false);
-            ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("d")));
-            WebControl year = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[3]"), false);
-            ((SeleniumElement) year).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("yyyy")));
+        switchToNativeAppContext();
+
+        try {
+            if (browserType == AppType.ANDROID_HYBRID_APP) {
+                setMonthOnAndroidDatePicker(date);
+                WebControl label = findElement(ByMobile.accessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))), false);
+                click(label);
+                WebControl label1 = findElement(ByMobile.id("android:id/button1"), false);
+                click(label1);
+            } else {
+                WebControl month = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
+                ((SeleniumElement) month).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
+                WebControl day = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[2]"), false);
+                ((SeleniumElement) day).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("d")));
+                WebControl year = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[3]"), false);
+                ((SeleniumElement) year).getUnderlyingWebElement().sendKeys(date.format(DateTimeFormatter.ofPattern("yyyy")));
+            }
+        } finally {
             switchToWebViewContext();
         }
     }
 
     @Override
     public void mobileSelect(MobileSelectOption selectOption, String value) {
-        if (browserType == AppType.ANDROID_HYBRID_APP) {
-            switchToNativeAppContext();
-            IByMobile selector = ByMobile.xpath(String.format("//android.widget.CheckedTextView[@text='%s']", value));
-            click(findElement(selector, false));
-            switchToWebViewContext();
-        } else {
-            switchToNativeAppContext();
-            WebControl element = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
-            ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(value);
-            click(findElement(ByMobile.accessibilityId("Done"), false));
+        switchToNativeAppContext();
+
+        try {
+            if (browserType == AppType.ANDROID_HYBRID_APP) {
+                IByMobile selector = ByMobile.xpath(String.format("//android.widget.CheckedTextView[@text='%s']", value));
+                click(findElement(selector, false));
+            } else {
+                WebControl element = findElement(ByMobile.xpath("//XCUIElementTypePickerWheel[1]"), false);
+                ((SeleniumElement) element).getUnderlyingWebElement().sendKeys(value);
+                click(findElement(ByMobile.accessibilityId("Done"), false));
+            }
+        } finally {
             switchToWebViewContext();
         }
     }
@@ -692,8 +698,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     public final void click(WebControl element) {
         if (element.getSelector() instanceof IByMobile) {
             switchToNativeAppContext();
-            super.click(element);
-            switchToWebViewContext();
+            try {
+                super.click(element);
+            } finally {
+                switchToWebViewContext();
+            }
 
             return;
         }
@@ -705,8 +714,11 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     public void set(WebControl control, WebSelectOption option, String setValue) {
         if (control.getSelector() instanceof IByMobile) {
             switchToNativeAppContext();
-            sendKeysToElement(control, setValue);
-            switchToWebViewContext();
+            try {
+                sendKeysToElement(control, setValue);
+            } finally {
+                switchToWebViewContext();
+            }
 
             return;
         }
@@ -763,8 +775,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         int windowHeight;
         try {
             switchToNativeAppContext();
-            Dimension windowSize = getMobileWebDriver().manage().window().getSize();
-            switchToWebViewContext();
+            Dimension windowSize;
+            try {
+                windowSize = getMobileWebDriver().manage().window().getSize();
+            } finally {
+                switchToWebViewContext();
+            }
             windowWidth = windowSize.getWidth();
             windowHeight = windowSize.getHeight();
             if (browserType == AppType.ANDROID_HYBRID_APP && mobileDeviceResolutions.containsKey(windowWidth)
@@ -787,9 +803,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
         log.trace("tapPoint: " + tapPoint.getX() + "," + tapPoint.getY());
         switchToNativeAppContext();
-        TouchAction a = new TouchAction((AppiumDriver) getWebDriver());
-        //a.tap(underlyingWebElement,elementSize.width/2, elementSize.height/2).perform();
-        a.tap(PointOption.point(tapPoint.getX(), tapPoint.getY())).perform();
-        switchToWebViewContext();
+        try {
+            TouchAction a = new TouchAction((AppiumDriver) getWebDriver());
+            //a.tap(underlyingWebElement,elementSize.width/2, elementSize.height/2).perform();
+            a.tap(PointOption.point(tapPoint.getX(), tapPoint.getY())).perform();
+        } finally {
+            switchToWebViewContext();
+        }
     }
 }
