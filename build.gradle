@@ -126,6 +126,38 @@ task CopyDriversPlatformPython(type: Copy) {
     into 'Aeon.Platform.Python/lib'
 }
 
+//Copy slack plugin into the plugins folder
+task CopySlackPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Slack/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+//Copy Artifactory plugin into the plugins folder
+task CopyArtifactoryPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Artifactory/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+//Copy RnR plugin into the plugins folder
+task CopyRnrPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.RnR/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+//Copy Metrics plugin into the plugins folder
+task CopyMetricsPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Metrics/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
@@ -140,6 +172,10 @@ assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
 assemble.finalizedBy(CopyDriversPlatformHttp)
 assemble.finalizedBy(CopyDriversPlatformPython)
+assemble.finalizedBy(CopySlackPlugin)
+assemble.finalizedBy(CopyArtifactoryPlugin)
+assemble.finalizedBy(CopyRnrPlugin)
+assemble.finalizedBy(CopyMetricsPlugin)
 
 allprojects {
     group 'aeon'
