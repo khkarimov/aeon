@@ -26,7 +26,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
 
     @Override
     public Object create(Class<?> extensionClass) {
-        log.trace("Creating Aeon extension for class {}", extensionClass.getName());
+        log.debug("Creating Aeon extension for class {}", extensionClass.getName());
         String currentSessionId = sessionIdProvider.getCurrentSessionId();
         String extensionClassName = extensionClass.getName();
 
@@ -57,7 +57,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
         try {
             createInstanceMethod = extensionClass.getMethod("createInstance");
         } catch (NoSuchMethodException e) {
-            log.trace("Could not find public static method 'createInstance' on " +
+            log.debug("Could not find public static method 'createInstance' on " +
                     "the extension class. Falling back to using parameter-less constructor.");
 
             return createInstanceUsingFallbackStrategy(extensionClass);
@@ -66,7 +66,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
         try {
             return createInstanceMethod.invoke(null);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            log.trace("Could not invoke public static method 'createInstance' on " +
+            log.debug("Could not invoke public static method 'createInstance' on " +
                     "the extension class. Falling back to using parameter-less constructor.");
 
             return createInstanceUsingFallbackStrategy(extensionClass);

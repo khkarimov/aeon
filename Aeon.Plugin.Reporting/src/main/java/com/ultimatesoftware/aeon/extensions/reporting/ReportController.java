@@ -1,113 +1,56 @@
 package com.ultimatesoftware.aeon.extensions.reporting;
 
-import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
-import com.ultimatesoftware.aeon.extensions.reporting.models.ReportDetails;
-import com.ultimatesoftware.aeon.extensions.reporting.reports.HtmlReport;
-import com.ultimatesoftware.aeon.extensions.reporting.reports.SlackReport;
-import com.ultimatesoftware.aeon.extensions.reporting.services.ArtifactoryService;
-import com.ultimatesoftware.aeon.extensions.reporting.services.RnrService;
+import com.ultimatesoftware.aeon.core.extensions.IUploaderExtension;
+import com.ultimatesoftware.aeon.core.testabstraction.product.Aeon;
+import com.ultimatesoftware.aeon.extensions.reporting.extensions.IReportingExtension;
+import com.ultimatesoftware.aeon.extensions.reporting.models.Report;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
- * Controls creation of the different reports.
+ * Controls creation of the HTML report file.
  */
-public class ReportController {
+class ReportController {
 
-    private static Logger log = LoggerFactory.getLogger(ReportController.class);
-    private String rnrUrl;
     private HtmlReport htmlReport;
-    private SlackReport slackReport;
-    private ArtifactoryService artifactoryService;
-    private RnrService rnrService;
 
-    ReportController(
-            HtmlReport htmlReport,
-            SlackReport slackReport,
-            ArtifactoryService artifactoryService,
-            RnrService rnrService
-    ) {
+    static Logger log = LoggerFactory.getLogger(ReportController.class);
 
+    ReportController(HtmlReport htmlReport) {
         this.htmlReport = htmlReport;
-        this.slackReport = slackReport;
-        this.artifactoryService = artifactoryService;
-        this.rnrService = rnrService;
     }
 
-    /**
-     * Sets the configuration objects on all dependent classes.
-     *
-     * @param configuration     The Reporting plugin configuration object.
-     * @param aeonConfiguration The Aeon configuration object.
-     */
-    void setConfiguration(IConfiguration configuration, IConfiguration aeonConfiguration) {
-        this.htmlReport.setConfiguration(configuration);
-        this.slackReport.setConfiguration(configuration, aeonConfiguration);
-        this.artifactoryService.setConfiguration(configuration);
-        this.rnrService.setConfiguration(configuration, aeonConfiguration);
+    void writeReportsAndUpload(Report report) {
 
-        this.rnrUrl = configuration.getString(ReportingConfiguration.Keys.RNR_URL, "");
-    }
-
-    void writeReportsAndUpload(ReportDetails reportDetails) {
-
-        // HTML Report
-        this.htmlReport.prepareReport(reportDetails);
-        String htmlReportUrl = this.uploadHtmlReport(this.htmlReport);
+        String htmlReportUrl = this.uploadHtmlReport(report);
 
         if (htmlReportUrl != null) {
             log.info("Test Report URL: {}", htmlReportUrl);
+            this.htmlReport.getReport().setURL(htmlReportUrl);
         }
 
-        // RnR Report
-        String correlationId = reportDetails.getCorrelationId();
-        String finalRnrUrl = this.uploadReportToRnr(htmlReport, htmlReportUrl, correlationId);
-
-        if (finalRnrUrl != null) {
-            log.info("RnR URL: {}", finalRnrUrl);
+        List<IReportingExtension> extensions = Aeon.getExtensions(IReportingExtension.class);
+        for (IReportingExtension extension : extensions) {
+            extension.onReportGenerated(this.htmlReport.getReport(), this.htmlReport.getJsonReport());
         }
-
-        // Slack Report
-        this.slackReport.setReportDetails(reportDetails);
-        this.slackReport.sendImageReportToSlack(htmlReportUrl, finalRnrUrl);
     }
 
-    private String uploadHtmlReport(HtmlReport htmlReport) {
-        String htmlReportFileName = htmlReport.createAngularReportFile();
+    private String uploadHtmlReport(Report report) {
+        this.htmlReport.prepareReport(report);
+        String htmlReportFileName = this.htmlReport.createAngularReportFile();
 
-        return this.artifactoryService.uploadToArtifactory(htmlReportFileName);
-    }
+        String lastUploadedReportURL = null;
+        List<IUploaderExtension> extensions = Aeon.getExtensions(IUploaderExtension.class);
+        for (IUploaderExtension extension : extensions) {
+            String reportURL = extension.onUploadRequested(htmlReportFileName, "report", "Test Report URL");
 
-    private String uploadReportToRnr(HtmlReport htmlReport, String htmlReportUrl, String correlationId) {
-        if (this.rnrUrl.isEmpty()) {
-            log.trace("RnR URL not set, cancelling upload to RnR.");
-            return null;
-        }
-
-        String rnrReportFileName = htmlReport.createJsonReportFile();
-
-        return this.rnrService.uploadToRnr(rnrReportFileName, htmlReportUrl, correlationId);
-    }
-
-    /**
-     * Formats a time duration in a readable way.
-     *
-     * @param time The duration to format.
-     * @return The formatted string.
-     */
-    public static String getTime(long time) {
-        int seconds = (int) (time / 1000);
-        if (seconds >= 60) {
-            int minutes = seconds / 60;
-            if (minutes >= 60) {
-                int hours = minutes / 60;
-                minutes = minutes % 60;
-                return hours + " hours" + minutes + " minutes";
+            if (reportURL != null) {
+                lastUploadedReportURL = reportURL;
             }
-            seconds = seconds % 60;
-            return minutes + " minutes " + seconds + " seconds";
-        } else {
-            return seconds + " seconds";
         }
+
+        return lastUploadedReportURL;
     }
 }

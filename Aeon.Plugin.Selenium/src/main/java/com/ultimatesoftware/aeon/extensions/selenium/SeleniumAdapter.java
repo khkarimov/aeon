@@ -14,15 +14,15 @@ import com.ultimatesoftware.aeon.core.common.web.*;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IBrowserType;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
 import com.ultimatesoftware.aeon.core.common.web.selectors.ByJQuery;
+import com.ultimatesoftware.aeon.core.extensions.IUploaderExtension;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IWebAdapter;
 import com.ultimatesoftware.aeon.core.framework.abstraction.controls.web.IWebCookie;
 import com.ultimatesoftware.aeon.core.framework.abstraction.controls.web.WebControl;
+import com.ultimatesoftware.aeon.core.testabstraction.product.Aeon;
 import com.ultimatesoftware.aeon.core.testabstraction.product.AeonTestExecution;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.IJavaScriptFlowExecutor;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.SeleniumScriptExecutor;
 import org.openqa.selenium.*;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 
-import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -45,7 +44,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.ultimatesoftware.aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
@@ -586,6 +584,15 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 AeonTestExecution.executionEvent("videoDownloaded", videoPath);
             }
 
+            List<IUploaderExtension> extensions = Aeon.getExtensions(IUploaderExtension.class);
+            for (IUploaderExtension extension : extensions) {
+                String videoUrl = extension.onUploadRequested(videoPath, "video", "Video URL");
+
+                if (videoUrl != null) {
+                    log.info("Video uploaded: {}", videoUrl);
+                }
+            }
+
             return;
         }
 
@@ -823,8 +830,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 webDriver.manage().window().setSize(new Dimension(dimension.width, dimension.height));
             } else if (!isRemote && osIsMacOrLinux() && (browserType.equals(BrowserType.OPERA) ||
                     browserType.equals(BrowserType.CHROME))) {
-                int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-                int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+                int screenWidth = (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+                int screenHeight = (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
                 Point position = new Point(0, 0);
                 webDriver.manage().window().setPosition(position);
                 Dimension maximizedScreenSize =
@@ -870,7 +877,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      *
      * @return An Image object of the current browser.
      */
-    public Image getScreenshot() {
+    public java.awt.Image getScreenshot() {
         TakesScreenshot driver = (TakesScreenshot) ((webDriver instanceof TakesScreenshot) ? webDriver : null);
 
         if (driver == null) {
@@ -2020,8 +2027,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             try {
                 SendKeysHelper.sendKeysToKeyboard(path);
                 SendKeysHelper.sendEnterKey();
-            } catch (AWTException e) {
-                log.error(e.getMessage());
+            } catch (java.awt.AWTException e) {
                 throw new RuntimeException(e);
             }
         } else {

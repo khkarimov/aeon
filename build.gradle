@@ -16,13 +16,17 @@ dependencies {
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Core.Web')
     compile project(':Aeon.Plugin.Appium')
+    compile project(':Aeon.Plugin.Artifactory')
     compile project(':Aeon.Plugin.HeadSpin')
     compile project(':Aeon.Plugin.JUnit5')
     compile project(':Aeon.Plugin.Log4J2')
+    compile project(':Aeon.Plugin.Metrics')
     compile project(':Aeon.Plugin.Perfecto')
     compile project(':Aeon.Plugin.Reporting')
     compile project(':Aeon.Plugin.SauceLabs')
+    compile project(':Aeon.Plugin.RnR')
     compile project(':Aeon.Plugin.Selenium')
+    compile project(':Aeon.Plugin.Slack')
     compile project(':Aeon.Plugin.TestNG')
     compile project(':Aeon.SystemTests.Web')
     compile project(':Aeon.SystemTests.Mobile')
@@ -124,6 +128,38 @@ task CopyDriversPlatformPython(type: Copy) {
     into 'Aeon.Platform.Python/lib'
 }
 
+//Copy slack plugin into the plugins folder
+task CopySlackPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Slack/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+//Copy Artifactory plugin into the plugins folder
+task CopyArtifactoryPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Artifactory/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+//Copy RnR plugin into the plugins folder
+task CopyRnrPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.RnR/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+//Copy Metrics plugin into the plugins folder
+task CopyMetricsPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Metrics/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
@@ -138,6 +174,10 @@ assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
 assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
 assemble.finalizedBy(CopyDriversPlatformHttp)
 assemble.finalizedBy(CopyDriversPlatformPython)
+assemble.finalizedBy(CopySlackPlugin)
+assemble.finalizedBy(CopyArtifactoryPlugin)
+assemble.finalizedBy(CopyRnrPlugin)
+assemble.finalizedBy(CopyMetricsPlugin)
 
 allprojects {
     group 'aeon'
@@ -206,7 +246,7 @@ subprojects {
         contextUrl = 'https://artifactory.mia.ulti.io/artifactory/'
         publish {
             repository {
-                repoKey = 'genesis-maven-prod' // The Artifactory repository key to publish to
+                repoKey = "${artifactory_repository}" // The Artifactory repository key to publish to
                 username = "${artifactory_username}" // The publisher user name
                 password = "${artifactory_password}" // The publisher password
             }

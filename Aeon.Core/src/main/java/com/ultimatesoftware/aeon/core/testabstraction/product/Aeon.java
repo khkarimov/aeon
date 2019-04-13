@@ -156,6 +156,15 @@ public class Aeon {
     }
 
     /**
+     * Setter for the plugin manager.
+     *
+     * @param pluginManager The plugin manager to use.
+     */
+    public static void setPluginManager(PluginManager pluginManager) {
+        Aeon.pluginManager = pluginManager;
+    }
+
+    /**
      * May be called at the end of all test executions.
      * <p>
      * This method allows plugins do tear down and clean up.
