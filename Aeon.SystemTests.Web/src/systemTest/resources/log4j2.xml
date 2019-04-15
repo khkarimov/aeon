@@ -20,7 +20,7 @@
         </PIdFileAppender>
     </Appenders>
     <Loggers>
-        <Logger name="com.ultimatesoftware.aeon" level="trace" additivity="false">
+        <Logger name="com.ultimatesoftware.aeon" level="info" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="PIdFileAppender"/>

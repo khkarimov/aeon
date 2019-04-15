@@ -97,7 +97,7 @@ public class BrowserWindowTests extends SampleBaseTest {
         product.browser.resize(BrowserSize.SMALL_TABLET_LANDSCAPE);
         product.browser.resize(BrowserSize.MOBILE_LANDSCAPE);
         product.browser.maximize();
-        product.browser.goToUrl("https://www.yahoo.com");
+        product.browser.goToUrl("https://en.wikipedia.org");
         product.browser.scrollToEnd();
         product.browser.scrollToTop();
         product.browser.goBack();
