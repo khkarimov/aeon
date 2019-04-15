@@ -26,6 +26,16 @@ public class ByJQuery implements IByWeb, IByJQuery {
      * Gets the previous function.
      */
     private ByJQuery predecessor;
+    /**
+     * Defining constant strings.
+     */
+    private final String filter = "filter";
+    private final String index = "index";
+    private final String nextUntil = "nextUntil";
+    private final String parentsUntil = "parentsUntil";
+    private final String prevUntil = "prevUntil";
+    private final String slice = "slice";
+
 
     /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
@@ -220,8 +230,8 @@ public class ByJQuery implements IByWeb, IByJQuery {
     public String toString() {
         List<String> parameterStrings = new ArrayList<>();
         parameters.forEach(x -> parameterStrings.add(x.toString()));
-        String parameters = String.join(",", parameterStrings);
-        return predecessor == null ? String.format("%1$s(%2$s)", function, parameters) : String.format("%1$s.%2$s(%3$s)", predecessor, function, parameters);
+        String joinedParameters = String.join(",", parameterStrings);
+        return predecessor == null ? String.format("%1$s(%2$s)", function, joinedParameters) : String.format("%1$s.%2$s(%3$s)", predecessor, function, joinedParameters);
     }
 
     /**
@@ -410,7 +420,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery filter(String selector) {
-        return new ByJQuery(this, "filter", selector);
+        return new ByJQuery(this, filter, selector);
     }
 
     /**
@@ -421,7 +431,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery filter(InlineJavaScript function) {
-        return new ByJQuery(this, "filter", function);
+        return new ByJQuery(this, filter, function);
     }
 
     /**
@@ -432,7 +442,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery filter(ByJQuery obj) {
-        return new ByJQuery(this, "filter", obj);
+        return new ByJQuery(this, filter, obj);
     }
 
     /**
@@ -500,7 +510,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery index() {
-        return new ByJQuery(this, "index");
+        return new ByJQuery(this, index);
     }
 
     /**
@@ -511,7 +521,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery index(String selector) {
-        return new ByJQuery(this, "index", selector);
+        return new ByJQuery(this, index, selector);
     }
 
     /**
@@ -522,7 +532,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery index(ByJQuery obj) {
-        return new ByJQuery(this, "index", obj);
+        return new ByJQuery(this, index, obj);
     }
 
     /**
@@ -630,7 +640,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery nextUntil(String selector) {
-        return new ByJQuery(this, "nextUntil", selector);
+        return new ByJQuery(this, nextUntil, selector);
     }
 
     /**
@@ -642,7 +652,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery nextUntil(String selector, String filter) {
-        return new ByJQuery(this, "nextUntil", selector, filter);
+        return new ByJQuery(this, nextUntil, selector, filter);
     }
 
     /**
@@ -653,7 +663,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery nextUntil(ByJQuery obj) {
-        return new ByJQuery(this, "nextUntil", obj);
+        return new ByJQuery(this, nextUntil, obj);
     }
 
     /**
@@ -665,7 +675,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery nextUntil(ByJQuery obj, String filter) {
-        return new ByJQuery(this, "nextUntil", obj, filter);
+        return new ByJQuery(this, nextUntil, obj, filter);
     }
 
     /**
@@ -751,7 +761,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery parentsUntil(String selector) {
-        return new ByJQuery(this, "parentsUntil", selector);
+        return new ByJQuery(this, parentsUntil, selector);
     }
 
     /**
@@ -763,7 +773,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery parentsUntil(String selector, String filter) {
-        return new ByJQuery(this, "parentsUntil", selector, filter);
+        return new ByJQuery(this, parentsUntil, selector, filter);
     }
 
     /**
@@ -774,7 +784,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery parentsUntil(ByJQuery obj) {
-        return new ByJQuery(this, "parentsUntil", obj);
+        return new ByJQuery(this, parentsUntil, obj);
     }
 
     /**
@@ -786,7 +796,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery parentsUntil(ByJQuery obj, String filter) {
-        return new ByJQuery(this, "parentsUntil", obj, filter);
+        return new ByJQuery(this, parentsUntil, obj, filter);
     }
 
     /**
@@ -839,7 +849,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery prevUntil(String selector) {
-        return new ByJQuery(this, "prevUntil", selector);
+        return new ByJQuery(this, prevUntil, selector);
     }
 
     /**
@@ -851,7 +861,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery prevUntil(String selector, String filter) {
-        return new ByJQuery(this, "prevUntil", selector, filter);
+        return new ByJQuery(this, prevUntil, selector, filter);
     }
 
     /**
@@ -862,7 +872,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery prevUntil(ByJQuery obj) {
-        return new ByJQuery(this, "prevUntil", obj);
+        return new ByJQuery(this, prevUntil, obj);
     }
 
     /**
@@ -874,7 +884,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery prevUntil(ByJQuery obj, String filter) {
-        return new ByJQuery(this, "prevUntil", obj, filter);
+        return new ByJQuery(this, prevUntil, obj, filter);
     }
 
     /**
@@ -906,7 +916,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery slice(int start) {
-        return new ByJQuery(this, "slice", start);
+        return new ByJQuery(this, slice, start);
     }
 
     /**
@@ -917,7 +927,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start) {
-        return new ByJQuery(this, "slice", start);
+        return new ByJQuery(this, slice, start);
     }
 
     /**
@@ -929,7 +939,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery slice(int start, int end) {
-        return new ByJQuery(this, "slice", start, end);
+        return new ByJQuery(this, slice, start, end);
     }
 
     /**
@@ -941,7 +951,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start, int end) {
-        return new ByJQuery(this, "slice", start, end);
+        return new ByJQuery(this, slice, start, end);
     }
 
     /**
@@ -953,7 +963,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery slice(int start, ByJQueryWithArithmeticOperatorOverload end) {
-        return new ByJQuery(this, "slice", start, end);
+        return new ByJQuery(this, slice, start, end);
     }
 
     /**
@@ -965,7 +975,7 @@ public class ByJQuery implements IByWeb, IByJQuery {
      */
     @Override
     public final ByJQuery slice(ByJQueryWithArithmeticOperatorOverload start, ByJQueryWithArithmeticOperatorOverload end) {
-        return new ByJQuery(this, "slice", start, end);
+        return new ByJQuery(this, slice, start, end);
     }
 
     /**

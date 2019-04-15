@@ -21,7 +21,7 @@ public abstract class Table<T extends Table, K extends Component> extends RowAct
     /**
      * Initializes a new instance of {@link Table} class.
      *
-     * @param tableClass  A sub class of {@link Table}
+     * @param tableClass     A sub class of {@link Table}
      * @param componentClass A sub class of {@link Component}
      */
     public Table(Class<T> tableClass, Class<K> componentClass) {
@@ -34,6 +34,7 @@ public abstract class Table<T extends Table, K extends Component> extends RowAct
      * @param index The index you are looking for.
      * @return Returns an instance of K.
      */
+    @Override
     public K index(int index) {
         return findRowByIndex(index);
     }
@@ -44,6 +45,7 @@ public abstract class Table<T extends Table, K extends Component> extends RowAct
      * @param index The index you are looking for.
      * @return Returns an instance of K.
      */
+    @Override
     protected K findRowByIndex(int index) {
         IByWeb updatedSelector = selector.toJQuery().find(String.format("%1$s:nth-child(%2$d)", rowSelector, index));
 

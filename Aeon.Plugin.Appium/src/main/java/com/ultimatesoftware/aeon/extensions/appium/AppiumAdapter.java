@@ -50,6 +50,16 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
     private HashMap<Integer, Integer> mobileDeviceResolutions = new HashMap<>();
 
+    private final String androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidViewViewGroup1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/";
+    private final String androidWidgetTextView1 = "android.widget.TextView[1]";
+    private final String androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidWidgetLinearLayout1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/";
+    private final String hierarchyAndroidWidgetFrameLayout1AndroidWidgetFrameLayout2 = "/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/";
+    private final String androidWidgetFrameLayout1AndroidWidgetFrameLayout2AndroidWidgetFrameLayout1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/";
+    private final String androidWidgetFrameLayout1AndroidViewViewGroup1AndroidWidgetTextView1 = "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]";
+    private final String androidWidgetScrollView1AndroidWidgetFrameLayout1AndroidWidgetFrameLayout1 = "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/";
+    private final String androidWdigetFrameLayout1AndroidWidgetLinearLayout1AndroidWidgetLinearLayout1 = "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/";
+    private final String androidIdDatePickerHeaderYear = "android:id/date_picker_header_year";
+
     /**
      * Constructor for Selenium Adapter.
      *
@@ -265,37 +275,37 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         //Google Pixel (7.1)
         bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
-                "android.widget.TextView[1]");
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidViewViewGroup1 +
+                androidWidgetTextView1);
 
         //Galaxy S7 Edge (6.0.1)
         bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidWidgetLinearLayout1 +
                 "android.widget.LinearLayout[1]/android.widget.TextView[1]");
 
         //Galaxy S7 (7.0)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+        bannerPaths.add(hierarchyAndroidWidgetFrameLayout1AndroidWidgetFrameLayout2 +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout2AndroidWidgetFrameLayout1 +
                 "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+                androidWidgetFrameLayout1AndroidViewViewGroup1AndroidWidgetTextView1);
 
         //Galaxy Note5 (7.0)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+        bannerPaths.add(hierarchyAndroidWidgetFrameLayout1AndroidWidgetFrameLayout2 +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout2AndroidWidgetFrameLayout1 +
+                androidWidgetScrollView1AndroidWidgetFrameLayout1AndroidWidgetFrameLayout1 +
+                androidWidgetFrameLayout1AndroidViewViewGroup1AndroidWidgetTextView1);
 
         //Galaxy S8 (7.0)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+        bannerPaths.add(hierarchyAndroidWidgetFrameLayout1AndroidWidgetFrameLayout2 +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout2AndroidWidgetFrameLayout1 +
+                androidWidgetScrollView1AndroidWidgetFrameLayout1AndroidWidgetFrameLayout1 +
+                androidWidgetFrameLayout1AndroidViewViewGroup1AndroidWidgetTextView1);
 
         //Sony Xperia XA (6.0)
         bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidViewViewGroup1 +
                 "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.TextView[1]");
         return bannerPaths;
@@ -306,33 +316,33 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         //Google Pixel (7.1)
         descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidWidgetLinearLayout1 +
                 "android.widget.LinearLayout[1]/android.widget.TextView[1]");
 
         //Galaxy S7 (7.0)
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+        descriptionPaths.add(hierarchyAndroidWidgetFrameLayout1AndroidWidgetFrameLayout2 +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout2AndroidWidgetFrameLayout1 +
                 "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
-                "android.widget.TextView[1]");
+                androidWdigetFrameLayout1AndroidWidgetLinearLayout1AndroidWidgetLinearLayout1 +
+                androidWidgetTextView1);
 
         //Galaxy Note5 (7.0) && Galaxy S8
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
-                "android.widget.TextView[1]");
+        descriptionPaths.add(hierarchyAndroidWidgetFrameLayout1AndroidWidgetFrameLayout2 +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout2AndroidWidgetFrameLayout1 +
+                androidWidgetScrollView1AndroidWidgetFrameLayout1AndroidWidgetFrameLayout1 +
+                androidWdigetFrameLayout1AndroidWidgetLinearLayout1AndroidWidgetLinearLayout1 +
+                androidWidgetTextView1);
 
         //Galaxy S8 (7.0)
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
-                "android.widget.TextView[1]");
+        descriptionPaths.add(hierarchyAndroidWidgetFrameLayout1AndroidWidgetFrameLayout2 +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout2AndroidWidgetFrameLayout1 +
+                androidWidgetScrollView1AndroidWidgetFrameLayout1AndroidWidgetFrameLayout1 +
+                androidWdigetFrameLayout1AndroidWidgetLinearLayout1AndroidWidgetLinearLayout1 +
+                androidWidgetTextView1);
 
         //Sony Xperia XA (6.0)
         descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
+                androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidViewViewGroup1 +
                 "android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.TextView[1]");
         return descriptionPaths;
@@ -379,7 +389,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         if (checkIfPerfectoInUse()) {
             log.info("Using perfecto path");
             yearXPath = "/hierarchy/android.widget.FrameLayout[1]/" +
-                    "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                    androidWidgetFrameLayout1AndroidWidgetFrameLayout1AndroidWidgetLinearLayout1 +
                     "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/" +
                     "android.widget.LinearLayout[1]/android.widget.ViewAnimator[1]/android.widget.ListView[1]/" +
                     "android.widget.TextView[";
@@ -400,7 +410,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                     return true;
                 }
             } catch (NoSuchElementException err) {
-                WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+                WebControl yearLabel = findElement(ByMobile.id(androidIdDatePickerHeaderYear), false);
                 click(yearLabel);
             }
         }
@@ -437,7 +447,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     }
 
     private void setYearOnAndroidDatePicker(int desiredYear) {
-        WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+        WebControl yearLabel = findElement(ByMobile.id(androidIdDatePickerHeaderYear), false);
         click(yearLabel);
         int currentYear = Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText());
         swipeAndCheckForYear(currentYear, desiredYear);
@@ -456,7 +466,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private void setMonthOnAndroidDatePicker(LocalDate date) {
         int currentMonth = getMonthNumberOnAndroidDatePicker();
         int desiredMonth = date.getMonthValue();
-        WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+        WebControl yearLabel = findElement(ByMobile.id(androidIdDatePickerHeaderYear), false);
         if (date.getYear() != Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText())) {
             setYearOnAndroidDatePicker(date.getYear());
         }

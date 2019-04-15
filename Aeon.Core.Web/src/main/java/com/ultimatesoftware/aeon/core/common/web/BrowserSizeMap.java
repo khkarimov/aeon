@@ -35,6 +35,13 @@ public final class BrowserSizeMap {
     }
 
     /**
+     * A private constructor to hide the implicit public constructor.
+     */
+    private BrowserSizeMap() {
+        throw new IllegalStateException("Incorrect initialization of the BrowserSizeMap object!");
+    }
+
+    /**
      * Boolean function that returns a truth value if the size is in the instance's sizes.
      *
      * @param size size input to test.

@@ -49,7 +49,7 @@ class WebCommandExecutionFacadeTests {
         //Act
 
         //Assert
-        assertEquals(webCommandExecutionFacade.getAjaxWaiterTimeoutMillis(), 100L);
+        assertEquals(100L, webCommandExecutionFacade.getAjaxWaiterTimeoutMillis());
         verify(ajaxWaiter, times(1)).getTimeout();
     }
 
