@@ -92,7 +92,6 @@ public class TimeoutDelegateRunner extends DelegateRunner {
         }
 
         // TODO(DionnyS): JAVA_CONVERSION Get running processes.
-        //var processList = ProcessCollector.GetProcesses();
 
         Image screenshot = null;
         try {

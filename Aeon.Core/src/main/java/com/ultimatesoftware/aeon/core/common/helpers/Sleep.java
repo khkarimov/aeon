@@ -16,6 +16,13 @@ public final class Sleep {
     private static final int TIME_FOR_INTERNAL = 70;
 
     /**
+     * A private constructor to hide the implicit public constructor.
+     */
+    private Sleep() {
+        throw new IllegalStateException("Incorrect initialization of the Sleep object!");
+    }
+
+    /**
      * Waits. May be used between Internal calls.
      * Default for Internal time is 70.
      */

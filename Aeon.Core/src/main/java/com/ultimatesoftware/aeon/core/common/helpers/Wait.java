@@ -43,7 +43,7 @@ public class Wait {
                 task.run();
 
                 return;
-            } catch (Throwable e) {
+            } catch (Exception e) {
 
                 if (startTime + timeout.toMillis() < System.currentTimeMillis()) {
                     throw e;

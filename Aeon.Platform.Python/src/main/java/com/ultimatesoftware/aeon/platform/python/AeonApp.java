@@ -2,6 +2,8 @@ package com.ultimatesoftware.aeon.platform.python;
 
 import com.ultimatesoftware.aeon.platform.DaggerAeonPlatformComponent;
 import com.ultimatesoftware.aeon.platform.factories.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import py4j.GatewayServer;
 
 /**
@@ -21,6 +23,8 @@ public class AeonApp {
         GatewayServer gatewayServer = new GatewayServer(sessionFactory);
         gatewayServer.start();
 
-        System.out.println("\n\nGateway server started.\n");
+        Logger logger = LoggerFactory.getLogger(AeonApp.class);
+
+        logger.debug("\n\nGateway server started.\n");
     }
 }

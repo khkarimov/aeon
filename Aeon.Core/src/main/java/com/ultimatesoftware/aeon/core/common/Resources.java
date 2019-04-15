@@ -14,7 +14,15 @@ public class Resources {
     }
 
     /**
+     * A private constructor to hide the implicit public constructor.
+     */
+    private Resources() {
+        throw new IllegalStateException("Incorrect initialization of the Resources object!");
+    }
+
+    /**
      * Gets the string if the bundle contains the input key.
+     *
      * @param key the input string.
      * @return the string of the bundle at the key.
      */
@@ -24,7 +32,5 @@ public class Resources {
         } else {
             return key; //"No message in MessagesBundle in Aeon.Core.Resources";
         }
-        //return bundle.getString(key);
-        //return key;
     }
 }

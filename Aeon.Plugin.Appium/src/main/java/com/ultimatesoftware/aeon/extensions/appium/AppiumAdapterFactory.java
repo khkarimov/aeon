@@ -206,11 +206,12 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
 
     private void switchToWebView() {
         Set<String> availableContexts = ((AppiumDriver<WebElement>) driver).getContextHandles();
-        log.trace("Available contexts: " + String.join(", ", availableContexts));
+        String joinedString = String.join(", ", availableContexts);
+        log.trace("Available contexts: %s", joinedString);
 
         for (String context : availableContexts) {
             if (context.contains("WEBVIEW")) {
-                log.trace("Switching to context " + context);
+                log.trace("Switching to context %s", context);
                 ((AppiumDriver) driver).context(context);
 
                 return;
@@ -223,7 +224,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
 
     private void setContext() {
         if (StringUtils.isNotBlank(driverContext)) {
-            log.trace("Switching to context " + driverContext + " as per configuration");
+            log.trace("Switching to context %s as per configuration", driverContext);
             ((AppiumDriver) driver).context(driverContext);
         } else {
             switchToWebView();

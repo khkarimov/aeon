@@ -189,7 +189,7 @@ public class ProductTests {
         String call = product.getConfig(key, "");
 
         // Assert
-        assertEquals(call, "Test Passed");
+        assertEquals("Test Passed", call);
     }
 
     @Test
