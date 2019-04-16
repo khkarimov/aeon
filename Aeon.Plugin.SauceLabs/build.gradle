@@ -16,7 +16,7 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'aeon.extensions.saucelabs',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.extensions.saucelabs.SauceLabsPlugin',
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.saucelabs.SauceLabsPlugin',
                 'Plugin-Dependencies': 'SeleniumAeon'
     }
 }

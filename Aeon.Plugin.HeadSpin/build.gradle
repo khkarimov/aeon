@@ -16,7 +16,7 @@ jar {
                 'Implementation-Version': version,
                 'Plugin-Id': 'aeon.extensions.headspin',
                 'Plugin-Version': version,
-                'Plugin-Class': 'aeon.extensions.headspin.HeadSpinPlugin',
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.headspin.HeadSpinPlugin',
                 'Plugin-Dependencies': 'SeleniumAeon'
     }
 }
