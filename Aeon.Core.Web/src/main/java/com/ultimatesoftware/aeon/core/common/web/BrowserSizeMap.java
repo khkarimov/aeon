@@ -38,8 +38,7 @@ public final class BrowserSizeMap {
      * A private constructor to hide the implicit public constructor.
      */
     private BrowserSizeMap() {
-        throw new IllegalStateException("Incorrect initialization of the BrowserSizeMap object!");
-        //It is not possible to call this constructor, anyway.
+        //It is not possible to call this constructor.
     }
 
     /**

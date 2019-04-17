@@ -7,6 +7,8 @@ import com.ultimatesoftware.aeon.core.common.exceptions.ContainsWhiteSpaceExcept
  */
 public class StringUtils {
 
+    private static final String VALUE = "value";
+
     /**
      * Function returns a string that is a quoted and escaped version of the original string.
      *
@@ -15,7 +17,7 @@ public class StringUtils {
      */
     public static String toQuotedAndEscapedString(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(VALUE);
         }
 
         // Note that the below has been optimized for performance (e.g., no regular expressions).
@@ -76,7 +78,7 @@ public class StringUtils {
      */
     public static String normalizeSpacing(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(VALUE);
         }
         StringBuilder stringBuilder = new StringBuilder(value.length());
         stringBuilder.setLength(0);
@@ -121,7 +123,7 @@ public class StringUtils {
      */
     public static String minimizeWhiteSpace(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(VALUE);
         }
         StringBuilder stringBuilder = new StringBuilder(value.length());
         stringBuilder.setLength(0);
@@ -152,7 +154,7 @@ public class StringUtils {
      */
     public static boolean is(String value, String expectedValue) {
         if (value == null) {
-            throw new IllegalArgumentException("value");
+            throw new IllegalArgumentException(VALUE);
         }
         if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");

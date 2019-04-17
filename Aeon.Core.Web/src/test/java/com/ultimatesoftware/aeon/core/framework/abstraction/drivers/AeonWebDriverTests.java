@@ -397,7 +397,6 @@ class AeonWebDriverTests {
 
         // Assert
         adapter.sendKeysToElement(webControl, "Test");
-        verify(adapter, times(2)).sendKeysToElement(webControl, "Test");
     }
 
     @Test
