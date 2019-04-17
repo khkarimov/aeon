@@ -14,14 +14,6 @@ public class Resources {
     }
 
     /**
-     * <<<<<<< HEAD
-     * A private constructor to hide the implicit public constructor.
-     */
-    private Resources() {
-        throw new IllegalStateException("Incorrect initialization of the Resources object!");
-    }
-
-    /**
      * Gets the string if the bundle contains the input key.
      *
      * @param key the input string.

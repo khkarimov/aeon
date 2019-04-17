@@ -16,7 +16,6 @@ public final class Sleep {
     private static final int TIME_FOR_INTERNAL = 70;
 
     /**
-     * <<<<<<< HEAD
      * A private constructor to hide the implicit public constructor.
      */
     private Sleep() {

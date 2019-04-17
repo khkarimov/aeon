@@ -10,13 +10,6 @@ public class StringUtils {
     private final String value = "value";
 
     /**
-     * A private constructor to hide the implicit public constructor.
-     */
-    private StringUtils() {
-        throw new IllegalStateException("Incorrect initialization of the StringUtils object!");
-    }
-
-    /**
      * Function returns a string that is a quoted and escaped version of the original string.
      *
      * @param value the input string to escape and quote.

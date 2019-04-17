@@ -18,14 +18,6 @@ public class AeonTestExecution {
 
     private static UUID correlationId = null;
 
-    /**
-     * <<<<<<< HEAD
-     * A private constructor to hide the implicit public constructor.
-     */
-    private AeonTestExecution() {
-        throw new IllegalStateException("Incorrect initialization of the AeonTestExecution object!");
-    }
-
     private static void trigger(Consumer<ITestExecutionExtension> consumer) {
         List<ITestExecutionExtension> testExecutionExtensions = Aeon.getExtensions(ITestExecutionExtension.class);
 

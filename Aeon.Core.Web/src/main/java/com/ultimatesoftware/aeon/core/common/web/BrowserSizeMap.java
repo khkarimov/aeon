@@ -39,6 +39,7 @@ public final class BrowserSizeMap {
      */
     private BrowserSizeMap() {
         throw new IllegalStateException("Incorrect initialization of the BrowserSizeMap object!");
+        //It is not possible to call this constructor, anyway.
     }
 
     /**

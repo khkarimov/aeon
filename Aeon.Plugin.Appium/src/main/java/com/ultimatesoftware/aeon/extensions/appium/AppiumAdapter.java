@@ -27,7 +27,13 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.UnsupportedCommandException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.slf4j.Logger;
@@ -37,7 +43,12 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Mobile adapter for Appium.
@@ -811,7 +822,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             windowHeight = 1920;
         }
 
-        log.trace("windowSize: %d, %d", windowWidth, windowHeight);
+        log.trace("windowSize: {0}, {1}", windowWidth, windowHeight);
 
         double xRatio = windowWidth * 1.0 / webRootWidth;
         double yRatio = windowHeight * 1.0 / webRootHeight;
@@ -819,7 +830,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         int pointY = webElementLocation.getY() + elementSize.getHeight() / 2;
         Point tapPoint = new Point((int) (pointX * xRatio), (int) (pointY * yRatio));
 
-        log.trace("tapPoint: %d, %d", tapPoint.getX(), tapPoint.getY());
+        log.trace("tapPoint: {0}, {1}", tapPoint.getX(), tapPoint.getY());
         switchToNativeAppContext();
         try {
             TouchAction a = new TouchAction((AppiumDriver) getWebDriver());

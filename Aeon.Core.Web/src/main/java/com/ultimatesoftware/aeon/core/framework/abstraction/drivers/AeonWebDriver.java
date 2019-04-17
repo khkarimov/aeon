@@ -30,15 +30,6 @@ public class AeonWebDriver implements IWebDriver {
     private IWebAdapter adapter;
     private Configuration configuration;
 
-    /**
-     * Initializes a new instance of the AeonWebDriver class.
-     */
-    public AeonWebDriver() {
-        /**This is left empty so that the AeonWebDriver can first be initialized
-         * and then configured, following the pattern of implementing the IWebDriver.
-         */
-    }
-
     @Override
     public IDriver configure(IAdapter adapter, Configuration configuration) {
         this.adapter = (IWebAdapter) adapter;

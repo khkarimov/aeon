@@ -2,7 +2,17 @@ package com.ultimatesoftware.aeon.core.testabstraction.elements.web;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.command.execution.commands.initialization.WebCommandInitializer;
-import com.ultimatesoftware.aeon.core.command.execution.commands.web.*;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.DoesNotHaveOptionsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.HasAllOptionsInOrderCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.HasNumberOfOptionsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.HasOptionsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.HasOptionsInOrderCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.IsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.IsLikeCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.IsNotLikeCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.SetCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.WebControlFinder;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.WebSelectorFinder;
 import com.ultimatesoftware.aeon.core.common.CompareType;
 import com.ultimatesoftware.aeon.core.common.ComparisonOption;
 import com.ultimatesoftware.aeon.core.common.web.WebSelectOption;
@@ -12,9 +22,7 @@ import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
  * Model class for dropdown elements.
  */
 public class Dropdown extends WebElement {
-    /**
-     * A constant variable for using "INNERHTML" multilple times.
-     */
+
     private final String innerhtml = "INNERHTML";
 
     /**

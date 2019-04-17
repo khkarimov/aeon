@@ -1,12 +1,9 @@
 package com.ultimatesoftware.aeon.core.common.helpers;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.time.Duration;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WaitTests {
     private int valueToBe5;
@@ -31,7 +28,7 @@ public class WaitTests {
         }, 5, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test(expected = RuntimeException.class)
@@ -42,7 +39,7 @@ public class WaitTests {
         Wait.forValue(() -> valueToBe5, 5, Duration.ofMillis(10), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test(expected = RuntimeException.class)
@@ -53,7 +50,7 @@ public class WaitTests {
         Wait.forValue(() -> valueToBe5, 5, Duration.ofMillis(10));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test(expected = RuntimeException.class)
@@ -67,7 +64,7 @@ public class WaitTests {
         }, 5, Duration.ofMillis(1), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test
@@ -81,7 +78,7 @@ public class WaitTests {
         }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test(expected = RuntimeException.class)
@@ -95,7 +92,7 @@ public class WaitTests {
         }, Duration.ofMillis(3), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test
@@ -112,7 +109,7 @@ public class WaitTests {
         }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test(expected = RuntimeException.class)
@@ -127,7 +124,7 @@ public class WaitTests {
         }, Duration.ofMillis(10), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test
@@ -144,7 +141,7 @@ public class WaitTests {
         }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test(expected = Throwable.class)
@@ -159,7 +156,7 @@ public class WaitTests {
         }, Duration.ofMillis(10), Duration.ofMillis(1));
 
         //Assert
-        assertEquals(5, valueToBe5);
+        //Verification is done implicitly by not receiving an exception.
     }
 
     @Test
@@ -173,7 +170,7 @@ public class WaitTests {
         }, expectedString, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        
+
     }
 
     @Test(expected = RuntimeException.class)

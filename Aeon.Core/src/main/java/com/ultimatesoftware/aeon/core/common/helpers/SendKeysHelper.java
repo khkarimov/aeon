@@ -15,11 +15,11 @@ public class SendKeysHelper {
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();
 
     /**
-     * <<<<<<< HEAD
      * A private constructor to hide the implicit public constructor.
      */
     private SendKeysHelper() {
         throw new IllegalStateException("Incorrect initialization of the SendKeysHelper object!");
+        //It should not be possible to call this specific constructor.
     }
 
     /**
@@ -34,7 +34,7 @@ public class SendKeysHelper {
         for (int i = 0; i < stringToSend.length(); i++) {
             char character = stringToSend.charAt(i);
             if (!Character.isLetter(character)) {
-                robot = checkIsDigit(character, robot);
+                keyPressAndReleaseBasedOnDigitsAndChars(character, robot);
             } else {
                 int n = KeyEvent.getExtendedKeyCodeForChar(character);
                 if (Character.isUpperCase(character)) {
@@ -50,12 +50,11 @@ public class SendKeysHelper {
         }
     }
 
-    private static Robot checkIsDigit(char character, Robot robot) {
+    private static void keyPressAndReleaseBasedOnDigitsAndChars(char character, Robot robot) {
         if (Character.isDigit(character)) {
             int n = KeyEvent.getExtendedKeyCodeForChar(character);
             robot.keyPress(n);
             robot.keyRelease(n);
-            return robot;
         } else {
             switch (character) {
                 case ':':
@@ -93,52 +92,6 @@ public class SendKeysHelper {
                 default:
                     throw new UnsupportedSpecialCharacterException(character);
             }
-            return robot;
-        }
-    }
-
-    /**
-     * Helper for the sendKeysToKeyboard method to reduce complexity and deals with switch statements.
-     *
-     * @param character the current character being analyzed.
-     * @throws AWTException Signals that an Abstract Window Toolkit exception has occurred.
-     */
-    public static void sendKeysToKeyboardSwitchHelper(char character) throws AWTException {
-        switch (character) {
-            case ':':
-                robot.keyPress(KeyEvent.VK_SHIFT);
-                robot.keyPress(KeyEvent.VK_SEMICOLON);
-                robot.keyRelease(KeyEvent.VK_SEMICOLON);
-                robot.keyRelease(KeyEvent.VK_SHIFT);
-                break;
-            case '\\':
-                robot.keyPress(KeyEvent.VK_BACK_SLASH);
-                robot.keyRelease(KeyEvent.VK_BACK_SLASH);
-                break;
-            case '.':
-                robot.keyPress(KeyEvent.VK_PERIOD);
-                robot.keyRelease(KeyEvent.VK_PERIOD);
-                break;
-            case '_':
-                robot.keyPress(KeyEvent.VK_SHIFT);
-                robot.keyPress(KeyEvent.VK_MINUS);
-                robot.keyRelease(KeyEvent.VK_MINUS);
-                robot.keyRelease(KeyEvent.VK_SHIFT);
-                break;
-            case '-':
-                robot.keyPress(KeyEvent.VK_MINUS);
-                robot.keyRelease(KeyEvent.VK_MINUS);
-                break;
-            case ' ':
-                robot.keyPress(KeyEvent.VK_SPACE);
-                robot.keyRelease(KeyEvent.VK_SPACE);
-                break;
-            case '/':
-                robot.keyPress(KeyEvent.VK_SLASH);
-                robot.keyRelease(KeyEvent.VK_SLASH);
-                break;
-            default:
-                throw new UnsupportedSpecialCharacterException(character);
         }
     }
 
