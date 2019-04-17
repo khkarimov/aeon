@@ -17,18 +17,6 @@ public class StringUtils {
     }
 
     /**
-     * A constant variable for using "value" multilple times.
-     */
-    private final String value = "value";
-
-    /**
-     * Default constructor to prevent Java from adding an implicit public constructor.
-     */
-    private StringUtils(){
-        throw new IllegalStateException("Illegal instantiation of StringUtils!");
-    }
-
-    /**
      * Function returns a string that is a quoted and escaped version of the original string.
      *
      * @param value the input string to escape and quote.

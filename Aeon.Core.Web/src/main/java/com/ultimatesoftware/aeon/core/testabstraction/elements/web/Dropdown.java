@@ -17,8 +17,6 @@ public class Dropdown extends WebElement {
      */
     private final String innerhtml = "INNERHTML";
 
-    private final String innerhtml = "INNERHTML";
-
     /**
      * Initializes a new instance of the {@link Dropdown} class.
      *
