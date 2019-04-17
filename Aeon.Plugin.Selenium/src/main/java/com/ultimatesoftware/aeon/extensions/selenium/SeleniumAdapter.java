@@ -1483,7 +1483,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         SeleniumElement currOption;
         while (elementsIterator.hasNext()) {
             currOption = (SeleniumElement) elementsIterator.next();
-            ifAscendingOrDescendingByTextOrValue_ThenThrowException(compare, prevOption, currOption);
+            ifAscendingOrDescendingByTextOrValueThenThrowException(compare, prevOption, currOption);
             prevOption = currOption;
         }
     }
@@ -1495,7 +1495,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param prevOption The previous selenium option.
      * @param currOption The current selenium option.
      */
-    private void ifAscendingOrDescendingByTextOrValue_ThenThrowException(CompareType compare, SeleniumElement prevOption, SeleniumElement currOption) {
+    private void ifAscendingOrDescendingByTextOrValueThenThrowException(CompareType compare, SeleniumElement prevOption, SeleniumElement currOption) {
         switch (compare) {
             case ASCENDING_BY_TEXT:
                 if (prevOption.getText().toLowerCase().compareTo(currOption.getText().toLowerCase()) > 0) {

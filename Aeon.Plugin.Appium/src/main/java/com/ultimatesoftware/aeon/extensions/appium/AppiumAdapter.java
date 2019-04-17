@@ -155,7 +155,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             int width = screenSize.getWidth();
             int height = screenSize.getHeight();
 
-            log.trace("Screen size: {0}, {1}", width, height);
+            log.trace("Screen size: {}", width, height);
 
             int startX = (int) (width * 0.78);
             int startY = height / 2;
@@ -172,7 +172,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 }
             }
 
-            log.trace("Swipe start point: {0}, {1}", startX, startY);
+            log.trace("Swipe start point: {}", startX, startY);
 
             TouchAction action = new TouchAction(getMobileWebDriver());
             action.press(PointOption.point(startX, startY))
@@ -613,14 +613,14 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             return;
         }
 
-        log.trace("switchToWebView({0})", selector);
+        log.trace("switchToWebView({})", selector);
         Set<String> availableContexts = getMobileWebDriver().getContextHandles();
         String joinedString = String.join(", ", availableContexts);
-        log.trace("Available contexts: {0}", joinedString);
+        log.trace("Available contexts: {}", joinedString);
         if (availableContexts.size() > 1) {
             for (String availableContext : availableContexts) {
                 if (!availableContext.contains("NATIVE_APP") && availableContext.startsWith("WEBVIEW")) {
-                    log.trace("Switching to context {0}", availableContext);
+                    log.trace("Switching to context {}", availableContext);
                     getMobileWebDriver().context(availableContext);
                     log.trace("Switched to context");
 
@@ -764,12 +764,12 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     }
 
     private void switchToNativeAppContext() {
-        log.trace("Switching to native app context {0}", "NATIVE_APP");
+        log.trace("Switching to native app context {}", "NATIVE_APP");
         getMobileWebDriver().context("NATIVE_APP");
     }
 
     private void switchToWebViewContext() {
-        log.trace("Switching to web view context {0}", context);
+        log.trace("Switching to web view context {}", context);
         getMobileWebDriver().context(context);
     }
 
@@ -779,13 +779,13 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
         WebElement underlyingWebElement = ((SeleniumElement) control).getUnderlyingWebElement();
         Point webElementLocation = underlyingWebElement.getLocation();
-        log.trace("elementLocation: {0}, {1}", webElementLocation.getX(), webElementLocation.getY());
+        log.trace("elementLocation: {}", webElementLocation.getX(), webElementLocation.getY());
         Dimension elementSize = underlyingWebElement.getSize();
-        log.trace("elementSize: {0}, {1}", elementSize.getWidth(), elementSize.getHeight());
+        log.trace("elementSize: {}", elementSize.getWidth(), elementSize.getHeight());
 
         long webRootWidth = (long) executeScript("return screen.availWidth");
         long webRootHeight = (long) executeScript("return screen.availHeight");
-        log.trace("screenSize: {0}, {1}", webRootWidth, webRootHeight);
+        log.trace("screenSize: {}", webRootWidth, webRootHeight);
 
         int windowWidth;
         int windowHeight;
@@ -809,7 +809,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             windowHeight = 1920;
         }
 
-        log.trace("windowSize: {0}, {1}", windowWidth, windowHeight);
+        log.trace("windowSize: {}", windowWidth, windowHeight);
 
         double xRatio = windowWidth * 1.0 / webRootWidth;
         double yRatio = windowHeight * 1.0 / webRootHeight;
@@ -817,7 +817,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         int pointY = webElementLocation.getY() + elementSize.getHeight() / 2;
         Point tapPoint = new Point((int) (pointX * xRatio), (int) (pointY * yRatio));
 
-        log.trace("tapPoint: {0}, {1}", tapPoint.getX(), tapPoint.getY());
+        log.trace("tapPoint: {}", tapPoint.getX(), tapPoint.getY());
         switchToNativeAppContext();
         try {
             TouchAction a = new TouchAction((AppiumDriver) getWebDriver());

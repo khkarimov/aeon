@@ -550,7 +550,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        log.info("firefox binary options: {0}", binaryPath);
+        log.info("firefox binary options: {}", binaryPath);
 
         if (!isRemote && OsCheck.getOperatingSystemType() == OsCheck.OSType.WINDOWS) {
             // Workaround for Windows Firefox problem:
