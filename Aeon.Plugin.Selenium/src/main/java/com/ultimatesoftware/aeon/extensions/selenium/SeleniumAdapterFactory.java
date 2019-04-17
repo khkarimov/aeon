@@ -67,6 +67,9 @@ import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 public class SeleniumAdapterFactory implements IAdapterExtension {
 
     private static final String MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+    private static final String CHROME = "Chrome";
+    private final String device = "deviceName";
+    private final String debug = "DEBUG";
     private SeleniumConfiguration configuration;
     private static Logger log = LoggerFactory.getLogger(SeleniumAdapterFactory.class);
     protected IBrowserType browserType;
@@ -104,7 +107,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
      */
     protected void prepare(SeleniumConfiguration configuration) {
         this.configuration = configuration;
-        configuration.setBrowserType(configuration.getString(WebConfiguration.Keys.BROWSER, "Chrome"));
+        configuration.setBrowserType(configuration.getString(WebConfiguration.Keys.BROWSER, CHROME));
         this.browserType = configuration.getBrowserType();
         this.browserAcceptedLanguageCodes = configuration.getString(SeleniumConfiguration.Keys.LANGUAGE, "en-us");
         this.useMobileUserAgent = configuration.getBoolean(SeleniumConfiguration.Keys.USE_MOBILE_USER_AGENT, true);
@@ -160,7 +163,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 launchFirefox();
                 break;
 
-            case "Chrome":
+            case CHROME:
                 launchChrome();
                 break;
 
@@ -222,6 +225,15 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         target.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
     }
 
+    private void checkLevel(String currentLevel, String logType) {
+        try {
+            Level parsedLevel = Level.parse(currentLevel);
+            loggingPreferences.enable(logType, parsedLevel);
+        } catch (IllegalArgumentException e) {
+            log.warn(String.format("Invalid level \"%s\" for logging type \"browser\".", currentLevel));
+        }
+    }
+
     private void setLoggingConfiguration() {
         loggingPreferences = new LoggingPreferences();
         seleniumLogsDirectory = configuration.getString(SeleniumConfiguration.Keys.LOGGING_DIRECTORY, "log");
@@ -232,44 +244,19 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String performanceLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_PERFORMANCE, defaultLevel);
         String serverLevel = configuration.getString(SeleniumConfiguration.Keys.LOGGING_SERVER, defaultLevel);
         if (!browserLevel.equals(defaultLevel) && !browserLevel.isEmpty()) {
-            try {
-                Level parsedLevel = Level.parse(browserLevel);
-                loggingPreferences.enable(LogType.BROWSER, parsedLevel);
-            } catch (IllegalArgumentException e) {
-                log.warn(String.format("Invalid level \"%s\" for logging type \"browser\".", browserLevel));
-            }
+            checkLevel(browserLevel, LogType.BROWSER);
         }
         if (!clientLevel.equals(defaultLevel) && !clientLevel.isEmpty()) {
-            try {
-                Level parsedLevel = Level.parse(clientLevel);
-                loggingPreferences.enable(LogType.CLIENT, parsedLevel);
-            } catch (IllegalArgumentException e) {
-                log.warn(String.format("Invalid level \"%s\" for logging type \"client\".", clientLevel));
-            }
+            checkLevel(clientLevel, LogType.CLIENT);
         }
         if (!driverLevel.equals(defaultLevel) && !driverLevel.isEmpty()) {
-            try {
-                Level parsedLevel = Level.parse(driverLevel);
-                loggingPreferences.enable(LogType.DRIVER, parsedLevel);
-            } catch (IllegalArgumentException e) {
-                log.warn(String.format("Invalid level \"%s\" for logging type \"driver\".", driverLevel));
-            }
+            checkLevel(driverLevel, LogType.DRIVER);
         }
         if (!performanceLevel.equals(defaultLevel) && !performanceLevel.isEmpty()) {
-            try {
-                Level parsedLevel = Level.parse(performanceLevel);
-                loggingPreferences.enable(LogType.PERFORMANCE, parsedLevel);
-            } catch (IllegalArgumentException e) {
-                log.warn(String.format("Invalid level \"%s\" for logging type \"performance\".", performanceLevel));
-            }
+            checkLevel(performanceLevel, LogType.PERFORMANCE);
         }
         if (!serverLevel.equals(defaultLevel) && !serverLevel.isEmpty()) {
-            try {
-                Level parsedLevel = Level.parse(serverLevel);
-                loggingPreferences.enable(LogType.SERVER, parsedLevel);
-            } catch (IllegalArgumentException e) {
-                log.warn(String.format("Invalid level \"%s\" for logging type \"server\".", serverLevel));
-            }
+            checkLevel(serverLevel, LogType.SERVER);
         }
     }
 
@@ -342,7 +329,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
         if (StringUtils.isNotBlank(mobileEmulationDevice)) {
             Map<String, String> mobileEmulation = new HashMap<>();
-            mobileEmulation.put("deviceName", mobileEmulationDevice);
+            mobileEmulation.put(device, mobileEmulationDevice);
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
             desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
@@ -361,17 +348,17 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
                 ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
             } else {
                 String loggingPath = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_PATH, "C:/iedriverserver.log");
-                String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, "DEBUG").toUpperCase();
+                String loggingLevel = configuration.getString(SeleniumConfiguration.Keys.IE_LOGGING_LEVEL, debug).toUpperCase();
                 switch (loggingLevel) {
                     case "FATAL":
                     case "INFO":
                     case "ERROR":
-                    case "DEBUG":
+                    case debug:
                     case "TRACE":
                     case "WARN":
                         break;
                     default:
-                        loggingLevel = "DEBUG";
+                        loggingLevel = debug;
                 }
                 String finalLoggingLevel = loggingLevel;
                 InternetExplorerOptions ieOptions = getInternetExplorerOptions(
@@ -499,14 +486,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private Capabilities getIOSSafariCapabilities() {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
         if (!deviceName.isEmpty()) {
-            desiredCapabilities.setCapability("deviceName", deviceName);
+            desiredCapabilities.setCapability(device, deviceName);
         }
-
-        desiredCapabilities.setCapability("platformName", "iOS");
-        desiredCapabilities.setCapability("platformVersion", platformVersion);
-        desiredCapabilities.setCapability("browserName", "mobileSafari");
-        desiredCapabilities.setCapability("deviceName", deviceName);
-        desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
+        setCapability(desiredCapabilities, "iOS", "mobileSafari");
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
@@ -515,17 +497,20 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private Capabilities getAndroidChromeCapabilities() {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
         if (!deviceName.isEmpty()) {
-            desiredCapabilities.setCapability("deviceName", deviceName);
+            desiredCapabilities.setCapability(device, deviceName);
         }
+        setCapability(desiredCapabilities, "Android", CHROME);
+        return desiredCapabilities;
+    }
 
-        desiredCapabilities.setCapability("platformName", "Android");
+    private void setCapability(MutableCapabilities desiredCapabilities, String os, String browser) {
+        desiredCapabilities.setCapability("platformName", os);
         desiredCapabilities.setCapability("platformVersion", platformVersion);
-        desiredCapabilities.setCapability("browserName", "Chrome");
-        desiredCapabilities.setCapability("deviceName", deviceName);
+        desiredCapabilities.setCapability("browserName", browser);
+        desiredCapabilities.setCapability(device, deviceName);
         desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
         addPluginCapabilities(desiredCapabilities);
 
-        return desiredCapabilities;
     }
 
     private void setProxySettings(MutableCapabilities options, String proxyLocation) {
@@ -560,7 +545,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         }
 
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        log.info("firefox binary options: " + binaryPath);
+        log.info("firefox binary options: %s", binaryPath);
 
         if (!isRemote && OsCheck.getOperatingSystemType() == OsCheck.OSType.WINDOWS) {
             // Workaround for Windows Firefox problem:
@@ -628,7 +613,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         if (StringUtils.isNotBlank(mobileEmulationDevice)) {
             Map<String, String> mobileEmulation = new HashMap<>();
-            mobileEmulation.put("deviceName",
+            mobileEmulation.put(device,
                     configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, ""));
             chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         }

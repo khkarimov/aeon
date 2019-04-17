@@ -98,7 +98,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
             return "";
         }
 
-        if (value instanceof Collection<?> && ((Collection<?>) value).size() > 0) {
+        if (value instanceof Collection<?> && !(((Collection) value).isEmpty()) && ((Collection<?>) value).size() > 0) {
             try {
                 Collection<WebControl> elements = (Collection<WebControl>) value;
 

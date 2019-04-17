@@ -31,7 +31,7 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
      *
      * @param <B> the type to build
      */
-    public static class Builder<B extends Builder<B>> extends AbstractOutputStreamAppender.Builder<B>
+    public static class PIdAppenderBuilder<B extends Builder<B>> extends AbstractOutputStreamAppender.Builder<B>
             implements org.apache.logging.log4j.core.util.Builder<PIdFileAppender> {
 
         @PluginBuilderAttribute
@@ -85,10 +85,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided advertise as a boolean.
+         * Function returns a PIdAppenderBuilder with the provided advertise as a boolean.
          *
          * @param advertise a boolean of advertise.
-         * @return the Builder with the new advertise.
+         * @return the PIdAppenderBuilder with the new advertise.
          */
         public B withAdvertise(final boolean advertise) {
             this.advertise = advertise;
@@ -96,10 +96,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided advertiseUri as a string.
+         * Function returns a PIdAppenderBuilder with the provided advertiseUri as a string.
          *
          * @param advertiseUri a string representing advertise uri.
-         * @return the Builder with the new advertise uri.
+         * @return the PIdAppenderBuilder with the new advertise uri.
          */
         public B withAdvertiseUri(final String advertiseUri) {
             this.advertiseUri = advertiseUri;
@@ -107,10 +107,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided append as a boolean.
+         * Function returns a PIdAppenderBuilder with the provided append as a boolean.
          *
          * @param append a boolean of append.
-         * @return the Builder with the new append.
+         * @return the PIdAppenderBuilder with the new append.
          */
         public B withAppend(final boolean append) {
             this.append = append;
@@ -118,10 +118,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided file name as a string.
+         * Function returns a PIdAppenderBuilder with the provided file name as a string.
          *
          * @param fileName a string representing file name.
-         * @return the Builder with the new file name.
+         * @return the PIdAppenderBuilder with the new file name.
          */
         public B withFileName(final String fileName) {
             this.fileName = fileName;
@@ -129,10 +129,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided create on demand as a boolean.
+         * Function returns a PIdAppenderBuilder with the provided create on demand as a boolean.
          *
          * @param createOnDemand a boolean of create on demand.
-         * @return the Builder with the new create on demand.
+         * @return the PIdAppenderBuilder with the new create on demand.
          */
         public B withCreateOnDemand(final boolean createOnDemand) {
             this.createOnDemand = createOnDemand;
@@ -140,10 +140,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided locking as a boolean.
+         * Function returns a PIdAppenderBuilder with the provided locking as a boolean.
          *
          * @param locking a boolean of locking.
-         * @return the Builder with the new locking.
+         * @return the PIdAppenderBuilder with the new locking.
          */
         public B withLocking(final boolean locking) {
             this.locking = locking;
@@ -178,10 +178,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided file permissions.
+         * Function returns a PIdAppenderBuilder with the provided file permissions.
          *
          * @param filePermissions the file permissions to use.
-         * @return the Builder with the new file permissions.
+         * @return the PIdAppenderBuilder with the new file permissions.
          */
         public B withFilePermissions(final String filePermissions) {
             this.filePermissions = filePermissions;
@@ -189,10 +189,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided file owner.
+         * Function returns a PIdAppenderBuilder with the provided file owner.
          *
          * @param fileOwner the file owner to use.
-         * @return the Builder with the new file owner.
+         * @return the PIdAppenderBuilder with the new file owner.
          */
         public B withFileOwner(final String fileOwner) {
             this.fileOwner = fileOwner;
@@ -200,10 +200,10 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
         }
 
         /**
-         * Function returns a Builder with the provided file group.
+         * Function returns a PIdAppenderBuilder with the provided file group.
          *
          * @param fileGroup the file group to use.
-         * @return the Builder with the new file group.
+         * @return the PIdAppenderBuilder with the new file group.
          */
         public B withFileGroup(final String fileGroup) {
             this.fileGroup = fileGroup;
@@ -213,14 +213,14 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
 
 
     /**
-     * Function which returns a new Builder.
+     * Function which returns a new PIdAppenderBuilder.
      *
      * @param <B> the type to build
-     * @return the new Builder
+     * @return the new PIdAppenderBuilder
      */
     @PluginBuilderFactory
     public static <B extends Builder<B>> B newBuilder() {
-        return new Builder<B>().asBuilder();
+        return new PIdAppenderBuilder<B>().asBuilder();
     }
 
     private String fileName;
@@ -233,6 +233,7 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
                             FileManager manager, String filename, final boolean ignoreExceptions,
                             final boolean immediateFlush, final Advertiser advertiser) {
         super(name, layout, filter, ignoreExceptions, immediateFlush, manager);
+        this.fileName = filename;
         if (advertiser != null) {
             final Map<String, String> configuration = new HashMap<>(layout.getContentFormat());
             configuration.putAll(manager.getContentFormat());
@@ -247,7 +248,7 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
 
     private static String appendIdToFileName(String oldFileName) {
         String pId = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
-        int dotIndex = oldFileName.lastIndexOf(".");
+        int dotIndex = oldFileName.lastIndexOf('.');
         if (dotIndex != -1) {
             return oldFileName.substring(0, dotIndex) + "-" + pId + oldFileName.substring(dotIndex);
         } else {

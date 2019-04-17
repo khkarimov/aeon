@@ -26,20 +26,6 @@ public class JQueryRegexPluginRegistration extends JavaScriptFinalizer {
             throw new IllegalArgumentException("javaScript");
         }
 
-        /* if(!jquery.expr[':'].regex) {
-         *     jquery.expr[':'].regex = function(elem, index, match) {
-         *         var matchParams = match[3].split(','),
-         *             validLabels = /^(data|css):/,
-         *             attr = {
-         *                 method: matchParams[0].match(validLabels) ? matchParams[0].split(':')[0] : 'attr',
-         *                 property: matchParams.shift().replace(validLabels,'')
-         *             },
-         *             regexFlags = 'ig',
-         *             regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g,''), regexFlags);
-         *         return regex.test(jquery(elem)[attr.method](attr.property));
-         *     }
-         * }
-         */
         return javaScript.contains(":regex") ? ("if(!jquery.expr[':'].regex)jquery.expr[':'].regex=function(elem,index,match){var matchParams=match[3].split(','),validLabels=/^(data|css):/,attr={method:matchParams[0].match(validLabels)?matchParams[0].split(':')[0]:'attr',property:matchParams.shift().replace(validLabels,'')}," +
                 "regexFlags='ig',regex=new RegExp(matchParams.join('').replace(/^\\s+|\\s+$/g,''),regexFlags);return regex.test(jquery(elem)[attr.method](attr.property))};" + successor.prepare(javaScript)) : successor.prepare(javaScript);
     }

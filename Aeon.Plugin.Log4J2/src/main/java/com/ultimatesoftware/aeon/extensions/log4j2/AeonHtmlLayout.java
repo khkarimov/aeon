@@ -31,7 +31,6 @@ import javax.xml.bind.DatatypeConverter;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.lang.management.ManagementFactory;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -61,8 +60,10 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
     private static final String HTMLAPPENDAGE = "$1<a href=\"http$3://$5$6\">http$3://$5$6</a>$7";
     private static final String DEFAULT_TITLE = "Log4j Log Messages";
     private static final String DEFAULT_CONTENT_TYPE = "text/html";
+    private static final String SEMICOLON_CHARSET = "; charset=";
+    private static final String CLOSE_TD = "</td>";
+    private static final String CLOSE_TD_TR = "</td></tr>";
 
-    private final long jvmStartTime = ManagementFactory.getRuntimeMXBean().getStartTime();
 
     // Print no location info by default
     private final boolean locationInfo;
@@ -109,7 +110,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         fontSize = fs.getFontSize();
         final String headerSize = fs.larger().getFontSize();
         if (contentType == null) {
-            contentType = DEFAULT_CONTENT_TYPE + "; charset=" + charset;
+            contentType = DEFAULT_CONTENT_TYPE + SEMICOLON_CHARSET + charset;
         }
         return new AeonHtmlLayout(locationInfo, title, contentType, charset, font, fontSize, headerSize);
     }
@@ -124,20 +125,20 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
     }
 
     /**
-     * Function creates and returns a new instance of Builder.
+     * Function creates and returns a new instance of PluginBuilder.
      *
-     * @return new instance of Builder().
+     * @return new instance of PluginBuilder().
      */
     @PluginBuilderFactory
-    public static Builder newBuilder() {
-        return new Builder();
+    public static PluginBuilder newBuilder() {
+        return new PluginBuilder();
     }
 
     private String addCharsetToContentType(final String contentType) {
         if (contentType == null) {
-            return DEFAULT_CONTENT_TYPE + "; charset=" + getCharset();
+            return DEFAULT_CONTENT_TYPE + SEMICOLON_CHARSET + getCharset();
         }
-        return contentType.contains("charset") ? contentType : contentType + "; charset=" + getCharset();
+        return contentType.contains("charset") ? contentType : contentType + SEMICOLON_CHARSET + getCharset();
     }
 
     /**
@@ -154,12 +155,12 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
 
         sbuf.append("<td>");
         sbuf.append(dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())));
-        sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
+        sbuf.append(CLOSE_TD).append(Strings.LINE_SEPARATOR);
 
         final String escapedThread = Transform.escapeHtmlTags(event.getThreadName());
         sbuf.append("<td title=\"").append(escapedThread).append(" thread\">");
         sbuf.append(escapedThread);
-        sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
+        sbuf.append(CLOSE_TD).append(Strings.LINE_SEPARATOR);
 
         sbuf.append("<td title=\"Level\">");
         if (event.getLevel().equals(Level.DEBUG)) {
@@ -173,7 +174,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         } else {
             sbuf.append(Transform.escapeHtmlTags(String.valueOf(event.getLevel())));
         }
-        sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
+        sbuf.append(CLOSE_TD).append(Strings.LINE_SEPARATOR);
 
         String escapedLogger = Transform.escapeHtmlTags(event.getLoggerName());
         if (escapedLogger.isEmpty()) {
@@ -181,7 +182,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         }
         sbuf.append("<td title=\"").append(escapedLogger).append(" logger\">");
         sbuf.append(escapedLogger);
-        sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
+        sbuf.append(CLOSE_TD).append(Strings.LINE_SEPARATOR);
 
         if (locationInfo) {
             final StackTraceElement element = event.getSource();
@@ -189,7 +190,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             sbuf.append(Transform.escapeHtmlTags(element.getFileName()));
             sbuf.append(':');
             sbuf.append(element.getLineNumber());
-            sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
+            sbuf.append(CLOSE_TD).append(Strings.LINE_SEPARATOR);
         }
 
         sbuf.append("<td title=\"Message\">");
@@ -208,7 +209,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             }
         }
 
-        sbuf.append("</td>").append(Strings.LINE_SEPARATOR);
+        sbuf.append(CLOSE_TD).append(Strings.LINE_SEPARATOR);
         sbuf.append("</tr>").append(Strings.LINE_SEPARATOR);
 
         if (event.getContextStack() != null && !event.getContextStack().isEmpty()) {
@@ -216,7 +217,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             sbuf.append(";\" colspan=\"6\" ");
             sbuf.append("title=\"Nested Diagnostic Context\">");
             sbuf.append("NDC: ").append(Transform.escapeHtmlTags(event.getContextStack().toString()));
-            sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
+            sbuf.append(CLOSE_TD_TR).append(Strings.LINE_SEPARATOR);
         }
 
         if (event.getContextData() != null && !event.getContextData().isEmpty()) {
@@ -224,7 +225,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             sbuf.append(";\" colspan=\"6\" ");
             sbuf.append("title=\"Mapped Diagnostic Context\">");
             sbuf.append("MDC: ").append(Transform.escapeHtmlTags(event.getContextData().toString()));
-            sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
+            sbuf.append(CLOSE_TD_TR).append(Strings.LINE_SEPARATOR);
         }
 
         final Throwable throwable = event.getThrown();
@@ -232,7 +233,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
             sbuf.append("<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : ").append(fontSize);
             sbuf.append(";\" colspan=\"6\">");
             appendThrowableAsHtml(throwable, sbuf);
-            sbuf.append("</td></tr>").append(Strings.LINE_SEPARATOR);
+            sbuf.append(CLOSE_TD_TR).append(Strings.LINE_SEPARATOR);
         }
 
         return sbuf.toString();
@@ -386,9 +387,9 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
     }
 
     /**
-     * The Builder class.
+     * The PluginBuilder class.
      */
-    public static class Builder implements org.apache.logging.log4j.core.util.Builder<AeonHtmlLayout> {
+    public static class PluginBuilder implements org.apache.logging.log4j.core.util.Builder<AeonHtmlLayout> {
 
         @PluginBuilderAttribute
         private boolean locationInfo = false;
@@ -408,71 +409,71 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         @PluginBuilderAttribute
         private String fontName = DEFAULT_FONT_FAMILY;
 
-        private Builder() {
+        private PluginBuilder() {
         }
 
         /**
-         * Function returns a Builder with the provided location info as a boolean.
+         * Function returns a PluginBuilder with the provided location info as a boolean.
          *
          * @param locationInfo a boolean of locationInfo.
          * @return the new location info.
          */
-        public Builder withLocationInfo(final boolean locationInfo) {
+        public PluginBuilder withLocationInfo(final boolean locationInfo) {
             this.locationInfo = locationInfo;
             return this;
         }
 
         /**
-         * Function returns a Builder with the provided title info as a string.
+         * Function returns a PluginBuilder with the provided title info as a string.
          *
          * @param title a string representing a title.
-         * @return the Builder with the new title.
+         * @return the PluginBuilder with the new title.
          */
-        public Builder withTitle(final String title) {
+        public PluginBuilder withTitle(final String title) {
             this.title = title;
             return this;
         }
 
         /**
-         * Function returns a Builder with the provided contentType info as a string.
+         * Function returns a PluginBuilder with the provided contentType info as a string.
          *
          * @param contentType a string representing the content type.
-         * @return the Builder with the new content type.
+         * @return the PluginBuilder with the new content type.
          */
-        public Builder withContentType(final String contentType) {
+        public PluginBuilder withContentType(final String contentType) {
             this.contentType = contentType;
             return this;
         }
 
         /**
-         * Function returns a Builder with the provided title info as a string.
+         * Function returns a PluginBuilder with the provided title info as a string.
          *
          * @param charset a Charset representing a set of chars.
-         * @return the Builder with the new char set.
+         * @return the PluginBuilder with the new char set.
          */
-        public Builder withCharset(final Charset charset) {
+        public PluginBuilder withCharset(final Charset charset) {
             this.charset = charset;
             return this;
         }
 
         /**
-         * Function returns a Builder with the provided title info as a string.
+         * Function returns a PluginBuilder with the provided title info as a string.
          *
          * @param fontSize a FontSize representing the font size.
-         * @return the Builder with the new font size.
+         * @return the PluginBuilder with the new font size.
          */
-        public Builder withFontSize(final FontSize fontSize) {
+        public PluginBuilder withFontSize(final FontSize fontSize) {
             this.fontSize = fontSize;
             return this;
         }
 
         /**
-         * Function returns a Builder with the provided title info as a string.
+         * Function returns a PluginBuilder with the provided title info as a string.
          *
          * @param fontName a string representing a fontName.
-         * @return the Builder with the new fontName.
+         * @return the PluginBuilder with the new fontName.
          */
-        public Builder withFontName(final String fontName) {
+        public PluginBuilder withFontName(final String fontName) {
             this.fontName = fontName;
             return this;
         }
@@ -480,7 +481,7 @@ public final class AeonHtmlLayout extends AbstractStringLayout {
         @Override
         public AeonHtmlLayout build() {
             if (contentType == null) {
-                contentType = DEFAULT_CONTENT_TYPE + "; charset=" + charset;
+                contentType = DEFAULT_CONTENT_TYPE + SEMICOLON_CHARSET + charset;
             }
             return new AeonHtmlLayout(locationInfo, title, contentType, charset, fontName, fontSize.getFontSize(),
                     fontSize.larger().getFontSize());
