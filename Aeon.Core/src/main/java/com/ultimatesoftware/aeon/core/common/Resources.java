@@ -14,6 +14,7 @@ public class Resources {
     }
 
     /**
+     * <<<<<<< HEAD
      * A private constructor to hide the implicit public constructor.
      */
     private Resources() {
@@ -30,7 +31,7 @@ public class Resources {
         if (bundle.containsKey(key)) {
             return bundle.getString(key);
         } else {
-            return key; //"No message in MessagesBundle in Aeon.Core.Resources";
+            return key;
         }
     }
 }

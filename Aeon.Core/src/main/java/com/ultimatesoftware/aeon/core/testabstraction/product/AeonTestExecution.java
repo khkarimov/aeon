@@ -19,6 +19,7 @@ public class AeonTestExecution {
     private static UUID correlationId = null;
 
     /**
+     * <<<<<<< HEAD
      * A private constructor to hide the implicit public constructor.
      */
     private AeonTestExecution() {

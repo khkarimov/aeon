@@ -36,7 +36,6 @@ public class ByJQuery implements IByWeb, IByJQuery {
     private final String prevUntil = "prevUntil";
     private final String slice = "slice";
 
-
     /**
      * Accepts a string containing a CSS selector which is then used to match a set of elements.
      *

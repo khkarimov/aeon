@@ -22,6 +22,7 @@ public class WebElement extends Element {
     protected IByWeb selector;
     protected AutomationInfo automationInfo;
     protected IByWeb[] switchMechanism;
+    private final String innerhtml = "innerhtml";
 
     /**
      * Initializes a new instance of the {@link WebElement} class.

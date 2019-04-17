@@ -15,6 +15,7 @@ public class SendKeysHelper {
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();
 
     /**
+     * <<<<<<< HEAD
      * A private constructor to hide the implicit public constructor.
      */
     private SendKeysHelper() {
@@ -33,13 +34,7 @@ public class SendKeysHelper {
         for (int i = 0; i < stringToSend.length(); i++) {
             char character = stringToSend.charAt(i);
             if (!Character.isLetter(character)) {
-                if (Character.isDigit(character)) {
-                    int n = KeyEvent.getExtendedKeyCodeForChar(character);
-                    robot.keyPress(n);
-                    robot.keyRelease(n);
-                } else {
-                    sendKeysToKeyboardSwitchHelper(character);
-                }
+                robot = checkIsDigit(character, robot);
             } else {
                 int n = KeyEvent.getExtendedKeyCodeForChar(character);
                 if (Character.isUpperCase(character)) {
@@ -52,6 +47,53 @@ public class SendKeysHelper {
                     robot.keyRelease(n);
                 }
             }
+        }
+    }
+
+    private static Robot checkIsDigit(char character, Robot robot) {
+        if (Character.isDigit(character)) {
+            int n = KeyEvent.getExtendedKeyCodeForChar(character);
+            robot.keyPress(n);
+            robot.keyRelease(n);
+            return robot;
+        } else {
+            switch (character) {
+                case ':':
+                    robot.keyPress(KeyEvent.VK_SHIFT);
+                    robot.keyPress(KeyEvent.VK_SEMICOLON);
+                    robot.keyRelease(KeyEvent.VK_SEMICOLON);
+                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                    break;
+                case '\\':
+                    robot.keyPress(KeyEvent.VK_BACK_SLASH);
+                    robot.keyRelease(KeyEvent.VK_BACK_SLASH);
+                    break;
+                case '.':
+                    robot.keyPress(KeyEvent.VK_PERIOD);
+                    robot.keyRelease(KeyEvent.VK_PERIOD);
+                    break;
+                case '_':
+                    robot.keyPress(KeyEvent.VK_SHIFT);
+                    robot.keyPress(KeyEvent.VK_MINUS);
+                    robot.keyRelease(KeyEvent.VK_MINUS);
+                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                    break;
+                case '-':
+                    robot.keyPress(KeyEvent.VK_MINUS);
+                    robot.keyRelease(KeyEvent.VK_MINUS);
+                    break;
+                case ' ':
+                    robot.keyPress(KeyEvent.VK_SPACE);
+                    robot.keyRelease(KeyEvent.VK_SPACE);
+                    break;
+                case '/':
+                    robot.keyPress(KeyEvent.VK_SLASH);
+                    robot.keyRelease(KeyEvent.VK_SLASH);
+                    break;
+                default:
+                    throw new UnsupportedSpecialCharacterException(character);
+            }
+            return robot;
         }
     }
 

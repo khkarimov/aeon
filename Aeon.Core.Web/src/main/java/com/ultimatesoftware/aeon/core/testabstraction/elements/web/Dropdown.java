@@ -12,6 +12,10 @@ import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
  * Model class for dropdown elements.
  */
 public class Dropdown extends WebElement {
+    /**
+     * A constant variable for using "INNERHTML" multilple times.
+     */
+    private final String innerhtml = "INNERHTML";
 
     private final String innerhtml = "INNERHTML";
 
