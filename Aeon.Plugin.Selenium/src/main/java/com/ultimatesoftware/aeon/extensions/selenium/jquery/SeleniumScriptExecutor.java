@@ -82,8 +82,8 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         Object returnValue = ((JavascriptExecutor) remoteWebDriver).executeAsyncScript(script, args);
 
         if (returnValue != null) {
-            String returnedValue = "WebDriver.executeAsyncScript() returned " + scriptReturnValueToReadableString(returnValue);
-            log.trace(returnedValue);
+            String logMessage = "WebDriver.executeAsyncScript() returned " + scriptReturnValueToReadableString(returnValue);
+            log.trace(logMessage);
         }
 
         return returnValue;
@@ -100,7 +100,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
             return "";
         }
 
-        if (value instanceof Collection<?> && !(((Collection) value).isEmpty()) && ((Collection<?>) value).size() > 0) {
+        if (value instanceof Collection<?> && ((Collection<?>) value).size() > 0) {
             try {
                 Collection<WebControl> elements = (Collection<WebControl>) value;
 

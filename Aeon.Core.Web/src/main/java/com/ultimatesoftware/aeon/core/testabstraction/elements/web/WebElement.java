@@ -2,7 +2,36 @@ package com.ultimatesoftware.aeon.core.testabstraction.elements.web;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.command.execution.commands.initialization.WebCommandInitializer;
-import com.ultimatesoftware.aeon.core.command.execution.commands.web.*;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.BlurCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.ClickAllElementsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.ClickAndHoldCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.ClickCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.DatesApproximatelyEqualCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.DisabledCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.DoesNotHaveCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.DoesNotHaveLikeCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.DoubleClickCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.DragAndDropCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.EnabledCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.ExistsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.HasCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.HasLikeCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.HasOnlyCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.IsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.IsLikeCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.IsNotLikeCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.MouseOutCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.MouseOverCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.NotExistsCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.NotVisibleCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.PressKeyboardKeyCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.RightClickCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.SetBodyValueByJavaScriptCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.SetDivValueByJavaScriptCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.SetTextByJavaScriptCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.VisibleCommand;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.WebControlFinder;
+import com.ultimatesoftware.aeon.core.command.execution.commands.web.WebSelectorFinder;
 import com.ultimatesoftware.aeon.core.common.ComparisonOption;
 import com.ultimatesoftware.aeon.core.common.KeyboardKey;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
@@ -16,8 +45,6 @@ import java.time.Period;
  * The class for webpage elements modeling.
  */
 public class WebElement extends Element {
-
-    private final String innerhtml = "INNERHTML";
 
     protected IByWeb selector;
     protected AutomationInfo automationInfo;
@@ -194,7 +221,7 @@ public class WebElement extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                innerhtml));
+                "INNERHTML"));
     }
 
     /**
@@ -223,7 +250,7 @@ public class WebElement extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                innerhtml));
+                "INNERHTML"));
     }
 
     /**
@@ -252,7 +279,7 @@ public class WebElement extends Element {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                innerhtml));
+                "INNERHTML"));
     }
 
     /**
@@ -280,7 +307,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
@@ -309,7 +336,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
@@ -338,7 +365,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
@@ -367,7 +394,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new DoesNotHaveLikeCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 
@@ -396,7 +423,7 @@ public class WebElement extends Element {
         automationInfo.getCommandExecutionFacade().execute(automationInfo,
                 new HasOnlyCommand(
                         selector,
-                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, innerhtml
+                        new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism), messages, childSelector, ComparisonOption.TEXT, "INNERHTML"
                 ));
     }
 

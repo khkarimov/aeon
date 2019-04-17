@@ -10,8 +10,6 @@ import java.awt.event.KeyEvent;
  */
 public class SendKeysHelper {
 
-    private static Robot robot;
-
     private static final OsCheck.OSType OS_TYPE = OsCheck.getOperatingSystemType();
 
     /**
@@ -29,7 +27,7 @@ public class SendKeysHelper {
      * @throws AWTException Signals that an Abstract Window Toolkit exception has occurred.
      */
     public static void sendKeysToKeyboard(String stringToSend) throws AWTException {
-        robot = new Robot();
+        Robot robot = new Robot();
         robot.setAutoDelay(50);
         for (int i = 0; i < stringToSend.length(); i++) {
             char character = stringToSend.charAt(i);

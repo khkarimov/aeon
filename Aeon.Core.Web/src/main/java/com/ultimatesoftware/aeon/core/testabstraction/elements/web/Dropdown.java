@@ -23,8 +23,6 @@ import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
  */
 public class Dropdown extends WebElement {
 
-    private final String innerhtml = "INNERHTML";
-
     /**
      * Initializes a new instance of the {@link Dropdown} class.
      *
@@ -205,7 +203,7 @@ public class Dropdown extends WebElement {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                innerhtml));
+                "INNERHTML"));
     }
 
     /**
@@ -236,7 +234,7 @@ public class Dropdown extends WebElement {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                innerhtml));
+                "INNERHTML"));
     }
 
     /**
@@ -267,7 +265,7 @@ public class Dropdown extends WebElement {
                 new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
                 value,
                 ComparisonOption.TEXT,
-                innerhtml));
+                "INNERHTML"));
     }
 
     /**
