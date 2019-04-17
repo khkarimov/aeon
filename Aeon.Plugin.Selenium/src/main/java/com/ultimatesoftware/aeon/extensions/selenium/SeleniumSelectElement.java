@@ -101,7 +101,8 @@ public class SeleniumSelectElement extends WebControl {
      * @param index The index of the option to deselect.
      */
     public final void deselectByIndex(int index) {
-        log.trace(String.format("SelectElement.deselectByIndex(%1$s);", index));
+        String formatted = String.format("SelectElement.deselectByIndex(%1$s);", index);
+        log.trace(formatted);
 
         getUnderlyingSelectElement().deselectByIndex(index);
     }
@@ -112,7 +113,8 @@ public class SeleniumSelectElement extends WebControl {
      * @param text The visible text to match against
      */
     public final void deselectByText(String text) {
-        log.trace(String.format("SelectElement.deselectByText(%1$s);", text));
+        String formatted = String.format("SelectElement.deselectByText(%1$s);", text);
+        log.trace(formatted);
         getUnderlyingSelectElement().deselectByVisibleText(text);
     }
 
@@ -122,7 +124,8 @@ public class SeleniumSelectElement extends WebControl {
      * @param value The value to match against
      */
     public final void deselectByValue(String value) {
-        log.trace(String.format("SelectElement.deselectByValue(%1$s);", value));
+        String formatted = String.format("SelectElement.deselectByValue(%1$s);", value);
+        log.trace(formatted);
         getUnderlyingSelectElement().deselectByValue(value);
     }
 
@@ -132,7 +135,8 @@ public class SeleniumSelectElement extends WebControl {
      * @param index The option at this index will be deselected.
      */
     public final void selectByIndex(int index) {
-        log.trace(String.format("SelectElement.selectByIndex(%1$s);", index));
+        String formatted = String.format("SelectElement.selectByIndex(%1$s);", index);
+        log.trace(formatted);
         getUnderlyingSelectElement().selectByIndex(index);
     }
 
@@ -142,7 +146,8 @@ public class SeleniumSelectElement extends WebControl {
      * @param text The visible text to match against.
      */
     public final void selectByText(String text) {
-        log.trace(String.format("SelectElement.selectByText(%1$s);", text));
+        String formatted = String.format("SelectElement.selectByText(%1$s);", text);
+        log.trace(formatted);
         getUnderlyingSelectElement().selectByVisibleText(text);
     }
 
@@ -152,7 +157,8 @@ public class SeleniumSelectElement extends WebControl {
      * @param value The value to match against
      */
     public final void selectByValue(String value) {
-        log.trace(String.format("SelectElement.selectByValue(%1$s);", value));
+        String formatted = String.format("SelectElement.selectByValue(%1$s);", value);
+        log.trace(formatted);
         getUnderlyingSelectElement().selectByValue(value);
     }
 }

@@ -618,7 +618,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         log.trace("switchToWebView(%s)", selector);
         Set<String> availableContexts = getMobileWebDriver().getContextHandles();
         String joinedString = String.join(", ", availableContexts);
-        log.trace("Available contexts: %s" + joinedString);
+        log.trace("Available contexts: %s", joinedString);
         if (availableContexts.size() > 1) {
             for (String availableContext : availableContexts) {
                 if (!availableContext.contains(nativeApp) && availableContext.startsWith("WEBVIEW")) {
@@ -668,7 +668,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         }
 
         if (findBy instanceof IByMobileXPath) {
-            log.trace(String.format("WebDriver.findElement(by.xpath(%1$s));", findBy));
+            String formattedByXPath = String.format("WebDriver.findElement(by.xpath(%1$s));", findBy);
+            log.trace(formattedByXPath);
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.xpath(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
@@ -681,7 +682,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         }
 
         if (findBy instanceof ByMobileId) {
-            log.trace(String.format("WebDriver.findElement(by.id(%1$s));", findBy));
+            String formattedByID = String.format("WebDriver.findElement(by.id(%1$s));", findBy);
+            log.trace(formattedByID);
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.id(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
@@ -693,7 +695,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             }
         }
 
-        log.trace(String.format("WebDriver.findElement(by.accessbilityId(%1$s));", findBy));
+        String formattedByAccessbility = String.format("WebDriver.findElement(by.accessbilityId(%1$s));", findBy);
+        log.trace(formattedByAccessbility);
         try {
             return new SeleniumElement(((MobileDriver) webDriver).findElementByAccessibilityId(findBy.toString()));
         } catch (org.openqa.selenium.NoSuchElementException e) {

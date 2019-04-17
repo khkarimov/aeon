@@ -73,8 +73,9 @@ public class TimeoutDelegateRunner extends DelegateRunner {
                 return returnValue;
             } catch (RuntimeException e) {
                 lastCaughtException = e;
-                log.debug(String.format(Resources.getString("TimWtr_Exception_Debug"), tries,
-                        lastCaughtException.getClass().getSimpleName(), lastCaughtException.getMessage()));
+                String formatted = String.format(Resources.getString("TimWtr_Exception_Debug"), tries,
+                        lastCaughtException.getClass().getSimpleName(), lastCaughtException.getMessage());
+                log.debug(formatted);
             }
 
             // Wait before retrying. Excessive attempts may cause WebDriver's client to lose connection with the server.
