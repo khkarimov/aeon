@@ -62,8 +62,8 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         Object returnValue = ((JavascriptExecutor) getRemoteWebDriver()).executeScript(script, args);
 
         if (returnValue != null) {
-            String returnedValue = "WebDriver.executeScript() returned " + scriptReturnValueToReadableString(returnValue);
-            log.trace(returnedValue);
+            String logMessage = "WebDriver.executeScript() returned " + scriptReturnValueToReadableString(returnValue);
+            log.trace(logMessage);
         }
 
         return returnValue;

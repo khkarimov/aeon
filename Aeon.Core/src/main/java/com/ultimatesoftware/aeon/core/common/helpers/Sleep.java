@@ -19,7 +19,7 @@ public final class Sleep {
      * A private constructor to hide the implicit public constructor.
      */
     private Sleep() {
-        throw new IllegalStateException("Incorrect initialization of the Sleep object!");
+        //It should not be possible to call this constructor.
     }
 
     /**

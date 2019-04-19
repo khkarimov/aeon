@@ -6,8 +6,7 @@ import org.omg.SendingContext.RunTime;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WaitTests {
     private int valueToBe5;
@@ -26,13 +25,15 @@ public class WaitTests {
         //Arrange
 
         // Act
-        Wait.forValue(() -> {
-            this.valueToBe5++;
-            return valueToBe5;
-        }, 5, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        assertDoesNotThrow(() -> {
+            Wait.forValue(() -> {
+                this.valueToBe5++;
+                return valueToBe5;
+            }, 5, Duration.ofMillis(100), Duration.ofMillis(1));
+        });
+
     }
 
     @Test
@@ -82,13 +83,14 @@ public class WaitTests {
         //Arrange
 
         // Act
-        Wait.forSuccess(() -> {
-            this.valueToBe5++;
-            return valueToBe5 == 5;
-        }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //The test should eventually pass.
+        assertDoesNotThrow(() -> {
+            Wait.forSuccess(() -> {
+                this.valueToBe5++;
+                return valueToBe5 == 5;
+            }, Duration.ofMillis(100), Duration.ofMillis(1));
+        });
     }
 
     @Test
@@ -112,16 +114,17 @@ public class WaitTests {
         //Arrange
 
         // Act
-        Wait.forSuccess(() -> {
-            this.valueToBe5++;
-            if (valueToBe5 != 5) {
-                throw new RuntimeException("unlucky");
-            }
-            return true;
-        }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //Should eventually pass.
+        assertDoesNotThrow(() -> {
+            Wait.forSuccess(() -> {
+                this.valueToBe5++;
+                if (valueToBe5 != 5) {
+                    throw new RuntimeException("unlucky");
+                }
+                return true;
+            }, Duration.ofMillis(100), Duration.ofMillis(1));
+        });
     }
 
     @Test
@@ -146,16 +149,17 @@ public class WaitTests {
         //Arrange
 
         // Act
-        Wait.forSuccess(() -> {
-            this.valueToBe5++;
-            if (valueToBe5 != 5) {
-                throw new Error("unlucky");
-            }
-            return true;
-        }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //Eventually passes.
+        assertDoesNotThrow(() -> {
+            Wait.forSuccess(() -> {
+                this.valueToBe5++;
+                if (valueToBe5 != 5) {
+                    throw new Error("unlucky");
+                }
+                return true;
+            }, Duration.ofMillis(100), Duration.ofMillis(1));
+        });
     }
 
     @Test
@@ -180,13 +184,14 @@ public class WaitTests {
         //Arrange
 
         // Act
-        Wait.forValue(() -> {
-            this.stringToCheck = stringToCheck.concat(stringToAppend);
-            return stringToCheck;
-        }, expectedString, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //Should eventually pass.
+        assertDoesNotThrow(() -> {
+            Wait.forValue(() -> {
+                this.stringToCheck = stringToCheck.concat(stringToAppend);
+                return stringToCheck;
+            }, expectedString, Duration.ofMillis(100), Duration.ofMillis(1));
+        });
     }
 
     @Test

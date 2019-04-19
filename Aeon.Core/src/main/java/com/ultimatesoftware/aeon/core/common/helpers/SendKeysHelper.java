@@ -16,7 +16,6 @@ public class SendKeysHelper {
      * A private constructor to hide the implicit public constructor.
      */
     private SendKeysHelper() {
-        throw new IllegalStateException("Incorrect initialization of the SendKeysHelper object!");
         //It should not be possible to call this specific constructor.
     }
 
