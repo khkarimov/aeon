@@ -72,7 +72,7 @@ public class WaitTests {
             Wait.forValue(() -> {
                 this.valueToBe5++;
                 return valueToBe5;
-            }, 5, Duration.ofMillis(100), Duration.ofMillis(1));
+            }, 5, Duration.ofMillis(1), Duration.ofMillis(1));
         });
 
     }
