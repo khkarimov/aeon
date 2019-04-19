@@ -27,13 +27,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.UnsupportedCommandException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.slf4j.Logger;
@@ -43,12 +37,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Mobile adapter for Appium.
@@ -60,6 +49,21 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private String context;
 
     private HashMap<Integer, Integer> mobileDeviceResolutions = new HashMap<>();
+
+
+    private static final String ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/";
+    private static final String ANDROIDWIDGETTEXTVIEW1 = "android.widget.TextView[1]";
+    private static final String ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/";
+    private static final String HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2 = "/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/";
+    private static final String HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 = "/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/";
+    private static final String ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2_ANDROIDWIDGETFRAMELAYOUT1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/";
+    private static final String ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1_ANDROIDWIDGETTEXTVIEW1 = "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]";
+    private static final String ANDROIDWIDGETSCROLLVIEW1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 = "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/";
+    private static final String ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 = "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/";
+    private static final String ANDROID_ID_DATE_PICKER_HEADER_YEAR = "android:id/date_picker_header_year";
+    private static final String ANDROID_HYBRID_APP = "AndroidHybridApp";
+    private static final String IOS_HYBRID_APP = "IOSHybridApp";
+    private static final String NATIVE_APP = "NATIVE_APP";
 
     /**
      * Constructor for Selenium Adapter.
@@ -129,10 +133,10 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void mobileLock(int seconds) {
         switch (browserType.getKey()) {
-            case "AndroidHybridApp":
+            case ANDROID_HYBRID_APP:
                 ((AndroidDriver) getMobileWebDriver()).lockDevice();
                 break;
-            case "IOSHybridApp":
+            case IOS_HYBRID_APP:
                 ((IOSDriver) getMobileWebDriver()).lockDevice(Duration.ofSeconds(seconds));
                 break;
             default:
@@ -155,7 +159,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             int width = screenSize.getWidth();
             int height = screenSize.getHeight();
 
-            log.trace("Screen size: {}", width, height);
+            log.trace("Screen size: {}, {}", width, height);
 
             int startX = (int) (width * 0.78);
             int startY = height / 2;
@@ -172,7 +176,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                 }
             }
 
-            log.trace("Swipe start point: {}", startX, startY);
+            log.trace("Swipe start point: {}, {}", startX, startY);
 
             TouchAction action = new TouchAction(getMobileWebDriver());
             action.press(PointOption.point(startX, startY))
@@ -274,39 +278,39 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private List<String> addBannerXPaths() {
         List<String> bannerPaths = new ArrayList();
         //Google Pixel (7.1)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+        bannerPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
                 "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
-                "android.widget.TextView[1]");
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1 +
+                ANDROIDWIDGETTEXTVIEW1);
 
         //Galaxy S7 Edge (6.0.1)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+        bannerPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
                 "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 +
                 "android.widget.LinearLayout[1]/android.widget.TextView[1]");
 
         //Galaxy S7 (7.0)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+        bannerPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2_ANDROIDWIDGETFRAMELAYOUT1 +
                 "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1_ANDROIDWIDGETTEXTVIEW1);
 
         //Galaxy Note5 (7.0)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+        bannerPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETSCROLLVIEW1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1_ANDROIDWIDGETTEXTVIEW1);
 
         //Galaxy S8 (7.0)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]");
+        bannerPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETSCROLLVIEW1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1_ANDROIDWIDGETTEXTVIEW1);
 
         //Sony Xperia XA (6.0)
-        bannerPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
+        bannerPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1 +
                 "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.TextView[1]");
         return bannerPaths;
@@ -315,35 +319,35 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private List<String> addDescriptionXPaths() {
         List<String> descriptionPaths = new ArrayList();
         //Google Pixel (7.1)
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
+        descriptionPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
                 "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 +
                 "android.widget.LinearLayout[1]/android.widget.TextView[1]");
 
         //Galaxy S7 (7.0)
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
+        descriptionPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2_ANDROIDWIDGETFRAMELAYOUT1 +
                 "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
-                "android.widget.TextView[1]");
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 +
+                ANDROIDWIDGETTEXTVIEW1);
 
         //Galaxy Note5 (7.0) && Galaxy S8
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
-                "android.widget.TextView[1]");
+        descriptionPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETSCROLLVIEW1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 +
+                ANDROIDWIDGETTEXTVIEW1);
 
         //Galaxy S8 (7.0)
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/" +
-                "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/" +
-                "android.widget.TextView[1]");
+        descriptionPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT2_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETSCROLLVIEW1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 +
+                ANDROIDWIDGETTEXTVIEW1);
 
         //Sony Xperia XA (6.0)
-        descriptionPaths.add("/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/" +
+        descriptionPaths.add(HIERARCHY_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1 +
+                ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDVIEWVIEWGROUP1 +
                 "android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.TextView[1]");
         return descriptionPaths;
@@ -390,7 +394,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         if (checkIfPerfectoInUse()) {
             log.info("Using perfecto path");
             yearXPath = "/hierarchy/android.widget.FrameLayout[1]/" +
-                    "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/" +
+                    ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETFRAMELAYOUT1_ANDROIDWIDGETLINEARLAYOUT1 +
                     "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/" +
                     "android.widget.LinearLayout[1]/android.widget.ViewAnimator[1]/android.widget.ListView[1]/" +
                     "android.widget.TextView[";
@@ -547,9 +551,9 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void acceptAlert() {
         switch (browserType.getKey()) {
-            case "AndroidHybridApp":
+            case ANDROID_HYBRID_APP:
                 // Break intentionally omitted
-            case "IOSHybridApp":
+            case IOS_HYBRID_APP:
                 switchToNativeAppContext();
                 try {
                     super.acceptAlert();
@@ -565,9 +569,9 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     @Override
     public void dismissAlert() {
         switch (browserType.getKey()) {
-            case "AndroidHybridApp":
+            case ANDROID_HYBRID_APP:
                 // Break intentionally omitted
-            case "IOSHybridApp":
+            case IOS_HYBRID_APP:
                 switchToNativeAppContext();
                 try {
                     super.dismissAlert();
@@ -619,7 +623,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         log.trace("Available contexts: {}", joinedString);
         if (availableContexts.size() > 1) {
             for (String availableContext : availableContexts) {
-                if (!availableContext.contains("NATIVE_APP") && availableContext.startsWith("WEBVIEW")) {
+                if (!availableContext.contains(NATIVE_APP) && availableContext.startsWith("WEBVIEW")) {
                     log.trace("Switching to context {}", availableContext);
                     getMobileWebDriver().context(availableContext);
                     log.trace("Switched to context");
@@ -764,8 +768,8 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     }
 
     private void switchToNativeAppContext() {
-        log.trace("Switching to native app context {}", "NATIVE_APP");
-        getMobileWebDriver().context("NATIVE_APP");
+        log.trace("Switching to native app context {}", NATIVE_APP);
+        getMobileWebDriver().context(NATIVE_APP);
     }
 
     private void switchToWebViewContext() {
@@ -779,13 +783,13 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
         WebElement underlyingWebElement = ((SeleniumElement) control).getUnderlyingWebElement();
         Point webElementLocation = underlyingWebElement.getLocation();
-        log.trace("elementLocation: {}", webElementLocation.getX(), webElementLocation.getY());
+        log.trace("elementLocation: {}, {}", webElementLocation.getX(), webElementLocation.getY());
         Dimension elementSize = underlyingWebElement.getSize();
-        log.trace("elementSize: {}", elementSize.getWidth(), elementSize.getHeight());
+        log.trace("elementSize: {}, {}", elementSize.getWidth(), elementSize.getHeight());
 
         long webRootWidth = (long) executeScript("return screen.availWidth");
         long webRootHeight = (long) executeScript("return screen.availHeight");
-        log.trace("screenSize: {}", webRootWidth, webRootHeight);
+        log.trace("screenSize: {}, {}", webRootWidth, webRootHeight);
 
         int windowWidth;
         int windowHeight;
@@ -809,7 +813,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             windowHeight = 1920;
         }
 
-        log.trace("windowSize: {}", windowWidth, windowHeight);
+        log.trace("windowSize: {}, {}", windowWidth, windowHeight);
 
         double xRatio = windowWidth * 1.0 / webRootWidth;
         double yRatio = windowHeight * 1.0 / webRootHeight;
@@ -817,7 +821,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         int pointY = webElementLocation.getY() + elementSize.getHeight() / 2;
         Point tapPoint = new Point((int) (pointX * xRatio), (int) (pointY * yRatio));
 
-        log.trace("tapPoint: {}", tapPoint.getX(), tapPoint.getY());
+        log.trace("tapPoint: {}, {}", tapPoint.getX(), tapPoint.getY());
         switchToNativeAppContext();
         try {
             TouchAction a = new TouchAction((AppiumDriver) getWebDriver());

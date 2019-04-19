@@ -75,6 +75,7 @@ import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 public class SeleniumAdapterFactory implements IAdapterExtension {
 
     private static final String MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+    private static final String DEVICE_NAME = "deviceName";
     private SeleniumConfiguration configuration;
     private static Logger log = LoggerFactory.getLogger(SeleniumAdapterFactory.class);
     protected IBrowserType browserType;
@@ -334,7 +335,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         String mobileEmulationDevice = configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, "");
         if (StringUtils.isNotBlank(mobileEmulationDevice)) {
             Map<String, String> mobileEmulation = new HashMap<>();
-            mobileEmulation.put("deviceName", mobileEmulationDevice);
+            mobileEmulation.put(DEVICE_NAME, mobileEmulationDevice);
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
             desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
@@ -491,7 +492,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private Capabilities getIOSSafariCapabilities() {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
         if (!deviceName.isEmpty()) {
-            desiredCapabilities.setCapability("deviceName", deviceName);
+            desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
         }
         setCapability(desiredCapabilities, "iOS", "mobileSafari");
         addPluginCapabilities(desiredCapabilities);
@@ -502,7 +503,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     private Capabilities getAndroidChromeCapabilities() {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
         if (!deviceName.isEmpty()) {
-            desiredCapabilities.setCapability("deviceName", deviceName);
+            desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
         }
         setCapability(desiredCapabilities, "Android", "Chrome");
         return desiredCapabilities;
@@ -512,7 +513,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         desiredCapabilities.setCapability("platformName", os);
         desiredCapabilities.setCapability("platformVersion", platformVersion);
         desiredCapabilities.setCapability("browserName", browser);
-        desiredCapabilities.setCapability("deviceName", deviceName);
+        desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
         desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
         addPluginCapabilities(desiredCapabilities);
 
@@ -618,7 +619,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
         if (StringUtils.isNotBlank(mobileEmulationDevice)) {
             Map<String, String> mobileEmulation = new HashMap<>();
-            mobileEmulation.put("deviceName",
+            mobileEmulation.put(DEVICE_NAME,
                     configuration.getString(SeleniumConfiguration.Keys.CHROME_MOBILE_EMULATION_DEVICE, ""));
             chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         }

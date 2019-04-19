@@ -1,9 +1,13 @@
 package com.ultimatesoftware.aeon.core.common.helpers;
 
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.omg.SendingContext.RunTime;
 
 import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class WaitTests {
     private int valueToBe5;
@@ -31,40 +35,46 @@ public class WaitTests {
         //Verification is done implicitly by not receiving an exception.
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForValue_IfTaskFailsToReturnValue_FailsWithException() {
         //Arrange
 
         // Act
-        Wait.forValue(() -> valueToBe5, 5, Duration.ofMillis(10), Duration.ofMillis(1));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            Wait.forValue(() -> valueToBe5, 5, Duration.ofMillis(10), Duration.ofMillis(1));
+        });
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        assertEquals("Timeout of 0:0 expired before operation \"Expected \"5\", but found \"0\" for task\" completed.", exception.getMessage());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForValueWithoutRetryParam_IfTaskFailsToReturnValue_FailsWithException() {
         //Arrange
 
         // Act
-        Wait.forValue(() -> valueToBe5, 5, Duration.ofMillis(10));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            Wait.forValue(() -> valueToBe5, 5, Duration.ofMillis(10));
+        });
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        assertEquals("Timeout of 0:0 expired before operation \"Expected \"5\", but found \"0\" for task\" completed.", exception.getMessage());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForValueWithoutEnoughTime_FailsWithException() {
         //Arrange
 
         // Act
-        Wait.forValue(() -> {
-            this.valueToBe5++;
-            return valueToBe5;
-        }, 5, Duration.ofMillis(1), Duration.ofMillis(1));
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        assertThrows(RuntimeException.class, () -> {
+            Wait.forValue(() -> {
+                this.valueToBe5++;
+                return valueToBe5;
+            }, 5, Duration.ofMillis(100), Duration.ofMillis(1));
+        });
+
     }
 
     @Test
@@ -78,21 +88,23 @@ public class WaitTests {
         }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        //The test should eventually pass.
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForSuccessWithoutEnoughTime_FailsWithException() {
         //Arrange
 
         // Act
-        Wait.forSuccess(() -> {
-            this.valueToBe5++;
-            return valueToBe5 == 5;
-        }, Duration.ofMillis(3), Duration.ofMillis(1));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            Wait.forSuccess(() -> {
+                this.valueToBe5++;
+                return valueToBe5 == 5;
+            }, Duration.ofMillis(3), Duration.ofMillis(1));
+        });
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        assertEquals("Timeout of 0:0 expired before operation \"Found false instead of true for task\" completed.", exception.getMessage());
     }
 
     @Test
@@ -109,22 +121,24 @@ public class WaitTests {
         }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        //Should eventually pass.
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForSuccessUsingExceptionsEventuallyFails() {
         //Arrange
 
         // Act
-        Wait.forSuccess(() -> {
-            if (valueToBe5 != 5) {
-                throw new RuntimeException("unlucky");
-            }
-        }, Duration.ofMillis(10), Duration.ofMillis(1));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            Wait.forSuccess(() -> {
+                if (valueToBe5 != 5) {
+                    throw new RuntimeException("unlucky");
+                }
+            }, Duration.ofMillis(10), Duration.ofMillis(1));
+        });
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        assertEquals("unlucky", exception.getMessage());
     }
 
     @Test
@@ -141,22 +155,24 @@ public class WaitTests {
         }, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        //Eventually passes.
     }
 
-    @Test(expected = Throwable.class)
+    @Test
     public void testForSuccessUsingThrowablesEventuallyFails() {
         //Arrange
 
         // Act
-        Wait.forSuccess(() -> {
-            if (valueToBe5 != 5) {
-                throw new Error("unlucky");
-            }
-        }, Duration.ofMillis(10), Duration.ofMillis(1));
+        Throwable throwable = assertThrows(Throwable.class, () -> {
+            Wait.forSuccess(() -> {
+                if (valueToBe5 != 5) {
+                    throw new Error("unlucky");
+                }
+            }, Duration.ofMillis(10), Duration.ofMillis(1));
+        });
 
         //Assert
-        //Verification is done implicitly by not receiving an exception.
+        assertEquals("unlucky", throwable.getMessage());
     }
 
     @Test
@@ -170,42 +186,47 @@ public class WaitTests {
         }, expectedString, Duration.ofMillis(100), Duration.ofMillis(1));
 
         //Assert
-
+        //Should eventually pass.
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForStringValue_IfTaskFailsToReturnValue_FailsWithException() {
         //Arrange
 
         // Act
-        Wait.forValue(() -> stringToCheck, expectedString, Duration.ofMillis(10), Duration.ofMillis(1));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            Wait.forValue(() -> stringToCheck, expectedString, Duration.ofMillis(10), Duration.ofMillis(1));
+        });
 
         //Assert
-
+        assertEquals("Timeout of 0:0 expired before operation \"Expected \"aaaaa\", but found \"\"\" completed.", exception.getMessage());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForStringValueWithoutRetryParam_IfTaskFailsToReturnValue_FailsWithException() {
         //Arrange
 
         // Act
-        Wait.forValue(() -> stringToCheck, expectedString, Duration.ofMillis(10));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            Wait.forValue(() -> stringToCheck, expectedString, Duration.ofMillis(10));
+        });
 
         //Assert
-
+        assertEquals("Timeout of 0:0 expired before operation \"Expected \"aaaaa\", but found \"\"\" completed.", exception.getMessage());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testForStringValueWithoutEnoughTime_FailsWithException() {
         //Arrange
 
         // Act
-        Wait.forValue(() -> {
-            this.stringToCheck += stringToAppend;
-            return stringToCheck;
-        }, expectedString, Duration.ofMillis(3), Duration.ofMillis(1));
 
         //Assert
-
+        assertThrows(RuntimeException.class, () -> {
+            Wait.forValue(() -> {
+                this.stringToCheck += stringToAppend;
+                return stringToCheck;
+            }, expectedString, Duration.ofMillis(3), Duration.ofMillis(1));
+        });
     }
 }

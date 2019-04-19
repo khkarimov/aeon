@@ -186,7 +186,7 @@ public class StringUtils {
      */
     public static boolean like(String value, String expectedValue, boolean caseSensitive) {
         if (value == null) {
-            throw new IllegalArgumentException(value);
+            throw new IllegalArgumentException(VALUE);
         }
         if (expectedValue == null) {
             throw new IllegalArgumentException("expectedValue");
@@ -233,7 +233,7 @@ public class StringUtils {
      */
     public static boolean containsWord(String value, String word) {
         if (value == null) {
-            throw new IllegalArgumentException(value);
+            throw new IllegalArgumentException(VALUE);
         }
         if (word == null) {
             throw new IllegalArgumentException("word");
@@ -250,7 +250,7 @@ public class StringUtils {
      */
     public static String assertNoWhiteSpace(String value) {
         if (value == null) {
-            throw new IllegalArgumentException(value);
+            throw new IllegalArgumentException(VALUE);
         }
         if (value.contains(" ")) {
             throw new ContainsWhiteSpaceException(value);
@@ -267,7 +267,7 @@ public class StringUtils {
      */
     public static String remove(String value, Object... values) {
         if (value == null) {
-            throw new IllegalArgumentException(value);
+            throw new IllegalArgumentException(VALUE);
         }
         if (values == null) {
             return value;

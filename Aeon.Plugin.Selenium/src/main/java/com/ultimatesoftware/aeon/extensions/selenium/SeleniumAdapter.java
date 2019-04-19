@@ -2125,11 +2125,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         });
     }
 
-    private void writingToLog(String filename, List<String> logStrings) {
+    private void writingToLog(String filename, List<String> logStrings) throws IOException{
+        FileWriter fileWriter = null;
         try {
             File file = new File(filename);
             file.getParentFile().mkdirs();
-            FileWriter fileWriter = new FileWriter(file);
+            fileWriter = new FileWriter(file);
             for (String log : logStrings) {
                 fileWriter.write(log);
                 fileWriter.write('\n');
@@ -2137,6 +2138,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
             fileWriter.close();
         } catch (IOException e) {
             log.error("Couldn't write Selenium log entries to " + filename, e);
+        } finally {
+            fileWriter.close();
         }
     }
 

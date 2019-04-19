@@ -157,8 +157,8 @@ public class SeleniumSelectElement extends WebControl {
      * @param value The value to match against
      */
     public final void selectByValue(String value) {
-        String formatted = String.format("SelectElement.selectByValue(%1$s);", value);
-        log.trace(formatted);
+        String logMessage = String.format("SelectElement.selectByValue(%1$s);", value);
+        log.trace(logMessage);
         getUnderlyingSelectElement().selectByValue(value);
     }
 }
