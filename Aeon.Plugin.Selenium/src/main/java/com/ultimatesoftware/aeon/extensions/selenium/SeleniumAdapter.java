@@ -3,51 +3,14 @@ package com.ultimatesoftware.aeon.extensions.selenium;
 import com.ultimatesoftware.aeon.core.common.CompareType;
 import com.ultimatesoftware.aeon.core.common.ComparisonOption;
 import com.ultimatesoftware.aeon.core.common.KeyboardKey;
-import com.ultimatesoftware.aeon.core.common.exceptions.AlertExistsException;
-import com.ultimatesoftware.aeon.core.common.exceptions.DatesNotApproximatelyEqualException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementAttributeNotADateException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementDoesNotHaveException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementDoesNotHaveNumberOfOptionsException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementDoesNotHaveOptionException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementDoesNotOnlyHaveException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementExistsException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementHasException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementHasOptionException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementIsEnabledException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementIsSelectedException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementIsVisibleException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementNotEnabledException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementNotSelectedException;
 import com.ultimatesoftware.aeon.core.common.exceptions.ElementNotVisibleException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ElementsNotInOrderException;
-import com.ultimatesoftware.aeon.core.common.exceptions.IncorrectElementTagException;
-import com.ultimatesoftware.aeon.core.common.exceptions.NoAlertException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchCookieException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchElementException;
-import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchElementsException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchWindowException;
-import com.ultimatesoftware.aeon.core.common.exceptions.NotAllPopupWindowsClosedException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ScriptExecutionException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ScriptReturnValueNotHtmlElementException;
-import com.ultimatesoftware.aeon.core.common.exceptions.UnableToTakeScreenshotException;
-import com.ultimatesoftware.aeon.core.common.exceptions.UnsupportedElementException;
-import com.ultimatesoftware.aeon.core.common.exceptions.UnsupportedSelectElementException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ValuesAreAlikeException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ValuesAreNotAlikeException;
-import com.ultimatesoftware.aeon.core.common.exceptions.ValuesAreNotEqualException;
-import com.ultimatesoftware.aeon.core.common.exceptions.WindowExistsException;
-import com.ultimatesoftware.aeon.core.common.helpers.MouseHelper;
-import com.ultimatesoftware.aeon.core.common.helpers.OsCheck;
-import com.ultimatesoftware.aeon.core.common.helpers.SendKeysHelper;
-import com.ultimatesoftware.aeon.core.common.helpers.Sleep;
-import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
+import com.ultimatesoftware.aeon.core.common.exceptions.*;
+import com.ultimatesoftware.aeon.core.common.helpers.*;
 import com.ultimatesoftware.aeon.core.common.interfaces.IBy;
-import com.ultimatesoftware.aeon.core.common.web.BrowserSize;
-import com.ultimatesoftware.aeon.core.common.web.BrowserSizeMap;
-import com.ultimatesoftware.aeon.core.common.web.BrowserType;
-import com.ultimatesoftware.aeon.core.common.web.ClientRects;
-import com.ultimatesoftware.aeon.core.common.web.JQueryStringType;
-import com.ultimatesoftware.aeon.core.common.web.WebSelectOption;
+import com.ultimatesoftware.aeon.core.common.web.*;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IBrowserType;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
 import com.ultimatesoftware.aeon.core.common.web.selectors.ByJQuery;
@@ -59,16 +22,7 @@ import com.ultimatesoftware.aeon.core.testabstraction.product.Aeon;
 import com.ultimatesoftware.aeon.core.testabstraction.product.AeonTestExecution;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.IJavaScriptFlowExecutor;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.SeleniumScriptExecutor;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -81,11 +35,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -93,13 +43,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.ultimatesoftware.aeon.core.common.helpers.DateTimeExtensions.approximatelyEquals;
@@ -112,6 +56,7 @@ import static com.ultimatesoftware.aeon.core.common.helpers.StringUtils.normaliz
 public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     private static final String RESULT = "Result: {}";
+    private static final String VALUE = "value";
     private final URL seleniumHubUrl;
     protected WebDriver webDriver;
     private IJavaScriptFlowExecutor javaScriptExecutor;
@@ -1508,12 +1453,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 }
                 break;
             case ASCENDING_BY_VALUE:
-                if (prevOption.getAttribute("value").toLowerCase().compareTo(currOption.getAttribute("value")) > 0) {
+                if (prevOption.getAttribute(VALUE).toLowerCase().compareTo(currOption.getAttribute(VALUE)) > 0) {
                     throw new ElementsNotInOrderException(compare);
                 }
                 break;
             case DESCENDING_BY_VALUE:
-                if (prevOption.getAttribute("value").toLowerCase().compareTo(currOption.getAttribute("value")) < 0) {
+                if (prevOption.getAttribute(VALUE).toLowerCase().compareTo(currOption.getAttribute(VALUE)) < 0) {
                     throw new ElementsNotInOrderException(compare);
                 }
                 break;
@@ -2066,7 +2011,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 sendKeysToElement(control, setValue);
                 break;
             default:
-                String currentValue = getElementAttribute(control, "value");
+                String currentValue = getElementAttribute(control, VALUE);
                 if (currentValue != null) {
                     StringBuilder backspaces = new StringBuilder();
                     for (int i = 0; i < currentValue.length(); i++) {
@@ -2125,21 +2070,24 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         });
     }
 
-    private void writingToLog(String filename, List<String> logStrings) throws IOException{
-        FileWriter fileWriter = null;
+    private void writingToLog(String filename, List<String> logStrings) throws IOException {
         try {
             File file = new File(filename);
             file.getParentFile().mkdirs();
-            fileWriter = new FileWriter(file);
-            for (String log : logStrings) {
-                fileWriter.write(log);
-                fileWriter.write('\n');
+            FileWriter fileWriter = new FileWriter(file);
+            try {
+                for (String log : logStrings) {
+                    fileWriter.write(log);
+                    fileWriter.write('\n');
+                }
+            } catch (IOException e){
+                log.error("Couldn't write Selenium log entries to " + filename, e);
+            } finally {
+                fileWriter.close();
             }
-            fileWriter.close();
+
         } catch (IOException e) {
             log.error("Couldn't write Selenium log entries to " + filename, e);
-        } finally {
-            fileWriter.close();
         }
     }
 

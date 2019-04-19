@@ -415,7 +415,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
                     return true;
                 }
             } catch (NoSuchElementException err) {
-                WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+                WebControl yearLabel = findElement(ByMobile.id(ANDROID_ID_DATE_PICKER_HEADER_YEAR), false);
                 click(yearLabel);
             }
         }
@@ -452,7 +452,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     }
 
     private void setYearOnAndroidDatePicker(int desiredYear) {
-        WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+        WebControl yearLabel = findElement(ByMobile.id(ANDROID_ID_DATE_PICKER_HEADER_YEAR), false);
         click(yearLabel);
         int currentYear = Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText());
         swipeAndCheckForYear(currentYear, desiredYear);
@@ -471,7 +471,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private void setMonthOnAndroidDatePicker(LocalDate date) {
         int currentMonth = getMonthNumberOnAndroidDatePicker();
         int desiredMonth = date.getMonthValue();
-        WebControl yearLabel = findElement(ByMobile.id("android:id/date_picker_header_year"), false);
+        WebControl yearLabel = findElement(ByMobile.id(ANDROID_ID_DATE_PICKER_HEADER_YEAR), false);
         if (date.getYear() != Integer.parseInt(((SeleniumElement) yearLabel).getUnderlyingWebElement().getText())) {
             setYearOnAndroidDatePicker(date.getYear());
         }
