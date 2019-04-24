@@ -103,6 +103,19 @@ class ParameterTest {
     }
 
     @Test
+    void equals_forNotObjectTypeOfParameter_isFalse(){
+        // Arrange
+        Parameter param1 = new Parameter("one");
+        Object obj1 = new Object();
+
+        // Act
+        boolean result = param1.equals(obj1);
+
+        // Assert
+        Assert.assertFalse(result);
+    }
+
+    @Test
     void hashCode_happyPath_returnsHashCodeForInnerObject() {
         //Arrange
         String innerObject = "MyString";

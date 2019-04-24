@@ -20,11 +20,7 @@ import com.ultimatesoftware.aeon.extensions.selenium.extensions.ISeleniumExtensi
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.JavaScriptFlowExecutor;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.MutableCapabilities;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -34,11 +30,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.ie.ElementScrollBehavior;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.ie.InternetExplorerDriverLogLevel;
-import org.openqa.selenium.ie.InternetExplorerDriverService;
-import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.ie.*;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.opera.OperaDriver;
@@ -236,7 +228,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             Level parsedLevel = Level.parse(currentLevel);
             loggingPreferences.enable(logType, parsedLevel);
         } catch (IllegalArgumentException e) {
-            log.warn(String.format("Invalid level \"%s\" for logging type \"%s\".", currentLevel, logType));
+            log.warn("Invalid level \"{}\" for logging type \"{}\".", currentLevel, logType);
         }
     }
 
@@ -494,7 +486,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         if (!deviceName.isEmpty()) {
             desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
         }
-        setCapability(desiredCapabilities, "iOS", "mobileSafari");
+        setMobileCapabilities(desiredCapabilities, "iOS", "mobileSafari");
         addPluginCapabilities(desiredCapabilities);
 
         return desiredCapabilities;
@@ -505,11 +497,11 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         if (!deviceName.isEmpty()) {
             desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
         }
-        setCapability(desiredCapabilities, "Android", "Chrome");
+        setMobileCapabilities(desiredCapabilities, "Android", "Chrome");
         return desiredCapabilities;
     }
 
-    private void setCapability(MutableCapabilities desiredCapabilities, String os, String browser) {
+    private void setMobileCapabilities(MutableCapabilities desiredCapabilities, String os, String browser) {
         desiredCapabilities.setCapability("platformName", os);
         desiredCapabilities.setCapability("platformVersion", platformVersion);
         desiredCapabilities.setCapability("browserName", browser);

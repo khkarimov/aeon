@@ -61,6 +61,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     }
 
     private Object executeDelegateWithReturn(Supplier<Object> commandDelegateWrapper) {
+        System.out.println("ENTERING EDWR");
         RuntimeException lastCaughtException = null;
         int tries = 0;
 
@@ -70,6 +71,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
                 tries++;
                 Object returnValue = commandDelegateWrapper.get();
                 log.debug(String.format(Resources.getString("TimWtr_Success_Debug"), tries));
+                System.out.println("RETURNING THAT VALUE");
                 return returnValue;
             } catch (RuntimeException e) {
                 lastCaughtException = e;
@@ -82,14 +84,17 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             Sleep.waitInternal();
         }
 
+        System.out.println("THROWING THAT EXCEPTION");
         RuntimeException ex = new TimeoutExpiredException(
                 Resources.getString("TimWtr_TimeoutExpired_DefaultMessage"), timeout);
 
         // If we have a last caught exception use that one
         // as the main exception for logging
+        System.out.println("CHECKING LAST CAUGHT EXCEPTION");
         if (lastCaughtException != null) {
             lastCaughtException.addSuppressed(ex);
             ex = lastCaughtException;
+            System.out.println("IT HAS BEEN CHECKED");
         }
 
         // TODO(DionnyS): JAVA_CONVERSION Get running processes.

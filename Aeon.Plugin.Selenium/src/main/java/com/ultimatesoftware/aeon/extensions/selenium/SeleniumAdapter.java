@@ -62,7 +62,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private static final String UPPERCASE_SELECT = "SELECT";
     private static final String WEBDRIVER_SWITCHTO_WINDOW = "WebDriver.SwitchTo().Window({});";
     private static final String WEBDRIVER_SWITCHTO_ALERT = "WebDriver.SwitchTo().Alert();";
-    private static final String NULL_DRIVER = "The driver is null.";
     private static final String OPTION_NORMALIZE_SPACE = ".//option[normalize-space(.) = ";
     private static final String OPTION_VALUE = "option[value='";
     private static final String OPTGROUP_LABEL = "optgroup[label='";
@@ -911,10 +910,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return A string representation of the source code of the page.
      */
     public final String getPageSource() {
-        if (webDriver == null) {
-            throw new IllegalStateException(NULL_DRIVER);
-        }
-
         log.trace("WebDriver.get_PageSource();");
 
         return webDriver.getPageSource();
@@ -927,9 +922,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param targetElement    Where the element will be dropped.
      */
     public final void dragAndDrop(WebControl draggableElement, IByWeb targetElement) {
-        if (webDriver == null) {
-            throw new IllegalStateException(NULL_DRIVER);
-        }
         WebElement draggable = ((SeleniumElement) draggableElement).getUnderlyingWebElement();
         WebElement target = ((SeleniumElement) findElement(targetElement)).getUnderlyingWebElement();
 
@@ -980,9 +972,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The element to perform the rightClick on.
      */
     public final void rightClick(WebControl element) {
-        if (webDriver == null) {
-            throw new IllegalStateException(NULL_DRIVER);
-        }
         log.trace("new Actions(IWebDriver).ContextClick(IWebElement);");
 
         if (browserType == BrowserType.FIREFOX || browserType == BrowserType.INTERNET_EXPLORER) {
@@ -1011,9 +1000,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param element The element to perform the doubleClick on.
      */
     public final void doubleClick(WebControl element) {
-        if (webDriver == null) {
-            throw new IllegalStateException(NULL_DRIVER);
-        }
         if (this.browserType == BrowserType.FIREFOX) {
             doubleClickByJavaScript(element);
             return;
@@ -1100,10 +1086,6 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Refreshes the current frame.
      */
     public final void refreshFrame() {
-        if (webDriver == null) {
-            throw new IllegalStateException(NULL_DRIVER);
-        }
-
         executeScript("window.location = location.href;");
     }
 

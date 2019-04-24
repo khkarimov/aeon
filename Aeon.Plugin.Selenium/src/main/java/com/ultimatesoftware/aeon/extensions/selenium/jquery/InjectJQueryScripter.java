@@ -66,6 +66,7 @@ public class InjectJQueryScripter extends JavaScriptFinalizer {
         if (javaScript == null) {
             throw new IllegalArgumentException("javaScript");
         }
+
         // Commented out because this causes the unit tests to hang (a pop up opens and the test hangs until you hit the "ignore" button.
         // Debug.Assert(successor != null, "Cannot use null reference for successor.");
         return javaScript.contains("$(") ?
