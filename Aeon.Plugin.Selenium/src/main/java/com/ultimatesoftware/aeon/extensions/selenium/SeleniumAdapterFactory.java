@@ -10,6 +10,7 @@ import com.ultimatesoftware.aeon.core.common.helpers.OsCheck;
 import com.ultimatesoftware.aeon.core.common.helpers.Sleep;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
 import com.ultimatesoftware.aeon.core.common.web.BrowserSize;
+import com.ultimatesoftware.aeon.core.common.web.BrowserType;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IBrowserType;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapterExtension;
@@ -472,36 +473,28 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         DesiredCapabilities capabilities;
 
         if (browserType.equals("IOSSafari")) {
-            capabilities = (DesiredCapabilities) getMobileCapabilities("iOS", "mobileSafari");
+            capabilities = (DesiredCapabilities) getMobileCapabilitiesForIOSAndAndroid("iOS", BrowserType.IOS_SAFARI.toString());
         } else {
-            capabilities = (DesiredCapabilities) getMobileCapabilities("Android", "Chrome");
+            capabilities = (DesiredCapabilities) getMobileCapabilitiesForIOSAndAndroid("Android", BrowserType.ANDROID_CHROME.toString());
         }
         driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
     }
 
-    private Capabilities getMobileCapabilities(String os, String browser) {
+    private Capabilities getMobileCapabilitiesForIOSAndAndroid(String os, String browser) {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
-        setMobileCapabilities(desiredCapabilities, os, browser);
-
-        if (os.equals("iOS")) {
-            addPluginCapabilities(desiredCapabilities);
-        }
-
-        return desiredCapabilities;
-    }
-
-    private void setMobileCapabilities(MutableCapabilities desiredCapabilities, String os, String browser) {
         if (!deviceName.isEmpty()) {
             desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
         }
+
         desiredCapabilities.setCapability("platformName", os);
         desiredCapabilities.setCapability("platformVersion", platformVersion);
         desiredCapabilities.setCapability("browserName", browser);
         desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
         addPluginCapabilities(desiredCapabilities);
 
+        return desiredCapabilities;
     }
 
     private void setProxySettings(MutableCapabilities options, String proxyLocation) {

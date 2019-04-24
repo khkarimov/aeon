@@ -1234,7 +1234,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select   The method by which the options are identified, either their value or their visible text.
      */
     public void elementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT)) {
             throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
@@ -1254,7 +1254,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select   The method by which the options are identified, either their value or their visible text.
      */
     public void elementDoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT)) {
             throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
@@ -1344,7 +1344,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select   The method by which the options are identified, either their value, or their visible text.
      */
     public void elementHasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT)) {
             throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
@@ -1389,7 +1389,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param optgroup  The optional option group to be searched.
      */
     public void hasNumberOfOptions(WebControl element, int optnumber, String optgroup) {
-        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT)) {
             throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
