@@ -505,7 +505,6 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         desiredCapabilities.setCapability("platformName", os);
         desiredCapabilities.setCapability("platformVersion", platformVersion);
         desiredCapabilities.setCapability("browserName", browser);
-        desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
         desiredCapabilities.setCapability("udid", configuration.getString(SeleniumConfiguration.Keys.UDID, ""));
         addPluginCapabilities(desiredCapabilities);
 
