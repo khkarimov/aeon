@@ -473,16 +473,16 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         DesiredCapabilities capabilities;
 
         if (browserType.equals("IOSSafari")) {
-            capabilities = (DesiredCapabilities) getMobileCapabilitiesForIOSAndAndroid("iOS", BrowserType.IOS_SAFARI.toString());
+            capabilities = (DesiredCapabilities) getMobileCapabilities("iOS", BrowserType.IOS_SAFARI.getKey());
         } else {
-            capabilities = (DesiredCapabilities) getMobileCapabilitiesForIOSAndAndroid("Android", BrowserType.ANDROID_CHROME.toString());
+            capabilities = (DesiredCapabilities) getMobileCapabilities("Android", BrowserType.ANDROID_CHROME.getKey());
         }
         driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
     }
 
-    private Capabilities getMobileCapabilitiesForIOSAndAndroid(String os, String browser) {
+    private Capabilities getMobileCapabilities(String os, String browser) {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
         if (!deviceName.isEmpty()) {
             desiredCapabilities.setCapability(DEVICE_NAME, deviceName);

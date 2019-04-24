@@ -56,8 +56,7 @@ import static com.ultimatesoftware.aeon.core.common.helpers.StringUtils.normaliz
 public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     private static final String RESULT = "Result: {}";
-    private static final String LOWERCASE_VALUE = "value";
-    private static final String UPPERCASE_VALUE = "VALUE";
+    private static final String VALUE = "value";
     private static final String SELECT = "select";
     private static final String WEBDRIVER_SWITCHTO_WINDOW = "WebDriver.SwitchTo().Window({});";
     private static final String WEBDRIVER_SWITCHTO_ALERT = "WebDriver.SwitchTo().Alert();";
@@ -535,7 +534,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public final String switchToWindowByUrl(String value) {
         if (StringUtils.isBlank(value)) {
-            throw new IllegalArgumentException(LOWERCASE_VALUE);
+            throw new IllegalArgumentException(VALUE);
         }
 
         for (String window : getWindowHandles()) {
@@ -1444,12 +1443,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 }
                 break;
             case ASCENDING_BY_VALUE:
-                if (prevOption.getAttribute(LOWERCASE_VALUE).toLowerCase().compareTo(currOption.getAttribute(LOWERCASE_VALUE)) > 0) {
+                if (prevOption.getAttribute(VALUE).toLowerCase().compareTo(currOption.getAttribute(VALUE)) > 0) {
                     throw new ElementsNotInOrderException(compare);
                 }
                 break;
             case DESCENDING_BY_VALUE:
-                if (prevOption.getAttribute(LOWERCASE_VALUE).toLowerCase().compareTo(currOption.getAttribute(LOWERCASE_VALUE)) < 0) {
+                if (prevOption.getAttribute(VALUE).toLowerCase().compareTo(currOption.getAttribute(VALUE)) < 0) {
                     throw new ElementsNotInOrderException(compare);
                 }
                 break;
@@ -1698,7 +1697,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void is(WebControl element, String expectedValue, ComparisonOption option, String attribute) {
         // special check for Select elements
         // if the select element is checking value or innerhtml, check the selected option, otherwise check the element
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(VALUE))) {
             isWithSelect(element, expectedValue, attribute);
             return;
         }
@@ -1750,7 +1749,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void isLike(WebControl element, String value, ComparisonOption option, String attribute) {
         // special check for Select elements
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(VALUE))) {
             isLikeWithSelect(element, value, attribute);
             return;
         }
@@ -1803,7 +1802,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void isNotLike(WebControl element, String value, ComparisonOption option, String attribute) {
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(VALUE))) {
             isNotLikeWithSelect(element, value, attribute);
             return;
         }
@@ -2002,7 +2001,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 sendKeysToElement(control, setValue);
                 break;
             default:
-                String currentValue = getElementAttribute(control, LOWERCASE_VALUE);
+                String currentValue = getElementAttribute(control, VALUE);
                 if (currentValue != null) {
                     StringBuilder backspaces = new StringBuilder();
                     for (int i = 0; i < currentValue.length(); i++) {
@@ -2062,23 +2061,18 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     }
 
     private void writingToLog(String filename, List<String> logStrings) throws IOException {
+        File file = new File(filename);
+        file.getParentFile().mkdirs();
+        FileWriter fileWriter = new FileWriter(file);
         try {
-            File file = new File(filename);
-            file.getParentFile().mkdirs();
-            FileWriter fileWriter = new FileWriter(file);
-            try {
-                for (String log : logStrings) {
-                    fileWriter.write(log);
-                    fileWriter.write('\n');
-                }
-            } catch (IOException e) {
-                log.error("Couldn't write Selenium log entries to " + filename, e);
-            } finally {
-                fileWriter.close();
+            for (String log : logStrings) {
+                fileWriter.write(log);
+                fileWriter.write('\n');
             }
-
         } catch (IOException e) {
             log.error("Couldn't write Selenium log entries to " + filename, e);
+        } finally {
+            fileWriter.close();
         }
     }
 
