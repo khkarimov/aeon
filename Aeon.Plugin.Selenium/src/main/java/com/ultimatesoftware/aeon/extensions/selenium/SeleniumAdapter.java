@@ -58,8 +58,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     private static final String RESULT = "Result: {}";
     private static final String LOWERCASE_VALUE = "value";
     private static final String UPPERCASE_VALUE = "VALUE";
-    private static final String LOWERCASE_SELECT = "select";
-    private static final String UPPERCASE_SELECT = "SELECT";
+    private static final String SELECT = "select";
     private static final String WEBDRIVER_SWITCHTO_WINDOW = "WebDriver.SwitchTo().Window({});";
     private static final String WEBDRIVER_SWITCHTO_ALERT = "WebDriver.SwitchTo().Alert();";
     private static final String OPTION_NORMALIZE_SPACE = ".//option[normalize-space(.) = ";
@@ -1235,8 +1234,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select   The method by which the options are identified, either their value or their visible text.
      */
     public void elementHasOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        if (!((SeleniumElement) element).getTagName().equals(LOWERCASE_SELECT)) {
-            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), LOWERCASE_SELECT);
+        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).findElement(com.ultimatesoftware.aeon.core.common.web.selectors.By.cssSelector(OPTGROUP_LABEL.concat(optgroup).concat("']")));
@@ -1255,8 +1254,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select   The method by which the options are identified, either their value or their visible text.
      */
     public void elementDoesNotHaveOptions(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        if (!((SeleniumElement) element).getTagName().equals(LOWERCASE_SELECT)) {
-            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), LOWERCASE_SELECT);
+        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).findElement(com.ultimatesoftware.aeon.core.common.web.selectors.By.cssSelector(OPTGROUP_LABEL.concat(optgroup).concat("']")));
@@ -1345,8 +1344,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param select   The method by which the options are identified, either their value, or their visible text.
      */
     public void elementHasOptionsInOrder(WebControl element, String[] options, String optgroup, WebSelectOption select) {
-        if (!((SeleniumElement) element).getTagName().equals(LOWERCASE_SELECT)) {
-            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), LOWERCASE_SELECT);
+        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
             SeleniumElement group = (SeleniumElement) ((SeleniumElement) element).findElement(com.ultimatesoftware.aeon.core.common.web.selectors.By.cssSelector(OPTGROUP_LABEL + optgroup + "']"));
@@ -1390,8 +1389,8 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param optgroup  The optional option group to be searched.
      */
     public void hasNumberOfOptions(WebControl element, int optnumber, String optgroup) {
-        if (!((SeleniumElement) element).getTagName().equals(LOWERCASE_SELECT)) {
-            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), LOWERCASE_SELECT);
+        if (!((SeleniumElement) element).getTagName().equals(SELECT)) {
+            throw new IncorrectElementTagException(((SeleniumElement) element).getTagName(), SELECT);
         }
         if (optgroup != null) {
             element = ((SeleniumElement) element).findElement(com.ultimatesoftware.aeon.core.common.web.selectors.By.cssSelector(OPTGROUP_LABEL + optgroup + "']"));
@@ -1699,7 +1698,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void is(WebControl element, String expectedValue, ComparisonOption option, String attribute) {
         // special check for Select elements
         // if the select element is checking value or innerhtml, check the selected option, otherwise check the element
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
             isWithSelect(element, expectedValue, attribute);
             return;
         }
@@ -1723,7 +1722,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute     The attribute being checked.
      */
     private void isWithSelect(WebControl element, String expectedValue, String attribute) {
-        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT)) {
             throw new UnsupportedElementException(element.getClass());
         }
         if (attribute.equalsIgnoreCase(INNERHTML)) {
@@ -1751,7 +1750,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void isLike(WebControl element, String value, ComparisonOption option, String attribute) {
         // special check for Select elements
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
             isLikeWithSelect(element, value, attribute);
             return;
         }
@@ -1776,7 +1775,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute     The attribute being checked.
      */
     private void isLikeWithSelect(WebControl element, String expectedValue, String attribute) {
-        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT)) {
             throw new UnsupportedElementException(element.getClass());
         }
         if (attribute.equalsIgnoreCase(INNERHTML)) {
@@ -1804,7 +1803,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void isNotLike(WebControl element, String value, ComparisonOption option, String attribute) {
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
             isNotLikeWithSelect(element, value, attribute);
             return;
         }
@@ -1827,7 +1826,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute     The attribute.
      */
     private void isNotLikeWithSelect(WebControl element, String expectedValue, String attribute) {
-        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(SELECT)) {
             throw new UnsupportedElementException(element.getClass());
         }
         try {
@@ -1981,10 +1980,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
     @Override
     public void set(WebControl control, WebSelectOption option, String setValue) {
-        String tag = getElementTagName(control).toUpperCase();
+        String tag = getElementTagName(control).toLowerCase();
 
         switch (tag) {
-            case UPPERCASE_SELECT:
+            case SELECT:
                 switch (option) {
                     case VALUE:
                         chooseSelectElementByValue(control, setValue);
@@ -1997,7 +1996,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                 }
 
                 break;
-            case "TEXTAREA":
+            case "textarea":
                 clickElement(control);
                 clearElement(control);
                 sendKeysToElement(control, setValue);

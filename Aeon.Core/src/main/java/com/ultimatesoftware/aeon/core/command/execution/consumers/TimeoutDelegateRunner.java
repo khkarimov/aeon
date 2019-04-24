@@ -69,12 +69,12 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             try {
                 tries++;
                 Object returnValue = commandDelegateWrapper.get();
-                log.debug(String.format(Resources.getString("TimWtr_Success_Debug"), tries));
+                log.debug(Resources.getString("TimWtr_Success_Debug"), tries);
                 return returnValue;
             } catch (RuntimeException e) {
                 lastCaughtException = e;
 
-                log.debug("{} used: {} tries. The last caught exception was: {}. Its message is: {}", Resources.getString("TimWtr_Exception_Debug"), tries,
+                log.debug(Resources.getString("TimWtr_Exception_Debug"), tries,
                         lastCaughtException.getClass().getSimpleName(), lastCaughtException.getMessage());
             }
 
