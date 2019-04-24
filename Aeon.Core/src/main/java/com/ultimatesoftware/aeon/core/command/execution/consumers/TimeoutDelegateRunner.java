@@ -61,7 +61,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
     }
 
     private Object executeDelegateWithReturn(Supplier<Object> commandDelegateWrapper) {
-        System.out.println("ENTERING EDWR");
+        log.trace("ENTERING EDWR");
         RuntimeException lastCaughtException = null;
         int tries = 0;
 
@@ -71,30 +71,29 @@ public class TimeoutDelegateRunner extends DelegateRunner {
                 tries++;
                 Object returnValue = commandDelegateWrapper.get();
                 log.debug(String.format(Resources.getString("TimWtr_Success_Debug"), tries));
-                System.out.println("RETURNING THAT VALUE");
+                log.trace("RETURNING THAT VALUE");
                 return returnValue;
             } catch (RuntimeException e) {
                 lastCaughtException = e;
-                String logMessage = String.format(Resources.getString("TimWtr_Exception_Debug"), tries,
+                log.debug(Resources.getString("TimWtr_Exception_Debug"), tries,
                         lastCaughtException.getClass().getSimpleName(), lastCaughtException.getMessage());
-                log.debug(logMessage);
             }
 
             // Wait before retrying. Excessive attempts may cause WebDriver's client to lose connection with the server.
             Sleep.waitInternal();
         }
 
-        System.out.println("THROWING THAT EXCEPTION");
+        log.trace("THROWING THAT EXCEPTION");
         RuntimeException ex = new TimeoutExpiredException(
                 Resources.getString("TimWtr_TimeoutExpired_DefaultMessage"), timeout);
 
         // If we have a last caught exception use that one
         // as the main exception for logging
-        System.out.println("CHECKING LAST CAUGHT EXCEPTION");
+        log.trace("CHECKING LAST CAUGHT EXCEPTION");
         if (lastCaughtException != null) {
             lastCaughtException.addSuppressed(ex);
             ex = lastCaughtException;
-            System.out.println("IT HAS BEEN CHECKED");
+            log.trace("IT HAS BEEN CHECKED");
         }
 
         // TODO(DionnyS): JAVA_CONVERSION Get running processes.

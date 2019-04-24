@@ -101,7 +101,7 @@ public class SeleniumSelectElement extends WebControl {
      * @param index The index of the option to deselect.
      */
     public final void deselectByIndex(int index) {
-        log.trace("SelectElement.deselectByIndex(%1$s);", index);
+        log.trace("SelectElement.deselectByIndex({});", index);
         getUnderlyingSelectElement().deselectByIndex(index);
     }
 
@@ -111,7 +111,7 @@ public class SeleniumSelectElement extends WebControl {
      * @param text The visible text to match against
      */
     public final void deselectByText(String text) {
-        log.trace("SelectElement.deselectByText(%1$s);", text);
+        log.trace("SelectElement.deselectByText({});", text);
         getUnderlyingSelectElement().deselectByVisibleText(text);
     }
 
@@ -121,7 +121,7 @@ public class SeleniumSelectElement extends WebControl {
      * @param value The value to match against
      */
     public final void deselectByValue(String value) {
-        log.trace("SelectElement.deselectByValue(%1$s);", value);
+        log.trace("SelectElement.deselectByValue({});", value);
         getUnderlyingSelectElement().deselectByValue(value);
     }
 
@@ -131,7 +131,7 @@ public class SeleniumSelectElement extends WebControl {
      * @param index The option at this index will be deselected.
      */
     public final void selectByIndex(int index) {
-        log.trace("SelectElement.selectByIndex(%1$s);", index);
+        log.trace("SelectElement.selectByIndex({});", index);
         getUnderlyingSelectElement().selectByIndex(index);
     }
 
@@ -141,7 +141,7 @@ public class SeleniumSelectElement extends WebControl {
      * @param text The visible text to match against.
      */
     public final void selectByText(String text) {
-        log.trace("SelectElement.selectByText(%1$s);", text);
+        log.trace("SelectElement.selectByText({});", text);
         getUnderlyingSelectElement().selectByVisibleText(text);
     }
 
@@ -151,7 +151,7 @@ public class SeleniumSelectElement extends WebControl {
      * @param value The value to match against
      */
     public final void selectByValue(String value) {
-        log.trace("SelectElement.selectByValue(%1$s);", value);
+        log.trace("SelectElement.selectByValue({});", value);
         getUnderlyingSelectElement().selectByValue(value);
     }
 }
