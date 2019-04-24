@@ -62,8 +62,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         Object returnValue = ((JavascriptExecutor) getRemoteWebDriver()).executeScript(script, args);
 
         if (returnValue != null) {
-            String logMessage = "WebDriver.executeScript() returned " + scriptReturnValueToReadableString(returnValue);
-            log.trace(logMessage);
+            log.trace("WebDriver.executeScript() returned {}", scriptReturnValueToReadableString(returnValue));
         }
 
         return returnValue;
@@ -82,8 +81,7 @@ public class SeleniumScriptExecutor implements IScriptExecutor {
         Object returnValue = ((JavascriptExecutor) remoteWebDriver).executeAsyncScript(script, args);
 
         if (returnValue != null) {
-            String logMessage = "WebDriver.executeAsyncScript() returned " + scriptReturnValueToReadableString(returnValue);
-            log.trace(logMessage);
+            log.trace("WebDriver.executeAsyncScript() returned {}", scriptReturnValueToReadableString(returnValue));
         }
 
         return returnValue;

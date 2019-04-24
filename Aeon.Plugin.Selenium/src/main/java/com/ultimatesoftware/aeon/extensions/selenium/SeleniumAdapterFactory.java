@@ -494,14 +494,14 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
 
     private Capabilities getAndroidChromeCapabilities() {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
-        if (!deviceName.isEmpty()) {
-            desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
-        }
         setMobileCapabilities(desiredCapabilities, "Android", "Chrome");
         return desiredCapabilities;
     }
 
     private void setMobileCapabilities(MutableCapabilities desiredCapabilities, String os, String browser) {
+        if (!deviceName.isEmpty()) {
+            desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
+        }
         desiredCapabilities.setCapability("platformName", os);
         desiredCapabilities.setCapability("platformVersion", platformVersion);
         desiredCapabilities.setCapability("browserName", browser);

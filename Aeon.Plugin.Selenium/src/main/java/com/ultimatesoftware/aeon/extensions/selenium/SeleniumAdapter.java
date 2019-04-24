@@ -3,11 +3,11 @@ package com.ultimatesoftware.aeon.extensions.selenium;
 import com.ultimatesoftware.aeon.core.common.CompareType;
 import com.ultimatesoftware.aeon.core.common.ComparisonOption;
 import com.ultimatesoftware.aeon.core.common.KeyboardKey;
-import com.ultimatesoftware.aeon.core.common.exceptions.*;
 import com.ultimatesoftware.aeon.core.common.exceptions.ElementNotVisibleException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchCookieException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchElementException;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchWindowException;
+import com.ultimatesoftware.aeon.core.common.exceptions.*;
 import com.ultimatesoftware.aeon.core.common.helpers.*;
 import com.ultimatesoftware.aeon.core.common.interfaces.IBy;
 import com.ultimatesoftware.aeon.core.common.web.*;
@@ -1699,7 +1699,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public void is(WebControl element, String expectedValue, ComparisonOption option, String attribute) {
         // special check for Select elements
         // if the select element is checking value or innerhtml, check the selected option, otherwise check the element
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(UPPERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
             isWithSelect(element, expectedValue, attribute);
             return;
         }
@@ -1723,7 +1723,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute     The attribute being checked.
      */
     private void isWithSelect(WebControl element, String expectedValue, String attribute) {
-        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(UPPERCASE_SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT)) {
             throw new UnsupportedElementException(element.getClass());
         }
         if (attribute.equalsIgnoreCase(INNERHTML)) {
@@ -1751,7 +1751,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     public void isLike(WebControl element, String value, ComparisonOption option, String attribute) {
         // special check for Select elements
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(UPPERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
             isLikeWithSelect(element, value, attribute);
             return;
         }
@@ -1776,7 +1776,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute     The attribute being checked.
      */
     private void isLikeWithSelect(WebControl element, String expectedValue, String attribute) {
-        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(UPPERCASE_SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT)) {
             throw new UnsupportedElementException(element.getClass());
         }
         if (attribute.equalsIgnoreCase(INNERHTML)) {
@@ -1804,7 +1804,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      */
     @Override
     public void isNotLike(WebControl element, String value, ComparisonOption option, String attribute) {
-        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(UPPERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
+        if (((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT) && (attribute.equalsIgnoreCase(INNERHTML) || attribute.equalsIgnoreCase(UPPERCASE_VALUE))) {
             isNotLikeWithSelect(element, value, attribute);
             return;
         }
@@ -1827,7 +1827,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @param attribute     The attribute.
      */
     private void isNotLikeWithSelect(WebControl element, String expectedValue, String attribute) {
-        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(UPPERCASE_SELECT)) {
+        if (!((SeleniumElement) element).getTagName().equalsIgnoreCase(LOWERCASE_SELECT)) {
             throw new UnsupportedElementException(element.getClass());
         }
         try {
@@ -2072,7 +2072,7 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
                     fileWriter.write(log);
                     fileWriter.write('\n');
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 log.error("Couldn't write Selenium log entries to " + filename, e);
             } finally {
                 fileWriter.close();

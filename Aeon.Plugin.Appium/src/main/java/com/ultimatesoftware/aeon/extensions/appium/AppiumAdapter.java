@@ -670,8 +670,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         }
 
         if (findBy instanceof IByMobileXPath) {
-            String logMessage = String.format("WebDriver.findElement(by.xpath(%1$s));", findBy);
-            log.trace(logMessage);
+            log.trace("WebDriver.findElement(by.xpath({}));", findBy);
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.xpath(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
@@ -697,8 +696,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
             }
         }
 
-        String logMessage = String.format("WebDriver.findElement(by.accessbilityId(%1$s));", findBy);
-        log.trace(logMessage);
+        log.trace("WebDriver.findElement(by.accessbilityId({}));", findBy);
         try {
             return new SeleniumElement(((MobileDriver) webDriver).findElementByAccessibilityId(findBy.toString()));
         } catch (org.openqa.selenium.NoSuchElementException e) {
