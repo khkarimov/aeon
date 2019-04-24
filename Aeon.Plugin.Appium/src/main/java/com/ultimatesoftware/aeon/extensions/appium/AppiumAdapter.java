@@ -51,15 +51,15 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private HashMap<Integer, Integer> mobileDeviceResolutions = new HashMap<>();
 
 
-    private static final String FRAMELAYOUT1_FRAMELAYOUT1_VIEWGROUP1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/";
+    private static final String FL1_FL1_VIEWGROUP1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/";
     private static final String TEXTVIEW1 = "android.widget.TextView[1]";
-    private static final String FRAMELAYOUT1_FRAMELAYOUT1_LINEARLAYOUT1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/";
-    private static final String HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT2 = "/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/";
-    private static final String HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT1 = "/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/";
-    private static final String FRAMELAYOUT1_FRAMELAYOUT2_FRAMELAYOUT1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/";
-    private static final String FRAMELAYOUT1_VIEWGROUP1_TEXTVIEW1 = "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]";
-    private static final String SCROLLVIEW1_FRAMELAYOUT1_FRAMELAYOUT1 = "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/";
-    private static final String FRAMELAYOUT1_LINEARLAYOUT1_LINEARLAYOUT1 = "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/";
+    private static final String FL1_FL1_LINEARLAYOUT1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/";
+    private static final String H_FL1_FRAMELAYOUT2 = "/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/";
+    private static final String H_FL1_FRAMELAYOUT1 = "/hierarchy/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/";
+    private static final String FL1_FL2_FRAMELAYOUT1 = "android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/";
+    private static final String FL1_VG1_TEXTVIEW1 = "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]";
+    private static final String SV1_FL1_FRAMELAYOUT1 = "android.widget.ScrollView[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/";
+    private static final String FL1_LL1_LINEARLAYOUT1 = "android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/";
     private static final String ANDROID_ID_DATE_PICKER_HEADER_YEAR = "android:id/date_picker_header_year";
     private static final String ANDROID_HYBRID_APP = "AndroidHybridApp";
     private static final String IOS_HYBRID_APP = "IOSHybridApp";
@@ -278,39 +278,39 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private List<String> addBannerXPaths() {
         List<String> bannerPaths = new ArrayList();
         //Google Pixel (7.1)
-        bannerPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT1 +
+        bannerPaths.add(H_FL1_FRAMELAYOUT1 +
                 "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
-                FRAMELAYOUT1_FRAMELAYOUT1_VIEWGROUP1 +
+                FL1_FL1_VIEWGROUP1 +
                 TEXTVIEW1);
 
         //Galaxy S7 Edge (6.0.1)
-        bannerPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT1 +
+        bannerPaths.add(H_FL1_FRAMELAYOUT1 +
                 "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/" +
-                FRAMELAYOUT1_FRAMELAYOUT1_LINEARLAYOUT1 +
+                FL1_FL1_LINEARLAYOUT1 +
                 "android.widget.LinearLayout[1]/android.widget.TextView[1]");
 
         //Galaxy S7 (7.0)
-        bannerPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT2 +
-                FRAMELAYOUT1_FRAMELAYOUT2_FRAMELAYOUT1 +
+        bannerPaths.add(H_FL1_FRAMELAYOUT2 +
+                FL1_FL2_FRAMELAYOUT1 +
                 "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                FRAMELAYOUT1_VIEWGROUP1_TEXTVIEW1);
+                FL1_VG1_TEXTVIEW1);
 
         //Galaxy Note5 (7.0)
-        bannerPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT2 +
-                FRAMELAYOUT1_FRAMELAYOUT2_FRAMELAYOUT1 +
-                SCROLLVIEW1_FRAMELAYOUT1_FRAMELAYOUT1 +
-                FRAMELAYOUT1_VIEWGROUP1_TEXTVIEW1);
+        bannerPaths.add(H_FL1_FRAMELAYOUT2 +
+                FL1_FL2_FRAMELAYOUT1 +
+                SV1_FL1_FRAMELAYOUT1 +
+                FL1_VG1_TEXTVIEW1);
 
         //Galaxy S8 (7.0)
-        bannerPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT2 +
-                FRAMELAYOUT1_FRAMELAYOUT2_FRAMELAYOUT1 +
-                SCROLLVIEW1_FRAMELAYOUT1_FRAMELAYOUT1 +
-                FRAMELAYOUT1_VIEWGROUP1_TEXTVIEW1);
+        bannerPaths.add(H_FL1_FRAMELAYOUT2 +
+                FL1_FL2_FRAMELAYOUT1 +
+                SV1_FL1_FRAMELAYOUT1 +
+                FL1_VG1_TEXTVIEW1);
 
         //Sony Xperia XA (6.0)
-        bannerPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT1 +
-                FRAMELAYOUT1_FRAMELAYOUT1_VIEWGROUP1 +
+        bannerPaths.add(H_FL1_FRAMELAYOUT1 +
+                FL1_FL1_VIEWGROUP1 +
                 "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.TextView[1]");
         return bannerPaths;
@@ -319,35 +319,35 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
     private List<String> addDescriptionXPaths() {
         List<String> descriptionPaths = new ArrayList();
         //Google Pixel (7.1)
-        descriptionPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT1 +
+        descriptionPaths.add(H_FL1_FRAMELAYOUT1 +
                 "android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.FrameLayout[1]/" +
-                FRAMELAYOUT1_FRAMELAYOUT1_LINEARLAYOUT1 +
+                FL1_FL1_LINEARLAYOUT1 +
                 "android.widget.LinearLayout[1]/android.widget.TextView[1]");
 
         //Galaxy S7 (7.0)
-        descriptionPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT2 +
-                FRAMELAYOUT1_FRAMELAYOUT2_FRAMELAYOUT1 +
+        descriptionPaths.add(H_FL1_FRAMELAYOUT2 +
+                FL1_FL2_FRAMELAYOUT1 +
                 "android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
-                FRAMELAYOUT1_LINEARLAYOUT1_LINEARLAYOUT1 +
+                FL1_LL1_LINEARLAYOUT1 +
                 TEXTVIEW1);
 
         //Galaxy Note5 (7.0) && Galaxy S8
-        descriptionPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT2 +
-                FRAMELAYOUT1_FRAMELAYOUT2_FRAMELAYOUT1 +
-                SCROLLVIEW1_FRAMELAYOUT1_FRAMELAYOUT1 +
-                FRAMELAYOUT1_LINEARLAYOUT1_LINEARLAYOUT1 +
+        descriptionPaths.add(H_FL1_FRAMELAYOUT2 +
+                FL1_FL2_FRAMELAYOUT1 +
+                SV1_FL1_FRAMELAYOUT1 +
+                FL1_LL1_LINEARLAYOUT1 +
                 TEXTVIEW1);
 
         //Galaxy S8 (7.0)
-        descriptionPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT2 +
-                FRAMELAYOUT1_FRAMELAYOUT2_FRAMELAYOUT1 +
-                SCROLLVIEW1_FRAMELAYOUT1_FRAMELAYOUT1 +
-                FRAMELAYOUT1_LINEARLAYOUT1_LINEARLAYOUT1 +
+        descriptionPaths.add(H_FL1_FRAMELAYOUT2 +
+                FL1_FL2_FRAMELAYOUT1 +
+                SV1_FL1_FRAMELAYOUT1 +
+                FL1_LL1_LINEARLAYOUT1 +
                 TEXTVIEW1);
 
         //Sony Xperia XA (6.0)
-        descriptionPaths.add(HIERARCHY_FRAMELAYOUT1_FRAMELAYOUT1 +
-                FRAMELAYOUT1_FRAMELAYOUT1_VIEWGROUP1 +
+        descriptionPaths.add(H_FL1_FRAMELAYOUT1 +
+                FL1_FL1_VIEWGROUP1 +
                 "android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/" +
                 "android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.TextView[1]");
         return descriptionPaths;
@@ -394,7 +394,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
         if (checkIfPerfectoInUse()) {
             log.info("Using perfecto path");
             yearXPath = "/hierarchy/android.widget.FrameLayout[1]/" +
-                    FRAMELAYOUT1_FRAMELAYOUT1_LINEARLAYOUT1 +
+                    FL1_FL1_LINEARLAYOUT1 +
                     "android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.DatePicker[1]/" +
                     "android.widget.LinearLayout[1]/android.widget.ViewAnimator[1]/android.widget.ListView[1]/" +
                     "android.widget.TextView[";
