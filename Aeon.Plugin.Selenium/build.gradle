@@ -22,6 +22,8 @@ dependencies {
     pluginImplementation "org.seleniumhq.selenium:selenium-safari-driver:$seleniumVersion"
     pluginImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
 
+    pluginImplementation "io.appium:java-client:7.0.0"
+
     configurations.compile.extendsFrom(configurations.pluginImplementation)
 }
 
@@ -38,7 +40,7 @@ jar {
                 'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.selenium.SeleniumPlugin'
     }
 
-    from configurations.pluginImplementation.collect {
+    from configurations.pluginImplementation.filter({ !(it.name =~ /.*slf4j.*.jar/) }).collect {
         it.isDirectory() ? it : zipTree(it)
     }
 }

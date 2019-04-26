@@ -10,8 +10,6 @@ dependencies {
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Plugin.Selenium')
 
-    pluginImplementation "io.appium:java-client:7.0.0"
-
     configurations.compile.extendsFrom(configurations.pluginImplementation)
 }
 

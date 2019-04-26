@@ -34,7 +34,8 @@ public class SeleniumElement extends WebControl {
      */
     public SeleniumElement(WebElement seleniumWebElement) {
         underlyingWebElement = seleniumWebElement;
-        if (underlyingWebElement.getTagName().equalsIgnoreCase(SELECT_ELEMENT_TAG)) {
+        String tagName = underlyingWebElement.getTagName();
+        if (tagName != null && tagName.equalsIgnoreCase(SELECT_ELEMENT_TAG)) {
             selectHelper = new SeleniumSelectElement(new Select(underlyingWebElement));
         } else {
             selectHelper = null;

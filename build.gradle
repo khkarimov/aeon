@@ -181,7 +181,7 @@ assemble.finalizedBy(CopyMetricsPlugin)
 
 allprojects {
     group 'aeon'
-    version '1.20.0'
+    version '1.20.3'
 
     apply plugin: 'java'
     apply plugin: 'jacoco'
