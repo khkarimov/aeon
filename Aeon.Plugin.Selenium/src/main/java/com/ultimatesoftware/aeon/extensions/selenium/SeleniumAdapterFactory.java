@@ -10,7 +10,6 @@ import com.ultimatesoftware.aeon.core.common.helpers.OsCheck;
 import com.ultimatesoftware.aeon.core.common.helpers.Sleep;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
 import com.ultimatesoftware.aeon.core.common.web.BrowserSize;
-import com.ultimatesoftware.aeon.core.common.web.BrowserType;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IBrowserType;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapterExtension;
@@ -473,9 +472,9 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         DesiredCapabilities capabilities;
 
         if (browserType.equals("IOSSafari")) {
-            capabilities = (DesiredCapabilities) getMobileCapabilities("iOS", BrowserType.IOS_SAFARI.getKey());
+            capabilities = (DesiredCapabilities) getMobileCapabilities("iOS", "mobileSafari");
         } else {
-            capabilities = (DesiredCapabilities) getMobileCapabilities("Android", BrowserType.ANDROID_CHROME.getKey());
+            capabilities = (DesiredCapabilities) getMobileCapabilities("Android", "Chrome");
         }
         driver = getDriver(() -> new RemoteWebDriver(finalSeleniumHubUrl, capabilities));
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);

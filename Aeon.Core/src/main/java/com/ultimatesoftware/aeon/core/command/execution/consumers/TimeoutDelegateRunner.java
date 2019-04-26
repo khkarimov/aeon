@@ -74,7 +74,7 @@ public class TimeoutDelegateRunner extends DelegateRunner {
             } catch (RuntimeException e) {
                 lastCaughtException = e;
 
-                log.debug(Resources.getString("TimWtr_Exception_Debug"), tries,
+                log.debug(Resources.getString("{} {} {}"), tries,
                         lastCaughtException.getClass().getSimpleName(), lastCaughtException.getMessage());
             }
 
