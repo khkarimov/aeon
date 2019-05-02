@@ -444,7 +444,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
             if (isRemote) {
                 String operaBinaryPath = configuration.getString(SeleniumConfiguration.Keys.OPERA_BINARY, "");
                 if (StringUtils.isBlank(operaBinaryPath)) {
-                    throw new IllegalArgumentException(SeleniumConfiguration.Keys.OPERA_BINARY + " must be specified for remote instances.");
+                    throw new IllegalArgumentException(SeleniumConfiguration.Keys.OPERA_BINARY.getKey() + " must be specified for remote instances.");
                 }
 
                 driver = new RemoteWebDriver(finalSeleniumHubUrl, getOperaCapabilities());

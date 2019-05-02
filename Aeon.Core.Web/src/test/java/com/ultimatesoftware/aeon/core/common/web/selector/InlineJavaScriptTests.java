@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class InlineJavaScriptTests {
+class InlineJavaScriptTests {
 
     private InlineJavaScript inlineJavaScript;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         this.inlineJavaScript = new InlineJavaScript("String");
     }
 
     @Test
-    public void getInlineJavaScript_HappyPath() {
+    void getInlineJavaScript_HappyPath() {
         // Arrange
 
         // Act
@@ -28,7 +28,7 @@ public class InlineJavaScriptTests {
     }
 
     @Test
-    public void toString_HappyPath() {
+    void toString_HappyPath() {
         // Arrange
 
         // Act
@@ -39,7 +39,7 @@ public class InlineJavaScriptTests {
     }
 
     @Test
-    public void toString_nullString_ReturnsEmptyString() {
+    void toString_nullString_ReturnsEmptyString() {
         // Arrange
         this.inlineJavaScript = new InlineJavaScript(null);
 
@@ -51,66 +51,66 @@ public class InlineJavaScriptTests {
     }
 
     @Test
-    public void equals_HappyPath() {
+    void equals_HappyPath() {
         // Arrange
-        InlineJavaScript seccondScript = new InlineJavaScript("String");
+        InlineJavaScript secondScript = new InlineJavaScript("String");
 
         // Act
-        Boolean result = inlineJavaScript.equals(seccondScript);
+        boolean result = inlineJavaScript.equals(secondScript);
 
         // Assert
         assertTrue(result);
     }
 
     @Test
-    public void equals_DifferentStrings_ReturnsFalse() {
+    void equals_DifferentStrings_ReturnsFalse() {
         // Arrange
-        InlineJavaScript seccondScript = new InlineJavaScript("FalseString");
+        InlineJavaScript secondScript = new InlineJavaScript("FalseString");
 
         // Act
-        Boolean result = inlineJavaScript.equals(seccondScript);
+        boolean result = inlineJavaScript.equals(secondScript);
 
         // Assert
         assertFalse(result);
     }
 
     @Test
-    public void equals_Object_HappyPath() {
+    void equals_Object_HappyPath() {
         // Arrange
         InlineJavaScript seccondScript = new InlineJavaScript("String");
 
         // Act
-        Boolean result = inlineJavaScript.equals((Object) seccondScript);
+        boolean result = inlineJavaScript.equals((Object) seccondScript);
 
         // Assert
         assertTrue(result);
     }
 
     @Test
-    public void equals_ObjectDifferentStrings_ReturnsFalse() {
+    void equals_ObjectDifferentStrings_ReturnsFalse() {
         // Arrange
-        InlineJavaScript seccondScript = new InlineJavaScript("FalseString");
+        InlineJavaScript secondScript = new InlineJavaScript("FalseString");
 
         // Act
-        Boolean result = inlineJavaScript.equals((Object) seccondScript);
+        boolean result = inlineJavaScript.equals((Object) secondScript);
 
         // Assert
         assertFalse(result);
     }
 
     @Test
-    public void equals_NotInstanceOfInlineJavaScript_ReturnsFalse() {
+    void equals_NotInstanceOfInlineJavaScript_ReturnsFalse() {
         // Arrange
 
         // Act
-        Boolean result = inlineJavaScript.equals("String");
+        boolean result = inlineJavaScript.equals("String");
 
         // Assert
         assertFalse(result);
     }
 
     @Test
-    public void hashCode_HappyPath() {
+    void hashCode_HappyPath() {
         // Arrange
 
         // Act

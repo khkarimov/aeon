@@ -219,7 +219,7 @@ public class PIdFileAppender extends AbstractOutputStreamAppender<FileManager> {
      * @return the new PIdAppenderBuilder
      */
     @PluginBuilderFactory
-    public static <B extends Builder<B>> B newBuilder() {
+    public static <B extends PIdAppenderBuilder<B>> B newBuilder() {
         return new PIdAppenderBuilder<B>().asBuilder();
     }
 
