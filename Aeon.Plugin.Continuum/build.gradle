@@ -1,0 +1,34 @@
+def baseProjectName = 'Aeon.Plugin.Continuum'
+def baseProjectDescription = 'Aeon Continuum Plugin'
+def base = baseProjectName
+
+dependencies {
+    compile project(':Aeon.Plugin.Selenium')
+
+    compile files('src/main/resources/continuum-java-3.0.2.jar')
+    compile group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.9.1-2'
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'aeon.extensions.continuum',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.continuum.ContinuumPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.continuum'
+        }
+    }
+}
