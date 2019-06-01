@@ -5,6 +5,7 @@ import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
 import com.ultimatesoftware.aeon.core.extensions.ITestExecutionExtension;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
+import com.ultimatesoftware.aeon.extensions.accessibility.IAccessibilityExtension;
 import com.ultimatesoftware.aeon.extensions.selenium.extensions.ISeleniumExtension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
@@ -15,10 +16,13 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * Selenium extensions for using Aeon with SauceLabs.
+ * Accessibility extension for Continuum.
  */
 @Extension
-public class ContinuumExtension implements ISeleniumExtension, ITestExecutionExtension {
+public class ContinuumExtension implements
+        ISeleniumExtension,
+        ITestExecutionExtension,
+        IAccessibilityExtension {
 
     private IConfiguration configuration;
     private Continuum continuum;
@@ -51,6 +55,7 @@ public class ContinuumExtension implements ISeleniumExtension, ITestExecutionExt
 
     @Override
     public void onGenerateCapabilities(Configuration configuration, MutableCapabilities capabilities) {
+        // Not needed
     }
 
     @Override
@@ -102,9 +107,9 @@ public class ContinuumExtension implements ISeleniumExtension, ITestExecutionExt
 
     @Override
     public void onBeforeStep(String message) {
-        if (message.startsWith("THEN ")) {
-            this.continuum.setUp(this.driver);
-            this.continuum.runAllTests();
+        if (this.configuration.getBoolean(ContinuumConfiguration.Keys.IMPLICIT_VALIDATIONS, true)
+                && message.startsWith("THEN ")) {
+            this.runAccessibilityTests(message.substring(5));
         }
     }
 
@@ -116,5 +121,11 @@ public class ContinuumExtension implements ISeleniumExtension, ITestExecutionExt
     @Override
     public void onExecutionEvent(String eventName, Object payload) {
         // Not needed
+    }
+
+    @Override
+    public void runAccessibilityTests(String pageName) {
+        this.continuum.setUp(this.driver);
+        this.continuum.runAllTests();
     }
 }

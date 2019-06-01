@@ -19,7 +19,7 @@ public class ContinuumConfiguration extends PluginConfiguration {
      * Keys relevant to the SauceLabs Configuration.
      */
     public enum Keys implements AeonConfigKey {
-        ;
+        IMPLICIT_VALIDATIONS("aeon.extensions.continuum.implicit");
 
         private String key;
 

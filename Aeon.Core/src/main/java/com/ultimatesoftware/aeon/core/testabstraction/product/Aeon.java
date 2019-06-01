@@ -1,6 +1,7 @@
 package com.ultimatesoftware.aeon.core.testabstraction.product;
 
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
+import com.ultimatesoftware.aeon.core.common.exceptions.AeonSinglePluginRequestedException;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
 import com.ultimatesoftware.aeon.core.extensions.AeonPluginManager;
 import com.ultimatesoftware.aeon.core.extensions.DefaultSessionIdProvider;
@@ -153,6 +154,24 @@ public class Aeon {
      */
     public static <T> List<T> getExtensions(Class<T> type) {
         return getPluginManager().getExtensions(type);
+    }
+
+    /**
+     * Retrieves a list of available extensions of an extension class.
+     *
+     * @param type The type of the extension class.
+     * @param <T>  The class object of the extension class.
+     * @return A list of available extensions of the extension class.
+     */
+    public static <T> T getExtension(Class<T> type) {
+        List<T> extensions = getExtensions(type);
+
+        int foundExtensions = extensions.size();
+        if (foundExtensions != 1) {
+            throw new AeonSinglePluginRequestedException(type.getSimpleName(), foundExtensions);
+        }
+
+        return extensions.get(0);
     }
 
     /**

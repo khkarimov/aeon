@@ -15,6 +15,7 @@ dependencies {
     compile project(':Aeon.Core')
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Plugin.Accessibility')
     compile project(':Aeon.Plugin.Appium')
     compile project(':Aeon.Plugin.Artifactory')
     compile project(':Aeon.Plugin.Continuum')

@@ -1,0 +1,31 @@
+def baseProjectName = 'Aeon.Plugin.Accessibility'
+def baseProjectDescription = 'Aeon Accessibility Plugin'
+def base = baseProjectName
+
+dependencies {
+    compile project(':Aeon.Core')
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'aeon.extensions.continuum',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.continuum.ContinuumPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.continuum'
+        }
+    }
+}
