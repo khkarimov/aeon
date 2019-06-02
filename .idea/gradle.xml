@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/Aeon.Plugin.Accessibility" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Appium" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Artifactory" />
+            <option value="$PROJECT_DIR$/Aeon.Plugin.Axe" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Continuum" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.HeadSpin" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.JUnit5" />

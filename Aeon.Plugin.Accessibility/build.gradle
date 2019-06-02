@@ -14,10 +14,9 @@ jar {
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
                 'Implementation-Version': version,
-                'Plugin-Id': 'aeon.extensions.continuum',
+                'Plugin-Id': 'aeon.extensions.accessibility',
                 'Plugin-Version': version,
-                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.continuum.ContinuumPlugin',
-                'Plugin-Dependencies': 'SeleniumAeon'
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.accessibility.AccessibilityPlugin'
     }
 }
 
@@ -25,7 +24,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId 'aeon.extensions.continuum'
+            artifactId 'aeon.extensions.accessibility'
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.ultimatesoftware.aeon.extensions.continuum;
+package com.ultimatesoftware.aeon.extensions.axe;
 
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
 import com.ultimatesoftware.aeon.core.extensions.PluginConfiguration;
@@ -11,15 +11,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Provides Axe specific settings.
+ * Configuration class for the Axe plugin.
  */
-public class ContinuumConfiguration extends PluginConfiguration {
+public class AxeConfiguration extends PluginConfiguration {
 
     /**
-     * Keys relevant to the SauceLabs Configuration.
+     * Keys relevant to the Axe Configuration.
      */
     public enum Keys implements AeonConfigKey {
-        IMPLICIT_VALIDATIONS("aeon.extensions.continuum.implicit");
+        SERVER_URL("aeon.extensions.axe.server.url"),
+        PRODUCT("aeon.extensions.metrics.product"),
+        TEAM("aeon.extensions.metrics.team"),
+        BRANCH("aeon.extensions.metrics.branch"),
+        BUILD_NUMBER("aeon.extensions.metrics.build.number");
 
         private String key;
 
@@ -35,17 +39,17 @@ public class ContinuumConfiguration extends PluginConfiguration {
 
     @Override
     protected List<AeonConfigKey> getConfigurationFields() {
-        return Arrays.asList(ContinuumConfiguration.Keys.values());
+        return Arrays.asList(AxeConfiguration.Keys.values());
     }
 
     @Override
     public void loadPluginSettings() throws IOException {
         super.loadPluginSettings();
-        try (InputStream in = ContinuumConfiguration.class.getResourceAsStream("/continuum.properties")) {
+        try (InputStream in = AxeConfiguration.class.getResourceAsStream("/axe.properties")) {
             properties.load(in);
         } catch (IOException e) {
-            Logger log = LoggerFactory.getLogger(ContinuumConfiguration.class);
-            log.error("continuum.properties resource could not be read");
+            Logger log = LoggerFactory.getLogger(AxeConfiguration.class);
+            log.error("axe.properties resource could not be read");
             throw e;
         }
     }
