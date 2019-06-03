@@ -20,11 +20,8 @@ clean.doFirst {
 }
 
 dependencies {
-    compile project(':Aeon.Plugin.Selenium')
-    //compile project(':Aeon.Plugin.Continuum')
+    compile project(':Aeon.Core.Web')
     compile project(':Aeon.Plugin.Log4J2')
-    compile project(':Aeon.Plugin.Accessibility')
-    compile project(':Aeon.Plugin.Axe')
 }
 
 systemTest {

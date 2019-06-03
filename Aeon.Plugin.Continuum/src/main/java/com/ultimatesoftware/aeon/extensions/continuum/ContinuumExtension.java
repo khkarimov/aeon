@@ -64,12 +64,12 @@ public class ContinuumExtension implements
     }
 
     @Override
-    public void onStartUp(Configuration configuration, String correlationId) {
+    public void onBeforeStart(String correlationId, String suiteName) {
         // Not needed
     }
 
     @Override
-    public void onBeforeStart(String correlationId, String suiteName) {
+    public void onStartUp(Configuration configuration, String correlationId) {
         // Not needed
     }
 

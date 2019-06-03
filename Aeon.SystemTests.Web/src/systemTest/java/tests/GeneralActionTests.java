@@ -5,9 +5,7 @@ import categories.SafariNotSupported;
 import com.ultimatesoftware.aeon.core.common.KeyboardKey;
 import com.ultimatesoftware.aeon.core.common.exceptions.NoSuchCookieException;
 import com.ultimatesoftware.aeon.core.framework.abstraction.controls.web.IWebCookie;
-import com.ultimatesoftware.aeon.core.testabstraction.product.Aeon;
 import com.ultimatesoftware.aeon.core.testabstraction.product.WebConfiguration;
-import com.ultimatesoftware.aeon.extensions.accessibility.AccessibilityControllerExtension;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -110,8 +108,6 @@ public class GeneralActionTests extends SampleBaseTest {
         //used to be set command
         product.startPage.alertTitleTextBox.set("");
         product.startPage.alertTitleTextBox.blur();
-
-        Aeon.getExtension(AccessibilityControllerExtension.class).runAccessibilityTests("test");
     }
 
     @Test

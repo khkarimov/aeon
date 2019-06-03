@@ -28,8 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -219,6 +218,149 @@ class AxeExtensionTests {
 
         // Assert
         verifyZeroInteractions(this.adapter);
+    }
+
+    @Test
+    void runAccessibilityTests_teamNameNotProvided_exceptionIsThrown() {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+                .thenReturn(this.accessibilityReport);
+        doReturn("").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        Executable action = () -> this.axeExtension.runAccessibilityTests("pageName");
+
+        // Assert
+        Exception thrownException = assertThrows(AxeException.class, action);
+        assertEquals("Team, product and page names need to be specified in order to submit an Axe report.", thrownException.getMessage());
+        verify(this.adapter, times(1)).executeScript(anyString());
+    }
+
+    @Test
+    void runAccessibilityTests_productNameNotProvided_exceptionIsThrown() {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+                .thenReturn(this.accessibilityReport);
+        doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        Executable action = () -> this.axeExtension.runAccessibilityTests("pageName");
+
+        // Assert
+        Exception thrownException = assertThrows(AxeException.class, action);
+        assertEquals("Team, product and page names need to be specified in order to submit an Axe report.", thrownException.getMessage());
+        verify(this.adapter, times(1)).executeScript(anyString());
+    }
+
+    @Test
+    void runAccessibilityTests_emptyPageNameProvided_exceptionIsThrown() {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+                .thenReturn(this.accessibilityReport);
+        doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        Executable action = () -> this.axeExtension.runAccessibilityTests("");
+
+        // Assert
+        Exception thrownException = assertThrows(AxeException.class, action);
+        assertEquals("Team, product and page names need to be specified in order to submit an Axe report.", thrownException.getMessage());
+        verify(this.adapter, times(1)).executeScript(anyString());
+    }
+
+    @Test
+    void runAccessibilityTests_nullPageNameProvided_exceptionIsThrown() {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+                .thenReturn(this.accessibilityReport);
+        doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        Executable action = () -> this.axeExtension.runAccessibilityTests(null);
+
+        // Assert
+        Exception thrownException = assertThrows(AxeException.class, action);
+        assertEquals("Team, product and page names need to be specified in order to submit an Axe report.", thrownException.getMessage());
+        verify(this.adapter, times(1)).executeScript(anyString());
+    }
+
+    @Test
+    void runAccessibilityTests_requestFails_exceptionIsThrown() throws IOException {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+                .thenReturn(this.accessibilityReport);
+        doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        doReturn("http://url").when(this.configuration).getString(AxeConfiguration.Keys.SERVER_URL, "");
+        IOException requestException = new IOException("error-message");
+        when(this.httpClient.execute(this.httpPostCaptor.capture())).thenThrow(requestException);
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        Executable action = () -> this.axeExtension.runAccessibilityTests("pageName");
+
+        // Assert
+        Exception thrownException = assertThrows(AxeException.class, action);
+        assertEquals("Could not upload report to Axe report server (http://url): error-message.", thrownException.getMessage());
+        verify(this.adapter, times(1)).executeScript(anyString());
+        verify(this.httpClient, times(1)).execute(this.httpPostCaptor.capture());
+    }
+
+    @Test
+    void runAccessibilityTests_requestNotSuccessful_exceptionIsThrown() throws IOException {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+                .thenReturn(this.accessibilityReport);
+        doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        doReturn("http://url").when(this.configuration).getString(AxeConfiguration.Keys.SERVER_URL, "");
+        when(this.statusLine.getStatusCode()).thenReturn(400);
+        when(this.httpResponse.getStatusLine()).thenReturn(this.statusLine);
+        when(this.httpResponse.getEntity()).thenReturn(this.httpEntity);
+        when(this.httpEntity.getContent()).thenReturn(new ByteArrayInputStream("response-body".getBytes()));
+        when(this.httpClient.execute(this.httpPostCaptor.capture())).thenReturn(this.httpResponse);
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        Executable action = () -> this.axeExtension.runAccessibilityTests("pageName");
+
+        // Assert
+        Exception thrownException = assertThrows(AxeException.class, action);
+        assertEquals("Did not receive successful status code for Axe report upload. Received 400 with body: response-body", thrownException.getMessage());
+        verify(this.adapter, times(1)).executeScript(anyString());
+        verify(this.httpClient, times(1)).execute(this.httpPostCaptor.capture());
     }
 
     @Test

@@ -157,11 +157,15 @@ public class Aeon {
     }
 
     /**
-     * Retrieves a list of available extensions of an extension class.
+     * Expects that exactly one extension of the requested type is available
+     * and returns it.
+     * <p>
+     * Throws an instance of {@link AeonSinglePluginRequestedException}
+     * if zero or multiple extensions of the requested type are available.
      *
      * @param type The type of the extension class.
      * @param <T>  The class object of the extension class.
-     * @return A list of available extensions of the extension class.
+     * @return The requested extension.
      */
     public static <T> T getExtension(Class<T> type) {
         List<T> extensions = getExtensions(type);
