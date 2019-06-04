@@ -35,6 +35,8 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class AxeExtensionTests {
 
+    private static final String CALLBACK_SCRIPT = "var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});";
+
     @Mock
     private IConfiguration configuration;
 
@@ -224,7 +226,7 @@ class AxeExtensionTests {
     void runAccessibilityTests_teamNameNotProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
                 .thenReturn(this.accessibilityReport);
         doReturn("").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
@@ -246,7 +248,7 @@ class AxeExtensionTests {
     void runAccessibilityTests_productNameNotProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
                 .thenReturn(this.accessibilityReport);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
@@ -268,7 +270,7 @@ class AxeExtensionTests {
     void runAccessibilityTests_emptyPageNameProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
                 .thenReturn(this.accessibilityReport);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
@@ -290,7 +292,7 @@ class AxeExtensionTests {
     void runAccessibilityTests_nullPageNameProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
                 .thenReturn(this.accessibilityReport);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
@@ -312,7 +314,7 @@ class AxeExtensionTests {
     void runAccessibilityTests_requestFails_exceptionIsThrown() throws IOException {
 
         // Arrange
-        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
                 .thenReturn(this.accessibilityReport);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
@@ -338,7 +340,7 @@ class AxeExtensionTests {
     void runAccessibilityTests_requestNotSuccessful_exceptionIsThrown() throws IOException {
 
         // Arrange
-        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
                 .thenReturn(this.accessibilityReport);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
@@ -367,7 +369,7 @@ class AxeExtensionTests {
     void runAccessibilityTests_isCalled_runsAccessibilityTests() throws IOException {
 
         // Arrange
-        when(this.adapter.executeAsyncScript("var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});"))
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
                 .thenReturn(this.accessibilityReport);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
