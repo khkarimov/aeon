@@ -27,7 +27,7 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
      * @param rowActionsClass A sub class of {@link RowActions}
      * @param componentClass  A sub class of {@link Component}
      */
-    RowActions(Class<T> rowActionsClass, Class<K> componentClass) {
+    protected RowActions(Class<T> rowActionsClass, Class<K> componentClass) {
         this.rowElementsClass = componentClass;
         this.rowActionsClass = rowActionsClass;
     }
