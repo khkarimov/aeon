@@ -56,7 +56,7 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    protected void setContext(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+    public void setContext(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
