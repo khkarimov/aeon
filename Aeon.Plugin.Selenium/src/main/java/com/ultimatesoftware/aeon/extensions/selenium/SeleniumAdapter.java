@@ -13,6 +13,7 @@ import com.ultimatesoftware.aeon.core.common.interfaces.IBy;
 import com.ultimatesoftware.aeon.core.common.web.*;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IBrowserType;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
+import com.ultimatesoftware.aeon.core.common.web.interfaces.IByXPath;
 import com.ultimatesoftware.aeon.core.common.web.selectors.ByJQuery;
 import com.ultimatesoftware.aeon.core.extensions.IUploaderExtension;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IWebAdapter;
@@ -363,22 +364,22 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * @return An IWebElementAdapter matching the findBy.
      */
     public WebControl findElement(IBy findBy) {
-        com.ultimatesoftware.aeon.core.common.web.selectors.By by =
-                (com.ultimatesoftware.aeon.core.common.web.selectors.By)
-                        ((findBy instanceof com.ultimatesoftware.aeon.core.common.web.selectors.By) ? findBy : null);
 
-        if (by != null) {
-            log.trace("WebDriver.findElement(by.cssSelector({}));", by);
+        if (findBy instanceof IByXPath) {
+            return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.xpath(findBy.toString())));
+        }
+
+        if (findBy instanceof com.ultimatesoftware.aeon.core.common.web.selectors.By) {
+            log.trace("WebDriver.findElement(by.cssSelector({}));", findBy);
             try {
                 return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.cssSelector(findBy.toString())));
             } catch (org.openqa.selenium.NoSuchElementException e) {
-                throw new NoSuchElementException(e, by);
+                throw new NoSuchElementException(e, findBy);
             }
         }
 
-        ByJQuery byJQuery = (ByJQuery) ((findBy instanceof ByJQuery) ? findBy : null);
-        if (byJQuery != null) {
-            return (WebControl) findElements(byJQuery).toArray()[0];
+        if (findBy instanceof ByJQuery) {
+            return (WebControl) findElements(findBy).toArray()[0];
         }
 
         throw new UnsupportedOperationException();
