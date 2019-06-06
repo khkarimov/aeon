@@ -14,8 +14,8 @@ import com.ultimatesoftware.aeon.core.testabstraction.models.Component;
  */
 public abstract class RowActions<T extends RowActions, K extends Component> {
 
-    IByWeb selector;
-    AutomationInfo automationInfo;
+    protected IByWeb selector;
+    protected AutomationInfo automationInfo;
     private IByWeb[] switchMechanism;
     private Class<K> rowElementsClass;
     private Class<T> rowActionsClass;
@@ -56,7 +56,7 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
      * @param selector        IBy selector that will identify the element.
      * @param switchMechanism The switch mechanism for the web element.
      */
-    public void setContext(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
+    protected void setContext(AutomationInfo automationInfo, IByWeb selector, IByWeb... switchMechanism) {
         this.automationInfo = automationInfo;
         this.selector = selector;
         this.switchMechanism = switchMechanism;
@@ -97,10 +97,10 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
     /**
      * Creates a new instance of K with a new selector. The new selector references the row containing the row elements defined in the K class.
      *
-     * @param updatedSelector The updated selector that references only 1 row.
+     * @param updatedSelector The updated selector that references a filtered list of rows.
      * @return Returns an instance of K.
      */
-    K newInstanceOfK(IByWeb updatedSelector) {
+    protected K newInstanceOfK(IByWeb updatedSelector) {
         Class classToLoad = rowElementsClass;
         Class[] cArgs = new Class[3];
         cArgs[0] = AutomationInfo.class;
@@ -117,9 +117,10 @@ public abstract class RowActions<T extends RowActions, K extends Component> {
     /**
      * Creates a new instance of T with a new selector. The new selector refers to the rows that contain the row elements defined in the K class.
      *
+     * @param updatedSelector The updated selector that references a filtered list of rows.
      * @return Returns a new instance of T.
      */
-    T newInstanceOfT(IByWeb updatedSelector) {
+    protected T newInstanceOfT(IByWeb updatedSelector) {
         Class classToLoad = rowActionsClass;
         try {
             T instance = (T) classToLoad.getConstructor().newInstance();
