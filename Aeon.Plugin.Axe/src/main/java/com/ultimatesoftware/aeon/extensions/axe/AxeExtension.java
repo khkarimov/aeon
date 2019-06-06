@@ -2,6 +2,7 @@ package com.ultimatesoftware.aeon.extensions.axe;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ultimatesoftware.aeon.core.common.exceptions.UnableToTakeScreenshotException;
 import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
 import com.ultimatesoftware.aeon.core.extensions.ITestExecutionExtension;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
@@ -18,10 +19,11 @@ import org.pf4j.Extension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
+
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -123,7 +125,15 @@ public class AxeExtension implements ITestExecutionExtension, IAccessibilityExte
         String reportRetrievalScript = "var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});";
         Map<String, Object> accessibilityReport = (Map<String, Object>) this.adapter.executeAsyncScript(reportRetrievalScript);
 
-        this.sendReport(accessibilityReport, pageName);
+        String screenshot = null;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            ImageIO.write((BufferedImage) this.adapter.getScreenshot(), "png", baos);
+            screenshot = DatatypeConverter.printBase64Binary(baos.toByteArray());
+        } catch (IOException | IllegalArgumentException | UnableToTakeScreenshotException e) {
+            log.error("Unable to get screenshot", e);
+        }
+
+        this.sendReport(accessibilityReport, pageName, screenshot);
     }
 
     /**
@@ -139,7 +149,7 @@ public class AxeExtension implements ITestExecutionExtension, IAccessibilityExte
         }
     }
 
-    private void sendReport(Map<String, Object> accessibilityReport, String pageName) {
+    private void sendReport(Map<String, Object> accessibilityReport, String pageName, String screenshot) {
         AxeReport report = new AxeReport();
         report.setTeam(this.configuration.getString(AxeConfiguration.Keys.TEAM, ""));
         report.setProduct(this.configuration.getString(AxeConfiguration.Keys.PRODUCT, ""));
@@ -147,6 +157,7 @@ public class AxeExtension implements ITestExecutionExtension, IAccessibilityExte
         report.setBranch(this.configuration.getString(AxeConfiguration.Keys.BRANCH, ""));
         report.setBuildNumber(this.configuration.getString(AxeConfiguration.Keys.BUILD_NUMBER, ""));
         report.setCorrelationId(this.correlationId);
+        report.setScreenshot(screenshot);
         report.setReport(accessibilityReport);
 
         if (report.getTeam().isEmpty() || report.getProduct().isEmpty() || pageName == null || report.getPage().isEmpty()) {

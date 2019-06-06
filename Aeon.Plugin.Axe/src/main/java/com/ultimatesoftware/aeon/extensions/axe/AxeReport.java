@@ -12,6 +12,7 @@ class AxeReport {
     private String branch;
     private String buildNumber;
     private String correlationId;
+    private String screenshot;
     private Map<String, Object> report;
 
     public String getTeam() {
@@ -60,6 +61,14 @@ class AxeReport {
 
     public void setCorrelationId(String correlationId) {
         this.correlationId = correlationId;
+    }
+
+    public String getScreenshot() {
+        return this.screenshot;
+    }
+
+    public void setScreenshot(String screenshot) {
+        this.screenshot = screenshot;
     }
 
     public Map<String, Object> getReport() {

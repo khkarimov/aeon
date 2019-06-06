@@ -1,5 +1,6 @@
 package com.ultimatesoftware.aeon.extensions.axe;
 
+import com.ultimatesoftware.aeon.core.common.exceptions.UnableToTakeScreenshotException;
 import com.ultimatesoftware.aeon.core.common.interfaces.IConfiguration;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IWebAdapter;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
@@ -20,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.slf4j.Logger;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -68,6 +70,8 @@ class AxeExtensionTests {
     private ArgumentCaptor<HttpPost> httpPostCaptor;
 
     private Map<String, Object> accessibilityReport = new HashMap<>();
+
+    private BufferedImage image = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
 
     private AxeExtension axeExtension;
 
@@ -226,8 +230,8 @@ class AxeExtensionTests {
     void runAccessibilityTests_teamNameNotProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
-                .thenReturn(this.accessibilityReport);
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenReturn(this.image);
         doReturn("").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
         doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
@@ -248,8 +252,8 @@ class AxeExtensionTests {
     void runAccessibilityTests_productNameNotProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
-                .thenReturn(this.accessibilityReport);
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenReturn(this.image);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
         doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
@@ -270,8 +274,8 @@ class AxeExtensionTests {
     void runAccessibilityTests_emptyPageNameProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
-                .thenReturn(this.accessibilityReport);
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenReturn(this.image);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
         doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
@@ -292,8 +296,8 @@ class AxeExtensionTests {
     void runAccessibilityTests_nullPageNameProvided_exceptionIsThrown() {
 
         // Arrange
-        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
-                .thenReturn(this.accessibilityReport);
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenReturn(this.image);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
         doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
@@ -314,8 +318,8 @@ class AxeExtensionTests {
     void runAccessibilityTests_requestFails_exceptionIsThrown() throws IOException {
 
         // Arrange
-        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
-                .thenReturn(this.accessibilityReport);
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenReturn(this.image);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
         doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
@@ -340,8 +344,8 @@ class AxeExtensionTests {
     void runAccessibilityTests_requestNotSuccessful_exceptionIsThrown() throws IOException {
 
         // Arrange
-        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
-                .thenReturn(this.accessibilityReport);
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenReturn(this.image);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
         doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
@@ -369,8 +373,8 @@ class AxeExtensionTests {
     void runAccessibilityTests_isCalled_runsAccessibilityTests() throws IOException {
 
         // Arrange
-        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT))
-                .thenReturn(this.accessibilityReport);
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenReturn(this.image);
         doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
         doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
         doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
@@ -391,8 +395,81 @@ class AxeExtensionTests {
         verify(this.adapter, times(1)).executeScript(anyString());
         verify(this.httpClient, times(1)).execute(this.httpPostCaptor.capture());
         verify(this.log, times(1)).info("Axe report successfully uploaded for page {} and correlation ID {}.", "pageName", "correlationId");
-        assertEquals(
-                "{\"team\":\"teamName\",\"product\":\"productName\",\"page\":\"pageName\",\"branch\":\"branchName\",\"buildNumber\":\"buildName\",\"correlationId\":\"correlationId\",\"report\":{}}",
+        assertEquals("{\"team\":\"teamName\",\"product\":\"productName\",\"page\":\"pageName\",\"branch\":\"branchName\"" +
+                        ",\"buildNumber\":\"buildName\",\"correlationId\":\"correlationId\",\"screenshot\":\"iVBORw0KGgoAAAANSUhE" +
+                        "UgAAAAIAAAACCAIAAAD91JpzAAAAC0lEQVR42mNgQAYAAA4AATo1BFYAAAAASUVORK5CYII=\",\"report\":{}}",
+                new BufferedReader(
+                        new InputStreamReader(
+                                this.httpPostCaptor.getValue().getEntity().getContent()
+                        )
+                ).lines().collect(Collectors.joining("\n")));
+    }
+
+    @Test
+    void runAccessibilityTests_unableToTakeScreenshotException_logsErrorButSendsTheReport() throws IOException {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenThrow(new UnableToTakeScreenshotException());
+        doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        doReturn("http://url").when(this.configuration).getString(AxeConfiguration.Keys.SERVER_URL, "");
+        when(this.statusLine.getStatusCode()).thenReturn(200);
+        when(this.httpResponse.getStatusLine()).thenReturn(this.statusLine);
+        when(this.httpResponse.getEntity()).thenReturn(this.httpEntity);
+        when(this.httpEntity.getContent()).thenReturn(new ByteArrayInputStream("response-body".getBytes()));
+        when(this.httpClient.execute(this.httpPostCaptor.capture())).thenReturn(this.httpResponse);
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        this.axeExtension.runAccessibilityTests("pageName");
+
+        // Assert
+        verify(this.adapter, times(1)).executeScript(anyString());
+        verify(this.httpClient, times(1)).execute(this.httpPostCaptor.capture());
+        verify(this.log, times(1)).info("Axe report successfully uploaded for page {} and correlation ID {}.", "pageName", "correlationId");
+        verify(this.log, times(1)).error(eq("Unable to get screenshot"), any(UnableToTakeScreenshotException.class));
+        assertEquals("{\"team\":\"teamName\",\"product\":\"productName\",\"page\":\"pageName\",\"branch\":\"branchName\"" +
+                        ",\"buildNumber\":\"buildName\",\"correlationId\":\"correlationId\",\"screenshot\":null,\"report\":{}}",
+                new BufferedReader(
+                        new InputStreamReader(
+                                this.httpPostCaptor.getValue().getEntity().getContent()
+                        )
+                ).lines().collect(Collectors.joining("\n")));
+    }
+
+    @Test
+    void runAccessibilityTests_illegalArgumentException_logsErrorButSendsTheReport() throws IOException {
+
+        // Arrange
+        when(this.adapter.executeAsyncScript(CALLBACK_SCRIPT)).thenReturn(this.accessibilityReport);
+        when(this.adapter.getScreenshot()).thenThrow(new IllegalArgumentException());
+        doReturn("teamName").when(this.configuration).getString(AxeConfiguration.Keys.TEAM, "");
+        doReturn("productName").when(this.configuration).getString(AxeConfiguration.Keys.PRODUCT, "");
+        doReturn("branchName").when(this.configuration).getString(AxeConfiguration.Keys.BRANCH, "");
+        doReturn("buildName").when(this.configuration).getString(AxeConfiguration.Keys.BUILD_NUMBER, "");
+        doReturn("http://url").when(this.configuration).getString(AxeConfiguration.Keys.SERVER_URL, "");
+        when(this.statusLine.getStatusCode()).thenReturn(200);
+        when(this.httpResponse.getStatusLine()).thenReturn(this.statusLine);
+        when(this.httpResponse.getEntity()).thenReturn(this.httpEntity);
+        when(this.httpEntity.getContent()).thenReturn(new ByteArrayInputStream("response-body".getBytes()));
+        when(this.httpClient.execute(this.httpPostCaptor.capture())).thenReturn(this.httpResponse);
+        this.axeExtension.onStartUp(this.aeonConfiguration, "correlationId");
+        this.axeExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        this.axeExtension.runAccessibilityTests("pageName");
+
+        // Assert
+        verify(this.adapter, times(1)).executeScript(anyString());
+        verify(this.httpClient, times(1)).execute(this.httpPostCaptor.capture());
+        verify(this.log, times(1)).info("Axe report successfully uploaded for page {} and correlation ID {}.", "pageName", "correlationId");
+        verify(this.log, times(1)).error(eq("Unable to get screenshot"), any(IllegalArgumentException.class));
+        assertEquals("{\"team\":\"teamName\",\"product\":\"productName\",\"page\":\"pageName\",\"branch\":\"branchName\"" +
+                        ",\"buildNumber\":\"buildName\",\"correlationId\":\"correlationId\",\"screenshot\":null,\"report\":{}}",
                 new BufferedReader(
                         new InputStreamReader(
                                 this.httpPostCaptor.getValue().getEntity().getContent()
