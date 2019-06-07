@@ -35,19 +35,6 @@ class AutomationInfoTests {
     }
 
     @Test
-    void setAdapter_returnsCorrectly() {
-
-        //Arrange
-
-        //Act
-        automationInfo.setAdapter(adapter);
-        IAdapter automationInfoAdapter = automationInfo.getAdapter();
-
-        //Assert
-        assertEquals(automationInfoAdapter, adapter);
-    }
-
-    @Test
     void setCommandExecutionFacade_returnsCorrectly() {
 
         //Arrange

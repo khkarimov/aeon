@@ -209,19 +209,6 @@ public class ProductTests {
     }
 
     @Test
-    public void switchDriver_onCall_callsAutomationSetAdapter() {
-
-        // Arrange
-        product.automationInfo = automationInfo;
-
-        // Act
-        product.switchDriver(adapter);
-
-        // Assert
-        verify(automationInfo, times(1)).setAdapter(adapter);
-    }
-
-    @Test
     public void getConfig_onCallWithBooleanDefaultValue_callsConfigurationGetBoolean() {
 
         // Arrange

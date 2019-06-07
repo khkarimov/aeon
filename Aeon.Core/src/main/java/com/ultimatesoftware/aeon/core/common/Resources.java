@@ -13,6 +13,10 @@ public class Resources {
         bundle = ResourceBundle.getBundle("MessagesBundle");
     }
 
+    private Resources() {
+        // Static classes should not be instantiated.
+    }
+
     /**
      * Gets the string if the bundle contains the input key.
      *

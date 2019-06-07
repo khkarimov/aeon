@@ -77,6 +77,7 @@ public class By implements IByWeb {
 
     /**
      * Gets the CSS selector.
+     *
      * @return the selector for the new element.
      */
     protected final String getSelector() {
