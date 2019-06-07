@@ -366,7 +366,12 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
     public WebControl findElement(IBy findBy) {
 
         if (findBy instanceof IByXPath) {
-            return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.xpath(findBy.toString())));
+            log.trace("WebDriver.findElement(by.xpath({}));", findBy);
+            try {
+                return new SeleniumElement(webDriver.findElement(org.openqa.selenium.By.xpath(findBy.toString())));
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                throw new NoSuchElementException(e, (IByXPath) findBy);
+            }
         }
 
         if (findBy instanceof com.ultimatesoftware.aeon.core.common.web.selectors.By) {

@@ -93,13 +93,14 @@ class SeleniumAdapterTests {
         // Arrange
         IBy selector = By.cssSelector(".class");
         when(this.webDriver.findElement(any(org.openqa.selenium.By.ByCssSelector.class)))
-                .thenThrow(new org.openqa.selenium.NoSuchElementException("nu such element"));
+                .thenThrow(new org.openqa.selenium.NoSuchElementException("no such element"));
 
         // Act
         Executable action = () -> this.seleniumAdapter.findElement(selector);
 
         // Assert
-        assertThrows(NoSuchElementException.class, action);
+        Exception exception = assertThrows(NoSuchElementException.class, action);
+        assertEquals("The specified element with css selector '.class' does not exist.", exception.getMessage());
     }
 
     @Test
@@ -128,6 +129,22 @@ class SeleniumAdapterTests {
 
         // Assert
         assertEquals(this.webElement, ((SeleniumElement) control).getUnderlyingWebElement());
+    }
+
+    @Test
+    void findElement_withXPathSelectorAndElementIsNotFound_ThrowsException() {
+
+        // Arrange
+        when(this.xPathSelector.toString()).thenReturn("//div/div");
+        when(this.webDriver.findElement(any(org.openqa.selenium.By.ByXPath.class)))
+                .thenThrow(new org.openqa.selenium.NoSuchElementException("no such element"));
+
+        // Act
+        Executable action = () -> this.seleniumAdapter.findElement(this.xPathSelector);
+
+        // Assert
+        Exception exception = assertThrows(NoSuchElementException.class, action);
+        assertEquals("The specified element with XPath selector '//div/div' does not exist.", exception.getMessage());
     }
 
     @Test
