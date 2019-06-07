@@ -33,24 +33,6 @@ public class AutomationInfo {
     }
 
     /**
-     * Gets the {@link IAdapter }.
-     *
-     * @return the {@link IAdapter }
-     */
-    public final IAdapter getAdapter() {
-        return this.adapter;
-    }
-
-    /**
-     * Sets the {@link IAdapter }.
-     *
-     * @param adapter the new {@link IAdapter }
-     */
-    public final void setAdapter(IAdapter adapter) {
-        this.adapter = adapter;
-    }
-
-    /**
      * Gets the {@link ICommandExecutionFacade }.
      *
      * @return the {@link ICommandExecutionFacade }

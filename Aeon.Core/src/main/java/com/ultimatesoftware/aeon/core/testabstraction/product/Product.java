@@ -105,15 +105,6 @@ public abstract class Product {
     }
 
     /**
-     * Sets the adapter of the Product's automationInfo.
-     *
-     * @param adapter The adapter to be set.
-     */
-    protected void switchDriver(IAdapter adapter) {
-        this.automationInfo.setAdapter(adapter);
-    }
-
-    /**
      * Default afterLaunch function.
      */
     protected void afterLaunch() {
