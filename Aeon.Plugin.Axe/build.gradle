@@ -18,7 +18,7 @@ dependencies {
 jar {
     version = version
     baseName = base
-    archiveName = base + '-' + version + '.jar'
+    archiveName = base + '-all-' + version + '.jar'
 
     manifest {
         attributes 'Implementation-Title': baseProjectDescription,
