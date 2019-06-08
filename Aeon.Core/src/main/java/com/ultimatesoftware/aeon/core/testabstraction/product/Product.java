@@ -3,6 +3,7 @@ package com.ultimatesoftware.aeon.core.testabstraction.product;
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
 import com.ultimatesoftware.aeon.core.common.Capability;
+import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapterExtension;
 import com.ultimatesoftware.aeon.core.framework.abstraction.drivers.IDriver;
@@ -14,12 +15,6 @@ public abstract class Product {
 
     protected AutomationInfo automationInfo;
     protected Configuration configuration;
-
-    /**
-     * Empty Constructor.
-     */
-    Product() {
-    }
 
     /**
      * Gets the capability type from a Capability enum.
@@ -42,7 +37,7 @@ public abstract class Product {
      *
      * @param automationInfo The AutomationInfo to be set.
      */
-    protected void setAutomationInfo(AutomationInfo automationInfo) {
+    void setAutomationInfo(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
     }
 
@@ -65,6 +60,27 @@ public abstract class Product {
         this.automationInfo = new AutomationInfo(configuration, driver, adapter);
 
         afterLaunch();
+    }
+
+    /**
+     * Switches to another product by passing the {@link AutomationInfo} object along.
+     *
+     * @param productClass The new product's class
+     * @param <T>          The type of the new product.
+     * @return The newly instantiated product.
+     */
+    public <T extends Product> T switchTo(Class<T> productClass) {
+
+        T newProduct;
+        try {
+            newProduct = productClass.newInstance();
+        } catch (Exception e) {
+            throw new AeonLaunchException(e);
+        }
+        newProduct.setAutomationInfo(this.getAutomationInfo());
+        newProduct.afterLaunch();
+
+        return newProduct;
     }
 
     /**
