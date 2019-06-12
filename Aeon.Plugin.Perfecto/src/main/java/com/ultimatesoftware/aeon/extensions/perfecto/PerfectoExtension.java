@@ -23,10 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Test execution and Selenium extensions for using Aeon with Perfecto.
@@ -41,6 +38,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
     private ReportiumClientFactory reportiumClientFactory;
     private String correlationId;
     private String suiteName;
+    private String testName;
 
     static Logger log = LoggerFactory.getLogger(PerfectoExtension.class);
 
@@ -116,6 +114,8 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
             testContext = new TestContext.Builder().withTestExecutionTags(tags).build();
         }
 
+        this.testName = name;
+
         this.reportiumClient.testStart(name, testContext);
     }
 
@@ -164,12 +164,44 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         boolean perfectoSensorInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
         String perfectoDeviceDescription = this.configuration.getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
 
+        String perfectoReportProjectName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        String perfectoReportProjectVersion = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        String perfectoReportTags = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        String perfectoReportJobName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        double perfectoReportJobNumber = this.configuration.getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, -1);
+        String perfectoReportJobBranch = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        String perfectoReportCustomFields = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        StringJoiner perfectoScriptNameJoiner = new StringJoiner(" ");
+        if (this.testName != null) {
+            perfectoScriptNameJoiner.add(this.testName);
+        } else if (this.suiteName != null) {
+            perfectoScriptNameJoiner.add(this.suiteName);
+        } else {
+            if (!perfectoReportJobName.isEmpty()) {
+                perfectoScriptNameJoiner.add(perfectoReportJobName);
+            }
+            if (this.correlationId != null) {
+                perfectoScriptNameJoiner.add(this.correlationId);
+            }
+        }
+
         // Set credentials
         setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
 
         // Set instrumentation
         capabilities.setCapability("autoInstrument", perfectoAutoInstrument);
         capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
+
+        // Set reporting
+        capabilities.setCapability("scriptName", perfectoScriptNameJoiner.toString());
+        capabilities.setCapability("report.projectName", perfectoReportProjectName);
+        capabilities.setCapability("report.projectVersion", perfectoReportProjectVersion);
+        capabilities.setCapability("report.tags", perfectoReportTags);
+        capabilities.setCapability("report.jobName", perfectoReportJobName);
+        capabilities.setCapability("report.jobNumber", (int) perfectoReportJobNumber);
+        capabilities.setCapability("report.jobBranch", perfectoReportJobBranch);
+        capabilities.setCapability("report.customFields", perfectoReportCustomFields);
 
         if (!perfectoDeviceDescription.isEmpty()) {
             capabilities.setCapability("description", perfectoDeviceDescription);

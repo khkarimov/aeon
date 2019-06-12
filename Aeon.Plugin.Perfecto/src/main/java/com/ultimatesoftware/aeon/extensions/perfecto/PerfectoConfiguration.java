@@ -25,7 +25,15 @@ public class PerfectoConfiguration extends PluginConfiguration {
         PERFECTO_TOKEN("aeon.extensions.perfecto.token"),
         PERFECTO_AUTOINSTRUMENT("aeon.extensions.perfecto.instrumentation.auto"),
         PERFECTO_SENSORINSTRUMENT("aeon.extensions.perfecto.instrumentation.sensor"),
-        DEVICE_DESCRIPTION("aeon.extensions.perfecto.device_description");
+        DEVICE_DESCRIPTION("aeon.extensions.perfecto.device_description"),
+
+        REPORT_PROJECT_NAME("aeon.extensions.perfecto.report.project.name"),
+        REPORT_PROJECT_VERSION("aeon.extensions.perfecto.report.project.version"),
+        REPORT_JOB_NAME("aeon.extensions.perfecto.report.job.name"),
+        REPORT_JOB_NUMBER("aeon.extensions.perfecto.report.job.number"),
+        REPORT_JOB_BRANCH("aeon.extensions.perfecto.report.job.branch"),
+        REPORT_TAGS("aeon.extensions.perfecto.report.tags"),
+        REPORT_CUSTOM_FIELDS("aeon.extensions.perfecto.report.custom_fields");
 
         private String key;
 
