@@ -147,6 +147,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
         reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
 
+        log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
     }
 
     @Override
