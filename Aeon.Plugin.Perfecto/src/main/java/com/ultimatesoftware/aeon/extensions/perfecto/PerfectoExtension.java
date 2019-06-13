@@ -40,7 +40,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
     private String suiteName;
     private String testName;
 
-    private boolean doesCallApi;
+    private boolean enabled;
 
     static Logger log = LoggerFactory.getLogger(PerfectoExtension.class);
 
@@ -48,7 +48,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         this.reportiumClientFactory = reportiumClientFactory;
         this.configuration = configuration;
 
-        this.doesCallApi = this.configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "").contains("ultimate.perfectomobile.com") ||
+        this.enabled = this.configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "").contains("perfectomobile.com") ||
                 this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_FORCED, false);
     }
 
@@ -114,7 +114,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onBeforeTest(String name, String... tags) {
-        if (this.doesCallApi) {
+        if (this.enabled) {
             TestContext testContext = new TestContext();
             if (tags != null) {
                 testContext = new TestContext.Builder().withTestExecutionTags(tags).build();
@@ -128,7 +128,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onSucceededTest() {
-        if (this.doesCallApi) {
+        if (this.enabled) {
             reportiumClient.testStop(TestResultFactory.createSuccess());
 
             log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
@@ -137,7 +137,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onSkippedTest(String name, String... tags) {
-        if (this.doesCallApi) {
+        if (this.enabled) {
             reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
 
             log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
@@ -146,7 +146,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onFailedTest(String reason, Throwable e) {
-        if (this.doesCallApi) {
+        if (this.enabled) {
             reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
 
             log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
@@ -155,7 +155,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onBeforeStep(String message) {
-        if (this.doesCallApi) {
+        if (this.enabled) {
             reportiumClient.stepStart(message);
         }
     }
