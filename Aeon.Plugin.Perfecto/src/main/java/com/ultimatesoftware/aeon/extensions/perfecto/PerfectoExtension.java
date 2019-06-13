@@ -114,50 +114,59 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onBeforeTest(String name, String... tags) {
-        if (this.enabled) {
-            TestContext testContext = new TestContext();
-            if (tags != null) {
-                testContext = new TestContext.Builder().withTestExecutionTags(tags).build();
-            }
-
-            this.testName = name;
-
-            this.reportiumClient.testStart(name, testContext);
+        if (!this.enabled) {
+            return;
         }
+
+        TestContext testContext = new TestContext();
+        if (tags != null) {
+            testContext = new TestContext.Builder().withTestExecutionTags(tags).build();
+        }
+
+        this.testName = name;
+
+        this.reportiumClient.testStart(name, testContext);
     }
 
     @Override
     public void onSucceededTest() {
-        if (this.enabled) {
-            reportiumClient.testStop(TestResultFactory.createSuccess());
-
-            log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+        if (!this.enabled) {
+            return;
         }
+
+        reportiumClient.testStop(TestResultFactory.createSuccess());
+
+        log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
     }
 
     @Override
     public void onSkippedTest(String name, String... tags) {
-        if (this.enabled) {
-            reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
-
-            log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+        if (!this.enabled) {
+            return;
         }
+
+        reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
+
     }
 
     @Override
     public void onFailedTest(String reason, Throwable e) {
-        if (this.enabled) {
-            reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
-
-            log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+        if (!this.enabled) {
+            return;
         }
+
+        reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
+
+        log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
     }
 
     @Override
     public void onBeforeStep(String message) {
-        if (this.enabled) {
-            reportiumClient.stepStart(message);
+        if (!this.enabled) {
+            return;
         }
+
+        reportiumClient.stepStart(message);
     }
 
     @Override
@@ -201,6 +210,10 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
             }
         }
 
+        if (perfectoScriptNameJoiner.length() > 0) {
+            capabilities.setCapability("scriptName", perfectoScriptNameJoiner.toString());
+        }
+
         // Set credentials
         setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
 
@@ -209,7 +222,6 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
 
         // Set reporting
-        capabilities.setCapability("scriptName", perfectoScriptNameJoiner.toString());
         capabilities.setCapability("report.projectName", perfectoReportProjectName);
         capabilities.setCapability("report.projectVersion", perfectoReportProjectVersion);
         capabilities.setCapability("report.tags", perfectoReportTags);
