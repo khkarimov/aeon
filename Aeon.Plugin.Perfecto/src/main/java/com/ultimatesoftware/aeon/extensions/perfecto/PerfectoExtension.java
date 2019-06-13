@@ -40,11 +40,16 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
     private String suiteName;
     private String testName;
 
+    private boolean doesCallApi;
+
     static Logger log = LoggerFactory.getLogger(PerfectoExtension.class);
 
     PerfectoExtension(ReportiumClientFactory reportiumClientFactory, IConfiguration configuration) {
         this.reportiumClientFactory = reportiumClientFactory;
         this.configuration = configuration;
+
+        this.doesCallApi = this.configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "").contains("ultimate.perfectomobile.com") ||
+                this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_FORCED, false);
     }
 
     /**
@@ -109,40 +114,50 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onBeforeTest(String name, String... tags) {
-        TestContext testContext = new TestContext();
-        if (tags != null) {
-            testContext = new TestContext.Builder().withTestExecutionTags(tags).build();
+        if (this.doesCallApi) {
+            TestContext testContext = new TestContext();
+            if (tags != null) {
+                testContext = new TestContext.Builder().withTestExecutionTags(tags).build();
+            }
+
+            this.testName = name;
+
+            this.reportiumClient.testStart(name, testContext);
         }
-
-        this.testName = name;
-
-        this.reportiumClient.testStart(name, testContext);
     }
 
     @Override
     public void onSucceededTest() {
-        reportiumClient.testStop(TestResultFactory.createSuccess());
+        if (this.doesCallApi) {
+            reportiumClient.testStop(TestResultFactory.createSuccess());
 
-        log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+            log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+        }
     }
 
     @Override
     public void onSkippedTest(String name, String... tags) {
-        reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
+        if (this.doesCallApi) {
+            reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
 
-        log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+            log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+        }
     }
 
     @Override
     public void onFailedTest(String reason, Throwable e) {
-        reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
+        if (this.doesCallApi) {
+            reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
 
-        log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+            log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
+        }
     }
 
     @Override
     public void onBeforeStep(String message) {
-        reportiumClient.stepStart(message);
+        if (this.doesCallApi) {
+            reportiumClient.stepStart(message);
+        }
     }
 
     @Override
