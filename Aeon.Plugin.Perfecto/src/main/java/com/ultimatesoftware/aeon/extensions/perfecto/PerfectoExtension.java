@@ -203,7 +203,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         } else if (this.suiteName != null) {
             perfectoScriptNameJoiner.add(this.suiteName);
         } else {
-            if (!perfectoReportJobName.isEmpty()) {
+            if (perfectoReportJobName != null && !perfectoReportJobName.isEmpty()) {
                 perfectoScriptNameJoiner.add(perfectoReportJobName);
             }
             if (this.correlationId != null) {

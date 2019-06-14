@@ -74,6 +74,10 @@ class PerfectoExtensionTests {
 
     @BeforeEach
     void setUp() {
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+
         this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
         PerfectoExtension.log = this.log;
     }
