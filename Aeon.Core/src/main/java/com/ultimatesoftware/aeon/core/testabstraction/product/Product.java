@@ -4,62 +4,34 @@ import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
 import com.ultimatesoftware.aeon.core.common.Capability;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
-import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
-import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import com.ultimatesoftware.aeon.core.framework.abstraction.drivers.IDriver;
 
 /**
  * Abstract class for Product implementation.
  */
 public abstract class Product {
 
-    protected AutomationInfo automationInfo;
-    protected Configuration configuration;
+    protected final AutomationInfo automationInfo;
+    protected final Configuration configuration;
+
+    public static final Capability REQUESTED_CAPABILITY = null;
 
     /**
-     * Gets the capability type from a Capability enum.
+     * Question: Remove configuration from constructor because it can be retrieved from the automationInfo?
      *
-     * @return A capability enum.
+     * @param automationInfo sd
      */
-    public abstract Capability getRequestedCapability();
+    public Product(AutomationInfo automationInfo) {
+        this.automationInfo = automationInfo;
+        this.configuration = automationInfo.getConfiguration();
+    }
 
     /**
-     * Returns the AutomationInfo which includes the configuration, idriver, and iadapter.
+     * Returns the AutomationInfo which includes the configuration, the driver and  the adapter.
      *
      * @return the AutomationInfo of the Product.
      */
     protected AutomationInfo getAutomationInfo() {
         return automationInfo;
-    }
-
-    /**
-     * Sets the AutomationInfo of the Product.
-     *
-     * @param automationInfo The AutomationInfo to be set.
-     */
-    void setAutomationInfo(AutomationInfo automationInfo) {
-        this.automationInfo = automationInfo;
-    }
-
-    /**
-     * Abstract for launch function.
-     *
-     * @param plugin The IAdapterExtension to be added.
-     * @throws InstantiationException If an instantiation exception is made.
-     * @throws IllegalAccessException If issue obtaining keys.
-     */
-    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException {
-        IDriver driver;
-        IAdapter adapter;
-
-        adapter = createAdapter(plugin);
-
-        driver = (IDriver) configuration.getDriver().newInstance();
-        driver.configure(adapter, configuration);
-
-        this.automationInfo = new AutomationInfo(configuration, driver, adapter);
-
-        afterLaunch();
     }
 
     /**
@@ -71,16 +43,16 @@ public abstract class Product {
      */
     public <T extends Product> T switchTo(Class<T> productClass) {
 
-        T newProduct;
+        T product;
         try {
-            newProduct = productClass.newInstance();
+            product = productClass
+                    .getDeclaredConstructor(AutomationInfo.class, Configuration.class)
+                    .newInstance(this.automationInfo, this.configuration);
         } catch (Exception e) {
             throw new AeonLaunchException(e);
         }
-        newProduct.setAutomationInfo(this.getAutomationInfo());
-        newProduct.afterLaunch();
 
-        return newProduct;
+        return product;
     }
 
     /**
@@ -93,31 +65,12 @@ public abstract class Product {
     }
 
     /**
-     * Create and returns and IAdapter given a plugin.
-     *
-     * @param plugin The Product's plugin to be returned.
-     * @return The plugin with a newly created adapter.
-     */
-    private IAdapter createAdapter(IAdapterExtension plugin) {
-        return plugin.createAdapter(configuration);
-    }
-
-    /**
      * Returns the configuration of the Product.
      *
      * @return The configuration of the product.
      */
     Configuration getConfiguration() {
         return this.configuration;
-    }
-
-    /**
-     * Sets the configuration of the Product.
-     *
-     * @param configuration The configuration to be set.
-     */
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
     }
 
     /**

@@ -3,13 +3,13 @@ package main.pagewithiframeandnestediframe.outerpages;
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.web.selectors.By;
 import com.ultimatesoftware.aeon.core.testabstraction.elements.web.Button;
-import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
+import com.ultimatesoftware.aeon.core.testabstraction.models.Page;
 import main.pagewithiframeandnestediframe.innerpages.InnerIFramePage;
 
 /**
  * Wikipedia's main page within an iFrame.
  */
-public class PageWithIFrameAndNestedIFrame extends WebProduct {
+public class PageWithIFrameAndNestedIFrame extends Page {
     public InnerIFramePage iFrame;
     public Button popupButton;
 

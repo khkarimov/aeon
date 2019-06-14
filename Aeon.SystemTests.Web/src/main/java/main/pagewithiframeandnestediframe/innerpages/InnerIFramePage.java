@@ -4,12 +4,12 @@ import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.web.selectors.By;
 import com.ultimatesoftware.aeon.core.testabstraction.elements.web.Button;
 import com.ultimatesoftware.aeon.core.testabstraction.elements.web.TextBox;
-import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
+import com.ultimatesoftware.aeon.core.testabstraction.models.Page;
 
 /**
  * Wikipedia's main page within an iFrame.
  */
-public class InnerIFramePage extends WebProduct {
+public class InnerIFramePage extends Page {
     public TextBox wikiSearchTextBox;
     public Button searchButton;
     public Button wikiLogo;

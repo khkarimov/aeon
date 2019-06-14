@@ -16,6 +16,15 @@ public class UltiProApp extends MobileProduct {
     public LoginPage loginPage;
     public IOSIdentitySignInPage iOSIdentitySignInPage;
 
+    /**
+     * Create new browser using a provided AutomationInfo variable.
+     *
+     * @param automationInfo An AutomationInfo object provided to the function.
+     */
+    protected UltiProApp(AutomationInfo automationInfo) {
+        super(automationInfo);
+    }
+
     @Override
     protected void afterLaunch() {
         super.afterLaunch();

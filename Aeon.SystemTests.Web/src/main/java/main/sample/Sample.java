@@ -1,5 +1,6 @@
 package main.sample;
 
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
 import main.sample.pages.SampleUltiHomePage;
 import main.sample.pages.VTeamSamplePage;
@@ -14,6 +15,15 @@ public class Sample extends WebProduct {
     public HomePage home;
     public VTeamSamplePage startPage;
     public SampleUltiHomePage ultihome;
+
+    /**
+     * Create new browser using a provided AutomationInfo variable.
+     *
+     * @param automationInfo An AutomationInfo object provided to the function.
+     */
+    public Sample(AutomationInfo automationInfo) {
+        super(automationInfo);
+    }
 
     @Override
     protected void afterLaunch() {

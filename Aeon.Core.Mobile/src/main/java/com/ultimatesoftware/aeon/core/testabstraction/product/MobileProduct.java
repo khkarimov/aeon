@@ -11,31 +11,15 @@ public class MobileProduct extends WebProduct {
 
     public MobileDevice mobileDevice;
 
-    /**
-     * Default {@link MobileProduct} constructor.
-     */
-    public MobileProduct() {
-
-    }
+    public static final Capability REQUESTED_CAPABILITY = Capability.MOBILE;
 
     /**
      * Create new browser using a provided AutomationInfo variable.
      *
      * @param automationInfo An AutomationInfo object provided to the function.
      */
-    protected MobileProduct(AutomationInfo automationInfo) {
+    public MobileProduct(AutomationInfo automationInfo) {
+        super(automationInfo);
         mobileDevice = new MobileDevice(automationInfo);
-    }
-
-    @Override
-    public Capability getRequestedCapability() {
-        return Capability.MOBILE;
-    }
-
-    @Override
-    protected void afterLaunch() {
-        super.afterLaunch();
-
-        mobileDevice = new MobileDevice(getAutomationInfo());
     }
 }

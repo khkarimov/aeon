@@ -17,27 +17,18 @@ public class WebProduct extends Product {
 
     private static Logger log = LoggerFactory.getLogger(WebProduct.class);
 
-    public Browser browser;
+    public final Browser browser;
 
-    /**
-     * Default WebProduct constructor.
-     */
-    public WebProduct() {
-
-    }
+    public static final Capability REQUESTED_CAPABILITY = Capability.WEB;
 
     /**
      * Create new browser using a provided AutomationInfo variable.
      *
      * @param automationInfo An AutomationInfo object provided to the function.
      */
-    protected WebProduct(AutomationInfo automationInfo) {
+    public WebProduct(AutomationInfo automationInfo) {
+        super(automationInfo);
         browser = new Browser(automationInfo);
-    }
-
-    @Override
-    public Capability getRequestedCapability() {
-        return Capability.WEB;
     }
 
     @Override
@@ -50,8 +41,7 @@ public class WebProduct extends Product {
         // Set WebCommandExecutionFacade
         new WebProductTypeExtension().createCommandExecutionFacade(this.automationInfo);
 
-        // Instantiate browser and optionally maximize the window
-        browser = new Browser(getAutomationInfo());
+        // Optionally maximize the window
         boolean maximizeBrowser = configuration.getBoolean(WebConfiguration.Keys.MAXIMIZE_BROWSER, true);
         if (maximizeBrowser
                 && (browserType == BrowserType.CHROME
