@@ -121,7 +121,7 @@ public class AxeExtension implements ITestExecutionExtension, IAccessibilityExte
 
     @Override
     public void runAccessibilityTests(String pageName) {
-        this.adapter.executeScript(this.geAxeJS());
+        this.adapter.executeScript(this.getAxeJS());
         String reportRetrievalScript = "var callback = arguments[arguments.length - 1]; axe.run().then(function(result){callback(result);});";
         Map<String, Object> accessibilityReport = (Map<String, Object>) this.adapter.executeAsyncScript(reportRetrievalScript);
 
@@ -141,7 +141,7 @@ public class AxeExtension implements ITestExecutionExtension, IAccessibilityExte
      *
      * @return the content of the buffered reader as a string.
      */
-    private String geAxeJS() {
+    private String getAxeJS() {
         try (InputStream scriptReader = AxeExtension.class.getResourceAsStream("/axe.min.js")) {
             return new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {

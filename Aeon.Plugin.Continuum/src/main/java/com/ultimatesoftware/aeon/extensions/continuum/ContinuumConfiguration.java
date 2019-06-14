@@ -16,7 +16,7 @@ import java.util.List;
 public class ContinuumConfiguration extends PluginConfiguration {
 
     /**
-     * Keys relevant to the SauceLabs Configuration.
+     * Keys relevant to the Continuum Configuration.
      */
     public enum Keys implements AeonConfigKey {
         IMPLICIT_VALIDATIONS("aeon.extensions.continuum.implicit");
