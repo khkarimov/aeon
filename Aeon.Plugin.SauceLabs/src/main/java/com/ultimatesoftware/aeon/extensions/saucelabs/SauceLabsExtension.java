@@ -65,7 +65,7 @@ public class SauceLabsExtension implements ISeleniumExtension {
         }
 
         if (!appId.isEmpty()) {
-            capabilities.setCapability("testobject_api_id", appId);
+            capabilities.setCapability("testobject_app_id", appId);
         }
 
         if (!appiumVersion.isEmpty()) {
