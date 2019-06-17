@@ -808,7 +808,7 @@ class PerfectoExtensionTests {
     }
 
     @Test
-    void onGenerateCapabilities_withCorrelationId_setsScriptName() {
+    void onGenerateCapabilities_withCorrelationIdandNullJobName_setsScriptName() {
         //Arrange
         doReturn("http://test.perfectomobile.com/test/wd/hub")
                 .when(this.configuration)
@@ -827,6 +827,38 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        //Act
+        this.perfectoExtension.onBeforeStart("correlationId", null);
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("scriptName", "correlationId");
+    }
+
+    @Test
+    void onGenerateCapabilities_withCorrelationIdAndEmptyJobName_setsScriptName() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("test-description")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
 
         //Act
         this.perfectoExtension.onBeforeStart("correlationId", null);
