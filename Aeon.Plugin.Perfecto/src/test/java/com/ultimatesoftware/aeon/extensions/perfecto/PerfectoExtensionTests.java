@@ -68,18 +68,13 @@ class PerfectoExtensionTests {
     @Captor
     private ArgumentCaptor<TestResult> testResultCaptor;
 
+    @Mock
     private MutableCapabilities mutableCapabilities = new MutableCapabilities();
 
     private PerfectoExtension perfectoExtension;
 
     @BeforeEach
     void setUp() {
-        doReturn("http://test.perfectomobile.com/test/wd/hub")
-                .when(this.configuration)
-                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
-
-        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
-        PerfectoExtension.log = this.log;
     }
 
     @Test
@@ -97,6 +92,11 @@ class PerfectoExtensionTests {
     @Test
     void onStartUp_isCalled_setsCorrelationId() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
 
@@ -113,6 +113,11 @@ class PerfectoExtensionTests {
     @Test
     void onBeforeStart_isCalled_setsCorrelationIdAndSuiteName() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
 
@@ -130,6 +135,11 @@ class PerfectoExtensionTests {
     @Test
     void onBeforeLaunch_isCalled_doesNotDoAnything() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
 
         // Act
         this.perfectoExtension.onBeforeLaunch(this.aeonConfiguration);
@@ -141,6 +151,11 @@ class PerfectoExtensionTests {
     @Test
     void onAfterLaunch_isCalled_setsConfigurationProperties() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.aeonConfiguration.getConfigurationKeys()).thenReturn(Arrays.asList("config1", "config2"));
         doReturn("value1")
                 .when(this.aeonConfiguration)
@@ -169,6 +184,11 @@ class PerfectoExtensionTests {
     @Test
     void onBeforeTest_tagsArePassed_setsTagsInContext() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
         this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
@@ -186,6 +206,11 @@ class PerfectoExtensionTests {
     @Test
     void onBeforeTest_noTagsArePassed_doesNotSetTagsinContext() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
         this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
@@ -201,6 +226,11 @@ class PerfectoExtensionTests {
     @Test
     void onBeforeTest_nullIsPassedAsTags_doesNotSetTagsinContexts() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
         this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
@@ -214,8 +244,57 @@ class PerfectoExtensionTests {
     }
 
     @Test
+    void onBeforeTest_withoutPerfectoUrl_doesNotCallApi() {
+        // Arrange
+        doReturn("http://test.not-perfecto.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
+        when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
+        this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        this.perfectoExtension.onBeforeTest("test-name", "tag1", "tag2");
+
+        // Assert
+        verifyZeroInteractions(this.reportiumClient);
+    }
+
+    @Test
+    void onBeforeTest_withPerfectoForced_setsTagsInContext() {
+        // Arrange
+        doReturn("http://test.not-perfecto.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        doReturn(true)
+                .when(this.configuration)
+                .getBoolean(PerfectoConfiguration.Keys.PERFECTO_FORCED, false);
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
+        when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
+        this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        this.perfectoExtension.onBeforeTest("test-name", "tag1", "tag2");
+
+        // Assert
+        verify(this.reportiumClient, times(1)).testStart(eq("test-name"), this.testContextCaptor.capture());
+        Iterator<String> iterator = this.testContextCaptor.getValue().getTestExecutionTags().iterator();
+        assertEquals("tag1", iterator.next());
+        assertEquals("tag2", iterator.next());
+    }
+
+    @Test
     void onSucceededTest_isCalled_marksTestAsSucceeded() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
         when(this.reportiumClient.getReportUrl()).thenReturn("reportUrl");
@@ -231,8 +310,32 @@ class PerfectoExtensionTests {
     }
 
     @Test
+    void onSucceededTest_withoutPerfectoUrl_doesNotCallApi() {
+        // Arrange
+        doReturn("http://test.not-perfecto.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
+        when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
+        this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        this.perfectoExtension.onSucceededTest();
+
+        // Assert
+        verifyZeroInteractions(this.reportiumClient);
+    }
+
+    @Test
     void onSkippedTest_isCalled_marksTestAsFailed() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
         when(this.reportiumClient.getReportUrl()).thenReturn("reportUrl");
@@ -249,8 +352,32 @@ class PerfectoExtensionTests {
     }
 
     @Test
+    void onSkippedTest_withoutPerfectoUrl_doesNotCallApi() {
+        // Arrange
+        doReturn("http://test.not-perfecto.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
+        when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
+        this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        this.perfectoExtension.onSkippedTest("test-name");
+
+        // Assert
+        verifyZeroInteractions(this.reportiumClient);
+    }
+
+    @Test
     void onFailedTest_isCalled_marksTestAsFailed() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
         when(this.reportiumClient.getReportUrl()).thenReturn("reportUrl");
@@ -268,8 +395,33 @@ class PerfectoExtensionTests {
     }
 
     @Test
+    void onFailedTest_withoutPerfectoUrl_doesNotCallApi() {
+        // Arrange
+        doReturn("http://test.not-perfecto.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
+        when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
+        this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+        Exception exception = new Exception();
+
+        // Act
+        this.perfectoExtension.onFailedTest("error-message", exception);
+
+        // Assert
+        verifyZeroInteractions(this.reportiumClient);
+    }
+
+    @Test
     void onBeforeStep_isCalled_submitsStepName() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
         when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
         this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
@@ -282,8 +434,32 @@ class PerfectoExtensionTests {
     }
 
     @Test
+    void onBeforeStep_withoutPerfectoUrl_doesNotCallApi() {
+        // Arrange
+        doReturn("http://test.not-perfecto.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
+        when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
+        this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+
+        // Act
+        this.perfectoExtension.onBeforeStep("stepName");
+
+        // Assert
+        verifyZeroInteractions(this.reportiumClient);
+    }
+
+    @Test
     void onExecutionEvent_isCalled_doesNotDoAnything() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         Object testPayload = mock(Object.class);
 
         // Act
@@ -297,6 +473,11 @@ class PerfectoExtensionTests {
     @Test
     void onDone_isCalled_doesNotDoAnything() {
         // Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
 
         // Act
         this.perfectoExtension.onDone();
@@ -308,6 +489,11 @@ class PerfectoExtensionTests {
     @Test
     void onGenerateCapabilities_tokenUserAndPasswordProvided_setsToken() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn("test_token")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
@@ -325,14 +511,19 @@ class PerfectoExtensionTests {
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
 
         //Assert
-        assertEquals("test_token", this.mutableCapabilities.getCapability("securityToken"));
-        assertNull(this.mutableCapabilities.getCapability("user"));
-        assertNull(this.mutableCapabilities.getCapability("password"));
+        verify(this.mutableCapabilities, times(1)).setCapability("securityToken", "test_token");
+        verify(this.mutableCapabilities, never()).setCapability(eq("user"), anyString());
+        verify(this.mutableCapabilities, never()).setCapability(eq("password"), anyString());
     }
 
     @Test
     void onGenerateCapabilities_onlyTokenProvided_setsToken() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn("test_token")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
@@ -350,14 +541,19 @@ class PerfectoExtensionTests {
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
 
         //Assert
-        assertEquals("test_token", this.mutableCapabilities.getCapability("securityToken"));
-        assertNull(this.mutableCapabilities.getCapability("user"));
-        assertNull(this.mutableCapabilities.getCapability("password"));
+        verify(this.mutableCapabilities, times(1)).setCapability("securityToken", "test_token");
+        verify(this.mutableCapabilities, never()).setCapability(eq("user"), anyString());
+        verify(this.mutableCapabilities, never()).setCapability(eq("password"), anyString());
     }
 
     @Test
     void onGenerateCapabilities_emptyTokenValidUserAndPassword_setsUserAndPassword() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn("test_user")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
@@ -374,14 +570,19 @@ class PerfectoExtensionTests {
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
 
         //Assert
-        assertNull(this.mutableCapabilities.getCapability("securityToken"));
-        assertEquals("test_user", this.mutableCapabilities.getCapability("user"));
-        assertEquals("test_pass", this.mutableCapabilities.getCapability("password"));
+        verify(this.mutableCapabilities, never()).setCapability(eq("securityToken"), anyString());
+        verify(this.mutableCapabilities, times(1)).setCapability("user", "test_user");
+        verify(this.mutableCapabilities, times(1)).setCapability("password", "test_pass");
     }
 
     @Test
     void onGenerateCapabilities_emptyTokenAndUser_throwsException() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
@@ -403,6 +604,11 @@ class PerfectoExtensionTests {
     @Test
     void onGenerateCapabilities_emptyTokenAndPassword_throwsException() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn("test_user")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
@@ -424,6 +630,11 @@ class PerfectoExtensionTests {
     @Test
     void onGenerateCapabilities_noDescriptionProvided_doesNotSetDescriptionCapability() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn("test_token")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
@@ -447,6 +658,11 @@ class PerfectoExtensionTests {
     @Test
     void onGenerateCapabilities_descriptionProvided_setsDescriptionCapability() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn("test_token")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
@@ -464,12 +680,170 @@ class PerfectoExtensionTests {
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
 
         //Assert
-        assertEquals("test-description", this.mutableCapabilities.getCapability("description"));
+        verify(this.mutableCapabilities, times(1)).setCapability("description", "test-description");
+    }
+
+    @Test
+    void onGenerateCapabilities_withTestName_setsScriptName() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        when(this.adapter.getWebDriver()).thenReturn(this.androidDriver);
+        when(this.reportiumClientFactory.createPerfectoReportiumClient(this.executionContextCaptor.capture())).thenReturn(this.reportiumClient);
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("test-description")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        //Act
+        this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
+        this.perfectoExtension.onBeforeTest("Test Name 1");
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("scriptName", "Test Name 1");
+    }
+
+    @Test
+    void onGenerateCapabilities_withSuiteName_setsScriptName() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("test-description")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        //Act
+        this.perfectoExtension.onBeforeStart("correlationId", "Test Name 1");
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("scriptName", "Test Name 1");
+    }
+
+    @Test
+    void onGenerateCapabilities_withJobName_setsScriptName() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("test-description")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        doReturn("Test Name 1")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+
+        //Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("scriptName", "Test Name 1");
+    }
+
+    @Test
+    void onGenerateCapabilities_withJobNameAndCorrelationId_setsScriptName() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("test-description")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        doReturn("Test Name 1")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+
+        //Act
+        this.perfectoExtension.onBeforeStart("correlationId", null);
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("scriptName", "Test Name 1 correlationId");
+    }
+
+    @Test
+    void onGenerateCapabilities_withCorrelationId_setsScriptName() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("test-description")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        //Act
+        this.perfectoExtension.onBeforeStart("correlationId", null);
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("scriptName", "correlationId");
     }
 
     @Test
     void onAfterLaunch_cleanEnvironmentRequested_cleansAppCache() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.aeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(true);
         when(this.aeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("test_appPackage");
 
@@ -485,6 +859,11 @@ class PerfectoExtensionTests {
     @Test
     void onAfterLaunch_scriptExecutionFails_quitsTheDriver() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         when(this.aeonConfiguration.getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true)).thenReturn(true);
         when(this.aeonConfiguration.getString("aeon.appium.android.app_package", "")).thenReturn("test_appPackage");
         when(this.androidDriver.executeScript(any(), any())).thenThrow(new ScriptExecutionException("error-message", new RuntimeException()));
@@ -502,6 +881,11 @@ class PerfectoExtensionTests {
     @Test
     void onAfterLaunch_cleanEnvironmentNotRequested_doesNotCleanAppCache() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn(false)
                 .when(this.aeonConfiguration)
                 .getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
@@ -519,6 +903,11 @@ class PerfectoExtensionTests {
     @Test
     void onAfterLaunch_appPackageNotSet_doesNotCleanAppCache() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn(true)
                 .when(this.aeonConfiguration)
                 .getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);
@@ -537,6 +926,11 @@ class PerfectoExtensionTests {
     @Test
     void onAfterLaunch_noAndroidDriverProvided_doesNotCleanAppCache() {
         //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
         doReturn(true)
                 .when(this.aeonConfiguration)
                 .getBoolean(SeleniumConfiguration.Keys.ENSURE_CLEAN_ENVIRONMENT, true);

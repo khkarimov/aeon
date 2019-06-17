@@ -189,12 +189,12 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         boolean perfectoSensorInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
         String perfectoDeviceDescription = this.configuration.getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
 
-        String perfectoReportProjectName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
-        String perfectoReportProjectVersion = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
-        String perfectoReportTags = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
         String perfectoReportJobName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
         double perfectoReportJobNumber = this.configuration.getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, -1);
         String perfectoReportJobBranch = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        String perfectoReportProjectName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        String perfectoReportProjectVersion = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        String perfectoReportTags = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
         String perfectoReportCustomFields = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
 
         StringJoiner perfectoScriptNameJoiner = new StringJoiner(" ");
