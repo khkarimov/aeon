@@ -15,7 +15,6 @@ import com.ultimatesoftware.aeon.extensions.selenium.SeleniumAdapter;
 import com.ultimatesoftware.aeon.extensions.selenium.SeleniumConfiguration;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
@@ -69,13 +68,9 @@ class PerfectoExtensionTests {
     private ArgumentCaptor<TestResult> testResultCaptor;
 
     @Mock
-    private MutableCapabilities mutableCapabilities = new MutableCapabilities();
+    private MutableCapabilities mutableCapabilities;
 
     private PerfectoExtension perfectoExtension;
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void createInstance_createsAnInstanceSuccessfully() {
