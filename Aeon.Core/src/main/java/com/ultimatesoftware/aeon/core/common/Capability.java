@@ -1,10 +1,19 @@
 package com.ultimatesoftware.aeon.core.common;
 
+import java.lang.annotation.*;
+
 /**
- * Enum with the supported capabilities.
+ *
  */
-public enum Capability {
-    WEB,
-    IMAGE,
-    MOBILE
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Inherited
+public @interface Capability {
+
+    /**
+     * asdasdasd.
+     *
+     * @return asdsad.
+     */
+    Capabilities value() default Capabilities.WEB;
 }

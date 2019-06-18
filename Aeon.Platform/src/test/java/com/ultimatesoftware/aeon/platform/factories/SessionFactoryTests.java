@@ -2,7 +2,7 @@ package com.ultimatesoftware.aeon.platform.factories;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.command.execution.WebCommandExecutionFacade;
-import com.ultimatesoftware.aeon.core.common.Capability;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.exceptions.UnableToCreateDriverException;
 import com.ultimatesoftware.aeon.core.extensions.IProductTypeExtension;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapterExtension;
@@ -77,7 +77,7 @@ public class SessionFactoryTests {
     public void getSessionTest() throws Exception {
         // loadPlugins
         when(adapterSupplierMock.get()).thenReturn(adapterExtensions);
-        when(pluginMock.getProvidedCapability()).thenReturn(Capability.WEB);
+        when(pluginMock.getProvidedCapability()).thenReturn(Capabilities.WEB);
 
         // createAdapter
         when(pluginMock.createAdapter(configurationMock)).thenReturn(adapterMock);
@@ -116,7 +116,7 @@ public class SessionFactoryTests {
     public void getSessionNullSettingsTest() throws Exception {
         // loadPlugins
         when(adapterSupplierMock.get()).thenReturn(adapterExtensions);
-        when(pluginMock.getProvidedCapability()).thenReturn(Capability.WEB);
+        when(pluginMock.getProvidedCapability()).thenReturn(Capabilities.WEB);
 
         // createAdapter
         when(pluginMock.createAdapter(configurationMock)).thenReturn(adapterMock);
@@ -154,7 +154,7 @@ public class SessionFactoryTests {
     public void getSessionExceptionTest() throws Exception {
         // loadPlugins
         when(adapterSupplierMock.get()).thenReturn(adapterExtensions);
-        when(pluginMock.getProvidedCapability()).thenReturn(Capability.WEB);
+        when(pluginMock.getProvidedCapability()).thenReturn(Capabilities.WEB);
 
         // createAdapter
         when(pluginMock.createAdapter(configurationMock)).thenReturn(adapterMock);

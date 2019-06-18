@@ -2,7 +2,7 @@ package com.ultimatesoftware.aeon.platform.factories;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.command.execution.ICommandExecutionFacade;
-import com.ultimatesoftware.aeon.core.common.Capability;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 import com.ultimatesoftware.aeon.core.common.exceptions.UnableToCreateDriverException;
 import com.ultimatesoftware.aeon.core.extensions.IProductTypeExtension;
@@ -62,7 +62,7 @@ public class SessionFactory implements ISessionFactory {
         List<IAdapterExtension> extensions = adapterExtensionsSupplier.get();
 
         for (IAdapterExtension extension : extensions) {
-            if (extension.getProvidedCapability() == Capability.WEB) {
+            if (extension.getProvidedCapability() == Capabilities.WEB) {
                 return extension;
             }
         }

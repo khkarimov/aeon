@@ -1,6 +1,7 @@
 package com.ultimatesoftware.aeon.core.testabstraction.product;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.Capability;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
 import com.ultimatesoftware.aeon.core.common.web.BrowserType;
@@ -13,13 +14,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to make a web product.
  */
+@Capability(Capabilities.WEB)
 public class WebProduct extends Product {
 
     private static Logger log = LoggerFactory.getLogger(WebProduct.class);
 
     public final Browser browser;
-
-    public static final Capability REQUESTED_CAPABILITY = Capability.WEB;
 
     /**
      * Create new browser using a provided AutomationInfo variable.

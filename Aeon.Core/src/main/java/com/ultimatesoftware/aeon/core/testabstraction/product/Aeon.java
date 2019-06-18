@@ -1,6 +1,7 @@
 package com.ultimatesoftware.aeon.core.testabstraction.product;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.Capability;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
@@ -40,17 +41,12 @@ public class Aeon {
      */
     public static <T extends Product> T launch(Class<T> productClass, Properties settings) {
 
-
-
-        Capability requestedCapability;
-        try {
-            requestedCapability = (Capability) productClass
-                    .getField("REQUESTED_CAPABILITY").get(null);
-
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new AeonLaunchException(e);
+        Capability capabilityAnnotation = productClass.getAnnotation(Capability.class);
+        if (capabilityAnnotation == null) {
+            throw new AeonLaunchException("Product class is not requesting a capability by carrying a 'Capability' annotation");
         }
 
+        Capabilities requestedCapability = capabilityAnnotation.value();
         IAdapterExtension plugin = findAdapterPlugin(requestedCapability);
 
         T product = null;
@@ -76,8 +72,8 @@ public class Aeon {
             AutomationInfo automationInfo = new AutomationInfo(configuration, driver, adapter);
 
             product = productClass
-                    .getDeclaredConstructor(AutomationInfo.class, Configuration.class)
-                    .newInstance(automationInfo, configuration);
+                    .getDeclaredConstructor(AutomationInfo.class)
+                    .newInstance(automationInfo);
 
             product.afterLaunch();
 
@@ -162,7 +158,7 @@ public class Aeon {
         AeonTestExecution.done();
     }
 
-    private static IAdapterExtension findAdapterPlugin(Capability requestedCapability) {
+    private static IAdapterExtension findAdapterPlugin(Capabilities requestedCapability) {
 
         List<IAdapterExtension> extensions = getExtensions(IAdapterExtension.class);
         for (IAdapterExtension extension : extensions) {

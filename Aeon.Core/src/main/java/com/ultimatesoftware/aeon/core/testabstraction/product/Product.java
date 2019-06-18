@@ -2,7 +2,6 @@ package com.ultimatesoftware.aeon.core.testabstraction.product;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
-import com.ultimatesoftware.aeon.core.common.Capability;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 
 /**
@@ -13,12 +12,10 @@ public abstract class Product {
     protected final AutomationInfo automationInfo;
     protected final Configuration configuration;
 
-    public static final Capability REQUESTED_CAPABILITY = null;
-
     /**
-     * Question: Remove configuration from constructor because it can be retrieved from the automationInfo?
+     * Initializes a product.
      *
-     * @param automationInfo sd
+     * @param automationInfo The automation info object containing the driver and the configuration.
      */
     public Product(AutomationInfo automationInfo) {
         this.automationInfo = automationInfo;
@@ -41,13 +38,13 @@ public abstract class Product {
      * @param <T>          The type of the new product.
      * @return The newly instantiated product.
      */
-    public <T extends Product> T switchTo(Class<T> productClass) {
+    public <T extends Product> T attach(Class<T> productClass) {
 
         T product;
         try {
             product = productClass
-                    .getDeclaredConstructor(AutomationInfo.class, Configuration.class)
-                    .newInstance(this.automationInfo, this.configuration);
+                    .getDeclaredConstructor(AutomationInfo.class)
+                    .newInstance(this.automationInfo);
         } catch (Exception e) {
             throw new AeonLaunchException(e);
         }
@@ -61,7 +58,7 @@ public abstract class Product {
      *
      * @param e Exception that caused the failure.
      */
-    protected void onLaunchFailure(Exception e) {
+    void onLaunchFailure(Exception e) {
     }
 
     /**
