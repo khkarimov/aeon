@@ -24,7 +24,7 @@ import java.util.Properties;
  **/
 public class Aeon {
 
-    private static Logger log = LoggerFactory.getLogger(Aeon.class);
+    static Logger log = LoggerFactory.getLogger(Aeon.class);
     private static PluginManager pluginManager;
     private static ISessionIdProvider sessionIdProvider = new DefaultSessionIdProvider();
 
@@ -44,7 +44,8 @@ public class Aeon {
 
         Capability capabilityAnnotation = productClass.getAnnotation(Capability.class);
         if (capabilityAnnotation == null) {
-            throw new AeonLaunchException("Product class is not requesting a capability by carrying a 'Capability' annotation");
+            throw new AeonLaunchException("Product class is not requesting a capability by carrying a " +
+                    "'Capability' annotation");
         }
 
         Capabilities requestedCapability = capabilityAnnotation.value();

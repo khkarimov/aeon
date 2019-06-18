@@ -2,25 +2,45 @@ package com.ultimatesoftware.aeon.core.testabstraction.product;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
+import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class ProductTests {
 
-    private class ProductChild extends Product {
+    private static class ProductChild extends Product {
+        private boolean afterLaunchWasCalled = false;
+
         ProductChild(AutomationInfo automationInfo) {
             super(automationInfo);
+        }
+
+        @Override
+        public void afterLaunch() {
+            super.afterLaunch();
+            this.afterLaunchWasCalled = true;
+        }
+
+        boolean getAfterLaunchWasCalled() {
+            return this.afterLaunchWasCalled;
+        }
+    }
+
+    private static class FailingProduct extends Product {
+        FailingProduct(AutomationInfo automationInfo) {
+            super(automationInfo);
+            throw new IllegalStateException("failing product");
         }
     }
 
@@ -38,6 +58,33 @@ class ProductTests {
     void setUp() {
         when(this.automationInfo.getConfiguration()).thenReturn(this.configuration);
         product = new ProductChild(this.automationInfo);
+    }
+
+    @Test
+    void attach_isCalled_createsNewProductAndTransfersAutomationInfo() {
+
+        // Arrange
+
+        // Act
+        ProductChild newProduct = this.product.attach(ProductChild.class);
+
+        // Assert
+        assertNotEquals(this.product, newProduct);
+        assertEquals(this.automationInfo, newProduct.getAutomationInfo());
+        assertFalse(newProduct.getAfterLaunchWasCalled());
+    }
+
+    @Test
+    void attach_isCalledWithBadProduct_throwsException() {
+
+        // Arrange
+
+        // Act
+        Executable action = () -> this.product.attach(FailingProduct.class);
+
+        // Assert
+        Exception exception = assertThrows(AeonLaunchException.class, action);
+        assertEquals("java.lang.reflect.InvocationTargetException", exception.getMessage());
     }
 
     @Test
@@ -118,7 +165,8 @@ class ProductTests {
     }
 
     @Test
-    void getConfig_onCallWithBooleanDefaultValue_callsConfigurationGetBoolean() {
+    void getConfig_onCallWithBooleanDefaultValue_callsConfigurationGetBoolean
+            () {
 
         // Arrange
         String key = "key";
@@ -132,7 +180,8 @@ class ProductTests {
     }
 
     @Test
-    void getConfig_onCallWithStringDefaultValue_callsConfigurationGetString() {
+    void getConfig_onCallWithStringDefaultValue_callsConfigurationGetString
+            () {
 
         // Arrange
         String key = "key";
@@ -146,7 +195,8 @@ class ProductTests {
     }
 
     @Test
-    void getConfig_onCallWithDoubleDefaultValue_callsConfigurationGetDouble() {
+    void getConfig_onCallWithDoubleDefaultValue_callsConfigurationGetDouble
+            () {
 
         // Arrange
         String key = "key";
