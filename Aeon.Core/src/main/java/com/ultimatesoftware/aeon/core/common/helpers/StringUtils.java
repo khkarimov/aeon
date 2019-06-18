@@ -9,6 +9,10 @@ public class StringUtils {
 
     private static final String VALUE = "value";
 
+    private StringUtils() {
+        // Static classes should not be instantiated.
+    }
+
     /**
      * Function returns a string that is a quoted and escaped version of the original string.
      *

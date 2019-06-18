@@ -4,6 +4,7 @@ import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.Capability;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
+import com.ultimatesoftware.aeon.core.common.exceptions.AeonSinglePluginRequestedException;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
 import com.ultimatesoftware.aeon.core.extensions.AeonPluginManager;
 import com.ultimatesoftware.aeon.core.extensions.DefaultSessionIdProvider;
@@ -138,6 +139,28 @@ public class Aeon {
      */
     public static <T> List<T> getExtensions(Class<T> type) {
         return getPluginManager().getExtensions(type);
+    }
+
+    /**
+     * Expects that exactly one extension of the requested type is available
+     * and returns it.
+     * <p>
+     * Throws an instance of {@link AeonSinglePluginRequestedException}
+     * if zero or multiple extensions of the requested type are available.
+     *
+     * @param type The type of the extension class.
+     * @param <T>  The class object of the extension class.
+     * @return The requested extension.
+     */
+    public static <T> T getExtension(Class<T> type) {
+        List<T> extensions = getExtensions(type);
+
+        int foundExtensions = extensions.size();
+        if (foundExtensions != 1) {
+            throw new AeonSinglePluginRequestedException(type.getSimpleName(), foundExtensions);
+        }
+
+        return extensions.get(0);
     }
 
     /**
