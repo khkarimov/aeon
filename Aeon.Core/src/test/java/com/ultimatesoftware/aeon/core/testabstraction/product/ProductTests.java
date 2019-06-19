@@ -165,8 +165,7 @@ class ProductTests {
     }
 
     @Test
-    void getConfig_onCallWithBooleanDefaultValue_callsConfigurationGetBoolean
-            () {
+    void getConfig_onCallWithBooleanDefaultValue_callsConfigurationGetBoolean() {
 
         // Arrange
         String key = "key";
@@ -180,8 +179,7 @@ class ProductTests {
     }
 
     @Test
-    void getConfig_onCallWithStringDefaultValue_callsConfigurationGetString
-            () {
+    void getConfig_onCallWithStringDefaultValue_callsConfigurationGetString() {
 
         // Arrange
         String key = "key";
@@ -195,8 +193,7 @@ class ProductTests {
     }
 
     @Test
-    void getConfig_onCallWithDoubleDefaultValue_callsConfigurationGetDouble
-            () {
+    void getConfig_onCallWithDoubleDefaultValue_callsConfigurationGetDouble() {
 
         // Arrange
         String key = "key";
