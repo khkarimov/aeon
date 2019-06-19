@@ -3,7 +3,7 @@ package com.ultimatesoftware.aeon.core.common;
 import java.lang.annotation.*;
 
 /**
- *
+ * Annotation for product classes to request a capability.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -11,9 +11,9 @@ import java.lang.annotation.*;
 public @interface Capability {
 
     /**
-     * asdasdasd.
+     * Returns the requested capability of the annotated product.
      *
-     * @return asdsad.
+     * @return The requested capability of the annotated product.
      */
     Capabilities value() default Capabilities.WEB;
 }
