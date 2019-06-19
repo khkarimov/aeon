@@ -89,7 +89,7 @@ public class AjaxWaiter {
     /**
      * Injects JS into the webDriver.
      */
-    public void injectJS() {
+    private void injectJS() {
         try {
             String injectScriptTag = "var a = document.createElement('script');a.text=\"" +
                     getAjaxWaiterJS() + "\";a.setAttribute('id', 'aeonAjaxWaiter');document.body.appendChild(a);";
@@ -110,7 +110,7 @@ public class AjaxWaiter {
      *
      * @return the content of the buffered reader as a string.
      */
-    public String getAjaxWaiterJS() {
+    private String getAjaxWaiterJS() {
         try (InputStream scriptReader = AjaxWaiter.class.getResourceAsStream("/ajax-waiter.js")) {
             return new BufferedReader(new InputStreamReader(scriptReader)).lines().collect(Collectors.joining("\n"));
         } catch (FileNotFoundException e) {

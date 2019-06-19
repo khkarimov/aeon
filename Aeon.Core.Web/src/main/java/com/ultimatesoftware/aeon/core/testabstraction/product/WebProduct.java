@@ -1,6 +1,7 @@
 package com.ultimatesoftware.aeon.core.testabstraction.product;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.Capability;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
 import com.ultimatesoftware.aeon.core.common.web.BrowserType;
@@ -13,31 +14,21 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to make a web product.
  */
+@Capability(Capabilities.WEB)
 public class WebProduct extends Product {
 
     private static Logger log = LoggerFactory.getLogger(WebProduct.class);
 
-    public Browser browser;
-
-    /**
-     * Default WebProduct constructor.
-     */
-    public WebProduct() {
-
-    }
+    public final Browser browser;
 
     /**
      * Create new browser using a provided AutomationInfo variable.
      *
      * @param automationInfo An AutomationInfo object provided to the function.
      */
-    protected WebProduct(AutomationInfo automationInfo) {
+    public WebProduct(AutomationInfo automationInfo) {
+        super(automationInfo);
         browser = new Browser(automationInfo);
-    }
-
-    @Override
-    public Capability getRequestedCapability() {
-        return Capability.WEB;
     }
 
     @Override
@@ -50,8 +41,7 @@ public class WebProduct extends Product {
         // Set WebCommandExecutionFacade
         new WebProductTypeExtension().createCommandExecutionFacade(this.automationInfo);
 
-        // Instantiate browser and optionally maximize the window
-        browser = new Browser(getAutomationInfo());
+        // Optionally maximize the window
         boolean maximizeBrowser = configuration.getBoolean(WebConfiguration.Keys.MAXIMIZE_BROWSER, true);
         if (maximizeBrowser
                 && (browserType == BrowserType.CHROME

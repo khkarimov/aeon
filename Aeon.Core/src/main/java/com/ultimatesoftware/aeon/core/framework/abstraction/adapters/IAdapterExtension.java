@@ -1,6 +1,6 @@
 package com.ultimatesoftware.aeon.core.framework.abstraction.adapters;
 
-import com.ultimatesoftware.aeon.core.common.Capability;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
 import org.pf4j.ExtensionPoint;
 
@@ -29,9 +29,9 @@ public interface IAdapterExtension extends ExtensionPoint {
     Configuration getConfiguration() throws IOException, IllegalAccessException;
 
     /**
-     * Gets the {@link Capability} provided.
+     * Gets the {@link Capabilities} provided.
      *
      * @return The capability.
      */
-    Capability getProvidedCapability();
+    Capabilities getProvidedCapability();
 }

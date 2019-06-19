@@ -10,8 +10,8 @@ import com.ultimatesoftware.aeon.core.testabstraction.models.Component;
  * Models the elements of a table row.
  */
 public class Material extends Component {
-    public Button checkBoxButton;
-    public Label unitPrice;
+    public final Button checkBoxButton;
+    public final Label unitPrice;
 
     /**
      * Constructor.

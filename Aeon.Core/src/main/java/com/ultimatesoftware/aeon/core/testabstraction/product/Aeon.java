@@ -1,11 +1,17 @@
 package com.ultimatesoftware.aeon.core.testabstraction.product;
 
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
+import com.ultimatesoftware.aeon.core.common.Capability;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
+import com.ultimatesoftware.aeon.core.common.exceptions.AeonSinglePluginRequestedException;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
 import com.ultimatesoftware.aeon.core.extensions.AeonPluginManager;
 import com.ultimatesoftware.aeon.core.extensions.DefaultSessionIdProvider;
 import com.ultimatesoftware.aeon.core.extensions.ISessionIdProvider;
+import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapterExtension;
+import com.ultimatesoftware.aeon.core.framework.abstraction.drivers.IDriver;
 import org.pf4j.PluginManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +24,7 @@ import java.util.Properties;
  **/
 public class Aeon {
 
-    private static Logger log = LoggerFactory.getLogger(Aeon.class);
+    static Logger log = LoggerFactory.getLogger(Aeon.class);
     private static PluginManager pluginManager;
     private static ISessionIdProvider sessionIdProvider = new DefaultSessionIdProvider();
 
@@ -35,20 +41,43 @@ public class Aeon {
      * @return A type T launch.
      */
     public static <T extends Product> T launch(Class<T> productClass, Properties settings) {
+
+        Capability capabilityAnnotation = productClass.getAnnotation(Capability.class);
+        if (capabilityAnnotation == null) {
+            throw new AeonLaunchException("Product class is not requesting a capability by carrying a " +
+                    "'Capability' annotation");
+        }
+
+        Capabilities requestedCapability = capabilityAnnotation.value();
+        IAdapterExtension plugin = findAdapterPlugin(requestedCapability);
+
         T product = null;
         try {
-            product = productClass.newInstance();
-            IAdapterExtension plugin = loadPlugins(product);
-            product.setConfiguration(plugin.getConfiguration());
+            Configuration configuration = plugin.getConfiguration();
             if (settings != null) {
-                product.getConfiguration().setProperties(settings);
+                configuration.setProperties(settings);
             }
 
-            AeonTestExecution.beforeLaunch(product.getConfiguration());
+            AeonTestExecution.beforeLaunch(configuration);
 
             log.info("Launching product");
 
-            product.launch(plugin);
+            IDriver driver;
+            IAdapter adapter;
+
+            adapter = plugin.createAdapter(configuration);
+
+            driver = (IDriver) configuration.getDriver().newInstance();
+            driver.configure(adapter, configuration);
+
+
+            AutomationInfo automationInfo = new AutomationInfo(configuration, driver, adapter);
+
+            product = productClass
+                    .getDeclaredConstructor(AutomationInfo.class)
+                    .newInstance(automationInfo);
+
+            product.afterLaunch();
 
             return product;
         } catch (Exception e) {
@@ -69,19 +98,6 @@ public class Aeon {
      */
     public static <T extends Product> T launch(Class<T> productClass) {
         return launch(productClass, null);
-    }
-
-    private static <T extends Product> IAdapterExtension loadPlugins(T product) {
-
-        List<IAdapterExtension> extensions = getExtensions(IAdapterExtension.class);
-        for (IAdapterExtension extension : extensions) {
-            if (extension.getProvidedCapability() == product.getRequestedCapability()) {
-                return extension;
-            }
-        }
-
-        throw new AeonLaunchException("No valid adapter found. Please check " +
-                "whether at least one matching adapter plugin is installed.");
     }
 
     /**
@@ -116,7 +132,73 @@ public class Aeon {
     }
 
     /**
-     * Returns a PluginManager, control which plugins to be used, can be disabled with environment variable.
+     * Retrieves a list of available extensions of an extension class.
+     *
+     * @param type The type of the extension class.
+     * @param <T>  The class object of the extension class.
+     * @return A list of available extensions of the extension class.
+     */
+    public static <T> List<T> getExtensions(Class<T> type) {
+        return getPluginManager().getExtensions(type);
+    }
+
+    /**
+     * Expects that exactly one extension of the requested type is available
+     * and returns it.
+     * <p>
+     * Throws an instance of {@link AeonSinglePluginRequestedException}
+     * if zero or multiple extensions of the requested type are available.
+     *
+     * @param type The type of the extension class.
+     * @param <T>  The class object of the extension class.
+     * @return The requested extension.
+     */
+    public static <T> T getExtension(Class<T> type) {
+        List<T> extensions = getExtensions(type);
+
+        int foundExtensions = extensions.size();
+        if (foundExtensions != 1) {
+            throw new AeonSinglePluginRequestedException(type.getSimpleName(), foundExtensions);
+        }
+
+        return extensions.get(0);
+    }
+
+    /**
+     * Setter for the plugin manager.
+     *
+     * @param pluginManager The plugin manager to use.
+     */
+    public static void setPluginManager(PluginManager pluginManager) {
+        Aeon.pluginManager = pluginManager;
+    }
+
+    /**
+     * May be called at the end of all test executions.
+     * <p>
+     * This method allows plugins do tear down and clean up.
+     */
+    public static void done() {
+        AeonTestExecution.done();
+    }
+
+    private static IAdapterExtension findAdapterPlugin(Capabilities requestedCapability) {
+
+        List<IAdapterExtension> extensions = getExtensions(IAdapterExtension.class);
+        for (IAdapterExtension extension : extensions) {
+            if (extension.getProvidedCapability() == requestedCapability) {
+                return extension;
+            }
+        }
+
+        throw new AeonLaunchException("No valid adapter found. Please check " +
+                "whether at least one matching adapter plugin is installed.");
+    }
+
+    /**
+     * Returns a PluginManager which controls which plugins can be used.
+     * <p>
+     * Plugins can be disabled with an environment variable.
      *
      * @return A plugin manager with plugins to be used.
      */
@@ -142,34 +224,5 @@ public class Aeon {
         }
 
         return pluginManager;
-    }
-
-    /**
-     * Retrieves a list of available extensions of an extension class.
-     *
-     * @param type The type of the extension class.
-     * @param <T>  The class object of the extension class.
-     * @return A list of available extensions of the extension class.
-     */
-    public static <T> List<T> getExtensions(Class<T> type) {
-        return getPluginManager().getExtensions(type);
-    }
-
-    /**
-     * Setter for the plugin manager.
-     *
-     * @param pluginManager The plugin manager to use.
-     */
-    public static void setPluginManager(PluginManager pluginManager) {
-        Aeon.pluginManager = pluginManager;
-    }
-
-    /**
-     * May be called at the end of all test executions.
-     * <p>
-     * This method allows plugins do tear down and clean up.
-     */
-    public static void done() {
-        AeonTestExecution.done();
     }
 }
