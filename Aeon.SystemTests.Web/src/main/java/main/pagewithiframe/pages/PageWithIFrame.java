@@ -10,10 +10,10 @@ import com.ultimatesoftware.aeon.core.testabstraction.models.Page;
  * Wikipedia's main page within an iFrame.
  */
 public class PageWithIFrame extends Page {
-    public TextBox wikiSearchTextBox;
-    public Button searchButton;
-    public Button wikiLogo;
-    public Button popupButton;
+    public final TextBox wikiSearchTextBox;
+    public final Button searchButton;
+    public final Button wikiLogo;
+    public final Button popupButton;
 
     /**
      * Constructor.

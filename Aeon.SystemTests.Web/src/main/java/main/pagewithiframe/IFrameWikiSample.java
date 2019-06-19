@@ -8,20 +8,16 @@ import main.pagewithiframe.pages.PageWithIFrame;
  * Sample web product.
  */
 public class IFrameWikiSample extends WebProduct {
-    public PageWithIFrame pageWithIFrame;
+    public final PageWithIFrame pageWithIFrame;
 
     /**
-     * Create new browser using a provided AutomationInfo variable.
+     * Create a new instance of the Wiki Sample models.
      *
-     * @param automationInfo An AutomationInfo object provided to the function.
+     * @param automationInfo The automation info object to use.
      */
     protected IFrameWikiSample(AutomationInfo automationInfo) {
         super(automationInfo);
-    }
 
-    @Override
-    protected void afterLaunch() {
-        super.afterLaunch();
         pageWithIFrame = new PageWithIFrame(getAutomationInfo());
     }
 }

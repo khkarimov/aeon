@@ -14,9 +14,9 @@ public class MobileProduct extends WebProduct {
     public MobileDevice mobileDevice;
 
     /**
-     * Create new browser using a provided AutomationInfo variable.
+     * Create new mobile device object using the provided automation info object.
      *
-     * @param automationInfo An AutomationInfo object provided to the function.
+     * @param automationInfo The automation info object to use.
      */
     public MobileProduct(AutomationInfo automationInfo) {
         super(automationInfo);

@@ -11,9 +11,9 @@ import com.ultimatesoftware.aeon.core.testabstraction.models.Page;
  */
 public class SampleUltiHomePage extends Page {
 
-    public TextBox userField;
-    public TextBox passField;
-    public Button loginButton;
+    public final TextBox userField;
+    public final TextBox passField;
+    public final Button loginButton;
 
     /**
      * Constructor.
