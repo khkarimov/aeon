@@ -80,7 +80,7 @@
                         <i ng-class="getBrowserClass(result)" class="fa"></i>
                     </div>
                     <div flex>
-                        <span>{{ result.prefix }}</span><strong>{{ result.description }}</strong>
+                        <span>{{ result.prefix }}</span> <strong>{{ result.description }}</strong>
                         <div ng-if="result.pendingReason != ''">
                             <small>{{ result.pendingReason }}</small>
                         </div>
@@ -91,10 +91,10 @@
                         <!--<small>{{result.suspectLine}}</small>-->
                         <!--</div>-->
                     </div>
-                    <div flex="none" style="width: 80px; text-align:right;">
+                    <div flex="none" style="width: 250px; text-align:right;">
                         <small>{{ result.duration }}</small>
                     </div>
-                    <div flex="none" style="width: 150px">
+                    <div flex="none" style="width: 150px; padding: 0;">
                         <img width="100%" ng-if="result.screenshotPath" ng-src="{{result.screenshotPath}}"/>
                     </div>
                 </div>
