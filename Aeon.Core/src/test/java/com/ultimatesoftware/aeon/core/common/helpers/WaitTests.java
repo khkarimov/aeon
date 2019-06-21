@@ -207,7 +207,7 @@ public class WaitTests {
         Executable executable = () -> Wait.forValue(() -> {
             this.stringToCheck += stringToAppend;
             return stringToCheck;
-        }, expectedString, Duration.ofMillis(3), Duration.ofMillis(1));
+        }, expectedString, Duration.ofMillis(2), Duration.ofMillis(1));
 
         //Assert
         assertThrows(RuntimeException.class, executable);
