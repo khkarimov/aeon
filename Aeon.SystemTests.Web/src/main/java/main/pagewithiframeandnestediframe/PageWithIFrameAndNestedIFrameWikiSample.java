@@ -1,19 +1,22 @@
 package main.pagewithiframeandnestediframe;
 
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
-import main.pagewithiframeandnestediframe.innerpages.InnerIFramePage;
 import main.pagewithiframeandnestediframe.outerpages.PageWithIFrameAndNestedIFrame;
 
 /**
- * Sample web product.
+ * Sample web product for testing IFrames.
  */
 public class PageWithIFrameAndNestedIFrameWikiSample extends WebProduct {
-    public PageWithIFrameAndNestedIFrame pageWithIFrameAndNestedIFrame;
+    public final PageWithIFrameAndNestedIFrame pageWithIFrameAndNestedIFrame;
 
-    @Override
-    protected void afterLaunch() {
-        super.afterLaunch();
+    /**
+     * Create a new instance of the IFrame Wiki Sample models.
+     *
+     * @param automationInfo The automation info object to use.
+     */
+    protected PageWithIFrameAndNestedIFrameWikiSample(AutomationInfo automationInfo) {
+        super(automationInfo);
         pageWithIFrameAndNestedIFrame = new PageWithIFrameAndNestedIFrame(getAutomationInfo());
-        pageWithIFrameAndNestedIFrame.iFrame = new InnerIFramePage(getAutomationInfo());
     }
 }

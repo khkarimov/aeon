@@ -1,6 +1,6 @@
 package com.ultimatesoftware.aeon.extensions.appium;
 
-import com.ultimatesoftware.aeon.core.common.Capability;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 import com.ultimatesoftware.aeon.core.common.helpers.Sleep;
 import com.ultimatesoftware.aeon.core.common.helpers.StringUtils;
@@ -11,7 +11,6 @@ import com.ultimatesoftware.aeon.extensions.selenium.SeleniumAdapterFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebElement;
@@ -86,7 +85,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         trySetContext();
     }
 
-    private Capabilities getIOSHybridAppCapabilities() {
+    private org.openqa.selenium.Capabilities getIOSHybridAppCapabilities() {
 
         MutableCapabilities desiredCapabilities = getAppCapabilities("iOS");
 
@@ -113,7 +112,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         trySetContext();
     }
 
-    private Capabilities getAndroidHybridAppCapabilities() {
+    private org.openqa.selenium.Capabilities getAndroidHybridAppCapabilities() {
 
         MutableCapabilities desiredCapabilities = getAppCapabilities("Android");
 
@@ -244,8 +243,8 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
     }
 
     @Override
-    public Capability getProvidedCapability() {
-        return Capability.MOBILE;
+    public Capabilities getProvidedCapability() {
+        return Capabilities.MOBILE;
     }
 }
 

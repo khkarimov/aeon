@@ -6,28 +6,25 @@ import com.ultimatesoftware.aeon.core.command.execution.commands.CommandWithRetu
 import com.ultimatesoftware.aeon.core.command.execution.commands.QuitCommand;
 import com.ultimatesoftware.aeon.core.common.exceptions.CommandExecutionException;
 import com.ultimatesoftware.aeon.core.extensions.IProductTypeExtension;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SessionTests {
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     private Session session;
 
@@ -50,7 +47,7 @@ public class SessionTests {
     @Mock
     private CommandWithReturn commandMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         session = new Session(automationInfoMock, commandExecutionFacadeMock, supplierMock);
 
@@ -70,7 +67,7 @@ public class SessionTests {
         verify(extensionMock, times(1)).createCommand("GoToUrlCommand", argsMock);
         verify(commandExecutionFacadeMock, times(1)).execute(automationInfoMock, commandMock);
 
-        Assert.assertEquals("GoToUrlCommand Successful", object);
+        assertEquals("GoToUrlCommand Successful", object);
     }
 
     @Test

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ByMobileTests {
 
@@ -31,7 +31,7 @@ public class ByMobileTests {
         IByMobile myNewSelector = ByMobileId.id(myId);
 
         //Assert
-        assertEquals("When instantiating using id, returns correct id", ((ByMobileId) myNewSelector).getSelector(), myId);
+        assertEquals(myId, ((ByMobileId) myNewSelector).getSelector());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class ByMobileTests {
         String selector = command.getSelector();
 
         //Assert
-        assertEquals("When instantiating using constructor, returns correct id", selector, mySelector);
+        assertEquals(mySelector, selector);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ByMobileTests {
         String selector = command.toString();
 
         //Assert
-        assertEquals("When instantiating using constructor, returns correct id", selector, mySelector);
+        assertEquals(mySelector, selector);
     }
 
 

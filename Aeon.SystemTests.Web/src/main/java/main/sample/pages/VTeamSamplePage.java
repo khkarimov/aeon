@@ -14,43 +14,40 @@ import main.sample.samplelistgroup.ActorListContainer;
  */
 public class VTeamSamplePage extends Page {
 
-    // Grid selector
-    private final By gridSelector = By.cssSelector("#grid-table-id");
-
-    public Button disabledButton;
-    public Button openAlertButton;
-    public Image ultimateLogoImage;
-    public Image heatLogoImage;
-    public Image ultimateLogoImageDoubleClick;
-    public Checkbox testCheckbox;
-    public FileDialogInput testFileDialogInput;
-    public Button start;
-    public TextBox alertTitleTextBox;
-    public ListItem draggableListItem;
-    public ListItem draggedListItem;
-    public ListItem draggableHTML5Item;
-    public ListItem draggedHTML5Item;
-    public Link tryLink;
-    public Dropdown dropDown;
-    public Checkbox checkbox100;
-    public WebElement divWindow;
-    public Label bodyTag;
-    public WebElement div;
-    public Button popupButton;
-    public Dropdown lexoDropDown;
-    public Dropdown revLexoDropDown;
-    public Label dateSelector;
-    public Label dateLabel;
-    public Label reactionLabel;
-    public Button invisibleButton;
-    public Label nonExistentLabel;
-    public TextBox formTextBox;
-    public RadioButton nextRadioButton;
-    public Button smileyFace1;
-    public Button smileyFace2;
-    public Button smileyFace3;
-    public MaterialTableContainer materialTableContainer;
-    public ActorListContainer actorListContainer;
+    public final Button disabledButton;
+    public final Button openAlertButton;
+    public final Image ultimateLogoImage;
+    public final Image heatLogoImage;
+    public final Image ultimateLogoImageDoubleClick;
+    public final Checkbox testCheckbox;
+    public final FileDialogInput testFileDialogInput;
+    public final Button start;
+    public final TextBox alertTitleTextBox;
+    public final ListItem draggableListItem;
+    public final ListItem draggedListItem;
+    public final ListItem draggableHTML5Item;
+    public final ListItem draggedHTML5Item;
+    public final Link tryLink;
+    public final Dropdown dropDown;
+    public final Checkbox checkbox100;
+    public final WebElement divWindow;
+    public final Label bodyTag;
+    public final WebElement div;
+    public final Button popupButton;
+    public final Dropdown lexoDropDown;
+    public final Dropdown revLexoDropDown;
+    public final Label dateSelector;
+    public final Label dateLabel;
+    public final Label reactionLabel;
+    public final Button invisibleButton;
+    public final Label nonExistentLabel;
+    public final TextBox formTextBox;
+    public final RadioButton nextRadioButton;
+    public final Button smileyFace1;
+    public final Button smileyFace2;
+    public final Button smileyFace3;
+    public final MaterialTableContainer materialTableContainer;
+    public final ActorListContainer actorListContainer;
 
     /**
      * Constructor.
@@ -92,7 +89,7 @@ public class VTeamSamplePage extends Page {
         smileyFace2 = new Button(automationInfo, By.cssSelector(".call-2 > button:nth-child(1)"));
         smileyFace3 = new Button(automationInfo, By.cssSelector(".call-3 > button:nth-child(1)"));
 
-        materialTableContainer = new MaterialTableContainer(automationInfo, gridSelector, new MaterialTable());
+        materialTableContainer = new MaterialTableContainer(automationInfo, By.cssSelector("#grid-table-id"), new MaterialTable());
         divWindow = new WebElement(automationInfo, By.cssSelector("div[id='drop-div']"));
         bodyTag = new Label(automationInfo, By.cssSelector("label[for='sample5']"));
         actorListContainer = new ActorListContainer(automationInfo, By.cssSelector(".demo-list-three"), new ActorList());

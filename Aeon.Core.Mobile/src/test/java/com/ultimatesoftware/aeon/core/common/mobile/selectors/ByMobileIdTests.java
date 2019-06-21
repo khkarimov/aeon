@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -36,7 +36,7 @@ public class ByMobileIdTests {
         IByMobile myNewSelector = ByMobileId.id(myId);
 
         //Assert
-        assertEquals("When instantiating using id, returns correct id", ((ByMobileId) myNewSelector).getSelector(), myId);
+        assertEquals(myId, ((ByMobileId) myNewSelector).getSelector());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ByMobileIdTests {
         String selector = command.getSelector();
 
         //Assert
-        assertEquals("When instantiating using constructor, returns correct id", selector, mySelector);
+        assertEquals(mySelector, selector);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class ByMobileIdTests {
         String selector = command.toString();
 
         //Assert
-        assertEquals("When instantiating using constructor, returns correct id", selector, mySelector);
+        assertEquals(mySelector, selector);
     }
 
 
