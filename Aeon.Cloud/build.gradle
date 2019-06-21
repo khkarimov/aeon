@@ -23,6 +23,7 @@ dependencies {
     compile 'io.projectreactor.ipc:reactor-netty:0.7.8.RELEASE'
 
     testCompile('junit:junit:4.12')
+    testRuntime("org.junit.vintage:junit-vintage-engine:5.2.0")
     testCompile('org.springframework.boot:spring-boot-starter-test:2.0.5.RELEASE')
 }
 
