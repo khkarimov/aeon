@@ -11,29 +11,24 @@ import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IWebAdapter
 import com.ultimatesoftware.aeon.core.framework.abstraction.drivers.AeonWebDriver;
 import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
 import com.ultimatesoftware.aeon.platform.session.ISession;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.*;
 import java.util.function.Supplier;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class SessionFactoryTests {
-
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     private IWebAdapter adapterMock;
@@ -60,7 +55,7 @@ public class SessionFactoryTests {
     private List<IProductTypeExtension> productExtensions;
     private Map<String, String> settings;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         sessionFactory = new SessionFactory(adapterSupplierMock, productSupplierMock);
 
@@ -114,14 +109,6 @@ public class SessionFactoryTests {
         // Arrange
         when(adapterSupplierMock.get()).thenReturn(adapterExtensions);
         when(pluginMock.getProvidedCapability()).thenReturn(Capabilities.IMAGE);
-
-        when(pluginMock.createAdapter(configurationMock)).thenReturn(adapterMock);
-
-        when(pluginMock.getConfiguration()).thenReturn(configurationMock);
-        when(configurationMock.getDriver()).thenReturn(AeonWebDriver.class);
-
-        when(productSupplierMock.get()).thenReturn(productExtensions);
-        when(extensionMock.createCommandExecutionFacade(any(AutomationInfo.class))).thenReturn(commandExecutionFacadeMock);
 
         // Act
         Executable action = () -> sessionFactory.getSession(settings);

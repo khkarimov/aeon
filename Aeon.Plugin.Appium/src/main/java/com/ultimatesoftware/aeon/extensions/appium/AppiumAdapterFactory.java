@@ -209,7 +209,7 @@ public final class AppiumAdapterFactory extends SeleniumAdapterFactory {
         log.trace("Available contexts: {}", joinedString);
 
         for (String context : availableContexts) {
-            if (context.contains("WEBVIEW")) {
+            if (context.contains("WEBVIEW_co")) {
                 log.trace("Switching to context {}", context);
                 ((AppiumDriver) driver).context(context);
 
