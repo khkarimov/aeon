@@ -171,9 +171,13 @@
                 </div>
 
                 <!-- video URL -->
-                <md-subheader ng-if="activeItem.videoUrl">Video URL</md-subheader>
+                <md-subheader ng-if="activeItem.videoUrl">Video</md-subheader>
                 <div layout-padding ng-if="activeItem.videoUrl">
-                    <a ng-href="{{activeItem.videoUrl}}">Download Video</a>
+                    <a ng-href="{{activeItem.videoUrl}}">Download Video</a><br>
+                    <div>
+                        <video ng-src="{{activeItem.videoUrl | trustArtifactoryVideoUrl}}" controls
+                               style="width: 100%;"></video>
+                    </div>
                 </div>
             </md-content>
 
@@ -243,7 +247,12 @@
             return classes[item.status];
         };
 
-    }).constant('RESULTS', RESULTS);
+    }).constant('RESULTS', RESULTS)
+        .filter("trustArtifactoryVideoUrl", ['$sce', function ($sce) {
+            return function (videoUrl) {
+                return $sce.trustAsResourceUrl(videoUrl);
+            }
+        }]);
 </script>
 
 </body>
