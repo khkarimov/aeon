@@ -223,28 +223,28 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
 
         // Set reporting
-        if (perfectoReportProjectName.isEmpty()){
+        if (!perfectoReportProjectName.isEmpty()) {
             capabilities.setCapability("report.projectName", perfectoReportProjectName);
         }
-        if (perfectoReportProjectVersion.isEmpty()) {
+        if (!perfectoReportProjectVersion.isEmpty()) {
             capabilities.setCapability("report.projectVersion", perfectoReportProjectVersion);
         }
-        if (perfectoReportTags.isEmpty()) {
+        if (!perfectoReportTags.isEmpty()) {
             capabilities.setCapability("report.tags", perfectoReportTags);
         }
-        if (perfectoReportJobName.isEmpty()) {
+        if (!perfectoReportJobName.isEmpty()) {
             capabilities.setCapability("report.jobName", perfectoReportJobName);
         }
         if (perfectoReportJobNumber != 0) {
             capabilities.setCapability("report.jobNumber", perfectoReportJobNumber);
         }
-        if (perfectoReportJobBranch.isEmpty()) {
+        if (!perfectoReportJobBranch.isEmpty()) {
             capabilities.setCapability("report.jobBranch", perfectoReportJobBranch);
         }
-        if (perfectoReportCustomFields.isEmpty()) {
+        if (!perfectoReportCustomFields.isEmpty()) {
             capabilities.setCapability("report.customFields", perfectoReportCustomFields);
         }
-        if (perfectoDeviceDescription.isEmpty()) {
+        if (!perfectoDeviceDescription.isEmpty()) {
             capabilities.setCapability("description", perfectoDeviceDescription);
         }
     }
