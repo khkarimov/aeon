@@ -16,6 +16,7 @@ import com.ultimatesoftware.aeon.extensions.selenium.SeleniumAdapter;
 import com.ultimatesoftware.aeon.extensions.selenium.SeleniumConfiguration;
 import com.ultimatesoftware.aeon.extensions.selenium.extensions.ISeleniumExtension;
 import io.appium.java_client.android.AndroidDriver;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.pf4j.Extension;
@@ -190,7 +191,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         String perfectoDeviceDescription = this.configuration.getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
 
         String perfectoReportJobName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
-        double perfectoReportJobNumber = this.configuration.getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, -1);
+        int perfectoReportJobNumber = (int) this.configuration.getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
         String perfectoReportJobBranch = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
         String perfectoReportProjectName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
         String perfectoReportProjectVersion = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
@@ -223,15 +224,28 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
 
         // Set reporting
-        capabilities.setCapability("report.projectName", perfectoReportProjectName);
-        capabilities.setCapability("report.projectVersion", perfectoReportProjectVersion);
-        capabilities.setCapability("report.tags", perfectoReportTags);
-        capabilities.setCapability("report.jobName", perfectoReportJobName);
-        capabilities.setCapability("report.jobNumber", (int) perfectoReportJobNumber);
-        capabilities.setCapability("report.jobBranch", perfectoReportJobBranch);
-        capabilities.setCapability("report.customFields", perfectoReportCustomFields);
-
-        if (!perfectoDeviceDescription.isEmpty()) {
+        if (!StringUtils.isEmpty(perfectoReportProjectName)) {
+            capabilities.setCapability("report.projectName", perfectoReportProjectName);
+        }
+        if (!StringUtils.isEmpty(perfectoReportProjectVersion)) {
+            capabilities.setCapability("report.projectVersion", perfectoReportProjectVersion);
+        }
+        if (!StringUtils.isEmpty(perfectoReportTags)) {
+            capabilities.setCapability("report.tags", perfectoReportTags);
+        }
+        if (!StringUtils.isEmpty(perfectoReportJobName)) {
+            capabilities.setCapability("report.jobName", perfectoReportJobName);
+        }
+        if (perfectoReportJobNumber != 0) {
+            capabilities.setCapability("report.jobNumber", perfectoReportJobNumber);
+        }
+        if (!StringUtils.isEmpty(perfectoReportJobBranch)) {
+            capabilities.setCapability("report.jobBranch", perfectoReportJobBranch);
+        }
+        if (!StringUtils.isEmpty(perfectoReportCustomFields)) {
+            capabilities.setCapability("report.customFields", perfectoReportCustomFields);
+        }
+        if (!StringUtils.isEmpty(perfectoDeviceDescription)) {
             capabilities.setCapability("description", perfectoDeviceDescription);
         }
     }
