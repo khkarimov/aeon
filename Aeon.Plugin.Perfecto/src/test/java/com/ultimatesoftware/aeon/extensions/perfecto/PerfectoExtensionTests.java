@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -71,6 +72,20 @@ class PerfectoExtensionTests {
     private MutableCapabilities mutableCapabilities;
 
     private PerfectoExtension perfectoExtension;
+
+
+    private void mockReportValuesWithEmptyStrings() {
+        Consumer<PerfectoConfiguration.Keys> mockEmptyString = (PerfectoConfiguration.Keys key) -> doReturn("")
+                .when(this.configuration)
+                .getString(key, "");
+        mockEmptyString.accept(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION);
+        mockEmptyString.accept(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME);
+        mockEmptyString.accept(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS);
+        mockEmptyString.accept(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH);
+        mockEmptyString.accept(PerfectoConfiguration.Keys.REPORT_JOB_NAME);
+        doReturn(0.0).when(this.configuration).getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        mockEmptyString.accept(PerfectoConfiguration.Keys.REPORT_TAGS);
+    }
 
     @Test
     void createInstance_createsAnInstanceSuccessfully() {
@@ -501,6 +516,7 @@ class PerfectoExtensionTests {
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
@@ -531,6 +547,7 @@ class PerfectoExtensionTests {
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
@@ -560,6 +577,7 @@ class PerfectoExtensionTests {
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
@@ -642,6 +660,7 @@ class PerfectoExtensionTests {
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
@@ -670,6 +689,28 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
 
         //Act
         this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
@@ -700,6 +741,7 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onAfterLaunch(this.aeonConfiguration, this.adapter);
@@ -730,6 +772,7 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onBeforeStart("correlationId", "Test Name 1");
@@ -759,6 +802,24 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
         doReturn("Test Name 1")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
@@ -790,6 +851,24 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
         doReturn("Test Name 1")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
@@ -822,6 +901,7 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onBeforeStart("correlationId", null);
@@ -839,9 +919,11 @@ class PerfectoExtensionTests {
                 .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
         this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
         PerfectoExtension.log = this.log;
+
         doReturn("test_token")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
@@ -851,9 +933,7 @@ class PerfectoExtensionTests {
         doReturn("test-description")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
-        doReturn("")
-                .when(this.configuration)
-                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         this.perfectoExtension.onBeforeStart("correlationId", null);
@@ -861,6 +941,42 @@ class PerfectoExtensionTests {
 
         //Assert
         verify(this.mutableCapabilities, times(1)).setCapability("scriptName", "correlationId");
+    }
+
+    @Test
+    void onGenerateCapabilities_doesNotSetEmptyReportFields() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
+
+        //Act
+        this.perfectoExtension.onBeforeStart("correlationId", null);
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(0)).setCapability(eq("report.projectName"), anyString());
+        verify(this.mutableCapabilities, times(0)).setCapability(eq("report.projectVersion"), anyString());
+        verify(this.mutableCapabilities, times(0)).setCapability(eq("report.tags"), anyString());
+        verify(this.mutableCapabilities, times(0)).setCapability(eq("report.jobName"), anyString());
+        verify(this.mutableCapabilities, times(0)).setCapability(eq("report.jobNumber"), anyString());
+        verify(this.mutableCapabilities, times(0)).setCapability(eq("report.jobBranch"), anyString());
+        verify(this.mutableCapabilities, times(0)).setCapability(eq("report.customFields"), anyString());
     }
 
     @Test
