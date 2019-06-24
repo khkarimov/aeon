@@ -16,7 +16,6 @@ import com.ultimatesoftware.aeon.extensions.selenium.SeleniumAdapter;
 import com.ultimatesoftware.aeon.extensions.selenium.SeleniumConfiguration;
 import com.ultimatesoftware.aeon.extensions.selenium.extensions.ISeleniumExtension;
 import io.appium.java_client.android.AndroidDriver;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.pf4j.Extension;
@@ -224,28 +223,28 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
 
         // Set reporting
-        if (!StringUtils.isEmpty(perfectoReportProjectName)) {
+        if (perfectoReportProjectName.isEmpty()){
             capabilities.setCapability("report.projectName", perfectoReportProjectName);
         }
-        if (!StringUtils.isEmpty(perfectoReportProjectVersion)) {
+        if (perfectoReportProjectVersion.isEmpty()) {
             capabilities.setCapability("report.projectVersion", perfectoReportProjectVersion);
         }
-        if (!StringUtils.isEmpty(perfectoReportTags)) {
+        if (perfectoReportTags.isEmpty()) {
             capabilities.setCapability("report.tags", perfectoReportTags);
         }
-        if (!StringUtils.isEmpty(perfectoReportJobName)) {
+        if (perfectoReportJobName.isEmpty()) {
             capabilities.setCapability("report.jobName", perfectoReportJobName);
         }
         if (perfectoReportJobNumber != 0) {
             capabilities.setCapability("report.jobNumber", perfectoReportJobNumber);
         }
-        if (!StringUtils.isEmpty(perfectoReportJobBranch)) {
+        if (perfectoReportJobBranch.isEmpty()) {
             capabilities.setCapability("report.jobBranch", perfectoReportJobBranch);
         }
-        if (!StringUtils.isEmpty(perfectoReportCustomFields)) {
+        if (perfectoReportCustomFields.isEmpty()) {
             capabilities.setCapability("report.customFields", perfectoReportCustomFields);
         }
-        if (!StringUtils.isEmpty(perfectoDeviceDescription)) {
+        if (perfectoDeviceDescription.isEmpty()) {
             capabilities.setCapability("description", perfectoDeviceDescription);
         }
     }
