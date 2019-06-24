@@ -13,6 +13,8 @@ or layout, see the [Appenders](https://logging.apache.org/log4j/2.x/manual/exten
 the example provided and include the proper values for the Plugin annotation. This will allow you to add the tag within
 `log4j2.xml` later.
 
+Note that even when not logging anything, files defined in appender setup will still exist, although initialized as empty files.
+
 ### Builder
 
 If your plugin takes in a large number of configuration options, a builder class can be used instead of the factory method. 
@@ -32,7 +34,7 @@ configuration element name, thus, a configuration with your custom appender and 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" packages="com.ultimatesoftware.aeon.core.common.logging">
+<Configuration status="WARN" packages="com.ultimatesoftware.aeon.extensions.log4j2">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n"/>
