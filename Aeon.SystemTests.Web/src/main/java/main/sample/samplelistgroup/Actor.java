@@ -9,9 +9,9 @@ import com.ultimatesoftware.aeon.core.testabstraction.models.Component;
  * Models the elements of an item of the list component.
  */
 public class Actor extends Component {
-    
-    public Label name;
-    public Label description;
+
+    public final Label name;
+    public final Label description;
 
     /**
      * Constructor.

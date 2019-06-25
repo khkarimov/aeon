@@ -630,7 +630,7 @@ public class AppiumAdapter extends SeleniumAdapter implements IMobileAdapter {
 
                     try {
                         findElement(selector);
-                    } catch (java.util.NoSuchElementException | NoSuchElementsException e) {
+                    } catch (NoSuchElementException | NoSuchElementsException e) {
                         log.trace(e.getMessage());
 
                         continue;

@@ -2,34 +2,28 @@ package com.ultimatesoftware.aeon.core.testabstraction.product;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.AeonConfigKey;
-import com.ultimatesoftware.aeon.core.common.Capability;
-import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
-import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapterExtension;
-import com.ultimatesoftware.aeon.core.framework.abstraction.drivers.IDriver;
+import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 
 /**
  * Abstract class for Product implementation.
  */
 public abstract class Product {
 
-    protected AutomationInfo automationInfo;
-    protected Configuration configuration;
+    protected final AutomationInfo automationInfo;
+    protected final Configuration configuration;
 
     /**
-     * Empty Constructor.
+     * Initializes a product.
+     *
+     * @param automationInfo The automation info object containing the driver and the configuration.
      */
-    Product() {
+    public Product(AutomationInfo automationInfo) {
+        this.automationInfo = automationInfo;
+        this.configuration = automationInfo.getConfiguration();
     }
 
     /**
-     * Gets the capability type from a Capability enum.
-     *
-     * @return A capability enum.
-     */
-    public abstract Capability getRequestedCapability();
-
-    /**
-     * Returns the AutomationInfo which includes the configuration, idriver, and iadapter.
+     * Returns the AutomationInfo which includes the configuration, the driver and  the adapter.
      *
      * @return the AutomationInfo of the Product.
      */
@@ -38,33 +32,24 @@ public abstract class Product {
     }
 
     /**
-     * Sets the AutomationInfo of the Product.
+     * Switches to another product by passing the {@link AutomationInfo} object along.
      *
-     * @param automationInfo The AutomationInfo to be set.
+     * @param productClass The new product's class
+     * @param <T>          The type of the new product.
+     * @return The newly instantiated product.
      */
-    protected void setAutomationInfo(AutomationInfo automationInfo) {
-        this.automationInfo = automationInfo;
-    }
+    public <T extends Product> T attach(Class<T> productClass) {
 
-    /**
-     * Abstract for launch function.
-     *
-     * @param plugin The IAdapterExtension to be added.
-     * @throws InstantiationException If an instantiation exception is made.
-     * @throws IllegalAccessException If issue obtaining keys.
-     */
-    protected void launch(IAdapterExtension plugin) throws InstantiationException, IllegalAccessException {
-        IDriver driver;
-        IAdapter adapter;
+        T product;
+        try {
+            product = productClass
+                    .getDeclaredConstructor(AutomationInfo.class)
+                    .newInstance(this.automationInfo);
+        } catch (Exception e) {
+            throw new AeonLaunchException(e);
+        }
 
-        adapter = createAdapter(plugin);
-
-        driver = (IDriver) configuration.getDriver().newInstance();
-        driver.configure(adapter, configuration);
-
-        this.automationInfo = new AutomationInfo(configuration, driver, adapter);
-
-        afterLaunch();
+        return product;
     }
 
     /**
@@ -73,17 +58,7 @@ public abstract class Product {
      *
      * @param e Exception that caused the failure.
      */
-    protected void onLaunchFailure(Exception e) {
-    }
-
-    /**
-     * Create and returns and IAdapter given a plugin.
-     *
-     * @param plugin The Product's plugin to be returned.
-     * @return The plugin with a newly created adapter.
-     */
-    private IAdapter createAdapter(IAdapterExtension plugin) {
-        return plugin.createAdapter(configuration);
+    void onLaunchFailure(Exception e) {
     }
 
     /**
@@ -93,15 +68,6 @@ public abstract class Product {
      */
     Configuration getConfiguration() {
         return this.configuration;
-    }
-
-    /**
-     * Sets the configuration of the Product.
-     *
-     * @param configuration The configuration to be set.
-     */
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
     }
 
     /**

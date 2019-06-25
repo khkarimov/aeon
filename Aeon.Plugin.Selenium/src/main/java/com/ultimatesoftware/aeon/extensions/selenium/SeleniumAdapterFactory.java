@@ -1,7 +1,7 @@
 package com.ultimatesoftware.aeon.extensions.selenium;
 
 
-import com.ultimatesoftware.aeon.core.common.Capability;
+import com.ultimatesoftware.aeon.core.common.Capabilities;
 import com.ultimatesoftware.aeon.core.common.exceptions.AeonLaunchException;
 import com.ultimatesoftware.aeon.core.common.exceptions.ConfigurationException;
 import com.ultimatesoftware.aeon.core.common.exceptions.UnableToCreateDriverException;
@@ -20,7 +20,10 @@ import com.ultimatesoftware.aeon.extensions.selenium.extensions.ISeleniumExtensi
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.JavaScriptFlowExecutor;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.SeleniumCheckInjectJQueryExecutor;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.SeleniumJavaScriptFinalizerFactory;
-import org.openqa.selenium.*;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -293,7 +296,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
     }
 
-    private Capabilities getFirefoxCapabilities() {
+    private org.openqa.selenium.Capabilities getFirefoxCapabilities() {
         MutableCapabilities desiredCapabilities = new FirefoxOptions();
         desiredCapabilities.setCapability("marionette", true);
         desiredCapabilities.setCapability("firefox_profile", getFirefoxProfile());
@@ -320,7 +323,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         });
     }
 
-    private Capabilities getChromeCapabilities() {
+    private org.openqa.selenium.Capabilities getChromeCapabilities() {
         MutableCapabilities desiredCapabilities = new ChromeOptions();
         setLoggingCapabilities(desiredCapabilities);
 
@@ -377,7 +380,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         });
     }
 
-    private Capabilities getInternetExplorerCapabilities() {
+    private org.openqa.selenium.Capabilities getInternetExplorerCapabilities() {
         MutableCapabilities desiredCapabilities;
 
         desiredCapabilities = DesiredCapabilities.internetExplorer();
@@ -403,7 +406,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         });
     }
 
-    private Capabilities getEdgeCapabilities() {
+    private org.openqa.selenium.Capabilities getEdgeCapabilities() {
         MutableCapabilities desiredCapabilities = new EdgeOptions();
         addPluginCapabilities(desiredCapabilities);
 
@@ -429,7 +432,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         });
     }
 
-    private Capabilities getSafariCapabilities() {
+    private org.openqa.selenium.Capabilities getSafariCapabilities() {
         MutableCapabilities desiredCapabilities = new SafariOptions();
         addPluginCapabilities(desiredCapabilities);
 
@@ -460,7 +463,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         });
     }
 
-    private Capabilities getOperaCapabilities() {
+    private org.openqa.selenium.Capabilities getOperaCapabilities() {
         MutableCapabilities desiredCapabilities = getOperaOptions();
         setLoggingCapabilities(desiredCapabilities);
         addPluginCapabilities(desiredCapabilities);
@@ -481,7 +484,7 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
     }
 
-    private Capabilities getMobileCapabilities(String os, String browser) {
+    private org.openqa.selenium.Capabilities getMobileCapabilities(String os, String browser) {
         MutableCapabilities desiredCapabilities = new DesiredCapabilities();
         if (!deviceName.isEmpty()) {
             desiredCapabilities.setCapability(DEVICE_NAME, deviceName);
@@ -639,8 +642,8 @@ public class SeleniumAdapterFactory implements IAdapterExtension {
     }
 
     @Override
-    public Capability getProvidedCapability() {
-        return Capability.WEB;
+    public Capabilities getProvidedCapability() {
+        return Capabilities.WEB;
     }
 }
 

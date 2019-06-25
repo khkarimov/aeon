@@ -8,15 +8,20 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'org.sonarqube'
+plugins {
+    id 'java'
+    id 'org.sonarqube' version '2.6.2'
+}
 
 dependencies {
     compile project(':Aeon.Core')
     compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Plugin.Accessibility')
     compile project(':Aeon.Plugin.Appium')
     compile project(':Aeon.Plugin.Artifactory')
+    compile project(':Aeon.Plugin.Axe')
+    compile project(':Aeon.Plugin.Continuum')
     compile project(':Aeon.Plugin.HeadSpin')
     compile project(':Aeon.Plugin.JUnit5')
     compile project(':Aeon.Plugin.Log4J2')
@@ -160,6 +165,13 @@ task CopyMetricsPlugin(type: Copy) {
     include '*.jar'
 }
 
+
+repositories {
+    maven {
+        url 'https://repo1.perfectomobile.com/public/repositories/maven'
+    }
+}
+
 assemble.dependsOn(clean)
 assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
@@ -181,40 +193,35 @@ assemble.finalizedBy(CopyMetricsPlugin)
 
 allprojects {
     group 'aeon'
-    version '1.21.0'
+    version '1.22.0'
 
     apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: 'com.jfrog.artifactory'
+    apply plugin: 'maven-publish'
+    apply plugin: 'checkstyle'
+
     sourceCompatibility = 1.8
 
     repositories {
         maven {
             url 'https://artifactory.mia.ulti.io/artifactory/maven/'
         }
-        maven {
-            url 'https://repo1.perfectomobile.com/public/repositories/maven'
-        }
     }
 
-    apply plugin: 'com.jfrog.artifactory'
-    apply plugin: 'maven-publish'
-    apply plugin: 'checkstyle'
     checkstyle {
         toolVersion = '8.7'
     }
 
     checkstyleTest {
-        configFile = new File("$rootProject.projectDir/config/checkstyle-test-sources/checkstyle.xml")
+        configFile = new File("$rootProject.projectDir/config/checkstyle-test-sources/checkstyle.xml".toString())
     }
 
     dependencies {
-        testCompile('junit:junit:4.12')
-        testRuntime("org.junit.vintage:junit-vintage-engine:5.2.0")
         testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
         testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
-        testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
         testCompile('org.mockito:mockito-junit-jupiter:2.18.0')
-        testCompile('org.junit.platform:junit-platform-launcher:1.2.0')
+        testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
     }
 
     test {
@@ -223,20 +230,6 @@ allprojects {
         }
 
         useJUnitPlatform {
-            def includeList = System.getenv('tests.included.tags')
-            if (includeList != null) {
-                def tags = includeList.split("\\s*(,|\\s)\\s*")
-                tags.each { tag ->
-                    includeTags tag
-                }
-            }
-            def excludeList = System.getenv('tests.excluded.tags')
-            if (excludeList != null) {
-                def tags = excludeList.split("\\s*(,|\\s)\\s*")
-                tags.each { tag ->
-                    excludeTags tag
-                }
-            }
         }
     }
 }

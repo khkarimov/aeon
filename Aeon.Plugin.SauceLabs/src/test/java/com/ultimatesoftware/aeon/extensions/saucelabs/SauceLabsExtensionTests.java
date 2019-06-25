@@ -242,7 +242,7 @@ class SauceLabsExtensionTests {
         this.sauceLabsExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
 
         // Assert
-        assertEquals("app-id", this.mutableCapabilities.getCapability("testobject_api_id"));
+        assertEquals("app-id", this.mutableCapabilities.getCapability("testobject_app_id"));
     }
 
     @Test

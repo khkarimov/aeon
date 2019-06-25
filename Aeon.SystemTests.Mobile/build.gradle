@@ -22,6 +22,7 @@ clean.doFirst {
 
 dependencies {
     compile project(':Aeon.Core.Mobile')
+    testCompile('junit:junit:4.12')
 }
 
 systemTest {

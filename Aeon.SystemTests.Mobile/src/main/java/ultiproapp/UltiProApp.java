@@ -11,15 +11,17 @@ import ultiproapp.pages.shared.loginpages.LoginPage;
  */
 public class UltiProApp extends MobileProduct {
 
-    // Core Pages
-    public AccessCodePage accessCodePage;
-    public LoginPage loginPage;
-    public IOSIdentitySignInPage iOSIdentitySignInPage;
+    public final AccessCodePage accessCodePage;
+    public final LoginPage loginPage;
+    public final IOSIdentitySignInPage iOSIdentitySignInPage;
 
-    @Override
-    protected void afterLaunch() {
-        super.afterLaunch();
-        AutomationInfo automationInfo = getAutomationInfo();
+    /**
+     * Create a new instance of the UltiProApp models.
+     *
+     * @param automationInfo The automation info object to use.
+     */
+    protected UltiProApp(AutomationInfo automationInfo) {
+        super(automationInfo);
 
         accessCodePage = new AccessCodePage(automationInfo);
         loginPage = new LoginPage(automationInfo);

@@ -596,14 +596,14 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
 
             if (videoPath != null) {
                 AeonTestExecution.executionEvent("videoDownloaded", videoPath);
-            }
 
-            List<IUploaderExtension> extensions = Aeon.getExtensions(IUploaderExtension.class);
-            for (IUploaderExtension extension : extensions) {
-                String videoUrl = extension.onUploadRequested(videoPath, "video", "Video URL");
+                List<IUploaderExtension> extensions = Aeon.getExtensions(IUploaderExtension.class);
+                for (IUploaderExtension extension : extensions) {
+                    String videoUrl = extension.onUploadRequested(videoPath, "video", "Video URL");
 
-                if (videoUrl != null) {
-                    log.info("Video uploaded: {}", videoUrl);
+                    if (videoUrl != null) {
+                        log.info("Video uploaded: {}", videoUrl);
+                    }
                 }
             }
 

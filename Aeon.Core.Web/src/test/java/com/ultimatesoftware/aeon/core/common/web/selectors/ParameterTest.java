@@ -1,17 +1,15 @@
 package com.ultimatesoftware.aeon.core.common.web.selectors;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-@RunWith(MockitoJUnitRunner.class)
 class ParameterTest {
 
     @Test
@@ -24,7 +22,7 @@ class ParameterTest {
         Object returnValue = parameter.getObject();
 
         // Assert
-        Assert.assertEquals(obj, returnValue);
+        assertEquals(obj, returnValue);
     }
 
     @Test
@@ -36,7 +34,7 @@ class ParameterTest {
         String result = parameter.toString();
 
         // Assert
-        Assert.assertEquals("\"A string\"", result);
+        assertEquals("\"A string\"", result);
     }
 
     @Test
@@ -48,7 +46,7 @@ class ParameterTest {
         String result = parameter.toString();
 
         // Assert
-        Assert.assertEquals("1", result);
+        assertEquals("1", result);
     }
 
     @Test
@@ -60,7 +58,7 @@ class ParameterTest {
         String result = parameter.toString();
 
         // Assert
-        Assert.assertEquals("", result);
+        assertEquals("", result);
     }
 
     @Test
@@ -73,7 +71,7 @@ class ParameterTest {
         boolean result = param1.equals(param2);
 
         // Assert
-        Assert.assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
@@ -86,7 +84,7 @@ class ParameterTest {
         boolean result = param1.equals((Object) param2);
 
         //Assert
-        Assert.assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
@@ -99,11 +97,11 @@ class ParameterTest {
         boolean result = param1.equals(param2);
 
         // Assert
-        Assert.assertFalse(result);
+        assertFalse(result);
     }
 
     @Test
-    void equals_forNotObjectTypeOfParameter_isFalse(){
+    void equals_forNotObjectTypeOfParameter_isFalse() {
         // Arrange
         Parameter param1 = new Parameter("one");
         Object obj1 = new Object();
@@ -112,7 +110,7 @@ class ParameterTest {
         boolean result = param1.equals(obj1);
 
         // Assert
-        Assert.assertFalse(result);
+        assertFalse(result);
     }
 
     @Test
@@ -126,6 +124,6 @@ class ParameterTest {
         int parameterHashCode = parameter.hashCode();
 
         //Assert
-        Assert.assertEquals(stringHashCode, parameterHashCode);
+        assertEquals(stringHashCode, parameterHashCode);
     }
 }

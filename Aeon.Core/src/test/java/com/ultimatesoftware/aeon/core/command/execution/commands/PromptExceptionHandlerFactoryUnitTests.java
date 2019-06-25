@@ -4,13 +4,12 @@ import com.ultimatesoftware.aeon.core.command.execution.consumers.ContinueAtUser
 import com.ultimatesoftware.aeon.core.command.execution.consumers.PromptExceptionHandlerFactory;
 import com.ultimatesoftware.aeon.core.command.execution.consumers.RethrowExceptionHandler;
 import com.ultimatesoftware.aeon.core.command.execution.consumers.interfaces.IExceptionHandler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class PromptExceptionHandlerFactoryUnitTests {
@@ -39,7 +38,7 @@ public class PromptExceptionHandlerFactoryUnitTests {
         handler = testPromptExceptionHandlerFactory.createHandlerFor(testException);
 
         //Assert
-        assertThat(handler, instanceOf(ContinueAtUserExceptionHandler.class));
+        assertTrue(handler instanceof ContinueAtUserExceptionHandler);
     }
 
     @Test
@@ -51,7 +50,7 @@ public class PromptExceptionHandlerFactoryUnitTests {
         handler = testPromptExceptionHandlerFactory.createHandlerFor(testException);
 
         //Assert
-        assertThat(handler, instanceOf(RethrowExceptionHandler.class));
+        assertTrue(handler instanceof RethrowExceptionHandler);
     }
 
 }

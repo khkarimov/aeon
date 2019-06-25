@@ -12,7 +12,7 @@ import org.mockito.quality.Strictness;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 

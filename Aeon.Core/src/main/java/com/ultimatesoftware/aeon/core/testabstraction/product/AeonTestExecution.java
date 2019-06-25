@@ -18,6 +18,10 @@ public class AeonTestExecution {
 
     private static UUID correlationId = null;
 
+    private AeonTestExecution() {
+        // Static classes should not be instantiated.
+    }
+
     private static void trigger(Consumer<ITestExecutionExtension> consumer) {
         List<ITestExecutionExtension> testExecutionExtensions = Aeon.getExtensions(ITestExecutionExtension.class);
 

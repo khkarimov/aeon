@@ -1,5 +1,6 @@
 package main.pagewithiframe;
 
+import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
 import main.pagewithiframe.pages.PageWithIFrame;
 
@@ -7,11 +8,16 @@ import main.pagewithiframe.pages.PageWithIFrame;
  * Sample web product.
  */
 public class IFrameWikiSample extends WebProduct {
-    public PageWithIFrame pageWithIFrame;
+    public final PageWithIFrame pageWithIFrame;
 
-    @Override
-    protected void afterLaunch() {
-        super.afterLaunch();
+    /**
+     * Create a new instance of the Wiki Sample models.
+     *
+     * @param automationInfo The automation info object to use.
+     */
+    protected IFrameWikiSample(AutomationInfo automationInfo) {
+        super(automationInfo);
+
         pageWithIFrame = new PageWithIFrame(getAutomationInfo());
     }
 }
