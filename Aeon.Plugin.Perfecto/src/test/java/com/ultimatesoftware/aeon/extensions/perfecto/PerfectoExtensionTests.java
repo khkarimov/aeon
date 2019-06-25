@@ -605,6 +605,10 @@ class PerfectoExtensionTests {
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         Executable action = () -> this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
@@ -631,6 +635,10 @@ class PerfectoExtensionTests {
         doReturn("")
                 .when(this.configuration)
                 .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+        mockReportValuesWithEmptyStrings();
 
         //Act
         Executable action = () -> this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
@@ -977,6 +985,322 @@ class PerfectoExtensionTests {
         verify(this.mutableCapabilities, times(0)).setCapability(eq("report.jobNumber"), anyString());
         verify(this.mutableCapabilities, times(0)).setCapability(eq("report.jobBranch"), anyString());
         verify(this.mutableCapabilities, times(0)).setCapability(eq("report.customFields"), anyString());
+    }
+
+    @Test
+    void onGenerateCapabilities_reportProjectNameProvided_setsReportProjectName() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("test_project_name")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        //Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("report.projectName", "test_project_name");
+    }
+
+    @Test
+    void onGenerateCapabilities_reportProjectVersionProvided_setsReportProjectVersion() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("test_project_version")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        //Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("report.projectVersion", "test_project_version");
+    }
+
+    @Test
+    void onGenerateCapabilities_reportTagsProvided_setsReportTags() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("test_tags")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        //Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("report.tags", "test_tags");
+    }
+
+    @Test
+    void onGenerateCapabilities_reportJobNumberProvided_setsReportJobNumber() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        doReturn(1.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        //Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("report.jobNumber", 1);
+    }
+
+    @Test
+    void onGenerateCapabilities_reportJobBranchProvided_setsReportJobBranch() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("test_branch")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        //Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("report.jobBranch", "test_branch");
+    }
+
+    @Test
+    void onGenerateCapabilities_reportCustomFieldsProvided_setsReportCustomFields() {
+        //Arrange
+        doReturn("http://test.perfectomobile.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+        doReturn("test_token")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        doReturn(0.0)
+                .when(this.configuration)
+                .getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        doReturn("")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        doReturn("test_custom_fields")
+                .when(this.configuration)
+                .getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        //Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        //Assert
+        verify(this.mutableCapabilities, times(1)).setCapability("report.customFields", "test_custom_fields");
+    }
+
+    @Test
+    void onGenerateCapabilities_withoutPerfectoUrl_doesNotCallApi() {
+        // Arrange
+        doReturn("http://test.not-perfecto.com/test/wd/hub")
+                .when(this.configuration)
+                .getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "");
+        this.perfectoExtension = new PerfectoExtension(this.reportiumClientFactory, this.configuration);
+        PerfectoExtension.log = this.log;
+
+        // Act
+        this.perfectoExtension.onGenerateCapabilities(this.aeonConfiguration, this.mutableCapabilities);
+
+        // Assert
+        verifyZeroInteractions(this.reportiumClient);
     }
 
     @Test

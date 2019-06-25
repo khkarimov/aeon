@@ -182,6 +182,9 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onGenerateCapabilities(Configuration configuration, MutableCapabilities capabilities) {
+        if (!this.enabled) {
+            return;
+        }
         String perfectoUser = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
         String perfectoPass = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
         String perfectoToken = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
