@@ -200,23 +200,7 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         String perfectoReportTags = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
         String perfectoReportCustomFields = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
 
-        StringJoiner perfectoScriptNameJoiner = new StringJoiner(" ");
-        if (this.testName != null) {
-            perfectoScriptNameJoiner.add(this.testName);
-        } else if (this.suiteName != null) {
-            perfectoScriptNameJoiner.add(this.suiteName);
-        } else {
-            if (!perfectoReportJobName.isEmpty()) {
-                perfectoScriptNameJoiner.add(perfectoReportJobName);
-            }
-            if (this.correlationId != null) {
-                perfectoScriptNameJoiner.add(this.correlationId);
-            }
-        }
-
-        if (perfectoScriptNameJoiner.length() > 0) {
-            capabilities.setCapability("scriptName", perfectoScriptNameJoiner.toString());
-        }
+        setScriptNameCapability(capabilities, perfectoReportJobName);
 
         // Set credentials
         setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
@@ -297,6 +281,26 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
             perfectoCapabilities.setCapability("password", perfectoPass);
         } else {
             throw new AeonLaunchException("Please specify either a token or username and password for Perfecto.");
+        }
+    }
+
+    private void setScriptNameCapability(MutableCapabilities capabilities, String perfectoReportJobName) {
+        StringJoiner perfectoScriptNameJoiner = new StringJoiner(" ");
+        if (this.testName != null) {
+            perfectoScriptNameJoiner.add(this.testName);
+        } else if (this.suiteName != null) {
+            perfectoScriptNameJoiner.add(this.suiteName);
+        } else {
+            if (!perfectoReportJobName.isEmpty()) {
+                perfectoScriptNameJoiner.add(perfectoReportJobName);
+            }
+            if (this.correlationId != null) {
+                perfectoScriptNameJoiner.add(this.correlationId);
+            }
+        }
+
+        if (perfectoScriptNameJoiner.length() > 0) {
+            capabilities.setCapability("scriptName", perfectoScriptNameJoiner.toString());
         }
     }
 }
