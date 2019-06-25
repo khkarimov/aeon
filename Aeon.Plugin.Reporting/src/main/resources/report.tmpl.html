@@ -122,7 +122,8 @@
         </md-toolbar>
         <md-dialog-content>
             <md-content>
-                <img width="100%" ng-if="activeItem.screenshotPath" ng-src="{{activeItem.screenshotPath}}">
+                <img ng-if="activeItem.screenshotPath" ng-src="{{activeItem.screenshotPath}}"
+                     style="max-width: 100%; max-height: calc(100vh - 100px);">
 
                 <!-- failed -->
                 <md-subheader ng-if="activeItem.failedExpectations.length > 0">Stack Traces</md-subheader>
@@ -176,7 +177,7 @@
                     <a ng-href="{{activeItem.videoUrl}}">Download Video</a><br>
                     <div>
                         <video ng-src="{{activeItem.videoUrl | trustArtifactoryVideoUrl}}" controls
-                               style="width: 100%;"></video>
+                               style="max-width: 100%; max-height: calc(100vh - 100px);"></video>
                     </div>
                 </div>
             </md-content>

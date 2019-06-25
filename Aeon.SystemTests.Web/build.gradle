@@ -29,9 +29,6 @@ systemTest {
     if (testConfiguration) {
         environment "AEON_CONFIG", "src/systemTest/resources/" + testConfiguration + ".properties"
     }
-    if (testConfiguration != "perfecto") {
-        environment "AEON_DISABLED_PLUGINS", "aeon.extensions.perfecto"
-    }
 
     maxParallelForks = 4
     useJUnit {

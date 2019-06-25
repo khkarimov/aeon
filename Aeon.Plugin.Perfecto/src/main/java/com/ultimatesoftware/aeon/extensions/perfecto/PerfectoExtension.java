@@ -23,10 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Test execution and Selenium extensions for using Aeon with Perfecto.
@@ -41,12 +38,18 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
     private ReportiumClientFactory reportiumClientFactory;
     private String correlationId;
     private String suiteName;
+    private String testName;
+
+    private boolean enabled;
 
     static Logger log = LoggerFactory.getLogger(PerfectoExtension.class);
 
     PerfectoExtension(ReportiumClientFactory reportiumClientFactory, IConfiguration configuration) {
         this.reportiumClientFactory = reportiumClientFactory;
         this.configuration = configuration;
+
+        this.enabled = this.configuration.getString(SeleniumConfiguration.Keys.SELENIUM_GRID_URL, "").contains("perfectomobile.com") ||
+                this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_FORCED, false);
     }
 
     /**
@@ -111,16 +114,26 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onBeforeTest(String name, String... tags) {
+        if (!this.enabled) {
+            return;
+        }
+
         TestContext testContext = new TestContext();
         if (tags != null) {
             testContext = new TestContext.Builder().withTestExecutionTags(tags).build();
         }
+
+        this.testName = name;
 
         this.reportiumClient.testStart(name, testContext);
     }
 
     @Override
     public void onSucceededTest() {
+        if (!this.enabled) {
+            return;
+        }
+
         reportiumClient.testStop(TestResultFactory.createSuccess());
 
         log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
@@ -128,6 +141,10 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onSkippedTest(String name, String... tags) {
+        if (!this.enabled) {
+            return;
+        }
+
         reportiumClient.testStop(TestResultFactory.createFailure("Skipped"));
 
         log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
@@ -135,6 +152,10 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onFailedTest(String reason, Throwable e) {
+        if (!this.enabled) {
+            return;
+        }
+
         reportiumClient.testStop(TestResultFactory.createFailure(reason, e));
 
         log.info(TEST_REPORT_URL_LABEL, reportiumClient.getReportUrl());
@@ -142,6 +163,10 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onBeforeStep(String message) {
+        if (!this.enabled) {
+            return;
+        }
+
         reportiumClient.stepStart(message);
     }
 
@@ -157,12 +182,25 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
 
     @Override
     public void onGenerateCapabilities(Configuration configuration, MutableCapabilities capabilities) {
+        if (!this.enabled) {
+            return;
+        }
         String perfectoUser = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_USER, "");
         String perfectoPass = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_PASS, "");
         String perfectoToken = this.configuration.getString(PerfectoConfiguration.Keys.PERFECTO_TOKEN, "");
         boolean perfectoAutoInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_AUTOINSTRUMENT, false);
         boolean perfectoSensorInstrument = this.configuration.getBoolean(PerfectoConfiguration.Keys.PERFECTO_SENSORINSTRUMENT, false);
         String perfectoDeviceDescription = this.configuration.getString(PerfectoConfiguration.Keys.DEVICE_DESCRIPTION, "");
+
+        String perfectoReportJobName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_NAME, "");
+        int perfectoReportJobNumber = (int) this.configuration.getDouble(PerfectoConfiguration.Keys.REPORT_JOB_NUMBER, 0);
+        String perfectoReportJobBranch = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_JOB_BRANCH, "");
+        String perfectoReportProjectName = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_NAME, "");
+        String perfectoReportProjectVersion = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_PROJECT_VERSION, "");
+        String perfectoReportTags = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_TAGS, "");
+        String perfectoReportCustomFields = this.configuration.getString(PerfectoConfiguration.Keys.REPORT_CUSTOM_FIELDS, "");
+
+        setScriptNameCapability(capabilities, perfectoReportJobName);
 
         // Set credentials
         setPerfectoCredentials(perfectoUser, perfectoPass, perfectoToken, capabilities);
@@ -171,6 +209,28 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
         capabilities.setCapability("autoInstrument", perfectoAutoInstrument);
         capabilities.setCapability("sensorInstrument", perfectoSensorInstrument);
 
+        // Set reporting
+        if (!perfectoReportProjectName.isEmpty()) {
+            capabilities.setCapability("report.projectName", perfectoReportProjectName);
+        }
+        if (!perfectoReportProjectVersion.isEmpty()) {
+            capabilities.setCapability("report.projectVersion", perfectoReportProjectVersion);
+        }
+        if (!perfectoReportTags.isEmpty()) {
+            capabilities.setCapability("report.tags", perfectoReportTags);
+        }
+        if (!perfectoReportJobName.isEmpty()) {
+            capabilities.setCapability("report.jobName", perfectoReportJobName);
+        }
+        if (perfectoReportJobNumber != 0) {
+            capabilities.setCapability("report.jobNumber", perfectoReportJobNumber);
+        }
+        if (!perfectoReportJobBranch.isEmpty()) {
+            capabilities.setCapability("report.jobBranch", perfectoReportJobBranch);
+        }
+        if (!perfectoReportCustomFields.isEmpty()) {
+            capabilities.setCapability("report.customFields", perfectoReportCustomFields);
+        }
         if (!perfectoDeviceDescription.isEmpty()) {
             capabilities.setCapability("description", perfectoDeviceDescription);
         }
@@ -221,6 +281,26 @@ public class PerfectoExtension implements ITestExecutionExtension, ISeleniumExte
             perfectoCapabilities.setCapability("password", perfectoPass);
         } else {
             throw new AeonLaunchException("Please specify either a token or username and password for Perfecto.");
+        }
+    }
+
+    private void setScriptNameCapability(MutableCapabilities capabilities, String perfectoReportJobName) {
+        StringJoiner perfectoScriptNameJoiner = new StringJoiner(" ");
+        if (this.testName != null) {
+            perfectoScriptNameJoiner.add(this.testName);
+        } else if (this.suiteName != null) {
+            perfectoScriptNameJoiner.add(this.suiteName);
+        } else {
+            if (!perfectoReportJobName.isEmpty()) {
+                perfectoScriptNameJoiner.add(perfectoReportJobName);
+            }
+            if (this.correlationId != null) {
+                perfectoScriptNameJoiner.add(this.correlationId);
+            }
+        }
+
+        if (perfectoScriptNameJoiner.length() > 0) {
+            capabilities.setCapability("scriptName", perfectoScriptNameJoiner.toString());
         }
     }
 }

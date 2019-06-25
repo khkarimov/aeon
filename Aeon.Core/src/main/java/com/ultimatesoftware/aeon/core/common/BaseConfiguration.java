@@ -280,7 +280,11 @@ public class BaseConfiguration implements IConfiguration {
      * @return Double representation of key and value pair.
      */
     public double getDouble(AeonConfigKey key, double defaultValue) {
-        return Double.parseDouble(get(key.getKey(), Double.toString(defaultValue)));
+        try {
+            return Double.parseDouble(get(key.getKey(), Double.toString(defaultValue)));
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     /**

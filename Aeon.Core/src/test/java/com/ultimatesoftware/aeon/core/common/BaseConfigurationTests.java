@@ -275,6 +275,16 @@ public class BaseConfigurationTests {
     }
 
     @Test
+    public void getDouble_withParseError_returnsDefault() {
+        // Arrange
+        config.setString(Configuration.Keys.TIMEOUT, "not a double");
+        // Act
+        double testVar = config.getDouble(Configuration.Keys.TIMEOUT, 1.58);
+        // Assert
+        Assertions.assertEquals(1.58, testVar);
+    }
+
+    @Test
     public void testGetString() {
         // Arrange
         config.setDouble(Configuration.Keys.TIMEOUT, 6.7);
