@@ -1,0 +1,4 @@
+lib
+plugins
+*.jar
+config.yml

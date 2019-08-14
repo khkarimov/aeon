@@ -1,0 +1,62 @@
+def baseProjectName = 'Aeon.Plugin.Appium'
+def baseProjectDescription = 'Aeon Appium Plugin'
+def base = baseProjectName
+
+configurations {
+    pluginImplementation
+}
+
+dependencies {
+    compile project(':Aeon.Core.Mobile')
+    compile project(':Aeon.Plugin.Selenium')
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'AppiumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.appium.AppiumPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
+    }
+
+    from configurations.pluginImplementation.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'AppiumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.appium.AppiumPlugin'
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.appium'
+        }
+    }
+}

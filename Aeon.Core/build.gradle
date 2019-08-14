@@ -1,0 +1,46 @@
+compileTestJava.options.encoding = 'utf-8'
+
+def baseProjectName = 'Aeon.Core'
+def baseProjectDescription = 'Aeon Core'
+def base = baseProjectName
+
+dependencies {
+    compile 'org.pf4j:pf4j:2.5.0'
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version
+    }
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.core'
+        }
+    }
+}

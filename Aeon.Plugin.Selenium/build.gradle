@@ -1,0 +1,75 @@
+def baseProjectName = 'Aeon.Plugin.Selenium'
+def baseProjectDescription = 'Aeon Selenium Plugin'
+def base = baseProjectName
+
+configurations {
+    pluginImplementation
+}
+
+ext {
+    seleniumVersion = '3.141.59'
+}
+
+dependencies {
+    compile project(':Aeon.Core.Web')
+
+    // Drivers
+    pluginImplementation "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-edge-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-opera-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-safari-driver:$seleniumVersion"
+    pluginImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+
+    pluginImplementation "io.appium:java-client:7.0.0"
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'SeleniumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.selenium.SeleniumPlugin'
+    }
+
+    from configurations.pluginImplementation.filter({ !(it.name =~ /.*slf4j.*.jar/) }).collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'SeleniumAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.selenium.SeleniumPlugin'
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.selenium'
+        }
+    }
+}

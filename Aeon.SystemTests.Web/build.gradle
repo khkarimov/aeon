@@ -1,0 +1,61 @@
+plugins {
+    id 'org.unbroken-dome.test-sets' version '2.1.1'
+}
+
+testSets {
+    systemTest
+}
+
+checkstyleSystemTest {
+    configFile = new File("$rootProject.projectDir/config/checkstyle-test-sources/checkstyle.xml")
+}
+
+compileTestJava.options.encoding = 'utf-8'
+
+artifactoryPublish.skip = true
+
+clean.doFirst {
+    delete 'log'
+    delete 'plugins'
+}
+
+dependencies {
+    compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Plugin.Log4J2')
+    testCompile('junit:junit:4.12')
+}
+
+systemTest {
+    if (testConfiguration) {
+        environment "AEON_CONFIG", "src/systemTest/resources/" + testConfiguration + ".properties"
+    }
+
+    maxParallelForks = 4
+    useJUnit {
+        def includeList = System.getenv('tests.included.tags')
+        if (includeList != null) {
+            def categories = includeList.split("\\s*(,|\\s)\\s*")
+            categories.each { category ->
+                includeCategories 'categories.' + category
+            }
+        }
+        def excludeList = System.getenv('tests.excluded.tags')
+        if (excludeList != null) {
+            def categories = excludeList.split("\\s*(,|\\s)\\s*")
+            categories.each { category ->
+                excludeCategories 'categories.' + category
+            }
+        }
+    }
+
+    testLogging {
+        // Make sure output from
+        // standard out or error is shown
+        // in Gradle output.
+        showStandardStreams = true
+    }
+}
+
+sonarqube {
+    skipProject = true
+}

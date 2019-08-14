@@ -1,0 +1,75 @@
+def baseProjectName = 'Aeon.Plugin.Perfecto'
+def baseProjectDescription = 'Aeon Perfecto Plugin'
+def base = baseProjectName
+
+configurations {
+    pluginImplementation
+}
+
+repositories {
+    maven {
+        url 'https://repo1.perfectomobile.com/public/repositories/maven'
+    }
+}
+
+ext {
+    reportiumSdkVersion = '1.2.0'
+}
+
+dependencies {
+    testCompile "org.mockito:mockito-core:2.7.22"
+
+    compile project(':Aeon.Plugin.Appium')
+
+    pluginImplementation "com.perfecto.reporting-sdk:reportium-java:$reportiumSdkVersion"
+
+    configurations.compile.extendsFrom(configurations.pluginImplementation)
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'aeon.extensions.perfecto',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.perfecto.PerfectoPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
+    }
+
+    from configurations.pluginImplementation.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+}
+
+task fatJar(type: Jar) {
+    group 'build'
+    version = version
+    baseName = base
+    archiveName = base + '-all-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'PerfectoAeon',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.perfecto.PerfectoPlugin'
+    }
+
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }
+    with jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.perfecto'
+        }
+    }
+}

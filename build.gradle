@@ -1,0 +1,236 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.7.5"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.sonarqube' version '2.6.2'
+}
+
+dependencies {
+    compile project(':Aeon.Core')
+    compile project(':Aeon.Core.Mobile')
+    compile project(':Aeon.Core.Web')
+    compile project(':Aeon.Plugin.Accessibility')
+    compile project(':Aeon.Plugin.Appium')
+    compile project(':Aeon.Plugin.Artifactory')
+    compile project(':Aeon.Plugin.Axe')
+    compile project(':Aeon.Plugin.Continuum')
+    compile project(':Aeon.Plugin.HeadSpin')
+    compile project(':Aeon.Plugin.JUnit5')
+    compile project(':Aeon.Plugin.Log4J2')
+    compile project(':Aeon.Plugin.Perfecto')
+    compile project(':Aeon.Plugin.Reporting')
+    compile project(':Aeon.Plugin.SauceLabs')
+    compile project(':Aeon.Plugin.Selenium')
+    compile project(':Aeon.Plugin.Slack')
+    compile project(':Aeon.Plugin.TestNG')
+    compile project(':Aeon.SystemTests.Web')
+    compile project(':Aeon.SystemTests.Mobile')
+    compile project(':Aeon.Platform')
+    compile project(':Aeon.Platform.Http')
+    compile project(':Aeon.Platform.Python')
+}
+
+wrapper {
+    gradleVersion = '4.10'
+}
+
+task CopySeleniumPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Selenium/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+task CopySeleniumPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Selenium/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
+    include '*.jar'
+}
+
+task CopyReportingPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Reporting/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+task CopyReportingPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Reporting/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
+    include '*.jar'
+}
+
+task CopyPerfectoPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Perfecto/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+task CopyPerfectoPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Perfecto/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
+    include '*.jar'
+}
+
+task CopyAppiumPluginMobile(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Appium/build/libs'
+    into 'Aeon.SystemTests.Mobile/plugins'
+    include '*.jar'
+}
+
+task CopySeleniumPlatformPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Selenium/build/libs'
+    into 'Aeon.Platform/plugins'
+    include '*.jar'
+}
+
+task CopySeleniumPlatformHttpPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Selenium/build/libs'
+    into 'Aeon.Platform.Http/plugins'
+    include '*.jar'
+}
+
+task CopySeleniumPlatformPythonPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Selenium/build/libs'
+    into 'Aeon.Platform.Python/plugins'
+    include '*.jar'
+}
+
+task CopyDriversPlatformHttp(type: Copy) {
+    group 'copy'
+    from 'Aeon.SystemTests.Web/lib'
+    into 'Aeon.Platform.Http/lib'
+}
+
+task CopyDriversPlatformPython(type: Copy) {
+    group 'copy'
+    from 'Aeon.SystemTests.Web/lib'
+    into 'Aeon.Platform.Python/lib'
+}
+
+task CopySlackPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Slack/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+task CopyArtifactoryPlugin(type: Copy) {
+    group 'copy'
+    from 'Aeon.Plugin.Artifactory/build/libs'
+    into 'Aeon.SystemTests.Web/plugins'
+    include '*.jar'
+}
+
+repositories {
+    maven {
+        url 'https://repo1.perfectomobile.com/public/repositories/maven'
+    }
+}
+
+assemble.dependsOn(clean)
+assemble.dependsOn(javadoc)
+assemble.finalizedBy(CopySeleniumPlugin)
+assemble.finalizedBy(CopySeleniumPluginMobile)
+assemble.finalizedBy(CopyReportingPlugin)
+assemble.finalizedBy(CopyReportingPluginMobile)
+assemble.finalizedBy(CopyPerfectoPlugin)
+assemble.finalizedBy(CopyPerfectoPluginMobile)
+assemble.finalizedBy(CopyAppiumPluginMobile)
+assemble.finalizedBy(CopySeleniumPlatformPlugin)
+assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
+assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
+assemble.finalizedBy(CopyDriversPlatformHttp)
+assemble.finalizedBy(CopyDriversPlatformPython)
+assemble.finalizedBy(CopySlackPlugin)
+assemble.finalizedBy(CopyArtifactoryPlugin)
+
+allprojects {
+    group 'aeon'
+    version '1.22.2'
+
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'com.jfrog.artifactory'
+    apply plugin: 'maven-publish'
+    apply plugin: 'checkstyle'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        maven {
+            url 'https://artifactory.mia.ulti.io/artifactory/maven/'
+        }
+    }
+
+    checkstyle {
+        toolVersion = '8.7'
+    }
+
+    checkstyleTest {
+        configFile = new File("$rootProject.projectDir/config/checkstyle-test-sources/checkstyle.xml".toString())
+    }
+
+    dependencies {
+        testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
+        testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
+        testCompile('org.mockito:mockito-junit-jupiter:2.18.0')
+        testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+
+        annotationProcessor 'org.pf4j:pf4j:2.5.0'
+    }
+
+    test {
+        if (threads) {
+            maxParallelForks = threads.toInteger()
+        }
+
+        useJUnitPlatform {
+        }
+    }
+}
+
+subprojects {
+    artifactory {
+        contextUrl = 'https://artifactory.mia.ulti.io/artifactory/'
+        publish {
+            repository {
+                repoKey = "${artifactory_repository}" // The Artifactory repository key to publish to
+                username = "${artifactory_username}" // The publisher user name
+                password = "${artifactory_password}" // The publisher password
+            }
+            defaults {
+                // Reference to Gradle publications defined in the build script.
+                // This is how we tell the Artifactory Plugin which artifacts should be
+                // published to Artifactory.
+                publications('mavenJava')
+                publishArtifacts = true
+                // Properties to be attached to the published artifacts.
+                properties = ['qa.level': 'basic', 'dev.team': 'core']
+                // Publish generated POM files to Artifactory (true by default)
+                publishPom = true
+            }
+        }
+        resolve {
+            repoKey = 'jcenter'
+        }
+    }
+}
+
+artifactoryPublish.skip = true

@@ -1,0 +1,31 @@
+def baseProjectName = 'Aeon.Plugin.HeadSpin'
+def baseProjectDescription = 'Aeon HeadSpin Plugin'
+def base = baseProjectName
+
+dependencies {
+    compile project(':Aeon.Plugin.Selenium')
+}
+
+jar {
+    version = version
+    baseName = base
+    archiveName = base + '-' + version + '.jar'
+
+    manifest {
+        attributes 'Implementation-Title': baseProjectDescription,
+                'Implementation-Version': version,
+                'Plugin-Id': 'aeon.extensions.headspin',
+                'Plugin-Version': version,
+                'Plugin-Class': 'com.ultimatesoftware.aeon.extensions.headspin.HeadSpinPlugin',
+                'Plugin-Dependencies': 'SeleniumAeon'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.extensions.headspin'
+        }
+    }
+}

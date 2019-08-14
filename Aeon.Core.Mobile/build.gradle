@@ -1,0 +1,12 @@
+dependencies {
+    compile project(':Aeon.Core.Web')
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'aeon.core.mobile'
+        }
+    }
+}
