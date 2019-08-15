@@ -174,9 +174,7 @@ allprojects {
     sourceCompatibility = 1.8
 
     repositories {
-        maven {
-            url 'https://artifactory.mia.ulti.io/artifactory/maven/'
-        }
+        jcenter()
     }
 
     checkstyle {
