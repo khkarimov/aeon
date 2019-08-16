@@ -243,7 +243,7 @@ class WebProductTypeExtensionTests {
         // Act
         ClickCommand result = (ClickCommand) this.webProductTypeExtension.createCommand(
                 "ClickCommand",
-                Collections.singletonList(selectors.toArray()));
+                Collections.singletonList(selectors.toArray(new Map[0])));
 
         // Assert
         assertEquals("#element-id .test-class", result.getSelector().toString());
@@ -262,7 +262,7 @@ class WebProductTypeExtensionTests {
         // Act
         ClickCommand result = (ClickCommand) this.webProductTypeExtension.createCommand(
                 "ClickCommand",
-                Collections.singletonList(selectors.toArray()));
+                Collections.singletonList(selectors.toArray(new Map[0])));
 
         // Assert
         assertEquals("$(\"#element-id\").find($(\".test-class:contains(test)\"))", result.getSelector().toString());
@@ -281,7 +281,7 @@ class WebProductTypeExtensionTests {
         // Act
         ClickCommand result = (ClickCommand) this.webProductTypeExtension.createCommand(
                 "ClickCommand",
-                Collections.singletonList(selectors.toArray()));
+                Collections.singletonList(selectors.toArray(new Map[0])));
 
         // Assert
         assertEquals("$(\"#element-id:contains(tester)\").find($(\".test-class:contains(test)\"))", result.getSelector().toString());
@@ -300,7 +300,7 @@ class WebProductTypeExtensionTests {
         // Act
         ClickCommand result = (ClickCommand) this.webProductTypeExtension.createCommand(
                 "ClickCommand",
-                Collections.singletonList(selectors.toArray()));
+                Collections.singletonList(selectors.toArray(new Map[0])));
 
         // Assert
         assertEquals("#element-id [data-automation=\"test-button\"]", result.getSelector().toString());
@@ -319,7 +319,7 @@ class WebProductTypeExtensionTests {
         // Act
         ClickCommand result = (ClickCommand) this.webProductTypeExtension.createCommand(
                 "ClickCommand",
-                Collections.singletonList(selectors.toArray()));
+                Collections.singletonList(selectors.toArray(new Map[0])));
 
         // Assert
         assertEquals("#element-id [da=\"test-button\"]", result.getSelector().toString());
@@ -338,7 +338,7 @@ class WebProductTypeExtensionTests {
         // Act
         ClickCommand result = (ClickCommand) this.webProductTypeExtension.createCommand(
                 "ClickCommand",
-                Collections.singletonList(selectors.toArray()));
+                Collections.singletonList(selectors.toArray(new Map[0])));
 
         // Assert
         assertEquals("$(\"#element-id\").parents(\".class-name\")", result.getSelector().toString());
@@ -357,7 +357,7 @@ class WebProductTypeExtensionTests {
         // Act
         ClickCommand result = (ClickCommand) this.webProductTypeExtension.createCommand(
                 "ClickCommand",
-                Collections.singletonList(selectors.toArray()));
+                Collections.singletonList(selectors.toArray(new Map[0])));
 
         // Assert
         assertEquals("$(\"#element-id\").filter(\".class-name\")", result.getSelector().toString());

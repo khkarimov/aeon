@@ -389,7 +389,7 @@ class ReportingTestExecutionExtensionTests {
         assertNotEquals("", this.reportCaptor.getValue().getSequence().get(0).getStopped());
         assertNotEquals("", this.reportCaptor.getValue().getSequence().get(0).getDuration());
         assertEquals("passed", this.reportCaptor.getValue().getSequence().get(0).getStatus());
-        assertEquals("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAC0lEQVR42mNgQAYAAA4AATo1BFYAAAAASUVORK5CYII=", this.reportCaptor.getValue().getSequence().get(0).getScreenshotPath());
+        assertEquals("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAC0lEQVR42mNgQAYAAA4AATo1BFYAAAAASUVORK5CYII=".substring(0, 75), this.reportCaptor.getValue().getSequence().get(0).getScreenshotPath().substring(0, 75));
     }
 
     @Test
