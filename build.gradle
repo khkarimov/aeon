@@ -185,6 +185,10 @@ allprojects {
         configFile = new File("$rootProject.projectDir/config/checkstyle-test-sources/checkstyle.xml".toString())
     }
 
+    jacoco {
+        toolVersion = "0.8.2"
+    }
+
     dependencies {
         testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
         testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
