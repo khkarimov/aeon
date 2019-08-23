@@ -73,7 +73,7 @@ public class AppiumConfiguration extends SeleniumConfiguration {
     @Override
     public void loadPluginSettings() throws IOException {
         super.loadPluginSettings();
-        try (InputStream in = AppiumConfiguration.class.getResourceAsStream("/appium.properties")) {
+        try (InputStream in = getAppiumInputStream()) {
             properties.load(in);
         } catch (IOException e) {
             log.error("appium.properties resource could not be read");
@@ -91,5 +91,14 @@ public class AppiumConfiguration extends SeleniumConfiguration {
         }
 
         super.setBrowserType(browserType);
+    }
+
+    /**
+     * Gets InputStream of appium.properties.
+     *
+     * @return getResourceAsStream of "/appium.properties" file
+     */
+    InputStream getAppiumInputStream() {
+        return AppiumConfiguration.class.getResourceAsStream("/appium.properties");
     }
 }
