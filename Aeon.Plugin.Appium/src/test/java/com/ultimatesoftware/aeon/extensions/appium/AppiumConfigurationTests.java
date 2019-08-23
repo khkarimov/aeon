@@ -132,7 +132,7 @@ public class AppiumConfigurationTests {
         appiumConfiguration.loadPluginSettings();
 
         // Assert
-        assertEquals("30", appiumConfiguration.getString(AppiumConfiguration.Keys.WEBVIEW_TIMEOUT, "30"));
+        assertEquals("30000", appiumConfiguration.getString(AppiumConfiguration.Keys.WEBVIEW_TIMEOUT, "30000"));
     }
 
     @Test
