@@ -12,6 +12,7 @@ import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
 import com.ultimatesoftware.aeon.core.framework.abstraction.adapters.IAdapter;
 import com.ultimatesoftware.aeon.core.framework.abstraction.controls.web.IWebCookie;
 import com.ultimatesoftware.aeon.core.framework.abstraction.drivers.IDriver;
+import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
 import com.ultimatesoftware.aeon.core.testabstraction.product.WebConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +28,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class BrowserTests {
+class BrowserTests {
 
     // Variables
     private Browser browserObject;
@@ -49,7 +50,7 @@ public class BrowserTests {
 
     // Setup Methods
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         automationInfo = new AutomationInfo(configuration, driver, adapter);
         automationInfo.setCommandExecutionFacade(commandExecutionFacade);
         browserObject = new Browser(automationInfo);
@@ -57,31 +58,91 @@ public class BrowserTests {
 
     // Test Methods
     @Test
-    public void dismissAlert_CallsExecute() {
+    void dismissAlert_CallsExecute() {
+
+        //Arrange
+
+        //Act
         browserObject.dismissAlert();
+
+        //Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(DismissAlertCommand.class));
     }
 
     @Test
-    public void acceptAlert_CallsExecute() {
+    void acceptAlert_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.acceptAlert();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(AcceptAlertCommand.class));
     }
 
     @Test
-    public void deleteAllCookies_CallsExecute() {
+    void deleteAllCookies_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.deleteAllCookies();
+
+        //Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(DeleteAllCookiesCommand.class));
     }
 
     @Test
-    public void deleteCookie_CallsExecute() {
+    void deleteCookie_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.deleteCookie("cookiename");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(DeleteCookieCommand.class));
     }
 
     @Test
-    public void getBrowserType_CallsExecute() {
+    void addCookie_CallsExecute() {
+
+        // Arrange
+
+        // Act
+        browserObject.addCookie(testCookie);
+
+        // Assert
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(AddCookieCommand.class));
+    }
+
+    @Test
+    void getAllCookies_CallsExecute() {
+
+        // Arrange
+
+        // Act
+        browserObject.getAllCookies();
+
+        // Assert
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAllCookiesCommand.class));
+    }
+
+    @Test
+    void verifyAlertText_CallsExecute() {
+
+        // Arrange
+
+        // Act
+        browserObject.verifyAlertText("comparingText");
+
+        // Assert
+        verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(VerifyAlertTextCommand.class));
+    }
+
+    @Test
+    void getBrowserType_CallsExecute() {
 
         // Arrange
         when(configuration.getBrowserType()).thenReturn(BrowserType.CHROME);
@@ -94,157 +155,322 @@ public class BrowserTests {
     }
 
     @Test
-    public void getCookie_CallsExecute_VerifyCookie() {
+    void getCookie_CallsExecute_VerifyCookie() {
+
+        // Arrange
+
+        // Act
         when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(testCookie);
         IWebCookie returnedCookie = browserObject.getCookie("Placeholder");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetCookieCommand.class));
         Assertions.assertSame(testCookie, returnedCookie);
     }
 
     @Test
-    public void goBack_CallsExecute() {
+    void goBack_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.goBack();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GoBackCommand.class));
     }
 
     @Test
-    public void goForward_CallsExecute() {
+    void goForward_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.goForward();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GoForwardCommand.class));
     }
 
     @Test
-    public void goToUrl_CallsExecute() {
+    void goToUrl_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.goToUrl("http://www.kindafunny.com");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GoToUrlCommand.class));
     }
 
     @Test
-    public void maximize_CallsExecute() {
+    void maximize_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.maximize();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(MaximizeCommand.class));
     }
 
     @Test
-    public void modifyCookie_CallsExecute() {
+    void modifyCookie_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.modifyCookie(testCookie.getName(), testCookie.getValue());
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(ModifyCookieCommand.class));
     }
 
     @Test
-    public void quit_CallsExecute() {
+    void quit_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.quit();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(QuitCommand.class));
     }
 
     @Test
-    public void close_CallsExecute() {
+    void quitConfigurationReporting_CallsTestSucceeded() {
+
+        // Arrange
+        AutomationInfo automationInfoSpy = Mockito.spy(automationInfo);
+        when(configuration.getBoolean(Configuration.Keys.REPORTING, true)).thenReturn(true);
+        browserObject = new Browser(automationInfoSpy);
+
+        // Act
+        browserObject.quit();
+
+        // Assert
+        verify(automationInfoSpy, times(1)).testSucceeded();
+    }
+
+    @Test
+    void close_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.close();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(CloseCommand.class));
     }
 
     @Test
-    public void refresh_CallsExecute() {
+    void refresh_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.refresh();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(RefreshCommand.class));
     }
 
     @Test
-    public void resize_CallsExecute() {
+    void resize_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.resize(BrowserSize.MAXIMIZED);
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(ResizeCommand.class));
     }
 
     @Test
-    public void scrollToTop_CallsExecute() {
+    void scrollToTop_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.scrollToTop();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(ScrollToTopCommand.class));
     }
 
     @Test
-    public void scrollToEnd_CallsExecute() {
+    void scrollToEnd_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.scrollToEnd();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(ScrollToEndCommand.class));
     }
 
     @Test
-    public void sendKeysToAlert_ValidString_CallsExecuteWithCorrectKeys() {
+    void sendKeysToAlert_ValidString_CallsExecuteWithCorrectKeys() {
+
+        // Arrange
+
+        // Act
         browserObject.sendKeysToAlert("Go Gators!");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(SendKeysToAlertCommand.class));
     }
 
     @Test
-    public void switchToMainWindow_CallsExecute() {
+    void switchToMainWindow_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.switchToMainWindow();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(SwitchToMainWindowCommand.class));
     }
 
     @Test
-    public void switchToMainWindowWaitForPopups_CallsExecute() {
+    void switchToMainWindowWaitForPopups_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.switchToMainWindow(true);
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(SwitchToMainWindowCommand.class));
     }
 
     @Test
-    public void switchToWindowByTitle_CallsExecute() {
+    void switchToWindowByTitle_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.switchToWindowByTitle("Kinda Funny");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(SwitchToWindowByTitleCommand.class));
     }
 
     @Test
-    public void switchToWindowByUrl_CallsExecute() {
+    void switchToWindowByUrl_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.switchToWindowByUrl("http://www.kindafunny.com");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(SwitchToWindowByUrlCommand.class));
     }
 
     @Test
-    public void verifyAlertExists_CallsExecute() {
+    void verifyAlertExists_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.verifyAlertExists();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(VerifyAlertExistsCommand.class));
     }
 
     @Test
-    public void verifyAlertNotExists_CallsExecute() {
+    void verifyAlertNotExists_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.verifyAlertNotExists();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(VerifyAlertNotExistsCommand.class));
     }
 
     @Test
-    public void getAlertText_CallsExecute_VerifyAlertText() {
+    void getAlertText_CallsExecute_VerifyAlertText() {
+
+        // Arrange
         String alertText = "This is an alert";
+
+        // Act
         when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(alertText);
         String returnedText = browserObject.getAlertText();
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(GetAlertTextCommand.class));
         Assertions.assertEquals(alertText, returnedText);
     }
 
     @Test
-    public void verifyAlertTextLike_CallsExecute() {
+    void verifyAlertTextLike_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.verifyAlertTextLike("test", true);
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(VerifyAlertTextLikeCommand.class));
     }
 
     @Test
-    public void verifyTitle_CallsExecute() {
+    void verifyTitle_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.verifyTitle("Title");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(VerifyTitleCommand.class));
     }
 
     @Test
-    public void verifyUrl_CallsExecute() {
+    void verifyUrl_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.verifyURL("http://www.kindafunny.com");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(VerifyUrlCommand.class));
     }
 
     @Test
-    public void verifyWindowDoesNotExistByTitle_CallsExecute() {
+    void verifyWindowDoesNotExistByTitle_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.verifyWindowDoesNotExistByTitle("Title");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(WindowDoesNotExistByTitleCommand.class));
     }
 
     @Test
-    public void verifyWindowDoesNotExistByUrl_CallsExecute() {
+    void verifyWindowDoesNotExistByUrl_CallsExecute() {
+
+        // Arrange
+
+        // Act
         browserObject.verifyWindowDoesNotExistByUrl("http://kindafunny.com");
+
+        // Assert
         verify(commandExecutionFacade, times(1)).execute(Mockito.eq(automationInfo), any(WindowDoesNotExistByUrlCommand.class));
     }
 }
