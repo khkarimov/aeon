@@ -158,9 +158,9 @@ class BrowserTests {
     void getCookie_CallsExecute_VerifyCookie() {
 
         // Arrange
+        when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(testCookie);
 
         // Act
-        when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(testCookie);
         IWebCookie returnedCookie = browserObject.getCookie("Placeholder");
 
         // Assert
@@ -404,9 +404,10 @@ class BrowserTests {
 
         // Arrange
         String alertText = "This is an alert";
+        when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(alertText);
+
 
         // Act
-        when(commandExecutionFacade.execute(any(AutomationInfo.class), any(CommandWithReturn.class))).thenReturn(alertText);
         String returnedText = browserObject.getAlertText();
 
         // Assert
