@@ -23,7 +23,7 @@ class ClientRectsTests {
     }
 
     @Test
-    void toString_ReturnsCorrectly() {
+    void clientRects_toString_ReturnsCorrectly() {
         // Arrange
         String expectedString = "Top: 1 Bottom: 8 Left: 2 Right: 6";
 
@@ -35,25 +35,21 @@ class ClientRectsTests {
     }
 
     @Test
-    void clientRects_ConstructorImplementsCorrectly() {
+    void clientRects_CopyConstructor_Works() {
         // Arrange
-        rect = new ClientRects(rect);
 
         // Act
-        int top = rect.getTop();
-        int bottom = rect.getBottom();
-        int left = rect.getLeft();
-        int right = rect.getRight();
+        ClientRects newRect = new ClientRects(rect);
 
         // Assert
-        assertEquals(1, top);
-        assertEquals(0, bottom);
-        assertEquals(0, left);
-        assertEquals(0, right);
+        assertEquals(1, newRect.getTop());
+        assertEquals(0, newRect.getBottom());
+        assertEquals(0, newRect.getLeft());
+        assertEquals(0, newRect.getRight());
     }
 
     @Test
-    void getWidthTest() {
+    void clientRects_getWidthTest() {
         // Arrange
         int expectedWidth = 4;
 
@@ -65,7 +61,7 @@ class ClientRectsTests {
     }
 
     @Test
-    void getHeightTest() {
+    void clientRects_getHeightTest() {
         // Arrange
         int expectedHeight = 7;
 
@@ -77,7 +73,7 @@ class ClientRectsTests {
     }
 
     @Test
-    void getHorizontalCenterTest() {
+    void clientRects_getHorizontalCenterTest() {
         // Arrange
         int expectedHorizontalCenter = 4;
 
@@ -89,7 +85,7 @@ class ClientRectsTests {
     }
 
     @Test
-    void getVerticalCenterTest() {
+    void clientRects_getVerticalCenterTest() {
         // Arrange
         int expectedVerticalCenter = 4;
 
@@ -101,7 +97,7 @@ class ClientRectsTests {
     }
 
     @Test
-    void getHorizontalMiddleTest() {
+    void clientRects_getHorizontalMiddleTest() {
         // Arrange
         int expectedHorizontalMiddle = 2;
 
@@ -113,7 +109,7 @@ class ClientRectsTests {
     }
 
     @Test
-    void getVerticalMiddleTest() {
+    void clientRects_getVerticalMiddleTest() {
         // Arrange
         int expectedVerticalMiddle = 3;
 
