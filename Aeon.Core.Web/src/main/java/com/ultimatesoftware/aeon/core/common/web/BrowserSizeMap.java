@@ -21,6 +21,9 @@ public final class BrowserSizeMap {
         browserSizes.put(BrowserSize.TABLET_PORTRAIT, new Dimension(768, 1024));
         browserSizes.put(BrowserSize.TABLET_LANDSCAPE, new Dimension(1024, 768));
         browserSizes.put(BrowserSize.FULL_HD, new Dimension(1920, 1080));
+        browserSizes.put(BrowserSize.WQHD, new Dimension(2560, 1440));
+        browserSizes.put(BrowserSize.UHD_4K, new Dimension(3840, 2160));
+        browserSizes.put(BrowserSize.UHD_8K, new Dimension(7680, 4320));
     }
 
     static {
@@ -32,6 +35,9 @@ public final class BrowserSizeMap {
         sizes.put(new Dimension(768, 1024), BrowserSize.TABLET_PORTRAIT);
         sizes.put(new Dimension(1024, 768), BrowserSize.TABLET_LANDSCAPE);
         sizes.put(new Dimension(1920, 1080), BrowserSize.FULL_HD);
+        sizes.put(new Dimension(2560, 1440), BrowserSize.WQHD);
+        sizes.put(new Dimension(3840, 2160), BrowserSize.UHD_4K);
+        sizes.put(new Dimension(7680, 4320), BrowserSize.UHD_8K);
     }
 
     /**
