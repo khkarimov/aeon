@@ -163,7 +163,7 @@ assemble.finalizedBy(CopyArtifactoryPlugin)
 
 allprojects {
     group 'aeon'
-    version '1.22.2'
+    version '1.23.0'
 
     apply plugin: 'java'
     apply plugin: 'jacoco'
