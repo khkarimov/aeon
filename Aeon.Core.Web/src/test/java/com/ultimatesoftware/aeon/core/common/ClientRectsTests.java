@@ -23,7 +23,7 @@ class ClientRectsTests {
     }
 
     @Test
-    void clientRects_toString_ReturnsCorrectly() {
+    void clientRects_toString_returnsCorrectly() {
         // Arrange
         String expectedString = "Top: 1 Bottom: 8 Left: 2 Right: 6";
 
@@ -35,17 +35,17 @@ class ClientRectsTests {
     }
 
     @Test
-    void clientRects_CopyConstructor_Works() {
+    void clientRects_constructor_works() {
         // Arrange
 
         // Act
-        ClientRects newRect = new ClientRects(rect);
+        ClientRects newRect = new ClientRects(1, 8, 2, 6);
 
         // Assert
         assertEquals(1, newRect.getTop());
-        assertEquals(0, newRect.getBottom());
-        assertEquals(0, newRect.getLeft());
-        assertEquals(0, newRect.getRight());
+        assertEquals(8, newRect.getBottom());
+        assertEquals(2, newRect.getLeft());
+        assertEquals(6, newRect.getRight());
     }
 
     @Test
