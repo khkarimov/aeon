@@ -2,8 +2,11 @@ package com.ultimatesoftware.aeon.extensions.appium;
 
 import com.ultimatesoftware.aeon.core.common.exceptions.BrowserTypeNotRecognizedException;
 import com.ultimatesoftware.aeon.core.common.mobile.AppType;
+import com.ultimatesoftware.aeon.core.common.mobile.selectors.MobileSelectOption;
 import com.ultimatesoftware.aeon.core.common.web.BrowserSize;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IBrowserType;
+import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
+import com.ultimatesoftware.aeon.extensions.selenium.SeleniumElement;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.IJavaScriptFlowExecutor;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -15,10 +18,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.UnsupportedCommandException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
 
@@ -26,6 +26,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -368,13 +371,45 @@ class AppiumAdapterTests {
     void appiumAdapter_setDate_androidApp() {
         // Assemble
         LocalDate date = LocalDate.now();
-        AppiumAdapter appiumAdapterSpy = Mockito.spy(appiumAdapter);
-        when(appiumDriver.findElement(any())).thenReturn(any());
+        AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
+        SeleniumElement seleniumElement = mock(SeleniumElement.class);
+        WebElement webElement1 = mock(WebElement.class);
+        WebElement webElement2 = mock(WebElement.class);
+        WebElement webElement3 = mock(WebElement.class);
+        WebElement webElement4 = mock(WebElement.class);
+        IByWeb byMobile = mock(IByWeb.class);
+
+        doReturn(webElement1).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_date"));
+        doReturn(webElement2).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_year"));
+        doReturn(webElement3).when(appiumDriver).findElementByAccessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+        doReturn(webElement4).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/button1"));
+
+        List<String> monthList = Arrays.asList("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        when(webElement1.getText()).thenReturn("     " + monthList.get(date.getMonthValue()));
+        when(webElement2.getText()).thenReturn("" + date.getYear());
+
+        when(seleniumElement.getSelector()).thenReturn(byMobile);
+
+        //doReturn(androidDriver).when(appiumAdapterSpy).getMobileWebDriver();
+        //doReturn(appiumDriver).when(appiumDriver).context("NATIVE_APP");
 
         // Act
         appiumAdapterSpy.setDate(date);
+
         // Assert
-        verify(appiumAdapterSpy, times(2)).click(any());
+        verify(appiumAdapterSpy, times(2)).click(seleniumElement);
+    }
+
+    @Test
+    void appiumAdapter_mobileSelect_() {
+        // Assemble
+        AppiumAdapter appiumAdapterSpy = mock(AppiumAdapter.class);
+
+        // Act
+        appiumAdapterSpy.mobileSelect(any(MobileSelectOption.class), anyString());
+
+        // Assert
+        verify(appiumAdapterSpy, times(1)).click(any(SeleniumElement.class));
 
     }
 }
