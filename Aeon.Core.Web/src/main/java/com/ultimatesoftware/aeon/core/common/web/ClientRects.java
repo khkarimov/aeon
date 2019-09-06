@@ -16,15 +16,6 @@ public class ClientRects {
     /**
      * Initializes a new instance of the {@link ClientRects} class.
      *
-     * @param clientRects ClientRects object.
-     */
-    public ClientRects(ClientRects clientRects) {
-        this.top = clientRects.getTop();
-    }
-
-    /**
-     * Initializes a new instance of the {@link ClientRects} class.
-     *
      * @param top    Location of top edge in pixels.
      * @param bottom Location of bottom edge in pixels.
      * @param left   Location of left edge in pixels.
@@ -146,6 +137,7 @@ public class ClientRects {
 
     /**
      * Function that returns top, bottom, left and right as as string.
+     *
      * @return the string of top, bottom, left and right.
      */
     public String toString() {
