@@ -13,7 +13,7 @@ import com.ultimatesoftware.aeon.core.common.web.BrowserType;
 import com.ultimatesoftware.aeon.core.common.web.WebSelectOption;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IBrowserType;
 import com.ultimatesoftware.aeon.core.common.web.interfaces.IByWeb;
-import com.ultimatesoftware.aeon.core.framework.abstraction.controls.web.WebControl;
+import com.ultimatesoftware.aeon.core.common.web.selectors.ByJQuery;
 import com.ultimatesoftware.aeon.extensions.selenium.QuadFunction;
 import com.ultimatesoftware.aeon.extensions.selenium.SeleniumElement;
 import com.ultimatesoftware.aeon.extensions.selenium.jquery.IJavaScriptFlowExecutor;
@@ -29,6 +29,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -380,12 +382,10 @@ class AppiumAdapterTests {
         verify(appiumDriver, times(1)).manage();
     }
 
-    @Ignore
     @Test
-    void recentNotificationDescriptionIs_throwsAppiumException() {
+    void recentNotificationDescriptionIs_noMatchingElement_throwsAppiumException() {
 
         // Arrange
-        SeleniumElement seleniumElement = mock(SeleniumElement.class);
         WebElement webElement = mock(WebElement.class);
 
         Dimension screenSize = new Dimension(5, 6);
@@ -393,22 +393,84 @@ class AppiumAdapterTests {
         when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
         when(this.remoteWindow.getSize()).thenReturn(screenSize);
 
-        doReturn(webElement).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(anyString()));
-        //doReturn(webElement).when(seleniumElement).getUnderlyingWebElement();
+        when(appiumDriver.findElement(any(By.class))).thenReturn(webElement);
+        when(webElement.getText()).thenReturn("hit");
 
         // Act
         Executable action = () -> appiumAdapter.recentNotificationDescriptionIs("miss");
 
         // Assert
         Exception exception = assertThrows(AppiumException.class, action);
-        assertEquals("Correct element was not found after all checks", exception);
+        assertEquals("Correct element not found, exiting", exception.getMessage());
     }
+
+    @Test
+    void recentNotificationDescriptionIs_matchingElement_callsGetText() {
+
+        // Arrange
+        WebElement webElement = mock(WebElement.class);
+
+        Dimension screenSize = new Dimension(5, 6);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
+
+        when(appiumDriver.findElement(any(By.class))).thenReturn(webElement);
+        when(webElement.getText()).thenReturn("hit");
+
+        // Act
+        appiumAdapter.recentNotificationDescriptionIs("hit");
+
+        // Assert
+        verify(webElement, times(1)).getText();
+    }
+
+    @Test
+    void recentNotificationDescriptionIs_noElementFound_throwsAppiumException() {
+
+        // Arrange
+        Dimension screenSize = new Dimension(5, 6);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
+
+        when(appiumDriver.findElement(any(By.class))).thenThrow(new NoSuchElementException(""));
+
+        // Act
+        Executable action = () -> appiumAdapter.recentNotificationDescriptionIs("hit");
+
+        // Assert
+        Exception exception = assertThrows(AppiumException.class, action);
+        assertEquals("Correct element was not found after all checks", exception.getMessage());
+    }
+
+    @Test
+    void recentNotificationIs_matchingElement_callsGetText() {
+
+        // Arrange
+        WebElement webElement = mock(WebElement.class);
+
+        Dimension screenSize = new Dimension(5, 6);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
+
+        when(appiumDriver.findElement(any(By.class))).thenReturn(webElement);
+        when(webElement.getText()).thenReturn("hit");
+
+        // Act
+        appiumAdapter.recentNotificationIs("hit");
+
+        // Assert
+        verify(webElement, times(1)).getText();
+    }
+
 
     @Test
     void setDate_androidApp_callsClickTwice() {
 
         // Arrange
-        LocalDate date = LocalDate.now();
+        LocalDate date = LocalDate.of(2019, 9, 9);
         WebElement webElement1 = mock(WebElement.class);
         WebElement webElement2 = mock(WebElement.class);
         WebElement webElement3 = mock(WebElement.class);
@@ -423,19 +485,235 @@ class AppiumAdapterTests {
         when(webElement1.getText()).thenReturn("     " + monthList.get(date.getMonthValue()));
         when(webElement2.getText()).thenReturn("" + date.getYear());
 
-        AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
-
         // Act
-        appiumAdapterSpy.setDate(date);
+        appiumAdapter.setDate(date);
 
         // Assert
         verify(webElement3, times(1)).click();
         verify(webElement4, times(1)).click();
     }
 
-    @Ignore
+    @MockitoSettings(strictness = Strictness.LENIENT)
     @Test
-    void setDate_notAndroidApp_callsGetMobileWebDriverTwice() throws MalformedURLException {
+    void setDate_monthIncorrectTooLow_callsClickEightTimes() {
+
+        // Arrange
+        LocalDate date = LocalDate.of(2019, 9, 9);
+        WebElement webElement1 = mock(WebElement.class);
+        WebElement webElement2 = mock(WebElement.class);
+        WebElement webElement3 = mock(WebElement.class);
+        WebElement webElement4 = mock(WebElement.class);
+        WebElement webElement5 = mock(WebElement.class);
+
+        doReturn(webElement1).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_date"));
+        doReturn(webElement2).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_year"));
+        doReturn(webElement3).when(appiumDriver).findElementByAccessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+        doReturn(webElement4).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/button1"));
+        doReturn(webElement5).when(appiumDriver).findElementByAccessibilityId(ByMobile.accessibilityId("Next month").toString());
+
+        List<String> monthList = Arrays.asList("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        when(webElement1.getText()).thenReturn("     Jan").thenReturn("      " + monthList.get(date.getMonthValue()));
+        when(webElement2.getText()).thenReturn("" + date.getYear());
+        //when(webElement5.getText()).thenReturn();
+
+
+        // Act
+        appiumAdapter.setDate(date);
+
+        // Assert
+        verify(webElement5, times(8)).click();
+    }
+
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    @Test
+    void setDate_monthIncorrectTooHigh_callsClickEightTimes() {
+
+        // Arrange
+        LocalDate date = LocalDate.of(2019, 1, 9);
+        WebElement webElement1 = mock(WebElement.class);
+        WebElement webElement2 = mock(WebElement.class);
+        WebElement webElement3 = mock(WebElement.class);
+        WebElement webElement4 = mock(WebElement.class);
+        WebElement webElement5 = mock(WebElement.class);
+
+        doReturn(webElement1).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_date"));
+        doReturn(webElement2).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_year"));
+        doReturn(webElement3).when(appiumDriver).findElementByAccessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+        doReturn(webElement4).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/button1"));
+        doReturn(webElement5).when(appiumDriver).findElementByAccessibilityId(ByMobile.accessibilityId("Previous month").toString());
+
+        List<String> monthList = Arrays.asList("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        when(webElement1.getText()).thenReturn("     Sep").thenReturn("      " + monthList.get(date.getMonthValue()));
+        when(webElement2.getText()).thenReturn("" + date.getYear());
+
+
+        // Act
+        appiumAdapter.setDate(date);
+
+        // Assert
+        verify(webElement5, times(8)).click();
+    }
+
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    @Test
+    void setDate_dateIsWrong_callsClickTwice() {
+
+        // Arrange
+        LocalDate date = LocalDate.of(2019, 9, 9);
+        WebElement webElement1 = mock(WebElement.class);
+        WebElement webElement2 = mock(WebElement.class);
+        WebElement webElement3 = mock(WebElement.class);
+        WebElement webElement4 = mock(WebElement.class);
+        WebElement webElement5 = mock(WebElement.class);
+
+
+        doReturn(webElement1).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_date"));
+        doReturn(webElement2).when(appiumDriver).findElement(org.openqa.selenium.By.id(ByMobile.id("android:id/date_picker_header_year").toString()));
+        doReturn(webElement3).when(appiumDriver).findElementByAccessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+        doReturn(webElement4).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/button1"));
+
+        doReturn(webElement5).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[1]").toString()));
+
+        doReturn(webElement5).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[2]").toString()));
+
+        doReturn(webElement5).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[3]").toString()));
+
+        doReturn(webElement5).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[4]").toString()));
+
+        doReturn(webElement5).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[5]").toString()));
+
+        doReturn(webElement5).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[6]").toString()));
+
+        doReturn(webElement5).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[7]").toString()));
+
+        when(webElement5.getText()).thenReturn("" + date.getYear());
+
+        List<String> monthList = Arrays.asList("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        when(webElement1.getText()).thenReturn("     " + monthList.get(date.getMonthValue()));
+        when(webElement2.getText()).thenReturn("" + date.getYear() + 1);
+
+        Dimension screenSize = new Dimension(5, 6);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
+
+
+        // Act
+        appiumAdapter.setDate(date);
+
+        // Assert
+        verify(webElement3, times(1)).click();
+        verify(webElement4, times(1)).click();
+    }
+
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    @Test
+    void setDate_dateIsWrongWithExceptions_callsClickFourteenTimes() {
+
+        // Arrange
+        LocalDate date = LocalDate.of(2019, 9, 9);
+        WebElement webElement1 = mock(WebElement.class);
+        WebElement webElement2 = mock(WebElement.class);
+        WebElement webElement3 = mock(WebElement.class);
+        WebElement webElement4 = mock(WebElement.class);
+        WebElement webElement5 = mock(WebElement.class);
+
+        doReturn(webElement1).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/date_picker_header_date"));
+        doReturn(webElement2).when(appiumDriver).findElement(org.openqa.selenium.By.id(ByMobile.id("android:id/date_picker_header_year").toString()));
+        doReturn(webElement3).when(appiumDriver).findElementByAccessibilityId(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+        doReturn(webElement4).when(appiumDriver).findElement(org.openqa.selenium.By.id("android:id/button1"));
+
+        doThrow(new NoSuchElementException("")).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[1]").toString()));
+
+        doThrow(new NoSuchElementException("")).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[2]").toString()));
+
+        doThrow(new NoSuchElementException("")).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[3]").toString()));
+
+        doThrow(new NoSuchElementException("")).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[4]").toString()));
+
+        doThrow(new NoSuchElementException("")).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[5]").toString()));
+
+        doThrow(new NoSuchElementException("")).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[6]").toString()));
+
+        when(appiumDriver.findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/" +
+                "android.widget.FrameLayout/android.widget.DatePicker/android.widget.LinearLayout/" +
+                "android.widget.ScrollView/android.widget.ViewAnimator/android.widget.ListView/" +
+                "android.widget.TextView[7]").toString()))).thenThrow(new NoSuchElementException("")).thenReturn(webElement5);
+
+        when(webElement5.getText()).thenReturn("" + date.getYear());
+
+        List<String> monthList = Arrays.asList("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        when(webElement1.getText()).thenReturn("     " + monthList.get(date.getMonthValue()));
+        when(webElement2.getText()).thenReturn("" + date.getYear() + 1);
+
+        Dimension screenSize = new Dimension(5, 6);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
+
+
+        // Act
+        appiumAdapter.setDate(date);
+
+        // Assert
+        verify(webElement2, times(14)).click();
+    }
+
+    @Test
+    void setDate_notAndroidApp_callsSendKeysThreeTimes() throws MalformedURLException {
 
         // Arrange
         when(this.configuration.getBrowserType()).thenReturn(AppType.IOS_HYBRID_APP);
@@ -449,35 +727,17 @@ class AppiumAdapterTests {
                 this.loggingPreferences
         );
 
-        LocalDate date = LocalDate.now();
+        LocalDate date = LocalDate.of(2019, 9, 9);
 
-        SeleniumElement seleniumElement = mock(SeleniumElement.class);
-        WebElement webElement1 = mock(WebElement.class);
-        WebElement webElement2 = mock(WebElement.class);
-        WebElement webElement3 = mock(WebElement.class);
+        WebElement webElement = mock(WebElement.class);
 
-        when(appiumDriver.findElement(org.openqa.selenium.By.xpath(ByMobile.xpath(anyString()).toString()))).thenReturn(webElement1);
-        //doReturn(webElement1).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath(anyString()).toString()));
-        //doReturn("Tag").when(webElement1).getTagName();
-        when(webElement1.getTagName()).thenReturn("Tag");
-        //doNothing().when(webElement1).sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
-
-        //doReturn(webElement2).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("//XCUIElementTypePickerWheel[2]").toString()));
-        //doReturn("Tag").when(webElement2).getTagName();
-        //doNothing().when(webElement2).sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
-
-        //doReturn(webElement3).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("//XCUIElementTypePickerWheel[3]").toString()));
-        //doReturn("Tag").when(webElement3).getTagName();
-        //doNothing().when(webElement3).sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
-
-
-        AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
+        when(iosDriver.findElement(any(By.class))).thenReturn(webElement);
 
         // Act
-        appiumAdapterSpy.setDate(date);
+        appiumAdapter.setDate(date);
 
         // Assert
-        verify(appiumAdapterSpy, times(1)).click(any(WebControl.class));
+        verify(webElement, times(3)).sendKeys(anyString());
     }
 
     @Test
@@ -486,7 +746,7 @@ class AppiumAdapterTests {
         WebElement webElement = mock(WebElement.class);
         String value = "";
 
-        doReturn(webElement).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("//android.widget.CheckedTextView[@text='']").toString()));
+        when(appiumDriver.findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("//android.widget.CheckedTextView[@text='']").toString()))).thenReturn(webElement);
 
         // Act
         appiumAdapter.mobileSelect(MobileSelectOption.TEXT, value);
@@ -515,36 +775,52 @@ class AppiumAdapterTests {
         WebElement webElement2 = mock(WebElement.class);
         String value = "";
 
-        doReturn(webElement1).when(appiumDriver).findElement(org.openqa.selenium.By.xpath(ByMobile.xpath("//XCUIElementTypePickerWheel[1]").toString()));
-        doReturn("tag").when(webElement1).getTagName();
-        //doReturn(webElement2).when(appiumDriver).findElementByAccessibilityId(ByMobile.accessibilityId("Done").toString());
-        //doReturn("tag").when(webElement2).getTagName();
+        when(iosDriver.findElement(any(By.class))).thenReturn(webElement1);
+        when(iosDriver.findElementByAccessibilityId(any(String.class))).thenReturn(webElement2);
 
         // Act
         appiumAdapter.mobileSelect(MobileSelectOption.TEXT, value);
 
         // Assert
         verify(webElement1, times(1)).sendKeys(value);
-        //verify(webElement2, times(1)).click();
+        verify(webElement2, times(1)).click();
     }
 
-    @Ignore
     @Test
-    void scrollElementIntoView_callsScrollElementIntoView() {
+    void scrollElementIntoView_selectorIsNotAIByMobile_callsGetExectuorTwice() {
+
         // Arrange
-        AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
         IByWeb ibyweb = mock(IByWeb.class);
+        ByJQuery jquery = mock(ByJQuery.class);
+        QuadFunction quad = mock(QuadFunction.class);
+
+        when(ibyweb.toJQuery()).thenReturn(jquery);
+        when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
+        when(quad.apply(any(Object.class), any(Object.class), any(Object.class))).thenReturn(new Object());
 
         // Act
         appiumAdapter.scrollElementIntoView(ibyweb);
 
         // Assert
-
-
+        verify(javaScriptFlowExecutor, times(2)).getExecutor();
     }
 
     @Test
-    void acceptAlert_callsAccept() {
+    void scrollElementIntoView_selectorIsAIByMobile_doesNothing() {
+
+        // Arrange
+        AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
+        ByMobileId byMobile = mock(ByMobileId.class);
+
+        // Act
+        appiumAdapterSpy.scrollElementIntoView(byMobile);
+
+        // Assert
+        verify(appiumAdapterSpy, times(1)).scrollElementIntoView(byMobile);
+    }
+
+    @Test
+    void acceptAlert_isAndroidOrIos_callsAccept() {
 
         // Arrange
         WebDriver.TargetLocator target = mock(WebDriver.TargetLocator.class);
@@ -561,9 +837,65 @@ class AppiumAdapterTests {
     }
 
     @Test
-    void dismissAlert_callsDismiss() {
+    void acceptAlert_isNotAndroidOrIos_callsAccept() throws MalformedURLException {
 
         // Arrange
+        when(this.configuration.getBrowserType()).thenReturn(OtherAppType.Other_App);
+        this.appiumAdapter = new AppiumAdapter(
+                this.appiumDriver,
+                this.javaScriptFlowExecutor,
+                this.asyncJavaScriptFlowExecutor,
+                this.configuration,
+                BrowserSize.FULL_HD,
+                new URL("http://host/wd/hub"),
+                this.loggingPreferences
+        );
+
+        WebDriver.TargetLocator target = mock(WebDriver.TargetLocator.class);
+        Alert alert = mock(Alert.class);
+
+        when(appiumDriver.switchTo()).thenReturn(target);
+        when(target.alert()).thenReturn(alert);
+
+        // Act
+        appiumAdapter.acceptAlert();
+
+        // Assert
+        verify(alert, times(1)).accept();
+    }
+
+    @Test
+    void dismissAlert_isAndroidOrIos_callsDismiss() {
+
+        // Arrange
+        WebDriver.TargetLocator target = mock(WebDriver.TargetLocator.class);
+        Alert alert = mock(Alert.class);
+
+        when(appiumDriver.switchTo()).thenReturn(target);
+        when(target.alert()).thenReturn(alert);
+
+        // Act
+        appiumAdapter.dismissAlert();
+
+        // Assert
+        verify(alert, times(1)).dismiss();
+    }
+
+    @Test
+    void dismissAlert_isNotAndroidOrIos_callsDismiss() throws MalformedURLException {
+
+        // Arrange
+        when(this.configuration.getBrowserType()).thenReturn(OtherAppType.Other_App);
+        this.appiumAdapter = new AppiumAdapter(
+                this.appiumDriver,
+                this.javaScriptFlowExecutor,
+                this.asyncJavaScriptFlowExecutor,
+                this.configuration,
+                BrowserSize.FULL_HD,
+                new URL("http://host/wd/hub"),
+                this.loggingPreferences
+        );
+
         WebDriver.TargetLocator target = mock(WebDriver.TargetLocator.class);
         Alert alert = mock(Alert.class);
 
@@ -583,7 +915,7 @@ class AppiumAdapterTests {
         // Arrange
         WebElement webElement = mock(WebElement.class);
 
-        doReturn(webElement).when(appiumDriver).findElement(org.openqa.selenium.By.id(ByMobile.id("com.android.packageinstaller:id/permission_allow_button").toString()));
+        when(appiumDriver.findElement(org.openqa.selenium.By.id(ByMobile.id("com.android.packageinstaller:id/permission_allow_button").toString()))).thenReturn(webElement);
 
         // Act
         appiumAdapter.acceptOrDismissPermissionDialog(true);
@@ -623,7 +955,7 @@ class AppiumAdapterTests {
         // Arrange
         WebElement webElement = mock(WebElement.class);
 
-        doReturn(webElement).when(appiumDriver).findElement(org.openqa.selenium.By.id(ByMobile.id("com.android.packageinstaller:id/permission_deny_button").toString()));
+        when(appiumDriver.findElement(org.openqa.selenium.By.id(ByMobile.id("com.android.packageinstaller:id/permission_deny_button").toString()))).thenReturn(webElement);
 
         // Act
         appiumAdapter.acceptOrDismissPermissionDialog(false);
@@ -665,7 +997,7 @@ class AppiumAdapterTests {
         ByMobileId byMobile = mock(ByMobileId.class);
         AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
 
-        doReturn(byMobile).when(element).getSelector();
+        when(element.getSelector()).thenReturn(byMobile);
 
         // Act
         appiumAdapterSpy.click(element);
@@ -688,45 +1020,90 @@ class AppiumAdapterTests {
         verify(element, times(1)).click();
     }
 
-    @Ignore
     @Test
-    void mobileClick_() {
+    void mobileClick_happyPath() {
 
         // Arrange
-        AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
         SeleniumElement seleniumElement = mock(SeleniumElement.class);
         WebElement webElement = mock(WebElement.class);
-        WebDriver.Options options = mock(WebDriver.Options.class);
-        WebDriver.Window window = mock(WebDriver.Window.class);
-        TouchAction touch = mock(TouchAction.class);
         QuadFunction quad = mock(QuadFunction.class);
-        SeleniumScriptExecutor exe = mock(SeleniumScriptExecutor.class);
 
         Point point = new Point(1, 1);
         Dimension dim = new Dimension(1, 1);
-        Object obj = new Object();
 
-        //doReturn(1l).when(appiumAdapterSpy).executeScript("return screen.availWidth");
-        //doReturn(1l).when(appiumAdapterSpy).executeScript("return screen.availHeight");
-        //doNothing().when(appiumAdapterSpy).executeScript("return screen.availWidth");
-        doReturn(quad).when(javaScriptFlowExecutor).getExecutor();
-        doReturn(1l).when(quad).apply(exe, "return screen.availWidth", Arrays.asList(obj));
-        doReturn(webElement).when(seleniumElement).getUnderlyingWebElement();
-        doReturn(point).when(webElement).getLocation();
-        doReturn(dim).when(webElement).getSize();
+        when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
+        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1l);
 
-        doReturn(options).when(appiumDriver).manage();
-        doReturn(window).when(options).window();
-        doReturn(dim).when(window).getSize();
+        when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
+        when(webElement.getLocation()).thenReturn(point);
+        when(webElement.getSize()).thenReturn(dim);
 
-        //doNothing().when(appiumDriver).performTouchAction(any(Touch));
+        Dimension screenSize = new Dimension(5, 6);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
 
         // Act
-        appiumAdapterSpy.mobileClick(seleniumElement);
+        appiumAdapter.mobileClick(seleniumElement);
 
         // Assert
-        verify(appiumDriver, times(1)).performTouchAction(touch);
+        verify(appiumDriver, times(1)).performTouchAction(any(TouchAction.class));
+    }
 
+    @Test
+    void mobileClick_throwsWebDriverException_happyPath() {
+
+        // Arrange
+        SeleniumElement seleniumElement = mock(SeleniumElement.class);
+        WebElement webElement = mock(WebElement.class);
+        QuadFunction quad = mock(QuadFunction.class);
+        Point point = new Point(1, 1);
+        Dimension dim = new Dimension(1, 1);
+
+        when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
+        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1l);
+
+        when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
+        when(webElement.getLocation()).thenReturn(point);
+        when(webElement.getSize()).thenReturn(dim);
+
+        when(this.appiumDriver.manage()).thenThrow(new WebDriverException());
+
+        // Act
+        appiumAdapter.mobileClick(seleniumElement);
+
+        // Assert
+        verify(appiumDriver, times(1)).performTouchAction(any(TouchAction.class));
+    }
+
+    @Test
+    void mobileClick_matchesMobileSize_happyPath() {
+
+        // Arrange
+        SeleniumElement seleniumElement = mock(SeleniumElement.class);
+        WebElement webElement = mock(WebElement.class);
+        QuadFunction quad = mock(QuadFunction.class);
+
+        Point point = new Point(1, 1);
+        Dimension dim = new Dimension(1, 1);
+
+        when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
+        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1l);
+
+        when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
+        when(webElement.getLocation()).thenReturn(point);
+        when(webElement.getSize()).thenReturn(dim);
+
+        Dimension screenSize = new Dimension(1125, 2436);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
+
+        // Act
+        appiumAdapter.mobileClick(seleniumElement);
+
+        // Assert
+        verify(appiumDriver, times(1)).performTouchAction(any(TouchAction.class));
     }
 
     @Test
@@ -817,8 +1194,8 @@ class AppiumAdapterTests {
         WebElement webElement = mock(WebElement.class);
         AppiumAdapter appiumAdapterSpy = spy(appiumAdapter);
 
-        doReturn(byMobile).when(seleniumElement).getSelector();
-        doReturn(webElement).when(seleniumElement).getUnderlyingWebElement();
+        when(seleniumElement.getSelector()).thenReturn(byMobile);
+        when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
 
         // Act
         appiumAdapter.set(seleniumElement, WebSelectOption.VALUE, "");
@@ -834,8 +1211,8 @@ class AppiumAdapterTests {
         SeleniumElement seleniumElement = mock(SeleniumElement.class);
         WebElement webElement = mock(WebElement.class);
 
-        doReturn(webElement).when(seleniumElement).getUnderlyingWebElement();
-        doReturn("Name").when(webElement).getTagName();
+        when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
+        when(webElement.getTagName()).thenReturn("Name");
 
         // Act
         appiumAdapter.set(seleniumElement, WebSelectOption.VALUE, "");
