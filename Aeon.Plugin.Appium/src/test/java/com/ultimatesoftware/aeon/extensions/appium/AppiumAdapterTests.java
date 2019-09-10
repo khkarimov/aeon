@@ -1032,7 +1032,7 @@ class AppiumAdapterTests {
         Dimension dim = new Dimension(1, 1);
 
         when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
-        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1l);
+        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1L);
 
         when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
         when(webElement.getLocation()).thenReturn(point);
@@ -1061,7 +1061,7 @@ class AppiumAdapterTests {
         Dimension dim = new Dimension(1, 1);
 
         when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
-        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1l);
+        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1L);
 
         when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
         when(webElement.getLocation()).thenReturn(point);
@@ -1088,7 +1088,7 @@ class AppiumAdapterTests {
         Dimension dim = new Dimension(1, 1);
 
         when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
-        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1l);
+        when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1L);
 
         when(seleniumElement.getUnderlyingWebElement()).thenReturn(webElement);
         when(webElement.getLocation()).thenReturn(point);
