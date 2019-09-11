@@ -807,21 +807,21 @@ class AppiumAdapterTests {
 
     @Test
     void scrollElementIntoView_selectorIsNotAIByMobile_callsExecuteScriptTwice() {
+
         // Arrange
         IByWeb ibyweb = mock(IByWeb.class);
         ByJQuery jquery = mock(ByJQuery.class);
         QuadFunction quad = mock(QuadFunction.class);
-        SeleniumScriptExecutor sel = mock(SeleniumScriptExecutor.class);
 
         when(ibyweb.toJQuery()).thenReturn(jquery);
         when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
-        when(quad.apply(eq(sel), any(Object.class), any(Object.class))).thenReturn(new Object());
+        when(quad.apply(any(Object.class), any(Object.class), any(Object.class))).thenReturn(new Object());
 
         // Act
         appiumAdapter.scrollElementIntoView(ibyweb);
 
         // Assert
-        verify(sel, times(2)).executeScript(any(String.class));
+        verify(quad, times(2)).apply(any(Object.class), any(Object.class), any(Object.class));
     }
 
     @Test
