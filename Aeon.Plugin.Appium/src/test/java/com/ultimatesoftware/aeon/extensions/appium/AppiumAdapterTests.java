@@ -351,7 +351,7 @@ class AppiumAdapterTests {
     }
 
     @Test
-    void swipe_trueParameters_callsPress() {
+    void swipe_trueParameters_callsPerformTouchAction() {
 
         // Arrange
         Dimension screenSize = new Dimension(5, 6);
@@ -363,11 +363,11 @@ class AppiumAdapterTests {
         appiumAdapter.swipe(true, true);
 
         // Assert
-        verify(appiumDriver, times(1)).manage();
+        verify(appiumDriver, times(1)).performTouchAction(any(TouchAction.class));
     }
 
     @Test
-    void swipe_falseParameters_callsPress() {
+    void swipe_falseParameters_callsPerformTouchAction() {
 
         // Arrange
         Dimension screenSize = new Dimension(5, 6);
@@ -379,7 +379,7 @@ class AppiumAdapterTests {
         appiumAdapter.swipe(false, false);
 
         // Assert
-        verify(appiumDriver, times(1)).manage();
+        verify(appiumDriver, times(1)).performTouchAction(any(TouchAction.class));
     }
 
     @Test
@@ -465,6 +465,25 @@ class AppiumAdapterTests {
         verify(webElement, times(1)).getText();
     }
 
+    @Test
+    void recentNotificationIs_noElementFound_callsGetText() {
+
+        // Arrange
+        Dimension screenSize = new Dimension(5, 6);
+        when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
+        when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
+        when(this.remoteWindow.getSize()).thenReturn(screenSize);
+
+        when(appiumDriver.findElement(any(By.class))).thenThrow(new NoSuchElementException(""));
+
+        // Act
+        Executable action = () -> appiumAdapter.recentNotificationIs("hit");
+
+        // Assert
+        Exception exception = assertThrows(AppiumException.class, action);
+        assertEquals("Correct element was not found after all checks", exception.getMessage());
+    }
+
 
     @Test
     void setDate_androidApp_callsClickTwice() {
@@ -514,8 +533,6 @@ class AppiumAdapterTests {
         List<String> monthList = Arrays.asList("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         when(webElement1.getText()).thenReturn("     Jan").thenReturn("      " + monthList.get(date.getMonthValue()));
         when(webElement2.getText()).thenReturn("" + date.getYear());
-        //when(webElement5.getText()).thenReturn();
-
 
         // Act
         appiumAdapter.setDate(date);
@@ -737,7 +754,9 @@ class AppiumAdapterTests {
         appiumAdapter.setDate(date);
 
         // Assert
-        verify(webElement, times(3)).sendKeys(anyString());
+        verify(webElement, times(1)).sendKeys(date.format(DateTimeFormatter.ofPattern("MMMM")));
+        verify(webElement, times(1)).sendKeys(date.format(DateTimeFormatter.ofPattern("d")));
+        verify(webElement, times(1)).sendKeys(date.format(DateTimeFormatter.ofPattern("yyyy")));
     }
 
     @Test
@@ -787,22 +806,22 @@ class AppiumAdapterTests {
     }
 
     @Test
-    void scrollElementIntoView_selectorIsNotAIByMobile_callsGetExectuorTwice() {
-
+    void scrollElementIntoView_selectorIsNotAIByMobile_callsExecuteScriptTwice() {
         // Arrange
         IByWeb ibyweb = mock(IByWeb.class);
         ByJQuery jquery = mock(ByJQuery.class);
         QuadFunction quad = mock(QuadFunction.class);
+        SeleniumScriptExecutor sel = mock(SeleniumScriptExecutor.class);
 
         when(ibyweb.toJQuery()).thenReturn(jquery);
         when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
-        when(quad.apply(any(Object.class), any(Object.class), any(Object.class))).thenReturn(new Object());
+        when(quad.apply(eq(sel), any(Object.class), any(Object.class))).thenReturn(new Object());
 
         // Act
         appiumAdapter.scrollElementIntoView(ibyweb);
 
         // Assert
-        verify(javaScriptFlowExecutor, times(2)).getExecutor();
+        verify(sel, times(2)).executeScript(any(String.class));
     }
 
     @Test
@@ -1029,7 +1048,7 @@ class AppiumAdapterTests {
         QuadFunction quad = mock(QuadFunction.class);
 
         Point point = new Point(1, 1);
-        Dimension dim = new Dimension(1, 1);
+        Dimension dim = new Dimension(2, 2);
 
         when(javaScriptFlowExecutor.getExecutor()).thenReturn(quad);
         when(quad.apply(any(SeleniumScriptExecutor.class), any(String.class), any())).thenReturn(1L);
@@ -1038,7 +1057,7 @@ class AppiumAdapterTests {
         when(webElement.getLocation()).thenReturn(point);
         when(webElement.getSize()).thenReturn(dim);
 
-        Dimension screenSize = new Dimension(5, 6);
+        Dimension screenSize = new Dimension(6, 6);
         when(this.appiumDriver.manage()).thenReturn(this.remoteDriver);
         when(this.remoteDriver.window()).thenReturn(this.remoteWindow);
         when(this.remoteWindow.getSize()).thenReturn(screenSize);
@@ -1047,6 +1066,7 @@ class AppiumAdapterTests {
         appiumAdapter.mobileClick(seleniumElement);
 
         // Assert
+
         verify(appiumDriver, times(1)).performTouchAction(any(TouchAction.class));
     }
 
