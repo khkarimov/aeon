@@ -1,5 +1,7 @@
 # Aeon Developer Documentation 
 
+[![Build Status](https://travis-ci.org/UltimateSoftware/aeon.svg?branch=master)](https://travis-ci.org/UltimateSoftware/aeon) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=UltimateSoftware_aeon&metric=alert_status)](https://sonarcloud.io/dashboard?id=UltimateSoftware_aeon)
+
 1. [Getting Started](docs/gettingstarted.md)
 2. [Logging](docs/logging.md)
 
