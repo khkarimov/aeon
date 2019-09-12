@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -106,10 +108,8 @@ public class HtmlReport {
         String angularReportFileName = reportsDirectory
                 + "/report-" + report.getCorrelationId() + ".html";
 
-        File file = new File(reportsDirectory);
-        file.mkdirs();
 
-        HtmlReport.writeFile(reportTemplate, angularReportFileName);
+        this.writeFile(reportTemplate, angularReportFileName);
 
         return angularReportFileName;
     }
@@ -120,7 +120,15 @@ public class HtmlReport {
      * @param contentToWrite The string to write into the file.
      * @param fileName       Name and path of the file to write to.
      */
-    public static void writeFile(String contentToWrite, String fileName) {
+    private void writeFile(String contentToWrite, String fileName) {
+
+        try {
+            Files.createDirectories(Paths.get(this.reportsDirectory));
+        } catch (IOException e) {
+            log.error("Error creating report directory: {}", this.reportsDirectory, e);
+            return;
+        }
+
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(contentToWrite);
         } catch (FileNotFoundException e) {
