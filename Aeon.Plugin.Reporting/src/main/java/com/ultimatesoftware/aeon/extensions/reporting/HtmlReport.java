@@ -106,6 +106,9 @@ public class HtmlReport {
         String angularReportFileName = reportsDirectory
                 + "/report-" + report.getCorrelationId() + ".html";
 
+        File file = new File(reportsDirectory);
+        file.mkdirs();
+
         HtmlReport.writeFile(reportTemplate, angularReportFileName);
 
         return angularReportFileName;
