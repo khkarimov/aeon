@@ -1,7 +1,5 @@
 package com.ultimatesoftware.aeon.platform.http.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.util.List;
 
 /**
@@ -26,7 +24,6 @@ public class ExecuteCommandBody {
      * @param args        The command arguments
      * @param callbackUrl Callback url string
      */
-    @JsonCreator
     public ExecuteCommandBody(String command, List<Object> args, String callbackUrl) {
         this.command = command;
         this.args = args;

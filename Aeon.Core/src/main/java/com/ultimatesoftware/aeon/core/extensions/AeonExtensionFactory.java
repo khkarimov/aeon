@@ -1,5 +1,6 @@
 package com.ultimatesoftware.aeon.core.extensions;
 
+import com.ultimatesoftware.aeon.core.common.helpers.PassiveExpiringMap;
 import org.pf4j.DefaultExtensionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
 
     private ISessionIdProvider sessionIdProvider;
 
-    private Map<String, Map<String, Object>> cache = new HashMap<>();
+    private PassiveExpiringMap<String, Map<String, Object>> cache = new PassiveExpiringMap<>(6000);
 
     private static Logger log = LoggerFactory.getLogger(AeonExtensionFactory.class);
 
