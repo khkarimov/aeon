@@ -45,7 +45,22 @@ public enum BrowserSize {
     /**
      * Desktop [Full HD]: 1920x1080.
      */
-    FULL_HD("FullHD");
+    FULL_HD("FullHD"),
+
+    /**
+     * Desktop [WQHD]: 2560x1440.
+     */
+    WQHD("WQHD"),
+
+    /**
+     * Desktop [4K UHD]: 3840x2160.
+     */
+    UHD_4K("UHD4K"),
+
+    /**
+     * Desktop [8K UHD]: 7680x4320.
+     */
+    UHD_8K("UHD8K");
 
     private static Logger log = LoggerFactory.getLogger(BrowserSize.class);
     private final String key;
