@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Provides the same extension instance for the same session.
@@ -17,7 +18,8 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
 
     private ISessionIdProvider sessionIdProvider;
 
-    private PassiveExpiringMap<String, Map<String, Object>> cache = new PassiveExpiringMap<>(6000);
+    private Map<String, Map<String, Object>> cache =
+            new PassiveExpiringMap<>(5, TimeUnit.MINUTES);
 
     private static Logger log = LoggerFactory.getLogger(AeonExtensionFactory.class);
 

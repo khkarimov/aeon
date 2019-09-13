@@ -46,11 +46,13 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
+     * Updates expiration time of entry being checked, then
      * Expired entries are removed before checking if the map includes the key.
      * {@inheritDoc}
      */
     @Override
     public boolean containsKey(Object key) {
+        updateExpirationTime(key);
         removeExpiredEntries();
         return super.containsKey(key);
     }
@@ -76,11 +78,13 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
+     * Updates expiration time of key being fetched, then
      * Expired entries are removed before attempting to retrieve the entry.
      * {@inheritDoc}
      */
     @Override
     public V get(Object key) {
+        updateExpirationTime(key);
         removeExpiredEntries();
         return super.get(key);
     }
@@ -190,13 +194,24 @@ public class PassiveExpiringMap<K, V>
      */
     private long calculateExpirationTime() {
         boolean timeToLiveIsNegative = timeToLiveMs < 0L;
-        boolean expirationWouldBeGreaterThanMAX = System.currentTimeMillis() > Long.MAX_VALUE - timeToLiveMs;
+        long now = System.currentTimeMillis();
+        boolean expirationWouldBeGreaterThanMAX = now > Long.MAX_VALUE - timeToLiveMs;
 
         if (timeToLiveIsNegative || expirationWouldBeGreaterThanMAX) {
             // Never expire
             return -1L;
         }
 
-        return System.currentTimeMillis() + timeToLiveMs;
+        return now + timeToLiveMs;
     }
+
+    /**
+     * Updates the expiration time for a given key.
+     *
+     * @param key The key whose expiry time is updated.
+     */
+    private void updateExpirationTime(Object key) {
+        expirationHashMap.put(key, calculateExpirationTime());
+    }
+
 }
