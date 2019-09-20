@@ -1,5 +1,6 @@
 package com.ultimatesoftware.aeon.core.extensions;
 
+import com.ultimatesoftware.aeon.core.common.helpers.PassiveExpiringMap;
 import org.pf4j.DefaultExtensionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Provides the same extension instance for the same session.
@@ -16,7 +18,8 @@ class AeonExtensionFactory extends DefaultExtensionFactory {
 
     private ISessionIdProvider sessionIdProvider;
 
-    private Map<String, Map<String, Object>> cache = new HashMap<>();
+    private Map<String, Map<String, Object>> cache =
+            new PassiveExpiringMap<>(5, TimeUnit.MINUTES);
 
     private static Logger log = LoggerFactory.getLogger(AeonExtensionFactory.class);
 
