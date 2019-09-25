@@ -46,6 +46,7 @@ public class AeonHtmlLayoutTests {
     void toSerializable_LevelDebug() {
 
         // Arrange
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.DEBUG);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
@@ -53,7 +54,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\"><font color=\"#339933\">DEBUG</font></td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -71,6 +72,7 @@ public class AeonHtmlLayoutTests {
     void toSerializable_LevelWarn() {
 
         // Arrange
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.WARN);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
@@ -78,7 +80,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\"><font color=\"#993300\"><strong>WARN</strong></font></td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -96,6 +98,7 @@ public class AeonHtmlLayoutTests {
     void toSerializable_LevelOther() {
 
         // Arrange
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
@@ -103,7 +106,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -121,6 +124,7 @@ public class AeonHtmlLayoutTests {
     void toSerializable_EmptyLogger() {
 
         // Arrange
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("");
@@ -128,7 +132,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"root logger\">root</td>\n" +
@@ -146,6 +150,7 @@ public class AeonHtmlLayoutTests {
     void toSerializable_ThrowableNotNull() {
 
         // Arrange
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
@@ -155,14 +160,14 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
                 "<td title=\"Message\">TestMessage</td>\n" +
                 "</tr>\n" +
                 "<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : small;\" colspan=\"6\">java.lang.Throwable: ThrowMessage\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat com.ultimatesoftware.aeon.extensions.log4j2.AeonHtmlLayoutTests.toSerializable_ThrowableNotNull(AeonHtmlLayoutTests.java:152)\n" +
+                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat com.ultimatesoftware.aeon.extensions.log4j2.AeonHtmlLayoutTests.toSerializable_ThrowableNotNull(AeonHtmlLayoutTests.java:157)\n" +
                 "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n" +
                 "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n" +
                 "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n" +
@@ -258,6 +263,7 @@ public class AeonHtmlLayoutTests {
         layoutObject = AeonHtmlLayout.createLayout(true, "Log4j Log Messages",
                 null, StandardCharsets.UTF_8, "", "arial,sans-serif");
 
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getSource()).thenReturn(new StackTraceElement("", "", "FileName", 0));
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
@@ -267,7 +273,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -288,6 +294,7 @@ public class AeonHtmlLayoutTests {
         // Arrange
         BufferedImage image = new BufferedImage(1, 1, 1);
 
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
@@ -297,7 +304,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -317,6 +324,7 @@ public class AeonHtmlLayoutTests {
         // Arrange
         ThreadContext.ContextStack stack = mock(ThreadContext.ContextStack.class);
 
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
@@ -327,7 +335,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -348,6 +356,7 @@ public class AeonHtmlLayoutTests {
         // Arrange
         ReadOnlyStringMap data = mock(ReadOnlyStringMap.class);
 
+        when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
@@ -358,7 +367,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.000</td>\n" +
+                "<td>19:00:00.020</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
