@@ -10,6 +10,12 @@ public class CreateSessionBody {
     private Properties settings;
 
     /**
+     * Constructs a default create-session body. This is required for Jackson serializer when deserializing requests
+     */
+    public CreateSessionBody() {
+    }
+
+    /**
      * Constructs a create-session body.
      *
      * @param settings Properties
