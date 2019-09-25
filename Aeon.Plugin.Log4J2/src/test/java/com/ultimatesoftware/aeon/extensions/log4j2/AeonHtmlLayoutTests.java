@@ -147,7 +147,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_ThrowableNotNull() {
+    void toSerializable_ThrowableNotNull() throws InterruptedException {
 
         // Arrange
         when(event.getTimeMillis()).thenReturn(20L);
@@ -251,6 +251,7 @@ public class AeonHtmlLayoutTests {
 
         // Act
         String serial = layoutObject.toSerializable(event);
+        System.out.println(serial);
 
         // Assert
         assertEquals(expected, serial);
