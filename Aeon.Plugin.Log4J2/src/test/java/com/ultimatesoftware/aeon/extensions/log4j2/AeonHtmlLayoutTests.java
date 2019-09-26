@@ -15,6 +15,9 @@ import org.mockito.quality.Strictness;
 
 import java.awt.image.BufferedImage;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +30,8 @@ public class AeonHtmlLayoutTests {
 
     // Variables
     private AeonHtmlLayout layoutObject;
-
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS")
+            .withZone(ZoneId.systemDefault());
     // Mocks
     @Mock
     private LogEvent event;
@@ -54,7 +58,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\"><font color=\"#339933\">DEBUG</font></td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -80,7 +84,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\"><font color=\"#993300\"><strong>WARN</strong></font></td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -106,7 +110,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -132,7 +136,7 @@ public class AeonHtmlLayoutTests {
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
         String expected = "\n<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"root logger\">root</td>\n" +
@@ -160,14 +164,14 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
                 "<td title=\"Message\">TestMessage</td>\n" +
                 "</tr>\n" +
                 "<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : small;\" colspan=\"6\">java.lang.Throwable: ThrowMessage\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat com.ultimatesoftware.aeon.extensions.log4j2.AeonHtmlLayoutTests.toSerializable_ThrowableNotNull(AeonHtmlLayoutTests.java:157)\n" +
+                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat com.ultimatesoftware.aeon.extensions.log4j2.AeonHtmlLayoutTests.toSerializable_ThrowableNotNull(AeonHtmlLayoutTests.java:161)\n" +
                 "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n" +
                 "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n" +
                 "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n" +
@@ -274,7 +278,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -305,7 +309,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -336,7 +340,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
@@ -368,7 +372,7 @@ public class AeonHtmlLayoutTests {
 
         String expected = "\n" +
                 "<tr>\n" +
-                "<td>19:00:00.020</td>\n" +
+                "<td>" + dateTimeFormatter.format(Instant.ofEpochMilli(event.getTimeMillis())) + "</td>\n" +
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
