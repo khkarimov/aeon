@@ -202,10 +202,7 @@ allprojects {
         if (threads) {
             maxParallelForks = threads.toInteger()
         }
-        testLogging {
-            events "failed"
-            exceptionFormat "full"
-        }
+
         useJUnitPlatform {
         }
     }

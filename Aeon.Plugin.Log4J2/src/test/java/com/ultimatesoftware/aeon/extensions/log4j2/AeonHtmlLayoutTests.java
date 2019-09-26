@@ -13,16 +13,21 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import javax.imageio.ImageIO;
+
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -154,11 +159,19 @@ public class AeonHtmlLayoutTests {
     void toSerializable_ThrowableNotNull() throws InterruptedException {
 
         // Arrange
+        Throwable thrown = mock(Throwable.class);
+
         when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
         when(event.getThreadName()).thenReturn("TestThread");
         when(event.getLoggerName()).thenReturn("TestLogger");
-        when(event.getThrown()).thenReturn(new Throwable("ThrowMessage"));
+        when(event.getThrown()).thenReturn(thrown);
+        doAnswer(invocation -> {
+            Object[] args = invocation.getArguments();
+            PrintWriter pw = (PrintWriter) args[0];
+            pw.print("StackTrace\nStackTrace\nStackTrace\n");
+            return null;
+        }).when(thrown).printStackTrace(any(PrintWriter.class));
         when(event.getMessage()).thenReturn(message);
         when(message.getFormattedMessage()).thenReturn("TestMessage");
 
@@ -170,87 +183,9 @@ public class AeonHtmlLayoutTests {
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
                 "<td title=\"Message\">TestMessage</td>\n" +
                 "</tr>\n" +
-                "<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : small;\" colspan=\"6\">java.lang.Throwable: ThrowMessage\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat com.ultimatesoftware.aeon.extensions.log4j2.AeonHtmlLayoutTests.toSerializable_ThrowableNotNull(AeonHtmlLayoutTests.java:161)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.lang.reflect.Method.invoke(Method.java:498)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:513)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:115)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$6(TestMethodTestDescriptor.java:170)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.jupiter.engine.execution.ThrowableCollector.execute(ThrowableCollector.java:40)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:166)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:113)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:58)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:113)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.Iterator.forEachRemaining(Iterator.java:116)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:485)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$2(HierarchicalTestExecutor.java:121)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:183)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.Iterator.forEachRemaining(Iterator.java:116)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:482)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:485)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.lambda$executeRecursively$3(HierarchicalTestExecutor.java:121)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.SingleTestExecutor.executeSafely(SingleTestExecutor.java:66)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.executeRecursively(HierarchicalTestExecutor.java:108)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor$NodeExecutor.execute(HierarchicalTestExecutor.java:79)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:55)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:43)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:170)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:154)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:90)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:92)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$100(JUnitPlatformTestClassProcessor.java:77)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:73)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.lang.reflect.Method.invoke(Method.java:498)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:32)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:93)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat com.sun.proxy.$Proxy2.stop(Unknown Source)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.api.internal.tasks.testing.worker.TestWorker.stop(TestWorker.java:131)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.lang.reflect.Method.invoke(Method.java:498)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:155)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:137)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:404)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:63)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:46)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:55)\n" +
-                "<br />&nbsp;&nbsp;&nbsp;&nbsp;\tat java.lang.Thread.run(Thread.java:748)\n" +
+                "<tr><td bgcolor=\"#993300\" style=\"color:White; font-size : small;\" colspan=\"6\">StackTrace\n" +
+                "<br />&nbsp;&nbsp;&nbsp;&nbsp;StackTrace\n" +
+                "<br />&nbsp;&nbsp;&nbsp;&nbsp;StackTrace\n" +
                 "</td></tr>\n";
 
         // Act
@@ -294,10 +229,14 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_ParametersExist() {
+    void toSerializable_ParametersExist() throws IOException {
 
         // Arrange
         BufferedImage image = new BufferedImage(1, 1, 1);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", baos);
+        String data = Base64.getEncoder().encodeToString(baos.toByteArray());
 
         when(event.getTimeMillis()).thenReturn(20L);
         when(event.getLevel()).thenReturn(Level.ALL);
@@ -313,7 +252,7 @@ public class AeonHtmlLayoutTests {
                 "<td title=\"TestThread thread\">TestThread</td>\n" +
                 "<td title=\"Level\">ALL</td>\n" +
                 "<td title=\"TestLogger logger\">TestLogger</td>\n" +
-                "<td title=\"Message\">TestMessage<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mNgYGAAAAAEAAHI6uv5AAAAAElFTkSuQmCC\" /></td>\n" +
+                "<td title=\"Message\">TestMessage<img src=\"data:image/png;base64," + data + "\" /></td>\n" +
                 "</tr>\n";
 
         // Act
