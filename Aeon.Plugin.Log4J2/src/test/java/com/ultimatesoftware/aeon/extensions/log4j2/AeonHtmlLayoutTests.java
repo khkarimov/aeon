@@ -37,6 +37,7 @@ public class AeonHtmlLayoutTests {
     private AeonHtmlLayout layoutObject;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS")
             .withZone(ZoneId.systemDefault());
+
     // Mocks
     @Mock
     private LogEvent event;
@@ -52,7 +53,7 @@ public class AeonHtmlLayoutTests {
 
     //Test Methods
     @Test
-    void toSerializable_LevelDebug() {
+    void toSerializable_WhenLevelIsDebug_ReturnsExpectedString() {
 
         // Arrange
         when(event.getTimeMillis()).thenReturn(20L);
@@ -78,7 +79,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_LevelWarn() {
+    void toSerializable_WhenLevelIsWarn_ReturnsExpectedString() {
 
         // Arrange
         when(event.getTimeMillis()).thenReturn(20L);
@@ -104,7 +105,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_LevelOther() {
+    void toSerializable_WhenLevelIsOther_ReturnsExpectedString() {
 
         // Arrange
         when(event.getTimeMillis()).thenReturn(20L);
@@ -130,7 +131,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_EmptyLogger() {
+    void toSerializable_WhenLoggerIsEmpty_ReturnsExpectedString() {
 
         // Arrange
         when(event.getTimeMillis()).thenReturn(20L);
@@ -156,7 +157,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_ThrowableNotNull() throws InterruptedException {
+    void toSerializable_WhenThrowableExists_ReturnsExpectedString() throws InterruptedException {
 
         // Arrange
         Throwable thrown = mock(Throwable.class);
@@ -170,7 +171,7 @@ public class AeonHtmlLayoutTests {
             Object[] args = invocation.getArguments();
             PrintWriter pw = (PrintWriter) args[0];
             pw.print("StackTrace\nStackTrace\nStackTrace\n");
-            return null;
+            throw new RuntimeException();
         }).when(thrown).printStackTrace(any(PrintWriter.class));
         when(event.getMessage()).thenReturn(message);
         when(message.getFormattedMessage()).thenReturn("TestMessage");
@@ -190,14 +191,13 @@ public class AeonHtmlLayoutTests {
 
         // Act
         String serial = layoutObject.toSerializable(event);
-        System.out.println(serial);
 
         // Assert
         assertEquals(expected, serial);
     }
 
     @Test
-    void toSerializable_LocationInfoTrue() {
+    void toSerializable_WhenLocationInfoIsTrue_ReturnsExpectedString() {
 
         // Arrange
         layoutObject = AeonHtmlLayout.createLayout(true, "Log4j Log Messages",
@@ -229,7 +229,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_ParametersExist() throws IOException {
+    void toSerializable_WhenMessageParametersExist_ReturnsExpectedString() throws IOException {
 
         // Arrange
         BufferedImage image = new BufferedImage(1, 1, 1);
@@ -263,7 +263,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_ContextStackExists() {
+    void toSerializable_WhenContextStackExists_ReturnsExpectedString() {
 
         // Arrange
         ThreadContext.ContextStack stack = mock(ThreadContext.ContextStack.class);
@@ -295,7 +295,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void toSerializable_ContextDataExists() {
+    void toSerializable_WhenContextDataExists_ReturnsExpectedString() {
 
         // Arrange
         ReadOnlyStringMap data = mock(ReadOnlyStringMap.class);
@@ -327,7 +327,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void getHeader() {
+    void getHeader_WhenLocationInfoDoesNotExist_ReturnsExpectedString() {
 
         // Arrange
         String expected = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
@@ -364,7 +364,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void getHeader_LocationInfoTrue() {
+    void getHeader_WhenLocationInfoExists_ReturnsExpectedString() {
 
         // Arrange
         layoutObject = layoutObject.newBuilder()
@@ -411,7 +411,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void getFooter() {
+    void getFooter_WhenCalled_ReturnsEmptyByteArray() {
 
         // Arrange
         byte[] expected = new byte[]{};
@@ -424,7 +424,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void getContentType() {
+    void getContentType_WhenCalled_ReturnsExpectedString() {
 
         // Arrange
 
@@ -436,7 +436,7 @@ public class AeonHtmlLayoutTests {
     }
 
     @Test
-    void getFontSize() {
+    void getFontSize_WhenValidSizePassedIn_ReturnsFontSizeOfTypeString() {
 
         // Arrange
 
@@ -445,6 +445,57 @@ public class AeonHtmlLayoutTests {
 
         // Assert
         assertEquals("LARGE", size.toString());
+    }
+
+    @Test
+    void getFontSize_WhenInvalidStringPassedIn_ReturnsFontSizeOfSmall() {
+
+        // Arrange
+
+        // Act
+        AeonHtmlLayout.FontSize size = AeonHtmlLayout.FontSize.getFontSize("invalid");
+
+        // Assert
+        assertEquals("SMALL", size.toString());
+    }
+
+    @Test
+    void getFontSize_WhenNoParametersPassed_ReturnsCurrentFontSize() {
+
+        // Arrange
+        AeonHtmlLayout.FontSize current = AeonHtmlLayout.FontSize.SMALLER;
+
+        // Act
+        String size = current.getFontSize();
+
+        // Assert
+        assertEquals("smaller", size);
+    }
+
+    @Test
+    void larger_WhenFontSizeIsLessThanXXLARGE_ReturnsLargerFontSize() {
+
+        // Arrange
+        AeonHtmlLayout.FontSize current = AeonHtmlLayout.FontSize.SMALLER;
+
+        // Act
+        AeonHtmlLayout.FontSize size = current.larger();
+
+        // Assert
+        assertEquals("XXSMALL", size.toString());
+    }
+
+    @Test
+    void larger_WhenFontSizeIsXXLARGE_ReturnsFontSize() {
+
+        // Arrange
+        AeonHtmlLayout.FontSize current = AeonHtmlLayout.FontSize.XXLARGE;
+
+        // Act
+        AeonHtmlLayout.FontSize size = current.larger();
+
+        // Assert
+        assertEquals("XXLARGE", size.toString());
     }
 
 }
