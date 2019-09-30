@@ -48,7 +48,7 @@ public class AeonHtmlLayoutTests {
     // Setup Methods
     @BeforeEach
     void setup() {
-        layoutObject = layoutObject.createDefaultLayout();
+        layoutObject = AeonHtmlLayout.createDefaultLayout();
     }
 
     //Test Methods
