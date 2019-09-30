@@ -16,14 +16,15 @@ ENV HOME=/root \
 	DISPLAY_HEIGHT=768
 
 # Install git, supervisor, VNC, & X11 packages
+RUN apt-get update
 RUN apt-get install \
-	fluxbox \
-	git \
-	socat \
-	supervisor \
-    default-jre \
-	x11vnc \
-	xvfb \
+        fluxbox \
+        git \
+        socat \
+        supervisor \
+        openjdk-8-jre-headless \
+        x11vnc \
+        xvfb \
     gettext \
     nginx -y
 
