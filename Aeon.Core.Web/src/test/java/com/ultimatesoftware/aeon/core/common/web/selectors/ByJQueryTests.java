@@ -979,45 +979,45 @@ public class ByJQueryTests {
         // Arrange
 
         // Act
-        String AS_SUBCHAIN = byJQuery.toString(JQueryStringType.AS_SUBCHAIN);
-        String BLUR_ELEMENT = byJQuery.toString(JQueryStringType.BLUR_ELEMENT);
-        String CLICK_INVISIBLE_ELEMENT = byJQuery.toString(JQueryStringType.CLICK_INVISIBLE_ELEMENT);
-        String FIRE_CHANGE_EVENT = byJQuery.toString(JQueryStringType.FIRE_CHANGE_EVENT);
-        String FIRE_DOUBLE_CLICK = byJQuery.toString(JQueryStringType.FIRE_DOUBLE_CLICK);
-        String GET_CLIENT_RECTS = byJQuery.toString(JQueryStringType.GET_CLIENT_RECTS);
-        String HAS_NUMBER_OF_OPTIONS = byJQuery.toString(JQueryStringType.HAS_NUMBER_OF_OPTIONS);
-        String JUST_THE_JQUERY_SELECTOR = byJQuery.toString(JQueryStringType.JUST_THE_JQUERY_SELECTOR);
-        String MOUSE_OUT = byJQuery.toString(JQueryStringType.MOUSE_OUT);
-        String MOUSE_OVER = byJQuery.toString(JQueryStringType.MOUSE_OVER);
-        String RETURN_ELEMENT_ARRAY = byJQuery.toString(JQueryStringType.RETURN_ELEMENT_ARRAY);
-        String SCROLL_ELEMENT_INTO_VIEW = byJQuery.toString(JQueryStringType.SCROLL_ELEMENT_INTO_VIEW);
-        String SET_BODY_TEXT = byJQuery.toString(JQueryStringType.SET_BODY_TEXT);
-        String SET_DIV_TEXT = byJQuery.toString(JQueryStringType.SET_DIV_TEXT);
-        String SET_MASKED_INPUT_TEXT = byJQuery.toString(JQueryStringType.SET_MASKED_INPUT_TEXT);
-        String SHOW_CONTEXT_MENU = byJQuery.toString(JQueryStringType.SHOW_CONTEXT_MENU);
-        String SHOW_ELEMENT = byJQuery.toString(JQueryStringType.SHOW_ELEMENT);
-        String SET_ELEMENT_TEXT = byJQuery.toString(JQueryStringType.SET_ELEMENT_TEXT);
+        String asSubchain = byJQuery.toString(JQueryStringType.AS_SUBCHAIN);
+        String blurElement = byJQuery.toString(JQueryStringType.BLUR_ELEMENT);
+        String clickInvisibleElement = byJQuery.toString(JQueryStringType.CLICK_INVISIBLE_ELEMENT);
+        String fireChangeEvent = byJQuery.toString(JQueryStringType.FIRE_CHANGE_EVENT);
+        String fireDoubleClick = byJQuery.toString(JQueryStringType.FIRE_DOUBLE_CLICK);
+        String getClientRects = byJQuery.toString(JQueryStringType.GET_CLIENT_RECTS);
+        String hasNumberOfOptions = byJQuery.toString(JQueryStringType.HAS_NUMBER_OF_OPTIONS);
+        String justTheJquerySelector = byJQuery.toString(JQueryStringType.JUST_THE_JQUERY_SELECTOR);
+        String mouseOut = byJQuery.toString(JQueryStringType.MOUSE_OUT);
+        String mouseOver = byJQuery.toString(JQueryStringType.MOUSE_OVER);
+        String returnElementArray = byJQuery.toString(JQueryStringType.RETURN_ELEMENT_ARRAY);
+        String scrollElementIntoView = byJQuery.toString(JQueryStringType.SCROLL_ELEMENT_INTO_VIEW);
+        String setBodyText = byJQuery.toString(JQueryStringType.SET_BODY_TEXT);
+        String setDivText = byJQuery.toString(JQueryStringType.SET_DIV_TEXT);
+        String setMaskedInputText = byJQuery.toString(JQueryStringType.SET_MASKED_INPUT_TEXT);
+        String showContextMenu = byJQuery.toString(JQueryStringType.SHOW_CONTEXT_MENU);
+        String showElement = byJQuery.toString(JQueryStringType.SHOW_ELEMENT);
+        String setElementText = byJQuery.toString(JQueryStringType.SET_ELEMENT_TEXT);
         Executable action = () -> byJQuery.toString(JQueryStringType.GET_OPTIONS);
 
         // Assert
-        assertEquals("find(\"test\")", AS_SUBCHAIN);
-        assertEquals("var a=$(\"test\");if(a.length>0){a[0].focus();a[0].blur();}", BLUR_ELEMENT);
-        assertEquals("var a=$(\"test\");if(a.length>0){a.first().mousedown();a.first().mouseup();a[0].click()}return a.length;", CLICK_INVISIBLE_ELEMENT);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.change();return a.length;", FIRE_CHANGE_EVENT);
-        assertEquals("$(\"test\").dblclick()", FIRE_DOUBLE_CLICK);
-        assertEquals("var rects = $(\"test\")[0].getClientRects(); var arr = [rects.length, rects[0].bottom, rects[0].left, rects[0].right, rects[0].top]; return arr;", GET_CLIENT_RECTS);
-        assertEquals("var a=$(\"test\");return a.length>0?a.children().length:-1;", HAS_NUMBER_OF_OPTIONS);
-        assertEquals("$(\"test\")", JUST_THE_JQUERY_SELECTOR);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.mouseout();return a.length;", MOUSE_OUT);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.mouseover();return a.length;", MOUSE_OVER);
-        assertEquals("return $.makeArray($(\"test\"));", RETURN_ELEMENT_ARRAY);
-        assertEquals("var a=$(\"test\");if(a.length>0)a[0].scrollIntoView(false);return a.length;", SCROLL_ELEMENT_INTO_VIEW);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.text(%1$s);return a.length;", SET_BODY_TEXT);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.html(%1$s);return a.length;", SET_DIV_TEXT);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.val(%1$s).blur();return a.length;", SET_MASKED_INPUT_TEXT);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.trigger({type:'mousedown', which: 3});return a.length;", SHOW_CONTEXT_MENU);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.show();return a.length;", SHOW_ELEMENT);
-        assertEquals("var a=$(\"test\");if(a.length>0)a.val(%1$s);return a.length;", SET_ELEMENT_TEXT);
+        assertEquals("find(\"test\")", asSubchain);
+        assertEquals("var a=$(\"test\");if(a.length>0){a[0].focus();a[0].blur();}", blurElement);
+        assertEquals("var a=$(\"test\");if(a.length>0){a.first().mousedown();a.first().mouseup();a[0].click()}return a.length;", clickInvisibleElement);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.change();return a.length;", fireChangeEvent);
+        assertEquals("$(\"test\").dblclick()", fireDoubleClick);
+        assertEquals("var rects = $(\"test\")[0].getClientRects(); var arr = [rects.length, rects[0].bottom, rects[0].left, rects[0].right, rects[0].top]; return arr;", getClientRects);
+        assertEquals("var a=$(\"test\");return a.length>0?a.children().length:-1;", hasNumberOfOptions);
+        assertEquals("$(\"test\")", justTheJquerySelector);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.mouseout();return a.length;", mouseOut);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.mouseover();return a.length;", mouseOver);
+        assertEquals("return $.makeArray($(\"test\"));", returnElementArray);
+        assertEquals("var a=$(\"test\");if(a.length>0)a[0].scrollIntoView(false);return a.length;", scrollElementIntoView);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.text(%1$s);return a.length;", setBodyText);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.html(%1$s);return a.length;", setDivText);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.val(%1$s).blur();return a.length;", setMaskedInputText);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.trigger({type:'mousedown', which: 3});return a.length;", showContextMenu);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.show();return a.length;", showElement);
+        assertEquals("var a=$(\"test\");if(a.length>0)a.val(%1$s);return a.length;", setElementText);
 
         assertThrows(UnsupportedOperationException.class, action);
     }
