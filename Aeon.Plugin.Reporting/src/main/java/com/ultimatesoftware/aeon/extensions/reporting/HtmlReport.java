@@ -120,7 +120,7 @@ public class HtmlReport {
      * @param contentToWrite The string to write into the file.
      * @param fileName       Name and path of the file to write to.
      */
-    private void writeFile(String contentToWrite, String fileName) {
+    public void writeFile(String contentToWrite, String fileName) {
 
         try {
             Files.createDirectories(Paths.get(this.reportsDirectory));
