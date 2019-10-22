@@ -225,6 +225,10 @@ public class ByJQuery implements IByWeb, IByJQuery {
                 throw new IllegalStateException("shadowDom requires an element that contains the shadow root.");
             }
 
+            if (joinedParameters.equals("")) {
+                return String.format("$(%1$s[0].shadowRoot.childNodes)", predecessor);
+            }
+
             return String.format("$(%1$s[0].shadowRoot.childNodes).find(%2$s)", predecessor, joinedParameters);
         }
 
@@ -456,6 +460,11 @@ public class ByJQuery implements IByWeb, IByJQuery {
     @Override
     public final ByJQuery shadowDom(String selector) {
         return new ByJQuery(this, "shadowDom", selector);
+    }
+
+    @Override
+    public final ByJQuery shadowRoot() {
+        return new ByJQuery(this, "shadowDom");
     }
 
     /**
