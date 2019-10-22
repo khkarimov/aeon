@@ -345,6 +345,18 @@ public class ByJQueryTests {
     }
 
     @Test
+    void shadowRoot_returnsExpectedString() {
+
+        // Arrange
+
+        // Act
+        ByJQuery returned = byJQuery.shadowRoot();
+
+        // Assert
+        assertEquals("$($(\"test\")[0].shadowRoot.childNodes)", returned.toString());
+    }
+
+    @Test
     void find_ByJQueryPassed_ReturnsExpectedString() {
 
         // Arrange
