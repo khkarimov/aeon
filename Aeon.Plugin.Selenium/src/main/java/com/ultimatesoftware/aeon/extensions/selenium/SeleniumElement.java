@@ -25,7 +25,7 @@ public class SeleniumElement extends WebControl {
     private static final int LONG_STRING_LENGTH = 50;
     private WebElement underlyingWebElement;
     private SeleniumSelectElement selectHelper;
-    private static Logger log = LoggerFactory.getLogger(SeleniumElement.class);
+    static Logger log = LoggerFactory.getLogger(SeleniumElement.class);
 
     /**
      * Initializes a new instance of the {@link SeleniumElement} class.
