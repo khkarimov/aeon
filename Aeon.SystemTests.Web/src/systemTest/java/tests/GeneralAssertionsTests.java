@@ -102,4 +102,18 @@ public class GeneralAssertionsTests extends SampleBaseTest {
     public void testListGroups() {
         product.startPage.actorListContainer.rowBy.description("Need For Speed").getRow().name.is("Aaron Paul");
     }
+
+    @Test
+    public void testHasAttribute() {
+        product.startPage.invisibleButton.hasAttribute("hidden");
+        Assertions.assertThrows(ElementDoesNotHaveAttributeException.class,
+                () -> product.startPage.openAlertButton.hasAttribute("test-attribute"));
+    }
+
+    @Test
+    public void testDoesNotHaveAttribute() {
+        product.startPage.openAlertButton.doesNotHaveAttribute("test-attribute");
+        Assertions.assertThrows(ElementHasAttributeException.class,
+                () -> product.startPage.invisibleButton.doesNotHaveAttribute("hidden"));
+    }
 }

@@ -1442,6 +1442,20 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
         }
     }
 
+    @Override
+    public void hasAttribute(WebControl element, String attributeName) {
+        if (!((SeleniumElement) element).hasAttribute(attributeName)) {
+            throw new ElementDoesNotHaveAttributeException(element, attributeName);
+        }
+    }
+
+    @Override
+    public void doesNotHaveAttribute(WebControl element, String attributeName) {
+        if (((SeleniumElement) element).hasAttribute(attributeName)) {
+            throw new ElementHasAttributeException(element, attributeName);
+        }
+    }
+
     private Collection<String> findOptions(SeleniumElement element, String selector, ComparisonOption option, String attribute) {
         Collection<String> elements = null;
         if (option == ComparisonOption.TEXT) {
@@ -1695,10 +1709,10 @@ public class SeleniumAdapter implements IWebAdapter, AutoCloseable {
      * Moreover, if the attribute it either INNERHTML or VALUE, and the control is a Select element, then
      * the assertion will be evaluated against the selected option's text or value, respectively.
      *
-     * @param element           The web element.
-     * @param expectedValue     The value the attribute should be.
-     * @param option            Whether the innerhtml will be evaluated by the literal html code or the visible text.
-     * @param attribute         The attribute.
+     * @param element       The web element.
+     * @param expectedValue The value the attribute should be.
+     * @param option        Whether the innerhtml will be evaluated by the literal html code or the visible text.
+     * @param attribute     The attribute.
      */
     @Override
     public void isNotLike(WebControl element, String expectedValue, ComparisonOption option, String attribute) {

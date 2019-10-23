@@ -149,7 +149,9 @@ public interface IByJQuery {
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
+     * @deprecated Please use shadowRoot().find(selector) instead.
      */
+    @Deprecated
     ByJQuery shadowDom(String selector);
 
     /**

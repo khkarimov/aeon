@@ -247,6 +247,22 @@ public class SeleniumElement extends WebControl {
     }
 
     /**
+     * Checks whether a specific attribute exists on the element.
+     *
+     * @param attributeName The name of the attribute to check for.
+     * @return True if the attribute exists, false otherwise.
+     */
+    boolean hasAttribute(String attributeName) {
+        if (attributeName == null) {
+            throw new IllegalArgumentException("attributeName");
+        }
+
+        log.trace("WebElement.hasAttribute({});", attributeName);
+
+        return underlyingWebElement.getAttribute(attributeName) != null;
+    }
+
+    /**
      * Gets the value of a CSS property of this element.
      *
      * @param propertyName Property name of the web element.

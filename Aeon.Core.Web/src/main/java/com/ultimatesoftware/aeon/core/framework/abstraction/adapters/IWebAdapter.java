@@ -672,6 +672,22 @@ public interface IWebAdapter extends IAdapter {
     void hasOnly(WebControl element, String[] messages, String selector, ComparisonOption option, String attribute);
 
     /**
+     * Asserts that an element has a specific attribute.
+     *
+     * @param element       The web control whose attributes are to be checked.
+     * @param attributeName The name of the attribute to check for.
+     */
+    void hasAttribute(WebControl element, String attributeName);
+
+    /**
+     * Asserts that an element does not have a specific attribute.
+     *
+     * @param element       The web control whose attributes are to be checked.
+     * @param attributeName The name of the attribute to check for.
+     */
+    void doesNotHaveAttribute(WebControl element, String attributeName);
+
+    /**
      * Asserts that an element's attribute is equal to a given value.
      *
      * @param element   The web element.
