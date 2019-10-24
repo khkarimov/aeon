@@ -23,7 +23,7 @@ public class DoesNotHaveAttributeCommand extends WebControlCommand {
      * @param attributeName      The attribute to check for.
      */
     public DoesNotHaveAttributeCommand(IByWeb selector, ICommandInitializer commandInitializer, String attributeName) {
-        super(String.format(Locale.getDefault(), Resources.getString("DoesNotHaveAttributeCommand_Info"), selector), selector, commandInitializer);
+        super(String.format(Locale.getDefault(), Resources.getString("DoesNotHaveAttributeCommand_Info"), selector, attributeName), selector, commandInitializer);
         this.attributeName = attributeName;
     }
 

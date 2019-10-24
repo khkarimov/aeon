@@ -23,7 +23,7 @@ public class HasAttributeCommand extends WebControlCommand {
      * @param attributeName      The attribute to check for.
      */
     public HasAttributeCommand(IByWeb selector, ICommandInitializer commandInitializer, String attributeName) {
-        super(String.format(Locale.getDefault(), Resources.getString("HasAttributeCommand_Info"), selector), selector, commandInitializer);
+        super(String.format(Locale.getDefault(), Resources.getString("HasAttributeCommand_Info"), selector, attributeName), selector, commandInitializer);
         this.attributeName = attributeName;
     }
 
