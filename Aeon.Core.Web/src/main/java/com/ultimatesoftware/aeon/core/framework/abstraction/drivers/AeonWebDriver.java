@@ -351,6 +351,16 @@ public class AeonWebDriver implements IWebDriver {
     }
 
     @Override
+    public void hasAttribute(WebControl element, String attributeName) {
+        adapter.hasAttribute(element, attributeName);
+    }
+
+    @Override
+    public void doesNotHaveAttribute(WebControl element, String attributeName) {
+        adapter.doesNotHaveAttribute(element, attributeName);
+    }
+
+    @Override
     public Collection<IWebCookie> getAllCookies() {
         return adapter.getAllCookies();
     }

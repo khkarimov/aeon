@@ -739,6 +739,30 @@ class AeonWebDriverTests {
     }
 
     @Test
+    void hasAttribute_verifyAdapterHasAttribute() {
+
+        // Arrange
+
+        // Act
+        aeonWebDriver.hasAttribute(webControl, "attribute-name");
+
+        // Assert
+        verify(adapter, times(1)).hasAttribute(webControl, "attribute-name");
+    }
+
+    @Test
+    void hasAttribute_verifyAdapterDoesNotHaveAttribute() {
+
+        // Arrange
+
+        // Act
+        aeonWebDriver.doesNotHaveAttribute(webControl, "attribute-name");
+
+        // Assert
+        verify(adapter, times(1)).doesNotHaveAttribute(webControl, "attribute-name");
+    }
+
+    @Test
     void mouseOut_verifyAdapterMouseOut() {
 
         // Arrange

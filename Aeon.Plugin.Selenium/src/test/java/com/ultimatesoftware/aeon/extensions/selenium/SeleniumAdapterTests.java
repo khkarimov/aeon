@@ -4646,6 +4646,68 @@ class SeleniumAdapterTests {
     }
 
     @Test
+    void hasAttribute_elementHasAttribute_passes() {
+
+        // Arrange
+        SeleniumElement element = Mockito.mock(SeleniumElement.class);
+        when(element.hasAttribute(eq("attribute-name"))).thenReturn(true);
+
+        // Act
+        this.seleniumAdapter.hasAttribute(element, "attribute-name");
+
+        // Assert
+        verify(element, times(1)).hasAttribute("attribute-name");
+    }
+
+    @Test
+    void hasAttribute_elementDoesNotHaveAttribute_throwsException() {
+
+        // Arrange
+        SeleniumElement element = Mockito.mock(SeleniumElement.class);
+        when(element.getSelector()).thenReturn(By.cssSelector(".selector"));
+        when(element.hasAttribute(eq("attribute-name"))).thenReturn(false);
+
+        // Act
+        Executable action = () -> this.seleniumAdapter.hasAttribute(element, "attribute-name");
+
+        // Assert
+        Exception exception = assertThrows(ElementDoesNotHaveAttributeException.class, action);
+        assertEquals("The element with selector .selector does not have an attribute with name \"attribute-name\".", exception.getMessage());
+        verify(element, times(1)).hasAttribute("attribute-name");
+    }
+
+    @Test
+    void doesNotHaveAttribute_elementDoesNotHaveAttribute_passes() {
+
+        // Arrange
+        SeleniumElement element = Mockito.mock(SeleniumElement.class);
+        when(element.hasAttribute(eq("attribute-name"))).thenReturn(false);
+
+        // Act
+        this.seleniumAdapter.doesNotHaveAttribute(element, "attribute-name");
+
+        // Assert
+        verify(element, times(1)).hasAttribute("attribute-name");
+    }
+
+    @Test
+    void doesNotHaveAttribute_elementHasAttribute_throwsException() {
+
+        // Arrange
+        SeleniumElement element = Mockito.mock(SeleniumElement.class);
+        when(element.getSelector()).thenReturn(By.cssSelector(".selector"));
+        when(element.hasAttribute(eq("attribute-name"))).thenReturn(true);
+
+        // Act
+        Executable action = () -> this.seleniumAdapter.doesNotHaveAttribute(element, "attribute-name");
+
+        // Assert
+        Exception exception = assertThrows(ElementHasAttributeException.class, action);
+        assertEquals("The element with selector .selector has an attribute with name \"attribute-name\".", exception.getMessage());
+        verify(element, times(1)).hasAttribute("attribute-name");
+    }
+
+    @Test
     void verifyAlertText_alertTextMatches_passes() {
 
         // Arrange
