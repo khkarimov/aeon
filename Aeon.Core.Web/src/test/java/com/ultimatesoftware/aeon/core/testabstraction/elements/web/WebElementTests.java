@@ -21,7 +21,6 @@ import org.mockito.quality.Strictness;
 import java.time.LocalDate;
 import java.time.Period;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
@@ -137,32 +136,6 @@ class WebElementTests {
                 .execute(eq(info1), any(ClickAllElementsCommand.class));
         verify(commandExecutionFacade, times(1))
                 .execute(eq(info2), any(ClickAllElementsCommand.class));
-    }
-
-    @Test
-    void hasAttribute_executesCommandWithTheCorrectArguments() {
-        // Arrange
-
-        // Act
-        webElement1.hasAttribute("attribute-name");
-
-        // Assert
-        verify(commandExecutionFacade, times(1))
-                .execute(eq(info1), hasAttributeCommandArgumentCaptor.capture());
-        assertEquals("attribute-name", hasAttributeCommandArgumentCaptor.getValue().getAttributeName());
-    }
-
-    @Test
-    void doesNotHaveAttribute_executesCommandWithTheCorrectArguments() {
-        // Arrange
-
-        // Act
-        webElement1.doesNotHaveAttribute("attribute-name");
-
-        // Assert
-        verify(commandExecutionFacade, times(1))
-                .execute(eq(info1), doesNotHaveAttributeCommandArgumentCaptor.capture());
-        assertEquals("attribute-name", doesNotHaveAttributeCommandArgumentCaptor.getValue().getAttributeName());
     }
 
     @Test
