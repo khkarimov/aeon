@@ -87,30 +87,6 @@ public class WebElement extends Element {
     }
 
     /**
-     * Asserts whether the element has a certain attribute.
-     *
-     * @param attributeName The name of the attribute to check for.
-     */
-    public void hasAttribute(String attributeName) {
-        automationInfo.getCommandExecutionFacade().execute(automationInfo, new HasAttributeCommand(
-                selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
-                attributeName));
-    }
-
-    /**
-     * Asserts whether the element does not have a certain attribute.
-     *
-     * @param attributeName The name of the attribute to check for.
-     */
-    public void doesNotHaveAttribute(String attributeName) {
-        automationInfo.getCommandExecutionFacade().execute(automationInfo, new DoesNotHaveAttributeCommand(
-                selector,
-                new WebCommandInitializer(new WebControlFinder(new WebSelectorFinder()), switchMechanism),
-                attributeName));
-    }
-
-    /**
      * Executes the double click command.
      */
     public void doubleClick() {
