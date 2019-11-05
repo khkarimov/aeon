@@ -464,6 +464,22 @@ public interface IWebDriver extends IDriver {
     void hasAllOptionsInOrder(WebControl element, CompareType compare, String optGroup);
 
     /**
+     * Asserts that an element has a specific attribute.
+     *
+     * @param element       The specified element.
+     * @param attributeName The name of the attribute to check for.
+     */
+    void hasAttribute(WebControl element, String attributeName);
+
+    /**
+     * Asserts that an element does not have a specific attribute.
+     *
+     * @param element       The specified element.
+     * @param attributeName The name of the attribute to check for.
+     */
+    void doesNotHaveAttribute(WebControl element, String attributeName);
+
+    /**
      * Asserts that the Text of given Alert is same as given string.
      *
      * @param comparingText String to compare against Alert Text.

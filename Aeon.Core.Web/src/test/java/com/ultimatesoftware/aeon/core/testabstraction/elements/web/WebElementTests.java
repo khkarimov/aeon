@@ -11,8 +11,9 @@ import com.ultimatesoftware.aeon.core.testabstraction.product.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -56,6 +58,12 @@ class WebElementTests {
     @Mock
     private ICommandExecutionFacade commandExecutionFacade;
 
+    @Captor
+    private ArgumentCaptor<HasAttributeCommand> hasAttributeCommandArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<DoesNotHaveAttributeCommand> doesNotHaveAttributeCommandArgumentCaptor;
+
     private LocalDate dateTime = LocalDate.now();
 
     private Period period = Period.of(1, 1, 1);
@@ -86,9 +94,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(BlurCommand.class));
+                .execute(eq(info1), any(BlurCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(BlurCommand.class));
+                .execute(eq(info2), any(BlurCommand.class));
     }
 
     @Test
@@ -99,9 +107,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(ClickAndHoldCommand.class));
+                .execute(eq(info1), any(ClickAndHoldCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(ClickAndHoldCommand.class));
+                .execute(eq(info2), any(ClickAndHoldCommand.class));
     }
 
     @Test
@@ -112,9 +120,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(ClickCommand.class));
+                .execute(eq(info1), any(ClickCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(ClickCommand.class));
+                .execute(eq(info2), any(ClickCommand.class));
     }
 
     @Test
@@ -125,9 +133,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(ClickAllElementsCommand.class));
+                .execute(eq(info1), any(ClickAllElementsCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(ClickAllElementsCommand.class));
+                .execute(eq(info2), any(ClickAllElementsCommand.class));
     }
 
     @Test
@@ -138,9 +146,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DoubleClickCommand.class));
+                .execute(eq(info1), any(DoubleClickCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DoubleClickCommand.class));
+                .execute(eq(info2), any(DoubleClickCommand.class));
     }
 
     @Test
@@ -151,9 +159,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DisabledCommand.class));
+                .execute(eq(info1), any(DisabledCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DisabledCommand.class));
+                .execute(eq(info2), any(DisabledCommand.class));
     }
 
     @Test
@@ -164,9 +172,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DragAndDropCommand.class));
+                .execute(eq(info1), any(DragAndDropCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DragAndDropCommand.class));
+                .execute(eq(info2), any(DragAndDropCommand.class));
     }
 
     @Test
@@ -177,9 +185,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(EnabledCommand.class));
+                .execute(eq(info1), any(EnabledCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(EnabledCommand.class));
+                .execute(eq(info2), any(EnabledCommand.class));
     }
 
     @Test
@@ -190,9 +198,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(ExistsCommand.class));
+                .execute(eq(info1), any(ExistsCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(ExistsCommand.class));
+                .execute(eq(info2), any(ExistsCommand.class));
     }
 
     @Test
@@ -203,9 +211,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(NotExistsCommand.class));
+                .execute(eq(info1), any(NotExistsCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(NotExistsCommand.class));
+                .execute(eq(info2), any(NotExistsCommand.class));
     }
 
     @Test
@@ -216,9 +224,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(RightClickCommand.class));
+                .execute(eq(info1), any(RightClickCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(RightClickCommand.class));
+                .execute(eq(info2), any(RightClickCommand.class));
     }
 
     @Test
@@ -229,9 +237,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(MouseOutCommand.class));
+                .execute(eq(info1), any(MouseOutCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(MouseOutCommand.class));
+                .execute(eq(info2), any(MouseOutCommand.class));
     }
 
     @Test
@@ -242,9 +250,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(MouseOverCommand.class));
+                .execute(eq(info1), any(MouseOverCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(MouseOverCommand.class));
+                .execute(eq(info2), any(MouseOverCommand.class));
     }
 
 
@@ -256,9 +264,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsCommand.class));
+                .execute(eq(info1), any(IsCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsCommand.class));
+                .execute(eq(info2), any(IsCommand.class));
     }
 
     @Test
@@ -269,9 +277,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsCommand.class));
+                .execute(eq(info1), any(IsCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsCommand.class));
+                .execute(eq(info2), any(IsCommand.class));
     }
 
     @Test
@@ -282,9 +290,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsCommand.class));
+                .execute(eq(info1), any(IsCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsCommand.class));
+                .execute(eq(info2), any(IsCommand.class));
     }
 
     @Test
@@ -295,9 +303,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsCommand.class));
+                .execute(eq(info1), any(IsCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsCommand.class));
+                .execute(eq(info2), any(IsCommand.class));
     }
 
     @Test
@@ -308,9 +316,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsLikeCommand.class));
+                .execute(eq(info1), any(IsLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsLikeCommand.class));
+                .execute(eq(info2), any(IsLikeCommand.class));
     }
 
     @Test
@@ -321,9 +329,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsLikeCommand.class));
+                .execute(eq(info1), any(IsLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsLikeCommand.class));
+                .execute(eq(info2), any(IsLikeCommand.class));
     }
 
     @Test
@@ -334,9 +342,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsLikeCommand.class));
+                .execute(eq(info1), any(IsLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsLikeCommand.class));
+                .execute(eq(info2), any(IsLikeCommand.class));
     }
 
     @Test
@@ -347,9 +355,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsNotLikeCommand.class));
+                .execute(eq(info1), any(IsNotLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsNotLikeCommand.class));
+                .execute(eq(info2), any(IsNotLikeCommand.class));
     }
 
     @Test
@@ -360,9 +368,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsNotLikeCommand.class));
+                .execute(eq(info1), any(IsNotLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsNotLikeCommand.class));
+                .execute(eq(info2), any(IsNotLikeCommand.class));
     }
 
     @Test
@@ -373,9 +381,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsNotLikeCommand.class));
+                .execute(eq(info1), any(IsNotLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsNotLikeCommand.class));
+                .execute(eq(info2), any(IsNotLikeCommand.class));
     }
 
     @Test
@@ -386,9 +394,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(IsNotLikeCommand.class));
+                .execute(eq(info1), any(IsNotLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(IsNotLikeCommand.class));
+                .execute(eq(info2), any(IsNotLikeCommand.class));
     }
 
     @Test
@@ -399,9 +407,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(HasCommand.class));
+                .execute(eq(info1), any(HasCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(HasCommand.class));
+                .execute(eq(info2), any(HasCommand.class));
     }
 
     @Test
@@ -412,9 +420,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(HasCommand.class));
+                .execute(eq(info1), any(HasCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(HasCommand.class));
+                .execute(eq(info2), any(HasCommand.class));
     }
 
     @Test
@@ -425,9 +433,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(HasLikeCommand.class));
+                .execute(eq(info1), any(HasLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(HasLikeCommand.class));
+                .execute(eq(info2), any(HasLikeCommand.class));
     }
 
     @Test
@@ -438,9 +446,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(HasLikeCommand.class));
+                .execute(eq(info1), any(HasLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(HasLikeCommand.class));
+                .execute(eq(info2), any(HasLikeCommand.class));
     }
 
     @Test
@@ -451,9 +459,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DoesNotHaveCommand.class));
+                .execute(eq(info1), any(DoesNotHaveCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DoesNotHaveCommand.class));
+                .execute(eq(info2), any(DoesNotHaveCommand.class));
     }
 
     @Test
@@ -464,9 +472,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DoesNotHaveCommand.class));
+                .execute(eq(info1), any(DoesNotHaveCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DoesNotHaveCommand.class));
+                .execute(eq(info2), any(DoesNotHaveCommand.class));
     }
 
     @Test
@@ -477,9 +485,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DoesNotHaveLikeCommand.class));
+                .execute(eq(info1), any(DoesNotHaveLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DoesNotHaveLikeCommand.class));
+                .execute(eq(info2), any(DoesNotHaveLikeCommand.class));
     }
 
     @Test
@@ -490,9 +498,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DoesNotHaveLikeCommand.class));
+                .execute(eq(info1), any(DoesNotHaveLikeCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DoesNotHaveLikeCommand.class));
+                .execute(eq(info2), any(DoesNotHaveLikeCommand.class));
     }
 
     @Test
@@ -503,9 +511,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(HasOnlyCommand.class));
+                .execute(eq(info1), any(HasOnlyCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(HasOnlyCommand.class));
+                .execute(eq(info2), any(HasOnlyCommand.class));
     }
 
     @Test
@@ -516,9 +524,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(HasOnlyCommand.class));
+                .execute(eq(info1), any(HasOnlyCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(HasOnlyCommand.class));
+                .execute(eq(info2), any(HasOnlyCommand.class));
     }
 
     @Test
@@ -529,9 +537,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(SetDivValueByJavaScriptCommand.class));
+                .execute(eq(info1), any(SetDivValueByJavaScriptCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(SetDivValueByJavaScriptCommand.class));
+                .execute(eq(info2), any(SetDivValueByJavaScriptCommand.class));
     }
 
     @Test
@@ -542,9 +550,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(SetBodyValueByJavaScriptCommand.class));
+                .execute(eq(info1), any(SetBodyValueByJavaScriptCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(SetBodyValueByJavaScriptCommand.class));
+                .execute(eq(info2), any(SetBodyValueByJavaScriptCommand.class));
     }
 
     @Test
@@ -555,9 +563,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(SetTextByJavaScriptCommand.class));
+                .execute(eq(info1), any(SetTextByJavaScriptCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(SetTextByJavaScriptCommand.class));
+                .execute(eq(info2), any(SetTextByJavaScriptCommand.class));
     }
 
     @Test
@@ -568,9 +576,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(VisibleCommand.class));
+                .execute(eq(info1), any(VisibleCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(VisibleCommand.class));
+                .execute(eq(info2), any(VisibleCommand.class));
     }
 
     @Test
@@ -581,9 +589,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(NotVisibleCommand.class));
+                .execute(eq(info1), any(NotVisibleCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(NotVisibleCommand.class));
+                .execute(eq(info2), any(NotVisibleCommand.class));
     }
 
     @Test
@@ -594,9 +602,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DatesApproximatelyEqualCommand.class));
+                .execute(eq(info1), any(DatesApproximatelyEqualCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DatesApproximatelyEqualCommand.class));
+                .execute(eq(info2), any(DatesApproximatelyEqualCommand.class));
     }
 
     @Test
@@ -607,9 +615,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(DatesApproximatelyEqualCommand.class));
+                .execute(eq(info1), any(DatesApproximatelyEqualCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(DatesApproximatelyEqualCommand.class));
+                .execute(eq(info2), any(DatesApproximatelyEqualCommand.class));
     }
 
     @Test
@@ -620,9 +628,9 @@ class WebElementTests {
 
         //Assert
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info1), any(PressKeyboardKeyCommand.class));
+                .execute(eq(info1), any(PressKeyboardKeyCommand.class));
         verify(commandExecutionFacade, times(1))
-                .execute(Mockito.eq(info2), any(PressKeyboardKeyCommand.class));
+                .execute(eq(info2), any(PressKeyboardKeyCommand.class));
     }
 
 }
