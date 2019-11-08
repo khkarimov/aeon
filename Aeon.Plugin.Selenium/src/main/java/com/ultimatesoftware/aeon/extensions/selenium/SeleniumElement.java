@@ -25,7 +25,7 @@ public class SeleniumElement extends WebControl {
     private static final int LONG_STRING_LENGTH = 50;
     private WebElement underlyingWebElement;
     private SeleniumSelectElement selectHelper;
-    private static Logger log = LoggerFactory.getLogger(SeleniumElement.class);
+    static Logger log = LoggerFactory.getLogger(SeleniumElement.class);
 
     /**
      * Initializes a new instance of the {@link SeleniumElement} class.
@@ -244,6 +244,22 @@ public class SeleniumElement extends WebControl {
         log.trace("WebElement.getAttribute({});", attributeName);
 
         return underlyingWebElement.getAttribute(attributeName) == null ? "" : underlyingWebElement.getAttribute(attributeName);
+    }
+
+    /**
+     * Checks whether a specific attribute exists on the element.
+     *
+     * @param attributeName The name of the attribute to check for.
+     * @return True if the attribute exists, false otherwise.
+     */
+    boolean hasAttribute(String attributeName) {
+        if (attributeName == null) {
+            throw new IllegalArgumentException("attributeName");
+        }
+
+        log.trace("WebElement.hasAttribute({});", attributeName);
+
+        return underlyingWebElement.getAttribute(attributeName) != null;
     }
 
     /**

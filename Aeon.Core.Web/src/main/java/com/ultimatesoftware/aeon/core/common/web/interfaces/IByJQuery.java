@@ -144,11 +144,22 @@ public interface IByJQuery {
 
     /**
      * Gets the elements in the shadow dom of the first of the matched elements, filtered by the given selector.
+     * This is equivalent to calling
+     * <code>shadowRoot().find(selector)</code>
      *
      * @param selector A string containing a selector expression to match elements against.
      * @return The {@link ByJQuery}
+     * @deprecated Please use shadowRoot().find(selector) instead.
      */
+    @Deprecated
     ByJQuery shadowDom(String selector);
+
+    /**
+     * Gets the shadow root element of the current element.
+     *
+     * @return The {@link ByJQuery}
+     */
+    ByJQuery shadowRoot();
 
     /**
      * Get the descendants of each element in the current set of matched elements, filtered by a selector, jquery object, or element.
