@@ -9,7 +9,8 @@ import org.mockito.quality.Strictness;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -46,52 +47,6 @@ public class SleepTests {
 
         // Assert
         assertEquals(returned, sleep);
-    }
-
-    @Test
-    void waitInternal_WhenCalled_TakesAbout70NanoSeconds() {
-
-        // Arrange
-
-        // Act
-        long startTime = System.nanoTime();
-        sleep.waitInternal();
-        long endTime = System.nanoTime();
-
-        // Assert
-        assertTrue(endTime - startTime > 70 * 1000000);
-        assertTrue(endTime - startTime < 80 * 1000000);
-    }
-
-    @Test
-    void wait_WhenMillisPassed_WaitsMillis() {
-
-        // Arrange
-
-        // Act
-        long startTime = System.nanoTime();
-        sleep.wait(30);
-        long endTime = System.nanoTime();
-
-        // Assert
-        assertTrue(endTime - startTime > 30 * 1000000);
-        assertTrue(endTime - startTime < 40 * 1000000);
-    }
-
-    @Test
-    void wait_WhenDurationPassed_WaitsDuration() {
-
-        // Arrange
-        Duration duration = Duration.ofMillis(50);
-
-        // Act
-        long startTime = System.nanoTime();
-        sleep.wait(duration);
-        long endTime = System.nanoTime();
-
-        // Assert
-        assertTrue(endTime - startTime > 50 * 1000000);
-        assertTrue(endTime - startTime < 60 * 1000000);
     }
 
     @Test
