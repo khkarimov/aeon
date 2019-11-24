@@ -15,27 +15,14 @@ plugins {
 
 dependencies {
     compile project(':Aeon.Core')
-    compile project(':Aeon.Core.Mobile')
     compile project(':Aeon.Core.Web')
-    compile project(':Aeon.Plugin.Accessibility')
-    compile project(':Aeon.Plugin.Appium')
     compile project(':Aeon.Plugin.Artifactory')
-    compile project(':Aeon.Plugin.Axe')
-    compile project(':Aeon.Plugin.Continuum')
-    compile project(':Aeon.Plugin.HeadSpin')
-    compile project(':Aeon.Plugin.JUnit5')
     compile project(':Aeon.Plugin.Log4J2')
-    compile project(':Aeon.Plugin.Perfecto')
     compile project(':Aeon.Plugin.Reporting')
-    compile project(':Aeon.Plugin.SauceLabs')
     compile project(':Aeon.Plugin.Selenium')
     compile project(':Aeon.Plugin.Slack')
     compile project(':Aeon.Plugin.TestNG')
     compile project(':Aeon.SystemTests.Web')
-    compile project(':Aeon.SystemTests.Mobile')
-    compile project(':Aeon.Platform')
-    compile project(':Aeon.Platform.Http')
-    compile project(':Aeon.Platform.Python')
 }
 
 wrapper {
@@ -63,34 +50,6 @@ task CopyReportingPlugin(type: Copy) {
     include '*.jar'
 }
 
-task CopyReportingPluginMobile(type: Copy) {
-    group 'copy'
-    from 'Aeon.Plugin.Reporting/build/libs'
-    into 'Aeon.SystemTests.Mobile/plugins'
-    include '*.jar'
-}
-
-task CopyPerfectoPlugin(type: Copy) {
-    group 'copy'
-    from 'Aeon.Plugin.Perfecto/build/libs'
-    into 'Aeon.SystemTests.Web/plugins'
-    include '*.jar'
-}
-
-task CopyPerfectoPluginMobile(type: Copy) {
-    group 'copy'
-    from 'Aeon.Plugin.Perfecto/build/libs'
-    into 'Aeon.SystemTests.Mobile/plugins'
-    include '*.jar'
-}
-
-task CopyAppiumPluginMobile(type: Copy) {
-    group 'copy'
-    from 'Aeon.Plugin.Appium/build/libs'
-    into 'Aeon.SystemTests.Mobile/plugins'
-    include '*.jar'
-}
-
 task CopySeleniumPlatformPlugin(type: Copy) {
     group 'copy'
     from 'Aeon.Plugin.Selenium/build/libs'
@@ -103,25 +62,6 @@ task CopySeleniumPlatformHttpPlugin(type: Copy) {
     from 'Aeon.Plugin.Selenium/build/libs'
     into 'Aeon.Platform.Http/plugins'
     include '*.jar'
-}
-
-task CopySeleniumPlatformPythonPlugin(type: Copy) {
-    group 'copy'
-    from 'Aeon.Plugin.Selenium/build/libs'
-    into 'Aeon.Platform.Python/plugins'
-    include '*.jar'
-}
-
-task CopyDriversPlatformHttp(type: Copy) {
-    group 'copy'
-    from 'Aeon.SystemTests.Web/lib'
-    into 'Aeon.Platform.Http/lib'
-}
-
-task CopyDriversPlatformPython(type: Copy) {
-    group 'copy'
-    from 'Aeon.SystemTests.Web/lib'
-    into 'Aeon.Platform.Python/lib'
 }
 
 task CopySlackPlugin(type: Copy) {
@@ -149,15 +89,8 @@ assemble.dependsOn(javadoc)
 assemble.finalizedBy(CopySeleniumPlugin)
 assemble.finalizedBy(CopySeleniumPluginMobile)
 assemble.finalizedBy(CopyReportingPlugin)
-assemble.finalizedBy(CopyReportingPluginMobile)
-assemble.finalizedBy(CopyPerfectoPlugin)
-assemble.finalizedBy(CopyPerfectoPluginMobile)
-assemble.finalizedBy(CopyAppiumPluginMobile)
 assemble.finalizedBy(CopySeleniumPlatformPlugin)
 assemble.finalizedBy(CopySeleniumPlatformHttpPlugin)
-assemble.finalizedBy(CopySeleniumPlatformPythonPlugin)
-assemble.finalizedBy(CopyDriversPlatformHttp)
-assemble.finalizedBy(CopyDriversPlatformPython)
 assemble.finalizedBy(CopySlackPlugin)
 assemble.finalizedBy(CopyArtifactoryPlugin)
 

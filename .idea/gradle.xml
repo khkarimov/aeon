@@ -5,36 +5,23 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="delegatedBuild" value="true" />
-        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Aeon.Core" />
-            <option value="$PROJECT_DIR$/Aeon.Core.Mobile" />
             <option value="$PROJECT_DIR$/Aeon.Core.Web" />
-            <option value="$PROJECT_DIR$/Aeon.Platform" />
-            <option value="$PROJECT_DIR$/Aeon.Platform.Http" />
-            <option value="$PROJECT_DIR$/Aeon.Platform.Python" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.Accessibility" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.Appium" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Artifactory" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.Axe" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.Continuum" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.HeadSpin" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.JUnit5" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Log4J2" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.Perfecto" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Reporting" />
-            <option value="$PROJECT_DIR$/Aeon.Plugin.SauceLabs" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Selenium" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.Slack" />
             <option value="$PROJECT_DIR$/Aeon.Plugin.TestNG" />
-            <option value="$PROJECT_DIR$/Aeon.SystemTests.Mobile" />
             <option value="$PROJECT_DIR$/Aeon.SystemTests.Web" />
           </set>
         </option>
+        <option name="testRunner" value="GRADLE" />
         <option name="useAutoImport" value="true" />
       </GradleProjectSettings>
     </option>
