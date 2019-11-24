@@ -1,4 +1,4 @@
-package main.sample.pages;
+package main.pages;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.common.web.selectors.By;

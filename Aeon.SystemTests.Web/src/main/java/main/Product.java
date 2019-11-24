@@ -1,8 +1,8 @@
-package main.sample;
+package main;
 
 import com.ultimatesoftware.aeon.core.command.execution.AutomationInfo;
 import com.ultimatesoftware.aeon.core.testabstraction.product.WebProduct;
-import main.sample.pages.HomePage;
+import main.pages.HomePage;
 
 /**
  * Product web product.
