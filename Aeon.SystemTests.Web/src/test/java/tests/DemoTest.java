@@ -16,6 +16,11 @@ public class DemoTest extends BaseSetup {
         product.homePage.wikiOption.click();
 
         product.browser.verifyTitle("Software testing - Wikipedia");
+
+        product.homePage.text.exists();
+        product.homePage.text.isLike("As the number of possible tests for even simple " +
+                "software components is practically infinite, all software testing uses some" +
+                " strategy to select tests that are feasible for the available time and resources.");
     }
 }
 

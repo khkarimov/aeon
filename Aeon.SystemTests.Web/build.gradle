@@ -60,7 +60,3 @@ systemTest {
 sonarqube {
     skipProject = true
 }
-
-wrapper {
-    gradleVersion = '4.10'
-}
